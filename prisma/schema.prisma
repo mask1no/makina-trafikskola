@@ -1,0 +1,655 @@
+// Makina Trafikskola — complete schema. See BUILD_SPEC.md §4.
+// Do not add models. If something is missing, stop and ask.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ───────────────────────────── identity ─────────────────────────────
+
+enum Role {
+  STUDENT
+  TEACHER
+  ADMIN
+}
+
+enum Transmission {
+  MANUAL
+  AUTOMATIC
+}
+
+enum KktStatus {
+  UNKNOWN
+  NOT_APPLIED
+  APPLIED
+  APPROVED
+}
+
+model User {
+  id                 String    @id @default(cuid())
+  email              String?   @unique
+  phone              String?   @unique          // E.164, +46...
+  emailVerifiedAt    DateTime?
+  phoneVerifiedAt    DateTime?
+  passwordHash       String?                    // null when phone-OTP only
+  role               Role      @default(STUDENT)
+  localePref         String    @default("sv")
+  firstName          String
+  lastName           String
+  identityVerifiedAt DateTime?                  // reserved for BankID
+  deletedAt          DateTime?                  // soft delete + anonymise
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  studentProfile    StudentProfile?
+  teacherProfile    TeacherProfile?
+  orders            Order[]
+  bookings          Booking[]               @relation("BookingStudent")
+  cancelledBookings Booking[]               @relation("BookingCancelledBy")
+  credits           CreditTransaction[]     @relation("CreditStudent")
+  theoryAccess      TheoryAccess[]
+  theoryAttempts    TheoryAttempt[]
+  theoryExams       TheoryExamSession[]
+  courseBookings    CourseBooking[]
+  reviews           Review[]                @relation("ReviewStudent")
+  notifications     Notification[]
+  momentProgress    StudentMomentProgress[]
+
+  @@index([role])
+  @@index([deletedAt])
+}
+
+model StudentProfile {
+  userId                String        @id
+  user                  User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  korkortstillstand     KktStatus     @default(UNKNOWN)
+  preferredLanguages    String[]      @default([])
+  preferredTransmission Transmission?
+  defaultPickupAddress  String?
+  defaultPickupLat      Float?
+  defaultPickupLng      Float?
+  notes                 String?       // internal, staff-visible only
+}
+
+model TeacherProfile {
+  id                String         @id @default(cuid())
+  userId            String         @unique
+  user              User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  slug              String         @unique
+  photoUrl          String?
+  languages         String[]       @default([])   // ["sv","ti","ar"] — GIN indexed
+  transmissions     Transmission[] @default([])
+  yearsExperience   Int            @default(0)
+  active            Boolean        @default(true)
+  ratingAvg         Float          @default(0)    // denormalised, recomputed by cron
+  ratingCount       Int            @default(0)
+  travelBufferMin   Int            @default(15)
+  maxPickupRadiusKm Int            @default(15)
+
+  translations    TeacherTranslation[]
+  locations       TeacherLocation[]
+  availability    TeacherAvailability[]
+  exceptions      AvailabilityException[]
+  bookings        Booking[]
+  vehicles        Vehicle[]
+  reviews         Review[]
+  lessonReports   LessonReport[]
+  courseOccasions CourseOccasion[]
+
+  @@index([active])
+  @@index([languages(ops: ArrayOps)], type: Gin)  // powers the language filter (R23)
+}
+
+model TeacherTranslation {
+  id        String         @id @default(cuid())
+  teacherId String
+  teacher   TeacherProfile @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  locale    String
+  bio       String
+
+  @@unique([teacherId, locale])
+}
+
+// ───────────────────────────── places ─────────────────────────────
+
+model Location {
+  id                 String  @id @default(cuid())
+  slug               String  @unique
+  name               String  // "Upplands Väsby – Huvudkontor"
+  address            String
+  city               String
+  postalCode         String
+  lat                Float
+  lng                Float
+  isPickupZoneCenter Boolean @default(true)
+  active             Boolean @default(true)
+
+  teachers     TeacherLocation[]
+  bookings     Booking[]
+  availability TeacherAvailability[]
+}
+
+model TeacherLocation {
+  teacherId  String
+  locationId String
+  teacher    TeacherProfile @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  location   Location       @relation(fields: [locationId], references: [id], onDelete: Cascade)
+
+  @@id([teacherId, locationId])
+}
+
+model Vehicle {
+  id           String          @id @default(cuid())
+  model        String          // "Volvo XC40"
+  registration String          @unique
+  transmission Transmission
+  photoUrl     String?
+  active       Boolean         @default(true)
+  teacherId    String?
+  teacher      TeacherProfile? @relation(fields: [teacherId], references: [id])
+
+  bookings Booking[]
+}
+
+// ───────────────────────────── catalogue ─────────────────────────────
+
+enum ProductKind {
+  PACKAGE
+  SINGLE_LESSON
+  TEST_LESSON
+  COURSE_SEAT
+  THEORY_ACCESS
+  GUARANTEE
+}
+
+model Product {
+  id              String      @id @default(cuid())
+  slug            String      @unique
+  kind            ProductKind
+  active          Boolean     @default(false)  // nothing sells until confirmed
+  sortOrder       Int         @default(0)
+
+  priceOre        Int                          // 1845000 = 18 450 kr
+  compareAtOre    Int?
+  vatRatePct      Int         @default(25)     // confirm with the accountant
+  currency        String      @default("SEK")
+
+  lessonCredits   Int         @default(0)
+  lessonMinutes   Int         @default(50)
+  theoryDays      Int?
+  includesRisk1   Boolean     @default(false)
+  includesRisk2   Boolean     @default(false)
+  creditValidDays Int         @default(730)
+
+  badge           String?                      // "POPULARAST"
+  accentHex       String?                      // tier colour — data, not CSS
+
+  translations ProductTranslation[]
+  orderItems   OrderItem[]
+  courses      Course[]
+}
+
+model ProductTranslation {
+  id        String   @id @default(cuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  locale    String
+  name      String
+  shortDesc String?
+  features  String[] @default([])
+
+  @@unique([productId, locale])
+}
+
+// ───────────────────────────── orders & money ─────────────────────────────
+
+enum OrderStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+  PARTIALLY_REFUNDED
+}
+
+enum PaymentProvider {
+  STRIPE
+  MANUAL
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCEEDED
+  FAILED
+  REFUNDED
+}
+
+model Order {
+  id        String      @id @default(cuid())
+  studentId String
+  student   User        @relation(fields: [studentId], references: [id])
+  status    OrderStatus @default(PENDING)
+  totalOre  Int
+  vatOre    Int
+  createdAt DateTime    @default(now())
+  paidAt    DateTime?
+
+  items   OrderItem[]
+  payment Payment?
+
+  @@index([studentId, createdAt])
+}
+
+model OrderItem {
+  id                  String  @id @default(cuid())
+  orderId             String
+  order               Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId           String
+  product             Product @relation(fields: [productId], references: [id])
+  quantity            Int     @default(1)
+  unitPriceOre        Int     // snapshot at time of sale — never re-read from Product
+  vatRatePct          Int
+  productNameSnapshot String
+
+  credits      CreditTransaction[]
+  theoryAccess TheoryAccess[]
+}
+
+model Payment {
+  id                      String          @id @default(cuid())
+  orderId                 String          @unique
+  order                   Order           @relation(fields: [orderId], references: [id])
+  provider                PaymentProvider @default(STRIPE)
+  method                  String?         // "card" | "swish" | "klarna"
+  amountOre               Int
+  refundedOre             Int             @default(0)
+  stripePaymentIntentId   String?         @unique
+  stripeCheckoutSessionId String?         @unique
+  status                  PaymentStatus   @default(PENDING)
+  createdAt               DateTime        @default(now())
+}
+
+model StripeEvent {
+  id          String   @id            // Stripe's event id — webhook idempotency
+  type        String
+  processedAt DateTime @default(now())
+}
+
+enum CreditReason {
+  PURCHASE
+  BOOKING_CONSUMED
+  CANCELLATION_REFUND
+  LATE_CANCELLATION_CHARGE
+  TEACHER_CANCELLATION_REFUND
+  ADMIN_ADJUSTMENT
+  EXPIRY
+}
+
+model CreditTransaction {
+  id          String       @id @default(cuid())
+  studentId   String
+  student     User         @relation("CreditStudent", fields: [studentId], references: [id])
+  delta       Int          // +10 purchase, -1 booking, +1 refund
+  reason      CreditReason
+  bookingId   String?
+  booking     Booking?     @relation(fields: [bookingId], references: [id])
+  orderItemId String?
+  orderItem   OrderItem?   @relation(fields: [orderItemId], references: [id])
+  expiresAt   DateTime?    // purchase lots expire; consumption never does
+  note        String?      // required for ADMIN_ADJUSTMENT
+  createdById String?      // admin who did it
+  createdAt   DateTime     @default(now())
+
+  @@index([studentId, createdAt])
+  @@index([expiresAt])
+}
+
+model TheoryAccess {
+  id                String     @id @default(cuid())
+  studentId         String
+  student           User       @relation(fields: [studentId], references: [id])
+  grantedAt         DateTime   @default(now())
+  expiresAt         DateTime
+  sourceOrderItemId String?
+  sourceOrderItem   OrderItem? @relation(fields: [sourceOrderItemId], references: [id])
+
+  @@index([studentId, expiresAt])
+}
+
+// ───────────────────────────── scheduling ─────────────────────────────
+
+enum ExceptionType {
+  FULL_DAY_OFF
+  PARTIAL_BLOCK
+  EXTRA_HOURS
+}
+
+enum BookingStatus {
+  CONFIRMED
+  COMPLETED
+  CANCELLED_BY_STUDENT
+  CANCELLED_BY_TEACHER
+  NO_SHOW
+}
+
+model TeacherAvailability {
+  id         String         @id @default(cuid())
+  teacherId  String
+  teacher    TeacherProfile @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  dayOfWeek  Int            // 0 = Sunday
+  startTime  String         // "09:00" local Europe/Stockholm — never an offset
+  endTime    String         // "17:00"
+  locationId String?
+  location   Location?      @relation(fields: [locationId], references: [id])
+  validFrom  DateTime?
+  validUntil DateTime?
+
+  @@index([teacherId, dayOfWeek])
+}
+
+model AvailabilityException {
+  id        String         @id @default(cuid())
+  teacherId String
+  teacher   TeacherProfile @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  date      DateTime       @db.Date
+  type      ExceptionType
+  startTime String?        // for PARTIAL_BLOCK / EXTRA_HOURS
+  endTime   String?
+  reason    String?
+
+  @@index([teacherId, date])
+}
+
+model Booking {
+  id            String         @id @default(cuid())
+  studentId     String
+  student       User           @relation("BookingStudent", fields: [studentId], references: [id])
+  teacherId     String
+  teacher       TeacherProfile @relation(fields: [teacherId], references: [id])
+  vehicleId     String?
+  vehicle       Vehicle?       @relation(fields: [vehicleId], references: [id])
+  locationId    String?        // null when this is a pickup booking
+  location      Location?      @relation(fields: [locationId], references: [id])
+
+  pickupAddress String?        // purge 90 days after completion
+  pickupLat     Float?
+  pickupLng     Float?
+
+  startsAt      DateTime       // UTC
+  endsAt        DateTime       // UTC
+  status        BookingStatus  @default(CONFIRMED)
+  creditCharged Boolean        @default(false)
+  holdExpiresAt DateTime?      // set when booked without credits
+
+  cancelledAt   DateTime?
+  cancelledById String?
+  cancelledBy   User?          @relation("BookingCancelledBy", fields: [cancelledById], references: [id])
+  cancelReason  String?
+
+  studentNote    String?
+  idempotencyKey String?       @unique
+  createdAt      DateTime      @default(now())
+
+  credits      CreditTransaction[]
+  lessonReport LessonReport?
+  review       Review?
+
+  @@index([teacherId, startsAt])
+  @@index([studentId, startsAt])
+  @@index([status, holdExpiresAt])
+}
+
+// ───────────────────────────── courses ─────────────────────────────
+
+enum CourseKind {
+  RISK1
+  RISK2
+  HANDLEDARUTBILDNING
+  INTRO_THEORY
+}
+
+model Course {
+  id        String     @id @default(cuid())
+  kind      CourseKind
+  productId String
+  product   Product    @relation(fields: [productId], references: [id])
+
+  occasions CourseOccasion[]
+}
+
+model CourseOccasion {
+  id           String          @id @default(cuid())
+  courseId     String
+  course       Course          @relation(fields: [courseId], references: [id])
+  startsAt     DateTime
+  endsAt       DateTime
+  capacity     Int
+  venueName    String          // often an external halkbana for RISK2
+  venueAddress String
+  language     String          @default("sv")
+  teacherId    String?
+  teacher      TeacherProfile? @relation(fields: [teacherId], references: [id])
+  cancelled    Boolean         @default(false)
+
+  bookings CourseBooking[]
+
+  @@index([courseId, startsAt])
+}
+
+model CourseBooking {
+  id         String         @id @default(cuid())
+  occasionId String
+  occasion   CourseOccasion @relation(fields: [occasionId], references: [id])
+  studentId  String
+  student    User           @relation(fields: [studentId], references: [id])
+  status     BookingStatus  @default(CONFIRMED)
+  createdAt  DateTime       @default(now())
+
+  @@unique([occasionId, studentId])
+}
+
+// ───────────────────────── utbildningskort ─────────────────────────
+
+model Moment {
+  id    String @id            // "3.4"
+  step  Int                   // 1–4
+  code  String @unique
+  order Int
+
+  translations MomentTranslation[]
+  progress     StudentMomentProgress[]
+}
+
+model MomentTranslation {
+  id          String  @id @default(cuid())
+  momentId    String
+  moment      Moment  @relation(fields: [momentId], references: [id], onDelete: Cascade)
+  locale      String
+  title       String
+  description String?
+
+  @@unique([momentId, locale])
+}
+
+model LessonReport {
+  id        String         @id @default(cuid())
+  bookingId String         @unique
+  booking   Booking        @relation(fields: [bookingId], references: [id])
+  teacherId String
+  teacher   TeacherProfile @relation(fields: [teacherId], references: [id])
+  summary   String?
+  nextFocus String?
+  createdAt DateTime       @default(now())
+}
+
+model StudentMomentProgress {
+  id          String   @id @default(cuid())
+  studentId   String
+  student     User     @relation(fields: [studentId], references: [id])
+  momentId    String
+  moment      Moment   @relation(fields: [momentId], references: [id])
+  level       Int      // 1 introduced → 4 independent
+  updatedAt   DateTime @updatedAt
+  updatedById String
+
+  @@unique([studentId, momentId])
+}
+
+// ───────────────────────────── theory ─────────────────────────────
+
+model TheoryCategory {
+  id    String @id @default(cuid())
+  slug  String @unique      // "vagmarken", "miljo", "fordonskannedom"
+  order Int
+
+  translations TheoryCategoryTranslation[]
+  questions    TheoryQuestion[]
+}
+
+model TheoryCategoryTranslation {
+  id         String         @id @default(cuid())
+  categoryId String
+  category   TheoryCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  locale     String
+  name       String
+
+  @@unique([categoryId, locale])
+}
+
+model TheoryQuestion {
+  id         String         @id @default(cuid())
+  categoryId String
+  category   TheoryCategory @relation(fields: [categoryId], references: [id])
+  isFree     Boolean        @default(false)
+  imageUrl   String?
+  difficulty Int            @default(2)  // 1–3, drives exam composition
+  active     Boolean        @default(true)
+  version    Int            @default(1)
+  createdAt  DateTime       @default(now())
+
+  translations TheoryQuestionTranslation[]
+  answers      TheoryAnswer[]
+  attempts     TheoryAttempt[]
+
+  @@index([categoryId, active])
+}
+
+model TheoryQuestionTranslation {
+  id          String         @id @default(cuid())
+  questionId  String
+  question    TheoryQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  locale      String
+  text        String
+  explanation String?        // required in practice — every competitor has it
+  audioUrl    String?        // the differentiator
+
+  @@unique([questionId, locale])
+}
+
+model TheoryAnswer {
+  id         String         @id @default(cuid())
+  questionId String
+  question   TheoryQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  isCorrect  Boolean
+  order      Int
+
+  translations TheoryAnswerTranslation[]
+  attempts     TheoryAttempt[]
+}
+
+model TheoryAnswerTranslation {
+  id       String       @id @default(cuid())
+  answerId String
+  answer   TheoryAnswer @relation(fields: [answerId], references: [id], onDelete: Cascade)
+  locale   String
+  text     String
+
+  @@unique([answerId, locale])
+}
+
+model TheoryAttempt {
+  id         String             @id @default(cuid())
+  studentId  String
+  student    User               @relation(fields: [studentId], references: [id])
+  questionId String
+  question   TheoryQuestion     @relation(fields: [questionId], references: [id])
+  answerId   String
+  answer     TheoryAnswer       @relation(fields: [answerId], references: [id])
+  correct    Boolean
+  sessionId  String?
+  session    TheoryExamSession? @relation(fields: [sessionId], references: [id])
+  answeredAt DateTime           @default(now())
+
+  @@index([studentId, questionId])
+}
+
+model TheoryExamSession {
+  id            String    @id @default(cuid())
+  studentId     String
+  student       User      @relation(fields: [studentId], references: [id])
+  locale        String
+  startedAt     DateTime  @default(now())
+  finishedAt    DateTime?
+  questionCount Int       @default(65)
+  correctCount  Int       @default(0)
+  passed        Boolean   @default(false)
+
+  attempts TheoryAttempt[]
+}
+
+// ───────────────────── reviews, notifications, audit ─────────────────────
+
+enum Channel {
+  EMAIL
+  SMS
+  PUSH
+  INAPP
+}
+
+model Review {
+  id        String         @id @default(cuid())
+  bookingId String         @unique        // only students who actually had a lesson
+  booking   Booking        @relation(fields: [bookingId], references: [id])
+  studentId String
+  student   User           @relation("ReviewStudent", fields: [studentId], references: [id])
+  teacherId String
+  teacher   TeacherProfile @relation(fields: [teacherId], references: [id])
+  rating    Int            // 1–5
+  comment   String?
+  published Boolean        @default(false) // moderated before it goes public
+  createdAt DateTime       @default(now())
+
+  @@index([teacherId, published])
+}
+
+model Notification {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id])
+  channel   Channel
+  template  String    // "booking_confirmed"
+  payload   Json
+  locale    String
+  sendAfter DateTime
+  sentAt    DateTime?
+  error     String?
+
+  @@index([sentAt, sendAfter])
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  actorId    String?
+  action     String   // "booking.cancel", "credit.adjust"
+  entityType String
+  entityId   String
+  before     Json?
+  after      Json?
+  createdAt  DateTime @default(now())
+
+  @@index([entityType, entityId])
+}

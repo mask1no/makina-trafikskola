@@ -1,0 +1,22 @@
+---
+description: Makina Trafikskola — project context. Always applied.
+alwaysApply: true
+---
+
+Next.js 14 App Router · TypeScript strict · Tailwind · Prisma/Postgres ·
+next-intl · Auth.js v5 · Stripe · Railway.
+
+Driving school in Stockholm. Students are largely newly arrived Swedes.
+Locales: sv (default), en, ti (Tigrinya), ar (Arabic, RTL), so (Somali).
+
+BEFORE proposing architecture, read /BUILD_SPEC.md. It is authoritative — if
+your suggestion and the spec disagree, the spec wins. If the spec is silent,
+say so and ask rather than inventing.
+
+Domain vocabulary stays Swedish in identifiers, slugs and DB values:
+korlektion, riskettan, risktvaan, handledarutbildning, korkortstillstand,
+saldo, utbildningskort, teoriprov, uppkorning, halkbana.
+
+Work one task at a time. Only touch the files the current task lists. Do not
+refactor unrelated code, do not add dependencies without saying why, and do
+not create README or docs files unless asked.

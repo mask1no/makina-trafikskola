@@ -1,0 +1,35 @@
+---
+description: UI, design tokens, accessibility and i18n rules.
+alwaysApply: true
+---
+
+TOKENS
+- Use CSS variables from globals.css. No hex literal in any component.
+  --surface #0D0D0F · --surface-raised #17171A · --page #F5F5F7 · --card #FFF
+  --ink #0D0D0F · --ink-inverse #FFF · --ink-muted #6B6B73 · --border #E5E5EA
+  --accent #F5B429 (gold) · --accent-ink #0D0D0F · --success #1FA971 · --danger #DC2626
+  radii 12 / 16 / 20px, 4px spacing scale.
+- Gold is for surfaces, borders and primary buttons. Never gold text on white.
+- Product tier colours come from Product.accentHex — data, not CSS classes.
+
+LAYOUT
+- CSS logical properties only: ps-*, pe-*, ms-*, me-*, text-start, border-s.
+  The app renders dir="rtl" for Arabic. Directional icons mirror; photos, the
+  logo and the map do not. Numbers stay LTR.
+- Minimum touch target 44px — the slot grid violates this by default.
+- Every input has a real <label>. Error messages say what to do next.
+
+REACT
+- Server Components by default. "use client" only for genuine interactivity,
+  and never on a page that must be indexed.
+- No browser storage APIs.
+
+I18N
+- No hardcoded user-facing strings. Use next-intl keys and add every new key to
+  ALL FIVE files in messages/ in the same change: sv, en, ti, ar, so.
+- Key naming: feature.section.element — booking.step.when.title,
+  errors.SLOT_TAKEN, pricing.perLesson.
+- UI strings live in messages/*.json. CONTENT (product names, instructor bios,
+  theory questions, emails) lives in *Translation tables — never in JSON.
+- Content fallback: requested locale → sv → first available. Never render an
+  empty string.

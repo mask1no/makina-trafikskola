@@ -1,0 +1,28 @@
+---
+description: Security rules for every API route.
+alwaysApply: true
+---
+
+Every route handler does these four things, in this order:
+1. Zod-parse the input (body, query, params).
+2. requireRole(session, [...]) from src/lib/auth/guards.ts.
+3. Verify the caller owns the resource — a STUDENT fetching /api/bookings/[id]
+   must own that booking. This is the most common real hole in apps like this.
+4. Act.
+
+Also:
+- Never trust a client-supplied price, credit count, role or userId.
+- Stripe webhook: read the RAW body via await req.text() before verifying the
+  signature. req.json() first breaks it. runtime = "nodejs", not edge.
+- Webhooks are idempotent: insert StripeEvent(event.id) first; on duplicate,
+  return 200 and stop.
+- Rate-limit: login 5/15min per IP+identifier, OTP 3/hour per phone with a hard
+  daily cap (SMS costs money and is an abuse target), booking creation, reviews.
+- Never return password hashes, other users' phone numbers, pickup addresses of
+  other students, or internal staff notes.
+- No PII in logs or Sentry — scrub phone, email, addresses, lesson notes.
+- Uploads: signed URLs, content-type allowlist, size cap, re-encode images.
+
+Error shape, always: { error: { code, message, fields? } } where code is a
+stable key the client translates: SLOT_TAKEN, NO_CREDITS,
+OUTSIDE_CANCELLATION_WINDOW, PRODUCT_INACTIVE, RATE_LIMITED.

@@ -1,0 +1,25 @@
+---
+description: Prisma schema rules.
+globs: ["prisma/**", "src/lib/**", "src/app/api/**"]
+---
+
+prisma/schema.prisma is COMPLETE and authoritative. Do not add, rename or
+remove models or fields. If something you need is missing, stop and say so.
+
+Things that look like mistakes but are deliberate:
+- There is no lessonsRemaining column. Balance is a SUM over
+  CreditTransaction. See 10-money-and-time.mdc.
+- Booking has no lessonType enum. Riskettan and Risktvåan are CourseOccasion
+  rows with seats, not bookings.
+- OrderItem.unitPriceOre and productNameSnapshot duplicate Product on purpose —
+  a receipt must show what the customer actually saw, not today's price.
+- Product.active defaults to false. Nothing is on sale until the client
+  confirms the canonical price list.
+
+Booking overlap is enforced by a database exclusion constraint in
+prisma/migrations/*_booking_exclusion/migration.sql, not by application code.
+Catch SQLSTATE 23P01 and return 409 SLOT_TAKEN. Never replace it with a
+SELECT-then-INSERT check.
+
+Booking creation is one transaction: read balance → insert Booking → insert
+CreditTransaction → commit.

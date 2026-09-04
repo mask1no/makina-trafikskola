@@ -1,0 +1,29 @@
+---
+description: Money, time and scheduling invariants.
+alwaysApply: true
+---
+
+MONEY
+- Integer öre everywhere. Never a float, never kronor as a number.
+  1845000 === 18 450 kr.
+- Prices are ALWAYS resolved server-side from the Product table. A request may
+  send productId and quantity; if it sends an amount, ignore it.
+- Display with formatPrice(ore, locale) → "18 450 kr" (non-breaking space, kr
+  after the number). Never "kr18,450.00".
+- Displayed prices include VAT; checkout and receipts show the VAT amount
+  separately using Product.vatRatePct.
+
+TIME
+- All timestamps stored UTC. Business hours are Europe/Stockholm.
+- TeacherAvailability.startTime/endTime are local wall-clock strings ("09:00").
+  Expand in Europe/Stockholm, THEN convert to UTC. Never store an offset.
+- Never call new Date() inside business logic — take `now: Date` as a
+  parameter, so tests are deterministic.
+- Deadlines shown to users are absolute local times
+  ("Kan avbokas fram till tisdag 14 jan 09:00"), never "24 hours".
+
+CREDITS
+- Balances are never stored. Balance = SUM(CreditTransaction.delta) over
+  non-expired lots. Never write a cached integer.
+- Every balance change has a CreditTransaction row. Admin adjustments require
+  a note and an AuditLog entry.
