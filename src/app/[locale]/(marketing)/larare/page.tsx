@@ -149,6 +149,7 @@ export default async function LararePage(
                       count: teacher.yearsExperience,
                     })}
                     detailsLabel={t("teacher.viewProfile")}
+                    demoLabel={teacher.slug === "sara-johansson" ? t("teacher.demoProfile") : undefined}
                     swedishOnly={teacher.swedishOnly}
                     swedishOnlyLabel={t("common.swedishOnly")}
                   />

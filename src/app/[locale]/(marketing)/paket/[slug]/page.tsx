@@ -135,7 +135,9 @@ export default async function ProductDetailPage(
             }}
           />
           <p className="mt-4 text-sm leading-6 text-ink-muted">
-            {t("product.provisionalDescription")}
+            {product.active
+              ? t("product.availableDescription")
+              : t("product.inactiveDescription")}
           </p>
         </aside>
       </article>

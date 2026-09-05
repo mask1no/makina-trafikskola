@@ -11,6 +11,7 @@ type TeacherCardProps = {
   locationNames: string[];
   experienceLabel: string;
   detailsLabel: string;
+  demoLabel?: string;
   swedishOnly?: boolean;
   swedishOnlyLabel: string;
 };
@@ -43,6 +44,11 @@ export function TeacherCard(props: TeacherCardProps) {
         )}
         <div className="min-w-0">
           <h3 className="text-lg font-bold">{props.name}</h3>
+          {props.demoLabel ? (
+            <span className="mt-2 inline-block rounded-full bg-accent px-2 py-1 text-xs font-bold text-accent-ink">
+              {props.demoLabel}
+            </span>
+          ) : null}
           <p className="mt-1 text-sm text-ink-muted">{props.experienceLabel}</p>
           {props.swedishOnly ? (
             <span className="mt-2 inline-block rounded-full bg-page px-2 py-1 text-xs text-ink-muted">

@@ -66,7 +66,7 @@
     "eyebrow": "Prices and packages",
     "title": "Driving lessons for every step",
     "description": "Compare single lessons and packages. All prices include VAT.",
-    "provisionalNotice": "Prices are provisional and the products cannot be purchased yet."
+    "provisionalNotice": "The full price list is shown. Single lessons, assessment lessons, B5 and B10 are available now; other products will open when every included service can be delivered."
   },
   "product": {
     "popular": "Most popular",
@@ -75,7 +75,8 @@
     "emptyDescription": "The selection is being updated. Please check back soon.",
     "included": "What is included",
     "priceIncludesVat": "Price including VAT",
-    "provisionalDescription": "This product will be activated only after the final price list is confirmed.",
+    "availableDescription": "This product is active and available to buy now.",
+    "inactiveDescription": "The price is shown for comparison. This product cannot be purchased until every included service can be delivered.",
     "checkout": {"terms": "I accept the draft terms of purchase.", "withdrawal": "I have read the draft 14-day withdrawal information and request that the service may begin as scheduled.", "submit": "Continue to payment", "redirecting": "Opening payment…", "error": "Payment could not be started. Sign in and try again."}
   },
   "checkout": {
@@ -106,6 +107,7 @@
       "automatic": "Automatic"
     },
     "profileEyebrow": "Driving instructor",
+    "demoProfile": "Demo profile – not a real instructor",
     "bioPending": "The instructor's introduction is being updated.",
     "languages": "Languages",
     "transmissions": "Transmission",

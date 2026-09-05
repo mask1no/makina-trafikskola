@@ -66,7 +66,7 @@
     "eyebrow": "ዋጋታትን ፓኬጃትን",
     "title": "ንኹሉ ደረጃ ትምህርቲ ምዝዋር",
     "description": "ንጽል ትምህርትን ፓኬጃትን ኣወዳድር። ኩሉ ዋጋታት ቫት የጠቓልል።",
-    "provisionalNotice": "ዋጋታት ግዝያዊ እዮም፣ ፍርያት ድማ ገና ክዕደጉ ኣይክእሉን።"
+    "provisionalNotice": "ምሉእ ዝርዝር ዋጋ ይረአ። ሓደ ትምህርቲ፣ ናይ ግምገማ ትምህርቲ፣ B5ን B10ን ሕጂ ክዕደጉ ይኽእሉ፤ ካልኦት ፍርያት ኩሉ ኣገልግሎቶም ምስ ተዳለወ ይኽፈቱ።"
   },
   "product": {
     "popular": "ዝያዳ ዝምረጽ",
@@ -75,7 +75,8 @@
     "emptyDescription": "እቲ ዝርዝር ይሕደስ ኣሎ። ቀልጢፍካ ተመለስ።",
     "included": "ዝጠቓለል",
     "priceIncludesVat": "ዋጋ ምስ ቫት",
-    "provisionalDescription": "ናይ መወዳእታ ዋጋ ምስ ተረጋገጸ ጥራይ እዚ ፍርያት ይንቀሳቐስ።",
+    "availableDescription": "እዚ ፍርያት ንጡፍ እዩ፣ ሕጂ ክዕደግ ይኽእል።",
+    "inactiveDescription": "ዋጋ ንምውድዳር ይረአ። ኩሉ ዝጠቓለለ ኣገልግሎት ክሳብ ዝዳሎ ክዕደግ ኣይክእልን።",
     "checkout": {"terms": "ንድፊ ውዕል ዕድጊ ተቐቢለ።", "withdrawal": "ንድፊ 14 መዓልቲ መሰል ምስራዝ ኣንቢበ፣ ኣገልግሎት ብመደቡ ክጅምር እሓትት።", "submit": "ናብ ክፍሊት ቀጽል", "redirecting": "ክፍሊት ይኽፈት ኣሎ…", "error": "ክፍሊት ክጅምር ኣይከኣለን። እቶ እሞ ደጊምካ ፈትን።"}
   },
   "checkout": {
@@ -106,6 +107,7 @@
       "automatic": "ኣውቶማቲክ"
     },
     "profileEyebrow": "መምህር ምዝዋር",
+    "demoProfile": "ናይ ምርኢት ፕሮፋይል – ናይ ሓቂ መምህር ኣይኮነን",
     "bioPending": "መግለጺ መምህር ይሕደስ ኣሎ።",
     "languages": "ቋንቋታት",
     "transmissions": "ዓይነት መኪና",

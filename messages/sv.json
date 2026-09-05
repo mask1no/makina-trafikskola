@@ -66,7 +66,7 @@
     "eyebrow": "Priser och paket",
     "title": "Körlektioner för varje steg",
     "description": "Jämför enstaka lektioner och paket. Alla priser visas inklusive moms.",
-    "provisionalNotice": "Priserna är preliminära och produkterna går ännu inte att köpa."
+    "provisionalNotice": "Prislistan visas i sin helhet. Enstaka körlektion, testlektion, B5 och B10 kan köpas nu; övriga produkter öppnas när de kan levereras fullt ut."
   },
   "product": {
     "popular": "Populärast",
@@ -75,7 +75,8 @@
     "emptyDescription": "Utbudet uppdateras. Kom tillbaka snart.",
     "included": "Det här ingår",
     "priceIncludesVat": "Pris inklusive moms",
-    "provisionalDescription": "Produkten aktiveras först när den slutliga prislistan är bekräftad.",
+    "availableDescription": "Produkten är aktiv och kan köpas nu.",
+    "inactiveDescription": "Priset visas för jämförelse. Produkten kan inte köpas förrän alla delar kan levereras.",
     "checkout": {"terms": "Jag godkänner utkastet till köpvillkor.", "withdrawal": "Jag har läst utkastet om 14 dagars ångerrätt och begär att tjänsten får börja enligt bokningen.", "submit": "Fortsätt till betalning", "redirecting": "Öppnar betalning…", "error": "Betalningen kunde inte startas. Logga in och försök igen."}
   },
   "checkout": {
@@ -114,6 +115,7 @@
       "automatic": "Automat"
     },
     "profileEyebrow": "Trafiklärare",
+    "demoProfile": "Demoprofil – inte en verklig lärare",
     "bioPending": "Lärarens presentation uppdateras.",
     "languages": "Språk",
     "transmissions": "Växellåda",

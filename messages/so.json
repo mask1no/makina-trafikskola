@@ -66,7 +66,7 @@
     "eyebrow": "Qiimayaasha iyo xirmooyinka",
     "title": "Casharro wadis marxalad kasta",
     "description": "Isbarbar dhig casharrada keli ah iyo xirmooyinka. Dhammaan qiimayaasha waxa ku jira VAT.",
-    "provisionalNotice": "Qiimayaashu waa ku meel gaar, alaabtana weli lama iibsan karo."
+    "provisionalNotice": "Liiska qiimaha oo dhan waa la muujiyey. Hal cashar, casharka qiimaynta, B5 iyo B10 hadda waa la iibsan karaa; alaabta kale waxa la furayaa marka dhammaan adeegyadooda la bixin karo."
   },
   "product": {
     "popular": "Ugu caansan",
@@ -75,7 +75,8 @@
     "emptyDescription": "Liiska waa la cusboonaysiinayaa. Mar dhow soo noqo.",
     "included": "Waxa ku jira",
     "priceIncludesVat": "Qiimaha VAT-ku ku jiro",
-    "provisionalDescription": "Alaabtan waxa la hawlgelinayaa kaddib marka liiska qiimaha kama dambaysta ah la xaqiijiyo.",
+    "availableDescription": "Alaabtani way shaqaynaysaa, haddana waa la iibsan karaa.",
+    "inactiveDescription": "Qiimaha waxa loo muujiyey isbarbardhig. Alaabtan lama iibsan karo ilaa dhammaan adeegyadeeda la bixin karo.",
     "checkout": {"terms": "Waan aqbalay qabyo-qoraalka shuruudaha iibsiga.", "withdrawal": "Waan akhriyey qabyo-qoraalka xaqa ka-noqoshada 14 maalmood, waxaanan codsanayaa in adeeggu waqtigiisa ku bilowdo.", "submit": "U gudub lacag-bixinta", "redirecting": "Lacag-bixinta waa la furayaa…", "error": "Lacag-bixinta lama bilaabi karin. Gal oo mar kale isku day."}
   },
   "checkout": {
@@ -106,6 +107,7 @@
       "automatic": "Otomaatig"
     },
     "profileEyebrow": "Macallinka wadista",
+    "demoProfile": "Bog tijaabo ah – ma aha macallin dhab ah",
     "bioPending": "Soo bandhigidda macallinka waa la cusboonaysiinayaa.",
     "languages": "Luqadaha",
     "transmissions": "Nooca gear-ka",

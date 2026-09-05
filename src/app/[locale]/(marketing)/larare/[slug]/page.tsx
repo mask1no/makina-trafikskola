@@ -74,6 +74,11 @@ export default async function TeacherDetailPage(
               {t("teacher.profileEyebrow")}
             </p>
             <h1 className="mt-2 text-4xl font-black">{name}</h1>
+            {teacher.slug === "sara-johansson" ? (
+              <span className="mt-3 inline-block rounded-full bg-accent px-3 py-1 text-sm font-bold text-accent-ink">
+                {t("teacher.demoProfile")}
+              </span>
+            ) : null}
             <p className="mt-3 text-ink-muted">
               {t("teacher.yearsExperience", { count: teacher.yearsExperience })}
             </p>
