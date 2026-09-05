@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { EmptyState } from "@/components/EmptyState";
+import { PageHeader } from "@/components/PageHeader";
 import { PillFilter } from "@/components/PillFilter";
 import { Select } from "@/components/Select";
 import { TeacherCard } from "@/components/TeacherCard";
@@ -60,18 +61,12 @@ export default async function LararePage(
     : { lat: 59.3293, lng: 18.0686 };
 
   return (
-    <div className="px-4 py-12 sm:py-16">
-      <div className="mx-auto max-w-7xl">
-        <div className="max-w-3xl">
-          <p className="text-sm font-bold uppercase tracking-wider text-ink-muted">
-            {t("teachers.eyebrow")}
-          </p>
-          <h1 className="mt-2 text-4xl font-black sm:text-5xl">{t("teachers.title")}</h1>
-          <p className="mt-4 text-lg leading-8 text-ink-muted">{t("teachers.description")}</p>
-        </div>
+    <div className="section-shell">
+      <div className="site-container">
+        <PageHeader eyebrow={t("teachers.eyebrow")} title={t("teachers.title")} description={t("teachers.description")} />
 
-        <section className="mt-8 rounded-md border border-border bg-card p-5" aria-labelledby="language-filter">
-          <h2 id="language-filter" className="font-bold">{t("teachers.languageFilter")}</h2>
+        <section className="mt-10 rounded-lg border border-border bg-card p-5 shadow-soft sm:p-6" aria-labelledby="language-filter">
+          <h2 id="language-filter" className="text-lg font-black">{t("teachers.languageFilter")}</h2>
           <div className="mt-3 flex flex-wrap gap-2">
             <PillFilter
               label={t("common.all")}
@@ -90,7 +85,7 @@ export default async function LararePage(
             ))}
           </div>
 
-          <form className="mt-5 max-w-sm" action={`/${params.locale}/larare`}>
+          <form className="mt-6 grid gap-4 border-t border-border pt-6 sm:grid-cols-[1fr_1fr_auto] sm:items-end" action={`/${params.locale}/larare`}>
             {language ? <input type="hidden" name="language" value={language} /> : null}
             <Select
               label={t("teachers.locationFilter")}
@@ -105,7 +100,7 @@ export default async function LararePage(
                 </option>
               ))}
             </Select>
-            <div className="mt-4">
+            <div>
               <Select
                 label={t("teachers.transmissionFilter")}
                 id="transmission"
@@ -119,14 +114,14 @@ export default async function LararePage(
             </div>
             <button
               type="submit"
-              className="mt-3 min-h-11 rounded-sm bg-surface px-5 font-bold text-ink-inverse"
+              className="min-h-11 rounded-sm bg-surface px-5 font-bold text-ink-inverse"
             >
               {t("common.applyFilter")}
             </button>
           </form>
         </section>
 
-        <div className="mt-8 grid gap-8 lg:grid-cols-[.9fr_1.1fr]">
+        <div className="mt-10 grid gap-8 lg:grid-cols-[.85fr_1.15fr]">
           <section aria-label={t("teachers.results")}>
             <p className="mb-4 text-sm font-semibold text-ink-muted">
               {t("teachers.resultCount", { count: teachers.length })}

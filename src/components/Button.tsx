@@ -5,10 +5,12 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 const variants = {
-  primary: "bg-accent text-accent-ink hover:bg-accent-hover",
+  primary:
+    "border border-accent bg-accent text-accent-ink shadow-soft hover:border-accent-hover hover:bg-accent-hover",
   secondary:
-    "border border-card/40 bg-transparent text-ink-inverse hover:bg-card/10",
-  tertiary: "border border-border bg-card text-ink hover:bg-page",
+    "border border-border-strong bg-transparent text-current hover:bg-surface-raised",
+  tertiary:
+    "border border-border bg-card text-ink shadow-soft hover:border-border-strong hover:bg-card-muted",
 };
 
 export function Button({
@@ -20,7 +22,7 @@ export function Button({
   return (
     <button
       type={type}
-      className={`inline-flex min-h-11 items-center justify-center rounded-sm px-5 py-2.5 text-sm font-bold transition disabled:cursor-not-allowed disabled:opacity-50 ${variants[variant]} ${className}`}
+      className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-sm px-5 py-2.5 text-sm font-bold tracking-tight transition duration-200 ease-premium active:translate-y-px disabled:cursor-not-allowed disabled:opacity-50 disabled:active:translate-y-0 ${variants[variant]} ${className}`}
       {...props}
     />
   );

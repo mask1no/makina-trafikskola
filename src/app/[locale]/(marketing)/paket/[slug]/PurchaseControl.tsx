@@ -2,6 +2,10 @@
 
 import { useState } from "react";
 
+import { Button } from "@/components/Button";
+import { CheckboxField } from "@/components/CheckboxField";
+import { Notice } from "@/components/Notice";
+
 type Copy = {
   terms: string;
   withdrawal: string;
@@ -53,45 +57,36 @@ export function PurchaseControl({
 
   if (!active) {
     return (
-      <button
-        type="button"
-        disabled
-        className="mt-8 min-h-11 w-full rounded-sm bg-border px-5 font-bold text-ink-muted"
-      >
+      <Button className="mt-8 w-full" disabled>
         {inactiveLabel}
-      </button>
+      </Button>
     );
   }
 
   return (
-    <div className="mt-8">
-      <label className="flex min-h-11 items-start gap-3 py-2">
-        <input
-          type="checkbox"
+    <div className="mt-8 border-t border-border pt-6">
+      <div className="grid gap-3">
+        <CheckboxField
+          id="purchase-terms"
+          label={copy.terms}
           checked={termsAccepted}
           onChange={(event) => setTermsAccepted(event.target.checked)}
-          className="mt-1"
         />
-        <span className="text-sm">{copy.terms}</span>
-      </label>
-      <label className="mt-2 flex min-h-11 items-start gap-3 py-2">
-        <input
-          type="checkbox"
+        <CheckboxField
+          id="purchase-withdrawal"
+          label={copy.withdrawal}
           checked={withdrawalAcknowledged}
           onChange={(event) => setWithdrawalAcknowledged(event.target.checked)}
-          className="mt-1"
         />
-        <span className="text-sm">{copy.withdrawal}</span>
-      </label>
-      <button
-        type="button"
+      </div>
+      <Button
         disabled={!termsAccepted || !withdrawalAcknowledged || busy}
         onClick={() => void checkout()}
-        className="mt-4 min-h-11 w-full rounded-sm bg-accent px-5 font-bold text-accent-ink disabled:cursor-not-allowed disabled:bg-border disabled:text-ink-muted"
+        className="mt-4 w-full"
       >
         {busy ? copy.redirecting : copy.submit}
-      </button>
-      {error ? <p className="mt-3 text-sm text-danger" role="alert">{error}</p> : null}
+      </Button>
+      {error ? <Notice className="mt-3" tone="danger">{error}</Notice> : null}
     </div>
   );
 }

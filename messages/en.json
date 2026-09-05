@@ -45,6 +45,19 @@
       "cardTitle": "A clear plan from your first lesson",
       "cardDescription": "Choose language, transmission and instructor based on your needs."
     },
+    "trust": {
+      "label": "What you get with Makina",
+      "languages": {"title": "Five languages", "description": "Support in Swedish, English, Tigrinya, Arabic and Somali"},
+      "lesson": {"title": "50 minutes", "description": "A clear lesson length across the catalogue"},
+      "pricing": {"title": "Transparent pricing", "description": "Always compare price and contents before buying"}
+    },
+    "journey": {
+      "eyebrow": "How it works",
+      "title": "From your first choice to safer driving",
+      "choose": {"title": "Choose your route", "description": "Compare one lesson or a package at your own pace."},
+      "book": {"title": "Find an instructor and time", "description": "Filter by language, location and transmission."},
+      "learn": {"title": "Follow your plan", "description": "Develop step by step with clear guidance."}
+    },
     "products": {
       "eyebrow": "Driving education",
       "title": "Choose the path that suits you"
@@ -71,6 +84,9 @@
   "product": {
     "popular": "Most popular",
     "notForSale": "Not for sale yet",
+    "visualLabel": "Driving education",
+    "save": "Save {percent}%",
+    "saveAmount": "You save {amount}",
     "emptyTitle": "No products to show",
     "emptyDescription": "The selection is being updated. Please check back soon.",
     "included": "What is included",
@@ -81,6 +97,13 @@
   },
   "checkout": {
     "eyebrow": "Secure payment", "title": "Complete your payment", "businessName": "Makina Trafikskola",
+    "description": "Review your order and choose a payment method. You stay here until the payment is complete.",
+    "paymentTitle": "Payment details",
+    "secureDescription": "Your payment details are handled directly by our payment provider Stripe.",
+    "summaryTitle": "Your order",
+    "quantity": "Quantity: {quantity}",
+    "loading": "Loading secure payment fields…",
+    "reassurance": "You are charged only after confirming payment. The price includes VAT.",
     "total": "Total", "vat": "Including VAT", "submit": "Pay now", "submitting": "Processing payment…",
     "genericError": "The payment could not be completed. Check your details and try again.",
     "mockTitle": "Development payment mode", "mockDescription": "Stripe keys are missing. The order remains pending, but no payment or fulfillment will occur.",
@@ -140,6 +163,9 @@
     "emptyTitle": "No instructors are assigned yet", "emptyDescription": "Instructors will appear when their location is confirmed.", "metadataTitle": "Driving school in {city}", "metadataDescription": "Driving lessons and licence training in {city}."
   },
   "booking": {
+    "eyebrow": "Book a driving lesson",
+    "title": "Your lesson, step by step",
+    "description": "Choose a lesson, place, instructor and time. Your choices remain while you continue.",
     "progress": "Booking steps",
     "back": "Back",
     "next": "Continue",
@@ -148,19 +174,20 @@
     "step": {
       "what": {"short": "What", "title": "What would you like to book?", "description": "Choose the option that suits your training.", "single": "Single driving lesson", "credits": "Use my package", "test": "Trial lesson"},
       "where": {"short": "Where", "title": "Where would you like to start?", "school": "I will come to you", "pickup": "Pick me up", "location": "Choose driving school", "address": "Pickup address"},
-      "who": {"short": "Who", "title": "Who would you like to drive with?", "languageFirst": "Choose language first", "list": "List", "map": "Map", "mapLabel": "Map of available instructors", "mapUnavailable": "The map is unavailable", "mapUnavailableDescription": "Choose an instructor from the list.", "empty": "No instructor matches the language and location."},
-      "when": {"short": "When", "title": "When would you like to drive?", "firstAvailable": "First available time", "loading": "Loading available times…", "empty": "No available times on this day."}
+      "who": {"short": "Who", "title": "Who would you like to drive with?", "languageFirst": "Choose language first", "list": "List", "map": "Map", "mapLabel": "Map of available instructors", "mapUnavailable": "The map is unavailable", "mapUnavailableDescription": "Choose an instructor from the list.", "emptyTitle": "No instructor matches", "empty": "Try another language or choose another location."},
+      "when": {"short": "When", "title": "When would you like to drive?", "firstAvailable": "First available time", "loading": "Loading available times…", "emptyTitle": "No times on this day", "empty": "Choose another day to see more available times."}
     },
     "account": {"title": "Create an account with your phone", "description": "Verify your number here without leaving the booking.", "firstName": "First name", "lastName": "Last name", "phone": "Mobile number with country code", "code": "Six-digit code", "send": "Send code", "verify": "Verify and book", "devCode": "Local development only – code: {code}"},
     "credits": {"loading": "Checking your balance…", "signIn": "Sign in to check your package credits.", "balance": "{count, plural, =0 {No lessons available} =1 {1 lesson available} other {# lessons available}}"},
+    "summary": {"eyebrow": "Your booking", "title": "Summary", "lesson": "Lesson", "place": "Place", "teacher": "Instructor", "time": "Time", "notSelected": "Not selected yet", "reassurance": "You can go back and change your choices before confirming."},
     "checkout": {"title": "Consent before payment", "draft": "Draft wording pending client and legal review.", "termsConsent": "I have read and accept the draft terms of purchase.", "withdrawalConsent": "I have read the draft information about the 14-day withdrawal right and request that the booked service may begin as scheduled.", "continue": "Continue to secure payment"},
     "confirmation": {"eyebrow": "Booking registered", "title": "Your time is booked", "deadline": "You can cancel until {deadline}.", "calendar": "Add to calendar", "creditUsed": "One lesson has been deducted from your balance.", "hold": "This time is held for you until {expires} while payment is completed.", "provisional": "The price list is not confirmed, so payment is temporarily unavailable. Your 15-minute hold is unchanged."},
     "calendar": {"summary": "Driving lesson with Makina Trafikskola", "description": "Cancellation deadline: {deadline}."}
   },
   "auth": {
-    "firstName": "First name", "lastName": "Last name", "email": "Email", "password": "Password",
+    "firstName": "First name", "lastName": "Last name", "email": "Email", "password": "Password", "phone": "Mobile number", "phonePlaceholder": "+46 70 123 45 67", "code": "Six-digit code", "methodLabel": "Sign-in method", "methods": {"email": "Email and password", "phone": "Text message code"}, "sendCode": "Send code", "verifyCode": "Verify and continue", "changePhone": "Change mobile number", "working": "Please wait…", "secure": "Secure account access", "support": "Need help accessing your account? Contact the school through its published support channel.", "context": {"eyebrow": "Your training in one place", "title": "Continue where you left off", "bookings": "View and manage your driving lessons", "balance": "Check available lesson credits", "messages": "Follow service and payment notifications"},
     "login": {"title": "Log in", "description": "Continue to your account.", "submit": "Log in", "noAccount": "Do not have an account?", "create": "Create account"},
-    "register": {"title": "Create account", "description": "Create a student account with email and password.", "submit": "Create account", "hasAccount": "Already have an account?", "login": "Log in"}
+    "register": {"title": "Create account", "description": "Create a student account with email or mobile number.", "submit": "Create account", "hasAccount": "Already have an account?", "login": "Log in"}
   },
   "student": {
     "nav": {"label": "My pages", "overview": "Overview", "bookings": "Bookings", "saldo": "Balance", "theory": "Theory", "messages": "Messages", "profile": "Profile"},
@@ -188,7 +215,7 @@
   },
   "metadata": {"brand": "Makina Trafikskola", "title": "Makina Trafikskola – driving education in Stockholm", "description": "Driving lessons and licence training in Stockholm with support in several languages."},
   "cookieConsent": {"title": "Cookie settings", "description": "We use necessary cookies for sign-in, language and your cookie choice. No analytics or marketing cookies are active.", "readMore": "Read about cookies", "necessary": "Necessary only", "accept": "Accept"},
-  "offline": {"title": "You are offline", "description": "Check your connection and try again. Bookings and account details require internet access.", "retry": "Try again"},
+  "offline": {"eyebrow": "No connection", "title": "You are offline", "description": "Check your connection and try again. Bookings and account details require internet access.", "retry": "Try again"},
   "legal": {
     "terms": {
       "metadata": "Draft terms for Makina Trafikskola.", "eyebrow": "Legal information", "title": "Terms of purchase", "draftTitle": "Draft – pending legal review", "draftNotice": "These are not the client's final or binding terms. Wording about purchases, refunds and withdrawal rights must be approved by the client and legal counsel before launch.",
@@ -217,6 +244,8 @@
     ,"instructorStatus": {"title": "Manage instructors", "description": "Activate or deactivate instructors. Future confirmed bookings must be reassigned or cancelled first.", "active": "Active", "inactive": "Inactive", "activate": "Activate", "deactivate": "Deactivate", "saving": "Saving…"}
   },
   "errors": {
+    "pageTitle": "We ran into a technical problem",
+    "retry": "Try again",
     "NO_CREDITS": "You have no package credits. Choose a paid single or trial lesson instead.",
     "CHECKOUT_CONSENT_REQUIRED": "Accept both draft checkout statements before continuing.",
     "INVALID_PICKUP_COORDINATES": "Choose a valid pickup address in Sweden.",

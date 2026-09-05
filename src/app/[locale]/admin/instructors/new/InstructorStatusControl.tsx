@@ -3,6 +3,9 @@
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { Badge } from "@/components/Badge";
+import { Button } from "@/components/Button";
+import { Notice } from "@/components/Notice";
 
 export function InstructorStatusControl({
   instructor,
@@ -44,27 +47,27 @@ export function InstructorStatusControl({
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <p className="font-bold">{instructor.name}</p>
-          <p className="text-sm text-ink-muted">
+          <Badge className="mt-2" tone={instructor.active ? "success" : "neutral"}>
             {instructor.active ? t("active") : t("inactive")}
-          </p>
+          </Badge>
         </div>
-        <button
+        <Button
           type="button"
           disabled={busy}
           onClick={toggle}
-          className="min-h-11 rounded-sm border border-border px-4 font-bold hover:border-accent disabled:opacity-50"
+          variant="tertiary"
         >
           {busy
             ? t("saving")
             : instructor.active
               ? t("deactivate")
               : t("activate")}
-        </button>
+        </Button>
       </div>
       {error ? (
-        <p role="alert" className="mt-2 text-sm text-danger">
+        <Notice tone="danger" className="mt-2">
           {errors.has(error) ? errors(error) : errors("UNKNOWN")}
-        </p>
+        </Notice>
       ) : null}
     </li>
   );

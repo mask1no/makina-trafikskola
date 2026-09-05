@@ -2,6 +2,9 @@
 
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { Button } from "@/components/Button";
+import { Input } from "@/components/Input";
+import { Notice } from "@/components/Notice";
 
 type Location = { id: string; name: string };
 type Hours = { enabled: boolean; startTime: string; endTime: string };
@@ -129,12 +132,10 @@ export function InstructorForm({ locations }: { locations: Location[] }) {
         ].map(([label, value, setter, autoComplete, type]) => {
           const id = `instructor-${String(label)}`;
           return (
-            <div className="grid gap-2" key={String(label)}>
-              <label htmlFor={id} className="text-sm font-bold">
-                {label as string}
-              </label>
-              <input
+              <Input
+                key={String(label)}
                 id={id}
+                label={label as string}
                 value={value as string}
                 onChange={(event) =>
                   (setter as (value: string) => void)(event.target.value)
@@ -143,10 +144,8 @@ export function InstructorForm({ locations }: { locations: Location[] }) {
                 type={type as string}
                 min={type === "number" ? 0 : undefined}
                 max={type === "number" ? 70 : undefined}
-                className="min-h-11 rounded-sm border border-border bg-card px-3"
                 required
               />
-            </div>
           );
         })}
       </fieldset>
@@ -283,7 +282,7 @@ export function InstructorForm({ locations }: { locations: Location[] }) {
         <p className="text-sm text-ink-muted">{t("photoHelp")}</p>
       </div>
 
-      <button
+      <Button
         type="submit"
         disabled={
           busy ||
@@ -292,19 +291,18 @@ export function InstructorForm({ locations }: { locations: Location[] }) {
           !locationIds.length ||
           !hours.some((entry) => entry.enabled)
         }
-        className="min-h-11 rounded-sm bg-accent px-5 font-bold text-accent-ink disabled:opacity-50"
       >
         {busy ? t("saving") : t("submit")}
-      </button>
+      </Button>
       {created ? (
         <p role="status" className="text-success">
           {t("created")}
         </p>
       ) : null}
       {error ? (
-        <p role="alert" className="text-danger">
+        <Notice tone="danger">
           {errors.has(error) ? errors(error) : errors("UNKNOWN")}
-        </p>
+        </Notice>
       ) : null}
     </form>
   );

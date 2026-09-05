@@ -1,6 +1,8 @@
+import Image from "next/image";
 import Link from "next/link";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
+import { LinkButton } from "@/components/LinkButton";
 import { ProductCard } from "@/components/ProductCard";
 import { TeacherCard } from "@/components/TeacherCard";
 import { isLocale } from "@/i18n/routing";
@@ -28,46 +30,59 @@ export default async function MarketingHome(
 
   return (
     <>
-      <section className="overflow-hidden bg-surface px-4 py-16 text-ink-inverse sm:py-24">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 md:grid-cols-[1.2fr_.8fr]">
+      <section className="overflow-hidden bg-surface text-ink-inverse">
+        <div className="site-container grid min-h-[42rem] items-center gap-10 py-16 md:grid-cols-[1.05fr_.95fr] md:py-24">
           <div>
-            <p className="mb-4 text-sm font-bold uppercase tracking-[0.18em] text-ink-muted">
+            <p className="mb-5 text-xs font-extrabold uppercase tracking-[0.2em] text-accent">
               {t("home.hero.eyebrow")}
             </p>
-            <h1 className="max-w-3xl text-balance text-4xl font-black leading-tight sm:text-6xl">
+            <h1 className="display-title max-w-3xl text-balance">
               {t("home.hero.title")}
             </h1>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-ink-muted">
+            <p className="mt-6 max-w-xl text-lg leading-8 text-ink-muted sm:text-xl">
               {t("home.hero.description")}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                className="inline-flex min-h-11 items-center rounded-sm bg-accent px-5 font-bold text-accent-ink hover:bg-accent-hover"
-                href={`/${params.locale}/boka`}
-              >
+              <LinkButton href={`/${params.locale}/boka`}>
                 {t("common.bookNow")}
-              </Link>
-              <Link
-                className="inline-flex min-h-11 items-center rounded-sm border border-card/40 px-5 font-bold hover:bg-card/10"
-                href={`/${params.locale}/larare`}
-              >
+              </LinkButton>
+              <LinkButton variant="secondary" className="text-ink-inverse" href={`/${params.locale}/larare`}>
                 {t("home.hero.findTeacher")}
-              </Link>
+              </LinkButton>
             </div>
           </div>
-          <div className="relative min-h-72 overflow-hidden rounded-lg border border-card/10 bg-surface-raised p-6">
-            <div className="absolute -end-16 -top-16 size-64 rounded-full bg-accent opacity-90" />
-            <div className="relative mt-28 rounded-md bg-card p-5 text-ink shadow-xl">
-              <p className="text-sm font-semibold text-ink-muted">{t("home.hero.cardLabel")}</p>
-              <p className="mt-2 text-2xl font-black">{t("home.hero.cardTitle")}</p>
+          <div className="relative min-h-[25rem]">
+            <div className="absolute inset-4 rounded-lg border border-surface-soft bg-surface-raised" />
+            <Image
+              src="/illustration-hero.svg"
+              alt=""
+              priority
+              width={720}
+              height={560}
+              className="rtl-no-mirror relative h-auto w-full object-contain"
+            />
+            <div className="absolute bottom-0 start-0 max-w-xs rounded-md border border-border bg-card p-5 text-ink shadow-float">
+              <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-ink-muted">{t("home.hero.cardLabel")}</p>
+              <p className="mt-2 text-xl font-black">{t("home.hero.cardTitle")}</p>
               <p className="mt-2 text-sm leading-6 text-ink-muted">{t("home.hero.cardDescription")}</p>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="px-4 py-16 sm:py-20">
-        <div className="mx-auto max-w-7xl">
+      <section className="border-b border-border bg-card" aria-label={t("home.trust.label")}>
+        <div className="site-container grid gap-px bg-border sm:grid-cols-3">
+          {(["languages", "lesson", "pricing"] as const).map((item) => (
+            <div className="bg-card px-5 py-6 text-center" key={item}>
+              <strong className="block text-lg">{t(`home.trust.${item}.title`)}</strong>
+              <span className="mt-1 block text-sm text-ink-muted">{t(`home.trust.${item}.description`)}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="section-shell">
+        <div className="site-container">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
               <p className="text-sm font-bold uppercase tracking-wider text-ink-muted">
@@ -98,14 +113,34 @@ export default async function MarketingHome(
                 swedishOnlyLabel={t("common.swedishOnly")}
                 unavailableLabel={t("product.notForSale")}
                 detailsLabel={t("common.readMore")}
+                visualLabel={t("product.visualLabel")}
+                savingsLabel={product.compareAtOre && product.compareAtOre > product.priceOre
+                  ? t("product.save", { percent: Math.round((1 - product.priceOre / product.compareAtOre) * 100) })
+                  : undefined}
               />
             ))}
           </div>
         </div>
       </section>
 
-      <section className="bg-card px-4 py-16 sm:py-20">
-        <div className="mx-auto max-w-7xl">
+      <section className="section-shell bg-surface text-ink-inverse">
+        <div className="site-container">
+          <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-accent">{t("home.journey.eyebrow")}</p>
+          <h2 className="section-title mt-3 max-w-2xl">{t("home.journey.title")}</h2>
+          <ol className="mt-10 grid gap-px overflow-hidden rounded-lg border border-surface-soft bg-surface-soft md:grid-cols-3">
+            {(["choose", "book", "learn"] as const).map((step, index) => (
+              <li className="bg-surface-raised p-6 sm:p-8" key={step}>
+                <span className="numbers-ltr text-sm font-black text-accent">0{index + 1}</span>
+                <h3 className="mt-5 text-xl font-black">{t(`home.journey.${step}.title`)}</h3>
+                <p className="mt-3 text-sm leading-6 text-ink-muted">{t(`home.journey.${step}.description`)}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section className="section-shell bg-card">
+        <div className="site-container">
           <div className="max-w-2xl">
             <p className="text-sm font-bold uppercase tracking-wider text-ink-muted">
               {t("home.teachers.eyebrow")}
@@ -139,23 +174,20 @@ export default async function MarketingHome(
         </div>
       </section>
 
-      <section className="px-4 py-16 sm:py-20">
-        <div className="mx-auto grid max-w-7xl items-center gap-8 md:grid-cols-2">
+      <section className="section-shell">
+        <div className="site-container grid items-center gap-10 md:grid-cols-[.8fr_1.2fr]">
           <div>
             <p className="text-sm font-bold uppercase tracking-wider text-ink-muted">
               {t("home.location.eyebrow")}
             </p>
             <h2 className="mt-2 text-3xl font-black">{t("home.location.title")}</h2>
             <p className="mt-4 max-w-xl leading-7 text-ink-muted">{t("home.location.description")}</p>
-            <Link
-              href={`/${params.locale}/larare`}
-              className="mt-6 inline-flex min-h-11 items-center rounded-sm bg-surface px-5 font-bold text-ink-inverse"
-            >
+            <LinkButton href={`/${params.locale}/larare`} className="mt-6">
               {t("home.location.openMap")}
-            </Link>
+            </LinkButton>
           </div>
           <div
-            className="static-map relative min-h-80 overflow-hidden rounded-lg border border-border"
+            className="static-map relative min-h-[26rem] overflow-hidden rounded-lg border border-border shadow-card"
             role="img"
             aria-label={t("map.staticLabel")}
           >

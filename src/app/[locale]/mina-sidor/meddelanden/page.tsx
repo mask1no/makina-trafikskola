@@ -2,6 +2,9 @@ import { getTranslations } from "next-intl/server";
 
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
+import { Badge } from "@/components/Badge";
+import { EmptyState } from "@/components/EmptyState";
+import { PageHeader } from "@/components/PageHeader";
 
 function templateKey(template: string) {
   switch (template) {
@@ -54,12 +57,11 @@ export default async function MessagesPage(
 
   return (
     <section>
-      <h1 className="text-3xl font-black">{t("title")}</h1>
-      <p className="mt-2 text-ink-muted">{t("description")}</p>
+      <PageHeader title={t("title")} description={t("description")} />
       {notifications.length ? (
-        <ul className="mt-6 grid gap-3">
+        <ul className="mt-6 overflow-hidden rounded-md border border-border bg-card shadow-soft">
           {notifications.map((notification) => (
-            <li key={notification.id} className="rounded-md border border-border bg-card p-5">
+            <li key={notification.id} className="border-b border-border p-5 last:border-b-0">
               {(() => {
                 const key = templateKey(notification.template);
                 return (
@@ -68,9 +70,9 @@ export default async function MessagesPage(
                 <p className="font-bold">
                   {t(`templates.${key}`)}
                 </p>
-                <span className="rounded-full bg-page px-3 py-1 text-xs font-semibold">
+                <Badge tone={notification.sentAt ? "success" : "neutral"}>
                   {t(`channels.${notification.channel}`)}
-                </span>
+                </Badge>
               </div>
               <p className="mt-2 text-sm text-ink-muted">
                 {formatter.format(notification.sentAt ?? notification.sendAfter)}
@@ -90,9 +92,7 @@ export default async function MessagesPage(
           ))}
         </ul>
       ) : (
-        <p className="mt-6 rounded-md border border-border bg-card p-6 text-ink-muted">
-          {t("empty")}
-        </p>
+        <div className="mt-6"><EmptyState title={t("empty")} description={t("description")} /></div>
       )}
       {notifications.length === 50 ? (
         <p className="mt-4 text-sm text-ink-muted">{t("limited")}</p>

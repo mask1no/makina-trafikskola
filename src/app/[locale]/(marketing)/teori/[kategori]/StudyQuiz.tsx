@@ -71,21 +71,24 @@ export function StudyQuiz({
   }
 
   return (
-    <div className="mt-8 grid gap-6">
+    <div className="mt-10 grid gap-8">
       {questions.map((question, index) => {
         const result = results[question.id];
         return (
-          <article key={question.id} className="rounded-lg border border-border bg-card p-6">
-            <h2 className="text-lg font-black">
+          <article key={question.id} className="overflow-hidden rounded-lg border border-border bg-card shadow-soft">
+            <div className="border-b border-border bg-card-muted px-6 py-4">
+            <h2 className="text-sm font-extrabold uppercase tracking-[0.14em] text-ink-muted">
               {copy.questionNumber.replace("{number}", String(index + 1))}
             </h2>
-            <p className="mt-3 text-lg">{question.text}</p>
+            </div>
+            <div className="p-6 sm:p-8">
+            <p className="text-xl font-bold leading-8">{question.text}</p>
             <fieldset className="mt-5 grid gap-3" disabled={Boolean(result)}>
               <legend className="sr-only">{question.text}</legend>
               {question.answers.map((answer) => (
                 <label
                   key={answer.id}
-                  className="flex min-h-11 cursor-pointer items-center gap-3 rounded-sm border border-border p-3 has-[:checked]:border-accent has-[:checked]:bg-page"
+                  className="flex min-h-14 cursor-pointer items-center gap-3 rounded-sm border border-border p-4 transition has-[:checked]:border-surface has-[:checked]:bg-card-muted"
                 >
                   <input
                     type="radio"
@@ -121,6 +124,7 @@ export function StudyQuiz({
             {error[question.id] ? (
               <p className="mt-3 text-sm text-danger" role="alert">{error[question.id]}</p>
             ) : null}
+            </div>
           </article>
         );
       })}

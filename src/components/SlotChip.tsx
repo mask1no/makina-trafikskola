@@ -13,10 +13,10 @@ export function SlotChip({
   return (
     <button
       type={type}
-      className={`min-h-11 min-w-20 rounded-sm border px-3 font-semibold transition ${
+      className={`min-h-11 min-w-20 rounded-sm border px-3 py-2.5 text-sm font-bold transition duration-200 ease-premium active:translate-y-px ${
         selected
-          ? "border-accent bg-accent text-accent-ink"
-          : "border-border bg-card hover:border-accent"
+          ? "border-ink bg-ink text-ink-inverse shadow-soft"
+          : "border-border bg-card hover:border-border-strong hover:bg-card-muted"
       } ${className}`}
       aria-pressed={selected}
       {...props}

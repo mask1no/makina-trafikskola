@@ -45,6 +45,19 @@
       "cardTitle": "En tydlig plan från första lektionen",
       "cardDescription": "Välj språk, växellåda och lärare efter dina behov."
     },
+    "trust": {
+      "label": "Det här får du hos Makina",
+      "languages": {"title": "Fem språk", "description": "Stöd på svenska, engelska, tigrinja, arabiska och somaliska"},
+      "lesson": {"title": "50 minuter", "description": "Tydlig lektionslängd i hela utbudet"},
+      "pricing": {"title": "Öppna priser", "description": "Jämför alltid pris och innehåll före köp"}
+    },
+    "journey": {
+      "eyebrow": "Så fungerar det",
+      "title": "Från första val till tryggare körning",
+      "choose": {"title": "Välj ditt upplägg", "description": "Jämför en lektion eller ett paket i lugn och ro."},
+      "book": {"title": "Hitta lärare och tid", "description": "Filtrera på språk, plats och växellåda."},
+      "learn": {"title": "Följ din plan", "description": "Utvecklas steg för steg med tydlig vägledning."}
+    },
     "products": {
       "eyebrow": "Körutbildning",
       "title": "Välj vägen som passar dig"
@@ -71,6 +84,9 @@
   "product": {
     "popular": "Populärast",
     "notForSale": "Inte till försäljning ännu",
+    "visualLabel": "Körutbildning",
+    "save": "Spara {percent} %",
+    "saveAmount": "Du sparar {amount}",
     "emptyTitle": "Inga produkter att visa",
     "emptyDescription": "Utbudet uppdateras. Kom tillbaka snart.",
     "included": "Det här ingår",
@@ -82,6 +98,13 @@
   "checkout": {
     "eyebrow": "Säker betalning",
     "title": "Slutför din betalning",
+    "description": "Granska beställningen och välj betalningssätt. Du lämnar inte sidan förrän betalningen är klar.",
+    "paymentTitle": "Betalningsuppgifter",
+    "secureDescription": "Dina betalningsuppgifter hanteras direkt av vår betalningsleverantör Stripe.",
+    "summaryTitle": "Din beställning",
+    "quantity": "Antal: {quantity}",
+    "loading": "Laddar säkra betalningsfält…",
+    "reassurance": "Du debiteras först när du bekräftar betalningen. Priset inkluderar moms.",
     "businessName": "Makina Trafikskola",
     "total": "Totalt",
     "vat": "Varav moms",
@@ -157,6 +180,9 @@
     "metadataTitle": "Trafikskola i {city}", "metadataDescription": "Körlektioner och körkortsutbildning i {city}."
   },
   "booking": {
+    "eyebrow": "Boka körlektion",
+    "title": "Din lektion, steg för steg",
+    "description": "Välj lektion, plats, lärare och tid. Dina val sparas medan du går vidare.",
     "progress": "Bokningssteg",
     "back": "Tillbaka",
     "next": "Fortsätt",
@@ -188,14 +214,16 @@
         "mapLabel": "Karta över tillgängliga lärare",
         "mapUnavailable": "Kartan är inte tillgänglig",
         "mapUnavailableDescription": "Välj en lärare i listan.",
-        "empty": "Ingen lärare matchar språk och plats."
+        "emptyTitle": "Ingen lärare matchar",
+        "empty": "Prova ett annat språk eller välj en annan plats."
       },
       "when": {
         "short": "När",
         "title": "När vill du köra?",
         "firstAvailable": "Första lediga tid",
         "loading": "Hämtar lediga tider…",
-        "empty": "Inga lediga tider den här dagen."
+        "emptyTitle": "Inga tider den här dagen",
+        "empty": "Välj en annan dag för att se fler lediga tider."
       }
     },
     "account": {
@@ -213,6 +241,16 @@
       "loading": "Kontrollerar ditt saldo…",
       "signIn": "Logga in för att kontrollera dina paketkrediter.",
       "balance": "{count, plural, =0 {Inga lektioner tillgängliga} =1 {1 lektion tillgänglig} other {# lektioner tillgängliga}}"
+    },
+    "summary": {
+      "eyebrow": "Din bokning",
+      "title": "Sammanfattning",
+      "lesson": "Lektion",
+      "place": "Plats",
+      "teacher": "Lärare",
+      "time": "Tid",
+      "notSelected": "Inte valt ännu",
+      "reassurance": "Du kan gå tillbaka och ändra dina val innan du bekräftar."
     },
     "checkout": {
       "title": "Samtycke före betalning",
@@ -237,6 +275,18 @@
     "lastName": "Efternamn",
     "email": "E-post",
     "password": "Lösenord",
+    "phone": "Mobilnummer",
+    "phonePlaceholder": "+46 70 123 45 67",
+    "code": "Sexsiffrig kod",
+    "methodLabel": "Inloggningssätt",
+    "methods": {"email": "E-post och lösenord", "phone": "Kod via sms"},
+    "sendCode": "Skicka kod",
+    "verifyCode": "Verifiera och fortsätt",
+    "changePhone": "Ändra mobilnummer",
+    "working": "Vänta…",
+    "secure": "Säker åtkomst till ditt konto",
+    "support": "Behöver du hjälp att komma åt kontot? Kontakta skolan via den publicerade supportkanalen.",
+    "context": {"eyebrow": "Din utbildning på ett ställe", "title": "Fortsätt där du slutade", "bookings": "Se och hantera dina körlektioner", "balance": "Kontrollera tillgängliga lektionskrediter", "messages": "Följ service- och betalningsmeddelanden"},
     "login": {
       "title": "Logga in",
       "description": "Fortsätt till ditt konto.",
@@ -246,7 +296,7 @@
     },
     "register": {
       "title": "Skapa konto",
-      "description": "Skapa ett elevkonto med e-post och lösenord.",
+      "description": "Skapa ett elevkonto med e-post eller mobilnummer.",
       "submit": "Skapa konto",
       "hasAccount": "Har du redan ett konto?",
       "login": "Logga in"
@@ -408,6 +458,7 @@
     "accept": "Godkänn"
   },
   "offline": {
+    "eyebrow": "Anslutning saknas",
     "title": "Du är offline",
     "description": "Kontrollera anslutningen och försök igen. Bokningar och kontouppgifter kräver internet.",
     "retry": "Försök igen"
@@ -460,6 +511,8 @@
     "instructorStatus": {"title": "Hantera lärare", "description": "Aktivera eller inaktivera lärare. Framtida bekräftade bokningar måste först flyttas eller avbokas.", "active": "Aktiv", "inactive": "Inaktiv", "activate": "Aktivera", "deactivate": "Inaktivera", "saving": "Sparar…"}
   },
   "errors": {
+    "pageTitle": "Vi fick ett tekniskt problem",
+    "retry": "Försök igen",
     "NO_CREDITS": "Du har inga paketkrediter. Välj en betald enstaka lektion eller testlektion i stället.",
     "CHECKOUT_CONSENT_REQUIRED": "Godkänn båda utkasten före betalning för att fortsätta.",
     "INVALID_PICKUP_COORDINATES": "Välj en giltig hämtningsadress i Sverige.",

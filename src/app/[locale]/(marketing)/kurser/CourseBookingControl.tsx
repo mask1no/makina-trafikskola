@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/Button";
+import { CheckboxField } from "@/components/CheckboxField";
+import { Notice } from "@/components/Notice";
 
 type ApiResult = {
   bookingId?: string;
@@ -58,29 +60,25 @@ export function CourseBookingControl({
   }
 
   return (
-    <div className="mt-5 border-t border-border pt-5">
-      <label className="flex min-h-11 items-start gap-3">
-        <input
-          className="mt-1 size-5 shrink-0 accent-accent"
-          type="checkbox"
+    <div className="mt-6 border-t border-border pt-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <CheckboxField
+          id={`course-terms-${occasionId}`}
+          label={t("terms")}
           checked={termsAccepted}
           onChange={(event) => setTermsAccepted(event.target.checked)}
         />
-        <span>{t("terms")}</span>
-      </label>
-      <label className="mt-2 flex min-h-11 items-start gap-3">
-        <input
-          className="mt-1 size-5 shrink-0 accent-accent"
-          type="checkbox"
+        <CheckboxField
+          id={`course-withdrawal-${occasionId}`}
+          label={t("withdrawal")}
           checked={withdrawalAcknowledged}
           onChange={(event) =>
             setWithdrawalAcknowledged(event.target.checked)
           }
         />
-        <span>{t("withdrawal")}</span>
-      </label>
+      </div>
       <Button
-        className="mt-3 min-h-11"
+        className="mt-4 w-full sm:w-auto"
         type="button"
         disabled={
           disabled ||
@@ -93,9 +91,7 @@ export function CourseBookingControl({
         {submitting ? t("submitting") : t("submit")}
       </Button>
       {message ? (
-        <p className="mt-3 text-sm" role="status" aria-live="polite">
-          {message}
-        </p>
+        <Notice className="mt-4" tone={message === t("confirmed") ? "success" : "danger"} aria-live="polite">{message}</Notice>
       ) : null}
     </div>
   );

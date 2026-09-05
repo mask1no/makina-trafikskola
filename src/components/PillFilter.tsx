@@ -18,10 +18,10 @@ export function PillFilter({
       href={href}
       data-value={value}
       aria-current={active ? "true" : undefined}
-      className={`inline-flex min-h-11 items-center rounded-full border px-4 text-sm font-semibold transition ${
+      className={`inline-flex min-h-11 items-center rounded-full border px-4 py-2 text-sm font-bold transition duration-200 ease-premium ${
         active
-          ? "border-accent bg-accent text-accent-ink"
-          : "border-border bg-card text-ink hover:border-accent"
+          ? "border-ink bg-ink text-ink-inverse shadow-soft"
+          : "border-border bg-card text-ink hover:border-border-strong hover:bg-card-muted"
       }`}
     >
       {label}

@@ -5,14 +5,37 @@ import { NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
-import { BottomTabBar } from "@/components/BottomTabBar";
+import { BottomTabBar, type BottomTabIcon } from "@/components/BottomTabBar";
 import { CookieConsent } from "@/components/CookieConsent";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { ServiceWorkerRegistration } from "@/components/ServiceWorkerRegistration";
 import { isLocale, locales } from "@/i18n/routing";
+import { auth } from "@/auth";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
+}
+
+function Logo({ compactOnMobile = false }: { compactOnMobile?: boolean }) {
+  return (
+    <span className="rtl-no-mirror inline-flex items-center gap-2.5">
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 36 36"
+        className="size-9 shrink-0"
+        fill="none"
+      >
+        <rect width="36" height="36" rx="10" fill="var(--accent)" />
+        <path
+          d="M8 25V11h4.2l5.8 7.2 5.8-7.2H28v14h-5v-7.1L18 24l-5-6.1V25H8Z"
+          fill="var(--accent-ink)"
+        />
+      </svg>
+      <span className={`${compactOnMobile ? "hidden sm:inline" : ""} text-base font-black tracking-[-0.035em] sm:text-lg`}>
+        Makina <span className="hidden font-semibold text-ink-muted sm:inline">Trafikskola</span>
+      </span>
+    </span>
+  );
 }
 
 function validSiteOrigin() {
@@ -82,7 +105,12 @@ export default async function LocaleLayout(
 
   if (!isLocale(params.locale)) notFound();
   setRequestLocale(params.locale);
-  const t = await getTranslations("shell");
+  const [t, adminT, teacherT, session] = await Promise.all([
+    getTranslations("shell"),
+    getTranslations("admin.nav"),
+    getTranslations("teacherPortal"),
+    auth(),
+  ]);
   const base = `/${params.locale}`;
   const siteUrl = validSiteOrigin();
   const structuredData = {
@@ -94,71 +122,97 @@ export default async function LocaleLayout(
     ...(siteUrl ? { url: `${siteUrl}/${params.locale}` } : {}),
   };
 
-  const tabs = [
-    { href: base, label: t("home"), symbol: "⌂" },
-    { href: `${base}/korlektioner`, label: t("packages"), symbol: "▦" },
-    { href: `${base}/mina-sidor/bokningar`, label: t("bookings"), symbol: "□" },
-    { href: `${base}/mina-sidor/meddelanden`, label: t("messages"), symbol: "◇" },
-    { href: `${base}/mina-sidor/profil`, label: t("profile"), symbol: "○" },
-  ];
+  const tabs = (
+    session?.user.role === "ADMIN"
+      ? [
+          { href: `${base}/admin/calendar`, label: adminT("calendar"), icon: "bookings" },
+          { href: `${base}/admin/students`, label: adminT("students"), icon: "profile" },
+          { href: `${base}/admin/instructors/new`, label: adminT("instructors"), icon: "messages" },
+          { href: base, label: t("home"), icon: "home" },
+          { href: `${base}/korlektioner`, label: t("packages"), icon: "packages" },
+        ]
+      : session?.user.role === "TEACHER"
+        ? [
+            { href: `${base}/larare-portal`, label: teacherT("eyebrow"), icon: "bookings" },
+            { href: base, label: t("home"), icon: "home" },
+            { href: `${base}/korlektioner`, label: t("lessons"), icon: "packages" },
+            { href: `${base}/larare`, label: t("teachers"), icon: "profile" },
+            { href: `${base}/teori`, label: t("theory"), icon: "messages" },
+          ]
+        : [
+            { href: base, label: t("home"), icon: "home" },
+            { href: `${base}/korlektioner`, label: t("packages"), icon: "packages" },
+            { href: `${base}/mina-sidor/bokningar`, label: t("bookings"), icon: "bookings" },
+            { href: `${base}/mina-sidor/meddelanden`, label: t("messages"), icon: "messages" },
+            { href: `${base}/mina-sidor/profil`, label: t("profile"), icon: "profile" },
+          ]
+  ) satisfies { href: string; label: string; icon: BottomTabIcon }[];
 
   return (
     <NextIntlClientProvider>
-      <div className="min-h-screen bg-page pb-20 md:pb-0">
+      <div className="min-h-screen bg-page pb-[calc(4rem+env(safe-area-inset-bottom))] md:pb-0">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
           }}
         />
-        <header className="sticky top-0 z-40 border-b border-card/10 bg-surface text-ink-inverse">
-          <div className="mx-auto flex min-h-16 max-w-7xl items-center gap-4 px-4 sm:px-6 lg:px-8">
-            <Link href={base} className="rtl-no-mirror text-lg font-black tracking-tight">
-              Makina Trafikskola
+        <header className="sticky top-0 z-40 border-b border-surface-soft bg-surface text-ink-inverse shadow-soft">
+          <div className="site-container flex min-h-16 items-center gap-3 lg:min-h-[4.5rem]">
+            <Link href={base} className="inline-flex min-h-11 items-center">
+              <Logo compactOnMobile />
             </Link>
-            <nav className="ms-auto hidden items-center gap-1 md:flex" aria-label={t("navigation")}>
-              <Link className="min-h-11 px-3 py-3 text-sm font-semibold hover:text-ink-muted" href={base}>
+            <nav className="ms-auto hidden items-center gap-1 lg:flex" aria-label={t("navigation")}>
+              <Link className="inline-flex min-h-11 items-center rounded-sm px-3 text-sm font-bold transition hover:bg-surface-raised" href={base}>
                 {t("home")}
               </Link>
-              <Link className="min-h-11 px-3 py-3 text-sm font-semibold hover:text-ink-muted" href={`${base}/korlektioner`}>
+              <Link className="inline-flex min-h-11 items-center rounded-sm px-3 text-sm font-bold transition hover:bg-surface-raised" href={`${base}/korlektioner`}>
                 {t("lessons")}
               </Link>
-              <Link className="min-h-11 px-3 py-3 text-sm font-semibold hover:text-ink-muted" href={`${base}/larare`}>
+              <Link className="inline-flex min-h-11 items-center rounded-sm px-3 text-sm font-bold transition hover:bg-surface-raised" href={`${base}/larare`}>
                 {t("teachers")}
               </Link>
+              <Link className="inline-flex min-h-11 items-center rounded-sm px-3 text-sm font-bold transition hover:bg-surface-raised" href={`${base}/teori`}>
+                {t("theory")}
+              </Link>
             </nav>
-            <LanguageSwitcher />
+            <div className="ms-auto lg:ms-2">
+              <LanguageSwitcher />
+            </div>
             <Link
               href={`${base}/boka`}
-              className="inline-flex min-h-11 items-center rounded-sm bg-accent px-3 text-sm font-bold text-accent-ink hover:bg-accent-hover sm:px-4"
+              className="inline-flex min-h-11 items-center rounded-sm border border-accent bg-accent px-3 text-sm font-extrabold text-accent-ink shadow-soft transition hover:border-accent-hover hover:bg-accent-hover sm:px-5"
             >
               {t("book")}
             </Link>
           </div>
         </header>
         <main>{children}</main>
-        <footer className="bg-surface px-4 py-12 text-ink-inverse">
-          <div className="mx-auto grid max-w-7xl gap-8 md:grid-cols-3">
-            <div>
-              <p className="font-black">Makina Trafikskola</p>
-              <p className="mt-3 max-w-sm text-sm leading-6 text-ink-muted">
+        <footer className="border-t border-surface-soft bg-surface py-12 text-ink-inverse sm:py-16">
+          <div className="site-container grid gap-10 md:grid-cols-12">
+            <div className="md:col-span-5">
+              <Logo />
+              <p className="mt-5 max-w-sm text-sm leading-6 text-ink-muted">
                 {t("footerDescription")}
               </p>
             </div>
-            <div>
-              <p className="font-bold">{t("explore")}</p>
-              <div className="mt-3 grid gap-2 text-sm">
-                <Link href={`${base}/korlektioner`}>{t("lessons")}</Link>
-                <Link href={`${base}/larare`}>{t("teachers")}</Link>
-                <Link href={`${base}/villkor`}>{t("terms")}</Link>
-                <Link href={`${base}/integritet`}>{t("privacy")}</Link>
-                <Link href={`${base}/cookies`}>{t("cookies")}</Link>
+            <div className="md:col-span-3">
+              <p className="text-sm font-extrabold">{t("explore")}</p>
+              <div className="mt-4 grid gap-1 text-sm text-ink-muted">
+                <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/korlektioner`}>{t("lessons")}</Link>
+                <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/larare`}>{t("teachers")}</Link>
+                <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/teori`}>{t("theory")}</Link>
               </div>
             </div>
-            <div>
-              <p className="font-bold">{t("languageHelp")}</p>
-              <p className="mt-3 text-sm leading-6 text-ink-muted">{t("languageHelpDescription")}</p>
+            <div className="md:col-span-4">
+              <p className="text-sm font-extrabold">{t("languageHelp")}</p>
+              <p className="mt-4 max-w-sm text-sm leading-6 text-ink-muted">{t("languageHelpDescription")}</p>
             </div>
+          </div>
+          <div className="site-container mt-10 flex flex-wrap gap-x-6 gap-y-2 border-t border-surface-soft pt-6 text-xs font-semibold text-ink-muted">
+            <Link className="inline-flex min-h-11 items-center hover:text-ink-inverse" href={`${base}/villkor`}>{t("terms")}</Link>
+            <Link className="inline-flex min-h-11 items-center hover:text-ink-inverse" href={`${base}/integritet`}>{t("privacy")}</Link>
+            <Link className="inline-flex min-h-11 items-center hover:text-ink-inverse" href={`${base}/cookies`}>{t("cookies")}</Link>
           </div>
         </footer>
         <BottomTabBar tabs={tabs} />

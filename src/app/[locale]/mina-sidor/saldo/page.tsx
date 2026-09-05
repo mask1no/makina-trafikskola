@@ -2,6 +2,9 @@ import { getTranslations } from "next-intl/server";
 
 import { getAvailableCreditBalance } from "@/lib/credits/ledger";
 import { db } from "@/lib/db";
+import { EmptyState } from "@/components/EmptyState";
+import { PageHeader } from "@/components/PageHeader";
+import { StatCard } from "@/components/StatCard";
 
 import { requireStudent } from "../_lib";
 
@@ -37,16 +40,14 @@ export default async function SaldoPage(
 
   return (
     <section>
-      <h1 className="text-3xl font-black">{t("title")}</h1>
-      <div className="mt-6 rounded-md border border-border bg-card p-6">
-        <p className="text-sm font-bold text-ink-muted">{t("available")}</p>
-        <p className="mt-2 text-4xl font-black">{credits.balance}</p>
-        <p className="mt-1 text-sm text-ink-muted">{t("lessons")}</p>
+      <PageHeader title={t("title")} />
+      <div className="mt-6 max-w-md">
+        <StatCard label={t("available")} value={credits.balance} detail={t("lessons")} />
       </div>
       <h2 className="mt-8 text-xl font-bold">{t("lots")}</h2>
-      <div className="mt-4 grid gap-3">
+      <div className="mt-4 overflow-hidden rounded-md border border-border bg-card shadow-soft">
         {lots.map((lot) => (
-          <article key={lot.id} className="flex items-center justify-between rounded-md border border-border bg-card p-4">
+          <article key={lot.id} className="flex min-h-20 items-center justify-between gap-4 border-b border-border p-4 last:border-b-0">
             <div>
               <p className="font-bold">{t(`reasons.${lot.reason}`)}</p>
               <p className="mt-1 text-sm text-ink-muted">
@@ -55,10 +56,10 @@ export default async function SaldoPage(
                   : t("noExpiry")}
               </p>
             </div>
-            <span className="text-lg font-black">+{lot.delta}</span>
+            <span className="text-lg font-black numbers-ltr text-success">+{lot.delta}</span>
           </article>
         ))}
-        {!lots.length ? <p className="text-ink-muted">{t("empty")}</p> : null}
+        {!lots.length ? <EmptyState title={t("empty")} description={t("lessons")} /> : null}
       </div>
     </section>
   );

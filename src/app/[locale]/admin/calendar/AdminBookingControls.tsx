@@ -4,6 +4,10 @@ import { formatInTimeZone, fromZonedTime } from "date-fns-tz";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { Button } from "@/components/Button";
+import { Input } from "@/components/Input";
+import { Select } from "@/components/Select";
+import { Textarea } from "@/components/Textarea";
 
 type Teacher = { id: string; name: string };
 
@@ -71,83 +75,68 @@ export function AdminBookingControls({
 
   return (
     <div className="mt-2">
-      <button
+      <Button
         type="button"
         onClick={() => setOpen((value) => !value)}
-        className="min-h-11 w-full rounded-sm border border-border bg-card px-2 font-bold"
+        variant="tertiary"
+        className="w-full"
       >
         {open ? t("close") : t("manage")}
-      </button>
+      </Button>
       {open ? (
-        <div className="mt-2 grid gap-2">
-          <label className="font-bold" htmlFor={`action-${bookingId}`}>
-            {t("action")}
-          </label>
-          <select
+        <div className="mt-3 grid gap-3 border-t border-border pt-3">
+          <Select
             id={`action-${bookingId}`}
+            label={t("action")}
             value={action}
             onChange={(event) =>
               setAction(
                 event.target.value as "move" | "cancel" | "reassign",
               )
             }
-            className="min-h-11 rounded-sm border border-border bg-card px-2"
           >
             <option value="move">{t("move")}</option>
             <option value="reassign">{t("reassign")}</option>
             <option value="cancel">{t("cancel")}</option>
-          </select>
+          </Select>
           {action === "move" ? (
-            <>
-              <label className="font-bold" htmlFor={`time-${bookingId}`}>
-                {t("newTime")}
-              </label>
-              <input
+              <Input
                 id={`time-${bookingId}`}
+                label={t("newTime")}
                 type="datetime-local"
                 value={dateTime}
                 onChange={(event) => setDateTime(event.target.value)}
-                className="min-h-11 rounded-sm border border-border bg-card px-2"
               />
-            </>
           ) : null}
           {action === "reassign" ? (
-            <>
-              <label className="font-bold" htmlFor={`teacher-${bookingId}`}>
-                {t("newInstructor")}
-              </label>
-              <select
+              <Select
                 id={`teacher-${bookingId}`}
+                label={t("newInstructor")}
                 value={teacherId}
                 onChange={(event) => setTeacherId(event.target.value)}
-                className="min-h-11 rounded-sm border border-border bg-card px-2"
               >
                 {teachers.map((teacher) => (
                   <option value={teacher.id} key={teacher.id}>
                     {teacher.name}
                   </option>
                 ))}
-              </select>
-            </>
+              </Select>
           ) : null}
-          <label className="font-bold" htmlFor={`reason-${bookingId}`}>
-            {t("reason")}
-          </label>
-          <textarea
+          <Textarea
             id={`reason-${bookingId}`}
+            label={t("reason")}
             value={reason}
             onChange={(event) => setReason(event.target.value)}
-            className="min-h-20 rounded-sm border border-border bg-card p-2"
+            className="min-h-20"
             required
           />
-          <button
+          <Button
             type="button"
             disabled={busy || reason.trim().length < 3}
             onClick={submit}
-            className="min-h-11 rounded-sm bg-accent px-2 font-bold text-accent-ink disabled:opacity-50"
           >
             {busy ? t("saving") : t("save")}
-          </button>
+          </Button>
           {error ? (
             <p role="alert" className="text-danger">
               {errors.has(error) ? errors(error) : errors("UNKNOWN")}

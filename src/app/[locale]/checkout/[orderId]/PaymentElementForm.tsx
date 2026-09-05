@@ -8,6 +8,9 @@ import {
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 
+import { Button } from "@/components/Button";
+import { Notice } from "@/components/Notice";
+
 export function PaymentElementForm({
   returnUrl,
 }: {
@@ -18,6 +21,7 @@ export function PaymentElementForm({
   const t = useTranslations("checkout");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [ready, setReady] = useState(false);
 
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -35,24 +39,30 @@ export function PaymentElementForm({
   }
 
   return (
-    <form onSubmit={submit} aria-busy={submitting}>
+    <form onSubmit={submit} aria-busy={submitting || !ready}>
+      {!ready ? (
+        <div className="mb-5 grid gap-3" role="status">
+          <span className="sr-only">{t("loading")}</span>
+          <span className="h-12 animate-pulse rounded-sm bg-page" />
+          <span className="h-12 animate-pulse rounded-sm bg-page" />
+        </div>
+      ) : null}
       <PaymentElement
+        onReady={() => setReady(true)}
         options={{
           layout: "tabs",
           business: { name: t("businessName") },
         }}
       />
-      <button
+      <Button
         type="submit"
-        disabled={!stripe || !elements || submitting}
-        className="mt-6 min-h-11 w-full rounded-sm bg-accent px-5 font-bold text-accent-ink disabled:cursor-not-allowed disabled:bg-border disabled:text-ink-muted"
+        disabled={!stripe || !elements || submitting || !ready}
+        className="mt-6 w-full"
       >
         {submitting ? t("submitting") : t("submit")}
-      </button>
+      </Button>
       {error ? (
-        <p className="mt-4 text-sm text-danger" role="alert">
-          {error}
-        </p>
+        <Notice className="mt-4" tone="danger">{error}</Notice>
       ) : null}
     </form>
   );

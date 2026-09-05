@@ -5,7 +5,11 @@ import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/Button";
+import { Card } from "@/components/Card";
+import { CheckboxField } from "@/components/CheckboxField";
+import { EmptyState } from "@/components/EmptyState";
 import { Input } from "@/components/Input";
+import { Notice } from "@/components/Notice";
 import { SlotChip } from "@/components/SlotChip";
 import { Stepper } from "@/components/Stepper";
 import { TeacherMap } from "@/components/TeacherMap";
@@ -230,6 +234,16 @@ export function BookingFlow({
   const dateSlots = slots.filter(
     (slot) => localDateKey(slot.startsAt) === selectedDate,
   );
+  const selectedTeacher = teachers.find((teacher) => teacher.id === teacherId);
+  const selectedLocation = locations.find((location) => location.id === locationId);
+  const selectedDateLabel = selectedSlot
+    ? new Intl.DateTimeFormat(locale, {
+        timeZone: "Europe/Stockholm",
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+      }).format(new Date(selectedSlot))
+    : "";
   const timeFormatter = new Intl.DateTimeFormat(locale, {
     timeZone: "Europe/Stockholm",
     hour: "2-digit",
@@ -400,53 +414,53 @@ export function BookingFlow({
       minute: "2-digit",
     }).format(deadline);
     return (
-      <section className="rounded-lg border border-border bg-card p-6 shadow-sm">
-        <p className="text-sm font-bold text-success">{t("confirmation.eyebrow")}</p>
-        <h1 className="mt-2 text-2xl font-black">{t("confirmation.title")}</h1>
+      <section className="mx-auto max-w-3xl overflow-hidden rounded-lg border border-border bg-card shadow-card">
+        <div className="bg-surface px-6 py-8 text-ink-inverse sm:px-10 sm:py-10">
+          <div className="grid size-12 place-items-center rounded-full bg-success text-xl font-black" aria-hidden="true">✓</div>
+          <p className="mt-5 text-xs font-extrabold uppercase tracking-[0.18em] text-ink-inverse/70">{t("confirmation.eyebrow")}</p>
+          <h1 className="mt-2 text-3xl font-black sm:text-4xl">{t("confirmation.title")}</h1>
+        </div>
+        <div className="p-6 sm:p-10">
         <p className="mt-3 text-ink-muted">
           {t("confirmation.deadline", { deadline: deadlineLabel })}
         </p>
         <a
           href={`/api/bookings/${booking.id}/calendar`}
-          className="mt-4 inline-flex min-h-11 items-center rounded-sm border border-border bg-card px-4 font-bold hover:border-accent"
+          className="mt-5 inline-flex min-h-11 items-center rounded-sm border border-border bg-card px-5 font-bold shadow-soft hover:border-border-strong"
         >
           {t("confirmation.calendar")}
         </a>
         {booking.creditCharged ? (
-          <p className="mt-4 rounded-sm bg-page p-4">{t("confirmation.creditUsed")}</p>
+            <Notice className="mt-5" tone="success">{t("confirmation.creditUsed")}</Notice>
         ) : (
           <>
-            <p className="mt-4 rounded-sm bg-page p-4">
+            <Notice className="mt-5">
               {t("confirmation.hold", {
                 expires: booking.holdExpiresAt
                   ? timeFormatter.format(new Date(booking.holdExpiresAt))
                   : "",
               })}
-            </p>
+            </Notice>
             {!paymentUnavailable ? (
-              <div className="mt-5 rounded-md border border-border p-5">
+              <Card className="mt-5" elevated>
                 <p className="font-bold">{t("checkout.title")}</p>
                 <p className="mt-2 text-sm text-ink-muted">{t("checkout.draft")}</p>
-                <label className="mt-4 flex min-h-11 items-start gap-3">
-                  <input
-                    type="checkbox"
+                <div className="mt-4 grid gap-3">
+                  <CheckboxField
+                    id="booking-terms"
+                    label={t("checkout.termsConsent")}
                     checked={termsAccepted}
                     onChange={(event) => setTermsAccepted(event.target.checked)}
-                    className="mt-1 size-5"
                   />
-                  <span>{t("checkout.termsConsent")}</span>
-                </label>
-                <label className="mt-3 flex min-h-11 items-start gap-3">
-                  <input
-                    type="checkbox"
+                  <CheckboxField
+                    id="booking-withdrawal"
+                    label={t("checkout.withdrawalConsent")}
                     checked={withdrawalAcknowledged}
                     onChange={(event) =>
                       setWithdrawalAcknowledged(event.target.checked)
                     }
-                    className="mt-1 size-5"
                   />
-                  <span>{t("checkout.withdrawalConsent")}</span>
-                </label>
+                </div>
                 <Button
                   className="mt-4 w-full"
                   disabled={
@@ -456,15 +470,11 @@ export function BookingFlow({
                 >
                   {t("checkout.continue")}
                 </Button>
-              </div>
+              </Card>
             ) : null}
           </>
         )}
-        {paymentUnavailable ? (
-          <p className="mt-4 rounded-sm border border-border p-4">
-            {t("confirmation.provisional")}
-          </p>
-        ) : null}
+        {paymentUnavailable ? <Notice className="mt-4">{t("confirmation.provisional")}</Notice> : null}
         {error ? (
           <p
             role="alert"
@@ -473,17 +483,25 @@ export function BookingFlow({
             {errors.has(error) ? errors(error) : errors("UNKNOWN")}
           </p>
         ) : null}
+        </div>
       </section>
     );
   }
 
   return (
     <div className="grid gap-6">
+      <header className="max-w-2xl">
+        <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-ink-muted">{t("eyebrow")}</p>
+        <h1 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">{t("title")}</h1>
+        <p className="mt-3 leading-7 text-ink-muted">{t("description")}</p>
+      </header>
       <Stepper
         steps={[t("step.what.short"), t("step.where.short"), t("step.who.short"), t("step.when.short")]}
         current={step}
         progressLabel={t("progress")}
       />
+      <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_21rem]">
+      <Card padding="lg" elevated>
 
       {step === 0 ? (
         <section>
@@ -501,8 +519,8 @@ export function BookingFlow({
                   key={option}
                   onClick={() => setKind(option)}
                   aria-pressed={kind === option}
-                  className={`min-h-20 rounded-md border p-4 text-start ${
-                    kind === option ? "border-accent bg-card" : "border-border bg-card"
+                  className={`min-h-24 rounded-md border p-5 text-start shadow-soft transition hover:-translate-y-0.5 hover:border-border-strong ${
+                    kind === option ? "border-ink bg-card ring-2 ring-accent" : "border-border bg-card"
                   }`}
                 >
                   <span className="font-bold">{t(`step.what.${option}`)}</span>
@@ -537,8 +555,8 @@ export function BookingFlow({
                 key={mode}
                 onClick={() => setPlaceMode(mode)}
                 aria-pressed={placeMode === mode}
-                className={`min-h-24 rounded-md border p-5 text-start font-bold ${
-                  placeMode === mode ? "border-accent bg-card" : "border-border bg-card"
+                className={`min-h-28 rounded-md border p-5 text-start font-bold shadow-soft transition hover:-translate-y-0.5 hover:border-border-strong ${
+                  placeMode === mode ? "border-ink bg-card ring-2 ring-accent" : "border-border bg-card"
                 }`}
               >
                 {t(`step.where.${mode}`)}
@@ -645,8 +663,8 @@ export function BookingFlow({
                   key={teacher.id}
                   onClick={() => setTeacherId(teacher.id)}
                   aria-pressed={teacherId === teacher.id}
-                  className={`min-h-16 rounded-md border bg-card p-4 text-start ${
-                    teacherId === teacher.id ? "border-accent" : "border-border"
+                  className={`min-h-20 rounded-md border bg-card p-5 text-start shadow-soft transition hover:border-border-strong ${
+                    teacherId === teacher.id ? "border-ink ring-2 ring-accent" : "border-border"
                   }`}
                 >
                   <span className="font-bold">{teacher.name}</span>
@@ -660,9 +678,7 @@ export function BookingFlow({
                 </button>
               ))}
               {!filteredTeachers.length ? (
-                <p className="rounded-md border border-border bg-card p-5 text-ink-muted">
-                  {t("step.who.empty")}
-                </p>
+                <EmptyState title={t("step.who.emptyTitle")} description={t("step.who.empty")} />
               ) : null}
             </div>
           )}
@@ -705,7 +721,12 @@ export function BookingFlow({
               </button>
             ))}
           </div>
-          {loadingSlots ? <p className="mt-5">{t("step.when.loading")}</p> : null}
+          {loadingSlots ? (
+            <div role="status" className="mt-5 grid grid-cols-3 gap-3 sm:grid-cols-4">
+              <span className="sr-only">{t("step.when.loading")}</span>
+              {Array.from({ length: 8 }, (_, index) => <span key={index} className="min-h-11 animate-pulse rounded-sm bg-page" />)}
+            </div>
+          ) : null}
           {!loadingSlots ? (
             <div className="mt-5 grid grid-cols-3 gap-3 sm:grid-cols-4">
               {dateSlots.map((slot) => (
@@ -720,13 +741,11 @@ export function BookingFlow({
             </div>
           ) : null}
           {!loadingSlots && !dateSlots.length ? (
-            <p className="mt-5 rounded-md border border-border bg-card p-5 text-ink-muted">
-              {t("step.when.empty")}
-            </p>
+            <div className="mt-5"><EmptyState title={t("step.when.emptyTitle")} description={t("step.when.empty")} /></div>
           ) : null}
 
           {showOtp ? (
-            <div className="mt-6 rounded-md border border-border bg-card p-5">
+            <Card className="mt-6 bg-page" elevated>
               <h2 className="text-xl font-bold">{t("account.title")}</h2>
               <p className="mt-2 text-sm text-ink-muted">{t("account.description")}</p>
               <div className="mt-4 grid gap-4">
@@ -745,7 +764,7 @@ export function BookingFlow({
               <Button className="mt-4 w-full" disabled={busy} onClick={otpRequested ? verifyOtp : requestOtp}>
                 {otpRequested ? t("account.verify") : t("account.send")}
               </Button>
-            </div>
+            </Card>
           ) : null}
         </section>
       ) : null}
@@ -771,6 +790,21 @@ export function BookingFlow({
             {t("confirm")}
           </Button>
         )}
+      </div>
+      </Card>
+      <aside className="hidden lg:sticky lg:top-24 lg:block">
+        <Card elevated>
+          <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-ink-muted">{t("summary.eyebrow")}</p>
+          <h2 className="mt-2 text-xl font-black">{t("summary.title")}</h2>
+          <dl className="mt-5 grid gap-4 text-sm">
+            <div className="border-b border-border pb-4"><dt className="text-ink-muted">{t("summary.lesson")}</dt><dd className="mt-1 font-bold">{t(`step.what.${kind}`)}</dd></div>
+            <div className="border-b border-border pb-4"><dt className="text-ink-muted">{t("summary.place")}</dt><dd className="mt-1 font-bold">{placeMode === "school" ? selectedLocation?.name ?? t("summary.notSelected") : pickupAddress || t("summary.notSelected")}</dd></div>
+            <div className="border-b border-border pb-4"><dt className="text-ink-muted">{t("summary.teacher")}</dt><dd className="mt-1 font-bold">{selectedTeacher?.name ?? t("summary.notSelected")}</dd></div>
+            <div><dt className="text-ink-muted">{t("summary.time")}</dt><dd className="mt-1 font-bold">{selectedSlot ? <><span>{selectedDateLabel}</span><span className="block [direction:ltr]">{timeFormatter.format(new Date(selectedSlot))}</span></> : t("summary.notSelected")}</dd></div>
+          </dl>
+          <Notice className="mt-5">{t("summary.reassurance")}</Notice>
+        </Card>
+      </aside>
       </div>
     </div>
   );

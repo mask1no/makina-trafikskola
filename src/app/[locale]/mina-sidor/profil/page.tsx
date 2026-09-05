@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 
 import { db } from "@/lib/db";
+import { PageHeader } from "@/components/PageHeader";
 
 import { requireStudent } from "../_lib";
 import { AccountPrivacyControls } from "./AccountPrivacyControls";
@@ -60,7 +61,7 @@ export default async function ProfilePage(
 
   return (
     <section>
-      <h1 className="text-3xl font-black">{t("title")}</h1>
+      <PageHeader title={t("title")} />
       <dl className="mt-6 divide-y divide-border rounded-md border border-border bg-card px-5">
         {fields.map(([label, value]) => (
           <div className="grid gap-1 py-4 sm:grid-cols-3" key={label}>

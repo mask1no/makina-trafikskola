@@ -1,8 +1,9 @@
 import { formatInTimeZone, fromZonedTime } from "date-fns-tz";
-import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 
 import { db } from "@/lib/db";
+import { LinkButton } from "@/components/LinkButton";
+import { PageHeader } from "@/components/PageHeader";
 
 import { AdminBookingControls } from "./AdminBookingControls";
 
@@ -87,29 +88,73 @@ export default async function AdminCalendarPage(
 
   return (
     <section>
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <p className="text-sm font-bold text-ink-muted">{t("eyebrow")}</p>
-          <h1 className="mt-2 text-3xl font-black">{t("title")}</h1>
-          <p className="mt-2 text-ink-muted">{t("description")}</p>
-        </div>
-        <div className="flex gap-2">
-          <Link
+      <PageHeader
+        eyebrow={t("eyebrow")}
+        title={t("title")}
+        description={t("description")}
+        actions={
+          <>
+          <LinkButton
+            variant="tertiary"
             href={`/${params.locale}/admin/calendar?week=${addDateKey(weekStartKey, -7)}`}
-            className="inline-flex min-h-11 items-center rounded-sm border border-border bg-card px-4 font-bold"
           >
             {t("previous")}
-          </Link>
-          <Link
+          </LinkButton>
+          <LinkButton
+            variant="tertiary"
             href={`/${params.locale}/admin/calendar?week=${addDateKey(weekStartKey, 7)}`}
-            className="inline-flex min-h-11 items-center rounded-sm border border-border bg-card px-4 font-bold"
           >
             {t("next")}
-          </Link>
-        </div>
+          </LinkButton>
+          </>
+        }
+      />
+
+      <div className="mt-6 grid gap-4 md:hidden">
+        {days.map((day) => {
+          const dayBookings = teachers.flatMap((teacher) =>
+            teacher.bookings
+              .filter(
+                (booking) =>
+                  formatInTimeZone(booking.startsAt, TIME_ZONE, "yyyy-MM-dd") === day,
+              )
+              .map((booking) => ({ booking, teacher })),
+          );
+          return (
+            <section key={day} className="rounded-md border border-border bg-card p-4 shadow-soft">
+              <h2 className="font-black">
+                {dayFormatter.format(fromZonedTime(`${day}T12:00:00`, TIME_ZONE))}
+              </h2>
+              <div className="mt-3 grid gap-3">
+                {dayBookings.map(({ booking, teacher }) => (
+                  <article key={booking.id} className="rounded-sm border border-border bg-card-muted p-3">
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <p className="font-black numbers-ltr">{timeFormatter.format(booking.startsAt)}</p>
+                        <p className="mt-1 font-bold">{booking.student.firstName} {booking.student.lastName}</p>
+                      </div>
+                      <p className="text-sm text-ink-muted">{teacher.user.firstName} {teacher.user.lastName}</p>
+                    </div>
+                    {booking.location ? <p className="mt-2 text-sm text-ink-muted">{booking.location.name}</p> : null}
+                    {booking.status === "CONFIRMED" ? (
+                      <AdminBookingControls
+                        bookingId={booking.id}
+                        startsAt={booking.startsAt.toISOString()}
+                        teachers={teacherOptions}
+                        currentTeacherId={teacher.id}
+                      />
+                    ) : (
+                      <p className="mt-2 text-sm text-ink-muted">{t("completed")}</p>
+                    )}
+                  </article>
+                ))}
+              </div>
+            </section>
+          );
+        })}
       </div>
 
-      <div className="mt-6 overflow-x-auto rounded-md border border-border bg-card">
+      <div className="mt-6 hidden overflow-x-auto rounded-md border border-border bg-card shadow-soft md:block">
         <div className="grid min-w-[76rem] grid-cols-[12rem_repeat(7,minmax(9rem,1fr))]">
           <div className="border-b border-e border-border p-3 font-bold">
             {t("instructor")}

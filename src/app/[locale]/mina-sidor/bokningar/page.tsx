@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 
 import { db } from "@/lib/db";
+import { PageHeader } from "@/components/PageHeader";
 
 import { requireStudent } from "../_lib";
 import { BookingList } from "./BookingList";
@@ -29,8 +30,7 @@ export default async function BookingsPage(
 
   return (
     <section>
-      <h1 className="text-3xl font-black">{t("title")}</h1>
-      <p className="mt-2 text-ink-muted">{t("description")}</p>
+      <PageHeader title={t("title")} description={t("description")} />
       <BookingList
         locale={params.locale}
         cancellationWindowHours={

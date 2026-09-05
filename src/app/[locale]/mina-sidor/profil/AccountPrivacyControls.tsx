@@ -3,6 +3,9 @@
 import { signOut } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { Button } from "@/components/Button";
+import { LinkButton } from "@/components/LinkButton";
+import { Notice } from "@/components/Notice";
 
 export function AccountPrivacyControls({ locale }: { locale: string }) {
   const t = useTranslations("student.profile");
@@ -32,33 +35,32 @@ export function AccountPrivacyControls({ locale }: { locale: string }) {
   }
 
   return (
-    <section className="mt-8 rounded-md border border-border bg-card p-5">
+    <section className="mt-8 rounded-md border border-danger bg-danger-soft p-5 sm:p-6">
       <h2 className="text-xl font-bold">{t("privacyTitle")}</h2>
       <p className="mt-2 text-sm leading-6 text-ink-muted">
         {t("privacyDescription")}
       </p>
       <div className="mt-4 flex flex-wrap gap-3">
-        {/* This API response is a file download, not client-side navigation. */}
-        {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-        <a
+        <LinkButton
           href="/api/me/export"
-          className="inline-flex min-h-11 items-center rounded-sm border border-border px-4 font-bold"
+          variant="tertiary"
         >
           {t("export")}
-        </a>
-        <button
+        </LinkButton>
+        <Button
           type="button"
           onClick={removeAccount}
           disabled={busy}
-          className="min-h-11 rounded-sm border border-danger px-4 font-bold text-danger disabled:opacity-50"
+          variant="tertiary"
+          className="border-danger text-danger hover:bg-danger-soft"
         >
           {busy ? t("deleting") : t("delete")}
-        </button>
+        </Button>
       </div>
       {error ? (
-        <p role="alert" className="mt-3 text-sm text-danger">
+        <Notice tone="danger" className="mt-3">
           {errors.has(error) ? errors(error) : errors("UNKNOWN")}
-        </p>
+        </Notice>
       ) : null}
     </section>
   );

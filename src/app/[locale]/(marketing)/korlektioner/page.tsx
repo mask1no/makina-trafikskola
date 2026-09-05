@@ -1,6 +1,8 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { EmptyState } from "@/components/EmptyState";
+import { Notice } from "@/components/Notice";
+import { PageHeader } from "@/components/PageHeader";
 import { ProductCard } from "@/components/ProductCard";
 import { isLocale } from "@/i18n/routing";
 
@@ -20,20 +22,12 @@ export default async function KorlektionerPage(
   const products = await getProducts(params.locale);
 
   return (
-    <div className="px-4 py-12 sm:py-16">
-      <div className="mx-auto max-w-7xl">
-        <div className="max-w-3xl">
-          <p className="text-sm font-bold uppercase tracking-wider text-ink-muted">
-            {t("lessons.eyebrow")}
-          </p>
-          <h1 className="mt-2 text-4xl font-black sm:text-5xl">{t("lessons.title")}</h1>
-          <p className="mt-4 text-lg leading-8 text-ink-muted">{t("lessons.description")}</p>
-          <div className="mt-5 rounded-sm border border-border bg-card p-4 text-sm text-ink-muted">
-            {t("lessons.provisionalNotice")}
-          </div>
-        </div>
+    <div className="section-shell">
+      <div className="site-container">
+        <PageHeader eyebrow={t("lessons.eyebrow")} title={t("lessons.title")} description={t("lessons.description")} />
+        <Notice className="mt-6 max-w-3xl">{t("lessons.provisionalNotice")}</Notice>
         {products.length ? (
-          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {products.map((product) => (
               <ProductCard
                 key={product.id}
@@ -52,6 +46,10 @@ export default async function KorlektionerPage(
                 swedishOnlyLabel={t("common.swedishOnly")}
                 unavailableLabel={t("product.notForSale")}
                 detailsLabel={t("common.readMore")}
+                visualLabel={t("product.visualLabel")}
+                savingsLabel={product.compareAtOre && product.compareAtOre > product.priceOre
+                  ? t("product.save", { percent: Math.round((1 - product.priceOre / product.compareAtOre) * 100) })
+                  : undefined}
               />
             ))}
           </div>

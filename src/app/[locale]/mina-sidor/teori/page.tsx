@@ -1,6 +1,9 @@
 import { getTranslations } from "next-intl/server";
 
 import { db } from "@/lib/db";
+import { Notice } from "@/components/Notice";
+import { PageHeader } from "@/components/PageHeader";
+import { StatCard } from "@/components/StatCard";
 
 import { requireStudent } from "../_lib";
 
@@ -32,28 +35,17 @@ export default async function TheoryPage(
 
   return (
     <section>
-      <h1 className="text-3xl font-black">{t("title")}</h1>
+      <PageHeader title={t("title")} />
       <div className="mt-6 grid gap-4 sm:grid-cols-2">
-        <article className="rounded-md border border-border bg-card p-5">
-          <h2 className="font-bold">{t("access")}</h2>
-          <p className="mt-3 text-ink-muted">
-            {access
-              ? t("activeUntil", { date: formatter.format(access.expiresAt) })
-              : t("inactive")}
-          </p>
-        </article>
-        <article className="rounded-md border border-border bg-card p-5">
-          <h2 className="font-bold">{t("progress")}</h2>
-          <p className="mt-3 text-3xl font-black" dir="ltr">
-            {correct}/{attempts}
-          </p>
-          <p className="mt-1 text-sm text-ink-muted">{t("correct")}</p>
-        </article>
+        <StatCard
+          label={t("access")}
+          value={access ? t("activeUntil", { date: formatter.format(access.expiresAt) }) : t("inactive")}
+          className="[&_[class*='text-3xl']]:text-lg"
+        />
+        <StatCard label={t("progress")} value={<span dir="ltr">{correct}/{attempts}</span>} detail={t("correct")} />
       </div>
       {!access ? (
-        <p className="mt-5 rounded-md border border-border bg-card p-5 text-ink-muted">
-          {t("provisional")}
-        </p>
+        <Notice className="mt-5">{t("provisional")}</Notice>
       ) : null}
     </section>
   );

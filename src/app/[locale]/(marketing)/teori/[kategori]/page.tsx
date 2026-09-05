@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { auth } from "@/auth";
 import { EmptyState } from "@/components/EmptyState";
+import { PageHeader } from "@/components/PageHeader";
 import { isLocale } from "@/i18n/routing";
 import { db } from "@/lib/db";
 import { hasTheoryAccess, presentQuestion } from "@/lib/theory/access";
@@ -57,12 +58,9 @@ export default async function TeoriKategoriPage(
     params.kategori;
 
   return (
-    <div className="px-4 py-12 sm:py-16">
-      <div className="mx-auto max-w-4xl">
-        <p className="text-sm font-bold uppercase tracking-wider text-ink-muted">
-          {paid ? t("paidAccess") : t("freeAccess")}
-        </p>
-        <h1 className="mt-2 text-4xl font-black">{title}</h1>
+    <div className="section-shell">
+      <div className="site-container max-w-4xl">
+        <PageHeader eyebrow={paid ? t("paidAccess") : t("freeAccess")} title={title} />
         {presented.length ? (
           <StudyQuiz
             locale={params.locale}

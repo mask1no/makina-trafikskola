@@ -1,8 +1,11 @@
+import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import type { CSSProperties } from "react";
 import type { Metadata } from "next";
 
+import { Badge } from "@/components/Badge";
+import { Notice } from "@/components/Notice";
 import { formatPrice } from "@/lib/pricing/format";
 import { isLocale } from "@/i18n/routing";
 
@@ -72,7 +75,7 @@ export default async function ProductDetailPage(
   };
 
   return (
-    <div className="px-4 py-12 sm:py-20">
+    <div className="section-shell">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -80,30 +83,37 @@ export default async function ProductDetailPage(
         }}
       />
       <article
-        className="mx-auto grid max-w-5xl overflow-hidden rounded-lg border border-border border-t-[8px] border-t-[var(--tier-accent,var(--accent))] bg-card shadow-sm md:grid-cols-[1.15fr_.85fr]"
+        className="site-container grid gap-8 lg:grid-cols-[minmax(0,1fr)_23rem] lg:gap-12"
         style={tierStyle}
       >
-        <div className="p-6 sm:p-10">
+        <div>
+          <div className="relative min-h-72 overflow-hidden rounded-lg border border-border bg-card-muted p-8 sm:min-h-[26rem]">
+            <div className="absolute inset-block-0 start-0 w-3 bg-[var(--tier-accent,var(--accent))]" />
+            <Image src="/illustration-package.svg" alt="" width={720} height={480} className="rtl-no-mirror mx-auto h-80 w-auto object-contain" priority />
+            <p className="absolute bottom-6 start-8 text-xs font-extrabold uppercase tracking-[0.18em] text-ink-muted">{t("product.visualLabel")}</p>
+          </div>
+          <div className="py-8 sm:py-10">
           <div className="flex flex-wrap gap-2">
             {product.badge ? (
-              <span className="rounded-full bg-accent px-3 py-1 text-xs font-bold text-accent-ink">
+              <Badge tone="accent">
                 {t("product.popular")}
-              </span>
+              </Badge>
             ) : null}
             {product.swedishOnly ? (
-              <span className="rounded-full bg-page px-3 py-1 text-xs text-ink-muted">
+              <Badge>
                 {t("common.swedishOnly")}
-              </span>
+              </Badge>
             ) : null}
+            {!product.active ? <Badge tone="danger">{t("product.notForSale")}</Badge> : null}
           </div>
-          <h1 className="mt-5 text-4xl font-black">{product.translation.name}</h1>
+          <h1 className="display-title mt-6 text-balance">{product.translation.name}</h1>
           {product.translation.shortDesc ? (
             <p className="mt-4 text-lg leading-8 text-ink-muted">
               {product.translation.shortDesc}
             </p>
           ) : null}
-          <h2 className="mt-8 text-lg font-bold">{t("product.included")}</h2>
-          <ul className="mt-4 grid gap-3">
+          <h2 className="mt-10 text-2xl font-black">{t("product.included")}</h2>
+          <ul className="mt-5 grid gap-3 sm:grid-cols-2">
             {product.translation.features.map((feature) => (
               <li className="flex gap-3" key={feature}>
                 <span aria-hidden="true" className="text-success">✓</span>
@@ -111,16 +121,22 @@ export default async function ProductDetailPage(
               </li>
             ))}
           </ul>
+          </div>
         </div>
-        <aside className="border-t border-border bg-page p-6 sm:p-10 md:border-s md:border-t-0">
+        <aside className="h-fit rounded-lg border border-border bg-card p-6 shadow-card lg:sticky lg:top-24 sm:p-8">
           <p className="text-sm font-semibold text-ink-muted">{t("product.priceIncludesVat")}</p>
           <p className="mt-2 text-4xl font-black [direction:ltr]">
             {formatPrice(product.priceOre, params.locale)}
           </p>
           {product.compareAtOre && product.compareAtOre > product.priceOre ? (
-            <p className="mt-2 text-ink-muted line-through [direction:ltr]">
-              {formatPrice(product.compareAtOre, params.locale)}
-            </p>
+            <>
+              <p className="mt-2 text-ink-muted line-through [direction:ltr]">
+                {formatPrice(product.compareAtOre, params.locale)}
+              </p>
+              <p className="mt-2 font-bold text-success">
+                {t("product.saveAmount", { amount: formatPrice(product.compareAtOre - product.priceOre, params.locale) })}
+              </p>
+            </>
           ) : null}
           <PurchaseControl
             productId={product.id}
@@ -134,11 +150,11 @@ export default async function ProductDetailPage(
               error: t("product.checkout.error"),
             }}
           />
-          <p className="mt-4 text-sm leading-6 text-ink-muted">
+          <Notice className="mt-5">
             {product.active
               ? t("product.availableDescription")
               : t("product.inactiveDescription")}
-          </p>
+          </Notice>
         </aside>
       </article>
     </div>

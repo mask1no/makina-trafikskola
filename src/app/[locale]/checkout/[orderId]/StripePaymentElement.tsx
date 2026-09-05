@@ -30,6 +30,29 @@ export function StripePaymentElement({
             colorDanger: "var(--danger)",
             colorBackground: "var(--card)",
             borderRadius: "12px",
+            fontFamily: "inherit",
+            spacingUnit: "4px",
+            fontSizeBase: "16px",
+          },
+          rules: {
+            ".Input": {
+              border: "1px solid var(--border)",
+              boxShadow: "none",
+              padding: "12px",
+            },
+            ".Input:focus": {
+              borderColor: "var(--ink)",
+              boxShadow: "0 0 0 2px var(--accent)",
+            },
+            ".Tab": {
+              border: "1px solid var(--border)",
+              boxShadow: "none",
+              padding: "12px",
+            },
+            ".Tab--selected": {
+              borderColor: "var(--ink)",
+              boxShadow: "0 0 0 2px var(--accent)",
+            },
           },
         },
       }}

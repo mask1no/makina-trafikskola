@@ -3,6 +3,8 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
 import { EmptyState } from "@/components/EmptyState";
+import { Notice } from "@/components/Notice";
+import { PageHeader } from "@/components/PageHeader";
 import { isLocale } from "@/i18n/routing";
 import { db } from "@/lib/db";
 
@@ -87,7 +89,7 @@ export default async function TrafikskolaPage(
       : null;
 
   return (
-    <div className="px-4 py-12 sm:py-20">
+    <div className="section-shell">
       {localStructuredData ? (
         <script
           type="application/ld+json"
@@ -96,23 +98,18 @@ export default async function TrafikskolaPage(
           }}
         />
       ) : null}
-      <div className="mx-auto max-w-5xl">
-        <p className="text-sm font-bold uppercase tracking-wider text-ink-muted">
-          {t("eyebrow")}
-        </p>
-        <h1 className="mt-2 text-4xl font-black sm:text-5xl">
-          {t("title", { city: location.city })}
-        </h1>
-        <p className="mt-4 max-w-3xl text-lg leading-8 text-ink-muted">
-          {t("description", { city: location.city })}
-        </p>
-        <section className="mt-10 rounded-lg border border-border bg-card p-6">
+      <div className="site-container max-w-6xl">
+        <PageHeader eyebrow={t("eyebrow")} title={t("title", { city: location.city })} description={t("description", { city: location.city })} />
+        <section className="mt-10 grid overflow-hidden rounded-lg border border-border bg-card shadow-card md:grid-cols-[.75fr_1.25fr]">
+          <div className="p-6 sm:p-8">
           <h2 className="text-2xl font-black">{location.name}</h2>
-          <p className="mt-3 text-ink-muted">
-            {hasConfirmedAddress
-              ? `${location.address}, ${location.postalCode} ${location.city}`
-              : t("addressPending")}
-          </p>
+          {hasConfirmedAddress ? (
+            <p className="mt-3 text-ink-muted">{location.address}, {location.postalCode} {location.city}</p>
+          ) : (
+            <Notice className="mt-5">{t("addressPending")}</Notice>
+          )}
+          </div>
+          <div className="static-map rtl-no-mirror relative min-h-72 border-t border-border md:border-s md:border-t-0" role="img" aria-label={t("title", { city: location.city })} />
         </section>
         <section className="mt-8">
           <h2 className="text-2xl font-black">{t("teachersTitle")}</h2>

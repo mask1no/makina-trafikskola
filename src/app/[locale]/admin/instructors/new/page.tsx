@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 
 import { db } from "@/lib/db";
+import { PageHeader } from "@/components/PageHeader";
 
 import { InstructorForm } from "./InstructorForm";
 import { InstructorStatusControl } from "./InstructorStatusControl";
@@ -27,12 +28,10 @@ export default async function NewInstructorPage() {
   ]);
 
   return (
-    <div className="grid max-w-4xl gap-10">
+    <div className="grid max-w-5xl gap-10">
       <section>
-        <p className="text-sm font-bold text-ink-muted">{t("eyebrow")}</p>
-        <h1 className="mt-2 text-3xl font-black">{statusT("title")}</h1>
-        <p className="mt-2 text-ink-muted">{statusT("description")}</p>
-        <ul className="mt-5 grid gap-3">
+        <PageHeader eyebrow={t("eyebrow")} title={statusT("title")} description={statusT("description")} />
+        <ul className="mt-6 grid gap-3 sm:grid-cols-2">
           {instructors.map((instructor) => (
             <InstructorStatusControl
               key={instructor.id}
@@ -46,8 +45,7 @@ export default async function NewInstructorPage() {
         </ul>
       </section>
       <section>
-        <h2 className="text-2xl font-black">{t("title")}</h2>
-        <p className="mt-2 text-ink-muted">{t("description")}</p>
+        <PageHeader title={t("title")} description={t("description")} />
         <InstructorForm locations={locations} />
       </section>
     </div>

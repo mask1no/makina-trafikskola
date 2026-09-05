@@ -45,6 +45,19 @@
       "cardTitle": "ካብ ቀዳማይ ትምህርቲ ንጹር መደብ",
       "cardDescription": "ቋንቋ፣ ዓይነት መኪናን መምህርን ብድሌትካ ምረጽ።"
     },
+    "trust": {
+      "label": "ኣብ Makina እትረኽቦ",
+      "languages": {"title": "ሓሙሽተ ቋንቋታት", "description": "ብሽወደንኛ፣ እንግሊዝኛ፣ ትግርኛ፣ ዓረብኛን ሶማልኛን ደገፍ"},
+      "lesson": {"title": "50 ደቒቕ", "description": "ኣብ ኩሉ ምርጫታት ንጹር ናይ ትምህርቲ ግዜ"},
+      "pricing": {"title": "ንጹር ዋጋ", "description": "ቅድሚ ዕድጊ ዋጋን ትሕዝቶን ኣወዳድር"}
+    },
+    "journey": {
+      "eyebrow": "ከመይ ይሰርሕ",
+      "title": "ካብ ቀዳማይ ምርጫኻ ናብ ውሑስ ምዝዋር",
+      "choose": {"title": "መደብካ ምረጽ", "description": "ሓደ ትምህርቲ ወይ ፓኬጅ ብህድኣት ኣወዳድር።"},
+      "book": {"title": "መምህርን ግዜን ድለ", "description": "ብቋንቋ፣ ቦታን ዓይነት መኪናን ፈልይ።"},
+      "learn": {"title": "መደብካ ተኸተል", "description": "ብንጹር መምርሒ ደረጃ ብደረጃ ምዕብል።"}
+    },
     "products": {
       "eyebrow": "ትምህርቲ ምዝዋር",
       "title": "ዝሰማምዓካ መንገዲ ምረጽ"
@@ -71,6 +84,9 @@
   "product": {
     "popular": "ዝያዳ ዝምረጽ",
     "notForSale": "ገና ንመሸጣ ኣይቀረበን",
+    "visualLabel": "ትምህርቲ ምዝዋር",
+    "save": "{percent}% ዕቑር",
+    "saveAmount": "{amount} ትዕቅብ",
     "emptyTitle": "ዝረአ ፍርያት የለን",
     "emptyDescription": "እቲ ዝርዝር ይሕደስ ኣሎ። ቀልጢፍካ ተመለስ።",
     "included": "ዝጠቓለል",
@@ -81,6 +97,13 @@
   },
   "checkout": {
     "eyebrow": "ውሑስ ክፍሊት", "title": "ክፍሊትካ ዛዝም", "businessName": "Makina Trafikskola",
+    "description": "ትእዛዝካ ርአን መንገዲ ክፍሊት ምረጽን። ክፍሊት ክሳብ ዝዛዘም ኣብዚ ትጸንሕ።",
+    "paymentTitle": "ሓበሬታ ክፍሊት",
+    "secureDescription": "ሓበሬታ ክፍሊትካ ብቐጥታ ብStripe ይመሓደር።",
+    "summaryTitle": "ትእዛዝካ",
+    "quantity": "ብዝሒ፦ {quantity}",
+    "loading": "ውሑሳት መደባት ክፍሊት ይጽዓኑ ኣለዉ…",
+    "reassurance": "ክፍሊት ምስ ኣረጋገጽካ ጥራይ ገንዘብ ይቕነስ። ዋጋ VAT የካትት።",
     "total": "ጠቕላላ", "vat": "ካብዚ ተወሳኺ እሴት ግብሪ", "submit": "ሕጂ ክፈል", "submitting": "ክፍሊት ይስራሕ ኣሎ…",
     "genericError": "ክፍሊት ክዛዘም ኣይከኣለን። ሓበሬታኻ ኣረጋግጽ እሞ ደጊምካ ፈትን።",
     "mockTitle": "ናይ ልምዓት ክፍሊት", "mockDescription": "ናይ Stripe መፍትሕታት የለዉን። ትእዛዙ ይጽበ፣ ክፍሊት ወይ ምርካብ ግን ኣይፍጸምን።",
@@ -140,23 +163,27 @@
     "emptyTitle": "መምህራን ገና ኣይተመደቡን", "emptyDescription": "ቦታኦም ምስ ተረጋገጸ ኣብዚ ይርከቡ።", "metadataTitle": "ቤት ትምህርቲ ምዝዋር ኣብ {city}", "metadataDescription": "ትምህርቲ ምዝዋርን ፍቓድን ኣብ {city}።"
   },
   "booking": {
+    "eyebrow": "ትምህርቲ ምዝዋር ሓዝ",
+    "title": "ትምህርትኻ ደረጃ ብደረጃ",
+    "description": "ትምህርቲ፣ ቦታ፣ መምህርን ግዜን ምረጽ። ምርጫታትካ ክትቅጽል ይጸንሑ።",
     "progress": "ደረጃታት ምሓዝ", "back": "ተመለስ", "next": "ቀጽል", "confirm": "ቦታ ምሓዝ ኣረጋግጽ", "provisional": "ግዝያዊ ኣገልግሎት – ገና ኣይሽየጥን",
     "step": {
       "what": {"short": "እንታይ", "title": "እንታይ ክትሕዝ ትደሊ?", "description": "ንትምህርትኻ ዝሰማማዕ ምረጽ።", "single": "ሓደ ትምህርቲ ምዝዋር", "credits": "ፓኬጀይ ተጠቐም", "test": "ናይ ፈተነ ትምህርቲ"},
       "where": {"short": "ኣበይ", "title": "ካበይ ክትጅምር ትደሊ?", "school": "ኣነ ናባኹም ክመጽእ", "pickup": "ክትወስዱኒ", "location": "ቤት ትምህርቲ ምረጽ", "address": "ናይ ምውሳድ ኣድራሻ"},
-      "who": {"short": "መን", "title": "ምስ መን ክትዝውር ትደሊ?", "languageFirst": "መጀመርታ ቋንቋ ምረጽ", "list": "ዝርዝር", "map": "ካርታ", "mapLabel": "ካርታ ናይ ዝርከቡ መምህራን", "mapUnavailable": "ካርታ ኣይርከብን", "mapUnavailableDescription": "ካብ ዝርዝር መምህር ምረጽ።", "empty": "ምስ ቋንቋን ቦታን ዝሰማማዕ መምህር የለን።"},
-      "when": {"short": "መዓስ", "title": "መዓስ ክትዝውር ትደሊ?", "firstAvailable": "ቀዳማይ ክፉት ግዜ", "loading": "ክፉት ግዜታት ይጽዓኑ ኣለዉ…", "empty": "ኣብዚ መዓልቲ ክፉት ግዜ የለን።"}
+      "who": {"short": "መን", "title": "ምስ መን ክትዝውር ትደሊ?", "languageFirst": "መጀመርታ ቋንቋ ምረጽ", "list": "ዝርዝር", "map": "ካርታ", "mapLabel": "ካርታ ናይ ዝርከቡ መምህራን", "mapUnavailable": "ካርታ ኣይርከብን", "mapUnavailableDescription": "ካብ ዝርዝር መምህር ምረጽ።", "emptyTitle": "ዝሰማማዕ መምህር የለን", "empty": "ካልእ ቋንቋ ወይ ቦታ ፈትን።"},
+      "when": {"short": "መዓስ", "title": "መዓስ ክትዝውር ትደሊ?", "firstAvailable": "ቀዳማይ ክፉት ግዜ", "loading": "ክፉት ግዜታት ይጽዓኑ ኣለዉ…", "emptyTitle": "ኣብዚ መዓልቲ ግዜ የለን", "empty": "ተወሳኺ ክፉት ግዜ ንምርኣይ ካልእ መዓልቲ ምረጽ።"}
     },
     "account": {"title": "ብተሌፎንካ ሕሳብ ክፈት", "description": "ካብ ምሓዝ ከይወጻእካ ቁጽርኻ ኣረጋግጽ።", "firstName": "ስም", "lastName": "ስም ኣቦ", "phone": "ቁጽሪ ሞባይል ምስ ኮድ ሃገር", "code": "ሽዱሽተ ኣሃዝ ኮድ", "send": "ኮድ ስደድ", "verify": "ኣረጋግጽን ሓዝን", "devCode": "ንናይ ከባቢ ልምዓት ጥራይ – ኮድ: {code}"},
     "credits": {"loading": "ሒሳብካ ይፍተሽ ኣሎ…", "signIn": "ናይ ፓኬጅ ክሬዲትካ ንምርኣይ እቶ።", "balance": "{count, plural, =0 {ዝርከብ ትምህርቲ የለን} =1 {1 ትምህርቲ ኣሎ} other {# ትምህርትታት ኣለዉ}}"},
+    "summary": {"eyebrow": "ምሓዝካ", "title": "ማጠቓለሊ", "lesson": "ትምህርቲ", "place": "ቦታ", "teacher": "መምህር", "time": "ግዜ", "notSelected": "ገና ኣይተመርጸን", "reassurance": "ቅድሚ ምርግጋጽ ተመሊስካ ምርጫታትካ ክትቅይር ትኽእል።"},
     "checkout": {"title": "ቅድሚ ክፍሊት ስምምዕ", "draft": "ናይ ዓሚልን ሕጋዊ ክለሳን ዝጽበ ንድፊ።", "termsConsent": "ንድፊ ውዕል ዕድጊ ኣንቢበ ተሰማሚዐ።", "withdrawalConsent": "ብዛዕባ 14 መዓልቲ መሰል ምስራዝ ንድፊ ኣንቢበ፣ እቲ ኣገልግሎት ብመሰረት ቆጸራ ክጅምር እሓትት።", "continue": "ናብ ውሑስ ክፍሊት ቀጽል"},
     "confirmation": {"eyebrow": "ቦታ ምሓዝ ተመዝጊቡ", "title": "ግዜኻ ተሓዚኡ", "deadline": "ክሳብ {deadline} ክትስርዝ ትኽእል።", "calendar": "ናብ ካላንደር ወስኽ", "creditUsed": "ሓደ ትምህርቲ ካብ ሒሳብካ ተቐኒሱ።", "hold": "ክሳብ {expires} ክፍሊት ዝዛዘም ግዜኻ ተታሒዙልካ።", "provisional": "ዝርዝር ዋጋ ገና ኣይተረጋገጸን፣ ስለዚ ክፍሊት ግዝያዊ ኣይርከብን። ናይ 15 ደቒቕ ምሓዝካ ኣይቀየርን።"},
     "calendar": {"summary": "ትምህርቲ ምዝዋር ምስ Makina Trafikskola", "description": "መወዳእታ ግዜ ምስራዝ፦ {deadline}።"}
   },
   "auth": {
-    "firstName": "ስም", "lastName": "ስም ኣቦ", "email": "ኢመይል", "password": "መሕለፊ ቃል",
+    "firstName": "ስም", "lastName": "ስም ኣቦ", "email": "ኢመይል", "password": "መሕለፊ ቃል", "phone": "ቁጽሪ ሞባይል", "phonePlaceholder": "+46 70 123 45 67", "code": "ሽዱሽተ ኣሃዝ ኮድ", "methodLabel": "መንገዲ ምእታው", "methods": {"email": "ኢመይልን መሕለፊ ቃልን", "phone": "ኮድ SMS"}, "sendCode": "ኮድ ስደድ", "verifyCode": "ኣረጋግጽን ቀጽልን", "changePhone": "ቁጽሪ ሞባይል ቀይር", "working": "በጃኻ ተጸበ…", "secure": "ውሑስ መእተዊ ሕሳብ", "support": "ናብ ሕሳብካ ንምእታው ሓገዝ የድልየካ? ብዝተገልጸ መራኸቢ ምስ ቤት ትምህርቲ ተራኸብ።", "context": {"eyebrow": "ትምህርትኻ ኣብ ሓደ ቦታ", "title": "ካብቲ ዝገደፍካዮ ቀጽል", "bookings": "ትምህርቲ ምዝዋርካ ርአን ኣመሓድርን", "balance": "ዘሎካ ክረዲት ትምህርቲ ርአ", "messages": "መልእኽቲ ኣገልግሎትን ክፍሊትን ተኸታተል"},
     "login": {"title": "እቶ", "description": "ናብ ሕሳብካ ቀጽል።", "submit": "እቶ", "noAccount": "ሕሳብ የብልካን?", "create": "ሕሳብ ክፈት"},
-    "register": {"title": "ሕሳብ ክፈት", "description": "ብኢመይልን መሕለፊ ቃልን ናይ ተማሃራይ ሕሳብ ክፈት።", "submit": "ሕሳብ ክፈት", "hasAccount": "ድሮ ሕሳብ ኣለካ?", "login": "እቶ"}
+    "register": {"title": "ሕሳብ ክፈት", "description": "ብኢመይል ወይ ቁጽሪ ሞባይል ናይ ተማሃራይ ሕሳብ ክፈት።", "submit": "ሕሳብ ክፈት", "hasAccount": "ድሮ ሕሳብ ኣለካ?", "login": "እቶ"}
   },
   "student": {
     "nav": {"label": "ገጻተይ", "overview": "ሓፈሻ", "bookings": "ቦታ ምሓዝ", "saldo": "ሒሳብ", "theory": "ቲዮሪ", "messages": "መልእኽትታት", "profile": "ፕሮፋይል"},
@@ -174,7 +201,7 @@
   },
   "metadata": {"brand": "Makina Trafikskola", "title": "Makina Trafikskola – ትምህርቲ ምዝዋር ኣብ ስቶክሆልም", "description": "ኣብ ስቶክሆልም ብብዙሕ ቋንቋታት ደገፍ ዘለዎ ትምህርቲ ምዝዋር።"},
   "cookieConsent": {"title": "ምርጫ ኩኪ", "description": "ንምእታው፣ ቋንቋን ምርጫ ኩኪኻን ኣድለይቲ ኩኪታት ንጥቀም። ናይ ትንተና ወይ ምልክታ ኩኪታት ኣይሰርሑን።", "readMore": "ብዛዕባ ኩኪ ኣንብብ", "necessary": "ኣድለይቲ ጥራይ", "accept": "ተቐበል"},
-  "offline": {"title": "ካብ ኢንተርነት ወጻኢ ኢኻ", "description": "ርክብካ ኣረጋግጽ እሞ ደጊምካ ፈትን። ቦታ ምሓዝን ሓበሬታ ሕሳብን ኢንተርነት የድልዮ።", "retry": "ደጊምካ ፈትን"},
+  "offline": {"eyebrow": "ርክብ የለን", "title": "ካብ ኢንተርነት ወጻኢ ኢኻ", "description": "ርክብካ ኣረጋግጽ እሞ ደጊምካ ፈትን። ቦታ ምሓዝን ሓበሬታ ሕሳብን ኢንተርነት የድልዮ።", "retry": "ደጊምካ ፈትን"},
   "legal": {
     "terms": {"metadata": "ንድፊ ውዕላት Makina Trafikskola።", "eyebrow": "ሕጋዊ ሓበሬታ", "title": "ውዕላት ዕድጊ", "draftTitle": "ንድፊ – ሕጋዊ ግምገማ ይጽበ", "draftNotice": "እዚ ናይ ዓሚል መወዳእታ ወይ ቀያዲ ውዕል ኣይኮነን። ቅድሚ ምጅማር ብዓሚልን ሕጋዊ ኣማኻሪን ክጸድቕ ኣለዎ።", "scope": {"title": "ዝሽፍኖ", "body": "እዚ ንድፊ ቦታ ምሓዝ ትምህርቲ ምዝዋርን መጻኢ ዲጂታላዊ ዕድጊን ይሽፍን።"}, "details": {"title": "ክረዲትን ምስራዝን", "body": "ናይ ቴክኒክ መደብ፡ ክረዲት 24 ወርሒ ይጸንሕ። ቅድሚ ምጅማር ልዕሊ 24 ሰዓት ምስራዝ ክረዲት ይመልስ፤ ድሕሪኡ ኣይምለስን። ቤት ትምህርቲ እንተሰሪዙ ኩሉ ግዜ ይምለስ።\n\nመወዳእታ ፖሊሲ ምምላስን ናይ 14 መዓልቲ መሰልን ሕጋዊ ጽሑፍ ይጽበ።"}, "rights": {"title": "ቅድሚ ዕድጊ", "body": "ዋጋ፣ VATን ውዕላትን ክሳብ ዝረጋገጹ ፍርያት ኣይነጥፉን። መወዳእታ ውዕላት ኣብ checkout ክረጋገጽ ኣለዎ።"}},
     "privacy": {"metadata": "ንድፊ ሓበሬታ ውልቃዊነት።", "eyebrow": "ሕጋዊ ሓበሬታ", "title": "ውልቃዊነት", "draftTitle": "ንድፊ – ሕጋዊ ግምገማ ይጽበ", "draftNotice": "ተሓታቲ ዳታ፣ መራኸቢ፣ ሕጋዊ መሰረትን ግዜ ምቕማጥን ብዓሚልን ሕጋዊ ኣማኻሪን ክረጋገጽ ኣለዎ።", "scope": {"title": "ዳታ ኣብ ኣገልግሎት", "body": "ኣገልግሎቱ ሓበሬታ ሕሳብን ርክብን፣ ቦታ ምሓዝ፣ ታሪኽ ክፍሊትን ምዕባለ ትምህርትን ይሕዝ።"}, "details": {"title": "ኣጠቓቕማን ድሕነትን", "body": "ዳታ ትምህርቲ ንምሃብ፣ ቦታ ምሓዝን ክፍሊትን ንምምሕዳር ይጥቀም። ስሱዕ ሓበሬታ ኣብ ሎግ ኣይጸሓፍን።"}, "rights": {"title": "ምርጫታትካ", "body": "ዝኣተዉ ተማሃሮ ዳታ ክወስዱን ሕሳቦም ክስርዙን ይኽእሉ። ምስራዝ ውልቃዊ ሓበሬታ ይሰውር፣ ንሕሳብን ክትትልን ዘድሊ ግን ይተርፍ።"}},
@@ -188,6 +215,8 @@
     ,"instructorStatus": {"title": "መምህራን ኣመሓድር", "description": "መምህራን ኣንጥፍ ወይ ኣቦዝን። ዝመጹ ዝተረጋገጹ ቦታታት ቅድሚኡ ቀይር ወይ ሰርዝ።", "active": "ንጡፍ", "inactive": "ዘይንጡፍ", "activate": "ኣንጥፍ", "deactivate": "ኣቦዝን", "saving": "ይዕቀብ…"}
   },
   "errors": {
+    "pageTitle": "ቴክኒካዊ ጸገም ኣጋጢሙ",
+    "retry": "ደጊምካ ፈትን",
     "NO_CREDITS": "ናይ ፓኬጅ ክሬዲት የብልካን። ዝኽፈል ሓደ ወይ ናይ ፈተነ ትምህርቲ ምረጽ።",
     "CHECKOUT_CONSENT_REQUIRED": "ቅድሚ ምቕጻል ክልቲኡ ናይ ክፍሊት ንድፊ ተሰማማዕ።",
     "INVALID_PICKUP_COORDINATES": "ኣብ ሽወደን ቅኑዕ ናይ ምውሳድ ኣድራሻ ምረጽ።",

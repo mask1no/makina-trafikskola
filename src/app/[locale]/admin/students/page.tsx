@@ -4,6 +4,12 @@ import { getTranslations } from "next-intl/server";
 import { calculateAvailableCreditBalance } from "@/lib/credits/ledger";
 import { formatPrice } from "@/lib/pricing/format";
 import { db } from "@/lib/db";
+import { Badge } from "@/components/Badge";
+import { Button } from "@/components/Button";
+import { EmptyState } from "@/components/EmptyState";
+import { Input } from "@/components/Input";
+import { PageHeader } from "@/components/PageHeader";
+import { StatCard } from "@/components/StatCard";
 
 import { CreditAdjustmentForm } from "./CreditAdjustmentForm";
 
@@ -105,27 +111,22 @@ export default async function AdminStudentsPage(
 
   return (
     <section>
-      <p className="text-sm font-bold text-ink-muted">{t("eyebrow")}</p>
-      <h1 className="mt-2 text-3xl font-black">{t("title")}</h1>
-      <p className="mt-2 text-ink-muted">{t("description")}</p>
+      <PageHeader eyebrow={t("eyebrow")} title={t("title")} description={t("description")} />
       <form className="mt-6 flex max-w-2xl flex-wrap gap-3">
         <div className="min-w-64 flex-1">
-          <label htmlFor="student-search" className="text-sm font-bold">
-            {t("searchLabel")}
-          </label>
-          <input
+          <Input
             id="student-search"
             name="q"
+            label={t("searchLabel")}
             defaultValue={q}
-            className="mt-2 min-h-11 w-full rounded-sm border border-border bg-card px-3"
           />
         </div>
-        <button
+        <Button
           type="submit"
-          className="min-h-11 self-end rounded-sm bg-accent px-5 font-bold text-accent-ink"
+          className="self-end"
         >
           {t("search")}
-        </button>
+        </Button>
       </form>
 
       <div className="mt-8 grid gap-6 lg:grid-cols-[20rem_1fr]">
@@ -167,12 +168,7 @@ export default async function AdminStudentsPage(
                 {selected.email ?? t("noEmail")} ·{" "}
                 {selected.localePref.toUpperCase()}
               </p>
-              <div className="mt-5 rounded-sm bg-page p-4">
-                <p className="text-sm font-bold text-ink-muted">
-                  {t("balance")}
-                </p>
-                <p className="mt-1 text-4xl font-black">{balance}</p>
-              </div>
+              <div className="mt-5 max-w-sm"><StatCard label={t("balance")} value={balance} /></div>
               <CreditAdjustmentForm studentId={selected.id} />
             </article>
 
@@ -188,9 +184,9 @@ export default async function AdminStudentsPage(
                       <p className="font-bold" dir="ltr">
                         {formatPrice(order.totalOre, params.locale)}
                       </p>
-                      <p className="text-sm">
+                      <Badge tone={order.status === "PAID" ? "success" : order.status === "FAILED" ? "danger" : "neutral"}>
                         {t(`orderStatus.${order.status}`)}
-                      </p>
+                      </Badge>
                     </div>
                     <p className="mt-1 text-sm text-ink-muted">
                       {formatter.format(order.createdAt)}
@@ -258,9 +254,7 @@ export default async function AdminStudentsPage(
             </article>
           </div>
         ) : (
-          <p className="rounded-md border border-border bg-card p-6 text-ink-muted">
-            {t("selectStudent")}
-          </p>
+          <EmptyState title={t("selectStudent")} description={t("description")} />
         )}
       </div>
     </section>

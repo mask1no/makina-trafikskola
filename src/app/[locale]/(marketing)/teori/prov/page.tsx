@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
@@ -33,13 +34,19 @@ export default async function TeoriprovPage(
   const available = Boolean(paid && count >= 65);
 
   return (
-    <div className="px-4 py-12 sm:py-20">
-      <article className="mx-auto max-w-3xl rounded-lg border border-border bg-card p-6 sm:p-10">
+    <div className="section-shell">
+      <article className="site-container max-w-5xl overflow-hidden rounded-lg border border-border bg-card p-0 shadow-card">
+        <div className="grid items-center border-b border-border bg-card-muted md:grid-cols-[1fr_.65fr]">
+        <div className="p-6 sm:p-10">
         <p className="text-sm font-bold uppercase tracking-wider text-ink-muted">
           {t("eyebrow")}
         </p>
         <h1 className="mt-2 text-4xl font-black">{t("title")}</h1>
         <p className="mt-4 text-lg leading-8 text-ink-muted">{t("description")}</p>
+        </div>
+        <Image src="/illustration-theory.svg" alt="" width={420} height={300} className="rtl-no-mirror mx-auto h-64 w-auto object-contain p-6" />
+        </div>
+        <div className="p-6 sm:p-10">
         <dl className="mt-8 grid gap-4 sm:grid-cols-3">
           <div className="rounded-md bg-page p-4"><dt className="font-bold">{t("questions")}</dt><dd className="mt-1 text-2xl font-black">65</dd></div>
           <div className="rounded-md bg-page p-4"><dt className="font-bold">{t("time")}</dt><dd className="mt-1 text-2xl font-black">50</dd></div>
@@ -71,6 +78,7 @@ export default async function TeoriprovPage(
             error: t("error"),
           }}
         />
+        </div>
       </article>
     </div>
   );

@@ -14,15 +14,17 @@ const messageLoaders = {
 function ErrorContent({ reset }: { reset: () => void }) {
   const t = useTranslations("errors");
   return (
-    <main className="grid min-h-screen place-items-center bg-page p-6">
-      <div className="max-w-md rounded-md border border-border bg-card p-6 text-center">
-        <p role="alert">{t("UNKNOWN")}</p>
+    <main className="grid min-h-screen place-items-center bg-surface p-6 text-ink-inverse">
+      <div className="w-full max-w-lg rounded-lg border border-surface-soft bg-surface-raised p-8 text-center shadow-float sm:p-10">
+        <span aria-hidden="true" className="mx-auto grid size-14 place-items-center rounded-full bg-accent text-2xl font-black text-accent-ink">!</span>
+        <h1 className="mt-6 text-3xl font-black">{t("pageTitle")}</h1>
+        <p className="mt-3 text-ink-muted" role="alert">{t("UNKNOWN")}</p>
         <button
           type="button"
           onClick={reset}
           className="mt-5 min-h-11 rounded-sm bg-accent px-5 font-bold text-accent-ink"
         >
-          {t("UNKNOWN")}
+          {t("retry")}
         </button>
       </div>
     </main>

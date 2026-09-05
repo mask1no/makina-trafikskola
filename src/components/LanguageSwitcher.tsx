@@ -12,13 +12,23 @@ export function LanguageSwitcher() {
   const t = useTranslations("language");
 
   return (
-    <label className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold">
+    <label className="relative inline-flex min-h-11 items-center text-sm font-semibold">
       <span className="sr-only">{t("label")}</span>
-      <span aria-hidden="true">◎</span>
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 24 24"
+        className="pointer-events-none absolute start-3 size-4"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.75"
+      >
+        <circle cx="12" cy="12" r="9" />
+        <path d="M3 12h18M12 3c2.2 2.5 3.3 5.5 3.3 9S14.2 18.5 12 21M12 3C9.8 5.5 8.7 8.5 8.7 12S9.8 18.5 12 21" />
+      </svg>
       <select
         value={currentLocale}
         aria-label={t("label")}
-        className="min-h-11 rounded-sm border border-card/30 bg-surface px-3 text-ink-inverse"
+        className="min-h-11 max-w-32 rounded-sm border border-surface-soft bg-surface-raised ps-9 pe-8 text-ink-inverse outline-none transition hover:border-ink-muted focus:border-accent"
         onChange={(event) =>
           router.replace(pathname, { locale: event.target.value as Locale })
         }

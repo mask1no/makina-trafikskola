@@ -65,7 +65,7 @@ test.describe("authorization boundaries", () => {
     await page.getByLabel("Email").fill("admin@makina.local");
     await page.getByLabel("Password").fill("Passw0rd!");
     await page.getByRole("button", { name: "Log in" }).click();
-    await expect(page).toHaveURL(/\/en\/admin\/calendar$/);
+    await expect(page).toHaveURL(/\/en\/admin$/);
 
     const response = await page.goto("/en/mina-sidor");
     expect(response?.status()).toBe(403);

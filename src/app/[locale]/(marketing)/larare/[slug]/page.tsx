@@ -1,10 +1,11 @@
 import Image from "next/image";
-import Link from "next/link";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
 import { isLocale } from "@/i18n/routing";
+import { Badge } from "@/components/Badge";
+import { LinkButton } from "@/components/LinkButton";
 
 import { getTeacher } from "../../_lib/data";
 
@@ -48,9 +49,9 @@ export default async function TeacherDetailPage(
   const initials = `${teacher.user.firstName[0] ?? ""}${teacher.user.lastName[0] ?? ""}`;
 
   return (
-    <div className="px-4 py-12 sm:py-20">
-      <article className="mx-auto max-w-5xl overflow-hidden rounded-lg border border-border bg-card shadow-sm">
-        <div className="grid md:grid-cols-[.75fr_1.25fr]">
+    <div className="section-shell">
+      <article className="site-container">
+        <div className="grid overflow-hidden rounded-lg border border-border bg-card shadow-card md:grid-cols-[.8fr_1.2fr]">
           <div className="grid min-h-72 place-items-center bg-surface p-8 text-ink-inverse">
             {teacher.photoUrl ? (
               <Image
@@ -75,9 +76,9 @@ export default async function TeacherDetailPage(
             </p>
             <h1 className="mt-2 text-4xl font-black">{name}</h1>
             {teacher.slug === "sara-johansson" ? (
-              <span className="mt-3 inline-block rounded-full bg-accent px-3 py-1 text-sm font-bold text-accent-ink">
+              <Badge tone="accent" className="mt-3">
                 {t("teacher.demoProfile")}
-              </span>
+              </Badge>
             ) : null}
             <p className="mt-3 text-ink-muted">
               {t("teacher.yearsExperience", { count: teacher.yearsExperience })}
@@ -115,14 +116,25 @@ export default async function TeacherDetailPage(
                 </dd>
               </div>
             </dl>
-            <Link
+            <LinkButton
               href={`/${params.locale}/boka?teacher=${teacher.id}`}
-              className="mt-8 inline-flex min-h-11 items-center rounded-sm bg-accent px-5 font-bold text-accent-ink hover:bg-accent-hover"
+              className="mt-8"
             >
               {t("teacher.bookWith", { name: teacher.user.firstName })}
-            </Link>
+            </LinkButton>
           </div>
         </div>
+        <section className="mt-8 grid overflow-hidden rounded-lg border border-border bg-card md:grid-cols-[.7fr_1.3fr]" aria-labelledby="teacher-location-title">
+          <div className="p-6 sm:p-8">
+            <h2 id="teacher-location-title" className="text-2xl font-black">{t("teacher.locations")}</h2>
+            <p className="mt-3 leading-7 text-ink-muted">
+              {teacher.locations.length
+                ? teacher.locations.map(({ location }) => location.name).join(" · ")
+                : t("map.unavailableDescription")}
+            </p>
+          </div>
+          <div className="static-map rtl-no-mirror relative min-h-64 border-t border-border md:border-s md:border-t-0" role="img" aria-label={t("map.staticLabel")} />
+        </section>
       </article>
     </div>
   );

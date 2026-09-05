@@ -1,10 +1,11 @@
-import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { z } from "zod";
 
 import { db } from "@/lib/db";
 import { formatPrice } from "@/lib/pricing/format";
+import { LinkButton } from "@/components/LinkButton";
+import { Notice } from "@/components/Notice";
 
 import { requireStudent } from "../../_lib";
 
@@ -80,17 +81,26 @@ export default async function PaymentStatusPage(
     order.status === "PENDING" &&
     Boolean(order.payment?.stripePaymentIntentId) &&
     order.payment?.status !== "SUCCEEDED";
+  const statusTone =
+    order.status === "PAID"
+      ? "border-success bg-success-soft"
+      : order.status === "FAILED"
+        ? "border-danger bg-danger-soft"
+        : order.status === "PENDING"
+          ? "border-accent bg-accent-soft"
+          : "border-border-strong bg-card-muted";
 
   return (
-    <section>
-      <p className="text-sm font-bold text-ink-muted">{t("eyebrow")}</p>
-      <h1 className="mt-2 text-3xl font-black">{t("title")}</h1>
-      <div className="mt-6 rounded-xl border border-border bg-card p-6">
-        <p className="font-bold">
-          {t("orderStatus", {
-            status: t(`statuses.${order.status}`),
-          })}
-        </p>
+    <section className="mx-auto max-w-4xl">
+      <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-ink-muted">{t("eyebrow")}</p>
+      <h1 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">{t("title")}</h1>
+      <div className={`mt-6 rounded-lg border p-5 sm:p-6 ${statusTone}`} role="status">
+        <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-ink-muted">{t("eyebrow")}</p>
+        <p className="mt-1 text-2xl font-black">{t(`statuses.${order.status}`)}</p>
+        <p className="mt-2 text-sm text-ink-muted">{t("orderStatus", { status: t(`statuses.${order.status}`) })}</p>
+      </div>
+      <div className="mt-6 rounded-lg border border-border bg-card p-5 shadow-card sm:p-8">
+        <h2 className="text-xl font-black">{t("title")}</h2>
         <ul className="mt-6 grid gap-4">
           {order.items.map((item) => (
             <li
@@ -128,34 +138,35 @@ export default async function PaymentStatusPage(
         </dl>
       </div>
       {rebookingKind ? (
-        <div
-          role="status"
-          className="mt-6 rounded-xl border border-accent bg-card p-5"
-        >
+        <Notice className="mt-6" tone="success">
+          <div>
           <h2 className="text-xl font-black">
             {t(`late.${rebookingKind}.title`)}
           </h2>
           <p className="mt-2 text-ink-muted">
             {t(`late.${rebookingKind}.description`)}
           </p>
-          <Link
+          <LinkButton
             href={`/${parsed.data.locale}/${rebookingKind === "lesson" ? "boka" : "kurser"}`}
-            className="mt-4 inline-flex min-h-11 items-center rounded-xl bg-accent px-5 font-bold text-accent-ink"
+            className="mt-4"
           >
             {t(`late.${rebookingKind}.action`)}
-          </Link>
-        </div>
+          </LinkButton>
+          </div>
+        </Notice>
       ) : null}
       {canRetry ? (
-        <div className="mt-6 rounded-xl border border-border bg-page p-5">
+        <Notice className="mt-6">
+          <div>
           <p>{t("retryDescription")}</p>
-          <Link
+          <LinkButton
             href={`/${parsed.data.locale}/checkout/${order.id}`}
-            className="mt-4 inline-flex min-h-11 items-center rounded-xl bg-accent px-5 font-bold text-accent-ink"
+            className="mt-4"
           >
             {t("retry")}
-          </Link>
-        </div>
+          </LinkButton>
+          </div>
+        </Notice>
       ) : null}
     </section>
   );

@@ -17,20 +17,29 @@ export function Select({
 
   return (
     <div className="grid gap-2">
-      <label className="text-sm font-semibold" htmlFor={selectId}>
-        {label}
+      <label className="grid gap-2 text-sm font-semibold text-ink" htmlFor={selectId}>
+        <span>{label}</span>
+        <select
+          id={selectId}
+          className={`min-h-11 w-full rounded-sm border bg-card px-4 py-2.5 text-ink shadow-soft outline-none transition duration-200 ease-premium hover:border-border-strong focus:border-ink ${
+            error ? "border-danger" : "border-border"
+          } ${className}`}
+          aria-invalid={Boolean(error)}
+          aria-describedby={error && selectId ? `${selectId}-error` : undefined}
+          {...props}
+        >
+          {children}
+        </select>
       </label>
-      <select
-        id={selectId}
-        className={`min-h-11 rounded-sm border bg-card px-4 text-ink outline-none focus:border-accent ${
-          error ? "border-danger" : "border-border"
-        } ${className}`}
-        aria-invalid={Boolean(error)}
-        {...props}
-      >
-        {children}
-      </select>
-      {error ? <p className="text-sm text-danger">{error}</p> : null}
+      {error ? (
+        <p
+          id={selectId ? `${selectId}-error` : undefined}
+          className="text-sm font-medium text-danger"
+          role="alert"
+        >
+          {error}
+        </p>
+      ) : null}
     </div>
   );
 }

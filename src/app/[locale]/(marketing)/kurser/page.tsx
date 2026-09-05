@@ -1,7 +1,10 @@
+import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
 import { EmptyState } from "@/components/EmptyState";
+import { Badge } from "@/components/Badge";
+import { PageHeader } from "@/components/PageHeader";
 import { isLocale } from "@/i18n/routing";
 import { resolveContent } from "@/lib/content/fallback";
 import { db } from "@/lib/db";
@@ -61,17 +64,14 @@ export default async function KurserPage(
   });
 
   return (
-    <div className="px-4 py-12 sm:py-16">
-      <div className="mx-auto max-w-5xl">
-        <p className="text-sm font-bold uppercase tracking-wider text-ink-muted">
-          {t("eyebrow")}
-        </p>
-        <h1 className="mt-2 text-4xl font-black sm:text-5xl">{t("title")}</h1>
-        <p className="mt-4 max-w-3xl text-lg leading-8 text-ink-muted">
-          {t("description")}
-        </p>
+    <div className="section-shell">
+      <div className="site-container max-w-6xl">
+        <div className="grid items-center gap-8 md:grid-cols-[1fr_.7fr]">
+          <PageHeader eyebrow={t("eyebrow")} title={t("title")} description={t("description")} />
+          <Image src="/illustration-course.svg" alt="" width={520} height={360} className="rtl-no-mirror mx-auto h-64 w-auto object-contain" priority />
+        </div>
         {occasions.length ? (
-          <div className="mt-10 grid gap-5">
+          <div className="mt-12 grid gap-5">
             {occasions.map((occasion) => {
               const content = resolveContent(
                 occasion.course.product.translations,
@@ -85,13 +85,13 @@ export default async function KurserPage(
               return (
                 <article
                   key={occasion.id}
-                  className="rounded-lg border border-border bg-card p-6"
+                  className="rounded-lg border border-border bg-card p-6 shadow-soft sm:p-8"
                 >
                   <div className="flex flex-wrap items-start justify-between gap-4">
                     <div>
-                      <p className="text-sm font-bold text-ink-muted">
+                      <Badge>
                         {t(`kind.${occasion.course.kind}`)}
-                      </p>
+                      </Badge>
                       <h2 className="mt-1 text-2xl font-black">
                         {content.translation.name}
                       </h2>

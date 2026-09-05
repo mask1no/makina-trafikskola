@@ -30,9 +30,10 @@ export function TeacherMap({
 }: TeacherMapProps) {
   if (!apiKey) {
     return (
-      <div className="rtl-no-mirror static-map relative grid min-h-[28rem] place-items-center overflow-hidden rounded-lg border border-border p-6">
-        <div className="relative max-w-sm rounded-md bg-card p-5 text-center shadow">
-          <h2 className="font-bold">{missingKeyTitle}</h2>
+      <div className="rtl-no-mirror static-map relative grid min-h-[30rem] place-items-center overflow-hidden rounded-lg border border-border p-6 shadow-card">
+        <div className="relative max-w-sm rounded-md border border-border bg-card p-6 text-center shadow-card">
+          <span className="mx-auto grid size-12 place-items-center rounded-full bg-accent text-xl text-accent-ink" aria-hidden="true">⌖</span>
+          <h2 className="mt-4 text-lg font-black">{missingKeyTitle}</h2>
           <p className="mt-2 text-sm leading-6 text-ink-muted">
             {missingKeyDescription}
           </p>

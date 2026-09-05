@@ -1,8 +1,9 @@
-import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
 
 import { auth } from "@/auth";
+import { LinkButton } from "@/components/LinkButton";
+import { NavPills } from "@/components/NavPills";
 
 export default async function StudentLayout(
   props: {
@@ -24,7 +25,10 @@ export default async function StudentLayout(
   }
   if (session.user.role !== "STUDENT") redirect(`/${params.locale}`);
 
-  const t = await getTranslations("student.nav");
+  const [t, shellT] = await Promise.all([
+    getTranslations("student.nav"),
+    getTranslations("shell"),
+  ]);
   const links = [
     ["", t("overview")],
     ["/bokningar", t("bookings")],
@@ -33,21 +37,31 @@ export default async function StudentLayout(
     ["/meddelanden", t("messages")],
     ["/profil", t("profile")],
   ];
+  const base = `/${params.locale}/mina-sidor`;
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
-      <nav aria-label={t("label")} className="mb-8 flex gap-2 overflow-x-auto pb-2">
-        {links.map(([path, label]) => (
-          <Link
-            key={path}
-            href={`/${params.locale}/mina-sidor${path}`}
-            className="inline-flex min-h-11 shrink-0 items-center rounded-full border border-border bg-card px-4 text-sm font-bold hover:border-accent"
-          >
-            {label}
-          </Link>
-        ))}
-      </nav>
-      {children}
+    <div>
+      <div className="border-b border-surface-soft bg-surface text-ink-inverse">
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-6 sm:px-6">
+          <div>
+            <p className="text-sm font-bold text-ink-muted">{t("label")}</p>
+            <p className="mt-1 text-xl font-black">{session.user.name}</p>
+          </div>
+          <LinkButton href={`/${params.locale}/boka`} className="shrink-0">
+            {shellT("book")}
+          </LinkButton>
+        </div>
+      </div>
+      <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-8">
+        <NavPills
+          label={t("label")}
+          items={links.map(([path, label]) => ({
+            href: `${base}${path}`,
+            label,
+          }))}
+        />
+        <main className="mt-8">{children}</main>
+      </div>
     </div>
   );
 }

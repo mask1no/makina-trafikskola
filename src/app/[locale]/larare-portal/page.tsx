@@ -4,6 +4,11 @@ import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
 
 import { auth } from "@/auth";
+import { Button } from "@/components/Button";
+import { EmptyState } from "@/components/EmptyState";
+import { Input } from "@/components/Input";
+import { PageHeader } from "@/components/PageHeader";
+import { Textarea } from "@/components/Textarea";
 import { db } from "@/lib/db";
 
 import { blockAvailability, reportLesson } from "./actions";
@@ -82,21 +87,22 @@ export default async function TeacherPortal(
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
       <section>
-        <p className="text-sm font-bold text-ink-muted">{t("eyebrow")}</p>
-        <h1 className="mt-2 text-3xl font-black">{t("title")}</h1>
-        <p className="mt-2 text-ink-muted">
-          {t("lessonCount", { count: lessons.length })}
-        </p>
-        <div className="mt-6 grid gap-4">
+        <PageHeader
+          eyebrow={t("eyebrow")}
+          title={t("title")}
+          description={t("lessonCount", { count: lessons.length })}
+        />
+        <div className="relative mt-8 grid gap-4 before:absolute before:bottom-6 before:start-[1.4rem] before:top-6 before:w-px before:bg-border sm:before:start-[3.45rem]">
           {lessons.map((lesson, index) => {
             const address = lesson.pickupAddress ?? lesson.location?.address;
             const previous = previousNotes[index]?.lessonReport;
             return (
-              <article key={lesson.id} className="rounded-md border border-border bg-card p-5">
-                <div className="flex flex-wrap items-start gap-4">
-                  <p className="text-2xl font-black" dir="ltr">
+              <article key={lesson.id} className="relative ms-12 rounded-md border border-border bg-card p-5 shadow-soft sm:ms-28 sm:p-6">
+                <p className="absolute end-[calc(100%+1rem)] top-4 rounded-sm border border-border bg-card px-2 py-1 text-sm font-black numbers-ltr sm:end-[calc(100%+1.25rem)]" dir="ltr">
                     {timeFormatter.format(lesson.startsAt)}
-                  </p>
+                </p>
+                <span aria-hidden="true" className="absolute -start-[1.95rem] top-7 size-3 rounded-full border-2 border-card bg-accent sm:-start-[5.2rem]" />
+                <div className="flex flex-wrap items-start justify-between gap-4">
                   <div>
                     <h2 className="text-lg font-bold">
                       {lesson.student.firstName} {lesson.student.lastName}
@@ -129,63 +135,48 @@ export default async function TeacherPortal(
                 <form action={reportLesson} className="mt-4 grid gap-3">
                   <input type="hidden" name="bookingId" value={lesson.id} />
                   <input type="hidden" name="locale" value={params.locale} />
-                  <label className="text-sm font-bold" htmlFor={`summary-${lesson.id}`}>
-                    {t("summary")}
-                  </label>
-                  <textarea
+                  <Textarea
                     id={`summary-${lesson.id}`}
                     name="summary"
+                    label={t("summary")}
                     defaultValue={lesson.lessonReport?.summary ?? ""}
-                    className="min-h-24 rounded-sm border border-border bg-card p-3"
+                    className="min-h-24"
                   />
-                  <label className="text-sm font-bold" htmlFor={`focus-${lesson.id}`}>
-                    {t("nextFocus")}
-                  </label>
-                  <input
+                  <Input
                     id={`focus-${lesson.id}`}
                     name="nextFocus"
+                    label={t("nextFocus")}
                     defaultValue={lesson.lessonReport?.nextFocus ?? ""}
-                    className="min-h-11 rounded-sm border border-border bg-card px-3"
                   />
-                  <button className="min-h-11 rounded-sm bg-accent px-4 font-bold text-accent-ink" type="submit">
+                  <Button type="submit">
                     {lesson.status === "COMPLETED" ? t("updateReport") : t("completeLesson")}
-                  </button>
+                  </Button>
                 </form>
               </article>
             );
           })}
           {!lessons.length ? (
-            <p className="rounded-md border border-border bg-card p-6 text-ink-muted">
-              {t("empty")}
-            </p>
+            <div className="relative z-10 bg-page"><EmptyState title={t("empty")} description={t("lessonCount", { count: 0 })} /></div>
           ) : null}
         </div>
       </section>
 
-      <section className="mt-10 rounded-md border border-border bg-card p-5">
+      <section className="mt-10 rounded-md border border-border bg-card p-5 shadow-soft sm:p-6">
         <h2 className="text-xl font-bold">{t("block.title")}</h2>
         <p className="mt-2 text-sm text-ink-muted">{t("block.description")}</p>
         <form action={blockAvailability} className="mt-5 grid gap-4 sm:grid-cols-2">
           <input type="hidden" name="locale" value={params.locale} />
-          <div className="grid gap-2 sm:col-span-2">
-            <label htmlFor="block-date" className="text-sm font-bold">{t("block.date")}</label>
-            <input id="block-date" name="date" type="date" defaultValue={tomorrow} required className="min-h-11 rounded-sm border border-border px-3" />
+          <div className="sm:col-span-2">
+            <Input id="block-date" name="date" type="date" label={t("block.date")} defaultValue={tomorrow} required />
           </div>
-          <div className="grid gap-2">
-            <label htmlFor="block-start" className="text-sm font-bold">{t("block.start")}</label>
-            <input id="block-start" name="startTime" type="time" className="min-h-11 rounded-sm border border-border px-3" />
+          <Input id="block-start" name="startTime" type="time" label={t("block.start")} />
+          <Input id="block-end" name="endTime" type="time" label={t("block.end")} />
+          <div className="sm:col-span-2">
+            <Input id="block-reason" name="reason" label={t("block.reason")} />
           </div>
-          <div className="grid gap-2">
-            <label htmlFor="block-end" className="text-sm font-bold">{t("block.end")}</label>
-            <input id="block-end" name="endTime" type="time" className="min-h-11 rounded-sm border border-border px-3" />
-          </div>
-          <div className="grid gap-2 sm:col-span-2">
-            <label htmlFor="block-reason" className="text-sm font-bold">{t("block.reason")}</label>
-            <input id="block-reason" name="reason" className="min-h-11 rounded-sm border border-border px-3" />
-          </div>
-          <button className="min-h-11 rounded-sm bg-accent px-4 font-bold text-accent-ink sm:col-span-2" type="submit">
+          <Button className="sm:col-span-2" type="submit">
             {t("block.submit")}
-          </button>
+          </Button>
         </form>
       </section>
     </div>

@@ -10,20 +10,24 @@ export function Input({ id, label, error, className = "", ...props }: InputProps
 
   return (
     <div className="grid gap-2">
-      <label className="text-sm font-semibold text-ink" htmlFor={inputId}>
-        {label}
+      <label className="grid gap-2 text-sm font-semibold text-ink" htmlFor={inputId}>
+        <span>{label}</span>
+        <input
+          id={inputId}
+          className={`min-h-11 w-full rounded-sm border bg-card px-4 py-2.5 text-ink shadow-soft outline-none transition duration-200 ease-premium placeholder:text-ink-subtle hover:border-border-strong focus:border-ink ${
+            error ? "border-danger" : "border-border"
+          } ${className}`}
+          aria-invalid={Boolean(error)}
+          aria-describedby={error && inputId ? `${inputId}-error` : undefined}
+          {...props}
+        />
       </label>
-      <input
-        id={inputId}
-        className={`min-h-11 rounded-sm border bg-card px-4 text-ink outline-none transition placeholder:text-ink-muted focus:border-accent ${
-          error ? "border-danger" : "border-border"
-        } ${className}`}
-        aria-invalid={Boolean(error)}
-        aria-describedby={error && inputId ? `${inputId}-error` : undefined}
-        {...props}
-      />
       {error ? (
-        <p id={inputId ? `${inputId}-error` : undefined} className="text-sm text-danger">
+        <p
+          id={inputId ? `${inputId}-error` : undefined}
+          className="text-sm font-medium text-danger"
+          role="alert"
+        >
           {error}
         </p>
       ) : null}

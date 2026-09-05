@@ -3,6 +3,9 @@ import { getTranslations } from "next-intl/server";
 
 import { getAvailableCreditBalance } from "@/lib/credits/ledger";
 import { db } from "@/lib/db";
+import { LinkButton } from "@/components/LinkButton";
+import { PageHeader } from "@/components/PageHeader";
+import { StatCard } from "@/components/StatCard";
 
 import { requireStudent } from "./_lib";
 
@@ -43,41 +46,38 @@ export default async function StudentDashboard(
 
   return (
     <section>
-      <h1 className="text-3xl font-black">{t("title")}</h1>
-      <div className="mt-6 grid gap-4 md:grid-cols-3">
-        <article className="rounded-md border border-border bg-card p-5">
-          <h2 className="font-bold">{t("nextBooking")}</h2>
+      <PageHeader title={t("title")} />
+      <div className="mt-8 grid gap-4 lg:grid-cols-[1.4fr_0.6fr]">
+        <article className="rounded-lg border border-border bg-card p-6 shadow-card sm:p-8">
+          <p className="text-sm font-bold text-ink-muted">{t("nextBooking")}</p>
           {nextBooking ? (
             <>
-              <p className="mt-3 text-lg font-bold">{date}</p>
-              <p className="mt-1 text-sm text-ink-muted">
+              <p className="mt-3 text-2xl font-black tracking-tight sm:text-3xl">{date}</p>
+              <p className="mt-2 text-ink-muted">
                 {nextBooking.teacher.user.firstName}{" "}
                 {nextBooking.teacher.user.lastName}
               </p>
             </>
           ) : (
-            <p className="mt-3 text-ink-muted">{t("noBooking")}</p>
+            <p className="mt-3 leading-7 text-ink-muted">{t("noBooking")}</p>
           )}
-          <Link className="mt-4 inline-flex min-h-11 items-center font-bold underline" href={`/${params.locale}/mina-sidor/bokningar`}>
+          <LinkButton className="mt-6" href={`/${params.locale}/mina-sidor/bokningar`}>
             {t("viewBookings")}
-          </Link>
+          </LinkButton>
         </article>
-        <article className="rounded-md border border-border bg-card p-5">
-          <h2 className="font-bold">{t("saldo")}</h2>
-          <p className="mt-3 text-3xl font-black">{credits.balance}</p>
-          <Link className="mt-4 inline-flex min-h-11 items-center font-bold underline" href={`/${params.locale}/mina-sidor/saldo`}>
-            {t("viewSaldo")}
-          </Link>
-        </article>
-        <article className="rounded-md border border-border bg-card p-5">
-          <h2 className="font-bold">{t("theory")}</h2>
-          <p className="mt-3 text-ink-muted">
-            {theoryAccess ? t("theoryActive") : t("theoryInactive")}
-          </p>
-          <Link className="mt-4 inline-flex min-h-11 items-center font-bold underline" href={`/${params.locale}/mina-sidor/teori`}>
-            {t("viewTheory")}
-          </Link>
-        </article>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+          <StatCard
+            label={t("saldo")}
+            value={credits.balance}
+            detail={<Link className="inline-flex min-h-11 items-center font-bold underline" href={`/${params.locale}/mina-sidor/saldo`}>{t("viewSaldo")}</Link>}
+          />
+          <StatCard
+            label={t("theory")}
+            value={theoryAccess ? t("theoryActive") : t("theoryInactive")}
+            className="[&_[class*='text-3xl']]:text-lg"
+            detail={<Link className="inline-flex min-h-11 items-center font-bold underline" href={`/${params.locale}/mina-sidor/teori`}>{t("viewTheory")}</Link>}
+          />
+        </div>
       </div>
     </section>
   );
