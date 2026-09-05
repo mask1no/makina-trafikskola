@@ -1,0 +1,195 @@
+{
+  "language": {
+    "label": "ቋንቋ ምረጽ",
+    "sv": "Svenska",
+    "en": "English",
+    "ti": "ትግርኛ",
+    "ar": "العربية",
+    "so": "Soomaali"
+  },
+  "shell": {
+    "navigation": "ቀንዲ መምርሒ",
+    "home": "ቀዳማይ ገጽ",
+    "packages": "ፓኬጃት",
+    "bookings": "ቦታ ምሓዘይ",
+    "messages": "መልእኽትታት",
+    "theory": "ቲዮሪ",
+    "profile": "ፕሮፋይል",
+    "lessons": "ትምህርቲ ምዝዋር",
+    "teachers": "መምህራን",
+    "book": "ሕጂ ሓዝ",
+    "footerDescription": "ንጹር መምርሒን ብቋንቋኻ ደገፍን ዘለዎ ትምህርቲ ምዝዋር።",
+    "explore": "ዳህስስ",
+    "terms": "ውዕላት",
+    "privacy": "ውልቃዊነት",
+    "cookies": "ኩኪታት",
+    "languageHelp": "ብቋንቋኻ ደገፍ",
+    "languageHelpDescription": "መምህራን ብቋንቋ ፈልይ እሞ ዝሰማምዓካ ምረጽ።"
+  },
+  "common": {
+    "bookNow": "ሕጂ ሓዝ",
+    "viewAll": "ኩሉ ርአ",
+    "readMore": "ተወሳኺ ኣንብብ",
+    "swedishOnly": "ብሽወደንኛ ጥራይ",
+    "all": "ኩሎም ቋንቋታት",
+    "allLocations": "ኩሎም ቦታታት",
+    "applyFilter": "ውጽኢት ኣርኢ"
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "መንገድኻ ናብ ፍቓድ ምዝዋር",
+      "title": "ብምትእምማን ዘውር፣ ብቋንቋኻ ተማሃር",
+      "description": "ትምህርቲ ምዝዋር፣ ቲዮሪን ምኩራት መምህራንን ኣብ ስቶክሆልም።",
+      "findTeacher": "መምህር ድለ",
+      "cardLabel": "ውልቃዊ ትምህርቲ",
+      "cardTitle": "ካብ ቀዳማይ ትምህርቲ ንጹር መደብ",
+      "cardDescription": "ቋንቋ፣ ዓይነት መኪናን መምህርን ብድሌትካ ምረጽ።"
+    },
+    "products": {
+      "eyebrow": "ትምህርቲ ምዝዋር",
+      "title": "ዝሰማምዓካ መንገዲ ምረጽ"
+    },
+    "teachers": {
+      "eyebrow": "ብቋንቋኻ ተማሃር",
+      "title": "ንመምህራንና ፍለጦም",
+      "description": "ቋንቋኻ ዝዛረብን ኣብ እትደልዮ ቦታ ዝምህርን መምህር ድለ።"
+    },
+    "location": {
+      "eyebrow": "ኣብ ጥቓኻ",
+      "title": "ኣብ ካርታ መምህራን ድለ",
+      "description": "ኣብ ቦታታትና ዘለዉ መምህራን ርአ። ተንቀሳቓሲ ካርታ ኣብ ገጽ መምህራን ጥራይ ይጽዓን።",
+      "openMap": "ካርታ መምህራን ክፈት",
+      "area": "ከባቢ ስቶክሆልም"
+    }
+  },
+  "lessons": {
+    "eyebrow": "ዋጋታትን ፓኬጃትን",
+    "title": "ንኹሉ ደረጃ ትምህርቲ ምዝዋር",
+    "description": "ንጽል ትምህርትን ፓኬጃትን ኣወዳድር። ኩሉ ዋጋታት ቫት የጠቓልል።",
+    "provisionalNotice": "ዋጋታት ግዝያዊ እዮም፣ ፍርያት ድማ ገና ክዕደጉ ኣይክእሉን።"
+  },
+  "product": {
+    "popular": "ዝያዳ ዝምረጽ",
+    "notForSale": "ገና ንመሸጣ ኣይቀረበን",
+    "emptyTitle": "ዝረአ ፍርያት የለን",
+    "emptyDescription": "እቲ ዝርዝር ይሕደስ ኣሎ። ቀልጢፍካ ተመለስ።",
+    "included": "ዝጠቓለል",
+    "priceIncludesVat": "ዋጋ ምስ ቫት",
+    "provisionalDescription": "ናይ መወዳእታ ዋጋ ምስ ተረጋገጸ ጥራይ እዚ ፍርያት ይንቀሳቐስ።",
+    "checkout": {"terms": "ንድፊ ውዕል ዕድጊ ተቐቢለ።", "withdrawal": "ንድፊ 14 መዓልቲ መሰል ምስራዝ ኣንቢበ፣ ኣገልግሎት ብመደቡ ክጅምር እሓትት።", "submit": "ናብ ክፍሊት ቀጽል", "redirecting": "ክፍሊት ይኽፈት ኣሎ…", "error": "ክፍሊት ክጅምር ኣይከኣለን። እቶ እሞ ደጊምካ ፈትን።"}
+  },
+  "checkout": {
+    "eyebrow": "ውሑስ ክፍሊት", "title": "ክፍሊትካ ዛዝም", "businessName": "Makina Trafikskola",
+    "total": "ጠቕላላ", "vat": "ካብዚ ተወሳኺ እሴት ግብሪ", "submit": "ሕጂ ክፈል", "submitting": "ክፍሊት ይስራሕ ኣሎ…",
+    "genericError": "ክፍሊት ክዛዘም ኣይከኣለን። ሓበሬታኻ ኣረጋግጽ እሞ ደጊምካ ፈትን።",
+    "mockTitle": "ናይ ልምዓት ክፍሊት", "mockDescription": "ናይ Stripe መፍትሕታት የለዉን። ትእዛዙ ይጽበ፣ ክፍሊት ወይ ምርካብ ግን ኣይፍጸምን።",
+    "unavailable": "ክፍሊት ሕጂ ኣይርከብን። ገንዘብ ኣይተቐነሰን።", "alreadyProcessed": "እዚ ትእዛዝ ድሮ ተሰሪሑ እዩ።", "viewStatus": "ኩነታት ትእዛዝ ርአ"
+  },
+  "teachers": {
+    "eyebrow": "መምህራንና",
+    "title": "ዝሰማምዓካ መምህር ድለ",
+    "description": "መጀመርታ ቋንቋ፣ ድሕሪኡ ቦታ ምረጽ።",
+    "languageFilter": "1. ቋንቋ ምረጽ",
+    "locationFilter": "2. ቦታ ምረጽ",
+    "results": "ውጽኢት መምህራን",
+    "resultCount": "{count, plural, =0 {መምህር የለን} =1 {1 መምህር} other {# መምህራን}}",
+    "emptyTitle": "ዝሰማማዕ መምህር የለን",
+    "emptyDescription": "ካልእ ቋንቋ ወይ ቦታ ፈትን።",
+    "transmissionFilter": "3. ዓይነት መኪና ምረጽ",
+    "allTransmissions": "ኩሎም ዓይነታት"
+  },
+  "teacher": {
+    "yearsExperience": "{count, plural, =0 {ሓድሽ መምህር} =1 {1 ዓመት ተመክሮ} other {# ዓመት ተመክሮ}}",
+    "viewProfile": "ፕሮፋይል ርአ",
+    "transmission": {
+      "manual": "ማንዋል",
+      "automatic": "ኣውቶማቲክ"
+    },
+    "profileEyebrow": "መምህር ምዝዋር",
+    "bioPending": "መግለጺ መምህር ይሕደስ ኣሎ።",
+    "languages": "ቋንቋታት",
+    "transmissions": "ዓይነት መኪና",
+    "locations": "ቦታታት",
+    "bookWith": "ምስ {name} ሓዝ"
+  },
+  "map": {
+    "title": "ካርታ መምህራን",
+    "staticLabel": "ቀሊል ካርታ ከባቢ ስቶክሆልም",
+    "interactiveLabel": "ተንቀሳቓሲ ካርታ ቦታታት መምህራን",
+    "unavailableTitle": "ካርታ ሕጂ ኣይርከብን",
+    "unavailableDescription": "ካብቲ ዝርዝር መምህር ክትደሊን ክትመርጽን ትኽእል ኢኻ።"
+  },
+  "courses": {
+    "eyebrow": "ስልጠና ሓደጋን ኮርሳትን", "title": "ዝመጽእ ኮርሳት", "description": "ዝተመደቡ ኮርሳትን ዝተረፉ ቦታታትን ርአ።",
+    "when": "ግዜ", "language": "ቋንቋ", "venue": "ቦታ", "seats": "ዝተረፈ ቦታ", "seatsLeft": "{count, plural, =0 {መሊኡ} =1 {1 ቦታ ተሪፉ} other {# ቦታታት ተሪፎም}}",
+    "inactive": "እዚ ኮርስ ገና ንሽያጥ ኣይተኸፍተን።", "emptyTitle": "ዝተመደበ ኮርስ የለን", "emptyDescription": "ሓደስቲ ግዜታት ምስ ተረጋገጹ ኣብዚ ይርከቡ።",
+    "kind": {"RISK1": "ሪስክ 1", "RISK2": "ሪስክ 2", "HANDLEDARUTBILDNING": "ስልጠና ተቖጻጻሪ", "INTRO_THEORY": "መእተዊ ክልሰ ሓሳብ"},
+    "booking": {"terms": "ናይ ዕድጊ ውዕላት እቕበል።", "withdrawal": "ምሓዝ ኮርስ ኣብ ናይ ምስራዝ ግዜ ክጅምር እሓትትን ኣብ መሰለይ ዘለዎ ጽልዋ እርዳእን።", "submit": "ቦታ ኮርስ ሓዝ", "submitting": "ቦታን ክፍሊትን ይረጋገጽ…", "confirmed": "ቦታ ኮርስካ ብዝኸፈልካዮ መሰል ተረጋጊጹ።", "failed": "ምሓዝ ኣይተዛዘመን። ደጊምካ ፈትን።"}
+  },
+  "theory": {
+    "eyebrow": "ክልሰ ሓሳብ ምዝዋር", "title": "ብዝተረጋገጹ ሕቶታት ተለማመድ", "description": "ነጻ ሕቶታት ብዘይ ዕድጊ ይርከቡ። ዝኽፈሎ ትሕዝቶ ንጡፍ ፍቓድ ይደሊ።",
+    "licensingPending": "ምሉእ ባንክ ሕቶታት መሰል ትሕዝቶ ምስ ተረጋገጸ ጥራይ ይዝርጋሕ።", "freeCount": "{count, plural, =1 {1 ነጻ ሕቶ} other {# ነጻ ሕቶታት}}", "swedishOnly": "ብሽወደንኛ ጥራይ", "examLink": "ናይ ፈተነ መርመራ ክፈት",
+    "emptyTitle": "ነጻ ሕቶታት ኣይተዘርግሑን", "emptyDescription": "ዝተረጋገጸን ፍቓድ ዘለዎን ትሕዝቶ ይጽበ ኣሎ።", "paidAccess": "ንጡፍ ፍቓድ ክልሰ ሓሳብ", "freeAccess": "ነጻ ሕቶታት", "questionNumber": "ሕቶ {number}",
+    "categoryEmptyTitle": "ሕቶታት ኣይርከቡን", "categoryEmptyDescription": "እዚ ምድብ ንኣኻ ዝፍቀዱ ሕቶታት የብሉን።", "submitAnswer": "መልሲ ኣረጋግጽ", "correct": "ቅኑዕ", "incorrect": "ጌጋ", "selectAnswer": "መጀመርታ መልሲ ምረጽ።", "signInToAnswer": "መልስኻ ንምዕቃብ ከም ተማሃራይ እቶ።", "answerError": "መልሲ ክዕቀብ ኣይከኣለን። ደጊምካ ፈትን።",
+    "exam": {"eyebrow": "ናይ ፈተነ መርመራ", "title": "ከም ናይ ሓቂ ፈተና ተዳሎ", "description": "ፈተና ኣብ ሰርቨር ይእረምን ኣብ ውሱን ግዜ ይውዳእን።", "questions": "ሕቶታት", "time": "ደቓይቕ", "pass": "ንምሕላፍ ቅኑዕ", "ready": "ባንክ ሕቶታት ንምሉእ ፈተና ድሉው እዩ።", "unavailable": "ንኣኻ ዝፍቀዱ 65 ንጡፋት ሕቶታት ገና የለዉን።", "signIn": "ፍቓድ ፈተና ንምርግጋጽ ከም ተማሃራይ እቶ።", "start": "ናይ 50 ደቒቕ ፈተና ጀምር", "starting": "ፈተና ይጅምር ኣሎ…", "finish": "ፈተና ዛዝም", "finishing": "ይእረም ኣሎ…", "next": "ዓቅብን ቀጽልን", "selectAnswer": "መጀመርታ መልሲ ምረጽ።", "progress": "ሕቶ {current} ካብ {total}", "timeRemaining": "ዝተረፈ ግዜ", "passed": "ሓሊፉ", "failed": "ኣይሓለፈን", "error": "ፈተና ክሕደስ ኣይከኣለን። ደጊምካ ፈትን።"}
+  },
+  "localSchool": {
+    "eyebrow": "ኣብ ቀረባኻ ቤት ትምህርቲ ምዝዋር", "title": "ቤት ትምህርቲ ምዝዋር ኣብ {city}", "description": "ዝተረጋገጸ ቦታናን መምህራንናን ኣብ {city} ርአ።", "addressPending": "ልክዕ ኣድራሻ መረጋገጺ ይጽበ ኣሎ።", "teachersTitle": "መምህራን ኣብዚ ቦታ",
+    "emptyTitle": "መምህራን ገና ኣይተመደቡን", "emptyDescription": "ቦታኦም ምስ ተረጋገጸ ኣብዚ ይርከቡ።", "metadataTitle": "ቤት ትምህርቲ ምዝዋር ኣብ {city}", "metadataDescription": "ትምህርቲ ምዝዋርን ፍቓድን ኣብ {city}።"
+  },
+  "booking": {
+    "progress": "ደረጃታት ምሓዝ", "back": "ተመለስ", "next": "ቀጽል", "confirm": "ቦታ ምሓዝ ኣረጋግጽ", "provisional": "ግዝያዊ ኣገልግሎት – ገና ኣይሽየጥን",
+    "step": {
+      "what": {"short": "እንታይ", "title": "እንታይ ክትሕዝ ትደሊ?", "description": "ንትምህርትኻ ዝሰማማዕ ምረጽ።", "single": "ሓደ ትምህርቲ ምዝዋር", "credits": "ፓኬጀይ ተጠቐም", "test": "ናይ ፈተነ ትምህርቲ"},
+      "where": {"short": "ኣበይ", "title": "ካበይ ክትጅምር ትደሊ?", "school": "ኣነ ናባኹም ክመጽእ", "pickup": "ክትወስዱኒ", "location": "ቤት ትምህርቲ ምረጽ", "address": "ናይ ምውሳድ ኣድራሻ"},
+      "who": {"short": "መን", "title": "ምስ መን ክትዝውር ትደሊ?", "languageFirst": "መጀመርታ ቋንቋ ምረጽ", "list": "ዝርዝር", "map": "ካርታ", "mapLabel": "ካርታ ናይ ዝርከቡ መምህራን", "mapUnavailable": "ካርታ ኣይርከብን", "mapUnavailableDescription": "ካብ ዝርዝር መምህር ምረጽ።", "empty": "ምስ ቋንቋን ቦታን ዝሰማማዕ መምህር የለን።"},
+      "when": {"short": "መዓስ", "title": "መዓስ ክትዝውር ትደሊ?", "firstAvailable": "ቀዳማይ ክፉት ግዜ", "loading": "ክፉት ግዜታት ይጽዓኑ ኣለዉ…", "empty": "ኣብዚ መዓልቲ ክፉት ግዜ የለን።"}
+    },
+    "account": {"title": "ብተሌፎንካ ሕሳብ ክፈት", "description": "ካብ ምሓዝ ከይወጻእካ ቁጽርኻ ኣረጋግጽ።", "firstName": "ስም", "lastName": "ስም ኣቦ", "phone": "ቁጽሪ ሞባይል ምስ ኮድ ሃገር", "code": "ሽዱሽተ ኣሃዝ ኮድ", "send": "ኮድ ስደድ", "verify": "ኣረጋግጽን ሓዝን", "devCode": "ንናይ ከባቢ ልምዓት ጥራይ – ኮድ: {code}"},
+    "credits": {"loading": "ሒሳብካ ይፍተሽ ኣሎ…", "signIn": "ናይ ፓኬጅ ክሬዲትካ ንምርኣይ እቶ።", "balance": "{count, plural, =0 {ዝርከብ ትምህርቲ የለን} =1 {1 ትምህርቲ ኣሎ} other {# ትምህርትታት ኣለዉ}}"},
+    "checkout": {"title": "ቅድሚ ክፍሊት ስምምዕ", "draft": "ናይ ዓሚልን ሕጋዊ ክለሳን ዝጽበ ንድፊ።", "termsConsent": "ንድፊ ውዕል ዕድጊ ኣንቢበ ተሰማሚዐ።", "withdrawalConsent": "ብዛዕባ 14 መዓልቲ መሰል ምስራዝ ንድፊ ኣንቢበ፣ እቲ ኣገልግሎት ብመሰረት ቆጸራ ክጅምር እሓትት።", "continue": "ናብ ውሑስ ክፍሊት ቀጽል"},
+    "confirmation": {"eyebrow": "ቦታ ምሓዝ ተመዝጊቡ", "title": "ግዜኻ ተሓዚኡ", "deadline": "ክሳብ {deadline} ክትስርዝ ትኽእል።", "calendar": "ናብ ካላንደር ወስኽ", "creditUsed": "ሓደ ትምህርቲ ካብ ሒሳብካ ተቐኒሱ።", "hold": "ክሳብ {expires} ክፍሊት ዝዛዘም ግዜኻ ተታሒዙልካ።", "provisional": "ዝርዝር ዋጋ ገና ኣይተረጋገጸን፣ ስለዚ ክፍሊት ግዝያዊ ኣይርከብን። ናይ 15 ደቒቕ ምሓዝካ ኣይቀየርን።"},
+    "calendar": {"summary": "ትምህርቲ ምዝዋር ምስ Makina Trafikskola", "description": "መወዳእታ ግዜ ምስራዝ፦ {deadline}።"}
+  },
+  "auth": {
+    "firstName": "ስም", "lastName": "ስም ኣቦ", "email": "ኢመይል", "password": "መሕለፊ ቃል",
+    "login": {"title": "እቶ", "description": "ናብ ሕሳብካ ቀጽል።", "submit": "እቶ", "noAccount": "ሕሳብ የብልካን?", "create": "ሕሳብ ክፈት"},
+    "register": {"title": "ሕሳብ ክፈት", "description": "ብኢመይልን መሕለፊ ቃልን ናይ ተማሃራይ ሕሳብ ክፈት።", "submit": "ሕሳብ ክፈት", "hasAccount": "ድሮ ሕሳብ ኣለካ?", "login": "እቶ"}
+  },
+  "student": {
+    "nav": {"label": "ገጻተይ", "overview": "ሓፈሻ", "bookings": "ቦታ ምሓዝ", "saldo": "ሒሳብ", "theory": "ቲዮሪ", "messages": "መልእኽትታት", "profile": "ፕሮፋይል"},
+    "overview": {"title": "ገጻተይ", "nextBooking": "ዝቕጽል ትምህርቲ", "noBooking": "ዝመጽእ ቦታ ምሓዝ የብልካን።", "viewBookings": "ቦታ ምሓዝ ርአ", "saldo": "ዝርከብ ትምህርቲ", "viewSaldo": "ሒሳብ ርአ", "theory": "ፍቓድ ቲዮሪ", "theoryActive": "ፍቓድ ቲዮሪኻ ንጡፍ እዩ።", "theoryInactive": "ንጡፍ ፍቓድ ቲዮሪ የለን።", "viewTheory": "ቲዮሪ ርአ"},
+    "bookings": {"title": "ቦታ ምሓዘይ", "description": "ዝመጹን ዝሓለፉን ትምህርትታት ርአ።", "empty": "ቦታ ምሓዝ የብልካን።", "pickup": "ናይ ምውሳድ ቦታ", "cancel": "ሰርዝ", "cancelLateWarning": "ናይ ምስራዝ ግዜ ሓሊፉ፣ ክረዲት ኣይምለስን። ገና ክትስርዝ ትደሊ?", "cancelRefundWarning": "ሕጂ እንተሰሪዝካ ክረዲት ይምለስ። መወዳእታ {deadline} እዩ። ቀጽል?", "deadline": "ክሳብ {deadline} ክትስርዝ ትኽእል።", "status": "ኩነታት: {status}", "statuses": {"CONFIRMED": "ተረጋጊጹ", "COMPLETED": "ተዛዚሙ", "CANCELLED_BY_STUDENT": "ብኣኻ ተሰሪዙ", "CANCELLED_BY_TEACHER": "ብመምህር ተሰሪዙ", "EXPIRED_HOLD": "ግዜ ምሓዝ ወዲኡ", "NO_SHOW": "ኣይመጸን"}},
+    "saldo": {"title": "ሒሳበይ", "available": "ዝርከብ ሒሳብ", "lessons": "ትምህርቲ ምዝዋር", "lots": "ንጡፍ ክረዲት", "expires": "ክሳብ {date} ይሰርሕ", "noExpiry": "መወዳእታ የብሉን", "empty": "ንጡፍ ክረዲት የብልካን።", "reasons": {"PURCHASE": "ዕድጊ", "BOOKING_CONSUMED": "ቦታ ምሓዝ", "CANCELLATION_REFUND": "ናይ ምስራዝ ምምላስ", "LATE_CANCELLATION_CHARGE": "ድሒርካ ምስራዝ", "TEACHER_CANCELLATION_REFUND": "ናይ መምህር ምስራዝ ምምላስ", "PAYMENT_REFUND": "ክፍሊት ምምላስ", "ADMIN_ADJUSTMENT": "ናይ ምምሕዳር ምትዕርራይ", "EXPIRY": "ዝወደቐ ክረዲት"}},
+    "payments": {"eyebrow": "ክፍሊት", "title": "ኩነታት ትእዛዝ", "orderStatus": "ኩነታት፦ {status}", "quantity": "ብዝሒ፦ {quantity}", "total": "ጠቕላላ", "vat": "ካብዚ ተወሳኺ እሴት ግብሪ", "retryDescription": "ክፍሊት ኣይተዛዘመን። እንደገና ንምፍታን ናብ ውሑስ ክፍሊት ቀጽል።", "retry": "ክፍሊት እንደገና ፈትን", "late": {"lesson": {"title": "ክፍሊት ተዓዊቱ – ሓድሽ ግዜ ምረጽ", "description": "ናይ 15 ደቒቕ ምሓዝካ ግዜኡ ሓሊፉ። ዝዓደግካያ ትምህርቲ ከም ዘይተጠቐምካላ ክረዲት ሓንሳብ ጥራይ ትቕጽል።", "action": "ሓድሽ ግዜ ሓዝ"}, "course": {"title": "ክፍሊት ተዓዊቱ – ካልእ ኮርስ ምረጽ", "description": "ናይ 15 ደቒቕ ምሓዝካ ግዜኡ ሓሊፉ። ዝዓደግካዮ መሰል ኮርስ ሓንሳብ ጥራይ ይቕጽል።", "action": "ካልእ ኮርስ ምረጽ"}}, "statuses": {"PENDING": "ክፍሊት ይጽበ", "PAID": "ተኸፊሉ", "FAILED": "ኣይተዓወተን", "REFUNDED": "ተመሊሱ", "PARTIALLY_REFUNDED": "ብኸፊል ተመሊሱ"}},
+    "theory": {"title": "ቲዮሪየይ", "access": "ፍቓድ", "activeUntil": "ክሳብ {date} ንጡፍ", "inactive": "ንጡፍ ፍቓድ የለን", "progress": "ውጽኢት", "correct": "ብትኽክል ዝተመለሱ ሕቶታት", "provisional": "ዋጋን ባንክ ሕቶታትን ምርግጋጽ ስለ ዝጽበ ፍርያት ቲዮሪ ገና ኣይነጠፈን።"},
+    "messages": {"title": "መልእኽትታት", "description": "ናይ ቀረባ ኣገልግሎት ምልክታታት ብዘይ ውልቃዊ ሓበሬታ።", "empty": "መልእኽቲ የብልካን።", "sent": "ተላኢኹ", "scheduled": "ተመዲቡ", "limited": "ናይ መወዳእታ 50 መልእኽትታት።", "templates": {"bookingConfirmed": "ቦታ ምሓዝ ተረጋጊጹ", "bookingCancelledByStudent": "ቦታ ምሓዝ ተሰሪዙ", "bookingCancelledByTeacher": "መምህር ሰሪዝዎ", "bookingReminder": "መዘኻኸሪ ቦታ ምሓዝ", "paymentReceipt": "ቅብሊት ክፍሊት", "paymentFailed": "ክፍሊት ኣይተዓወተን", "lessonPaymentNeedsRebooking": "ዝተኸፍለ ትምህርቲ ሓድሽ ግዜ የድልዮ", "coursePaymentNeedsRebooking": "ዝተኸፍለ ኮርስ ሓድሽ ግዜ የድልዮ", "generic": "መልእኽቲ ኣገልግሎት"}, "bodies": {"lessonPaymentNeedsRebooking": "ምሓዝ ድሕሪ ምውድኡ ክፍሊት ተዓዊቱ። ዘይተጠቐምካሉ ክረዲት ኣሎ፤ ሓድሽ ግዜ ምረጽ።", "coursePaymentNeedsRebooking": "ምሓዝ ድሕሪ ምውድኡ ክፍሊት ተዓዊቱ። ዘይተጠቐምካሉ መሰል ኮርስ ኣሎ፤ ካልእ ግዜ ምረጽ።"}, "channels": {"EMAIL": "ኢመይል", "SMS": "SMS", "PUSH": "ምልክታ", "INAPP": "ኣብ መተግበሪ"}},
+    "profile": {"title": "ፕሮፋይለይ", "name": "ስም", "email": "ኢመይል", "phone": "ተሌፎን", "language": "ቋንቋ", "permit": "ፍቓድ ትምህርቲ", "transmission": "ዓይነት መኪና", "pickup": "ቀዋሚ ኣድራሻ", "missing": "ኣይተገልጸን", "privacyTitle": "ውልቃዊ ሓበሬታኻ", "privacyDescription": "ሓበሬታኻ ኣውርድ ወይ ሕሳብካ ሰርዝን መንነቱ ሰውርን።", "export": "ሓበሬታይ ኣውርድ", "delete": "ሕሳበይ ሰርዝ", "deleting": "ይስረዝ…", "deleteConfirm": "ሕሳብ መንነቱ ይስወርን ክትወጽእን ኢኻ። ክምለስ ኣይክእልን። ቀጽል?", "permitStatuses": {"UNKNOWN": "ዘይተፈልጠ", "NOT_APPLIED": "ኣይተመልከተን", "APPLIED": "ተመልኪቱ", "APPROVED": "ተፈቒዱ"}, "transmissions": {"MANUAL": "ማንዋል", "AUTOMATIC": "ኣውቶማቲክ"}}
+  },
+  "teacherPortal": {
+    "eyebrow": "ገጽ መምህር", "title": "ናይ ሎሚ ትምህርትታት", "lessonCount": "{count, plural, =0 {ሎሚ ትምህርቲ የለን} =1 {ሎሚ 1 ትምህርቲ} other {ሎሚ # ትምህርትታት}}", "call": "ንተማሃራይ ደውል", "openAddress": "ኣድራሻ ክፈት", "previousNote": "ዝሓለፈ መዘኻኸሪ", "noPreviousNote": "ዝሓለፈ መዘኻኸሪ የለን።", "summary": "መዘኻኸሪ ትምህርቲ", "nextFocus": "ዝቕጽል ትኹረት", "completeLesson": "ዛዝምን ዓቅብን", "updateReport": "ጸብጻብ ኣሐድስ", "empty": "ሎሚ ትምህርቲ የብልካን።", "noProfile": "ምስዚ ተጠቃሚ ዝተኣሳሰረ መምህር የለን።",
+    "block": {"title": "ዝርከበሉ ግዜ ዕገት", "description": "ምሉእ መዓልቲ ንምዕጋት ግዜ ባዶ ግደፍ።", "date": "ዕለት", "start": "ካብ", "end": "ክሳብ", "reason": "ምኽንያት", "submit": "ግዜ ዕገት"}
+  },
+  "metadata": {"brand": "Makina Trafikskola", "title": "Makina Trafikskola – ትምህርቲ ምዝዋር ኣብ ስቶክሆልም", "description": "ኣብ ስቶክሆልም ብብዙሕ ቋንቋታት ደገፍ ዘለዎ ትምህርቲ ምዝዋር።"},
+  "cookieConsent": {"title": "ምርጫ ኩኪ", "description": "ንምእታው፣ ቋንቋን ምርጫ ኩኪኻን ኣድለይቲ ኩኪታት ንጥቀም። ናይ ትንተና ወይ ምልክታ ኩኪታት ኣይሰርሑን።", "readMore": "ብዛዕባ ኩኪ ኣንብብ", "necessary": "ኣድለይቲ ጥራይ", "accept": "ተቐበል"},
+  "offline": {"title": "ካብ ኢንተርነት ወጻኢ ኢኻ", "description": "ርክብካ ኣረጋግጽ እሞ ደጊምካ ፈትን። ቦታ ምሓዝን ሓበሬታ ሕሳብን ኢንተርነት የድልዮ።", "retry": "ደጊምካ ፈትን"},
+  "legal": {
+    "terms": {"metadata": "ንድፊ ውዕላት Makina Trafikskola።", "eyebrow": "ሕጋዊ ሓበሬታ", "title": "ውዕላት ዕድጊ", "draftTitle": "ንድፊ – ሕጋዊ ግምገማ ይጽበ", "draftNotice": "እዚ ናይ ዓሚል መወዳእታ ወይ ቀያዲ ውዕል ኣይኮነን። ቅድሚ ምጅማር ብዓሚልን ሕጋዊ ኣማኻሪን ክጸድቕ ኣለዎ።", "scope": {"title": "ዝሽፍኖ", "body": "እዚ ንድፊ ቦታ ምሓዝ ትምህርቲ ምዝዋርን መጻኢ ዲጂታላዊ ዕድጊን ይሽፍን።"}, "details": {"title": "ክረዲትን ምስራዝን", "body": "ናይ ቴክኒክ መደብ፡ ክረዲት 24 ወርሒ ይጸንሕ። ቅድሚ ምጅማር ልዕሊ 24 ሰዓት ምስራዝ ክረዲት ይመልስ፤ ድሕሪኡ ኣይምለስን። ቤት ትምህርቲ እንተሰሪዙ ኩሉ ግዜ ይምለስ።\n\nመወዳእታ ፖሊሲ ምምላስን ናይ 14 መዓልቲ መሰልን ሕጋዊ ጽሑፍ ይጽበ።"}, "rights": {"title": "ቅድሚ ዕድጊ", "body": "ዋጋ፣ VATን ውዕላትን ክሳብ ዝረጋገጹ ፍርያት ኣይነጥፉን። መወዳእታ ውዕላት ኣብ checkout ክረጋገጽ ኣለዎ።"}},
+    "privacy": {"metadata": "ንድፊ ሓበሬታ ውልቃዊነት።", "eyebrow": "ሕጋዊ ሓበሬታ", "title": "ውልቃዊነት", "draftTitle": "ንድፊ – ሕጋዊ ግምገማ ይጽበ", "draftNotice": "ተሓታቲ ዳታ፣ መራኸቢ፣ ሕጋዊ መሰረትን ግዜ ምቕማጥን ብዓሚልን ሕጋዊ ኣማኻሪን ክረጋገጽ ኣለዎ።", "scope": {"title": "ዳታ ኣብ ኣገልግሎት", "body": "ኣገልግሎቱ ሓበሬታ ሕሳብን ርክብን፣ ቦታ ምሓዝ፣ ታሪኽ ክፍሊትን ምዕባለ ትምህርትን ይሕዝ።"}, "details": {"title": "ኣጠቓቕማን ድሕነትን", "body": "ዳታ ትምህርቲ ንምሃብ፣ ቦታ ምሓዝን ክፍሊትን ንምምሕዳር ይጥቀም። ስሱዕ ሓበሬታ ኣብ ሎግ ኣይጸሓፍን።"}, "rights": {"title": "ምርጫታትካ", "body": "ዝኣተዉ ተማሃሮ ዳታ ክወስዱን ሕሳቦም ክስርዙን ይኽእሉ። ምስራዝ ውልቃዊ ሓበሬታ ይሰውር፣ ንሕሳብን ክትትልን ዘድሊ ግን ይተርፍ።"}},
+    "cookies": {"metadata": "ሓበሬታ ኩኪ Makina Trafikskola።", "eyebrow": "ሕጋዊ ሓበሬታ", "title": "ኩኪታት", "draftTitle": "ንድፊ – ሕጋዊ ግምገማ ይጽበ", "draftNotice": "ትንተና፣ ክትትል ወይ ካልእ ግዳማዊ ኣገልግሎት ምስ ነጠፈ ዝርዝር ኩኪ ክግምገም ኣለዎ።", "scope": {"title": "ኣድለይቲ ኩኪታት", "body": "ኣገልግሎቱ ንምእታው፣ ቋንቋ፣ ድሕነትን ምርጫኻ ንምዝካርን ኩኪታት ይጥቀም።"}, "details": {"title": "ኣማራጺ ኩኪታት", "body": "ኣብዚ ስሪት ናይ ትንተና ወይ ምልክታ ኩኪታት ኣይነጥፉን።"}, "rights": {"title": "ምርጫኻ ቀይር", "body": "ምርጫ ደጊሙ ክርአ ኩኪታት እዚ ወብሳይት ኣብ browser ስረዝ። ኣድለይቲ ኩኪታት ንምእታው የድልዩ።"}}
+  },
+  "admin": {
+    "nav": {"label": "ምምሕዳር", "calendar": "ናይ ሰሙን ካላንደር", "students": "ተማሃሮ", "instructors": "ሓድሽ መምህር"},
+    "calendar": {"eyebrow": "ምምሕዳር", "title": "ናይ ሰሙን ካላንደር", "description": "ናይ ኩሎም ንጡፋት መምህራን ቦታ ምሓዝ ርአን ኣመሓድርን።", "previous": "ዝሓለፈ ሰሙን", "next": "ዝቕጽል ሰሙን", "instructor": "መምህር", "completed": "ተዛዚሙ", "empty": "ንጡፍ መምህር የለን።", "controls": {"manage": "ኣመሓድር", "close": "ዕጾ", "action": "ስጉምቲ", "move": "ግዜ ቀይር", "reassign": "መምህር ቀይር", "cancel": "ሰርዝ", "newTime": "ሓድሽ ናይ ከባቢ ግዜ", "newInstructor": "ሓድሽ መምህር", "reason": "ጽሑፍ ምኽንያት", "save": "ለውጢ ዓቅብ", "saving": "ይዕቀብ…"}},
+    "students": {"eyebrow": "ምምሕዳር", "title": "ተማሃሮ", "description": "ተማሃራይ ድለ፣ ሒሳብን ክፍሊትን ርአ ወይ ክረዲት ቀይር።", "searchLabel": "ስም ወይ ኢመይል", "search": "ድለ", "results": "{count} ውጽኢት", "noEmail": "ኢመይል የለን", "empty": "ዝሰማማዕ ተማሃራይ የለን።", "selectStudent": "ዝርዝር ንምርኣይ ተማሃራይ ምረጽ።", "balance": "ዝተሓሰበ ንጡፍ ሒሳብ", "payments": "ክፍሊታት", "paymentLine": "{provider} · {method} · {status} · ዝተመልሰ {refunded}", "unknownMethod": "ዘይተፈልጠ መንገዲ", "orderStatus": {"PENDING": "ይጽበ", "PAID": "ተኸፊሉ", "FAILED": "ኣይተዓወተን", "REFUNDED": "ተመሊሱ", "PARTIALLY_REFUNDED": "ብኸፊል ተመሊሱ"}, "paymentStatus": {"PENDING": "ይጽበ", "SUCCEEDED": "ተዛዚሙ", "FAILED": "ኣይተዓወተን", "REFUNDED": "ተመሊሱ"}, "provider": {"STRIPE": "Stripe", "MANUAL": "ማንዋል"}, "method": {"card": "ካርድ", "swish": "Swish", "klarna": "Klarna"}, "noPayment": "ክፍሊት ኣይተመዝገበን", "noPayments": "ክፍሊት የለን።", "ledger": "ምንቅስቓስ ክረዲት", "noLedger": "ምንቅስቓስ ክረዲት የለን።", "adjustment": {"title": "ክረዲት ቀይር", "delta": "ለውጢ", "reason": "ኣድላዪ ጽሑፍ ምኽንያት", "submit": "ለውጢ መዝግብ", "saving": "ይዕቀብ…"}},
+    "instructors": {"eyebrow": "ምምሕዳር", "title": "መምህር ወስኽ", "description": "ሕሳብ፣ ቋንቋታት፣ ዓይነት መኪና፣ ቦታን ስሩዕ ሰዓታትን ፍጠር።", "account": "ሕሳብ", "firstName": "ስም", "lastName": "ስም ኣቦ", "email": "ኢመይል", "initialPassword": "ግዝያዊ መሕለፊ ቃል", "slug": "ኣድራሻ ፕሮፋይል", "yearsExperience": "ዓመታት ተመክሮ", "languages": "ቋንቋታት", "transmissions": "ዓይነት መኪና", "transmission": {"MANUAL": "ማንዋል", "AUTOMATIC": "ኣውቶማቲክ"}, "locations": "ቦታታት", "noLocations": "ንጡፍ ቦታ የለን። መምህር ክፍጠር ኣይክእልን።", "hours": "ሰዓታት ስራሕ", "hoursDescription": "ግዜ ናይ Europe/Stockholm ከባቢ ግዜ እዩ።", "from": "ካብ", "to": "ክሳብ", "day": {"0": "ሰንበት", "1": "ሰኑይ", "2": "ሰሉስ", "3": "ረቡዕ", "4": "ሓሙስ", "5": "ዓርቢ", "6": "ቀዳም"}, "photo": "ስእሊ ፕሮፋይል", "photoHelp": "ኣማራጺ JPEG፣ PNG ወይ WebP፣ ክሳብ 5 MB።", "submit": "መምህር ፍጠር", "saving": "ይፍጠር…", "created": "መምህር ተፈጢሩ።"}
+    ,"instructorStatus": {"title": "መምህራን ኣመሓድር", "description": "መምህራን ኣንጥፍ ወይ ኣቦዝን። ዝመጹ ዝተረጋገጹ ቦታታት ቅድሚኡ ቀይር ወይ ሰርዝ።", "active": "ንጡፍ", "inactive": "ዘይንጡፍ", "activate": "ኣንጥፍ", "deactivate": "ኣቦዝን", "saving": "ይዕቀብ…"}
+  },
+  "errors": {
+    "NO_CREDITS": "ናይ ፓኬጅ ክሬዲት የብልካን። ዝኽፈል ሓደ ወይ ናይ ፈተነ ትምህርቲ ምረጽ።",
+    "CHECKOUT_CONSENT_REQUIRED": "ቅድሚ ምቕጻል ክልቲኡ ናይ ክፍሊት ንድፊ ተሰማማዕ።",
+    "INVALID_PICKUP_COORDINATES": "ኣብ ሽወደን ቅኑዕ ናይ ምውሳድ ኣድራሻ ምረጽ።",
+    "TEACHER_HAS_FUTURE_BOOKINGS": "ቅድሚ መምህር ምብዛን ዝመጹ ቦታ ምሓዝ ቀይር ወይ ሰርዝ።",
+    "INVALID_INPUT": "ሓበሬታ ኣረጋግጽ እሞ ደጊምካ ፈትን።", "INVALID_CREDENTIALS": "ኢመይል ወይ መሕለፊ ቃል ጌጋ እዩ።", "ACCOUNT_EXISTS": "በዚ ኢመይል ሕሳብ ኣሎ።", "INVALID_OTP": "ኮድ ጌጋ ወይ ዝወደቐ እዩ። ሓድሽ ሕተት።", "RATE_LIMITED": "ብዙሕ ፈተነ። ጽናሕ እሞ ደጊምካ ፈትን።", "SELECT_LOCATION_OR_PICKUP": "ቦታ ምረጽ ወይ ኣድራሻ ጽሓፍ።", "TEACHER_REQUIRED": "ንምቕጻል መምህር ምረጽ።", "SLOT_REQUIRED": "ክፉት ግዜ ምረጽ።", "SLOT_TAKEN": "እዚ ግዜ ተታሒዙ። ካልእ ምረጽ።", "PRODUCT_INACTIVE": "እዚ ፍርያት ገና ኣይሽየጥን።", "UNAUTHENTICATED": "ንምቕጻል እቶ።", "FORBIDDEN": "ፍቓድ የብልካን።", "STUDENT_NOT_FOUND": "ተማሃራይ ኣይተረኽበን።", "BOOKING_NOT_FOUND": "ቦታ ምሓዝ ኣይተረኽበን።", "BOOKING_NOT_ACTIVE": "ቦታ ምሓዝ ድሕሪ ሕጂ ኣይቀየርን።", "TEACHER_NOT_FOUND": "መምህር ኣይተረኽበን ወይ ንጡፍ ኣይኮነን።", "LOCATION_NOT_FOUND": "ዝተመርጸ ቦታ ኣይተረኽበን።", "LOCATION_NOT_ASSIGNED": "ሰዓት ስራሕ ዘይተመርጸ ቦታ ይጥቀም።", "SLUG_EXISTS": "ኣድራሻ ፕሮፋይል ድሮ ይጥቀም።", "ACCOUNT_OR_SLUG_EXISTS": "ኢመይል ወይ ኣድራሻ ፕሮፋይል ድሮ ይጥቀም።", "ACCOUNT_HAS_ACTIVE_BOOKINGS": "ቅድሚ ሕሳብካ ምስራዝ ዝመጹ ቦታ ምሓዝ ሰርዝ።", "COURSE_OCCASION_NOT_FOUND": "እዚ ኮርስ ድሕሪ ሕጂ ኣይርከብን።", "COURSE_FULL": "እዚ ኮርስ መሊኡ።", "COURSE_ALREADY_BOOKED": "ኣብዚ ኮርስ ድሮ ዝተረጋገጸ ቦታ ኣለካ።", "PAYMENT_PROVIDER_ERROR": "ክፍሊት ክጅምር ኣይከኣለን። ደጊምካ ፈትን።", "PRODUCT_TRANSLATION_MISSING": "እቲ ኮርስ ኣድላዪ ሓበሬታ ፍርያት የብሉን።", "THEORY_QUESTION_NOT_FOUND": "እዚ ሕቶ ድሕሪ ሕጂ ኣይርከብን።", "THEORY_ACCESS_REQUIRED": "እዚ ሕቶ ንጡፍ ፍቓድ ይደሊ።", "THEORY_EXAM_NOT_FOUND": "ፈተና ኣይተረኽበን።", "THEORY_EXAM_FINISHED": "ፈተና ድሮ ተዛዚሙ።", "THEORY_EXAM_EXPIRED": "ግዜ ፈተና ወዲኡ።", "THEORY_EXAM_COMPLETE": "ኩሎም ሕቶታት ተመሊሶም።", "THEORY_EXAM_UNAVAILABLE": "እኹላት ሕቶታት የለዉን።", "BOOKING_NOT_COMPLETED": "ንዝተዛዘመ ትምህርቲ ግምገማ ሃብ።", "REVIEW_EXISTS": "ነዚ ትምህርቲ ድሮ ገምጊምካዮ።", "UNKNOWN": "ጌጋ ተፈጢሩ። ደጊምካ ፈትን።"
+  }
+}

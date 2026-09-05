@@ -1,0 +1,2 @@
+-- AlterEnum
+ALTER TYPE "CreditReason" ADD VALUE 'PAYMENT_REFUND';

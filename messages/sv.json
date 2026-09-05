@@ -1,0 +1,502 @@
+{
+  "language": {
+    "label": "Välj språk",
+    "sv": "Svenska",
+    "en": "English",
+    "ti": "ትግርኛ",
+    "ar": "العربية",
+    "so": "Soomaali"
+  },
+  "shell": {
+    "navigation": "Huvudnavigering",
+    "home": "Hem",
+    "packages": "Paket",
+    "bookings": "Mina bokningar",
+    "messages": "Meddelanden",
+    "theory": "Teori",
+    "profile": "Profil",
+    "lessons": "Körlektioner",
+    "teachers": "Lärare",
+    "book": "Boka nu",
+    "footerDescription": "Körutbildning med tydlig vägledning och stöd på ditt språk.",
+    "explore": "Utforska",
+    "terms": "Villkor",
+    "privacy": "Integritet",
+    "cookies": "Cookies",
+    "languageHelp": "Stöd på ditt språk",
+    "languageHelpDescription": "Filtrera lärare efter språk och hitta ett upplägg som passar dig."
+  },
+  "common": {
+    "bookNow": "Boka nu",
+    "viewAll": "Visa alla",
+    "readMore": "Läs mer",
+    "swedishOnly": "Endast på svenska",
+    "all": "Alla språk",
+    "allLocations": "Alla platser",
+    "applyFilter": "Visa resultat"
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "Din väg till körkortet",
+      "title": "Kör tryggt, lär på ditt språk",
+      "description": "Körlektioner, teori och erfarna lärare i Stockholm – samlat på ett ställe.",
+      "findTeacher": "Hitta lärare",
+      "cardLabel": "Personlig utbildning",
+      "cardTitle": "En tydlig plan från första lektionen",
+      "cardDescription": "Välj språk, växellåda och lärare efter dina behov."
+    },
+    "products": {
+      "eyebrow": "Körutbildning",
+      "title": "Välj vägen som passar dig"
+    },
+    "teachers": {
+      "eyebrow": "Lär på ditt språk",
+      "title": "Möt våra lärare",
+      "description": "Hitta en lärare som talar ditt språk och undervisar där du vill köra."
+    },
+    "location": {
+      "eyebrow": "Nära dig",
+      "title": "Hitta lärare på kartan",
+      "description": "Se vilka lärare som finns vid våra platser. Den interaktiva kartan laddas bara när du öppnar lärarsidan.",
+      "openMap": "Öppna lärarkartan",
+      "area": "Stockholmsområdet"
+    }
+  },
+  "lessons": {
+    "eyebrow": "Priser och paket",
+    "title": "Körlektioner för varje steg",
+    "description": "Jämför enstaka lektioner och paket. Alla priser visas inklusive moms.",
+    "provisionalNotice": "Priserna är preliminära och produkterna går ännu inte att köpa."
+  },
+  "product": {
+    "popular": "Populärast",
+    "notForSale": "Inte till försäljning ännu",
+    "emptyTitle": "Inga produkter att visa",
+    "emptyDescription": "Utbudet uppdateras. Kom tillbaka snart.",
+    "included": "Det här ingår",
+    "priceIncludesVat": "Pris inklusive moms",
+    "provisionalDescription": "Produkten aktiveras först när den slutliga prislistan är bekräftad.",
+    "checkout": {"terms": "Jag godkänner utkastet till köpvillkor.", "withdrawal": "Jag har läst utkastet om 14 dagars ångerrätt och begär att tjänsten får börja enligt bokningen.", "submit": "Fortsätt till betalning", "redirecting": "Öppnar betalning…", "error": "Betalningen kunde inte startas. Logga in och försök igen."}
+  },
+  "checkout": {
+    "eyebrow": "Säker betalning",
+    "title": "Slutför din betalning",
+    "businessName": "Makina Trafikskola",
+    "total": "Totalt",
+    "vat": "Varav moms",
+    "submit": "Betala nu",
+    "submitting": "Behandlar betalningen…",
+    "genericError": "Betalningen kunde inte slutföras. Kontrollera uppgifterna och försök igen.",
+    "mockTitle": "Betalning i utvecklingsläge",
+    "mockDescription": "Stripe-nycklar saknas. Beställningen finns kvar som väntande, men ingen betalning eller leverans sker.",
+    "unavailable": "Betalning är inte tillgänglig just nu. Ingen debitering har gjorts.",
+    "alreadyProcessed": "Den här beställningen har redan behandlats.",
+    "viewStatus": "Visa beställningsstatus"
+  },
+  "teachers": {
+    "eyebrow": "Våra lärare",
+    "title": "Hitta rätt lärare",
+    "description": "Välj språk först och därefter plats för att hitta den lärare som passar dig.",
+    "languageFilter": "1. Välj språk",
+    "locationFilter": "2. Välj plats",
+    "results": "Lärarresultat",
+    "resultCount": "{count, plural, =0 {Inga lärare} =1 {1 lärare} other {# lärare}}",
+    "emptyTitle": "Ingen lärare matchar",
+    "emptyDescription": "Prova ett annat språk eller en annan plats.",
+    "transmissionFilter": "3. Välj växellåda",
+    "allTransmissions": "Alla växellådor"
+  },
+  "teacher": {
+    "yearsExperience": "{count, plural, =0 {Ny lärare} =1 {1 års erfarenhet} other {# års erfarenhet}}",
+    "viewProfile": "Visa profil",
+    "transmission": {
+      "manual": "Manuell",
+      "automatic": "Automat"
+    },
+    "profileEyebrow": "Trafiklärare",
+    "bioPending": "Lärarens presentation uppdateras.",
+    "languages": "Språk",
+    "transmissions": "Växellåda",
+    "locations": "Platser",
+    "bookWith": "Boka med {name}"
+  },
+  "map": {
+    "title": "Lärarkarta",
+    "staticLabel": "Förenklad karta över Stockholmsområdet",
+    "interactiveLabel": "Interaktiv karta över lärarnas platser",
+    "unavailableTitle": "Kartan är inte tillgänglig just nu",
+    "unavailableDescription": "Du kan fortfarande hitta och välja lärare i listan."
+  },
+  "courses": {
+    "eyebrow": "Riskutbildningar och kurser",
+    "title": "Kommande kurstillfällen",
+    "description": "Se verkliga, schemalagda kurstillfällen och återstående platser.",
+    "when": "Tid", "language": "Språk", "venue": "Plats", "seats": "Lediga platser",
+    "seatsLeft": "{count, plural, =0 {Fullbokad} =1 {1 plats kvar} other {# platser kvar}}",
+    "inactive": "Kursprodukten är inte aktiverad för köp ännu.",
+    "emptyTitle": "Inga kurstillfällen är schemalagda",
+    "emptyDescription": "Nya tillfällen visas här när de har bekräftats.",
+    "kind": {"RISK1": "Riskettan", "RISK2": "Risktvåan", "HANDLEDARUTBILDNING": "Handledarutbildning", "INTRO_THEORY": "Introduktionsteori"},
+    "booking": {"terms": "Jag godkänner köpvillkoren.", "withdrawal": "Jag begär att kursbokningen påbörjas under ångerfristen och förstår hur det påverkar ångerrätten.", "submit": "Boka kursplats", "submitting": "Kontrollerar plats och betalning…", "confirmed": "Kursplatsen är bekräftad med din betalda rättighet.", "failed": "Bokningen kunde inte slutföras. Försök igen."}
+  },
+  "theory": {
+    "eyebrow": "Körkortsteori", "title": "Öva med verifierade frågor", "description": "Gratisfrågor visas utan köp. Betalt innehåll kräver en aktiv teoriåtkomst.",
+    "licensingPending": "Den fullständiga frågebanken publiceras först när innehållsrättigheterna är bekräftade.",
+    "freeCount": "{count, plural, =1 {1 gratisfråga} other {# gratisfrågor}}", "swedishOnly": "Endast på svenska", "examLink": "Öppna övningsprovet",
+    "emptyTitle": "Inga gratisfrågor är publicerade", "emptyDescription": "Vi inväntar verifierat och licensierat frågeinnehåll.",
+    "paidAccess": "Aktiv teoriåtkomst", "freeAccess": "Gratisfrågor", "questionNumber": "Fråga {number}",
+    "categoryEmptyTitle": "Inga frågor är tillgängliga", "categoryEmptyDescription": "Kategorin saknar frågor som du har åtkomst till.", "submitAnswer": "Rätta svaret", "correct": "Rätt", "incorrect": "Inte rätt", "selectAnswer": "Välj ett svar först.", "signInToAnswer": "Logga in som elev för att spara ditt svar.", "answerError": "Svaret kunde inte sparas. Försök igen.",
+    "exam": {"eyebrow": "Övningsprov", "title": "Förbered dig som på kunskapsprovet", "description": "Provet rättas på servern och avslutas efter den fasta tiden.", "questions": "Frågor", "time": "Minuter", "pass": "Rätt för godkänt", "ready": "Frågebanken är redo för ett fullständigt prov.", "unavailable": "Det finns inte 65 aktiva frågor som ditt konto har åtkomst till ännu.", "signIn": "Logga in som elev för att kontrollera provåtkomst.", "start": "Starta provet på 50 minuter", "starting": "Startar provet…", "finish": "Avsluta provet", "finishing": "Rättar…", "next": "Spara och fortsätt", "selectAnswer": "Välj ett svar först.", "progress": "Fråga {current} av {total}", "timeRemaining": "Tid kvar", "passed": "Godkänt", "failed": "Inte godkänt", "error": "Provet kunde inte uppdateras. Försök igen."}
+  },
+  "localSchool": {
+    "eyebrow": "Trafikskola nära dig", "title": "Trafikskola i {city}", "description": "Se vår bekräftade plats och tillgängliga lärare i {city}.",
+    "addressPending": "Den exakta besöksadressen inväntar bekräftelse.", "teachersTitle": "Lärare på platsen",
+    "emptyTitle": "Inga lärare är kopplade ännu", "emptyDescription": "Lärare visas här när deras placering har bekräftats.",
+    "metadataTitle": "Trafikskola i {city}", "metadataDescription": "Körlektioner och körkortsutbildning i {city}."
+  },
+  "booking": {
+    "progress": "Bokningssteg",
+    "back": "Tillbaka",
+    "next": "Fortsätt",
+    "confirm": "Bekräfta bokningen",
+    "provisional": "Preliminärt utbud – går ännu inte att köpa",
+    "step": {
+      "what": {
+        "short": "Vad",
+        "title": "Vad vill du boka?",
+        "description": "Välj det alternativ som passar din utbildning.",
+        "single": "Enstaka körlektion",
+        "credits": "Använd mitt paket",
+        "test": "Testlektion"
+      },
+      "where": {
+        "short": "Var",
+        "title": "Var vill du börja?",
+        "school": "Jag kommer till er",
+        "pickup": "Hämta mig",
+        "location": "Välj trafikskola",
+        "address": "Hämtningsadress"
+      },
+      "who": {
+        "short": "Vem",
+        "title": "Vem vill du köra med?",
+        "languageFirst": "Välj språk först",
+        "list": "Lista",
+        "map": "Karta",
+        "mapLabel": "Karta över tillgängliga lärare",
+        "mapUnavailable": "Kartan är inte tillgänglig",
+        "mapUnavailableDescription": "Välj en lärare i listan.",
+        "empty": "Ingen lärare matchar språk och plats."
+      },
+      "when": {
+        "short": "När",
+        "title": "När vill du köra?",
+        "firstAvailable": "Första lediga tid",
+        "loading": "Hämtar lediga tider…",
+        "empty": "Inga lediga tider den här dagen."
+      }
+    },
+    "account": {
+      "title": "Skapa konto med mobilen",
+      "description": "Verifiera ditt nummer här utan att lämna bokningen.",
+      "firstName": "Förnamn",
+      "lastName": "Efternamn",
+      "phone": "Mobilnummer med landskod",
+      "code": "Sexsiffrig kod",
+      "send": "Skicka kod",
+      "verify": "Verifiera och boka",
+      "devCode": "Endast lokal utveckling – kod: {code}"
+    },
+    "credits": {
+      "loading": "Kontrollerar ditt saldo…",
+      "signIn": "Logga in för att kontrollera dina paketkrediter.",
+      "balance": "{count, plural, =0 {Inga lektioner tillgängliga} =1 {1 lektion tillgänglig} other {# lektioner tillgängliga}}"
+    },
+    "checkout": {
+      "title": "Samtycke före betalning",
+      "draft": "Utkast som inväntar kundens och juristens granskning.",
+      "termsConsent": "Jag har läst och godkänner utkastet till köpvillkor.",
+      "withdrawalConsent": "Jag har läst utkastet om 14 dagars ångerrätt och begär att den bokade tjänsten får börja enligt bokningen.",
+      "continue": "Fortsätt till säker betalning"
+    },
+    "confirmation": {
+      "eyebrow": "Bokningen är registrerad",
+      "title": "Din tid är bokad",
+      "deadline": "Kan avbokas fram till {deadline}.",
+      "calendar": "Lägg till i kalender",
+      "creditUsed": "En lektion har dragits från ditt saldo.",
+      "hold": "Tiden hålls åt dig till {expires} medan betalningen slutförs.",
+      "provisional": "Prislistan är ännu inte bekräftad, så betalning är tillfälligt otillgänglig. Din 15-minutersreservation påverkas inte."
+    },
+    "calendar": {"summary": "Körlektion med Makina Trafikskola", "description": "Avbokningsfrist: {deadline}."}
+  },
+  "auth": {
+    "firstName": "Förnamn",
+    "lastName": "Efternamn",
+    "email": "E-post",
+    "password": "Lösenord",
+    "login": {
+      "title": "Logga in",
+      "description": "Fortsätt till ditt konto.",
+      "submit": "Logga in",
+      "noAccount": "Har du inget konto?",
+      "create": "Skapa konto"
+    },
+    "register": {
+      "title": "Skapa konto",
+      "description": "Skapa ett elevkonto med e-post och lösenord.",
+      "submit": "Skapa konto",
+      "hasAccount": "Har du redan ett konto?",
+      "login": "Logga in"
+    }
+  },
+  "student": {
+    "nav": {
+      "label": "Mina sidor",
+      "overview": "Översikt",
+      "bookings": "Bokningar",
+      "saldo": "Saldo",
+      "theory": "Teori",
+      "messages": "Meddelanden",
+      "profile": "Profil"
+    },
+    "overview": {
+      "title": "Mina sidor",
+      "nextBooking": "Nästa körlektion",
+      "noBooking": "Du har ingen kommande bokning.",
+      "viewBookings": "Visa bokningar",
+      "saldo": "Tillgängliga lektioner",
+      "viewSaldo": "Visa saldo",
+      "theory": "Teoriåtkomst",
+      "theoryActive": "Din teoriåtkomst är aktiv.",
+      "theoryInactive": "Ingen aktiv teoriåtkomst.",
+      "viewTheory": "Visa teori"
+    },
+    "bookings": {
+      "title": "Mina bokningar",
+      "description": "Se kommande och tidigare körlektioner.",
+      "empty": "Du har inga bokningar.",
+      "pickup": "Hämtningsplats",
+      "cancel": "Avboka",
+      "cancelLateWarning": "Avbokningsfristen har passerat. Krediten återbetalas inte. Vill du ändå avboka?",
+      "cancelRefundWarning": "Avbokar du nu återförs krediten. Fristen är {deadline}. Vill du fortsätta?",
+      "deadline": "Kan avbokas fram till {deadline}.",
+      "status": "Status: {status}",
+      "statuses": {
+        "CONFIRMED": "Bekräftad",
+        "COMPLETED": "Genomförd",
+        "CANCELLED_BY_STUDENT": "Avbokad av dig",
+        "CANCELLED_BY_TEACHER": "Avbokad av läraren",
+        "EXPIRED_HOLD": "Reservationen har gått ut",
+        "NO_SHOW": "Utebleven"
+      }
+    },
+    "saldo": {
+      "title": "Mitt saldo",
+      "available": "Tillgängligt saldo",
+      "lessons": "körlektioner",
+      "lots": "Aktiva krediter",
+      "expires": "Gäller till {date}",
+      "noExpiry": "Utan slutdatum",
+      "empty": "Du har inga aktiva krediter.",
+      "reasons": {
+        "PURCHASE": "Köp",
+        "BOOKING_CONSUMED": "Bokning",
+        "CANCELLATION_REFUND": "Återförd avbokning",
+        "LATE_CANCELLATION_CHARGE": "Sen avbokning",
+        "TEACHER_CANCELLATION_REFUND": "Återförd läraravbokning",
+        "PAYMENT_REFUND": "Betalningsåterbetalning",
+        "ADMIN_ADJUSTMENT": "Administrativ justering",
+        "EXPIRY": "Utgången kredit"
+      }
+    },
+    "payments": {
+      "eyebrow": "Betalning",
+      "title": "Beställningsstatus",
+      "orderStatus": "Status: {status}",
+      "quantity": "Antal: {quantity}",
+      "total": "Totalt",
+      "vat": "Varav moms",
+      "retryDescription": "Betalningen är inte slutförd. Fortsätt till den säkra betalningen för att försöka igen.",
+      "retry": "Försök betala igen",
+      "late": {
+        "lesson": {"title": "Betalningen lyckades – välj en ny tid", "description": "Din 15-minutersreservation hann löpa ut. Den köpta lektionen finns kvar exakt en gång som en oanvänd kredit. Den gamla tiden har inte återtagits.", "action": "Boka en ny lektionstid"},
+        "course": {"title": "Betalningen lyckades – välj ett nytt kurstillfälle", "description": "Din 15-minutersreservation hann löpa ut. Den köpta kursplatsen finns kvar exakt en gång som en oanvänd kursrättighet. Den gamla platsen har inte återtagits.", "action": "Välj ett nytt kurstillfälle"}
+      },
+      "statuses": {
+        "PENDING": "Väntar på betalning",
+        "PAID": "Betald",
+        "FAILED": "Misslyckad",
+        "REFUNDED": "Återbetald",
+        "PARTIALLY_REFUNDED": "Delvis återbetald"
+      }
+    },
+    "theory": {
+      "title": "Min teori",
+      "access": "Åtkomst",
+      "activeUntil": "Aktiv till {date}",
+      "inactive": "Ingen aktiv åtkomst",
+      "progress": "Resultat",
+      "correct": "rätt besvarade frågor",
+      "provisional": "Teoriprodukten är ännu inte aktiverad eftersom pris och frågebank inväntar bekräftelse."
+    },
+    "messages": {"title": "Meddelanden", "description": "Dina senaste servicemeddelanden. Personuppgifter från meddelandets data visas inte här.", "empty": "Du har inga meddelanden.", "sent": "Skickat", "scheduled": "Planerat", "limited": "De 50 senaste meddelandena visas.", "templates": {"bookingConfirmed": "Bokning bekräftad", "bookingCancelledByStudent": "Bokning avbokad", "bookingCancelledByTeacher": "Bokning avbokad av läraren", "bookingReminder": "Bokningspåminnelse", "paymentReceipt": "Betalningskvitto", "paymentFailed": "Betalningen misslyckades", "lessonPaymentNeedsRebooking": "Betald lektion behöver bokas om", "coursePaymentNeedsRebooking": "Betald kursplats behöver bokas om", "generic": "Servicemeddelande"}, "bodies": {"lessonPaymentNeedsRebooking": "Betalningen lyckades efter att reservationen gått ut. Din oanvända lektionskredit finns kvar; välj en ny tid.", "coursePaymentNeedsRebooking": "Betalningen lyckades efter att reservationen gått ut. Din oanvända kursrättighet finns kvar; välj ett nytt tillfälle."}, "channels": {"EMAIL": "E-post", "SMS": "SMS", "PUSH": "Pushnotis", "INAPP": "I appen"}},
+    "profile": {
+      "title": "Min profil",
+      "name": "Namn",
+      "email": "E-post",
+      "phone": "Telefon",
+      "language": "Språk",
+      "permit": "Körkortstillstånd",
+      "transmission": "Växellåda",
+      "pickup": "Standardadress",
+      "missing": "Inte angivet",
+      "privacyTitle": "Dina personuppgifter",
+      "privacyDescription": "Ladda ner dina uppgifter eller radera och anonymisera kontot.",
+      "export": "Ladda ner mina uppgifter",
+      "delete": "Radera mitt konto",
+      "deleting": "Raderar…",
+      "deleteConfirm": "Kontot anonymiseras och du loggas ut. Detta går inte att ångra. Vill du fortsätta?",
+      "permitStatuses": {
+        "UNKNOWN": "Okänd status",
+        "NOT_APPLIED": "Inte ansökt",
+        "APPLIED": "Ansökt",
+        "APPROVED": "Godkänt"
+      },
+      "transmissions": {
+        "MANUAL": "Manuell",
+        "AUTOMATIC": "Automat"
+      }
+    }
+  },
+  "teacherPortal": {
+    "eyebrow": "Lärarportal",
+    "title": "Dagens körlektioner",
+    "lessonCount": "{count, plural, =0 {Inga lektioner idag} =1 {1 lektion idag} other {# lektioner idag}}",
+    "call": "Ring eleven",
+    "openAddress": "Öppna adress",
+    "previousNote": "Föregående anteckning",
+    "noPreviousNote": "Ingen tidigare anteckning.",
+    "summary": "Lektionsanteckning",
+    "nextFocus": "Nästa fokus",
+    "completeLesson": "Slutför och spara",
+    "updateReport": "Uppdatera rapport",
+    "empty": "Du har inga lektioner idag.",
+    "noProfile": "Inget lärarkonto är kopplat till den här användaren.",
+    "block": {
+      "title": "Blockera tillgänglighet",
+      "description": "Lämna tiderna tomma för att blockera hela dagen.",
+      "date": "Datum",
+      "start": "Från",
+      "end": "Till",
+      "reason": "Orsak",
+      "submit": "Blockera tiden"
+    }
+  },
+  "metadata": {
+    "brand": "Makina Trafikskola",
+    "title": "Makina Trafikskola – körutbildning i Stockholm",
+    "description": "Körlektioner och körkortsutbildning i Stockholm med stöd på flera språk."
+  },
+  "cookieConsent": {
+    "title": "Cookieinställningar",
+    "description": "Vi använder nödvändiga cookies för inloggning, språk och dina cookieval. Inga analys- eller marknadsföringscookies är aktiverade.",
+    "readMore": "Läs om cookies",
+    "necessary": "Endast nödvändiga",
+    "accept": "Godkänn"
+  },
+  "offline": {
+    "title": "Du är offline",
+    "description": "Kontrollera anslutningen och försök igen. Bokningar och kontouppgifter kräver internet.",
+    "retry": "Försök igen"
+  },
+  "legal": {
+    "terms": {
+      "metadata": "Utkast till villkor för Makina Trafikskola.",
+      "eyebrow": "Juridisk information",
+      "title": "Köpvillkor",
+      "draftTitle": "Utkast – inväntar juridisk granskning",
+      "draftNotice": "Detta är inte kundens slutliga eller bindande villkor. Formuleringar om köp, återbetalning och ångerrätt måste godkännas av kunden och juridisk rådgivare före lansering.",
+      "scope": {"title": "Omfattning", "body": "Utkastet gäller bokning av körlektioner och framtida digitala köp via Makina Trafikskola."},
+      "details": {"title": "Krediter och avbokning", "body": "Teknisk standard i tjänsten: lektionskrediter gäller i 24 månader. Elevens avbokning mer än 24 timmar före start återför krediten; senare avbokning gör det inte. När skolan avbokar återförs krediten alltid.\n\nSlutlig policy för återbetalning, paket och 14 dagars ångerrätt inväntar kundens juridiska text."},
+      "rights": {"title": "Före köp", "body": "Produkter är inaktiva tills prislista, moms och villkor har bekräftats. En obligatorisk bekräftelse av slutliga villkor och ångerrätt behöver kopplas till checkout före lansering."}
+    },
+    "privacy": {
+      "metadata": "Utkast till integritetsinformation för Makina Trafikskola.",
+      "eyebrow": "Juridisk information",
+      "title": "Integritet",
+      "draftTitle": "Utkast – inväntar juridisk granskning",
+      "draftNotice": "Personuppgiftsansvarig, kontaktvägar, rättsliga grunder och lagringstider måste bekräftas av kunden och juridisk rådgivare före lansering.",
+      "scope": {"title": "Uppgifter i tjänsten", "body": "Tjänsten behandlar konto- och kontaktuppgifter, bokningar, betalningshistorik, utbildningsprogression och uppgifter som eleven själv lämnar."},
+      "details": {"title": "Användning och skydd", "body": "Uppgifter används för att leverera utbildning, hantera bokningar och betalningar samt uppfylla rättsliga krav. Känsliga uppgifter ska inte skrivas till applikationsloggar."},
+      "rights": {"title": "Dina val", "body": "Inloggade elever kan begära en maskinläsbar export och radera sitt konto. Radering anonymiserar personuppgifter men bevarar uppgifter som måste finnas kvar för bokföring och spårbarhet. Exakta kontakt- och klagomålsvägar inväntar juridisk granskning."}
+    },
+    "cookies": {
+      "metadata": "Information om cookies i Makina Trafikskolas tjänst.",
+      "eyebrow": "Juridisk information",
+      "title": "Cookies",
+      "draftTitle": "Utkast – inväntar juridisk granskning",
+      "draftNotice": "Den slutliga cookielistan måste granskas igen när analys, övervakning eller andra externa tjänster aktiveras.",
+      "scope": {"title": "Nödvändiga cookies", "body": "Tjänsten använder servercookies för inloggning, språkval, säkerhet och för att minnas ditt cookieval."},
+      "details": {"title": "Valfria cookies", "body": "Inga analys- eller marknadsföringscookies är aktiverade i den här versionen. Sådana cookies får inte aktiveras innan samtycke och dokumentation är på plats."},
+      "rights": {"title": "Ändra ditt val", "body": "Du kan radera webbplatsens cookies i webbläsarens inställningar för att visa valet igen. Nödvändiga cookies krävs för inloggade funktioner."}
+    }
+  },
+  "admin": {
+    "nav": {"label": "Administration", "calendar": "Veckokalender", "students": "Elever", "instructors": "Ny lärare"},
+    "calendar": {
+      "eyebrow": "Administration", "title": "Veckokalender", "description": "Se bokningar för alla aktiva lärare och hantera en bokning.", "previous": "Föregående vecka", "next": "Nästa vecka", "instructor": "Lärare", "completed": "Genomförd", "empty": "Det finns inga aktiva lärare.",
+      "controls": {"manage": "Hantera", "close": "Stäng", "action": "Åtgärd", "move": "Flytta tid", "reassign": "Byt lärare", "cancel": "Avboka", "newTime": "Ny lokal tid", "newInstructor": "Ny lärare", "reason": "Skriftlig orsak", "save": "Spara ändring", "saving": "Sparar…"}
+    },
+    "students": {
+      "eyebrow": "Administration", "title": "Elever", "description": "Sök elev, granska saldo och betalningar eller justera krediter.", "searchLabel": "Namn eller e-post", "search": "Sök", "results": "{count} resultat", "noEmail": "Ingen e-post", "empty": "Inga elever matchar sökningen.", "selectStudent": "Välj en elev för att visa detaljer.", "balance": "Beräknat aktivt saldo", "payments": "Betalningar", "paymentLine": "{provider} · {method} · {status} · återbetalat {refunded}", "unknownMethod": "okänd metod", "orderStatus": {"PENDING": "Väntar", "PAID": "Betald", "FAILED": "Misslyckad", "REFUNDED": "Återbetald", "PARTIALLY_REFUNDED": "Delvis återbetald"}, "paymentStatus": {"PENDING": "Väntar", "SUCCEEDED": "Genomförd", "FAILED": "Misslyckad", "REFUNDED": "Återbetald"}, "provider": {"STRIPE": "Stripe", "MANUAL": "Manuell"}, "method": {"card": "Kort", "swish": "Swish", "klarna": "Klarna"}, "noPayment": "Ingen betalning registrerad", "noPayments": "Inga betalningar.", "ledger": "Kredittransaktioner", "noLedger": "Inga kredittransaktioner.",
+      "adjustment": {"title": "Justera krediter", "delta": "Förändring", "reason": "Obligatorisk skriftlig orsak", "submit": "Registrera justering", "saving": "Sparar…"}
+    },
+    "instructors": {
+      "eyebrow": "Administration", "title": "Lägg till lärare", "description": "Skapa konto, språk, växellådor, platser och återkommande lokala arbetstider.", "account": "Konto", "firstName": "Förnamn", "lastName": "Efternamn", "email": "E-post", "initialPassword": "Tillfälligt lösenord", "slug": "Profiladress", "yearsExperience": "Års erfarenhet", "languages": "Språk", "transmissions": "Växellådor", "transmission": {"MANUAL": "Manuell", "AUTOMATIC": "Automat"}, "locations": "Platser", "noLocations": "Inga aktiva platser finns. Lärare kan inte skapas.", "hours": "Arbetstider", "hoursDescription": "Tiderna är lokal väggtid i Europe/Stockholm.", "from": "Från", "to": "Till", "day": {"0": "Söndag", "1": "Måndag", "2": "Tisdag", "3": "Onsdag", "4": "Torsdag", "5": "Fredag", "6": "Lördag"}, "photo": "Profilbild", "photoHelp": "Valfri JPEG-, PNG- eller WebP-bild, högst 5 MB.", "submit": "Skapa lärare", "saving": "Skapar…", "created": "Läraren har skapats."
+    },
+    "instructorStatus": {"title": "Hantera lärare", "description": "Aktivera eller inaktivera lärare. Framtida bekräftade bokningar måste först flyttas eller avbokas.", "active": "Aktiv", "inactive": "Inaktiv", "activate": "Aktivera", "deactivate": "Inaktivera", "saving": "Sparar…"}
+  },
+  "errors": {
+    "NO_CREDITS": "Du har inga paketkrediter. Välj en betald enstaka lektion eller testlektion i stället.",
+    "CHECKOUT_CONSENT_REQUIRED": "Godkänn båda utkasten före betalning för att fortsätta.",
+    "INVALID_PICKUP_COORDINATES": "Välj en giltig hämtningsadress i Sverige.",
+    "INVALID_INPUT": "Kontrollera uppgifterna och försök igen.",
+    "INVALID_CREDENTIALS": "E-post eller lösenord är fel.",
+    "ACCOUNT_EXISTS": "Det finns redan ett konto med den e-postadressen.",
+    "INVALID_OTP": "Koden är fel eller har gått ut. Begär en ny kod.",
+    "RATE_LIMITED": "För många försök. Vänta och försök igen.",
+    "SELECT_LOCATION_OR_PICKUP": "Välj en plats eller skriv en hämtningsadress.",
+    "TEACHER_REQUIRED": "Välj en lärare för att fortsätta.",
+    "SLOT_REQUIRED": "Välj en ledig tid.",
+    "SLOT_TAKEN": "Tiden hann bokas. Välj en annan ledig tid.",
+    "PRODUCT_INACTIVE": "Produkten är ännu inte tillgänglig för köp.",
+    "UNAUTHENTICATED": "Logga in för att fortsätta.",
+    "FORBIDDEN": "Du har inte behörighet till detta.",
+    "STUDENT_NOT_FOUND": "Eleven finns inte.",
+    "BOOKING_NOT_FOUND": "Bokningen finns inte.",
+    "BOOKING_NOT_ACTIVE": "Bokningen kan inte längre ändras.",
+    "TEACHER_NOT_FOUND": "Läraren finns inte eller är inaktiv.",
+    "TEACHER_HAS_FUTURE_BOOKINGS": "Flytta eller avboka lärarens framtida bokningar innan läraren inaktiveras.",
+    "LOCATION_NOT_FOUND": "En vald plats finns inte eller är inaktiv.",
+    "LOCATION_NOT_ASSIGNED": "Arbetstiden använder en plats som inte är vald.",
+    "SLUG_EXISTS": "Profiladressen används redan.",
+    "ACCOUNT_OR_SLUG_EXISTS": "E-postadressen eller profiladressen används redan.",
+    "ACCOUNT_HAS_ACTIVE_BOOKINGS": "Avboka kommande bokningar innan du raderar kontot.",
+    "COURSE_OCCASION_NOT_FOUND": "Kurstillfället finns inte längre.",
+    "COURSE_FULL": "Kurstillfället är fullbokat.",
+    "COURSE_ALREADY_BOOKED": "Du har redan en bekräftad plats på kurstillfället.",
+    "PAYMENT_PROVIDER_ERROR": "Betalningen kunde inte startas. Försök igen.",
+    "PRODUCT_TRANSLATION_MISSING": "Kursen saknar nödvändig produktinformation.",
+    "THEORY_QUESTION_NOT_FOUND": "Frågan finns inte längre.",
+    "THEORY_ACCESS_REQUIRED": "Aktiv teoriåtkomst krävs för den här frågan.",
+    "THEORY_EXAM_NOT_FOUND": "Provet finns inte.",
+    "THEORY_EXAM_FINISHED": "Provet är redan avslutat.",
+    "THEORY_EXAM_EXPIRED": "Provtiden har gått ut.",
+    "THEORY_EXAM_COMPLETE": "Alla frågor i provet är redan besvarade.",
+    "THEORY_EXAM_UNAVAILABLE": "Det finns inte tillräckligt många tillgängliga frågor.",
+    "BOOKING_NOT_COMPLETED": "Du kan lämna en recension efter en genomförd lektion.",
+    "REVIEW_EXISTS": "Du har redan lämnat en recension för lektionen.",
+    "UNKNOWN": "Något gick fel. Försök igen."
+  }
+}

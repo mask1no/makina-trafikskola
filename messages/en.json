@@ -1,0 +1,223 @@
+{
+  "language": {
+    "label": "Choose language",
+    "sv": "Svenska",
+    "en": "English",
+    "ti": "ትግርኛ",
+    "ar": "العربية",
+    "so": "Soomaali"
+  },
+  "shell": {
+    "navigation": "Main navigation",
+    "home": "Home",
+    "packages": "Packages",
+    "bookings": "My bookings",
+    "messages": "Messages",
+    "theory": "Theory",
+    "profile": "Profile",
+    "lessons": "Driving lessons",
+    "teachers": "Instructors",
+    "book": "Book now",
+    "footerDescription": "Driving education with clear guidance and support in your language.",
+    "explore": "Explore",
+    "terms": "Terms",
+    "privacy": "Privacy",
+    "cookies": "Cookies",
+    "languageHelp": "Support in your language",
+    "languageHelpDescription": "Filter instructors by language and find an option that suits you."
+  },
+  "common": {
+    "bookNow": "Book now",
+    "viewAll": "View all",
+    "readMore": "Read more",
+    "swedishOnly": "Swedish only",
+    "all": "All languages",
+    "allLocations": "All locations",
+    "applyFilter": "Show results"
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "Your path to a driving licence",
+      "title": "Drive with confidence, learn in your language",
+      "description": "Driving lessons, theory and experienced instructors in Stockholm – all in one place.",
+      "findTeacher": "Find an instructor",
+      "cardLabel": "Personal education",
+      "cardTitle": "A clear plan from your first lesson",
+      "cardDescription": "Choose language, transmission and instructor based on your needs."
+    },
+    "products": {
+      "eyebrow": "Driving education",
+      "title": "Choose the path that suits you"
+    },
+    "teachers": {
+      "eyebrow": "Learn in your language",
+      "title": "Meet our instructors",
+      "description": "Find an instructor who speaks your language and teaches where you want to drive."
+    },
+    "location": {
+      "eyebrow": "Near you",
+      "title": "Find instructors on the map",
+      "description": "See the instructors available at our locations. The interactive map loads only when you open the instructor page.",
+      "openMap": "Open instructor map",
+      "area": "Stockholm area"
+    }
+  },
+  "lessons": {
+    "eyebrow": "Prices and packages",
+    "title": "Driving lessons for every step",
+    "description": "Compare single lessons and packages. All prices include VAT.",
+    "provisionalNotice": "Prices are provisional and the products cannot be purchased yet."
+  },
+  "product": {
+    "popular": "Most popular",
+    "notForSale": "Not for sale yet",
+    "emptyTitle": "No products to show",
+    "emptyDescription": "The selection is being updated. Please check back soon.",
+    "included": "What is included",
+    "priceIncludesVat": "Price including VAT",
+    "provisionalDescription": "This product will be activated only after the final price list is confirmed.",
+    "checkout": {"terms": "I accept the draft terms of purchase.", "withdrawal": "I have read the draft 14-day withdrawal information and request that the service may begin as scheduled.", "submit": "Continue to payment", "redirecting": "Opening payment…", "error": "Payment could not be started. Sign in and try again."}
+  },
+  "checkout": {
+    "eyebrow": "Secure payment", "title": "Complete your payment", "businessName": "Makina Trafikskola",
+    "total": "Total", "vat": "Including VAT", "submit": "Pay now", "submitting": "Processing payment…",
+    "genericError": "The payment could not be completed. Check your details and try again.",
+    "mockTitle": "Development payment mode", "mockDescription": "Stripe keys are missing. The order remains pending, but no payment or fulfillment will occur.",
+    "unavailable": "Payment is currently unavailable. You have not been charged.", "alreadyProcessed": "This order has already been processed.", "viewStatus": "View order status"
+  },
+  "teachers": {
+    "eyebrow": "Our instructors",
+    "title": "Find the right instructor",
+    "description": "Choose a language first, then a location, to find the instructor who suits you.",
+    "languageFilter": "1. Choose language",
+    "locationFilter": "2. Choose location",
+    "results": "Instructor results",
+    "resultCount": "{count, plural, =0 {No instructors} =1 {1 instructor} other {# instructors}}",
+    "emptyTitle": "No instructor matches",
+    "emptyDescription": "Try another language or location.",
+    "transmissionFilter": "3. Choose transmission",
+    "allTransmissions": "All transmissions"
+  },
+  "teacher": {
+    "yearsExperience": "{count, plural, =0 {New instructor} =1 {1 year of experience} other {# years of experience}}",
+    "viewProfile": "View profile",
+    "transmission": {
+      "manual": "Manual",
+      "automatic": "Automatic"
+    },
+    "profileEyebrow": "Driving instructor",
+    "bioPending": "The instructor's introduction is being updated.",
+    "languages": "Languages",
+    "transmissions": "Transmission",
+    "locations": "Locations",
+    "bookWith": "Book with {name}"
+  },
+  "map": {
+    "title": "Instructor map",
+    "staticLabel": "Simplified map of the Stockholm area",
+    "interactiveLabel": "Interactive map of instructor locations",
+    "unavailableTitle": "The map is currently unavailable",
+    "unavailableDescription": "You can still find and choose an instructor from the list."
+  },
+  "courses": {
+    "eyebrow": "Risk training and courses", "title": "Upcoming course occasions", "description": "View real scheduled courses and remaining seats.",
+    "when": "Time", "language": "Language", "venue": "Venue", "seats": "Available seats", "seatsLeft": "{count, plural, =0 {Fully booked} =1 {1 seat left} other {# seats left}}",
+    "inactive": "This course product is not active for purchase yet.", "emptyTitle": "No courses are scheduled", "emptyDescription": "New occasions will appear here after confirmation.",
+    "kind": {"RISK1": "Risk 1", "RISK2": "Risk 2", "HANDLEDARUTBILDNING": "Supervisor course", "INTRO_THEORY": "Theory introduction"},
+    "booking": {"terms": "I accept the purchase terms.", "withdrawal": "I request that the course booking starts during the withdrawal period and understand how this affects my right of withdrawal.", "submit": "Book course seat", "submitting": "Checking seat and payment…", "confirmed": "Your course seat is confirmed with your paid entitlement.", "failed": "The booking could not be completed. Try again."}
+  },
+  "theory": {
+    "eyebrow": "Driving theory", "title": "Practise with verified questions", "description": "Free questions are available without purchase. Paid content requires active theory access.",
+    "licensingPending": "The complete question bank will be published only after content rights are confirmed.", "freeCount": "{count, plural, =1 {1 free question} other {# free questions}}", "swedishOnly": "Swedish only", "examLink": "Open mock exam",
+    "emptyTitle": "No free questions are published", "emptyDescription": "Verified and licensed question content is pending.", "paidAccess": "Active theory access", "freeAccess": "Free questions", "questionNumber": "Question {number}",
+    "categoryEmptyTitle": "No questions are available", "categoryEmptyDescription": "This category has no questions your account can access.", "submitAnswer": "Check answer", "correct": "Correct", "incorrect": "Not correct", "selectAnswer": "Choose an answer first.", "signInToAnswer": "Sign in as a student to save your answer.", "answerError": "The answer could not be saved. Try again.",
+    "exam": {"eyebrow": "Mock exam", "title": "Prepare under real exam conditions", "description": "The exam is scored on the server and ends after the fixed time.", "questions": "Questions", "time": "Minutes", "pass": "Correct to pass", "ready": "The question bank is ready for a full exam.", "unavailable": "There are not yet 65 active questions your account may access.", "signIn": "Sign in as a student to check exam access.", "start": "Start 50-minute exam", "starting": "Starting exam…", "finish": "Finish exam", "finishing": "Scoring…", "next": "Save and continue", "selectAnswer": "Choose an answer first.", "progress": "Question {current} of {total}", "timeRemaining": "Time remaining", "passed": "Passed", "failed": "Not passed", "error": "The exam could not be updated. Try again."}
+  },
+  "localSchool": {
+    "eyebrow": "Driving school near you", "title": "Driving school in {city}", "description": "View our confirmed location and available instructors in {city}.", "addressPending": "The exact visiting address is awaiting confirmation.", "teachersTitle": "Instructors at this location",
+    "emptyTitle": "No instructors are assigned yet", "emptyDescription": "Instructors will appear when their location is confirmed.", "metadataTitle": "Driving school in {city}", "metadataDescription": "Driving lessons and licence training in {city}."
+  },
+  "booking": {
+    "progress": "Booking steps",
+    "back": "Back",
+    "next": "Continue",
+    "confirm": "Confirm booking",
+    "provisional": "Provisional offering – not yet available to buy",
+    "step": {
+      "what": {"short": "What", "title": "What would you like to book?", "description": "Choose the option that suits your training.", "single": "Single driving lesson", "credits": "Use my package", "test": "Trial lesson"},
+      "where": {"short": "Where", "title": "Where would you like to start?", "school": "I will come to you", "pickup": "Pick me up", "location": "Choose driving school", "address": "Pickup address"},
+      "who": {"short": "Who", "title": "Who would you like to drive with?", "languageFirst": "Choose language first", "list": "List", "map": "Map", "mapLabel": "Map of available instructors", "mapUnavailable": "The map is unavailable", "mapUnavailableDescription": "Choose an instructor from the list.", "empty": "No instructor matches the language and location."},
+      "when": {"short": "When", "title": "When would you like to drive?", "firstAvailable": "First available time", "loading": "Loading available times…", "empty": "No available times on this day."}
+    },
+    "account": {"title": "Create an account with your phone", "description": "Verify your number here without leaving the booking.", "firstName": "First name", "lastName": "Last name", "phone": "Mobile number with country code", "code": "Six-digit code", "send": "Send code", "verify": "Verify and book", "devCode": "Local development only – code: {code}"},
+    "credits": {"loading": "Checking your balance…", "signIn": "Sign in to check your package credits.", "balance": "{count, plural, =0 {No lessons available} =1 {1 lesson available} other {# lessons available}}"},
+    "checkout": {"title": "Consent before payment", "draft": "Draft wording pending client and legal review.", "termsConsent": "I have read and accept the draft terms of purchase.", "withdrawalConsent": "I have read the draft information about the 14-day withdrawal right and request that the booked service may begin as scheduled.", "continue": "Continue to secure payment"},
+    "confirmation": {"eyebrow": "Booking registered", "title": "Your time is booked", "deadline": "You can cancel until {deadline}.", "calendar": "Add to calendar", "creditUsed": "One lesson has been deducted from your balance.", "hold": "This time is held for you until {expires} while payment is completed.", "provisional": "The price list is not confirmed, so payment is temporarily unavailable. Your 15-minute hold is unchanged."},
+    "calendar": {"summary": "Driving lesson with Makina Trafikskola", "description": "Cancellation deadline: {deadline}."}
+  },
+  "auth": {
+    "firstName": "First name", "lastName": "Last name", "email": "Email", "password": "Password",
+    "login": {"title": "Log in", "description": "Continue to your account.", "submit": "Log in", "noAccount": "Do not have an account?", "create": "Create account"},
+    "register": {"title": "Create account", "description": "Create a student account with email and password.", "submit": "Create account", "hasAccount": "Already have an account?", "login": "Log in"}
+  },
+  "student": {
+    "nav": {"label": "My pages", "overview": "Overview", "bookings": "Bookings", "saldo": "Balance", "theory": "Theory", "messages": "Messages", "profile": "Profile"},
+    "overview": {"title": "My pages", "nextBooking": "Next driving lesson", "noBooking": "You have no upcoming booking.", "viewBookings": "View bookings", "saldo": "Available lessons", "viewSaldo": "View balance", "theory": "Theory access", "theoryActive": "Your theory access is active.", "theoryInactive": "No active theory access.", "viewTheory": "View theory"},
+    "bookings": {
+      "title": "My bookings", "description": "View upcoming and previous driving lessons.", "empty": "You have no bookings.", "pickup": "Pickup location", "cancel": "Cancel", "cancelLateWarning": "The cancellation deadline has passed. Your credit will not be refunded. Cancel anyway?", "cancelRefundWarning": "Cancelling now returns your credit. The deadline is {deadline}. Continue?", "deadline": "You can cancel until {deadline}.", "status": "Status: {status}",
+      "statuses": {"CONFIRMED": "Confirmed", "COMPLETED": "Completed", "CANCELLED_BY_STUDENT": "Cancelled by you", "CANCELLED_BY_TEACHER": "Cancelled by instructor", "EXPIRED_HOLD": "Hold expired", "NO_SHOW": "Did not attend"}
+    },
+    "saldo": {
+      "title": "My balance", "available": "Available balance", "lessons": "driving lessons", "lots": "Active credits", "expires": "Valid until {date}", "noExpiry": "No expiry date", "empty": "You have no active credits.",
+      "reasons": {"PURCHASE": "Purchase", "BOOKING_CONSUMED": "Booking", "CANCELLATION_REFUND": "Cancellation refund", "LATE_CANCELLATION_CHARGE": "Late cancellation", "TEACHER_CANCELLATION_REFUND": "Instructor cancellation refund", "PAYMENT_REFUND": "Payment refund", "ADMIN_ADJUSTMENT": "Administrative adjustment", "EXPIRY": "Expired credit"}
+    },
+    "payments": {"eyebrow": "Payment", "title": "Order status", "orderStatus": "Status: {status}", "quantity": "Quantity: {quantity}", "total": "Total", "vat": "Including VAT", "retryDescription": "The payment is not complete. Continue to secure payment to try again.", "retry": "Try payment again", "late": {"lesson": {"title": "Payment succeeded – choose a new time", "description": "Your 15-minute reservation expired. The purchased lesson remains available exactly once as an unused credit. The old time was not reclaimed.", "action": "Book a new lesson time"}, "course": {"title": "Payment succeeded – choose another course occasion", "description": "Your 15-minute reservation expired. The purchased course seat remains available exactly once as an unused entitlement. The old seat was not reclaimed.", "action": "Choose another course occasion"}}, "statuses": {"PENDING": "Awaiting payment", "PAID": "Paid", "FAILED": "Failed", "REFUNDED": "Refunded", "PARTIALLY_REFUNDED": "Partially refunded"}},
+    "theory": {"title": "My theory", "access": "Access", "activeUntil": "Active until {date}", "inactive": "No active access", "progress": "Results", "correct": "correctly answered questions", "provisional": "The theory product is not active yet because the price and question bank await confirmation."},
+    "messages": {"title": "Messages", "description": "Your latest service notifications. Personal payload data is not shown here.", "empty": "You have no messages.", "sent": "Sent", "scheduled": "Scheduled", "limited": "Showing the latest 50 messages.", "templates": {"bookingConfirmed": "Booking confirmed", "bookingCancelledByStudent": "Booking cancelled", "bookingCancelledByTeacher": "Booking cancelled by instructor", "bookingReminder": "Booking reminder", "paymentReceipt": "Payment receipt", "paymentFailed": "Payment failed", "lessonPaymentNeedsRebooking": "Paid lesson needs rebooking", "coursePaymentNeedsRebooking": "Paid course seat needs rebooking", "generic": "Service message"}, "bodies": {"lessonPaymentNeedsRebooking": "Payment succeeded after the reservation expired. Your unused lesson credit remains; choose a new time.", "coursePaymentNeedsRebooking": "Payment succeeded after the reservation expired. Your unused course entitlement remains; choose another occasion."}, "channels": {"EMAIL": "Email", "SMS": "SMS", "PUSH": "Push", "INAPP": "In app"}},
+    "profile": {
+      "title": "My profile", "name": "Name", "email": "Email", "phone": "Phone", "language": "Language", "permit": "Learner's permit", "transmission": "Transmission", "pickup": "Default address", "missing": "Not provided", "privacyTitle": "Your personal data", "privacyDescription": "Download your data or delete and anonymise the account.", "export": "Download my data", "delete": "Delete my account", "deleting": "Deleting…", "deleteConfirm": "The account will be anonymised and you will be signed out. This cannot be undone. Continue?",
+      "permitStatuses": {"UNKNOWN": "Unknown status", "NOT_APPLIED": "Not applied", "APPLIED": "Applied", "APPROVED": "Approved"},
+      "transmissions": {"MANUAL": "Manual", "AUTOMATIC": "Automatic"}
+    }
+  },
+  "teacherPortal": {
+    "eyebrow": "Instructor portal", "title": "Today's driving lessons", "lessonCount": "{count, plural, =0 {No lessons today} =1 {1 lesson today} other {# lessons today}}", "call": "Call student", "openAddress": "Open address", "previousNote": "Previous note", "noPreviousNote": "No previous note.", "summary": "Lesson note", "nextFocus": "Next focus", "completeLesson": "Complete and save", "updateReport": "Update report", "empty": "You have no lessons today.", "noProfile": "No instructor profile is linked to this user.",
+    "block": {"title": "Block availability", "description": "Leave the times empty to block the whole day.", "date": "Date", "start": "From", "end": "To", "reason": "Reason", "submit": "Block time"}
+  },
+  "metadata": {"brand": "Makina Trafikskola", "title": "Makina Trafikskola – driving education in Stockholm", "description": "Driving lessons and licence training in Stockholm with support in several languages."},
+  "cookieConsent": {"title": "Cookie settings", "description": "We use necessary cookies for sign-in, language and your cookie choice. No analytics or marketing cookies are active.", "readMore": "Read about cookies", "necessary": "Necessary only", "accept": "Accept"},
+  "offline": {"title": "You are offline", "description": "Check your connection and try again. Bookings and account details require internet access.", "retry": "Try again"},
+  "legal": {
+    "terms": {
+      "metadata": "Draft terms for Makina Trafikskola.", "eyebrow": "Legal information", "title": "Terms of purchase", "draftTitle": "Draft – pending legal review", "draftNotice": "These are not the client's final or binding terms. Wording about purchases, refunds and withdrawal rights must be approved by the client and legal counsel before launch.",
+      "scope": {"title": "Scope", "body": "This draft covers booking driving lessons and future digital purchases through Makina Trafikskola."},
+      "details": {"title": "Credits and cancellation", "body": "Technical default in the service: lesson credits are valid for 24 months. A student cancellation more than 24 hours before the start returns the credit; a later cancellation does not. A school cancellation always returns the credit.\n\nThe final policy for refunds, packages and the 14-day withdrawal right is awaiting the client's legal wording."},
+      "rights": {"title": "Before purchase", "body": "Products remain inactive until prices, VAT and terms are confirmed. A mandatory confirmation of final terms and withdrawal rights must be connected to checkout before launch."}
+    },
+    "privacy": {
+      "metadata": "Draft privacy information for Makina Trafikskola.", "eyebrow": "Legal information", "title": "Privacy", "draftTitle": "Draft – pending legal review", "draftNotice": "The controller, contact routes, legal bases and retention periods must be confirmed by the client and legal counsel before launch.",
+      "scope": {"title": "Data in the service", "body": "The service processes account and contact details, bookings, payment history, training progress and information supplied by the student."},
+      "details": {"title": "Use and protection", "body": "Data is used to deliver training, manage bookings and payments, and meet legal obligations. Sensitive information must not be written to application logs."},
+      "rights": {"title": "Your choices", "body": "Signed-in students can request a machine-readable export and delete their account. Deletion anonymises personal data while preserving records required for accounting and traceability. Exact contact and complaint routes await legal review."}
+    },
+    "cookies": {
+      "metadata": "Cookie information for Makina Trafikskola.", "eyebrow": "Legal information", "title": "Cookies", "draftTitle": "Draft – pending legal review", "draftNotice": "The final cookie list must be reviewed again when analytics, monitoring or other external services are enabled.",
+      "scope": {"title": "Necessary cookies", "body": "The service uses server cookies for sign-in, language, security and remembering your cookie choice."},
+      "details": {"title": "Optional cookies", "body": "No analytics or marketing cookies are active in this version. They must not be enabled before consent and documentation are in place."},
+      "rights": {"title": "Change your choice", "body": "Delete this site's cookies in your browser settings to show the choice again. Necessary cookies are required for signed-in features."}
+    }
+  },
+  "admin": {
+    "nav": {"label": "Administration", "calendar": "Week calendar", "students": "Students", "instructors": "New instructor"},
+    "calendar": {"eyebrow": "Administration", "title": "Week calendar", "description": "View bookings for every active instructor and manage a booking.", "previous": "Previous week", "next": "Next week", "instructor": "Instructor", "completed": "Completed", "empty": "There are no active instructors.", "controls": {"manage": "Manage", "close": "Close", "action": "Action", "move": "Move time", "reassign": "Change instructor", "cancel": "Cancel", "newTime": "New local time", "newInstructor": "New instructor", "reason": "Written reason", "save": "Save change", "saving": "Saving…"}},
+    "students": {"eyebrow": "Administration", "title": "Students", "description": "Find a student, review balance and payments, or adjust credits.", "searchLabel": "Name or email", "search": "Search", "results": "{count} results", "noEmail": "No email", "empty": "No students match the search.", "selectStudent": "Select a student to view details.", "balance": "Computed active balance", "payments": "Payments", "paymentLine": "{provider} · {method} · {status} · refunded {refunded}", "unknownMethod": "unknown method", "orderStatus": {"PENDING": "Pending", "PAID": "Paid", "FAILED": "Failed", "REFUNDED": "Refunded", "PARTIALLY_REFUNDED": "Partially refunded"}, "paymentStatus": {"PENDING": "Pending", "SUCCEEDED": "Succeeded", "FAILED": "Failed", "REFUNDED": "Refunded"}, "provider": {"STRIPE": "Stripe", "MANUAL": "Manual"}, "method": {"card": "Card", "swish": "Swish", "klarna": "Klarna"}, "noPayment": "No payment recorded", "noPayments": "No payments.", "ledger": "Credit transactions", "noLedger": "No credit transactions.", "adjustment": {"title": "Adjust credits", "delta": "Change", "reason": "Required written reason", "submit": "Record adjustment", "saving": "Saving…"}},
+    "instructors": {"eyebrow": "Administration", "title": "Add instructor", "description": "Create an account, languages, transmissions, locations and recurring local working hours.", "account": "Account", "firstName": "First name", "lastName": "Last name", "email": "Email", "initialPassword": "Temporary password", "slug": "Profile address", "yearsExperience": "Years of experience", "languages": "Languages", "transmissions": "Transmissions", "transmission": {"MANUAL": "Manual", "AUTOMATIC": "Automatic"}, "locations": "Locations", "noLocations": "There are no active locations. An instructor cannot be created.", "hours": "Working hours", "hoursDescription": "Times are local wall-clock times in Europe/Stockholm.", "from": "From", "to": "To", "day": {"0": "Sunday", "1": "Monday", "2": "Tuesday", "3": "Wednesday", "4": "Thursday", "5": "Friday", "6": "Saturday"}, "photo": "Profile photo", "photoHelp": "Optional JPEG, PNG or WebP, maximum 5 MB.", "submit": "Create instructor", "saving": "Creating…", "created": "The instructor was created."}
+    ,"instructorStatus": {"title": "Manage instructors", "description": "Activate or deactivate instructors. Future confirmed bookings must be reassigned or cancelled first.", "active": "Active", "inactive": "Inactive", "activate": "Activate", "deactivate": "Deactivate", "saving": "Saving…"}
+  },
+  "errors": {
+    "NO_CREDITS": "You have no package credits. Choose a paid single or trial lesson instead.",
+    "CHECKOUT_CONSENT_REQUIRED": "Accept both draft checkout statements before continuing.",
+    "INVALID_PICKUP_COORDINATES": "Choose a valid pickup address in Sweden.",
+    "INVALID_INPUT": "Check the details and try again.", "INVALID_CREDENTIALS": "The email or password is incorrect.", "ACCOUNT_EXISTS": "An account with this email already exists.", "INVALID_OTP": "The code is incorrect or expired. Request a new code.", "RATE_LIMITED": "Too many attempts. Wait and try again.", "SELECT_LOCATION_OR_PICKUP": "Choose a location or enter a pickup address.", "TEACHER_REQUIRED": "Choose an instructor to continue.", "SLOT_REQUIRED": "Choose an available time.", "SLOT_TAKEN": "This time was just booked. Choose another available time.", "PRODUCT_INACTIVE": "The product is not yet available to buy.", "UNAUTHENTICATED": "Log in to continue.", "FORBIDDEN": "You do not have access to this.", "STUDENT_NOT_FOUND": "The student was not found.", "BOOKING_NOT_FOUND": "The booking was not found.", "BOOKING_NOT_ACTIVE": "The booking can no longer be changed.", "TEACHER_NOT_FOUND": "The instructor was not found or is inactive.", "TEACHER_HAS_FUTURE_BOOKINGS": "Reassign or cancel the instructor's future bookings before deactivating.", "LOCATION_NOT_FOUND": "A selected location was not found or is inactive.", "LOCATION_NOT_ASSIGNED": "The working hours use a location that is not selected.", "SLUG_EXISTS": "The profile address is already in use.", "ACCOUNT_OR_SLUG_EXISTS": "The email or profile address is already in use.", "ACCOUNT_HAS_ACTIVE_BOOKINGS": "Cancel upcoming bookings before deleting the account.", "COURSE_OCCASION_NOT_FOUND": "This course occasion is no longer available.", "COURSE_FULL": "This course is fully booked.", "COURSE_ALREADY_BOOKED": "You already have a confirmed seat on this course.", "PAYMENT_PROVIDER_ERROR": "Payment could not be started. Try again.", "PRODUCT_TRANSLATION_MISSING": "The course is missing required product information.", "THEORY_QUESTION_NOT_FOUND": "This question is no longer available.", "THEORY_ACCESS_REQUIRED": "Active theory access is required for this question.", "THEORY_EXAM_NOT_FOUND": "The exam was not found.", "THEORY_EXAM_FINISHED": "The exam is already finished.", "THEORY_EXAM_EXPIRED": "The exam time has expired.", "THEORY_EXAM_COMPLETE": "All exam questions have already been answered.", "THEORY_EXAM_UNAVAILABLE": "There are not enough available questions.", "BOOKING_NOT_COMPLETED": "You can review a completed lesson.", "REVIEW_EXISTS": "You already reviewed this lesson.", "UNKNOWN": "Something went wrong. Try again."
+  }
+}

@@ -5,20 +5,30 @@
 
 CREATE EXTENSION IF NOT EXISTS btree_gist;
 
-ALTER TABLE "Booking"
-  ADD COLUMN IF NOT EXISTS period tstzrange
-  GENERATED ALWAYS AS (tstzrange("startsAt", "endsAt", '[)')) STORED;
-
 -- An instructor cannot be in two places at once.
 ALTER TABLE "Booking"
   ADD CONSTRAINT booking_no_overlap_teacher
-  EXCLUDE USING gist ("teacherId" WITH =, period WITH &&)
+  EXCLUDE USING gist (
+    "teacherId" WITH =,
+    (tstzrange(
+      "startsAt" AT TIME ZONE 'UTC',
+      "endsAt" AT TIME ZONE 'UTC',
+      '[)'
+    )) WITH &&
+  )
   WHERE (status IN ('CONFIRMED', 'COMPLETED'));
 
 -- Neither can a student.
 ALTER TABLE "Booking"
   ADD CONSTRAINT booking_no_overlap_student
-  EXCLUDE USING gist ("studentId" WITH =, period WITH &&)
+  EXCLUDE USING gist (
+    "studentId" WITH =,
+    (tstzrange(
+      "startsAt" AT TIME ZONE 'UTC',
+      "endsAt" AT TIME ZONE 'UTC',
+      '[)'
+    )) WITH &&
+  )
   WHERE (status IN ('CONFIRMED', 'COMPLETED'));
 
 -- Violations surface as SQLSTATE 23P01 → the API returns 409 SLOT_TAKEN.

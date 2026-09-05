@@ -1,0 +1,86 @@
+import { expect, test } from "@playwright/test";
+
+test.describe("public localized experience", () => {
+  test.beforeEach(async ({ context }) => {
+    await context.addCookies([
+      {
+        name: "makina-cookie-consent",
+        value: "necessary",
+        domain: "localhost",
+        path: "/",
+      },
+    ]);
+  });
+
+  test("keeps the selected locale during public navigation", async ({ page }) => {
+    await page.goto("/en");
+    await page
+      .getByRole("navigation", { name: "Main navigation" })
+      .getByRole("link", { name: "Instructors", exact: true })
+      .click();
+    await expect(page).toHaveURL(/\/en\/larare$/);
+    await expect(page.locator("html")).toHaveAttribute("lang", "en");
+  });
+
+  test("renders Arabic right-to-left", async ({ page }) => {
+    await page.goto("/ar");
+    await expect(page.locator("html")).toHaveAttribute("lang", "ar");
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+  });
+
+  test("preserves an instructor deep link in booking", async ({ page }) => {
+    await page.goto("/en/larare/sara-johansson");
+    await page.getByRole("link", { name: /Sara/ }).last().click();
+    await expect(page).toHaveURL(/\/en\/boka\?teacher=/);
+
+    await page.getByRole("button", { name: "Continue" }).click();
+    await page.getByRole("button", { name: "Continue" }).click();
+    await expect(page.getByRole("button", { name: /Sara Johansson/ })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+  });
+});
+
+test("stores cookie consent", async ({ page }) => {
+  await page.goto("/en");
+  const banner = page.getByRole("complementary", { name: "Cookie settings" });
+  await expect(banner).toBeVisible();
+  await banner.getByRole("button", { name: "Accept" }).click();
+  await expect(banner).toBeHidden();
+  await page.reload();
+  await expect(banner).toBeHidden();
+});
+
+test.describe("authorization boundaries", () => {
+  test("redirects anonymous users to localized login", async ({ page }) => {
+    await page.goto("/en/mina-sidor");
+    await expect(page).toHaveURL(
+      /\/en\/logga-in\?callbackUrl=%2Fen%2Fmina-sidor/,
+    );
+  });
+
+  test("rejects an authenticated user with the wrong role", async ({ page }) => {
+    await page.goto("/en/admin");
+    await page.getByLabel("Email").fill("admin@makina.local");
+    await page.getByLabel("Password").fill("Passw0rd!");
+    await page.getByRole("button", { name: "Log in" }).click();
+    await expect(page).toHaveURL(/\/en\/admin\/calendar$/);
+
+    const response = await page.goto("/en/mina-sidor");
+    expect(response?.status()).toBe(403);
+    await expect(page.getByText("FORBIDDEN")).toBeVisible();
+  });
+});
+
+test("ships localized offline fallback and service worker artifacts", async ({
+  request,
+}) => {
+  const worker = await request.get("/sw.js");
+  expect(worker.ok()).toBeTruthy();
+  expect(await worker.text()).toContain("/offline");
+
+  const fallback = await request.get("/en/offline");
+  expect(fallback.ok()).toBeTruthy();
+  expect(await fallback.text()).toContain("You are offline");
+});

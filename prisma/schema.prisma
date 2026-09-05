@@ -257,6 +257,7 @@ model OrderItem {
 
   credits      CreditTransaction[]
   theoryAccess TheoryAccess[]
+  courseBookings CourseBooking[]
 }
 
 model Payment {
@@ -285,6 +286,7 @@ enum CreditReason {
   CANCELLATION_REFUND
   LATE_CANCELLATION_CHARGE
   TEACHER_CANCELLATION_REFUND
+  PAYMENT_REFUND
   ADMIN_ADJUSTMENT
   EXPIRY
 }
@@ -330,9 +332,11 @@ enum ExceptionType {
 
 enum BookingStatus {
   CONFIRMED
+  PENDING_PAYMENT
   COMPLETED
   CANCELLED_BY_STUDENT
   CANCELLED_BY_TEACHER
+  EXPIRED_HOLD
   NO_SHOW
 }
 
@@ -441,15 +445,18 @@ model CourseOccasion {
 }
 
 model CourseBooking {
-  id         String         @id @default(cuid())
-  occasionId String
-  occasion   CourseOccasion @relation(fields: [occasionId], references: [id])
-  studentId  String
-  student    User           @relation(fields: [studentId], references: [id])
-  status     BookingStatus  @default(CONFIRMED)
-  createdAt  DateTime       @default(now())
+  id                String         @id @default(cuid())
+  occasionId        String
+  occasion          CourseOccasion @relation(fields: [occasionId], references: [id])
+  studentId         String
+  student           User           @relation(fields: [studentId], references: [id])
+  sourceOrderItemId String?
+  sourceOrderItem   OrderItem?     @relation(fields: [sourceOrderItemId], references: [id])
+  status            BookingStatus  @default(CONFIRMED)
+  createdAt         DateTime       @default(now())
 
   @@unique([occasionId, studentId])
+  @@index([sourceOrderItemId])
 }
 
 // ───────────────────────── utbildningskort ─────────────────────────
@@ -595,6 +602,7 @@ model TheoryExamSession {
   startedAt     DateTime  @default(now())
   finishedAt    DateTime?
   questionCount Int       @default(65)
+  selectedQuestionIds String[] @default([])
   correctCount  Int       @default(0)
   passed        Boolean   @default(false)
 

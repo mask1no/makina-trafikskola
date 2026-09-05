@@ -1,0 +1,23 @@
+const NON_BREAKING_SPACE = "\u00A0";
+
+export function formatPrice(ore: number, locale: string) {
+  if (!Number.isSafeInteger(ore)) {
+    throw new TypeError("PRICE_MUST_BE_INTEGER_ORE");
+  }
+
+  const sign = ore < 0 ? "-" : "";
+  const absoluteOre = Math.abs(ore);
+  const wholeKronor = Math.floor(absoluteOre / 100).toString();
+  const grouped = wholeKronor.replace(
+    /\B(?=(\d{3})+(?!\d))/g,
+    NON_BREAKING_SPACE,
+  );
+  const remainder = absoluteOre % 100;
+  const decimalSeparator = locale === "en" ? "." : ",";
+  const decimals =
+    remainder === 0
+      ? ""
+      : `${decimalSeparator}${remainder.toString().padStart(2, "0")}`;
+
+  return `${sign}${grouped}${decimals}${NON_BREAKING_SPACE}kr`;
+}

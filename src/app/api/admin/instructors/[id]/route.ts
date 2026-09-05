@@ -1,0 +1,109 @@
+import { Prisma } from "@prisma/client";
+import { z } from "zod";
+
+import { auth } from "@/auth";
+import {
+  AuthorizationError,
+  requireRole,
+} from "@/lib/auth/guards";
+import { canDeactivateInstructor } from "@/lib/bookings/cancellation";
+import { db } from "@/lib/db";
+
+export const runtime = "nodejs";
+
+const requestSchema = z
+  .object({
+    id: z.string().cuid(),
+    active: z.boolean(),
+  })
+  .strict();
+
+function apiError(code: string, status: number) {
+  return Response.json({ error: { code, message: code } }, { status });
+}
+
+export async function PATCH(
+  request: Request,
+  context: { params: Promise<{ id: string }> },
+) {
+  const now = new Date();
+  const body = await request.json().catch(() => null);
+  const parsed = requestSchema.safeParse({
+    ...(body && typeof body === "object" ? body : {}),
+    id: (await context.params).id,
+  });
+  if (!parsed.success) {
+    return Response.json(
+      {
+        error: {
+          code: "INVALID_INPUT",
+          message: "INVALID_INPUT",
+          fields: parsed.error.flatten().fieldErrors,
+        },
+      },
+      { status: 400 },
+    );
+  }
+
+  let actorId: string;
+  try {
+    actorId = requireRole(await auth(), ["ADMIN"]).user.id;
+  } catch (error) {
+    if (error instanceof AuthorizationError) {
+      return apiError(error.code, error.status);
+    }
+    throw error;
+  }
+
+  const teacher = await db.teacherProfile.findUnique({
+    where: { id: parsed.data.id },
+    select: { id: true, active: true },
+  });
+  if (!teacher) return apiError("TEACHER_NOT_FOUND", 404);
+
+  try {
+    const updated = await db.$transaction(
+      async (tx) => {
+        if (!parsed.data.active) {
+          const futureBookings = await tx.booking.count({
+            where: {
+              teacherId: teacher.id,
+              status: "CONFIRMED",
+              startsAt: { gt: now },
+            },
+          });
+          if (!canDeactivateInstructor(futureBookings)) {
+            throw new Error("TEACHER_HAS_FUTURE_BOOKINGS");
+          }
+        }
+
+        const changed = await tx.teacherProfile.update({
+          where: { id: teacher.id },
+          data: { active: parsed.data.active },
+          select: { id: true, active: true },
+        });
+        await tx.auditLog.create({
+          data: {
+            actorId,
+            action: changed.active ? "teacher.activate" : "teacher.deactivate",
+            entityType: "TeacherProfile",
+            entityId: teacher.id,
+            before: { active: teacher.active },
+            after: { active: changed.active },
+          },
+        });
+        return changed;
+      },
+      { isolationLevel: Prisma.TransactionIsolationLevel.Serializable },
+    );
+    return Response.json(updated);
+  } catch (error) {
+    if (
+      error instanceof Error &&
+      error.message === "TEACHER_HAS_FUTURE_BOOKINGS"
+    ) {
+      return apiError("TEACHER_HAS_FUTURE_BOOKINGS", 409);
+    }
+    throw error;
+  }
+}

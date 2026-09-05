@@ -234,7 +234,11 @@ async function main() {
 
     await db.user.upsert({
       where: { email: "admin@makina.local" },
-      update: {},
+      update: {
+        passwordHash: hash,
+        role: Role.ADMIN,
+        deletedAt: null,
+      },
       create: {
         email: "admin@makina.local",
         passwordHash: hash,
@@ -246,7 +250,11 @@ async function main() {
 
     const teacherUser = await db.user.upsert({
       where: { email: "larare@makina.local" },
-      update: {},
+      update: {
+        passwordHash: hash,
+        role: Role.TEACHER,
+        deletedAt: null,
+      },
       create: {
         email: "larare@makina.local",
         passwordHash: hash,
@@ -266,6 +274,14 @@ async function main() {
     });
 
     if (teacherUser.teacherProfile) {
+      await db.teacherProfile.update({
+        where: { id: teacherUser.teacherProfile.id },
+        data: {
+          active: true,
+          languages: ["sv", "en", "ti"],
+          transmissions: [Transmission.MANUAL, Transmission.AUTOMATIC],
+        },
+      });
       await db.teacherLocation.upsert({
         where: {
           teacherId_locationId: {
@@ -278,6 +294,9 @@ async function main() {
       });
 
       // Mon–Fri 09:00–17:00 local wall clock (R19)
+      await db.teacherAvailability.deleteMany({
+        where: { teacherId: teacherUser.teacherProfile.id },
+      });
       for (const dayOfWeek of [1, 2, 3, 4, 5]) {
         await db.teacherAvailability.create({
           data: {
@@ -293,7 +312,11 @@ async function main() {
 
     await db.user.upsert({
       where: { email: "elev@makina.local" },
-      update: {},
+      update: {
+        passwordHash: hash,
+        role: Role.STUDENT,
+        deletedAt: null,
+      },
       create: {
         email: "elev@makina.local",
         passwordHash: hash,
