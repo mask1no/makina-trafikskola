@@ -41,7 +41,7 @@ export default async function AdminLayout(
     <div>
       <div className="border-b border-surface-soft bg-surface text-ink-inverse">
         <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6">
-          <p className="text-sm font-bold text-ink-muted">{t("label")}</p>
+          <p className="text-sm font-bold text-ink-inverse-muted">{t("label")}</p>
           <p className="mt-1 text-xl font-black">{session.user.name}</p>
         </div>
       </div>

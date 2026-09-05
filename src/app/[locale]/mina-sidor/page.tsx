@@ -54,8 +54,10 @@ export default async function StudentDashboard(
             <>
               <p className="mt-3 text-2xl font-black tracking-tight sm:text-3xl">{date}</p>
               <p className="mt-2 text-ink-muted">
-                {nextBooking.teacher.user.firstName}{" "}
-                {nextBooking.teacher.user.lastName}
+                <bdi>
+                  {nextBooking.teacher.user.firstName}{" "}
+                  {nextBooking.teacher.user.lastName}
+                </bdi>
               </p>
             </>
           ) : (

@@ -26,6 +26,7 @@ const config: Config = {
         ink: {
           DEFAULT: "var(--ink)",
           inverse: "var(--ink-inverse)",
+          "inverse-muted": "var(--ink-inverse-muted)",
           muted: "var(--ink-muted)",
           subtle: "var(--ink-subtle)",
         },

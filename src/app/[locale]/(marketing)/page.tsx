@@ -39,7 +39,7 @@ export default async function MarketingHome(
             <h1 className="display-title max-w-3xl text-balance">
               {t("home.hero.title")}
             </h1>
-            <p className="mt-6 max-w-xl text-lg leading-8 text-ink-muted sm:text-xl">
+            <p className="mt-6 max-w-xl text-lg leading-8 text-ink-inverse-muted sm:text-xl">
               {t("home.hero.description")}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
@@ -132,7 +132,7 @@ export default async function MarketingHome(
               <li className="bg-surface-raised p-6 sm:p-8" key={step}>
                 <span className="numbers-ltr text-sm font-black text-accent">0{index + 1}</span>
                 <h3 className="mt-5 text-xl font-black">{t(`home.journey.${step}.title`)}</h3>
-                <p className="mt-3 text-sm leading-6 text-ink-muted">{t(`home.journey.${step}.description`)}</p>
+                <p className="mt-3 text-sm leading-6 text-ink-inverse-muted">{t(`home.journey.${step}.description`)}</p>
               </li>
             ))}
           </ol>

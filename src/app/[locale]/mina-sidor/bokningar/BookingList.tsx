@@ -98,7 +98,9 @@ export function BookingList({
                 <p className="text-lg font-black numbers-ltr">
                   {dateFormatter.format(new Date(booking.startsAt))}
                 </p>
-                <p className="mt-1 text-sm text-ink-muted">{booking.teacherName}</p>
+                <p className="mt-1 text-sm text-ink-muted">
+                  <bdi>{booking.teacherName}</bdi>
+                </p>
                 <p className="mt-1 text-sm text-ink-muted">{booking.place}</p>
                 <Badge className="mt-3" tone={booking.status === "CONFIRMED" ? "success" : "neutral"}>
                   {t(`statuses.${booking.status}`)}

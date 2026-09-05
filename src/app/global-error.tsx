@@ -18,7 +18,7 @@ function ErrorContent({ reset }: { reset: () => void }) {
       <div className="w-full max-w-lg rounded-lg border border-surface-soft bg-surface-raised p-8 text-center shadow-float sm:p-10">
         <span aria-hidden="true" className="mx-auto grid size-14 place-items-center rounded-full bg-accent text-2xl font-black text-accent-ink">!</span>
         <h1 className="mt-6 text-3xl font-black">{t("pageTitle")}</h1>
-        <p className="mt-3 text-ink-muted" role="alert">{t("UNKNOWN")}</p>
+        <p className="mt-3 text-ink-inverse-muted" role="alert">{t("UNKNOWN")}</p>
         <button
           type="button"
           onClick={reset}

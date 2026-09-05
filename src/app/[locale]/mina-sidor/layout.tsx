@@ -44,7 +44,7 @@ export default async function StudentLayout(
       <div className="border-b border-surface-soft bg-surface text-ink-inverse">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-6 sm:px-6">
           <div>
-            <p className="text-sm font-bold text-ink-muted">{t("label")}</p>
+            <p className="text-sm font-bold text-ink-inverse-muted">{t("label")}</p>
             <p className="mt-1 text-xl font-black">{session.user.name}</p>
           </div>
           <LinkButton href={`/${params.locale}/boka`} className="shrink-0">

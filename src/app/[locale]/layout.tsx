@@ -32,7 +32,7 @@ function Logo({ compactOnMobile = false }: { compactOnMobile?: boolean }) {
         />
       </svg>
       <span className={`${compactOnMobile ? "hidden sm:inline" : ""} text-base font-black tracking-[-0.035em] sm:text-lg`}>
-        Makina <span className="hidden font-semibold text-ink-muted sm:inline">Trafikskola</span>
+        Makina <span className="hidden font-semibold text-ink-inverse-muted sm:inline">Trafikskola</span>
       </span>
     </span>
   );
@@ -192,13 +192,13 @@ export default async function LocaleLayout(
           <div className="site-container grid gap-10 md:grid-cols-12">
             <div className="md:col-span-5">
               <Logo />
-              <p className="mt-5 max-w-sm text-sm leading-6 text-ink-muted">
+              <p className="mt-5 max-w-sm text-sm leading-6 text-ink-inverse-muted">
                 {t("footerDescription")}
               </p>
             </div>
             <div className="md:col-span-3">
               <p className="text-sm font-extrabold">{t("explore")}</p>
-              <div className="mt-4 grid gap-1 text-sm text-ink-muted">
+              <div className="mt-4 grid gap-1 text-sm text-ink-inverse-muted">
                 <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/korlektioner`}>{t("lessons")}</Link>
                 <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/larare`}>{t("teachers")}</Link>
                 <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/teori`}>{t("theory")}</Link>
@@ -206,10 +206,10 @@ export default async function LocaleLayout(
             </div>
             <div className="md:col-span-4">
               <p className="text-sm font-extrabold">{t("languageHelp")}</p>
-              <p className="mt-4 max-w-sm text-sm leading-6 text-ink-muted">{t("languageHelpDescription")}</p>
+              <p className="mt-4 max-w-sm text-sm leading-6 text-ink-inverse-muted">{t("languageHelpDescription")}</p>
             </div>
           </div>
-          <div className="site-container mt-10 flex flex-wrap gap-x-6 gap-y-2 border-t border-surface-soft pt-6 text-xs font-semibold text-ink-muted">
+          <div className="site-container mt-10 flex flex-wrap gap-x-6 gap-y-2 border-t border-surface-soft pt-6 text-xs font-semibold text-ink-inverse-muted">
             <Link className="inline-flex min-h-11 items-center hover:text-ink-inverse" href={`${base}/villkor`}>{t("terms")}</Link>
             <Link className="inline-flex min-h-11 items-center hover:text-ink-inverse" href={`${base}/integritet`}>{t("privacy")}</Link>
             <Link className="inline-flex min-h-11 items-center hover:text-ink-inverse" href={`${base}/cookies`}>{t("cookies")}</Link>

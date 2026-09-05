@@ -74,7 +74,9 @@ export default async function TeacherDetailPage(
             <p className="text-sm font-bold uppercase tracking-wider text-ink-muted">
               {t("teacher.profileEyebrow")}
             </p>
-            <h1 className="mt-2 text-4xl font-black">{name}</h1>
+            <h1 className="mt-2 text-4xl font-black">
+              <bdi>{name}</bdi>
+            </h1>
             {teacher.slug === "sara-johansson" ? (
               <Badge tone="accent" className="mt-3">
                 {t("teacher.demoProfile")}

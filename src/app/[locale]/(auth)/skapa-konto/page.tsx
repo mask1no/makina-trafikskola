@@ -18,11 +18,11 @@ export default async function RegisterPage(
       <div className="overflow-hidden rounded-lg border border-border bg-card shadow-card lg:grid lg:grid-cols-[0.9fr_1.1fr]">
         <aside className="hidden bg-surface p-10 text-ink-inverse lg:flex lg:flex-col lg:justify-between">
           <div>
-            <p className="text-sm font-bold text-ink-muted">{authT("context.eyebrow")}</p>
+            <p className="text-sm font-bold text-ink-inverse-muted">{authT("context.eyebrow")}</p>
             <h2 className="mt-3 text-3xl font-black tracking-tight">
               {authT("context.title")}
             </h2>
-            <ul className="mt-6 grid gap-3 text-sm leading-6 text-ink-muted">
+            <ul className="mt-6 grid gap-3 text-sm leading-6 text-ink-inverse-muted">
               <li>{authT("context.bookings")}</li>
               <li>{authT("context.balance")}</li>
               <li>{authT("context.messages")}</li>

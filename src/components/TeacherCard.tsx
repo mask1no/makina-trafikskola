@@ -26,7 +26,9 @@ export function TeacherCard(props: TeacherCardProps) {
       <div className="flex items-start gap-4">
         <Avatar name={props.name} imageUrl={props.photoUrl} size="lg" className="size-20 text-xl" />
         <div className="min-w-0">
-          <h3 className="text-xl font-extrabold tracking-tight">{props.name}</h3>
+          <h3 className="text-xl font-extrabold tracking-tight">
+            <bdi>{props.name}</bdi>
+          </h3>
           {props.demoLabel ? (
             <Badge tone="accent" className="mt-2">
               {props.demoLabel}
