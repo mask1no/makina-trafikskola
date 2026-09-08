@@ -47,7 +47,7 @@ const PRODUCTS: Seed[] = [
   {
     slug: "en-korlektion",
     kind: ProductKind.SINGLE_LESSON,
-    active: true,
+    active: false,
     priceOre: 79500,
     lessonCredits: 1,
     translations: {
@@ -61,7 +61,7 @@ const PRODUCTS: Seed[] = [
   {
     slug: "testlektion",
     kind: ProductKind.TEST_LESSON,
-    active: true,
+    active: false,
     priceOre: 49500,
     lessonCredits: 1,
     translations: {
@@ -75,7 +75,7 @@ const PRODUCTS: Seed[] = [
   {
     slug: "korpaket-b5",
     kind: ProductKind.PACKAGE,
-    active: true,
+    active: false,
     priceOre: 369500,
     compareAtOre: 397500,
     lessonCredits: 5,
@@ -91,7 +91,7 @@ const PRODUCTS: Seed[] = [
   {
     slug: "korpaket-b10",
     kind: ProductKind.PACKAGE,
-    active: true,
+    active: false,
     priceOre: 719000,
     compareAtOre: 795000,
     lessonCredits: 10,

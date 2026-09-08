@@ -15,6 +15,9 @@
     "test:e2e": "npm run e2e:prepare && npm run build && playwright test",
     "check:translations": "tsx scripts/check-translations.ts",
     "test:booking-concurrency": "tsx scripts/booking-concurrency.ts",
+    "test:concurrency": "vitest run concurrency.integration.test.ts --maxWorkers=1",
+    "test:webhook-replay": "vitest run replay.integration.test.ts --maxWorkers=1",
+    "test:payment-simulator": "vitest run simulator.integration.test.ts --maxWorkers=1",
     "backup:db": "tsx scripts/backup-db.ts",
     "verify:restore": "tsx scripts/verify-restore.ts"
   },
@@ -22,6 +25,7 @@
     "seed": "tsx prisma/seed.ts"
   },
   "overrides": {
+    "deepmerge-ts": "8.0.0",
     "glob": "10.5.0",
     "postcss": "$postcss",
     "typescript-eslint": "8.55.0"

@@ -112,8 +112,14 @@ export async function POST(request: Request) {
     );
   }
 
+  return processVerifiedStripeEvent(event);
+}
+
+export async function processVerifiedStripeEvent(
+  event: Stripe.Event,
+  receivedAt = new Date(),
+) {
   const eventTime = fromUnixTime(event.created);
-  const receivedAt = new Date();
   const normalized = normalizeStripeEvent(event);
   let notificationIds: string[] = [];
   const replayNotificationIds =
