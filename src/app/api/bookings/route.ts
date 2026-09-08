@@ -277,7 +277,11 @@ export async function POST(request: Request) {
       }
     }
 
-    if (isExclusionViolation(error)) {
+    if (
+      isExclusionViolation(error) ||
+      (error instanceof Prisma.PrismaClientKnownRequestError &&
+        error.code === "P2034")
+    ) {
       const refreshedSlots = await loadAvailability({
         teacherId: parsed.data.teacherId,
         from,
