@@ -39,8 +39,7 @@ export async function getProducts(locale: Locale) {
     const resolved = resolveTranslation(
       product.translations,
       locale,
-      (item) =>
-        JSON.stringify([item.name, item.shortDesc, item.features]),
+      (item) => item.shortDesc ?? "",
     );
     if (!resolved.translation) return [];
     return [{ ...product, ...resolved }];
@@ -56,7 +55,7 @@ export async function getProduct(locale: Locale, slug: string) {
   const resolved = resolveTranslation(
     product.translations,
     locale,
-    (item) => JSON.stringify([item.name, item.shortDesc, item.features]),
+    (item) => item.shortDesc ?? "",
   );
   if (!resolved.translation) return null;
   return { ...product, ...resolved };

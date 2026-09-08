@@ -32,11 +32,19 @@ export function AuthForm({
   const [error, setError] = useState("");
 
   function finishAuthentication() {
-    const requested = searchParams.get("callbackUrl");
-    const destination =
-      requested?.startsWith(`/${locale}/`) || requested === `/${locale}`
-        ? requested
-        : `/${locale}/mina-sidor`;
+    const requested =
+      searchParams.get("next") ?? searchParams.get("callbackUrl");
+    let destination = `/${locale}/mina-sidor`;
+    if (
+      requested?.startsWith("/") &&
+      !requested.startsWith("//") &&
+      !requested.includes("\\")
+    ) {
+      const resolved = new URL(requested, window.location.origin);
+      if (resolved.origin === window.location.origin) {
+        destination = `${resolved.pathname}${resolved.search}${resolved.hash}`;
+      }
+    }
     router.push(destination);
     router.refresh();
   }
@@ -243,7 +251,14 @@ export function AuthForm({
         {mode === "login" ? t("login.noAccount") : t("register.hasAccount")}{" "}
         <Link
           className="font-bold text-ink underline"
-          href={`/${locale}/${mode === "login" ? "skapa-konto" : "logga-in"}`}
+          href={(() => {
+            const path = `/${locale}/${mode === "login" ? "skapa-konto" : "logga-in"}`;
+            const next =
+              searchParams.get("next") ?? searchParams.get("callbackUrl");
+            return next
+              ? `${path}?next=${encodeURIComponent(next)}`
+              : path;
+          })()}
         >
           {mode === "login" ? t("login.create") : t("register.login")}
         </Link>

@@ -2,17 +2,26 @@ import type { Prisma } from "@prisma/client";
 
 import { resolveContent } from "@/lib/content/fallback";
 
-export async function hasTheoryAccess(
-  tx: Prisma.TransactionClient,
+type TheoryAccessStore = Pick<Prisma.TransactionClient, "theoryAccess">;
+
+export function getActiveTheoryAccess(
+  tx: TheoryAccessStore,
   studentId: string,
   now: Date,
 ) {
-  return Boolean(
-    await tx.theoryAccess.findFirst({
-      where: { studentId, expiresAt: { gt: now } },
-      select: { id: true },
-    }),
-  );
+  return tx.theoryAccess.findFirst({
+    where: { studentId, expiresAt: { gt: now } },
+    orderBy: { expiresAt: "desc" },
+    select: { expiresAt: true },
+  });
+}
+
+export async function hasTheoryAccess(
+  tx: TheoryAccessStore,
+  studentId: string,
+  now: Date,
+) {
+  return Boolean(await getActiveTheoryAccess(tx, studentId, now));
 }
 
 type QuestionWithContent = Prisma.TheoryQuestionGetPayload<{

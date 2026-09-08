@@ -27,6 +27,36 @@ const LOCALES = ["sv", "en", "ti", "ar", "so"] as const;
 type Locale = (typeof LOCALES)[number];
 type Translation = { name: string; shortDesc: string; features: string[] };
 
+const PRODUCT_DESCRIPTIONS = {
+  // TODO: ersätt med kundens egen text före lansering
+  enKorlektion:
+    "50 minuter bakom ratten med en lärare som anpassar tempot efter dig. Passar dig som vill prova på, fylla på inför uppkörningen eller köra enstaka lektioner vid sidan av privat övningskörning.",
+  // TODO: ersätt med kundens egen text före lansering
+  testlektion:
+    "Vi bedömer din nuvarande nivå och ger dig en tydlig plan: ungefär hur många lektioner du behöver, vad du ska öva på och i vilken ordning. Börja här om du är osäker på vilket paket som passar.",
+  // TODO: ersätt med kundens egen text före lansering
+  korpaketB5:
+    "Fem körlektioner för dig som redan övningskör privat och vill ha struktur på slutspurten. Du bokar lektionerna när det passar dig och saldot gäller i 24 månader.",
+  // TODO: ersätt med kundens egen text före lansering
+  korpaketB10:
+    "Tio körlektioner med samma lärare hela vägen, så att någon känner till din körning och vet vad ni ska öva på härnäst.",
+  // TODO: ersätt med kundens egen text före lansering
+  intensivpaketSilver:
+    "Tio körlektioner, båda riskutbildningarna och digital teori i åtta månader. För dig som har kört en del innan och vill ha allt samlat på ett ställe.",
+  // TODO: ersätt med kundens egen text före lansering
+  intensivpaketGuld:
+    "Tjugo körlektioner, båda riskutbildningarna, digital teori i tolv månader och förtur när du bokar tider. Vårt vanligaste val för dig som börjar från noll.",
+  // TODO: ersätt med kundens egen text före lansering
+  intensivpaketPlatinum:
+    "Trettio körlektioner och full förberedelse hela vägen till uppkörningen, med teori i tolv månader och personlig uppföljning.",
+  // TODO: ersätt med kundens egen text före lansering
+  korkortsgaranti:
+    "Du kör tills du klarar uppkörningen, till ett fast pris. Inkluderar båda riskutbildningarna och en personlig utbildningsplan från första lektionen.",
+  // TODO: ersätt med kundens egen text före lansering
+  korkortsteori:
+    "Över 1 200 frågor med ljud och video, på ditt språk. Öva kategori för kategori och gör övningsprov som följer samma upplägg som Trafikverkets kunskapsprov.",
+} as const;
+
 type Seed = {
   slug: string;
   kind: ProductKind;
@@ -51,11 +81,11 @@ const PRODUCTS: Seed[] = [
     priceOre: 79500,
     lessonCredits: 1,
     translations: {
-      sv: { name: "En körlektion", shortDesc: "50 minuter med undervisning anpassad efter din nivå.", features: ["50 minuters körning", "Manuell eller automat", "Personlig återkoppling"] },
-      en: { name: "Single driving lesson", shortDesc: "50 minutes of instruction adapted to your level.", features: ["50 minutes of driving", "Manual or automatic", "Personal feedback"] },
-      ti: { name: "ሓደ ትምህርቲ ምዝዋር", shortDesc: "ንደረጃኻ ዝተመጣጠነ ናይ 50 ደቒቕ ትምህርቲ።", features: ["50 ደቒቕ ምዝዋር", "ማንዋል ወይ ኣውቶማቲክ", "ውልቃዊ ግብረ መልሲ"] },
-      ar: { name: "درس قيادة منفرد", shortDesc: "خمسون دقيقة من التدريب الملائم لمستواك.", features: ["50 دقيقة قيادة", "يدوي أو أوتوماتيكي", "ملاحظات شخصية"] },
-      so: { name: "Hal cashar wadis", shortDesc: "50 daqiiqo oo tababar ku habboon heerkaaga.", features: ["50 daqiiqo oo wadis ah", "Gacanta ama otomaatig", "Qiimayn kuu gaar ah"] },
+      sv: { name: "En körlektion", shortDesc: PRODUCT_DESCRIPTIONS.enKorlektion, features: ["50 minuters körning", "Manuell eller automat", "Personlig återkoppling"] },
+      en: { name: "Single driving lesson", shortDesc: PRODUCT_DESCRIPTIONS.enKorlektion, features: ["50 minutes of driving", "Manual or automatic", "Personal feedback"] },
+      ti: { name: "ሓደ ትምህርቲ ምዝዋር", shortDesc: PRODUCT_DESCRIPTIONS.enKorlektion, features: ["50 ደቒቕ ምዝዋር", "ማንዋል ወይ ኣውቶማቲክ", "ውልቃዊ ግብረ መልሲ"] },
+      ar: { name: "درس قيادة منفرد", shortDesc: PRODUCT_DESCRIPTIONS.enKorlektion, features: ["50 دقيقة قيادة", "يدوي أو أوتوماتيكي", "ملاحظات شخصية"] },
+      so: { name: "Hal cashar wadis", shortDesc: PRODUCT_DESCRIPTIONS.enKorlektion, features: ["50 daqiiqo oo wadis ah", "Gacanta ama otomaatig", "Qiimayn kuu gaar ah"] },
     },
   },
   {
@@ -65,11 +95,11 @@ const PRODUCTS: Seed[] = [
     priceOre: 49500,
     lessonCredits: 1,
     translations: {
-      sv: { name: "Testlektion", shortDesc: "Vi bedömer din körning och ger dig en tydlig plan framåt.", features: ["50 minuters nivåbedömning", "Personlig utbildningsplan"] },
-      en: { name: "Assessment lesson", shortDesc: "We assess your driving and give you a clear plan for the next steps.", features: ["50-minute level assessment", "Personal training plan"] },
-      ti: { name: "ናይ ግምገማ ትምህርቲ", shortDesc: "ኣዘዋውራኻ ንግምግምን ንቐጻሊ ንጹር መደብ ንህበካን።", features: ["ናይ 50 ደቒቕ ግምገማ ደረጃ", "ውልቃዊ መደብ ትምህርቲ"] },
-      ar: { name: "درس تقييم", shortDesc: "نقيّم قيادتك ونضع لك خطة واضحة للخطوات التالية.", features: ["تقييم مستوى لمدة 50 دقيقة", "خطة تدريب شخصية"] },
-      so: { name: "Cashar qiimayn ah", shortDesc: "Waxaan qiimaynaa wadistaada oo ku siinaynaa qorshe cad oo aad ku sii socoto.", features: ["Qiimayn heer oo 50 daqiiqo ah", "Qorshe tababar oo qofeed"] },
+      sv: { name: "Testlektion", shortDesc: PRODUCT_DESCRIPTIONS.testlektion, features: ["50 minuters nivåbedömning", "Personlig utbildningsplan"] },
+      en: { name: "Assessment lesson", shortDesc: PRODUCT_DESCRIPTIONS.testlektion, features: ["50-minute level assessment", "Personal training plan"] },
+      ti: { name: "ናይ ግምገማ ትምህርቲ", shortDesc: PRODUCT_DESCRIPTIONS.testlektion, features: ["ናይ 50 ደቒቕ ግምገማ ደረጃ", "ውልቃዊ መደብ ትምህርቲ"] },
+      ar: { name: "درس تقييم", shortDesc: PRODUCT_DESCRIPTIONS.testlektion, features: ["تقييم مستوى لمدة 50 دقيقة", "خطة تدريب شخصية"] },
+      so: { name: "Cashar qiimayn ah", shortDesc: PRODUCT_DESCRIPTIONS.testlektion, features: ["Qiimayn heer oo 50 daqiiqo ah", "Qorshe tababar oo qofeed"] },
     },
   },
   {
@@ -81,11 +111,11 @@ const PRODUCTS: Seed[] = [
     lessonCredits: 5,
     accentHex: "#8A8A93",
     translations: {
-      sv: { name: "Körpaket B5", shortDesc: "Fem körlektioner för dig som vill komma igång.", features: ["5 körlektioner à 50 minuter", "Giltigt i 24 månader", "Spara 280 kr"] },
-      en: { name: "B5 driving package", shortDesc: "Five driving lessons to help you get started.", features: ["5 driving lessons of 50 minutes", "Valid for 24 months", "Save 280 kr"] },
-      ti: { name: "ፓኬጅ ምዝዋር B5", shortDesc: "ንምጅማር ዝሕግዙኻ ሓሙሽተ ትምህርትታት ምዝዋር።", features: ["5 ትምህርትታት፣ ነፍሲ ወከፍ 50 ደቒቕ", "ን24 ወርሒ ይሰርሕ", "280 kr ትቑጥብ"] },
-      ar: { name: "باقة القيادة B5", shortDesc: "خمسة دروس قيادة تساعدك على البدء.", features: ["5 دروس، مدة كل منها 50 دقيقة", "صالحة لمدة 24 شهرًا", "وفّر 280 كرونة"] },
-      so: { name: "Xirmada wadista B5", shortDesc: "Shan cashar wadis oo kaa caawinaya inaad bilowdo.", features: ["5 cashar oo min 50 daqiiqo ah", "Waxay shaqaynaysaa 24 bilood", "Kaydi 280 kr"] },
+      sv: { name: "Körpaket B5", shortDesc: PRODUCT_DESCRIPTIONS.korpaketB5, features: ["5 körlektioner à 50 minuter", "Giltigt i 24 månader", "Spara 280 kr"] },
+      en: { name: "B5 driving package", shortDesc: PRODUCT_DESCRIPTIONS.korpaketB5, features: ["5 driving lessons of 50 minutes", "Valid for 24 months", "Save 280 kr"] },
+      ti: { name: "ፓኬጅ ምዝዋር B5", shortDesc: PRODUCT_DESCRIPTIONS.korpaketB5, features: ["5 ትምህርትታት፣ ነፍሲ ወከፍ 50 ደቒቕ", "ን24 ወርሒ ይሰርሕ", "280 kr ትቑጥብ"] },
+      ar: { name: "باقة القيادة B5", shortDesc: PRODUCT_DESCRIPTIONS.korpaketB5, features: ["5 دروس، مدة كل منها 50 دقيقة", "صالحة لمدة 24 شهرًا", "وفّر 280 كرونة"] },
+      so: { name: "Xirmada wadista B5", shortDesc: PRODUCT_DESCRIPTIONS.korpaketB5, features: ["5 cashar oo min 50 daqiiqo ah", "Waxay shaqaynaysaa 24 bilood", "Kaydi 280 kr"] },
     },
   },
   {
@@ -97,11 +127,11 @@ const PRODUCTS: Seed[] = [
     lessonCredits: 10,
     accentHex: "#8A8A93",
     translations: {
-      sv: { name: "Körpaket B10", shortDesc: "Tio körlektioner som ger dig en stadig grund.", features: ["10 körlektioner à 50 minuter", "Giltigt i 24 månader", "Spara 760 kr"] },
-      en: { name: "B10 driving package", shortDesc: "Ten driving lessons that give you a solid foundation.", features: ["10 driving lessons of 50 minutes", "Valid for 24 months", "Save 760 kr"] },
-      ti: { name: "ፓኬጅ ምዝዋር B10", shortDesc: "ጽኑዕ መሰረት ዝህቡኻ ዓሰርተ ትምህርትታት ምዝዋር።", features: ["10 ትምህርትታት፣ ነፍሲ ወከፍ 50 ደቒቕ", "ን24 ወርሒ ይሰርሕ", "760 kr ትቑጥብ"] },
-      ar: { name: "باقة القيادة B10", shortDesc: "عشرة دروس قيادة تمنحك أساسًا قويًا.", features: ["10 دروس، مدة كل منها 50 دقيقة", "صالحة لمدة 24 شهرًا", "وفّر 760 كرونة"] },
-      so: { name: "Xirmada wadista B10", shortDesc: "Toban cashar wadis oo ku siinaya aasaas adag.", features: ["10 cashar oo min 50 daqiiqo ah", "Waxay shaqaynaysaa 24 bilood", "Kaydi 760 kr"] },
+      sv: { name: "Körpaket B10", shortDesc: PRODUCT_DESCRIPTIONS.korpaketB10, features: ["10 körlektioner à 50 minuter", "Giltigt i 24 månader", "Spara 760 kr"] },
+      en: { name: "B10 driving package", shortDesc: PRODUCT_DESCRIPTIONS.korpaketB10, features: ["10 driving lessons of 50 minutes", "Valid for 24 months", "Save 760 kr"] },
+      ti: { name: "ፓኬጅ ምዝዋር B10", shortDesc: PRODUCT_DESCRIPTIONS.korpaketB10, features: ["10 ትምህርትታት፣ ነፍሲ ወከፍ 50 ደቒቕ", "ን24 ወርሒ ይሰርሕ", "760 kr ትቑጥብ"] },
+      ar: { name: "باقة القيادة B10", shortDesc: PRODUCT_DESCRIPTIONS.korpaketB10, features: ["10 دروس، مدة كل منها 50 دقيقة", "صالحة لمدة 24 شهرًا", "وفّر 760 كرونة"] },
+      so: { name: "Xirmada wadista B10", shortDesc: PRODUCT_DESCRIPTIONS.korpaketB10, features: ["10 cashar oo min 50 daqiiqo ah", "Waxay shaqaynaysaa 24 bilood", "Kaydi 760 kr"] },
     },
   },
   {
@@ -116,11 +146,11 @@ const PRODUCTS: Seed[] = [
     includesRisk2: true,
     accentHex: "#2563EB",
     translations: {
-      sv: { name: "Intensivpaket Silver", shortDesc: "Ett komplett upplägg med körning, riskutbildning och teori.", features: ["10 körlektioner à 50 minuter", "Riskettan och Risktvåan", "Digital teori i 12 månader"] },
-      en: { name: "Silver intensive package", shortDesc: "A complete plan with driving, risk training and theory.", features: ["10 driving lessons of 50 minutes", "Risk 1 and Risk 2", "Digital theory for 12 months"] },
-      ti: { name: "ሲልቨር ጽዑቕ ፓኬጅ", shortDesc: "ምዝዋር፣ ስልጠና ሓደጋን ቲዮሪን ዘጠቓለለ ምሉእ መደብ።", features: ["10 ትምህርትታት፣ ነፍሲ ወከፍ 50 ደቒቕ", "ሪስክ 1ን ሪስክ 2ን", "ዲጂታላዊ ቲዮሪ ን12 ወርሒ"] },
-      ar: { name: "الباقة المكثفة الفضية", shortDesc: "خطة متكاملة تشمل القيادة وتدريب المخاطر والنظري.", features: ["10 دروس، مدة كل منها 50 دقيقة", "المخاطر 1 والمخاطر 2", "نظري رقمي لمدة 12 شهرًا"] },
-      so: { name: "Xirmada degdegga ah ee Silver", shortDesc: "Qorshe dhammaystiran oo leh wadis, tababarka khatarta iyo teori.", features: ["10 cashar oo min 50 daqiiqo ah", "Risk 1 iyo Risk 2", "Teori dijitaal ah 12 bilood"] },
+      sv: { name: "Intensivpaket Silver", shortDesc: PRODUCT_DESCRIPTIONS.intensivpaketSilver, features: ["10 körlektioner à 50 minuter", "Riskettan och Risktvåan", "Digital teori i 12 månader"] },
+      en: { name: "Silver intensive package", shortDesc: PRODUCT_DESCRIPTIONS.intensivpaketSilver, features: ["10 driving lessons of 50 minutes", "Risk 1 and Risk 2", "Digital theory for 12 months"] },
+      ti: { name: "ሲልቨር ጽዑቕ ፓኬጅ", shortDesc: PRODUCT_DESCRIPTIONS.intensivpaketSilver, features: ["10 ትምህርትታት፣ ነፍሲ ወከፍ 50 ደቒቕ", "ሪስክ 1ን ሪስክ 2ን", "ዲጂታላዊ ቲዮሪ ን12 ወርሒ"] },
+      ar: { name: "الباقة المكثفة الفضية", shortDesc: PRODUCT_DESCRIPTIONS.intensivpaketSilver, features: ["10 دروس، مدة كل منها 50 دقيقة", "المخاطر 1 والمخاطر 2", "نظري رقمي لمدة 12 شهرًا"] },
+      so: { name: "Xirmada degdegga ah ee Silver", shortDesc: PRODUCT_DESCRIPTIONS.intensivpaketSilver, features: ["10 cashar oo min 50 daqiiqo ah", "Risk 1 iyo Risk 2", "Teori dijitaal ah 12 bilood"] },
     },
   },
   {
@@ -136,11 +166,11 @@ const PRODUCTS: Seed[] = [
     badge: "POPULARAST",
     accentHex: "#F5B429",
     translations: {
-      sv: { name: "Intensivpaket Guld", shortDesc: "Ett omfattande upplägg för dig som vill träna målmedvetet.", features: ["20 körlektioner à 50 minuter", "Riskettan och Risktvåan", "Digital teori i 12 månader"] },
-      en: { name: "Gold intensive package", shortDesc: "A comprehensive plan for focused driving practice.", features: ["20 driving lessons of 50 minutes", "Risk 1 and Risk 2", "Digital theory for 12 months"] },
-      ti: { name: "ጎልድ ጽዑቕ ፓኬጅ", shortDesc: "ብዕላማ ክትለማመድ ንእትደሊ ሰፊሕ መደብ።", features: ["20 ትምህርትታት፣ ነፍሲ ወከፍ 50 ደቒቕ", "ሪስክ 1ን ሪስክ 2ን", "ዲጂታላዊ ቲዮሪ ን12 ወርሒ"] },
-      ar: { name: "الباقة المكثفة الذهبية", shortDesc: "خطة شاملة لمن يريد التدريب بتركيز.", features: ["20 درسًا، مدة كل منها 50 دقيقة", "المخاطر 1 والمخاطر 2", "نظري رقمي لمدة 12 شهرًا"] },
-      so: { name: "Xirmada degdegga ah ee Gold", shortDesc: "Qorshe ballaadhan oo loogu talagalay tababar ujeeddo leh.", features: ["20 cashar oo min 50 daqiiqo ah", "Risk 1 iyo Risk 2", "Teori dijitaal ah 12 bilood"] },
+      sv: { name: "Intensivpaket Guld", shortDesc: PRODUCT_DESCRIPTIONS.intensivpaketGuld, features: ["20 körlektioner à 50 minuter", "Riskettan och Risktvåan", "Digital teori i 12 månader"] },
+      en: { name: "Gold intensive package", shortDesc: PRODUCT_DESCRIPTIONS.intensivpaketGuld, features: ["20 driving lessons of 50 minutes", "Risk 1 and Risk 2", "Digital theory for 12 months"] },
+      ti: { name: "ጎልድ ጽዑቕ ፓኬጅ", shortDesc: PRODUCT_DESCRIPTIONS.intensivpaketGuld, features: ["20 ትምህርትታት፣ ነፍሲ ወከፍ 50 ደቒቕ", "ሪስክ 1ን ሪስክ 2ን", "ዲጂታላዊ ቲዮሪ ን12 ወርሒ"] },
+      ar: { name: "الباقة المكثفة الذهبية", shortDesc: PRODUCT_DESCRIPTIONS.intensivpaketGuld, features: ["20 درسًا، مدة كل منها 50 دقيقة", "المخاطر 1 والمخاطر 2", "نظري رقمي لمدة 12 شهرًا"] },
+      so: { name: "Xirmada degdegga ah ee Gold", shortDesc: PRODUCT_DESCRIPTIONS.intensivpaketGuld, features: ["20 cashar oo min 50 daqiiqo ah", "Risk 1 iyo Risk 2", "Teori dijitaal ah 12 bilood"] },
     },
   },
   {
@@ -155,11 +185,11 @@ const PRODUCTS: Seed[] = [
     includesRisk2: true,
     accentHex: "#7C3AED",
     translations: {
-      sv: { name: "Intensivpaket Platinum", shortDesc: "Vårt mest omfattande upplägg för mycket körträning.", features: ["30 körlektioner à 50 minuter", "Riskettan och Risktvåan", "Digital teori i 12 månader"] },
-      en: { name: "Platinum intensive package", shortDesc: "Our most extensive plan for substantial driving practice.", features: ["30 driving lessons of 50 minutes", "Risk 1 and Risk 2", "Digital theory for 12 months"] },
-      ti: { name: "ፕላቲነም ጽዑቕ ፓኬጅ", shortDesc: "ንብዙሕ ልምምድ ምዝዋር ዝተዳለወ ዝሰፍሐ መደብና።", features: ["30 ትምህርትታት፣ ነፍሲ ወከፍ 50 ደቒቕ", "ሪስክ 1ን ሪስክ 2ን", "ዲጂታላዊ ቲዮሪ ን12 ወርሒ"] },
-      ar: { name: "الباقة المكثفة البلاتينية", shortDesc: "خطتنا الأشمل لمن يحتاج إلى تدريب قيادة مكثف.", features: ["30 درسًا، مدة كل منها 50 دقيقة", "المخاطر 1 والمخاطر 2", "نظري رقمي لمدة 12 شهرًا"] },
-      so: { name: "Xirmada degdegga ah ee Platinum", shortDesc: "Qorshahayaga ugu ballaadhan ee tababar wadis badan.", features: ["30 cashar oo min 50 daqiiqo ah", "Risk 1 iyo Risk 2", "Teori dijitaal ah 12 bilood"] },
+      sv: { name: "Intensivpaket Platinum", shortDesc: PRODUCT_DESCRIPTIONS.intensivpaketPlatinum, features: ["30 körlektioner à 50 minuter", "Riskettan och Risktvåan", "Digital teori i 12 månader"] },
+      en: { name: "Platinum intensive package", shortDesc: PRODUCT_DESCRIPTIONS.intensivpaketPlatinum, features: ["30 driving lessons of 50 minutes", "Risk 1 and Risk 2", "Digital theory for 12 months"] },
+      ti: { name: "ፕላቲነም ጽዑቕ ፓኬጅ", shortDesc: PRODUCT_DESCRIPTIONS.intensivpaketPlatinum, features: ["30 ትምህርትታት፣ ነፍሲ ወከፍ 50 ደቒቕ", "ሪስክ 1ን ሪስክ 2ን", "ዲጂታላዊ ቲዮሪ ን12 ወርሒ"] },
+      ar: { name: "الباقة المكثفة البلاتينية", shortDesc: PRODUCT_DESCRIPTIONS.intensivpaketPlatinum, features: ["30 درسًا، مدة كل منها 50 دقيقة", "المخاطر 1 والمخاطر 2", "نظري رقمي لمدة 12 شهرًا"] },
+      so: { name: "Xirmada degdegga ah ee Platinum", shortDesc: PRODUCT_DESCRIPTIONS.intensivpaketPlatinum, features: ["30 cashar oo min 50 daqiiqo ah", "Risk 1 iyo Risk 2", "Teori dijitaal ah 12 bilood"] },
     },
   },
   {
@@ -173,11 +203,11 @@ const PRODUCTS: Seed[] = [
     includesRisk1: true,
     includesRisk2: true,
     translations: {
-      sv: { name: "Körkortsgaranti", shortDesc: "Ett fastprisupplägg som lanseras först efter juridisk granskning.", features: ["35 körlektioner à 50 minuter", "Riskettan och Risktvåan", "Digital teori i 12 månader", "Villkor inväntar juridiskt godkännande"] },
-      en: { name: "Driving licence guarantee", shortDesc: "A fixed-price plan that will launch only after legal review.", features: ["35 driving lessons of 50 minutes", "Risk 1 and Risk 2", "Digital theory for 12 months", "Terms pending legal approval"] },
-      ti: { name: "ውሕስነት ፍቓድ ምዝዋር", shortDesc: "ድሕሪ ሕጋዊ ግምገማ ጥራይ ዝጅምር ናይ ቀዋሚ ዋጋ መደብ።", features: ["35 ትምህርትታት፣ ነፍሲ ወከፍ 50 ደቒቕ", "ሪስክ 1ን ሪስክ 2ን", "ዲጂታላዊ ቲዮሪ ን12 ወርሒ", "ውዕላት ሕጋዊ ፍቓድ ይጽበ"] },
-      ar: { name: "ضمان رخصة القيادة", shortDesc: "خطة بسعر ثابت لن تُطرح قبل اكتمال المراجعة القانونية.", features: ["35 درسًا، مدة كل منها 50 دقيقة", "المخاطر 1 والمخاطر 2", "نظري رقمي لمدة 12 شهرًا", "الشروط بانتظار الاعتماد القانوني"] },
-      so: { name: "Dammaanadda laysanka wadista", shortDesc: "Qorshe qiime go'an leh oo la furayo marka dib-u-eegista sharcigu dhammaato.", features: ["35 cashar oo min 50 daqiiqo ah", "Risk 1 iyo Risk 2", "Teori dijitaal ah 12 bilood", "Shuruuduhu waxay sugayaan ansixin sharci"] },
+      sv: { name: "Körkortsgaranti", shortDesc: PRODUCT_DESCRIPTIONS.korkortsgaranti, features: ["35 körlektioner à 50 minuter", "Riskettan och Risktvåan", "Digital teori i 12 månader", "Villkor inväntar juridiskt godkännande"] },
+      en: { name: "Driving licence guarantee", shortDesc: PRODUCT_DESCRIPTIONS.korkortsgaranti, features: ["35 driving lessons of 50 minutes", "Risk 1 and Risk 2", "Digital theory for 12 months", "Terms pending legal approval"] },
+      ti: { name: "ውሕስነት ፍቓድ ምዝዋር", shortDesc: PRODUCT_DESCRIPTIONS.korkortsgaranti, features: ["35 ትምህርትታት፣ ነፍሲ ወከፍ 50 ደቒቕ", "ሪስክ 1ን ሪስክ 2ን", "ዲጂታላዊ ቲዮሪ ን12 ወርሒ", "ውዕላት ሕጋዊ ፍቓድ ይጽበ"] },
+      ar: { name: "ضمان رخصة القيادة", shortDesc: PRODUCT_DESCRIPTIONS.korkortsgaranti, features: ["35 درسًا، مدة كل منها 50 دقيقة", "المخاطر 1 والمخاطر 2", "نظري رقمي لمدة 12 شهرًا", "الشروط بانتظار الاعتماد القانوني"] },
+      so: { name: "Dammaanadda laysanka wadista", shortDesc: PRODUCT_DESCRIPTIONS.korkortsgaranti, features: ["35 cashar oo min 50 daqiiqo ah", "Risk 1 iyo Risk 2", "Teori dijitaal ah 12 bilood", "Shuruuduhu waxay sugayaan ansixin sharci"] },
     },
   },
   {
@@ -228,11 +258,11 @@ const PRODUCTS: Seed[] = [
     priceOre: 39900,
     theoryDays: 365,
     translations: {
-      sv: { name: "Digital körkortsteori", shortDesc: "Digital teori för B-körkort, tillgänglig när den licensierade frågebanken är klar.", features: ["Tillgång i 365 dagar", "Studieläge och övningsprov", "Lanseras med licensierade frågor"] },
-      en: { name: "Digital driving theory", shortDesc: "Digital category B theory, available when the licensed question bank is ready.", features: ["Access for 365 days", "Study mode and mock exams", "Launches with licensed questions"] },
-      ti: { name: "ዲጂታላዊ ቲዮሪ ምዝዋር", shortDesc: "ፍቓድ ዘለዎ ባንክ ሕቶታት ምስ ተዳለወ ዝርከብ ዲጂታላዊ ቲዮሪ B።", features: ["ን365 መዓልቲ ፍቓድ", "ናይ መጽናዕትን ፈተነን ኣገባብ", "ብፍቓድ ዘለዎም ሕቶታት ይጅምር"] },
-      ar: { name: "نظري القيادة الرقمي", shortDesc: "نظري رقمي لرخصة B، يتاح عند اكتمال بنك الأسئلة المرخص.", features: ["وصول لمدة 365 يومًا", "وضع دراسة واختبارات تجريبية", "يُطلق بأسئلة مرخصة"] },
-      so: { name: "Teoriga wadista ee dijitaalka ah", shortDesc: "Teori dijitaal ah oo laysanka B ah, lana heli doono marka kaydka su'aalaha shatiga leh diyaar noqdo.", features: ["Gelitaan 365 maalmood", "Hab waxbarasho iyo imtixaano tijaabo ah", "Waxa lagu furayaa su'aalo shati leh"] },
+      sv: { name: "Digital körkortsteori", shortDesc: PRODUCT_DESCRIPTIONS.korkortsteori, features: ["Tillgång i 365 dagar", "Studieläge och övningsprov", "Lanseras med licensierade frågor"] },
+      en: { name: "Digital driving theory", shortDesc: PRODUCT_DESCRIPTIONS.korkortsteori, features: ["Access for 365 days", "Study mode and mock exams", "Launches with licensed questions"] },
+      ti: { name: "ዲጂታላዊ ቲዮሪ ምዝዋር", shortDesc: PRODUCT_DESCRIPTIONS.korkortsteori, features: ["ን365 መዓልቲ ፍቓድ", "ናይ መጽናዕትን ፈተነን ኣገባብ", "ብፍቓድ ዘለዎም ሕቶታት ይጅምር"] },
+      ar: { name: "نظري القيادة الرقمي", shortDesc: PRODUCT_DESCRIPTIONS.korkortsteori, features: ["وصول لمدة 365 يومًا", "وضع دراسة واختبارات تجريبية", "يُطلق بأسئلة مرخصة"] },
+      so: { name: "Teoriga wadista ee dijitaalka ah", shortDesc: PRODUCT_DESCRIPTIONS.korkortsteori, features: ["Gelitaan 365 maalmood", "Hab waxbarasho iyo imtixaano tijaabo ah", "Waxa lagu furayaa su'aalo shati leh"] },
     },
   },
 ];

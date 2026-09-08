@@ -40,13 +40,27 @@ export default async function KorlektionerPage(
                 priceOre={product.priceOre}
                 compareAtOre={product.compareAtOre}
                 accentHex={product.accentHex}
+                lessonCredits={product.lessonCredits}
+                creditValidDays={product.creditValidDays}
+                tierLabel={t(
+                  `product.kind.${
+                    product.kind === "PACKAGE" && product.slug.startsWith("intensiv")
+                      ? "INTENSIVE_PACKAGE"
+                      : product.kind
+                  }`,
+                )}
+                includedLabel={t("product.included")}
+                perLessonLabel={t("product.perLesson")}
+                validityLabel={t("product.validityMonths", {
+                  count: Math.round(product.creditValidDays / 30),
+                })}
+                vatLabel={t("product.priceIncludesVat")}
                 badge={product.badge}
                 badgeLabel={product.badge ? t("product.popular") : undefined}
                 swedishOnly={product.swedishOnly}
                 swedishOnlyLabel={t("common.swedishOnly")}
                 unavailableLabel={t("product.notForSale")}
                 detailsLabel={t("common.readMore")}
-                visualLabel={t("product.visualLabel")}
                 savingsLabel={product.compareAtOre && product.compareAtOre > product.priceOre
                   ? t("product.save", { percent: Math.round((1 - product.priceOre / product.compareAtOre) * 100) })
                   : undefined}

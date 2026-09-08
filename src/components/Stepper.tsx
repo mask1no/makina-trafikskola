@@ -2,9 +2,15 @@ type StepperProps = {
   steps: string[];
   current: number;
   progressLabel: string;
+  completed?: number[];
 };
 
-export function Stepper({ steps, current, progressLabel }: StepperProps) {
+export function Stepper({
+  steps,
+  current,
+  progressLabel,
+  completed = [],
+}: StepperProps) {
   return (
     <nav aria-label={progressLabel} className="rounded-md border border-border bg-card p-4 shadow-soft sm:p-5">
       <div className="mb-4 flex items-center justify-between gap-4">
@@ -17,7 +23,7 @@ export function Stepper({ steps, current, progressLabel }: StepperProps) {
       </div>
       <ol className="flex gap-2 sm:gap-3">
         {steps.map((step, index) => {
-          const complete = index < current;
+          const complete = index < current || completed.includes(index);
           const active = index === current;
           return (
             <li

@@ -1,16 +1,34 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import {
+  Noto_Sans_Arabic,
+  Noto_Sans_Ethiopic,
+} from "next/font/google";
 import { headers } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
+import { auth, signOut } from "@/auth";
+import { Avatar } from "@/components/Avatar";
 import { BottomTabBar, type BottomTabIcon } from "@/components/BottomTabBar";
 import { CookieConsent } from "@/components/CookieConsent";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { ServiceWorkerRegistration } from "@/components/ServiceWorkerRegistration";
 import { isLocale, locales } from "@/i18n/routing";
-import { auth } from "@/auth";
+import { db } from "@/lib/db";
+
+const notoArabic = Noto_Sans_Arabic({
+  subsets: ["arabic"],
+  variable: "--font-arabic",
+  display: "swap",
+});
+
+const notoEthiopic = Noto_Sans_Ethiopic({
+  subsets: ["ethiopic"],
+  variable: "--font-ethiopic",
+  display: "swap",
+});
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -112,6 +130,13 @@ export default async function LocaleLayout(
     auth(),
   ]);
   const base = `/${params.locale}`;
+  const teacherProfile =
+    session?.user.role === "TEACHER"
+      ? await db.teacherProfile.findUnique({
+          where: { userId: session.user.id },
+          select: { slug: true },
+        })
+      : null;
   const siteUrl = validSiteOrigin();
   const structuredData = {
     "@context": "https://schema.org",
@@ -139,18 +164,26 @@ export default async function LocaleLayout(
             { href: `${base}/larare`, label: t("teachers"), icon: "profile" },
             { href: `${base}/teori`, label: t("theory"), icon: "messages" },
           ]
-        : [
+        : session?.user.role === "STUDENT"
+          ? [
             { href: base, label: t("home"), icon: "home" },
             { href: `${base}/korlektioner`, label: t("packages"), icon: "packages" },
             { href: `${base}/mina-sidor/bokningar`, label: t("bookings"), icon: "bookings" },
             { href: `${base}/mina-sidor/meddelanden`, label: t("messages"), icon: "messages" },
             { href: `${base}/mina-sidor/profil`, label: t("profile"), icon: "profile" },
           ]
+          : [
+              { href: base, label: t("home"), icon: "home" },
+              { href: `${base}/korlektioner`, label: t("packages"), icon: "packages" },
+              { href: `${base}/larare`, label: t("teachers"), icon: "bookings" },
+              { href: `${base}/teori`, label: t("theory"), icon: "messages" },
+              { href: `${base}/logga-in`, label: t("signIn"), icon: "profile" },
+            ]
   ) satisfies { href: string; label: string; icon: BottomTabIcon }[];
 
   return (
     <NextIntlClientProvider>
-      <div className="min-h-screen bg-page pb-[calc(4rem+env(safe-area-inset-bottom))] md:pb-0">
+      <div className={`${notoArabic.variable} ${notoEthiopic.variable} min-h-screen bg-page pb-[calc(4rem+env(safe-area-inset-bottom))] md:pb-0`}>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -179,6 +212,62 @@ export default async function LocaleLayout(
             <div className="ms-auto lg:ms-2">
               <LanguageSwitcher />
             </div>
+            {!session?.user ? (
+              <Link
+                href={`${base}/logga-in`}
+                className="hidden min-h-11 items-center px-2 text-sm font-bold underline-offset-4 hover:underline lg:inline-flex"
+              >
+                {t("signIn")}
+              </Link>
+            ) : (
+              <details className="group relative hidden lg:block">
+                <summary
+                  aria-label={t("account")}
+                  className="flex min-h-11 cursor-pointer list-none items-center rounded-full outline-none ring-offset-surface focus-visible:ring-2 focus-visible:ring-accent [&::-webkit-details-marker]:hidden"
+                >
+                  <Avatar
+                    name={
+                      session.user.name ??
+                      session.user.email ??
+                      t("account")
+                    }
+                    size="sm"
+                  />
+                </summary>
+                <div className="absolute end-0 top-[calc(100%+0.5rem)] z-50 min-w-56 rounded-md border border-border bg-card p-2 text-sm text-ink shadow-float">
+                  {session.user.role === "STUDENT" ? (
+                    <>
+                      <Link className="flex min-h-11 items-center rounded-sm px-3 font-semibold hover:bg-card-muted" href={`${base}/mina-sidor`}>{t("myPages")}</Link>
+                      <Link className="flex min-h-11 items-center rounded-sm px-3 font-semibold hover:bg-card-muted" href={`${base}/mina-sidor/bokningar`}>{t("bookings")}</Link>
+                      <Link className="flex min-h-11 items-center rounded-sm px-3 font-semibold hover:bg-card-muted" href={`${base}/mina-sidor/saldo`}>{t("balance")}</Link>
+                      <Link className="flex min-h-11 items-center rounded-sm px-3 font-semibold hover:bg-card-muted" href={`${base}/mina-sidor/profil`}>{t("profile")}</Link>
+                    </>
+                  ) : session.user.role === "TEACHER" ? (
+                    <>
+                      <Link className="flex min-h-11 items-center rounded-sm px-3 font-semibold hover:bg-card-muted" href={`${base}/larare-portal`}>{t("teacherPortal")}</Link>
+                      <Link className="flex min-h-11 items-center rounded-sm px-3 font-semibold hover:bg-card-muted" href={teacherProfile ? `${base}/larare/${teacherProfile.slug}` : `${base}/larare`}>{t("profile")}</Link>
+                    </>
+                  ) : (
+                    <>
+                      <Link className="flex min-h-11 items-center rounded-sm px-3 font-semibold hover:bg-card-muted" href={`${base}/admin`}>{t("adminPanel")}</Link>
+                      <Link className="flex min-h-11 items-center rounded-sm px-3 font-semibold hover:bg-card-muted" href={`${base}/admin/calendar`}>{t("calendar")}</Link>
+                      <Link className="flex min-h-11 items-center rounded-sm px-3 font-semibold hover:bg-card-muted" href={`${base}/admin/students`}>{t("students")}</Link>
+                    </>
+                  )}
+                  <div className="my-1 border-t border-border" />
+                  <form
+                    action={async () => {
+                      "use server";
+                      await signOut({ redirectTo: base });
+                    }}
+                  >
+                    <button type="submit" className="flex min-h-11 w-full items-center rounded-sm px-3 text-start font-semibold text-danger hover:bg-card-muted">
+                      {t("signOut")}
+                    </button>
+                  </form>
+                </div>
+              </details>
+            )}
             <Link
               href={`${base}/boka`}
               className="inline-flex min-h-11 items-center rounded-sm border border-accent bg-accent px-3 text-sm font-extrabold text-accent-ink shadow-soft transition hover:border-accent-hover hover:bg-accent-hover sm:px-5"

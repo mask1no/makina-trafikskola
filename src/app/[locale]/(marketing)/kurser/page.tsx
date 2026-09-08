@@ -2,6 +2,7 @@ import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
+import { auth } from "@/auth";
 import { EmptyState } from "@/components/EmptyState";
 import { Badge } from "@/components/Badge";
 import { PageHeader } from "@/components/PageHeader";
@@ -28,8 +29,9 @@ export default async function KurserPage(
   );
   const now = new Date();
   const holdCutoff = new Date(now.getTime() - holdMinutes * 60_000);
-  const [t, occasions] = await Promise.all([
+  const [t, authT, occasions, session] = await Promise.all([
     getTranslations("courses"),
+    getTranslations("auth"),
     db.courseOccasion.findMany({
       where: { cancelled: false, startsAt: { gt: now } },
       orderBy: { startsAt: "asc" },
@@ -56,6 +58,7 @@ export default async function KurserPage(
         },
       },
     }),
+    auth(),
   ]);
   const formatter = new Intl.DateTimeFormat(params.locale, {
     dateStyle: "long",
@@ -117,6 +120,10 @@ export default async function KurserPage(
                   <CourseBookingControl
                     occasionId={occasion.id}
                     disabled={seatsLeft === 0}
+                    authenticated={session?.user.role === "STUDENT"}
+                    signInHref={`/${params.locale}/logga-in?next=${encodeURIComponent(`/${params.locale}/kurser`)}`}
+                    accountRequired={authT("purchaseGate")}
+                    signInToBuy={authT("signInToBuy")}
                   />
                 </article>
               );

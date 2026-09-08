@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 
@@ -17,9 +18,17 @@ type ApiResult = {
 export function CourseBookingControl({
   occasionId,
   disabled,
+  authenticated,
+  signInHref,
+  accountRequired,
+  signInToBuy,
 }: {
   occasionId: string;
   disabled: boolean;
+  authenticated: boolean;
+  signInHref: string;
+  accountRequired: string;
+  signInToBuy: string;
 }) {
   const t = useTranslations("courses.booking");
   const errors = useTranslations("errors");
@@ -57,6 +66,20 @@ export function CourseBookingControl({
     } finally {
       setSubmitting(false);
     }
+  }
+
+  if (!authenticated) {
+    return (
+      <div className="mt-6 border-t border-border pt-6">
+        <p className="text-sm leading-6 text-ink-muted">{accountRequired}</p>
+        <Link
+          href={signInHref}
+          className="mt-4 inline-flex min-h-11 items-center justify-center rounded-sm border border-accent bg-accent px-5 font-bold text-accent-ink transition hover:border-accent-hover hover:bg-accent-hover"
+        >
+          {signInToBuy}
+        </Link>
+      </div>
+    );
   }
 
   return (

@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import type { TeacherMarker } from "./GoogleMapClient";
 
 const GoogleMapClient = dynamic(() => import("./GoogleMapClient"), {
@@ -12,7 +13,9 @@ type TeacherMapProps = {
   center: { lat: number; lng: number };
   label: string;
   missingKeyTitle: string;
-  missingKeyDescription: string;
+  missingKeyDescription?: string;
+  fallbackHref?: string;
+  fallbackLabel?: string;
   markers?: TeacherMarker[];
   selectedTeacherId?: string;
   onSelectTeacher?: (teacherId: string) => void;
@@ -24,19 +27,43 @@ export function TeacherMap({
   label,
   missingKeyTitle,
   missingKeyDescription,
+  fallbackHref,
+  fallbackLabel,
   markers = [],
   selectedTeacherId,
   onSelectTeacher,
 }: TeacherMapProps) {
   if (!apiKey) {
     return (
-      <div className="rtl-no-mirror static-map relative grid min-h-[30rem] place-items-center overflow-hidden rounded-lg border border-border p-6 shadow-card">
-        <div className="relative max-w-sm rounded-md border border-border bg-card p-6 text-center shadow-card">
-          <span className="mx-auto grid size-12 place-items-center rounded-full bg-accent text-xl text-accent-ink" aria-hidden="true">⌖</span>
+      <div className="rtl-no-mirror grid min-h-[30rem] place-items-center overflow-hidden rounded-lg border border-border bg-page p-6">
+        <div className="max-w-sm text-center">
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            className="mx-auto size-12 text-ink-subtle"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1.5"
+          >
+            <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z" />
+            <circle cx="12" cy="10" r="2.5" />
+          </svg>
           <h2 className="mt-4 text-lg font-black">{missingKeyTitle}</h2>
-          <p className="mt-2 text-sm leading-6 text-ink-muted">
-            {missingKeyDescription}
-          </p>
+          {missingKeyDescription ? (
+            <p className="mt-2 text-sm leading-6 text-ink-muted">
+              {missingKeyDescription}
+            </p>
+          ) : null}
+          {fallbackHref && fallbackLabel ? (
+            <Link
+              href={fallbackHref}
+              className="mt-5 inline-flex min-h-11 items-center justify-center rounded-sm border border-border-strong bg-card px-4 font-bold text-ink shadow-soft transition hover:border-ink"
+            >
+              {fallbackLabel}
+            </Link>
+          ) : null}
         </div>
       </div>
     );

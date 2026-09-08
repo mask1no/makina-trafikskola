@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";
@@ -114,7 +115,6 @@ export function BookingFlow({
   const [selectedSlot, setSelectedSlot] = useState("");
   const [loadingSlots, setLoadingSlots] = useState(false);
   const [authenticated, setAuthenticated] = useState(initiallyAuthenticated);
-  const [showOtp, setShowOtp] = useState(false);
   const [otpRequested, setOtpRequested] = useState(false);
   const [phone, setPhone] = useState("");
   const [code, setCode] = useState("");
@@ -260,7 +260,17 @@ export function BookingFlow({
       setError("TEACHER_REQUIRED");
       return;
     }
-    setStep((current) => Math.min(3, current + 1));
+    if (step === 3) {
+      if (!selectedSlot) {
+        setError("SLOT_REQUIRED");
+        return;
+      }
+      if (authenticated) {
+        void createBooking();
+        return;
+      }
+    }
+    setStep((current) => Math.min(4, current + 1));
   }
 
   async function requestOtp() {
@@ -297,7 +307,6 @@ export function BookingFlow({
         response.status === 204 ? null : await response.json().catch(() => null);
       if (!response.ok) throw new Error(payload?.error?.code ?? "INVALID_OTP");
       setAuthenticated(true);
-      setShowOtp(false);
       await createBooking(true);
     } catch (reason) {
       setError(reason instanceof Error ? reason.message : "UNKNOWN");
@@ -308,7 +317,7 @@ export function BookingFlow({
 
   async function createBooking(authenticatedNow = false) {
     if (!authenticatedNow && !authenticated && !initiallyAuthenticated) {
-      setShowOtp(true);
+      setStep(4);
       return;
     }
     if (!selectedSlot) {
@@ -496,8 +505,15 @@ export function BookingFlow({
         <p className="mt-3 leading-7 text-ink-muted">{t("description")}</p>
       </header>
       <Stepper
-        steps={[t("step.what.short"), t("step.where.short"), t("step.who.short"), t("step.when.short")]}
+        steps={[
+          t("step.what.short"),
+          t("step.where.short"),
+          t("step.who.short"),
+          t("step.when.short"),
+          t("account.short"),
+        ]}
         current={step}
+        completed={authenticated ? [4] : []}
         progressLabel={t("progress")}
       />
       <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_21rem]">
@@ -743,29 +759,40 @@ export function BookingFlow({
           {!loadingSlots && !dateSlots.length ? (
             <div className="mt-5"><EmptyState title={t("step.when.emptyTitle")} description={t("step.when.empty")} /></div>
           ) : null}
+        </section>
+      ) : null}
 
-          {showOtp ? (
-            <Card className="mt-6 bg-page" elevated>
-              <h2 className="text-xl font-bold">{t("account.title")}</h2>
-              <p className="mt-2 text-sm text-ink-muted">{t("account.description")}</p>
-              <div className="mt-4 grid gap-4">
+      {step === 4 ? (
+        <section>
+          <h1 className="text-3xl font-black">{t("account.title")}</h1>
+          <p className="mt-2 leading-7 text-ink-muted">
+            {t("account.description")}
+          </p>
+          <div className="mt-6 grid gap-4">
+            {!otpRequested ? (
+              <>
                 <Input label={t("account.firstName")} value={firstName} onChange={(event) => setFirstName(event.target.value)} autoComplete="given-name" />
                 <Input label={t("account.lastName")} value={lastName} onChange={(event) => setLastName(event.target.value)} autoComplete="family-name" />
                 <Input label={t("account.phone")} value={phone} onChange={(event) => setPhone(event.target.value)} type="tel" autoComplete="tel" placeholder="+46…" />
-                {otpRequested ? (
-                  <Input label={t("account.code")} value={code} onChange={(event) => setCode(event.target.value)} inputMode="numeric" autoComplete="one-time-code" />
-                ) : null}
-              </div>
-              {devCode ? (
-                <p className="mt-3 rounded-sm bg-page p-3 text-sm">
-                  {t("account.devCode", { code: devCode })}
-                </p>
-              ) : null}
-              <Button className="mt-4 w-full" disabled={busy} onClick={otpRequested ? verifyOtp : requestOtp}>
-                {otpRequested ? t("account.verify") : t("account.send")}
-              </Button>
-            </Card>
+              </>
+            ) : (
+              <Input label={t("account.code")} value={code} onChange={(event) => setCode(event.target.value)} inputMode="numeric" autoComplete="one-time-code" />
+            )}
+          </div>
+          {devCode ? (
+            <p className="mt-3 rounded-sm bg-page p-3 text-sm">
+              {t("account.devCode", { code: devCode })}
+            </p>
           ) : null}
+          <Button className="mt-5 w-full" disabled={busy} onClick={otpRequested ? verifyOtp : requestOtp}>
+            {otpRequested ? t("account.verify") : t("account.send")}
+          </Button>
+          <Link
+            href={`/${locale}/logga-in?next=${encodeURIComponent(`/${locale}/boka`)}`}
+            className="mt-4 flex min-h-11 items-center justify-center text-sm font-bold underline underline-offset-4"
+          >
+            {t("account.emailLink")}
+          </Link>
         </section>
       ) : null}
 
@@ -785,11 +812,11 @@ export function BookingFlow({
           <Button className="ms-auto" onClick={next}>
             {t("next")}
           </Button>
-        ) : (
-          <Button className="ms-auto" disabled={busy || !selectedSlot} onClick={() => createBooking()}>
-            {t("confirm")}
+        ) : step === 3 ? (
+          <Button className="ms-auto" disabled={busy || !selectedSlot} onClick={next}>
+            {authenticated ? t("confirm") : t("next")}
           </Button>
-        )}
+        ) : null}
       </div>
       </Card>
       <aside className="hidden lg:sticky lg:top-24 lg:block">

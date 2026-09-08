@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import type { CSSProperties } from "react";
 import type { Metadata } from "next";
 
+import { auth } from "@/auth";
 import { Badge } from "@/components/Badge";
 import { Notice } from "@/components/Notice";
 import { formatPrice } from "@/lib/pricing/format";
@@ -43,9 +44,10 @@ export default async function ProductDetailPage(
   const params = await props.params;
   if (!isLocale(params.locale)) notFound();
   setRequestLocale(params.locale);
-  const [t, product] = await Promise.all([
+  const [t, product, session] = await Promise.all([
     getTranslations(),
     getProduct(params.locale, params.slug),
+    auth(),
   ]);
   if (!product) notFound();
 
@@ -124,8 +126,7 @@ export default async function ProductDetailPage(
           </div>
         </div>
         <aside className="h-fit rounded-lg border border-border bg-card p-6 shadow-card lg:sticky lg:top-24 sm:p-8">
-          <p className="text-sm font-semibold text-ink-muted">{t("product.priceIncludesVat")}</p>
-          <p className="mt-2 text-4xl font-black [direction:ltr]">
+          <p className="text-4xl font-black [direction:ltr]">
             {formatPrice(product.priceOre, params.locale)}
           </p>
           {product.compareAtOre && product.compareAtOre > product.priceOre ? (
@@ -138,11 +139,34 @@ export default async function ProductDetailPage(
               </p>
             </>
           ) : null}
+          {product.lessonCredits > 0 ? (
+            <p className="mt-4 font-semibold">
+              <bdi>
+                {formatPrice(
+                  Math.round(product.priceOre / product.lessonCredits),
+                  params.locale,
+                )}
+              </bdi>{" "}
+              {t("product.perLesson")}
+            </p>
+          ) : null}
+          <p className="mt-2 text-sm text-ink-muted">
+            {t("product.validityMonths", {
+              count: Math.round(product.creditValidDays / 30),
+            })}
+          </p>
+          <p className="mt-1 text-sm text-ink-muted">
+            {t("product.priceIncludesVat")}
+          </p>
           <PurchaseControl
             productId={product.id}
             active={product.active}
+            authenticated={session?.user.role === "STUDENT"}
+            signInHref={`/${params.locale}/logga-in?next=${encodeURIComponent(`/${params.locale}/paket/${product.slug}`)}`}
             inactiveLabel={t("product.notForSale")}
             copy={{
+              accountRequired: t("auth.purchaseGate"),
+              signInToBuy: t("auth.signInToBuy"),
               terms: t("product.checkout.terms"),
               withdrawal: t("product.checkout.withdrawal"),
               submit: t("product.checkout.submit"),

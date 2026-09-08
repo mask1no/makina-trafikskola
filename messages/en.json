@@ -18,6 +18,19 @@
     "lessons": "Driving lessons",
     "teachers": "Instructors",
     "book": "Book now",
+    "signIn": "Logga in",
+    "signOut": "Logga ut",
+    "account": "Mitt konto",
+    "myPages": "Mina sidor",
+    "createAccount": "Skapa konto",
+    "balance": "Mitt saldo",
+    "teacherPortal": "Lärarportal",
+    "adminPanel": "Adminpanel",
+    "calendar": "Kalender",
+    "students": "Elever",
+    "contact": "Kontakt",
+    "openingHours": "Öppettider: mån–fre 09–17",
+    "copyright": "© {year} Makina Trafikskola",
     "footerDescription": "Driving education with clear guidance and support in your language.",
     "explore": "Explore",
     "terms": "Terms",
@@ -43,13 +56,17 @@
       "findTeacher": "Find an instructor",
       "cardLabel": "Personal education",
       "cardTitle": "A clear plan from your first lesson",
-      "cardDescription": "Choose language, transmission and instructor based on your needs."
+      "cardDescription": "Choose language, transmission and instructor based on your needs.",
+      "reviews": "omdömen",
+      "pickupProof": "Vi hämtar dig",
+      "languageProof": "Undervisning på 5 språk"
     },
     "trust": {
       "label": "What you get with Makina",
-      "languages": {"title": "Five languages", "description": "Support in Swedish, English, Tigrinya, Arabic and Somali"},
-      "lesson": {"title": "50 minutes", "description": "A clear lesson length across the catalogue"},
-      "pricing": {"title": "Transparent pricing", "description": "Always compare price and contents before buying"}
+      "languages": {"title": "Fem språk", "description": "Svenska, engelska, tigrinja, arabiska och somaliska"},
+      "pickup": {"title": "Vi hämtar dig", "description": "Läraren möter dig där du är"},
+      "lesson": {"title": "50 minuter", "description": "Samma lektionslängd i hela utbudet"},
+      "pricing": {"title": "Öppna priser", "description": "Se exakt vad som ingår innan du betalar"}
     },
     "journey": {
       "eyebrow": "How it works",
@@ -64,8 +81,9 @@
     },
     "teachers": {
       "eyebrow": "Learn in your language",
-      "title": "Meet our instructors",
-      "description": "Find an instructor who speaks your language and teaches where you want to drive."
+      "title": "Hitta din lärare",
+      "description": "Find an instructor who speaks your language and teaches where you want to drive.",
+      "languageLabel": "Filtrera lärare efter språk"
     },
     "location": {
       "eyebrow": "Near you",
@@ -73,6 +91,16 @@
       "description": "See the instructors available at our locations. The interactive map loads only when you open the instructor page.",
       "openMap": "Open instructor map",
       "area": "Stockholm area"
+    },
+    "faq": {
+      "eyebrow": "Vanliga frågor",
+      "title": "Svar innan du börjar",
+      "cost": {"question": "Vad kostar det att ta körkort hos Makina?", "answer": "Priset beror på hur många lektioner du behöver. En enskild körlektion kostar {singlePrice} och våra paket börjar på {packagePrice}. Alla priser visas inklusive moms och du ser exakt vad som ingår innan du betalar."},
+      "languages": {"question": "Kan jag få undervisning på mitt språk?", "answer": "Ja. Våra lärare undervisar på svenska, engelska, tigrinja, arabiska och somaliska. Välj språk först när du söker lärare, så ser du bara de lärare som kan undervisa dig."},
+      "pickup": {"question": "Hämtar ni mig?", "answer": "Ja, våra lärare kan möta dig där du är inom Stockholmsområdet. Du anger din adress när du bokar lektionen."},
+      "cancel": {"question": "Hur avbokar jag en lektion?", "answer": "Du avbokar själv under Mina bokningar. Avbokar du minst 24 timmar före lektionen kostar det ingenting och lektionen går tillbaka till ditt saldo. Avbokar du senare dras lektionen från saldot."},
+      "risk": {"question": "Vad är skillnaden mellan Risk 1 och Risk 2?", "answer": "Risk 1, riskettan, är en teoretisk utbildning om alkohol, droger, trötthet och andra risker. Risk 2 körs på halkbana och handlar om hastighet och körning under svåra förhållanden. Båda är obligatoriska för B-körkort."},
+      "validity": {"question": "Hur länge gäller mitt paket?", "answer": "Köpta lektioner gäller i 24 månader från köpdatum. Du ser alltid ditt saldo och sista giltighetsdag under Mina sidor."}
     }
   },
   "lessons": {
@@ -91,6 +119,9 @@
     "emptyDescription": "The selection is being updated. Please check back soon.",
     "included": "What is included",
     "priceIncludesVat": "Price including VAT",
+    "perLesson": "per lektion",
+    "validityMonths": "Gäller i {count} månader",
+    "kind": {"SINGLE_LESSON": "ENSTAKA LEKTION", "TEST_LESSON": "ENSTAKA LEKTION", "PACKAGE": "KÖRPAKET", "INTENSIVE_PACKAGE": "INTENSIVPAKET", "THEORY_ACCESS": "TEORI", "GUARANTEE": "GARANTI", "COURSE_SEAT": "KURS"},
     "availableDescription": "This product is active and available to buy now.",
     "inactiveDescription": "The price is shown for comparison. This product cannot be purchased until every included service can be delivered.",
     "checkout": {"terms": "I accept the draft terms of purchase.", "withdrawal": "I have read the draft 14-day withdrawal information and request that the service may begin as scheduled.", "submit": "Continue to payment", "redirecting": "Opening payment…", "error": "Payment could not be started. Sign in and try again."}
@@ -114,6 +145,11 @@
     "title": "Find the right instructor",
     "description": "Choose a language first, then a location, to find the instructor who suits you.",
     "languageFilter": "1. Choose language",
+    "languageQuestion": "Vilket språk vill du ha undervisning på?",
+    "anyLanguage": "Spelar ingen roll",
+    "noneAvailable": "Ingen lärare tillgänglig just nu",
+    "clearFilters": "Rensa filter",
+    "showAsList": "Visa lärare som lista",
     "locationFilter": "2. Choose location",
     "results": "Instructor results",
     "resultCount": "{count, plural, =0 {No instructors} =1 {1 instructor} other {# instructors}}",
@@ -142,7 +178,8 @@
     "staticLabel": "Simplified map of the Stockholm area",
     "interactiveLabel": "Interactive map of instructor locations",
     "unavailableTitle": "The map is currently unavailable",
-    "unavailableDescription": "You can still find and choose an instructor from the list."
+    "unavailableDescription": "You can still find and choose an instructor from the list.",
+    "pendingKey": "Kartan aktiveras när Google Maps-nyckeln är på plats."
   },
   "courses": {
     "eyebrow": "Risk training and courses", "title": "Upcoming course occasions", "description": "View real scheduled courses and remaining seats.",
@@ -153,6 +190,7 @@
   },
   "theory": {
     "eyebrow": "Driving theory", "title": "Practise with verified questions", "description": "Free questions are available without purchase. Paid content requires active theory access.",
+    "teaser": {"eyebrow": "Körkortsteori", "title": "Plugga teorin på ditt språk", "description": "Över 1 200 frågor med ljud och video. Öva kategori för kategori, gör övningsprov och se var du står inför kunskapsprovet.", "tryFree": "Prova gratisfrågor", "buy": "Köp teoriåtkomst", "pending": "Släpps så snart frågebanken är klar"},
     "licensingPending": "The complete question bank will be published only after content rights are confirmed.", "freeCount": "{count, plural, =1 {1 free question} other {# free questions}}", "swedishOnly": "Swedish only", "examLink": "Open mock exam",
     "emptyTitle": "No free questions are published", "emptyDescription": "Verified and licensed question content is pending.", "paidAccess": "Active theory access", "freeAccess": "Free questions", "questionNumber": "Question {number}",
     "categoryEmptyTitle": "No questions are available", "categoryEmptyDescription": "This category has no questions your account can access.", "submitAnswer": "Check answer", "correct": "Correct", "incorrect": "Not correct", "selectAnswer": "Choose an answer first.", "signInToAnswer": "Sign in as a student to save your answer.", "answerError": "The answer could not be saved. Try again.",
@@ -177,7 +215,7 @@
       "who": {"short": "Who", "title": "Who would you like to drive with?", "languageFirst": "Choose language first", "list": "List", "map": "Map", "mapLabel": "Map of available instructors", "mapUnavailable": "The map is unavailable", "mapUnavailableDescription": "Choose an instructor from the list.", "emptyTitle": "No instructor matches", "empty": "Try another language or choose another location."},
       "when": {"short": "When", "title": "When would you like to drive?", "firstAvailable": "First available time", "loading": "Loading available times…", "emptyTitle": "No times on this day", "empty": "Choose another day to see more available times."}
     },
-    "account": {"title": "Create an account with your phone", "description": "Verify your number here without leaving the booking.", "firstName": "First name", "lastName": "Last name", "phone": "Mobile number with country code", "code": "Six-digit code", "send": "Send code", "verify": "Verify and book", "devCode": "Local development only – code: {code}"},
+    "account": {"short": "Ditt konto", "title": "Ditt konto", "description": "Vi skapar ett konto åt dig så att du kan se dina bokningar, ditt saldo och avboka själv.", "firstName": "First name", "lastName": "Last name", "phone": "Mobile number with country code", "code": "Six-digit code", "send": "Send code", "verify": "Verify and book", "emailLink": "E-post och lösenord", "devCode": "Local development only – code: {code}"},
     "credits": {"loading": "Checking your balance…", "signIn": "Sign in to check your package credits.", "balance": "{count, plural, =0 {No lessons available} =1 {1 lesson available} other {# lessons available}}"},
     "summary": {"eyebrow": "Your booking", "title": "Summary", "lesson": "Lesson", "place": "Place", "teacher": "Instructor", "time": "Time", "notSelected": "Not selected yet", "reassurance": "You can go back and change your choices before confirming."},
     "checkout": {"title": "Consent before payment", "draft": "Draft wording pending client and legal review.", "termsConsent": "I have read and accept the draft terms of purchase.", "withdrawalConsent": "I have read the draft information about the 14-day withdrawal right and request that the booked service may begin as scheduled.", "continue": "Continue to secure payment"},
@@ -185,6 +223,10 @@
     "calendar": {"summary": "Driving lesson with Makina Trafikskola", "description": "Cancellation deadline: {deadline}."}
   },
   "auth": {
+    "required": "Du behöver ett konto för att boka och betala. Det tar 30 sekunder.",
+    "purchaseGate": "Du behöver ett konto för att köpa. Det tar 30 sekunder och du får tillgång till dina bokningar och ditt saldo.",
+    "signInToBuy": "Logga in för att köpa",
+    "signInToSeeBalance": "Logga in för att se ditt saldo",
     "firstName": "First name", "lastName": "Last name", "email": "Email", "password": "Password", "phone": "Mobile number", "phonePlaceholder": "+46 70 123 45 67", "code": "Six-digit code", "methodLabel": "Sign-in method", "methods": {"email": "Email and password", "phone": "Text message code"}, "sendCode": "Send code", "verifyCode": "Verify and continue", "changePhone": "Change mobile number", "working": "Please wait…", "secure": "Secure account access", "support": "Need help accessing your account? Contact the school through its published support channel.", "context": {"eyebrow": "Your training in one place", "title": "Continue where you left off", "bookings": "View and manage your driving lessons", "balance": "Check available lesson credits", "messages": "Follow service and payment notifications"},
     "login": {"title": "Log in", "description": "Continue to your account.", "submit": "Log in", "noAccount": "Do not have an account?", "create": "Create account"},
     "register": {"title": "Create account", "description": "Create a student account with email or mobile number.", "submit": "Create account", "hasAccount": "Already have an account?", "login": "Log in"}

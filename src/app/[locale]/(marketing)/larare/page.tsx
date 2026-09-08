@@ -1,4 +1,5 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import Link from "next/link";
 
 import { EmptyState } from "@/components/EmptyState";
 import { PageHeader } from "@/components/PageHeader";
@@ -50,12 +51,22 @@ export default async function LararePage(
     searchParams.transmission === "AUTOMATIC"
       ? searchParams.transmission
       : undefined;
-  const teachers = await getTeachers(
+  const allTeachers = await getTeachers(
     params.locale,
-    language,
+    undefined,
     location,
     transmission,
   );
+  const languageCounts = Object.fromEntries(
+    locales.map((option) => [
+      option,
+      allTeachers.filter((teacher) => teacher.languages.includes(option)).length,
+    ]),
+  ) as Record<(typeof locales)[number], number>;
+  const teachers = language
+    ? allTeachers.filter((teacher) => teacher.languages.includes(language))
+    : allTeachers;
+  const hasActiveFilter = Boolean(language || location || transmission);
   const center = locations[0]
     ? { lat: locations[0].lat, lng: locations[0].lng }
     : { lat: 59.3293, lng: 18.0686 };
@@ -65,67 +76,120 @@ export default async function LararePage(
       <div className="site-container">
         <PageHeader eyebrow={t("teachers.eyebrow")} title={t("teachers.title")} description={t("teachers.description")} />
 
-        <section className="mt-10 rounded-lg border border-border bg-card p-5 shadow-soft sm:p-6" aria-labelledby="language-filter">
-          <h2 id="language-filter" className="text-lg font-black">{t("teachers.languageFilter")}</h2>
-          <div className="mt-3 flex flex-wrap gap-2">
-            <PillFilter
-              label={t("common.all")}
-              value=""
-              active={!language}
-              href={filterHref(params.locale, undefined, location, transmission)}
-            />
-            {locales.map((option) => (
-              <PillFilter
-                key={option}
-                label={t(`language.${option}`)}
-                value={option}
-                active={language === option}
-                href={filterHref(params.locale, option, location, transmission)}
-              />
-            ))}
+        <section className="mt-10 overflow-hidden rounded-lg border border-border bg-card shadow-soft" aria-labelledby="language-filter">
+          <div className="p-5 sm:p-6">
+            <h2 id="language-filter" className="text-lg font-black">
+              {t("teachers.languageQuestion")}
+            </h2>
+            <div className="mt-4 flex flex-wrap items-center gap-2">
+              {locales.map((option) => {
+                const count = languageCounts[option];
+                return (
+                  <PillFilter
+                    key={option}
+                    label={`${t(`language.${option}`)} (${count})`}
+                    value={option}
+                    active={language === option}
+                    disabled={count === 0}
+                    title={count === 0 ? t("teachers.noneAvailable") : undefined}
+                    href={filterHref(params.locale, option, location, transmission)}
+                  />
+                );
+              })}
+              <span className="ms-2 border-s border-border ps-4">
+                <PillFilter
+                  label={t("teachers.anyLanguage")}
+                  value=""
+                  active={!language}
+                  href={filterHref(params.locale, undefined, location, transmission)}
+                />
+              </span>
+            </div>
           </div>
 
-          <form className="mt-6 grid gap-4 border-t border-border pt-6 sm:grid-cols-[1fr_1fr_auto] sm:items-end" action={`/${params.locale}/larare`}>
-            {language ? <input type="hidden" name="language" value={language} /> : null}
-            <Select
-              label={t("teachers.locationFilter")}
-              id="location"
-              name="location"
-              defaultValue={location ?? ""}
-            >
-              <option value="">{t("common.allLocations")}</option>
-              {locations.map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.name}
-                </option>
+          <div className="border-t border-border p-5 sm:p-6">
+            <h3 className="text-sm font-bold">{t("teachers.locationFilter")}</h3>
+            {locations.length <= 4 ? (
+              <div className="mt-3 flex flex-wrap gap-1 rounded-md border border-border bg-page p-1">
+                <Link
+                  href={filterHref(params.locale, language, undefined, transmission)}
+                  aria-current={!location ? "true" : undefined}
+                  className="inline-flex min-h-11 flex-1 items-center justify-center rounded-sm px-4 text-center text-sm font-bold text-ink-muted transition aria-[current=true]:bg-card aria-[current=true]:text-ink aria-[current=true]:shadow-soft"
+                >
+                  {t("common.allLocations")}
+                </Link>
+                {locations.map((item) => (
+                  <Link
+                    key={item.id}
+                    href={filterHref(params.locale, language, item.id, transmission)}
+                    aria-current={location === item.id ? "true" : undefined}
+                    className="inline-flex min-h-11 flex-1 items-center justify-center rounded-sm px-4 text-center text-sm font-bold text-ink-muted transition aria-[current=true]:bg-card aria-[current=true]:text-ink aria-[current=true]:shadow-soft"
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <form className="mt-3 flex items-end gap-3" action={`/${params.locale}/larare`}>
+                {language ? <input type="hidden" name="language" value={language} /> : null}
+                {transmission ? <input type="hidden" name="transmission" value={transmission} /> : null}
+                <div className="min-w-0 flex-1">
+                  <Select
+                    label={t("teachers.locationFilter")}
+                    id="location"
+                    name="location"
+                    defaultValue={location ?? ""}
+                  >
+                    <option value="">{t("common.allLocations")}</option>
+                    {locations.map((item) => (
+                      <option key={item.id} value={item.id}>{item.name}</option>
+                    ))}
+                  </Select>
+                </div>
+                <button className="min-h-11 rounded-sm border border-border bg-card px-4 font-bold">
+                  {t("common.applyFilter")}
+                </button>
+              </form>
+            )}
+          </div>
+
+          <div className="border-t border-border p-5 sm:p-6">
+            <h3 className="text-sm font-bold">{t("teachers.transmissionFilter")}</h3>
+            <div className="mt-3 grid grid-cols-3 gap-1 rounded-md border border-border bg-page p-1">
+              {([
+                [undefined, t("teachers.allTransmissions")],
+                ["MANUAL", t("teacher.transmission.manual")],
+                ["AUTOMATIC", t("teacher.transmission.automatic")],
+              ] as const).map(([value, label]) => (
+                <Link
+                  key={value ?? "all"}
+                  href={filterHref(params.locale, language, location, value)}
+                  aria-current={transmission === value || (!transmission && !value) ? "true" : undefined}
+                  className="inline-flex min-h-11 items-center justify-center rounded-sm px-2 text-center text-sm font-bold text-ink-muted transition aria-[current=true]:bg-card aria-[current=true]:text-ink aria-[current=true]:shadow-soft"
+                >
+                  {label}
+                </Link>
               ))}
-            </Select>
-            <div>
-              <Select
-                label={t("teachers.transmissionFilter")}
-                id="transmission"
-                name="transmission"
-                defaultValue={transmission ?? ""}
-              >
-                <option value="">{t("teachers.allTransmissions")}</option>
-                <option value="MANUAL">{t("teacher.transmission.manual")}</option>
-                <option value="AUTOMATIC">{t("teacher.transmission.automatic")}</option>
-              </Select>
             </div>
-            <button
-              type="submit"
-              className="min-h-11 rounded-sm bg-surface px-5 font-bold text-ink-inverse"
-            >
-              {t("common.applyFilter")}
-            </button>
-          </form>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border px-5 py-4 sm:px-6">
+            <p className="text-sm font-semibold text-ink-muted">
+              {t("teachers.resultCount", { count: teachers.length })}
+            </p>
+            {hasActiveFilter ? (
+              <Link
+                href={`/${params.locale}/larare`}
+                className="inline-flex min-h-11 items-center font-bold underline underline-offset-4 md:min-h-0"
+              >
+                {t("teachers.clearFilters")}
+              </Link>
+            ) : null}
+          </div>
         </section>
 
         <div className="mt-10 grid gap-8 lg:grid-cols-[.85fr_1.15fr]">
-          <section aria-label={t("teachers.results")}>
-            <p className="mb-4 text-sm font-semibold text-ink-muted">
-              {t("teachers.resultCount", { count: teachers.length })}
-            </p>
+          <section id="teacher-results" aria-label={t("teachers.results")}>
             {teachers.length ? (
               <div className="grid gap-4">
                 {teachers.map((teacher) => (
@@ -170,8 +234,9 @@ export default async function LararePage(
                 })),
               )}
               label={t("map.interactiveLabel")}
-              missingKeyTitle={t("map.unavailableTitle")}
-              missingKeyDescription={t("map.unavailableDescription")}
+              missingKeyTitle={t("map.pendingKey")}
+              fallbackHref="#teacher-results"
+              fallbackLabel={t("teachers.showAsList")}
             />
           </section>
         </div>

@@ -97,27 +97,6 @@ textarea {
   }
 }
 
-.static-map {
-  background-color: var(--page);
-  background-image:
-    linear-gradient(25deg, transparent 46%, var(--border) 47%, var(--border) 52%, transparent 53%),
-    linear-gradient(155deg, transparent 46%, var(--border) 47%, var(--border) 52%, transparent 53%);
-  background-size: 88px 64px;
-}
-
-.static-map::after {
-  background: var(--accent);
-  border: 4px solid var(--card);
-  border-radius: 999px;
-  box-shadow: 0 3px 14px color-mix(in srgb, var(--ink) 25%, transparent);
-  content: "";
-  height: 28px;
-  inset-block-start: 48%;
-  inset-inline-start: 56%;
-  position: absolute;
-  width: 28px;
-}
-
 [dir="rtl"] .rtl-directional {
   transform: scaleX(-1);
 }

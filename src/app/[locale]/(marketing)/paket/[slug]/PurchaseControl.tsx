@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 
 import { Button } from "@/components/Button";
@@ -7,6 +8,8 @@ import { CheckboxField } from "@/components/CheckboxField";
 import { Notice } from "@/components/Notice";
 
 type Copy = {
+  accountRequired: string;
+  signInToBuy: string;
   terms: string;
   withdrawal: string;
   submit: string;
@@ -17,11 +20,15 @@ type Copy = {
 export function PurchaseControl({
   productId,
   active,
+  authenticated,
+  signInHref,
   inactiveLabel,
   copy,
 }: {
   productId: string;
   active: boolean;
+  authenticated: boolean;
+  signInHref: string;
   inactiveLabel: string;
   copy: Copy;
 }) {
@@ -60,6 +67,22 @@ export function PurchaseControl({
       <Button className="mt-8 w-full" disabled>
         {inactiveLabel}
       </Button>
+    );
+  }
+
+  if (!authenticated) {
+    return (
+      <div className="mt-8 border-t border-border pt-6">
+        <p className="text-sm leading-6 text-ink-muted">
+          {copy.accountRequired}
+        </p>
+        <Link
+          href={signInHref}
+          className="mt-4 inline-flex min-h-11 w-full items-center justify-center rounded-sm border border-accent bg-accent px-5 font-bold text-accent-ink transition hover:border-accent-hover hover:bg-accent-hover"
+        >
+          {copy.signInToBuy}
+        </Link>
+      </div>
     );
   }
 
