@@ -1,11 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
 import { EmptyState } from "@/components/EmptyState";
 import { LinkButton } from "@/components/LinkButton";
-import { Notice } from "@/components/Notice";
 import { PageHeader } from "@/components/PageHeader";
 import { isLocale } from "@/i18n/routing";
 import { resolveContent } from "@/lib/content/fallback";
@@ -40,13 +38,12 @@ export default async function TeoriPage(
   return (
     <div className="section-shell">
       <div className="site-container max-w-6xl">
-        <div className="grid items-center gap-8 md:grid-cols-[1fr_.75fr]">
-          <div>
+        <div className="max-w-3xl">
             <PageHeader eyebrow={t("eyebrow")} title={t("title")} description={t("description")} />
-            <Notice className="mt-6">{t("licensingPending")}</Notice>
+            <p className="mt-4 max-w-2xl text-sm leading-6 text-ink-muted">
+              {t("licensingPending")}
+            </p>
           </div>
-          <Image src="/illustration-theory.svg" alt="" width={520} height={380} className="rtl-no-mirror mx-auto h-72 w-auto object-contain" priority />
-        </div>
 
         {available.length ? (
           <div className="mt-10 grid gap-4 sm:grid-cols-2">

@@ -62,6 +62,7 @@ test.describe("authorization boundaries", () => {
 
   test("rejects an authenticated user with the wrong role", async ({ page }) => {
     await page.goto("/en/admin");
+    await page.getByRole("button", { name: "Email and password" }).click();
     await page.getByLabel("Email").fill("admin@makina.local");
     await page.getByLabel("Password").fill("Passw0rd!");
     await page.getByRole("button", { name: "Log in" }).click();

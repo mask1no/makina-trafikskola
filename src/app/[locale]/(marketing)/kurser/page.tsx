@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
@@ -69,9 +68,8 @@ export default async function KurserPage(
   return (
     <div className="section-shell">
       <div className="site-container max-w-6xl">
-        <div className="grid items-center gap-8 md:grid-cols-[1fr_.7fr]">
+        <div>
           <PageHeader eyebrow={t("eyebrow")} title={t("title")} description={t("description")} />
-          <Image src="/illustration-course.svg" alt="" width={520} height={360} className="rtl-no-mirror mx-auto h-64 w-auto object-contain" priority />
         </div>
         {occasions.length ? (
           <div className="mt-12 grid gap-5">

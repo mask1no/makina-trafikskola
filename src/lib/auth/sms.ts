@@ -3,7 +3,15 @@ type SendOtpSmsInput = {
   code: string;
 };
 
-export async function sendOtpSms({ phone, code }: SendOtpSmsInput) {
+/**
+ * Sends an OTP SMS via 46elks.
+ * @returns true when a message was accepted by the provider;
+ *          false when delivery was intentionally skipped (local/dev without credentials).
+ */
+export async function sendOtpSms({
+  phone,
+  code,
+}: SendOtpSmsInput): Promise<boolean> {
   const username = process.env.ELKS_API_USERNAME;
   const password = process.env.ELKS_API_PASSWORD;
 
@@ -11,7 +19,7 @@ export async function sendOtpSms({ phone, code }: SendOtpSmsInput) {
     if (process.env.NODE_ENV === "production") {
       throw new Error("SMS_PROVIDER_NOT_CONFIGURED");
     }
-    return;
+    return false;
   }
 
   const body = new URLSearchParams({
@@ -32,4 +40,6 @@ export async function sendOtpSms({ phone, code }: SendOtpSmsInput) {
   if (!response.ok) {
     throw new Error("SMS_DELIVERY_FAILED");
   }
+
+  return true;
 }

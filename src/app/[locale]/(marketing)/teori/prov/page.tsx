@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
@@ -35,49 +34,55 @@ export default async function TeoriprovPage(
 
   return (
     <div className="section-shell">
-      <article className="site-container max-w-5xl overflow-hidden rounded-lg border border-border bg-card p-0 shadow-card">
-        <div className="grid items-center border-b border-border bg-card-muted md:grid-cols-[1fr_.65fr]">
-        <div className="p-6 sm:p-10">
-        <p className="text-sm font-bold uppercase tracking-wider text-ink-muted">
-          {t("eyebrow")}
-        </p>
-        <h1 className="mt-2 text-4xl font-black">{t("title")}</h1>
-        <p className="mt-4 text-lg leading-8 text-ink-muted">{t("description")}</p>
+      <article className="site-container max-w-3xl">
+        <div className="border-b border-border pb-8">
+          <p className="text-sm font-bold uppercase tracking-wider text-ink-muted">
+            {t("eyebrow")}
+          </p>
+          <h1 className="mt-2 text-4xl font-black">{t("title")}</h1>
+          <p className="mt-4 text-lg leading-8 text-ink-muted">{t("description")}</p>
         </div>
-        <Image src="/illustration-theory.svg" alt="" width={420} height={300} className="rtl-no-mirror mx-auto h-64 w-auto object-contain p-6" />
-        </div>
-        <div className="p-6 sm:p-10">
-        <dl className="mt-8 grid gap-4 sm:grid-cols-3">
-          <div className="rounded-md bg-page p-4"><dt className="font-bold">{t("questions")}</dt><dd className="mt-1 text-2xl font-black">65</dd></div>
-          <div className="rounded-md bg-page p-4"><dt className="font-bold">{t("time")}</dt><dd className="mt-1 text-2xl font-black">50</dd></div>
-          <div className="rounded-md bg-page p-4"><dt className="font-bold">{t("pass")}</dt><dd className="mt-1 text-2xl font-black">52</dd></div>
-        </dl>
-        <p className="mt-8 rounded-sm border border-border bg-page p-4 text-sm text-ink-muted">
-          {available
-            ? t("ready")
-            : session?.user?.role === "STUDENT"
-              ? paid
-                ? t("unavailable")
-                : errors("THEORY_ACCESS_REQUIRED")
-              : t("signIn")}
-        </p>
-        <ExamClient
-          locale={params.locale}
-          available={available}
-          copy={{
-            start: t("start"),
-            starting: t("starting"),
-            finish: t("finish"),
-            finishing: t("finishing"),
-            next: t("next"),
-            selectAnswer: t("selectAnswer"),
-            progress: t("progress"),
-            timeRemaining: t("timeRemaining"),
-            passed: t("passed"),
-            failed: t("failed"),
-            error: t("error"),
-          }}
-        />
+        <div className="pt-8">
+          <dl className="grid gap-4 sm:grid-cols-3">
+            <div className="border-b border-border pb-4">
+              <dt className="font-bold">{t("questions")}</dt>
+              <dd className="mt-1 text-2xl font-black">65</dd>
+            </div>
+            <div className="border-b border-border pb-4">
+              <dt className="font-bold">{t("time")}</dt>
+              <dd className="mt-1 text-2xl font-black">50</dd>
+            </div>
+            <div className="border-b border-border pb-4">
+              <dt className="font-bold">{t("pass")}</dt>
+              <dd className="mt-1 text-2xl font-black">52</dd>
+            </div>
+          </dl>
+          <p className="mt-8 text-sm leading-6 text-ink-muted">
+            {available
+              ? t("ready")
+              : session?.user?.role === "STUDENT"
+                ? paid
+                  ? t("unavailable")
+                  : errors("THEORY_ACCESS_REQUIRED")
+                : t("signIn")}
+          </p>
+          <ExamClient
+            locale={params.locale}
+            available={available}
+            copy={{
+              start: t("start"),
+              starting: t("starting"),
+              finish: t("finish"),
+              finishing: t("finishing"),
+              next: t("next"),
+              selectAnswer: t("selectAnswer"),
+              progress: t("progress"),
+              timeRemaining: t("timeRemaining"),
+              passed: t("passed"),
+              failed: t("failed"),
+              error: t("error"),
+            }}
+          />
         </div>
       </article>
     </div>

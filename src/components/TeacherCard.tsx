@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 import { Avatar } from "@/components/Avatar";
-import { Badge } from "@/components/Badge";
 
 type TeacherCardProps = {
   locale: string;
@@ -20,50 +19,38 @@ type TeacherCardProps = {
 
 export function TeacherCard(props: TeacherCardProps) {
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-lg border border-border bg-card shadow-soft transition duration-200 hover:border-border-strong hover:shadow-card">
-      <div className="h-2 bg-accent" aria-hidden="true" />
-      <div className="flex flex-1 flex-col p-5 sm:p-6">
+    <article className="group flex h-full flex-col border-b border-border pb-6 transition duration-300 hover:border-ink">
       <div className="flex items-start gap-4">
-        <Avatar name={props.name} imageUrl={props.photoUrl} size="lg" className="size-20 text-xl" />
-        <div className="min-w-0">
+        <Avatar
+          name={props.name}
+          imageUrl={props.photoUrl}
+          size="lg"
+          className="size-20 text-xl transition duration-300 group-hover:scale-[1.03] sm:size-24"
+        />
+        <div className="min-w-0 pt-1">
           <h3 className="text-xl font-extrabold tracking-tight">
             <bdi>{props.name}</bdi>
           </h3>
-          {props.demoLabel ? (
-            <Badge tone="accent" className="mt-2">
-              {props.demoLabel}
-            </Badge>
-          ) : null}
           <p className="mt-1 text-sm text-ink-muted">{props.experienceLabel}</p>
           {props.swedishOnly ? (
-            <Badge className="mt-2">
+            <p className="mt-2 text-xs font-bold uppercase tracking-wider text-ink-subtle">
               {props.swedishOnlyLabel}
-            </Badge>
+            </p>
           ) : null}
         </div>
       </div>
-      <div className="mt-5 flex flex-wrap gap-2 border-t border-border pt-5">
-        {props.languages.map((language) => (
-          <Badge key={language}>
-            {language}
-          </Badge>
-        ))}
-        {props.transmissions.map((transmission) => (
-          <Badge key={transmission}>
-            {transmission}
-          </Badge>
-        ))}
-      </div>
+      <p className="mt-4 text-sm leading-6 text-ink-muted">
+        {[...props.languages, ...props.transmissions].join(" · ")}
+      </p>
       {props.locationNames.length ? (
-        <p className="mt-4 text-sm text-ink-muted">{props.locationNames.join(" · ")}</p>
+        <p className="mt-2 text-sm text-ink-subtle">{props.locationNames.join(" · ")}</p>
       ) : null}
       <Link
         href={`/${props.locale}/larare/${props.slug}`}
-        className="mt-5 inline-flex min-h-11 items-center justify-center rounded-sm bg-surface px-4 font-bold text-ink-inverse transition hover:bg-surface-raised"
+        className="mt-5 inline-flex min-h-11 items-center font-bold underline underline-offset-4"
       >
         {props.detailsLabel}
       </Link>
-      </div>
     </article>
   );
 }

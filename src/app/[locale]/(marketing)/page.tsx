@@ -5,7 +5,6 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { LinkButton } from "@/components/LinkButton";
 import { ProductCard } from "@/components/ProductCard";
 import { TeacherCard } from "@/components/TeacherCard";
-import { TeacherMap } from "@/components/TeacherMap";
 import { isLocale } from "@/i18n/routing";
 import { formatPrice } from "@/lib/pricing/format";
 
@@ -14,32 +13,6 @@ import { getProducts, getTeachers } from "./_lib/data";
 export const dynamic = "force-dynamic";
 
 const LANGUAGE_FILTERS = ["sv", "en", "ti", "ar", "so"] as const;
-// TODO: bekräfta med kunden
-const UNVERIFIED_RATING = "4,8 ★ · 300+";
-
-function TrustIcon({ name }: { name: "languages" | "pickup" | "lesson" | "pricing" }) {
-  const paths = {
-    languages: "M4 5h16M8 3v2c0 5-2 8-5 10m5-6c1 3 3 5 6 6m2-7 5 13m-8 0 5-13m-3 9h7",
-    pickup: "M3 17h18M5 17V9l3-4h8l3 4v8M8 17a2 2 0 1 0 4 0m2 0a2 2 0 1 0 4 0M5 11h14",
-    lesson: "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0-13v5l3 2",
-    pricing: "M4 7V4h16v3M5 7h14v13H5V7Zm3 4h8m-8 4h5",
-  } as const;
-
-  return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 24 24"
-      className="size-6 shrink-0 text-accent"
-      fill="none"
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="1.75"
-    >
-      <path d={paths[name]} />
-    </svg>
-  );
-}
 
 export default async function MarketingHome(
   props: {
@@ -96,70 +69,39 @@ export default async function MarketingHome(
         }}
       />
 
-      <section className="relative min-h-[78svh] overflow-hidden bg-surface text-ink-inverse">
-        <div className="site-container grid min-h-[78svh] items-center md:grid-cols-[1.05fr_.95fr]">
-          <div className="relative z-10 py-16 md:pe-10 md:py-20 lg:pe-16">
-            <p className="mb-5 text-xs font-extrabold uppercase tracking-[0.2em] text-accent">
-              {t("home.hero.eyebrow")}
-            </p>
-            <h1 className="display-title max-w-3xl text-balance">
-              {t("home.hero.title")}
-            </h1>
-            <p className="mt-6 max-w-xl text-lg leading-8 text-ink-inverse-muted sm:text-xl">
-              {t("home.hero.description")}
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <LinkButton href={`/${params.locale}/boka`}>
-                {t("common.bookNow")}
-              </LinkButton>
-              <LinkButton variant="secondary" className="text-ink-inverse" href={`/${params.locale}/larare`}>
-                {t("home.hero.findTeacher")}
-              </LinkButton>
-            </div>
-            <div className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm font-semibold text-ink-inverse-muted">
-              <span>{UNVERIFIED_RATING} {t("home.hero.reviews")}</span>
-              <span aria-hidden="true">·</span>
-              <span>{t("home.hero.pickupProof")}</span>
-              <span aria-hidden="true">·</span>
-              <span>{t("home.hero.languageProof")}</span>
-            </div>
-          </div>
-          {/* TODO: byt mot kundens egen bild på deras bil */}
-          <div className="absolute inset-0 md:relative md:inset-auto md:h-full md:min-h-[78svh] md:[margin-inline-end:min(0px,calc((80rem-100vw)/2))]">
-            <Image
-              src="/hero.jpg"
-              alt=""
-              priority
-              fill
-              sizes="(min-width: 768px) 50vw, 100vw"
-              className="rtl-no-mirror object-cover object-[68%_center]"
-            />
-            <div className="absolute inset-0 bg-[linear-gradient(90deg,var(--surface)_8%,color-mix(in_srgb,var(--surface)_88%,transparent)_48%,transparent_100%)] md:hidden rtl:bg-[linear-gradient(270deg,var(--surface)_8%,color-mix(in_srgb,var(--surface)_88%,transparent)_48%,transparent_100%)]" />
-            <div className="absolute bottom-6 start-6 hidden max-w-xs rounded-md border border-border bg-card p-5 text-ink shadow-float lg:block">
-              <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-ink-muted">{t("home.hero.cardLabel")}</p>
-              <p className="mt-2 text-xl font-black">{t("home.hero.cardTitle")}</p>
-              <p className="mt-2 text-sm leading-6 text-ink-muted">{t("home.hero.cardDescription")}</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="border-y border-surface-soft bg-surface-raised text-ink-inverse" aria-label={t("home.trust.label")}>
-        <div className="site-container flex snap-x overflow-x-auto">
-          {(["languages", "pickup", "lesson", "pricing"] as const).map((item, index) => (
-            <div
-              className={`flex min-w-[17rem] snap-start items-start gap-3 px-5 py-6 sm:min-w-0 sm:flex-1 ${
-                index > 0 ? "border-s border-surface-soft" : ""
-              }`}
-              key={item}
+      <section className="relative isolate min-h-[100svh] overflow-hidden bg-surface text-ink-inverse">
+        <Image
+          src="/hero.jpg"
+          alt=""
+          priority
+          fill
+          sizes="100vw"
+          className="rtl-no-mirror hero-pan object-cover object-[68%_center]"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-[linear-gradient(180deg,color-mix(in_srgb,var(--surface)_55%,transparent)_0%,color-mix(in_srgb,var(--surface)_78%,transparent)_48%,var(--surface)_100%)]"
+        />
+        <div className="site-container relative z-10 flex min-h-[100svh] flex-col justify-end pb-14 pt-28 sm:pb-20">
+          <p className="brand-mark reveal text-accent">{t("home.hero.brand")}</p>
+          <h1 className="display-title reveal reveal-delay-1 mt-5 max-w-4xl text-balance">
+            {t("home.hero.title")}
+          </h1>
+          <p className="reveal reveal-delay-2 mt-5 max-w-xl text-lg leading-8 text-ink-inverse-muted sm:text-xl">
+            {t("home.hero.description")}
+          </p>
+          <div className="reveal reveal-delay-3 mt-8 flex flex-wrap gap-3">
+            <LinkButton href={`/${params.locale}/boka`}>
+              {t("common.bookNow")}
+            </LinkButton>
+            <LinkButton
+              variant="secondary"
+              className="border-ink-inverse/30 text-ink-inverse hover:bg-ink-inverse/10"
+              href={`/${params.locale}/larare`}
             >
-              <TrustIcon name={item} />
-              <div>
-                <strong className="block text-base">{t(`home.trust.${item}.title`)}</strong>
-                <span className="mt-1 block text-sm leading-5 text-ink-inverse-muted">{t(`home.trust.${item}.description`)}</span>
-              </div>
-            </div>
-          ))}
+              {t("home.hero.findTeacher")}
+            </LinkButton>
+          </div>
         </div>
       </section>
 
@@ -169,40 +111,24 @@ export default async function MarketingHome(
             <p className="text-sm font-bold uppercase tracking-wider text-ink-muted">
               {t("home.teachers.eyebrow")}
             </p>
-            <h2 className="mt-2 text-3xl font-black">{t("home.teachers.title")}</h2>
-            <p className="mt-3 leading-7 text-ink-muted">{t("home.teachers.description")}</p>
+            <h2 className="section-title mt-3">{t("home.teachers.title")}</h2>
+            <p className="mt-4 leading-7 text-ink-muted">{t("home.teachers.description")}</p>
           </div>
-          <nav className="mt-6 flex flex-wrap gap-2" aria-label={t("home.teachers.languageLabel")}>
+          <nav className="mt-8 flex flex-wrap gap-2" aria-label={t("home.teachers.languageLabel")}>
             {LANGUAGE_FILTERS.map((language) => (
               <Link
                 key={language}
                 href={`/${params.locale}/larare?language=${language}`}
                 lang={language}
-                className="inline-flex min-h-11 items-center rounded-full border border-border bg-card px-4 text-sm font-bold transition hover:-translate-y-0.5 hover:border-border-strong hover:shadow-soft"
+                className="inline-flex min-h-11 items-center border-b-2 border-transparent px-1 text-base font-bold transition hover:border-ink"
               >
                 {t(`language.${language}`)}
               </Link>
             ))}
           </nav>
-          <div className="mt-8 grid items-stretch gap-6 lg:grid-cols-[.9fr_1.1fr]">
-            <TeacherMap
-              apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY}
-              center={{ lat: 59.3293, lng: 18.0686 }}
-              markers={teachers.flatMap((teacher) =>
-                teacher.locations.map(({ location }, index) => ({
-                  id: `${teacher.id}-${index}`,
-                  teacherId: teacher.id,
-                  title: `${teacher.user.firstName} ${teacher.user.lastName}`,
-                  position: { lat: location.lat, lng: location.lng },
-                })),
-              )}
-              label={t("map.interactiveLabel")}
-              missingKeyTitle={t("map.pendingKey")}
-              fallbackHref={`/${params.locale}/larare#teacher-results`}
-              fallbackLabel={t("teachers.showAsList")}
-            />
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
-              {teachers.slice(0, 3).map((teacher) => (
+          <div className="mt-10 grid gap-8 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
+            <div className="grid gap-5 sm:grid-cols-2">
+              {teachers.slice(0, 4).map((teacher) => (
                 <TeacherCard
                   key={teacher.id}
                   locale={params.locale}
@@ -218,30 +144,52 @@ export default async function MarketingHome(
                     count: teacher.yearsExperience,
                   })}
                   detailsLabel={t("teacher.viewProfile")}
-                  demoLabel={teacher.slug === "sara-johansson" ? t("teacher.demoProfile") : undefined}
                   swedishOnly={teacher.swedishOnly}
                   swedishOnlyLabel={t("common.swedishOnly")}
                 />
               ))}
             </div>
+            <Link
+              href={`/${params.locale}/larare`}
+              className="group relative min-h-[22rem] overflow-hidden bg-surface text-ink-inverse"
+              aria-label={t("map.homeTeaserCta")}
+            >
+              <Image
+                src="/hero.jpg"
+                alt=""
+                fill
+                sizes="(min-width: 1024px) 40vw, 100vw"
+                className="rtl-no-mirror object-cover object-[40%_center] opacity-70 transition duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_20%,var(--surface)_92%)]" />
+              <div className="relative z-10 flex h-full flex-col justify-end p-6 sm:p-8">
+                <h3 className="text-2xl font-black">{t("map.homeTeaserTitle")}</h3>
+                <p className="mt-3 max-w-sm text-sm leading-6 text-ink-inverse-muted">
+                  {t("map.homeTeaserDescription")}
+                </p>
+                <span className="mt-6 inline-flex min-h-11 items-center font-bold underline underline-offset-4">
+                  {t("map.homeTeaserCta")}
+                </span>
+              </div>
+            </Link>
           </div>
         </div>
       </section>
 
-      <section className="section-shell bg-card">
+      <section className="section-shell border-y border-border bg-card">
         <div className="site-container">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
               <p className="text-sm font-bold uppercase tracking-wider text-ink-muted">
                 {t("home.products.eyebrow")}
               </p>
-              <h2 className="mt-2 text-3xl font-black">{t("home.products.title")}</h2>
+              <h2 className="section-title mt-3">{t("home.products.title")}</h2>
             </div>
             <Link className="min-h-11 py-3 font-bold underline underline-offset-4" href={`/${params.locale}/korlektioner`}>
               {t("common.viewAll")}
             </Link>
           </div>
-          <div className="mt-8 grid gap-5 md:grid-cols-3">
+          <div className="mt-10 grid gap-5 md:grid-cols-3">
             {featuredProducts.map((product) => (
               <ProductCard
                 key={product.id}
@@ -288,11 +236,11 @@ export default async function MarketingHome(
         <div className="site-container">
           <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-accent">{t("home.journey.eyebrow")}</p>
           <h2 className="section-title mt-3 max-w-2xl">{t("home.journey.title")}</h2>
-          <ol className="mt-10 grid gap-px overflow-hidden rounded-lg border border-surface-soft bg-surface-soft md:grid-cols-3">
+          <ol className="mt-12 grid gap-10 md:grid-cols-3 md:gap-8">
             {(["choose", "book", "learn"] as const).map((step, index) => (
-              <li className="bg-surface-raised p-6 sm:p-8" key={step}>
+              <li key={step}>
                 <span className="numbers-ltr text-sm font-black text-accent">0{index + 1}</span>
-                <h3 className="mt-5 text-xl font-black">{t(`home.journey.${step}.title`)}</h3>
+                <h3 className="mt-4 text-xl font-black">{t(`home.journey.${step}.title`)}</h3>
                 <p className="mt-3 text-sm leading-6 text-ink-inverse-muted">{t(`home.journey.${step}.description`)}</p>
               </li>
             ))}
@@ -302,12 +250,12 @@ export default async function MarketingHome(
 
       <section className="section-shell">
         <div className="site-container">
-          <div className="rounded-xl border border-border bg-card p-6 shadow-card sm:p-10 lg:flex lg:items-center lg:justify-between lg:gap-12">
-            <div className="max-w-2xl">
+          <div className="max-w-3xl border-y border-border py-10 sm:flex sm:items-end sm:justify-between sm:gap-12">
+            <div>
               <p className="text-sm font-bold uppercase tracking-wider text-ink-muted">
                 {t("theory.teaser.eyebrow")}
               </p>
-              <h2 className="mt-2 text-3xl font-black">{t("theory.teaser.title")}</h2>
+              <h2 className="mt-3 text-3xl font-black">{t("theory.teaser.title")}</h2>
               <p className="mt-4 leading-7 text-ink-muted">{t("theory.teaser.description")}</p>
               {theoryProduct ? (
                 <p className="numbers-ltr mt-5 text-3xl font-black">
@@ -315,7 +263,7 @@ export default async function MarketingHome(
                 </p>
               ) : null}
             </div>
-            <div className="mt-7 flex shrink-0 flex-wrap gap-3 lg:mt-0 lg:max-w-xs">
+            <div className="mt-8 flex shrink-0 flex-wrap gap-3 sm:mt-0 sm:justify-end">
               <LinkButton href={`/${params.locale}/teori`}>
                 {t("theory.teaser.tryFree")}
               </LinkButton>
@@ -324,7 +272,7 @@ export default async function MarketingHome(
                   {t("theory.teaser.buy")}
                 </LinkButton>
               ) : (
-                <span className="inline-flex min-h-11 items-center rounded-sm border border-border bg-card-muted px-5 text-sm font-bold text-ink-muted">
+                <span className="inline-flex min-h-11 items-center text-sm font-bold text-ink-muted">
                   {t("theory.teaser.pending")}
                 </span>
               )}
@@ -333,12 +281,12 @@ export default async function MarketingHome(
         </div>
       </section>
 
-      <section className="section-shell border-t border-border bg-card">
+      <section className="section-shell border-t border-border">
         <div className="site-container">
           <p className="text-sm font-bold uppercase tracking-wider text-ink-muted">
             {t("home.faq.eyebrow")}
           </p>
-          <h2 className="mt-2 text-3xl font-black">{t("home.faq.title")}</h2>
+          <h2 className="section-title mt-3">{t("home.faq.title")}</h2>
           <div className="mt-8 divide-y divide-border border-y border-border">
             {faqItems.map((item) => (
               <details key={item.question} className="group">

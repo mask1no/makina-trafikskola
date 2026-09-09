@@ -12,7 +12,7 @@ export function Stepper({
   completed = [],
 }: StepperProps) {
   return (
-    <nav aria-label={progressLabel} className="rounded-md border border-border bg-card p-4 shadow-soft sm:p-5">
+    <nav aria-label={progressLabel} className="border-b border-border pb-5">
       <div className="mb-4 flex items-center justify-between gap-4">
         <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-ink-muted">
           {progressLabel}
@@ -32,7 +32,7 @@ export function Stepper({
               aria-current={active ? "step" : undefined}
             >
               <span
-                className={`h-2 rounded-full transition-colors ${
+                className={`h-1.5 rounded-full transition-colors duration-300 ${
                   active ? "bg-accent" : complete ? "bg-ink" : "bg-border"
                 }`}
                 aria-hidden="true"

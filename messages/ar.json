@@ -18,18 +18,18 @@
     "lessons": "دروس القيادة",
     "teachers": "المدربون",
     "book": "احجز الآن",
-    "signIn": "Logga in",
-    "signOut": "Logga ut",
-    "account": "Mitt konto",
-    "myPages": "Mina sidor",
-    "createAccount": "Skapa konto",
-    "balance": "Mitt saldo",
-    "teacherPortal": "Lärarportal",
-    "adminPanel": "Adminpanel",
-    "calendar": "Kalender",
-    "students": "Elever",
-    "contact": "Kontakt",
-    "openingHours": "Öppettider: mån–fre 09–17",
+    "signIn": "تسجيل الدخول",
+    "signOut": "تسجيل الخروج",
+    "account": "حسابي",
+    "myPages": "صفحاتي",
+    "createAccount": "إنشاء حساب",
+    "balance": "رصيدي",
+    "teacherPortal": "بوابة المدرب",
+    "adminPanel": "لوحة الإدارة",
+    "calendar": "التقويم",
+    "students": "الطلاب",
+    "contact": "اتصل بنا",
+    "openingHours": "ساعات العمل: الإثنين–الجمعة 09–17",
     "copyright": "© {year} Makina Trafikskola",
     "footerDescription": "تعليم قيادة واضح ودعم بلغتك.",
     "explore": "استكشف",
@@ -50,6 +50,7 @@
   },
   "home": {
     "hero": {
+      "brand": "Makina",
       "eyebrow": "طريقك إلى رخصة القيادة",
       "title": "قُد بثقة وتعلّم بلغتك",
       "description": "دروس قيادة ونظري ومدربون ذوو خبرة في ستوكهولم، كل ذلك في مكان واحد.",
@@ -57,9 +58,9 @@
       "cardLabel": "تعليم شخصي",
       "cardTitle": "خطة واضحة من أول درس",
       "cardDescription": "اختر اللغة وناقل الحركة والمدرب وفق احتياجاتك.",
-      "reviews": "omdömen",
-      "pickupProof": "Vi hämtar dig",
-      "languageProof": "Undervisning på 5 språk"
+      "reviews": "تقييمات",
+      "pickupProof": "نأتي لاصطحابك",
+      "languageProof": "تعليم بـ 5 لغات"
     },
     "trust": {
       "label": "ما تحصل عليه مع ماكينا",
@@ -107,7 +108,7 @@
     "eyebrow": "الأسعار والباقات",
     "title": "دروس قيادة لكل مرحلة",
     "description": "قارن بين الدروس المنفردة والباقات. جميع الأسعار تشمل ضريبة القيمة المضافة.",
-    "provisionalNotice": "تظهر قائمة الأسعار كاملة. تتوفر الآن الدروس المنفردة ودروس التقييم وباقتا B5 وB10؛ وتُفتح المنتجات الأخرى عندما تصبح جميع خدماتها قابلة للتقديم."
+    "provisionalNotice": "تُعرض الأسعار كمسودة. تُفتح عمليات الشراء عندما تؤكد المدرسة قائمة الأسعار النهائية."
   },
   "product": {
     "popular": "الأكثر شعبية",
@@ -179,7 +180,10 @@
     "interactiveLabel": "خريطة تفاعلية لمواقع المدربين",
     "unavailableTitle": "الخريطة غير متاحة حاليًا",
     "unavailableDescription": "لا يزال بإمكانك العثور على مدرب واختياره من القائمة.",
-    "pendingKey": "Kartan aktiveras när Google Maps-nyckeln är på plats."
+    "pendingKey": "تُفعَّل الخريطة عندما يكون مفتاح Google Maps جاهزًا.",
+    "homeTeaserTitle": "اعثر على مدرب قريب منك",
+    "homeTeaserDescription": "صفِّ حسب اللغة وشاهد أماكن المدربين – افتح الخريطة في صفحة المدربين.",
+    "homeTeaserCta": "افتح خريطة المدربين"
   },
   "courses": {
     "eyebrow": "دورات المخاطر والتدريب", "title": "مواعيد الدورات القادمة", "description": "اطّلع على الدورات المجدولة فعليًا والمقاعد المتبقية.",
@@ -190,7 +194,7 @@
   },
   "theory": {
     "eyebrow": "نظرية القيادة", "title": "تدرّب بأسئلة موثقة", "description": "الأسئلة المجانية متاحة دون شراء. يتطلب المحتوى المدفوع وصولًا نشطًا.",
-    "teaser": {"eyebrow": "Körkortsteori", "title": "Plugga teorin på ditt språk", "description": "Över 1 200 frågor med ljud och video. Öva kategori för kategori, gör övningsprov och se var du står inför kunskapsprovet.", "tryFree": "Prova gratisfrågor", "buy": "Köp teoriåtkomst", "pending": "Släpps så snart frågebanken är klar"},
+    "teaser": {"eyebrow": "نظرية رخصة القيادة", "title": "ادرس النظرية بلغتك", "description": "أكثر من 1200 سؤال مع صوت وفيديو. تمرّن فئة فئة، خض اختبارات تجريبية واعرف مستواك قبل الاختبار المعرفي.", "tryFree": "جرّب الأسئلة المجانية", "buy": "اشترِ الوصول للنظري", "pending": "يُطلق عند جاهزية بنك الأسئلة"},
     "licensingPending": "لن يُنشر بنك الأسئلة الكامل قبل تأكيد حقوق المحتوى.", "freeCount": "{count, plural, =1 {سؤال مجاني واحد} other {# أسئلة مجانية}}", "swedishOnly": "بالسويدية فقط", "examLink": "فتح الاختبار التجريبي",
     "emptyTitle": "لا توجد أسئلة مجانية منشورة", "emptyDescription": "ننتظر محتوى أسئلة موثقًا ومرخصًا.", "paidAccess": "وصول نشط للنظرية", "freeAccess": "أسئلة مجانية", "questionNumber": "السؤال {number}",
     "categoryEmptyTitle": "لا توجد أسئلة متاحة", "categoryEmptyDescription": "لا تحتوي الفئة على أسئلة يمكن لحسابك الوصول إليها.", "submitAnswer": "تحقق من الإجابة", "correct": "صحيح", "incorrect": "غير صحيح", "selectAnswer": "اختر إجابة أولًا.", "signInToAnswer": "سجّل الدخول كطالب لحفظ إجابتك.", "answerError": "تعذر حفظ الإجابة. حاول مجددًا.",
@@ -211,7 +215,7 @@
       "who": {"short": "من", "title": "مع من تريد القيادة؟", "languageFirst": "اختر اللغة أولًا", "list": "قائمة", "map": "خريطة", "mapLabel": "خريطة المدربين المتاحين", "mapUnavailable": "الخريطة غير متاحة", "mapUnavailableDescription": "اختر مدربًا من القائمة.", "emptyTitle": "لا يوجد مدرب مطابق", "empty": "جرّب لغة أخرى أو اختر موقعًا مختلفًا."},
       "when": {"short": "متى", "title": "متى تريد القيادة؟", "firstAvailable": "أول موعد متاح", "loading": "جارٍ تحميل المواعيد…", "emptyTitle": "لا توجد مواعيد اليوم", "empty": "اختر يومًا آخر لرؤية المزيد من المواعيد."}
     },
-    "account": {"short": "Ditt konto", "title": "Ditt konto", "description": "Vi skapar ett konto åt dig så att du kan se dina bokningar, ditt saldo och avboka själv.", "firstName": "الاسم الأول", "lastName": "اسم العائلة", "phone": "رقم الجوال مع رمز الدولة", "code": "الرمز المكون من ستة أرقام", "send": "إرسال الرمز", "verify": "تحقق واحجز", "emailLink": "E-post och lösenord", "devCode": "للتطوير المحلي فقط – الرمز: {code}"},
+    "account": {"short": "حسابك", "title": "حسابك", "description": "ننشئ حسابًا لك لترى حجوزاتك ورصيدك وتلغي بنفسك.", "firstName": "الاسم الأول", "lastName": "اسم العائلة", "phone": "رقم الجوال مع رمز الدولة", "code": "الرمز المكون من ستة أرقام", "send": "إرسال الرمز", "verify": "تحقق واحجز", "emailLink": "البريد وكلمة المرور", "devCode": "للتطوير المحلي فقط – الرمز: {code}"},
     "credits": {"loading": "جارٍ التحقق من رصيدك…", "signIn": "سجّل الدخول للتحقق من رصيد باقتك.", "balance": "{count, plural, =0 {لا توجد دروس متاحة} =1 {درس واحد متاح} other {# دروس متاحة}}"},
     "summary": {"eyebrow": "حجزك", "title": "الملخص", "lesson": "الدرس", "place": "المكان", "teacher": "المدرب", "time": "الوقت", "notSelected": "لم يُحدد بعد", "reassurance": "يمكنك الرجوع وتغيير اختياراتك قبل التأكيد."},
     "checkout": {"title": "الموافقة قبل الدفع", "draft": "صياغة مسودة بانتظار مراجعة العميل والمستشار القانوني.", "termsConsent": "قرأت مسودة شروط الشراء وأوافق عليها.", "withdrawalConsent": "قرأت مسودة معلومات حق التراجع لمدة 14 يومًا وأطلب بدء الخدمة المحجوزة في موعدها.", "continue": "المتابعة إلى الدفع الآمن"},
@@ -219,13 +223,13 @@
     "calendar": {"summary": "درس قيادة مع Makina Trafikskola", "description": "مهلة الإلغاء: {deadline}."}
   },
   "auth": {
-    "required": "Du behöver ett konto för att boka och betala. Det tar 30 sekunder.",
-    "purchaseGate": "Du behöver ett konto för att köpa. Det tar 30 sekunder och du får tillgång till dina bokningar och ditt saldo.",
-    "signInToBuy": "Logga in för att köpa",
-    "signInToSeeBalance": "Logga in för att se ditt saldo",
-    "firstName": "الاسم الأول", "lastName": "اسم العائلة", "email": "البريد الإلكتروني", "password": "كلمة المرور", "phone": "رقم الجوال", "phonePlaceholder": "+46 70 123 45 67", "code": "الرمز المكون من ستة أرقام", "methodLabel": "طريقة تسجيل الدخول", "methods": {"email": "البريد وكلمة المرور", "phone": "رمز برسالة نصية"}, "sendCode": "إرسال الرمز", "verifyCode": "تحقق وتابع", "changePhone": "تغيير رقم الجوال", "working": "يرجى الانتظار…", "secure": "وصول آمن إلى الحساب", "support": "هل تحتاج إلى مساعدة في الوصول إلى حسابك؟ تواصل مع المدرسة عبر قناة الدعم المنشورة.", "context": {"eyebrow": "تدريبك في مكان واحد", "title": "تابع من حيث توقفت", "bookings": "عرض دروس القيادة وإدارتها", "balance": "التحقق من أرصدة الدروس المتاحة", "messages": "متابعة إشعارات الخدمة والدفع"},
-    "login": {"title": "تسجيل الدخول", "description": "تابع إلى حسابك.", "submit": "تسجيل الدخول", "noAccount": "ليس لديك حساب؟", "create": "إنشاء حساب"},
-    "register": {"title": "إنشاء حساب", "description": "أنشئ حساب طالب بالبريد الإلكتروني أو رقم الجوال.", "submit": "إنشاء حساب", "hasAccount": "لديك حساب بالفعل؟", "login": "تسجيل الدخول"}
+    "required": "تحتاج إلى حساب للحجز والدفع. يستغرق ذلك نحو 30 ثانية.",
+    "purchaseGate": "تحتاج إلى حساب للشراء. يستغرق نحو 30 ثانية ويمنحك الوصول إلى حجوزاتك ورصيدك.",
+    "signInToBuy": "سجّل الدخول للشراء",
+    "signInToSeeBalance": "سجّل الدخول لرؤية رصيدك",
+    "firstName": "الاسم الأول", "lastName": "اسم العائلة", "email": "البريد الإلكتروني", "password": "كلمة المرور", "phone": "رقم الجوال", "phonePlaceholder": "+46 70 123 45 67", "phoneHint": "نرسل رمزًا لمرة واحدة عبر رسالة نصية. يُستخدم الرقم للحجوزات والتذكيرات والدعم.", "code": "الرمز المكون من ستة أرقام", "codeSentHint": "أدخل الرمز من الرسالة. لم يصلك؟ أرسل رمزًا جديدًا.", "methodLabel": "طريقة تسجيل الدخول", "methods": {"email": "البريد وكلمة المرور", "phone": "رمز برسالة نصية"}, "sendCode": "إرسال الرمز", "resendCode": "إرسال رمز جديد", "verifyCode": "تحقق وتابع", "changePhone": "تغيير رقم الجوال", "working": "يرجى الانتظار…", "devCode": "للتطوير المحلي فقط – الرمز: {code}", "secure": "وصول آمن إلى الحساب", "support": "هل تحتاج إلى مساعدة في الوصول إلى حسابك؟ تواصل مع المدرسة عبر قناة الدعم المنشورة.", "context": {"eyebrow": "Makina Trafikskola", "title": "حجوزات ورصيد ونظري بلغتك", "bookings": "عرض دروس القيادة وإدارتها", "balance": "التحقق من أرصدة الدروس المتاحة", "messages": "متابعة إشعارات الخدمة والدفع"},
+    "login": {"title": "تسجيل الدخول", "description": "الأسرع برقم الجوال ورمز الرسالة. يمكنك أيضًا استخدام البريد.", "submit": "تسجيل الدخول", "noAccount": "ليس لديك حساب؟", "create": "إنشاء حساب"},
+    "register": {"title": "إنشاء حساب", "description": "ابدأ برقم الجوال. نرسل رمزًا – ثم تدخل.", "submit": "إنشاء حساب", "hasAccount": "لديك حساب بالفعل؟", "login": "تسجيل الدخول"}
   },
   "student": {
     "nav": {"label": "صفحاتي", "overview": "نظرة عامة", "bookings": "الحجوزات", "saldo": "الرصيد", "theory": "النظري", "messages": "الرسائل", "profile": "الملف"},
@@ -266,6 +270,6 @@
     "COURSE_ALREADY_BOOKED": "لديك بالفعل مقعد مؤكد في هذه الدورة.",
     "PAYMENT_PROVIDER_ERROR": "تعذر بدء الدفع. حاول مجددًا.",
     "PRODUCT_TRANSLATION_MISSING": "تفتقد الدورة معلومات المنتج المطلوبة.",
-    "INVALID_INPUT": "تحقق من البيانات وحاول مجددًا.", "INVALID_CREDENTIALS": "البريد أو كلمة المرور غير صحيحة.", "ACCOUNT_EXISTS": "يوجد حساب بهذا البريد بالفعل.", "INVALID_OTP": "الرمز غير صحيح أو انتهت صلاحيته. اطلب رمزًا جديدًا.", "RATE_LIMITED": "محاولات كثيرة. انتظر وحاول مجددًا.", "SELECT_LOCATION_OR_PICKUP": "اختر موقعًا أو أدخل عنوان الاصطحاب.", "TEACHER_REQUIRED": "اختر مدربًا للمتابعة.", "SLOT_REQUIRED": "اختر موعدًا متاحًا.", "SLOT_TAKEN": "حُجز هذا الموعد للتو. اختر موعدًا آخر.", "PRODUCT_INACTIVE": "المنتج غير متاح للشراء بعد.", "UNAUTHENTICATED": "سجل الدخول للمتابعة.", "FORBIDDEN": "ليس لديك صلاحية الوصول.", "STUDENT_NOT_FOUND": "لم يتم العثور على الطالب.", "BOOKING_NOT_FOUND": "لم يتم العثور على الحجز.", "BOOKING_NOT_ACTIVE": "لم يعد من الممكن تغيير الحجز.", "TEACHER_NOT_FOUND": "لم يتم العثور على المدرب أو أنه غير نشط.", "LOCATION_NOT_FOUND": "الموقع المختار غير موجود أو غير نشط.", "LOCATION_NOT_ASSIGNED": "ساعات العمل تستخدم موقعًا غير محدد.", "SLUG_EXISTS": "عنوان الملف مستخدم بالفعل.", "ACCOUNT_OR_SLUG_EXISTS": "البريد أو عنوان الملف مستخدم بالفعل.", "ACCOUNT_HAS_ACTIVE_BOOKINGS": "ألغِ الحجوزات القادمة قبل حذف الحساب.", "COURSE_OCCASION_NOT_FOUND": "موعد الدورة لم يعد متاحًا.", "COURSE_FULL": "الدورة مكتملة.", "THEORY_QUESTION_NOT_FOUND": "السؤال لم يعد متاحًا.", "THEORY_ACCESS_REQUIRED": "يتطلب هذا السؤال وصولًا نشطًا للنظرية.", "THEORY_EXAM_NOT_FOUND": "لم يتم العثور على الاختبار.", "THEORY_EXAM_FINISHED": "انتهى الاختبار بالفعل.", "THEORY_EXAM_EXPIRED": "انتهى وقت الاختبار.", "THEORY_EXAM_COMPLETE": "تمت الإجابة عن جميع أسئلة الاختبار.", "THEORY_EXAM_UNAVAILABLE": "لا توجد أسئلة كافية متاحة.", "BOOKING_NOT_COMPLETED": "يمكنك تقييم درس مكتمل.", "REVIEW_EXISTS": "لقد قيّمت هذا الدرس بالفعل.", "UNKNOWN": "حدث خطأ. حاول مجددًا."
+    "INVALID_INPUT": "تحقق من البيانات وحاول مجددًا.", "INVALID_CREDENTIALS": "البريد أو كلمة المرور غير صحيحة.", "ACCOUNT_EXISTS": "يوجد حساب بهذا البريد بالفعل.", "INVALID_OTP": "الرمز غير صحيح أو انتهت صلاحيته. اطلب رمزًا جديدًا.", "INVALID_PHONE": "أدخل رقم جوال صالحًا، مثل 0701234567 أو +46701234567.", "SMS_PROVIDER_NOT_CONFIGURED": "تسجيل الدخول عبر الرسائل غير مُعد بعد. تواصل مع المدرسة أو استخدم البريد.", "SMS_DELIVERY_FAILED": "تعذر إرسال الرسالة. تحقق من الرقم وحاول مجددًا.", "RATE_LIMITED": "محاولات كثيرة. انتظر وحاول مجددًا.", "SELECT_LOCATION_OR_PICKUP": "اختر موقعًا أو أدخل عنوان الاصطحاب.", "TEACHER_REQUIRED": "اختر مدربًا للمتابعة.", "SLOT_REQUIRED": "اختر موعدًا متاحًا.", "SLOT_TAKEN": "حُجز هذا الموعد للتو. اختر موعدًا آخر.", "PRODUCT_INACTIVE": "المنتج غير متاح للشراء بعد.", "UNAUTHENTICATED": "سجل الدخول للمتابعة.", "FORBIDDEN": "ليس لديك صلاحية الوصول.", "STUDENT_NOT_FOUND": "لم يتم العثور على الطالب.", "BOOKING_NOT_FOUND": "لم يتم العثور على الحجز.", "BOOKING_NOT_ACTIVE": "لم يعد من الممكن تغيير الحجز.", "TEACHER_NOT_FOUND": "لم يتم العثور على المدرب أو أنه غير نشط.", "LOCATION_NOT_FOUND": "الموقع المختار غير موجود أو غير نشط.", "LOCATION_NOT_ASSIGNED": "ساعات العمل تستخدم موقعًا غير محدد.", "SLUG_EXISTS": "عنوان الملف مستخدم بالفعل.", "ACCOUNT_OR_SLUG_EXISTS": "البريد أو عنوان الملف مستخدم بالفعل.", "ACCOUNT_HAS_ACTIVE_BOOKINGS": "ألغِ الحجوزات القادمة قبل حذف الحساب.", "COURSE_OCCASION_NOT_FOUND": "موعد الدورة لم يعد متاحًا.", "COURSE_FULL": "الدورة مكتملة.", "THEORY_QUESTION_NOT_FOUND": "السؤال لم يعد متاحًا.", "THEORY_ACCESS_REQUIRED": "يتطلب هذا السؤال وصولًا نشطًا للنظرية.", "THEORY_EXAM_NOT_FOUND": "لم يتم العثور على الاختبار.", "THEORY_EXAM_FINISHED": "انتهى الاختبار بالفعل.", "THEORY_EXAM_EXPIRED": "انتهى وقت الاختبار.", "THEORY_EXAM_COMPLETE": "تمت الإجابة عن جميع أسئلة الاختبار.", "THEORY_EXAM_UNAVAILABLE": "لا توجد أسئلة كافية متاحة.", "BOOKING_NOT_COMPLETED": "يمكنك تقييم درس مكتمل.", "REVIEW_EXISTS": "لقد قيّمت هذا الدرس بالفعل.", "UNKNOWN": "حدث خطأ. حاول مجددًا."
   }
 }

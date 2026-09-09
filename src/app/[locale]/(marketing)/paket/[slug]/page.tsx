@@ -89,10 +89,20 @@ export default async function ProductDetailPage(
         style={tierStyle}
       >
         <div>
-          <div className="relative min-h-72 overflow-hidden rounded-lg border border-border bg-card-muted p-8 sm:min-h-[26rem]">
-            <div className="absolute inset-block-0 start-0 w-3 bg-[var(--tier-accent,var(--accent))]" />
-            <Image src="/illustration-package.svg" alt="" width={720} height={480} className="rtl-no-mirror mx-auto h-80 w-auto object-contain" priority />
-            <p className="absolute bottom-6 start-8 text-xs font-extrabold uppercase tracking-[0.18em] text-ink-muted">{t("product.visualLabel")}</p>
+          <div className="relative min-h-56 overflow-hidden bg-surface sm:min-h-72">
+            <Image
+              src="/hero.jpg"
+              alt=""
+              fill
+              priority
+              sizes="(min-width: 1024px) 60vw, 100vw"
+              className="rtl-no-mirror object-cover object-[60%_center] opacity-80"
+            />
+            <div className="absolute inset-0 bg-[linear-gradient(90deg,var(--surface)_0%,transparent_55%)] rtl:bg-[linear-gradient(270deg,var(--surface)_0%,transparent_55%)]" />
+            <div className="absolute inset-block-0 start-0 w-1.5 bg-[var(--tier-accent,var(--accent))]" />
+            <p className="absolute bottom-6 start-6 text-xs font-extrabold uppercase tracking-[0.18em] text-ink-inverse-muted">
+              {t("product.visualLabel")}
+            </p>
           </div>
           <div className="py-8 sm:py-10">
           <div className="flex flex-wrap gap-2">

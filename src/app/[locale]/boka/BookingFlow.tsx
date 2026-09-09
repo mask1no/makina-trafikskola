@@ -282,9 +282,11 @@ export function BookingFlow({
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ phone }),
       });
-      const payload =
-        response.status === 204 ? null : await response.json().catch(() => null);
+      const payload = await response.json().catch(() => null);
       if (!response.ok) throw new Error(payload?.error?.code ?? "UNKNOWN");
+      if (typeof payload?.phone === "string" && payload.phone) {
+        setPhone(payload.phone);
+      }
       setDevCode(payload?.devCode ?? "");
       setOtpRequested(true);
     } catch (reason) {
@@ -516,14 +518,14 @@ export function BookingFlow({
         completed={authenticated ? [4] : []}
         progressLabel={t("progress")}
       />
-      <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_21rem]">
-      <Card padding="lg" elevated>
+      <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_18rem]">
+      <div>
 
       {step === 0 ? (
         <section>
           <h1 className="text-3xl font-black">{t("step.what.title")}</h1>
           <p className="mt-2 text-ink-muted">{t("step.what.description")}</p>
-          <div className="mt-6 grid gap-3">
+          <div className="mt-6 grid gap-2">
             {(["single", "credits", "test"] as const).map((option) => {
               const product =
                 option === "test"
@@ -535,8 +537,10 @@ export function BookingFlow({
                   key={option}
                   onClick={() => setKind(option)}
                   aria-pressed={kind === option}
-                  className={`min-h-24 rounded-md border p-5 text-start shadow-soft transition hover:-translate-y-0.5 hover:border-border-strong ${
-                    kind === option ? "border-ink bg-card ring-2 ring-accent" : "border-border bg-card"
+                  className={`min-h-20 border-b px-1 py-4 text-start transition ${
+                    kind === option
+                      ? "border-ink"
+                      : "border-border hover:border-ink-muted"
                   }`}
                 >
                   <span className="font-bold">{t(`step.what.${option}`)}</span>
@@ -571,8 +575,10 @@ export function BookingFlow({
                 key={mode}
                 onClick={() => setPlaceMode(mode)}
                 aria-pressed={placeMode === mode}
-                className={`min-h-28 rounded-md border p-5 text-start font-bold shadow-soft transition hover:-translate-y-0.5 hover:border-border-strong ${
-                  placeMode === mode ? "border-ink bg-card ring-2 ring-accent" : "border-border bg-card"
+                className={`min-h-24 border-b px-1 py-5 text-start font-bold transition ${
+                  placeMode === mode
+                    ? "border-ink"
+                    : "border-border hover:border-ink-muted"
                 }`}
               >
                 {t(`step.where.${mode}`)}
@@ -818,9 +824,8 @@ export function BookingFlow({
           </Button>
         ) : null}
       </div>
-      </Card>
-      <aside className="hidden lg:sticky lg:top-24 lg:block">
-        <Card elevated>
+      </div>
+      <aside className="hidden border-s border-border ps-8 lg:sticky lg:top-24 lg:block">
           <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-ink-muted">{t("summary.eyebrow")}</p>
           <h2 className="mt-2 text-xl font-black">{t("summary.title")}</h2>
           <dl className="mt-5 grid gap-4 text-sm">
@@ -829,8 +834,7 @@ export function BookingFlow({
             <div className="border-b border-border pb-4"><dt className="text-ink-muted">{t("summary.teacher")}</dt><dd className="mt-1 font-bold">{selectedTeacher?.name ?? t("summary.notSelected")}</dd></div>
             <div><dt className="text-ink-muted">{t("summary.time")}</dt><dd className="mt-1 font-bold">{selectedSlot ? <><span>{selectedDateLabel}</span><span className="block [direction:ltr]">{timeFormatter.format(new Date(selectedSlot))}</span></> : t("summary.notSelected")}</dd></div>
           </dl>
-          <Notice className="mt-5">{t("summary.reassurance")}</Notice>
-        </Card>
+          <p className="mt-5 text-sm leading-6 text-ink-muted">{t("summary.reassurance")}</p>
       </aside>
       </div>
     </div>

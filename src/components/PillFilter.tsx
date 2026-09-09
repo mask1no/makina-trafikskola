@@ -17,12 +17,12 @@ export function PillFilter({
   disabled = false,
   title,
 }: PillFilterProps) {
-  const className = `inline-flex min-h-11 items-center rounded-full border px-4 py-2 text-sm font-bold transition duration-200 ease-premium ${
+  const className = `inline-flex min-h-11 items-center border-b-2 px-1 py-2 text-sm font-bold transition duration-200 ease-premium ${
     active
-      ? "border-ink bg-ink text-ink-inverse shadow-soft"
+      ? "border-ink text-ink"
       : disabled
-        ? "cursor-not-allowed border-border bg-card-muted text-ink-subtle"
-        : "border-border bg-card text-ink hover:border-border-strong hover:bg-card-muted"
+        ? "cursor-not-allowed border-transparent text-ink-subtle"
+        : "border-transparent text-ink-muted hover:border-border-strong hover:text-ink"
   }`;
 
   if (disabled) {

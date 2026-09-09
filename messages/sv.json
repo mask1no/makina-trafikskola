@@ -50,6 +50,7 @@
   },
   "home": {
     "hero": {
+      "brand": "Makina",
       "eyebrow": "Din väg till körkortet",
       "title": "Kör tryggt, lär på ditt språk",
       "description": "Körlektioner, teori och erfarna lärare i Stockholm – samlat på ett ställe.",
@@ -125,7 +126,7 @@
     "eyebrow": "Priser och paket",
     "title": "Körlektioner för varje steg",
     "description": "Jämför enstaka lektioner och paket. Alla priser visas inklusive moms.",
-    "provisionalNotice": "Prislistan visas i sin helhet. Enstaka körlektion, testlektion, B5 och B10 kan köpas nu; övriga produkter öppnas när de kan levereras fullt ut."
+    "provisionalNotice": "Prislistan visas som utkast. Köpen öppnas när skolan har bekräftat den slutliga prislistan."
   },
   "product": {
     "popular": "Populärast",
@@ -213,7 +214,10 @@
     "interactiveLabel": "Interaktiv karta över lärarnas platser",
     "unavailableTitle": "Kartan är inte tillgänglig just nu",
     "unavailableDescription": "Du kan fortfarande hitta och välja lärare i listan.",
-    "pendingKey": "Kartan aktiveras när Google Maps-nyckeln är på plats."
+    "pendingKey": "Kartan aktiveras när Google Maps-nyckeln är på plats.",
+    "homeTeaserTitle": "Hitta lärare nära dig",
+    "homeTeaserDescription": "Filtrera på språk och se var lärarna finns – öppna kartan på lärarsidan.",
+    "homeTeaserCta": "Öppna lärarkartan"
   },
   "courses": {
     "eyebrow": "Riskutbildningar och kurser",
@@ -354,26 +358,30 @@
     "password": "Lösenord",
     "phone": "Mobilnummer",
     "phonePlaceholder": "+46 70 123 45 67",
+    "phoneHint": "Vi skickar en engångskod med sms. Numret används för bokningar, påminnelser och support.",
     "code": "Sexsiffrig kod",
+    "codeSentHint": "Skriv in koden från sms:et. Saknar du den? Skicka en ny kod.",
     "methodLabel": "Inloggningssätt",
     "methods": {"email": "E-post och lösenord", "phone": "Kod via sms"},
     "sendCode": "Skicka kod",
+    "resendCode": "Skicka ny kod",
     "verifyCode": "Verifiera och fortsätt",
     "changePhone": "Ändra mobilnummer",
     "working": "Vänta…",
+    "devCode": "Endast lokal utveckling – kod: {code}",
     "secure": "Säker åtkomst till ditt konto",
     "support": "Behöver du hjälp att komma åt kontot? Kontakta skolan via den publicerade supportkanalen.",
-    "context": {"eyebrow": "Din utbildning på ett ställe", "title": "Fortsätt där du slutade", "bookings": "Se och hantera dina körlektioner", "balance": "Kontrollera tillgängliga lektionskrediter", "messages": "Följ service- och betalningsmeddelanden"},
+    "context": {"eyebrow": "Makina Trafikskola", "title": "Bokningar, saldo och teori på ditt språk", "bookings": "Se och hantera dina körlektioner", "balance": "Kontrollera tillgängliga lektionskrediter", "messages": "Följ service- och betalningsmeddelanden"},
     "login": {
       "title": "Logga in",
-      "description": "Fortsätt till ditt konto.",
+      "description": "Snabbast med mobilnummer och sms-kod. Du kan också använda e-post.",
       "submit": "Logga in",
       "noAccount": "Har du inget konto?",
       "create": "Skapa konto"
     },
     "register": {
       "title": "Skapa konto",
-      "description": "Skapa ett elevkonto med e-post eller mobilnummer.",
+      "description": "Börja med mobilnummer. Vi skickar en kod – sedan är du inne.",
       "submit": "Skapa konto",
       "hasAccount": "Har du redan ett konto?",
       "login": "Logga in"
@@ -597,6 +605,9 @@
     "INVALID_CREDENTIALS": "E-post eller lösenord är fel.",
     "ACCOUNT_EXISTS": "Det finns redan ett konto med den e-postadressen.",
     "INVALID_OTP": "Koden är fel eller har gått ut. Begär en ny kod.",
+    "INVALID_PHONE": "Ange ett giltigt mobilnummer, till exempel 0701234567 eller +46701234567.",
+    "SMS_PROVIDER_NOT_CONFIGURED": "Sms-inloggning är inte konfigurerad ännu. Kontakta skolan eller använd e-post.",
+    "SMS_DELIVERY_FAILED": "Sms kunde inte skickas. Kontrollera numret och försök igen.",
     "RATE_LIMITED": "För många försök. Vänta och försök igen.",
     "SELECT_LOCATION_OR_PICKUP": "Välj en plats eller skriv en hämtningsadress.",
     "TEACHER_REQUIRED": "Välj en lärare för att fortsätta.",

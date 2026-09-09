@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { redirect, notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { z } from "zod";
@@ -155,11 +154,8 @@ export default async function CheckoutPage({
         ) : null}
         </div>
       </section>
-      <aside className="overflow-hidden rounded-lg border border-border bg-card shadow-card lg:sticky lg:top-24">
-        <div className="bg-card-muted p-5">
-          <Image src="/illustration-package.svg" alt="" width={360} height={220} className="rtl-no-mirror mx-auto h-32 w-auto object-contain" />
-        </div>
-        <div className="p-5 sm:p-6">
+      <aside className="border-s border-border ps-0 lg:sticky lg:top-24 lg:ps-8">
+        <div className="p-0 sm:p-0">
         <h2 className="text-lg font-black">{t("summaryTitle")}</h2>
         <ul className="mt-4 grid gap-4 border-b border-border pb-5">
           {order.items.map((item) => (

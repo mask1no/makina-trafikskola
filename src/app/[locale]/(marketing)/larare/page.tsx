@@ -74,113 +74,129 @@ export default async function LararePage(
   return (
     <div className="section-shell">
       <div className="site-container">
-        <PageHeader eyebrow={t("teachers.eyebrow")} title={t("teachers.title")} description={t("teachers.description")} />
+        <PageHeader
+          eyebrow={t("teachers.eyebrow")}
+          title={t("teachers.title")}
+          description={t("teachers.description")}
+        />
 
-        <section className="mt-10 overflow-hidden rounded-lg border border-border bg-card shadow-soft" aria-labelledby="language-filter">
-          <div className="p-5 sm:p-6">
-            <h2 id="language-filter" className="text-lg font-black">
-              {t("teachers.languageQuestion")}
-            </h2>
-            <div className="mt-4 flex flex-wrap items-center gap-2">
-              {locales.map((option) => {
-                const count = languageCounts[option];
-                return (
-                  <PillFilter
-                    key={option}
-                    label={`${t(`language.${option}`)} (${count})`}
-                    value={option}
-                    active={language === option}
-                    disabled={count === 0}
-                    title={count === 0 ? t("teachers.noneAvailable") : undefined}
-                    href={filterHref(params.locale, option, location, transmission)}
-                  />
-                );
-              })}
-              <span className="ms-2 border-s border-border ps-4">
+        <section className="mt-12" aria-labelledby="language-filter">
+          <h2 id="language-filter" className="text-2xl font-black tracking-tight sm:text-3xl">
+            {t("teachers.languageQuestion")}
+          </h2>
+          <div className="mt-6 flex flex-wrap gap-2">
+            {locales.map((option) => {
+              const count = languageCounts[option];
+              return (
                 <PillFilter
-                  label={t("teachers.anyLanguage")}
-                  value=""
-                  active={!language}
-                  href={filterHref(params.locale, undefined, location, transmission)}
+                  key={option}
+                  label={`${t(`language.${option}`)} (${count})`}
+                  value={option}
+                  active={language === option}
+                  disabled={count === 0}
+                  title={count === 0 ? t("teachers.noneAvailable") : undefined}
+                  href={filterHref(params.locale, option, location, transmission)}
                 />
-              </span>
-            </div>
+              );
+            })}
+            <PillFilter
+              label={t("teachers.anyLanguage")}
+              value=""
+              active={!language}
+              href={filterHref(params.locale, undefined, location, transmission)}
+            />
           </div>
 
-          <div className="border-t border-border p-5 sm:p-6">
-            <h3 className="text-sm font-bold">{t("teachers.locationFilter")}</h3>
-            {locations.length <= 4 ? (
-              <div className="mt-3 flex flex-wrap gap-1 rounded-md border border-border bg-page p-1">
-                <Link
-                  href={filterHref(params.locale, language, undefined, transmission)}
-                  aria-current={!location ? "true" : undefined}
-                  className="inline-flex min-h-11 flex-1 items-center justify-center rounded-sm px-4 text-center text-sm font-bold text-ink-muted transition aria-[current=true]:bg-card aria-[current=true]:text-ink aria-[current=true]:shadow-soft"
-                >
-                  {t("common.allLocations")}
-                </Link>
-                {locations.map((item) => (
+          <div className="mt-10 grid gap-8 border-t border-border pt-8 md:grid-cols-2">
+            <div>
+              <h3 className="text-sm font-bold uppercase tracking-wider text-ink-muted">
+                {t("teachers.locationFilter")}
+              </h3>
+              {locations.length <= 4 ? (
+                <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2">
                   <Link
-                    key={item.id}
-                    href={filterHref(params.locale, language, item.id, transmission)}
-                    aria-current={location === item.id ? "true" : undefined}
-                    className="inline-flex min-h-11 flex-1 items-center justify-center rounded-sm px-4 text-center text-sm font-bold text-ink-muted transition aria-[current=true]:bg-card aria-[current=true]:text-ink aria-[current=true]:shadow-soft"
+                    href={filterHref(params.locale, language, undefined, transmission)}
+                    aria-current={!location ? "true" : undefined}
+                    className="inline-flex min-h-11 items-center border-b-2 border-transparent text-sm font-bold text-ink-muted transition aria-[current=true]:border-ink aria-[current=true]:text-ink"
                   >
-                    {item.name}
+                    {t("common.allLocations")}
+                  </Link>
+                  {locations.map((item) => (
+                    <Link
+                      key={item.id}
+                      href={filterHref(params.locale, language, item.id, transmission)}
+                      aria-current={location === item.id ? "true" : undefined}
+                      className="inline-flex min-h-11 items-center border-b-2 border-transparent text-sm font-bold text-ink-muted transition aria-[current=true]:border-ink aria-[current=true]:text-ink"
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+                </div>
+              ) : (
+                <form className="mt-4 flex items-end gap-3" action={`/${params.locale}/larare`}>
+                  {language ? <input type="hidden" name="language" value={language} /> : null}
+                  {transmission ? (
+                    <input type="hidden" name="transmission" value={transmission} />
+                  ) : null}
+                  <div className="min-w-0 flex-1">
+                    <Select
+                      label={t("teachers.locationFilter")}
+                      id="location"
+                      name="location"
+                      defaultValue={location ?? ""}
+                    >
+                      <option value="">{t("common.allLocations")}</option>
+                      {locations.map((item) => (
+                        <option key={item.id} value={item.id}>
+                          {item.name}
+                        </option>
+                      ))}
+                    </Select>
+                  </div>
+                  <button className="min-h-11 rounded-sm border border-border bg-card px-4 font-bold">
+                    {t("common.applyFilter")}
+                  </button>
+                </form>
+              )}
+            </div>
+
+            <div>
+              <h3 className="text-sm font-bold uppercase tracking-wider text-ink-muted">
+                {t("teachers.transmissionFilter")}
+              </h3>
+              <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2">
+                {(
+                  [
+                    [undefined, t("teachers.allTransmissions")],
+                    ["MANUAL", t("teacher.transmission.manual")],
+                    ["AUTOMATIC", t("teacher.transmission.automatic")],
+                  ] as const
+                ).map(([value, label]) => (
+                  <Link
+                    key={value ?? "all"}
+                    href={filterHref(params.locale, language, location, value)}
+                    aria-current={
+                      transmission === value || (!transmission && !value)
+                        ? "true"
+                        : undefined
+                    }
+                    className="inline-flex min-h-11 items-center border-b-2 border-transparent text-sm font-bold text-ink-muted transition aria-[current=true]:border-ink aria-[current=true]:text-ink"
+                  >
+                    {label}
                   </Link>
                 ))}
               </div>
-            ) : (
-              <form className="mt-3 flex items-end gap-3" action={`/${params.locale}/larare`}>
-                {language ? <input type="hidden" name="language" value={language} /> : null}
-                {transmission ? <input type="hidden" name="transmission" value={transmission} /> : null}
-                <div className="min-w-0 flex-1">
-                  <Select
-                    label={t("teachers.locationFilter")}
-                    id="location"
-                    name="location"
-                    defaultValue={location ?? ""}
-                  >
-                    <option value="">{t("common.allLocations")}</option>
-                    {locations.map((item) => (
-                      <option key={item.id} value={item.id}>{item.name}</option>
-                    ))}
-                  </Select>
-                </div>
-                <button className="min-h-11 rounded-sm border border-border bg-card px-4 font-bold">
-                  {t("common.applyFilter")}
-                </button>
-              </form>
-            )}
-          </div>
-
-          <div className="border-t border-border p-5 sm:p-6">
-            <h3 className="text-sm font-bold">{t("teachers.transmissionFilter")}</h3>
-            <div className="mt-3 grid grid-cols-3 gap-1 rounded-md border border-border bg-page p-1">
-              {([
-                [undefined, t("teachers.allTransmissions")],
-                ["MANUAL", t("teacher.transmission.manual")],
-                ["AUTOMATIC", t("teacher.transmission.automatic")],
-              ] as const).map(([value, label]) => (
-                <Link
-                  key={value ?? "all"}
-                  href={filterHref(params.locale, language, location, value)}
-                  aria-current={transmission === value || (!transmission && !value) ? "true" : undefined}
-                  className="inline-flex min-h-11 items-center justify-center rounded-sm px-2 text-center text-sm font-bold text-ink-muted transition aria-[current=true]:bg-card aria-[current=true]:text-ink aria-[current=true]:shadow-soft"
-                >
-                  {label}
-                </Link>
-              ))}
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border px-5 py-4 sm:px-6">
+          <div className="mt-8 flex flex-wrap items-center justify-between gap-3">
             <p className="text-sm font-semibold text-ink-muted">
               {t("teachers.resultCount", { count: teachers.length })}
             </p>
             {hasActiveFilter ? (
               <Link
                 href={`/${params.locale}/larare`}
-                className="inline-flex min-h-11 items-center font-bold underline underline-offset-4 md:min-h-0"
+                className="inline-flex min-h-11 items-center font-bold underline underline-offset-4"
               >
                 {t("teachers.clearFilters")}
               </Link>
@@ -188,10 +204,10 @@ export default async function LararePage(
           </div>
         </section>
 
-        <div className="mt-10 grid gap-8 lg:grid-cols-[.85fr_1.15fr]">
+        <div className="mt-10 grid gap-10 lg:grid-cols-[.9fr_1.1fr]">
           <section id="teacher-results" aria-label={t("teachers.results")}>
             {teachers.length ? (
-              <div className="grid gap-4">
+              <div className="grid gap-8">
                 {teachers.map((teacher) => (
                   <TeacherCard
                     key={teacher.id}
@@ -203,12 +219,13 @@ export default async function LararePage(
                     transmissions={teacher.transmissions.map((item) =>
                       t(`teacher.transmission.${item.toLowerCase()}`),
                     )}
-                    locationNames={teacher.locations.map(({ location: item }) => item.name)}
+                    locationNames={teacher.locations.map(
+                      ({ location: item }) => item.name,
+                    )}
                     experienceLabel={t("teacher.yearsExperience", {
                       count: teacher.yearsExperience,
                     })}
                     detailsLabel={t("teacher.viewProfile")}
-                    demoLabel={teacher.slug === "sara-johansson" ? t("teacher.demoProfile") : undefined}
                     swedishOnly={teacher.swedishOnly}
                     swedishOnlyLabel={t("common.swedishOnly")}
                   />
@@ -221,7 +238,10 @@ export default async function LararePage(
               />
             )}
           </section>
-          <section aria-label={t("map.title")} className="lg:sticky lg:top-24 lg:self-start">
+          <section
+            aria-label={t("map.title")}
+            className="lg:sticky lg:top-24 lg:self-start"
+          >
             <TeacherMap
               apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY}
               center={center}

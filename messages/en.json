@@ -18,18 +18,18 @@
     "lessons": "Driving lessons",
     "teachers": "Instructors",
     "book": "Book now",
-    "signIn": "Logga in",
-    "signOut": "Logga ut",
-    "account": "Mitt konto",
-    "myPages": "Mina sidor",
-    "createAccount": "Skapa konto",
-    "balance": "Mitt saldo",
-    "teacherPortal": "Lärarportal",
-    "adminPanel": "Adminpanel",
-    "calendar": "Kalender",
-    "students": "Elever",
-    "contact": "Kontakt",
-    "openingHours": "Öppettider: mån–fre 09–17",
+    "signIn": "Log in",
+    "signOut": "Log out",
+    "account": "My account",
+    "myPages": "My pages",
+    "createAccount": "Create account",
+    "balance": "My balance",
+    "teacherPortal": "Instructor portal",
+    "adminPanel": "Admin panel",
+    "calendar": "Calendar",
+    "students": "Students",
+    "contact": "Contact",
+    "openingHours": "Opening hours: Mon–Fri 09–17",
     "copyright": "© {year} Makina Trafikskola",
     "footerDescription": "Driving education with clear guidance and support in your language.",
     "explore": "Explore",
@@ -50,6 +50,7 @@
   },
   "home": {
     "hero": {
+      "brand": "Makina",
       "eyebrow": "Your path to a driving licence",
       "title": "Drive with confidence, learn in your language",
       "description": "Driving lessons, theory and experienced instructors in Stockholm – all in one place.",
@@ -57,9 +58,9 @@
       "cardLabel": "Personal education",
       "cardTitle": "A clear plan from your first lesson",
       "cardDescription": "Choose language, transmission and instructor based on your needs.",
-      "reviews": "omdömen",
-      "pickupProof": "Vi hämtar dig",
-      "languageProof": "Undervisning på 5 språk"
+      "reviews": "reviews",
+      "pickupProof": "We pick you up",
+      "languageProof": "Teaching in 5 languages"
     },
     "trust": {
       "label": "What you get with Makina",
@@ -107,7 +108,7 @@
     "eyebrow": "Prices and packages",
     "title": "Driving lessons for every step",
     "description": "Compare single lessons and packages. All prices include VAT.",
-    "provisionalNotice": "The full price list is shown. Single lessons, assessment lessons, B5 and B10 are available now; other products will open when every included service can be delivered."
+    "provisionalNotice": "Prices are shown as a draft. Purchases open when the school confirms the final price list."
   },
   "product": {
     "popular": "Most popular",
@@ -179,7 +180,10 @@
     "interactiveLabel": "Interactive map of instructor locations",
     "unavailableTitle": "The map is currently unavailable",
     "unavailableDescription": "You can still find and choose an instructor from the list.",
-    "pendingKey": "Kartan aktiveras när Google Maps-nyckeln är på plats."
+    "pendingKey": "The map activates when the Google Maps key is in place.",
+    "homeTeaserTitle": "Find an instructor near you",
+    "homeTeaserDescription": "Filter by language and see where instructors are – open the map on the instructors page.",
+    "homeTeaserCta": "Open instructor map"
   },
   "courses": {
     "eyebrow": "Risk training and courses", "title": "Upcoming course occasions", "description": "View real scheduled courses and remaining seats.",
@@ -190,7 +194,7 @@
   },
   "theory": {
     "eyebrow": "Driving theory", "title": "Practise with verified questions", "description": "Free questions are available without purchase. Paid content requires active theory access.",
-    "teaser": {"eyebrow": "Körkortsteori", "title": "Plugga teorin på ditt språk", "description": "Över 1 200 frågor med ljud och video. Öva kategori för kategori, gör övningsprov och se var du står inför kunskapsprovet.", "tryFree": "Prova gratisfrågor", "buy": "Köp teoriåtkomst", "pending": "Släpps så snart frågebanken är klar"},
+    "teaser": {"eyebrow": "Driving theory", "title": "Study theory in your language", "description": "Over 1,200 questions with audio and video. Practise category by category, take mock exams and see where you stand before the knowledge test.", "tryFree": "Try free questions", "buy": "Buy theory access", "pending": "Releases when the question bank is ready"},
     "licensingPending": "The complete question bank will be published only after content rights are confirmed.", "freeCount": "{count, plural, =1 {1 free question} other {# free questions}}", "swedishOnly": "Swedish only", "examLink": "Open mock exam",
     "emptyTitle": "No free questions are published", "emptyDescription": "Verified and licensed question content is pending.", "paidAccess": "Active theory access", "freeAccess": "Free questions", "questionNumber": "Question {number}",
     "categoryEmptyTitle": "No questions are available", "categoryEmptyDescription": "This category has no questions your account can access.", "submitAnswer": "Check answer", "correct": "Correct", "incorrect": "Not correct", "selectAnswer": "Choose an answer first.", "signInToAnswer": "Sign in as a student to save your answer.", "answerError": "The answer could not be saved. Try again.",
@@ -215,7 +219,7 @@
       "who": {"short": "Who", "title": "Who would you like to drive with?", "languageFirst": "Choose language first", "list": "List", "map": "Map", "mapLabel": "Map of available instructors", "mapUnavailable": "The map is unavailable", "mapUnavailableDescription": "Choose an instructor from the list.", "emptyTitle": "No instructor matches", "empty": "Try another language or choose another location."},
       "when": {"short": "When", "title": "When would you like to drive?", "firstAvailable": "First available time", "loading": "Loading available times…", "emptyTitle": "No times on this day", "empty": "Choose another day to see more available times."}
     },
-    "account": {"short": "Ditt konto", "title": "Ditt konto", "description": "Vi skapar ett konto åt dig så att du kan se dina bokningar, ditt saldo och avboka själv.", "firstName": "First name", "lastName": "Last name", "phone": "Mobile number with country code", "code": "Six-digit code", "send": "Send code", "verify": "Verify and book", "emailLink": "E-post och lösenord", "devCode": "Local development only – code: {code}"},
+    "account": {"short": "Your account", "title": "Your account", "description": "We create an account so you can see your bookings, your balance and cancel on your own.", "firstName": "First name", "lastName": "Last name", "phone": "Mobile number with country code", "code": "Six-digit code", "send": "Send code", "verify": "Verify and book", "emailLink": "Email and password", "devCode": "Local development only – code: {code}"},
     "credits": {"loading": "Checking your balance…", "signIn": "Sign in to check your package credits.", "balance": "{count, plural, =0 {No lessons available} =1 {1 lesson available} other {# lessons available}}"},
     "summary": {"eyebrow": "Your booking", "title": "Summary", "lesson": "Lesson", "place": "Place", "teacher": "Instructor", "time": "Time", "notSelected": "Not selected yet", "reassurance": "You can go back and change your choices before confirming."},
     "checkout": {"title": "Consent before payment", "draft": "Draft wording pending client and legal review.", "termsConsent": "I have read and accept the draft terms of purchase.", "withdrawalConsent": "I have read the draft information about the 14-day withdrawal right and request that the booked service may begin as scheduled.", "continue": "Continue to secure payment"},
@@ -223,13 +227,13 @@
     "calendar": {"summary": "Driving lesson with Makina Trafikskola", "description": "Cancellation deadline: {deadline}."}
   },
   "auth": {
-    "required": "Du behöver ett konto för att boka och betala. Det tar 30 sekunder.",
-    "purchaseGate": "Du behöver ett konto för att köpa. Det tar 30 sekunder och du får tillgång till dina bokningar och ditt saldo.",
-    "signInToBuy": "Logga in för att köpa",
-    "signInToSeeBalance": "Logga in för att se ditt saldo",
-    "firstName": "First name", "lastName": "Last name", "email": "Email", "password": "Password", "phone": "Mobile number", "phonePlaceholder": "+46 70 123 45 67", "code": "Six-digit code", "methodLabel": "Sign-in method", "methods": {"email": "Email and password", "phone": "Text message code"}, "sendCode": "Send code", "verifyCode": "Verify and continue", "changePhone": "Change mobile number", "working": "Please wait…", "secure": "Secure account access", "support": "Need help accessing your account? Contact the school through its published support channel.", "context": {"eyebrow": "Your training in one place", "title": "Continue where you left off", "bookings": "View and manage your driving lessons", "balance": "Check available lesson credits", "messages": "Follow service and payment notifications"},
-    "login": {"title": "Log in", "description": "Continue to your account.", "submit": "Log in", "noAccount": "Do not have an account?", "create": "Create account"},
-    "register": {"title": "Create account", "description": "Create a student account with email or mobile number.", "submit": "Create account", "hasAccount": "Already have an account?", "login": "Log in"}
+    "required": "You need an account to book and pay. It takes about 30 seconds.",
+    "purchaseGate": "You need an account to buy. It takes about 30 seconds and gives you access to your bookings and balance.",
+    "signInToBuy": "Log in to buy",
+    "signInToSeeBalance": "Log in to see your balance",
+    "firstName": "First name", "lastName": "Last name", "email": "Email", "password": "Password", "phone": "Mobile number", "phonePlaceholder": "+46 70 123 45 67", "phoneHint": "We send a one-time code by text message. Your number is used for bookings, reminders and support.", "code": "Six-digit code", "codeSentHint": "Enter the code from the text message. Missing it? Send a new code.", "methodLabel": "Sign-in method", "methods": {"email": "Email and password", "phone": "Text message code"}, "sendCode": "Send code", "resendCode": "Send a new code", "verifyCode": "Verify and continue", "changePhone": "Change mobile number", "working": "Please wait…", "devCode": "Local development only – code: {code}", "secure": "Secure account access", "support": "Need help accessing your account? Contact the school through its published support channel.", "context": {"eyebrow": "Makina Trafikskola", "title": "Bookings, balance and theory in your language", "bookings": "View and manage your driving lessons", "balance": "Check available lesson credits", "messages": "Follow service and payment notifications"},
+    "login": {"title": "Log in", "description": "Fastest with a mobile number and text code. You can also use email.", "submit": "Log in", "noAccount": "Do not have an account?", "create": "Create account"},
+    "register": {"title": "Create account", "description": "Start with your mobile number. We send a code – then you are in.", "submit": "Create account", "hasAccount": "Already have an account?", "login": "Log in"}
   },
   "student": {
     "nav": {"label": "My pages", "overview": "Overview", "bookings": "Bookings", "saldo": "Balance", "theory": "Theory", "messages": "Messages", "profile": "Profile"},
@@ -291,6 +295,6 @@
     "NO_CREDITS": "You have no package credits. Choose a paid single or trial lesson instead.",
     "CHECKOUT_CONSENT_REQUIRED": "Accept both draft checkout statements before continuing.",
     "INVALID_PICKUP_COORDINATES": "Choose a valid pickup address in Sweden.",
-    "INVALID_INPUT": "Check the details and try again.", "INVALID_CREDENTIALS": "The email or password is incorrect.", "ACCOUNT_EXISTS": "An account with this email already exists.", "INVALID_OTP": "The code is incorrect or expired. Request a new code.", "RATE_LIMITED": "Too many attempts. Wait and try again.", "SELECT_LOCATION_OR_PICKUP": "Choose a location or enter a pickup address.", "TEACHER_REQUIRED": "Choose an instructor to continue.", "SLOT_REQUIRED": "Choose an available time.", "SLOT_TAKEN": "This time was just booked. Choose another available time.", "PRODUCT_INACTIVE": "The product is not yet available to buy.", "UNAUTHENTICATED": "Log in to continue.", "FORBIDDEN": "You do not have access to this.", "STUDENT_NOT_FOUND": "The student was not found.", "BOOKING_NOT_FOUND": "The booking was not found.", "BOOKING_NOT_ACTIVE": "The booking can no longer be changed.", "TEACHER_NOT_FOUND": "The instructor was not found or is inactive.", "TEACHER_HAS_FUTURE_BOOKINGS": "Reassign or cancel the instructor's future bookings before deactivating.", "LOCATION_NOT_FOUND": "A selected location was not found or is inactive.", "LOCATION_NOT_ASSIGNED": "The working hours use a location that is not selected.", "SLUG_EXISTS": "The profile address is already in use.", "ACCOUNT_OR_SLUG_EXISTS": "The email or profile address is already in use.", "ACCOUNT_HAS_ACTIVE_BOOKINGS": "Cancel upcoming bookings before deleting the account.", "COURSE_OCCASION_NOT_FOUND": "This course occasion is no longer available.", "COURSE_FULL": "This course is fully booked.", "COURSE_ALREADY_BOOKED": "You already have a confirmed seat on this course.", "PAYMENT_PROVIDER_ERROR": "Payment could not be started. Try again.", "PRODUCT_TRANSLATION_MISSING": "The course is missing required product information.", "THEORY_QUESTION_NOT_FOUND": "This question is no longer available.", "THEORY_ACCESS_REQUIRED": "Active theory access is required for this question.", "THEORY_EXAM_NOT_FOUND": "The exam was not found.", "THEORY_EXAM_FINISHED": "The exam is already finished.", "THEORY_EXAM_EXPIRED": "The exam time has expired.", "THEORY_EXAM_COMPLETE": "All exam questions have already been answered.", "THEORY_EXAM_UNAVAILABLE": "There are not enough available questions.", "BOOKING_NOT_COMPLETED": "You can review a completed lesson.", "REVIEW_EXISTS": "You already reviewed this lesson.", "UNKNOWN": "Something went wrong. Try again."
+    "INVALID_INPUT": "Check the details and try again.", "INVALID_CREDENTIALS": "The email or password is incorrect.", "ACCOUNT_EXISTS": "An account with this email already exists.", "INVALID_OTP": "The code is incorrect or expired. Request a new code.", "INVALID_PHONE": "Enter a valid mobile number, for example 0701234567 or +46701234567.", "SMS_PROVIDER_NOT_CONFIGURED": "Text-message sign-in is not configured yet. Contact the school or use email.", "SMS_DELIVERY_FAILED": "The text message could not be sent. Check the number and try again.", "RATE_LIMITED": "Too many attempts. Wait and try again.", "SELECT_LOCATION_OR_PICKUP": "Choose a location or enter a pickup address.", "TEACHER_REQUIRED": "Choose an instructor to continue.", "SLOT_REQUIRED": "Choose an available time.", "SLOT_TAKEN": "This time was just booked. Choose another available time.", "PRODUCT_INACTIVE": "The product is not yet available to buy.", "UNAUTHENTICATED": "Log in to continue.", "FORBIDDEN": "You do not have access to this.", "STUDENT_NOT_FOUND": "The student was not found.", "BOOKING_NOT_FOUND": "The booking was not found.", "BOOKING_NOT_ACTIVE": "The booking can no longer be changed.", "TEACHER_NOT_FOUND": "The instructor was not found or is inactive.", "TEACHER_HAS_FUTURE_BOOKINGS": "Reassign or cancel the instructor's future bookings before deactivating.", "LOCATION_NOT_FOUND": "A selected location was not found or is inactive.", "LOCATION_NOT_ASSIGNED": "The working hours use a location that is not selected.", "SLUG_EXISTS": "The profile address is already in use.", "ACCOUNT_OR_SLUG_EXISTS": "The email or profile address is already in use.", "ACCOUNT_HAS_ACTIVE_BOOKINGS": "Cancel upcoming bookings before deleting the account.", "COURSE_OCCASION_NOT_FOUND": "This course occasion is no longer available.", "COURSE_FULL": "This course is fully booked.", "COURSE_ALREADY_BOOKED": "You already have a confirmed seat on this course.", "PAYMENT_PROVIDER_ERROR": "Payment could not be started. Try again.", "PRODUCT_TRANSLATION_MISSING": "The course is missing required product information.", "THEORY_QUESTION_NOT_FOUND": "This question is no longer available.", "THEORY_ACCESS_REQUIRED": "Active theory access is required for this question.", "THEORY_EXAM_NOT_FOUND": "The exam was not found.", "THEORY_EXAM_FINISHED": "The exam is already finished.", "THEORY_EXAM_EXPIRED": "The exam time has expired.", "THEORY_EXAM_COMPLETE": "All exam questions have already been answered.", "THEORY_EXAM_UNAVAILABLE": "There are not enough available questions.", "BOOKING_NOT_COMPLETED": "You can review a completed lesson.", "REVIEW_EXISTS": "You already reviewed this lesson.", "UNKNOWN": "Something went wrong. Try again."
   }
 }

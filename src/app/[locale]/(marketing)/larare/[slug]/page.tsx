@@ -4,7 +4,6 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
 import { isLocale } from "@/i18n/routing";
-import { Badge } from "@/components/Badge";
 import { LinkButton } from "@/components/LinkButton";
 
 import { getTeacher } from "../../_lib/data";
@@ -77,11 +76,6 @@ export default async function TeacherDetailPage(
             <h1 className="mt-2 text-4xl font-black">
               <bdi>{name}</bdi>
             </h1>
-            {teacher.slug === "sara-johansson" ? (
-              <Badge tone="accent" className="mt-3">
-                {t("teacher.demoProfile")}
-              </Badge>
-            ) : null}
             <p className="mt-3 text-ink-muted">
               {t("teacher.yearsExperience", { count: teacher.yearsExperience })}
             </p>

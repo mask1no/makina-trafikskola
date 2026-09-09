@@ -24,10 +24,11 @@ export function AuthForm({
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [method, setMethod] = useState<"email" | "phone">("email");
+  const [method, setMethod] = useState<"email" | "phone">("phone");
   const [phone, setPhone] = useState("");
   const [code, setCode] = useState("");
   const [codeSent, setCodeSent] = useState(false);
+  const [devCode, setDevCode] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
 
@@ -52,6 +53,7 @@ export function AuthForm({
   async function requestCode() {
     setBusy(true);
     setError("");
+    setDevCode("");
     try {
       const response = await fetch("/api/auth/otp/request", {
         method: "POST",
@@ -60,6 +62,12 @@ export function AuthForm({
       });
       const payload = await response.json().catch(() => null);
       if (!response.ok) throw new Error(payload?.error?.code ?? "UNKNOWN");
+      if (typeof payload?.phone === "string" && payload.phone) {
+        setPhone(payload.phone);
+      }
+      if (typeof payload?.devCode === "string" && payload.devCode) {
+        setDevCode(payload.devCode);
+      }
       setCodeSent(true);
     } catch (reason) {
       setError(reason instanceof Error ? reason.message : "UNKNOWN");
@@ -83,7 +91,10 @@ export function AuthForm({
             ...(mode === "register" ? { firstName, lastName } : {}),
           }),
         });
-        const payload = await response.json().catch(() => null);
+        const payload =
+          response.status === 204
+            ? null
+            : await response.json().catch(() => null);
         if (!response.ok) throw new Error(payload?.error?.code ?? "UNKNOWN");
         finishAuthentication();
         return;
@@ -123,8 +134,8 @@ export function AuthForm({
     <form onSubmit={submit} className="grid gap-4">
       <fieldset>
         <legend className="sr-only">{t("methodLabel")}</legend>
-        <div className="grid grid-cols-2 gap-1 rounded-md border border-border bg-card-muted p-1">
-          {(["email", "phone"] as const).map((value) => (
+        <div className="grid grid-cols-2 gap-1 border-b border-border pb-1">
+          {(["phone", "email"] as const).map((value) => (
             <button
               key={value}
               type="button"
@@ -132,8 +143,11 @@ export function AuthForm({
               onClick={() => {
                 setMethod(value);
                 setError("");
+                setCodeSent(false);
+                setCode("");
+                setDevCode("");
               }}
-              className="min-h-11 rounded-sm px-3 text-sm font-bold text-ink-muted transition aria-pressed:bg-card aria-pressed:text-ink aria-pressed:shadow-soft"
+              className="min-h-11 px-3 text-sm font-bold text-ink-muted transition aria-pressed:text-ink aria-pressed:shadow-[inset_0_-2px_0_0_var(--ink)]"
             >
               {t(`methods.${value}`)}
             </button>
@@ -194,19 +208,29 @@ export function AuthForm({
             autoComplete="tel"
             placeholder={t("phonePlaceholder")}
             required
+            disabled={codeSent}
           />
+          <p className="text-sm leading-6 text-ink-muted">{t("phoneHint")}</p>
           {codeSent ? (
-            <Input
-              name="code"
-              label={t("code")}
-              value={code}
-              onChange={(event) => setCode(event.target.value)}
-              inputMode="numeric"
-              autoComplete="one-time-code"
-              pattern="[0-9]{6}"
-              maxLength={6}
-              required
-            />
+            <>
+              <Input
+                name="code"
+                label={t("code")}
+                value={code}
+                onChange={(event) => setCode(event.target.value)}
+                inputMode="numeric"
+                autoComplete="one-time-code"
+                pattern="[0-9]{6}"
+                maxLength={6}
+                required
+              />
+              <p className="text-sm leading-6 text-ink-muted">{t("codeSentHint")}</p>
+              {devCode ? (
+                <p className="rounded-sm bg-page p-3 text-sm text-ink">
+                  {t("devCode", { code: devCode })}
+                </p>
+              ) : null}
+            </>
           ) : null}
         </>
       )}
@@ -236,16 +260,27 @@ export function AuthForm({
         </Button>
       )}
       {method === "phone" && codeSent ? (
-        <button
-          type="button"
-          onClick={() => {
-            setCode("");
-            setCodeSent(false);
-          }}
-          className="min-h-11 text-sm font-bold text-ink underline"
-        >
-          {t("changePhone")}
-        </button>
+        <div className="grid gap-2 sm:grid-cols-2">
+          <button
+            type="button"
+            onClick={requestCode}
+            disabled={busy}
+            className="min-h-11 text-sm font-bold text-ink underline disabled:opacity-50"
+          >
+            {t("resendCode")}
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setCode("");
+              setCodeSent(false);
+              setDevCode("");
+            }}
+            className="min-h-11 text-sm font-bold text-ink underline"
+          >
+            {t("changePhone")}
+          </button>
+        </div>
       ) : null}
       <p className="text-center text-sm text-ink-muted">
         {mode === "login" ? t("login.noAccount") : t("register.hasAccount")}{" "}
