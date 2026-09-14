@@ -181,7 +181,7 @@ model Product {
 
   lessonCredits   Int         @default(0)
   lessonMinutes   Int         @default(50)
-  theoryDays      Int?
+  includesTheory  Boolean     @default(false)
   includesRisk1   Boolean     @default(false)
   includesRisk2   Boolean     @default(false)
   creditValidDays Int         @default(730)
@@ -315,7 +315,7 @@ model TheoryAccess {
   studentId         String
   student           User       @relation(fields: [studentId], references: [id])
   grantedAt         DateTime   @default(now())
-  expiresAt         DateTime
+  expiresAt         DateTime?  // null = lifetime access, never expires
   sourceOrderItemId String?
   sourceOrderItem   OrderItem? @relation(fields: [sourceOrderItemId], references: [id])
 

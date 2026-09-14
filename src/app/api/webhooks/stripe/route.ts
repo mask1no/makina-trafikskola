@@ -245,15 +245,12 @@ export async function processVerifiedStripeEvent(
               });
             }
 
-            if (item.product.theoryDays) {
+            if (item.product.includesTheory) {
               await tx.theoryAccess.create({
                 data: {
                   studentId: order.studentId,
                   grantedAt: eventTime,
-                  expiresAt: addDays(
-                    eventTime,
-                    item.product.theoryDays,
-                  ),
+                  expiresAt: null,
                   sourceOrderItemId: item.id,
                 },
               });

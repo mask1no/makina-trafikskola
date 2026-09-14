@@ -123,10 +123,11 @@ export default async function LocaleLayout(
 
   if (!isLocale(params.locale)) notFound();
   setRequestLocale(params.locale);
-  const [t, adminT, teacherT, session] = await Promise.all([
+  const [t, adminT, teacherT, company, session] = await Promise.all([
     getTranslations("shell"),
     getTranslations("admin.nav"),
     getTranslations("teacherPortal"),
+    getTranslations("company"),
     auth(),
   ]);
   const base = `/${params.locale}`;
@@ -141,7 +142,15 @@ export default async function LocaleLayout(
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "DrivingSchool",
-    name: "Makina Trafikskola",
+    name: company("legalName"),
+    taxID: company("orgnr"),
+    telephone: company("phone"),
+    email: company("email"),
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: company("visitingAddress"),
+      addressCountry: "SE",
+    },
     areaServed: { "@type": "City", name: "Stockholm" },
     availableLanguage: [...locales],
     ...(siteUrl ? { url: `${siteUrl}/${params.locale}` } : {}),
@@ -207,6 +216,9 @@ export default async function LocaleLayout(
               </Link>
               <Link className="inline-flex min-h-11 items-center rounded-sm px-3 text-sm font-bold transition hover:bg-surface-raised" href={`${base}/teori`}>
                 {t("theory")}
+              </Link>
+              <Link className="inline-flex min-h-11 items-center rounded-sm px-3 text-sm font-bold transition hover:bg-surface-raised" href={`${base}/kontakt`}>
+                {t("contact")}
               </Link>
             </nav>
             <div className="ms-auto lg:ms-2">
@@ -284,6 +296,21 @@ export default async function LocaleLayout(
               <p className="mt-5 max-w-sm text-sm leading-6 text-ink-inverse-muted">
                 {t("footerDescription")}
               </p>
+              <address className="mt-5 max-w-sm text-sm not-italic leading-6 text-ink-inverse-muted">
+                <p className="font-bold text-ink-inverse">{company("legalName")}</p>
+                <p className="numbers-ltr">{t("orgnrLabel")}: {company("orgnr")}</p>
+                <p>{company("visitingAddress")}</p>
+                <p>
+                  <a className="inline-flex min-h-11 items-center hover:text-ink-inverse numbers-ltr" href={`tel:${company("phone").replace(/[^\d+]/g, "") || company("phone")}`}>
+                    {company("phone")}
+                  </a>
+                </p>
+                <p>
+                  <a className="inline-flex min-h-11 items-center hover:text-ink-inverse" href={`mailto:${company("email")}`}>
+                    {company("email")}
+                  </a>
+                </p>
+              </address>
             </div>
             <div className="md:col-span-3">
               <p className="text-sm font-extrabold">{t("explore")}</p>
@@ -291,6 +318,7 @@ export default async function LocaleLayout(
                 <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/korlektioner`}>{t("lessons")}</Link>
                 <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/larare`}>{t("teachers")}</Link>
                 <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/teori`}>{t("theory")}</Link>
+                <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/kontakt`}>{t("contact")}</Link>
               </div>
             </div>
             <div className="md:col-span-4">
@@ -299,6 +327,7 @@ export default async function LocaleLayout(
             </div>
           </div>
           <div className="site-container mt-10 flex flex-wrap gap-x-6 gap-y-2 border-t border-surface-soft pt-6 text-xs font-semibold text-ink-inverse-muted">
+            <Link className="inline-flex min-h-11 items-center hover:text-ink-inverse" href={`${base}/kontakt`}>{t("contact")}</Link>
             <Link className="inline-flex min-h-11 items-center hover:text-ink-inverse" href={`${base}/villkor`}>{t("terms")}</Link>
             <Link className="inline-flex min-h-11 items-center hover:text-ink-inverse" href={`${base}/integritet`}>{t("privacy")}</Link>
             <Link className="inline-flex min-h-11 items-center hover:text-ink-inverse" href={`${base}/cookies`}>{t("cookies")}</Link>

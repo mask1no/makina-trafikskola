@@ -33,7 +33,7 @@ export async function GET(request: Request) {
         currency: product.currency,
         lessonCredits: product.lessonCredits,
         lessonMinutes: product.lessonMinutes,
-        theoryDays: product.theoryDays,
+        includesTheory: product.includesTheory,
         includesRisk1: product.includesRisk1,
         includesRisk2: product.includesRisk2,
         creditValidDays: product.creditValidDays,

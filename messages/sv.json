@@ -1,4 +1,20 @@
 {
+  "placeholders": {
+    "note": "Replace every [TOKEN] in this file before launch. The same tokens are used on köpvillkor, integritet and /kontakt.",
+    "ORGNR": "[ORGNR]",
+    "BESOKSADRESS": "[BESOKSADRESS]",
+    "POSTADRESS": "[POSTADRESS]",
+    "TELEFON": "[TELEFON]",
+    "EPOST": "[EPOST]"
+  },
+  "company": {
+    "legalName": "Makina Trafikskola AB",
+    "orgnr": "[ORGNR]",
+    "visitingAddress": "[BESOKSADRESS]",
+    "postalAddress": "[POSTADRESS]",
+    "phone": "[TELEFON]",
+    "email": "[EPOST]"
+  },
   "language": {
     "label": "Välj språk",
     "sv": "Svenska",
@@ -29,6 +45,7 @@
     "calendar": "Kalender",
     "students": "Elever",
     "contact": "Kontakt",
+    "orgnrLabel": "Org.nr",
     "openingHours": "Öppettider: mån–fre 09–17",
     "copyright": "© {year} Makina Trafikskola",
     "footerDescription": "Körutbildning med tydlig vägledning och stöd på ditt språk.",
@@ -471,7 +488,7 @@
     "theory": {
       "title": "Min teori",
       "access": "Åtkomst",
-      "activeUntil": "Aktiv till {date}",
+      "active": "Aktiv – gäller tills vidare",
       "inactive": "Ingen aktiv åtkomst",
       "progress": "Resultat",
       "correct": "rätt besvarade frågor",
@@ -548,36 +565,137 @@
     "description": "Kontrollera anslutningen och försök igen. Bokningar och kontouppgifter kräver internet.",
     "retry": "Försök igen"
   },
+  "contact": {
+    "metadata": "Kontaktuppgifter till Makina Trafikskola i Stockholm.",
+    "eyebrow": "Hitta oss",
+    "title": "Kontakt",
+    "description": "Här hittar du namn, organisationsnummer, adresser och hur du når oss. Fyll i platshållarna före lansering.",
+    "orgnr": "Organisationsnummer",
+    "visitingAddress": "Besöksadress",
+    "postalAddress": "Postadress",
+    "phone": "Telefon",
+    "email": "E-post",
+    "openingHours": "Öppettider",
+    "openingHoursValue": "Måndag–fredag 09.00–17.00, Europe/Stockholm.",
+    "locationsTitle": "Våra platser",
+    "locationsDescription": "Vi utgår från fyra orter norr om Stockholm. Öppna vägbeskrivning i Google Maps.",
+    "directions": "Vägbeskrivning",
+    "languagesTitle": "Vilket språk behöver du?",
+    "languagesBody": "Vi undervisar på svenska, engelska, tigrinja, arabiska och somaliska. Säg vilket språk du vill ha när du bokar. Då matchar vi dig med en lärare som kan det."
+  },
   "legal": {
     "terms": {
-      "metadata": "Utkast till villkor för Makina Trafikskola.",
+      "metadata": "Köpvillkor för Makina Trafikskola.",
       "eyebrow": "Juridisk information",
       "title": "Köpvillkor",
-      "draftTitle": "Utkast – inväntar juridisk granskning",
-      "draftNotice": "Detta är inte kundens slutliga eller bindande villkor. Formuleringar om köp, återbetalning och ångerrätt måste godkännas av kunden och juridisk rådgivare före lansering.",
-      "scope": {"title": "Omfattning", "body": "Utkastet gäller bokning av körlektioner och framtida digitala köp via Makina Trafikskola."},
-      "details": {"title": "Krediter och avbokning", "body": "Teknisk standard i tjänsten: lektionskrediter gäller i 24 månader. Elevens avbokning mer än 24 timmar före start återför krediten; senare avbokning gör det inte. När skolan avbokar återförs krediten alltid.\n\nSlutlig policy för återbetalning, paket och 14 dagars ångerrätt inväntar kundens juridiska text."},
-      "rights": {"title": "Före köp", "body": "Produkter är inaktiva tills prislista, moms och villkor har bekräftats. En obligatorisk bekräftelse av slutliga villkor och ångerrätt behöver kopplas till checkout före lansering."}
+      "sectionOrder": ["seller", "prices", "delivery", "validity", "cancellation", "withdrawal", "complaints", "law"],
+      "seller": {
+        "title": "Säljare",
+        "body": "Tjänsten säljs av Makina Trafikskola AB.\nOrganisationsnummer: [ORGNR].\nBesöksadress: [BESOKSADRESS].\nPostadress: [POSTADRESS].\nE-post: [EPOST].\nTelefon: [TELEFON]."
+      },
+      "prices": {
+        "title": "Priser och betalning",
+        "body": "Alla priser visas i svenska kronor inklusive moms.\nDu betalar med kort, Swish eller Klarna via Stripe.\nPriset hämtas från produktlistan vid köpet. Ett belopp som du själv skickar används inte."
+      },
+      "delivery": {
+        "title": "Leverans av tjänsten",
+        "body": "Körlektioner bokar du i kalendern på webbplatsen. Lektionen körs med din lärare på avtalad tid.\nDigital teori öppnas när betalningen är bekräftad.\nKurser som Riskettan och Risktvåan gäller en plats på ett valt tillfälle."
+      },
+      "validity": {
+        "title": "Giltighetstid",
+        "body": "Lektionskrediter gäller i 24 månader från köpet.\nDigital teori är ett engångsköp. Den har ingen tidsgräns."
+      },
+      "cancellation": {
+        "title": "Ombokning och avbokning",
+        "body": "Du kan avboka själv under Mina bokningar.\nAvbokar du mer än 24 timmar före start får du tillbaka krediten.\nAvbokar du senare får du inte tillbaka krediten.\nOm skolan avbokar får du alltid tillbaka krediten.\nTiden du senast kan avboka visas som ett klockslag, inte som \"24 timmar\"."
+      },
+      "withdrawal": {
+        "title": "Ångerrätt",
+        "body": "Du har 14 dagars ångerrätt enligt distansavtalslagen.\nÅngerfristen börjar när avtalet ingås.\nUndantag: om du uttryckligen samtycker till att tjänsten börjar under ångerfristen, och bekräftar att du då kan förlora ångerrätten, gäller det undantaget för den del som redan har levererats.\nKontakta oss på [EPOST] om du vill ångra köpet."
+      },
+      "complaints": {
+        "title": "Reklamation och klagomål",
+        "body": "Hör av dig till oss först på [EPOST] eller [TELEFON].\nOm vi inte kommer överens kan du vända dig till Allmänna reklamationsnämnden (ARN), arn.se.\nDu kan också använda EU:s plattform för tvistlösning online: https://ec.europa.eu/consumers/odr"
+      },
+      "law": {
+        "title": "Tillämplig lag",
+        "body": "Svensk lag gäller för avtalet.\nTvist prövas av svensk allmän domstol, om inte tvingande konsumentregler säger något annat."
+      }
     },
     "privacy": {
-      "metadata": "Utkast till integritetsinformation för Makina Trafikskola.",
+      "metadata": "Integritetspolicy för Makina Trafikskola.",
       "eyebrow": "Juridisk information",
-      "title": "Integritet",
-      "draftTitle": "Utkast – inväntar juridisk granskning",
-      "draftNotice": "Personuppgiftsansvarig, kontaktvägar, rättsliga grunder och lagringstider måste bekräftas av kunden och juridisk rådgivare före lansering.",
-      "scope": {"title": "Uppgifter i tjänsten", "body": "Tjänsten behandlar konto- och kontaktuppgifter, bokningar, betalningshistorik, utbildningsprogression och uppgifter som eleven själv lämnar."},
-      "details": {"title": "Användning och skydd", "body": "Uppgifter används för att leverera utbildning, hantera bokningar och betalningar samt uppfylla rättsliga krav. Känsliga uppgifter ska inte skrivas till applikationsloggar."},
-      "rights": {"title": "Dina val", "body": "Inloggade elever kan begära en maskinläsbar export och radera sitt konto. Radering anonymiserar personuppgifter men bevarar uppgifter som måste finnas kvar för bokföring och spårbarhet. Exakta kontakt- och klagomålsvägar inväntar juridisk granskning."}
+      "title": "Integritetspolicy",
+      "sectionOrder": ["controller", "collected", "purpose", "retention", "recipients", "rights", "supervisory"],
+      "controller": {
+        "title": "Personuppgiftsansvarig",
+        "body": "Makina Trafikskola AB är personuppgiftsansvarig.\nOrganisationsnummer: [ORGNR].\nAdress: [BESOKSADRESS].\nE-post: [EPOST].\nTelefon: [TELEFON]."
+      },
+      "collected": {
+        "title": "Vad vi samlar in",
+        "body": "Vi behandlar namn, e-post och telefonnummer.\nVi behandlar bokningar, betalningshistorik och hämtningsadress.\nVi behandlar teoriresultat och lektionsanteckningar som läraren skriver."
+      },
+      "purpose": {
+        "title": "Syfte och rättslig grund",
+        "body": "Avtal: att boka lektioner, ge teoriåtkomst och ta betalt.\nRättslig förpliktelse: bokföring och kvitto.\nBerättigat intresse: att planera lärarnas tid och förbättra utbildningen.\nSamtycke: valfria meddelanden och cookies utöver det nödvändiga, om sådana införs senare."
+      },
+      "retention": {
+        "title": "Hur länge vi sparar",
+        "body": "Hämtningsadresser raderas 90 dagar efter en genomförd lektion.\nBokföringsuppgifter sparas enligt bokföringslagen.\nKonto och utbildningskort sparas så länge du är kund, därefter så länge lagen kräver det."
+      },
+      "recipients": {
+        "title": "Mottagare och underbiträden",
+        "body": "Stripe hanterar betalningar.\nResend skickar e-post.\n46elks skickar SMS.\nGoogle Maps visar kartor och adresser.\nSentry tar emot felrapporter.\nRailway hostar tjänsten.\nCloudflare R2 lagrar filer och säkerhetskopior.\nVissa av dessa kan föra uppgifter till land utanför EU/EES. Då används godkända skyddsåtgärder, till exempel standardavtalsklausuler."
+      },
+      "rights": {
+        "title": "Dina rättigheter",
+        "body": "Du kan begära tillgång, rättelse, radering, dataportabilitet och invändning.\nInloggade elever kan exportera sina uppgifter och radera kontot under Mina sidor.\nRadering anonymiserar personuppgifter. Vissa poster måste sparas för bokföring."
+      },
+      "supervisory": {
+        "title": "Tillsynsmyndighet",
+        "body": "Du kan klaga till Integritetsskyddsmyndigheten (IMY), imy.se."
+      }
     },
     "cookies": {
-      "metadata": "Information om cookies i Makina Trafikskolas tjänst.",
+      "metadata": "Cookiepolicy för Makina Trafikskola.",
       "eyebrow": "Juridisk information",
-      "title": "Cookies",
-      "draftTitle": "Utkast – inväntar juridisk granskning",
-      "draftNotice": "Den slutliga cookielistan måste granskas igen när analys, övervakning eller andra externa tjänster aktiveras.",
-      "scope": {"title": "Nödvändiga cookies", "body": "Tjänsten använder servercookies för inloggning, språkval, säkerhet och för att minnas ditt cookieval."},
-      "details": {"title": "Valfria cookies", "body": "Inga analys- eller marknadsföringscookies är aktiverade i den här versionen. Sådana cookies får inte aktiveras innan samtycke och dokumentation är på plats."},
-      "rights": {"title": "Ändra ditt val", "body": "Du kan radera webbplatsens cookies i webbläsarens inställningar för att visa valet igen. Nödvändiga cookies krävs för inloggade funktioner."}
+      "title": "Cookiepolicy",
+      "sectionOrder": ["necessary", "analytics", "change"],
+      "necessary": {
+        "title": "Cookies vi använder",
+        "body": "Vi sätter bara cookies som behövs för att webbplatsen ska fungera. Tabellen nedan visar namn, syfte och hur länge de sparas."
+      },
+      "analytics": {
+        "title": "Analys och marknadsföring",
+        "body": "Vi sätter inga analys- eller marknadsföringscookies just nu."
+      },
+      "change": {
+        "title": "Ändra eller ta tillbaka valet",
+        "body": "Du valde cookies i bannern längst ner på sidan.\nRadera webbplatsens cookies i webbläsaren om du vill se valet igen.\nNödvändiga cookies krävs för inloggning och språk."
+      },
+      "table": {
+        "caption": "Cookies som används",
+        "name": "Namn",
+        "purpose": "Syfte",
+        "duration": "Tid",
+        "rows": {
+          "session": {
+            "name": "authjs.session-token",
+            "purpose": "Håller dig inloggad. I produktion kan namnet vara __Secure-authjs.session-token.",
+            "duration": "Session, högst 30 dagar"
+          },
+          "locale": {
+            "name": "NEXT_LOCALE",
+            "purpose": "Kommer ihåg språket du valt.",
+            "duration": "1 år"
+          },
+          "consent": {
+            "name": "makina-cookie-consent",
+            "purpose": "Sparar ditt val i cookie-bannern.",
+            "duration": "1 år"
+          }
+        }
+      }
     }
   },
   "admin": {
@@ -640,6 +758,11 @@
     "THEORY_EXAM_UNAVAILABLE": "Det finns inte tillräckligt många tillgängliga frågor.",
     "BOOKING_NOT_COMPLETED": "Du kan lämna en recension efter en genomförd lektion.",
     "REVIEW_EXISTS": "Du har redan lämnat en recension för lektionen.",
-    "UNKNOWN": "Något gick fel. Försök igen."
+    "UNKNOWN": "Något gick fel. Försök igen.",
+    "notFoundTitle": "Vi hittar inte sidan",
+    "notFoundDescription": "Adressen stämmer inte. Gå till startsidan, körlektioner, lärare eller boka en tid.",
+    "forbiddenTitle": "Du har inte behörighet",
+    "forbiddenDescription": "Den här sidan är till för en annan roll. Gå till startsidan eller till dina egna sidor.",
+    "forbiddenDashboard": "Till mina sidor"
   }
 }

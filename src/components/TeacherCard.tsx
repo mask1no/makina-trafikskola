@@ -25,7 +25,7 @@ export function TeacherCard(props: TeacherCardProps) {
           name={props.name}
           imageUrl={props.photoUrl}
           size="lg"
-          className="size-20 text-xl transition duration-300 group-hover:scale-[1.03] sm:size-24"
+          className="transition duration-300 group-hover:scale-[1.03]"
         />
         <div className="min-w-0 pt-1">
           <h3 className="text-xl font-extrabold tracking-tight">

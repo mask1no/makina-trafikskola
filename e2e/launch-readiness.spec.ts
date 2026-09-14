@@ -68,9 +68,11 @@ test.describe("authorization boundaries", () => {
     await page.getByRole("button", { name: "Log in" }).click();
     await expect(page).toHaveURL(/\/en\/admin$/);
 
-    const response = await page.goto("/en/mina-sidor");
-    expect(response?.status()).toBe(403);
-    await expect(page.getByText("FORBIDDEN")).toBeVisible();
+    await page.goto("/en/mina-sidor");
+    await expect(page).toHaveURL(/\/en\/ingen-behorighet$/);
+    await expect(
+      page.getByRole("heading", { name: "You do not have access" }),
+    ).toBeVisible();
   });
 });
 

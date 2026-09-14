@@ -46,9 +46,16 @@ export default auth((request) => {
   }
 
   if (roles && request.auth?.user && !roles.includes(request.auth.user.role)) {
-    return Response.json(
-      { error: { code: "FORBIDDEN", message: "FORBIDDEN" } },
-      { status: 403 },
+    if (request.nextUrl.pathname.startsWith("/api/")) {
+      return Response.json(
+        { error: { code: "FORBIDDEN", message: "FORBIDDEN" } },
+        { status: 403 },
+      );
+    }
+    const locale =
+      request.nextUrl.pathname.split("/")[1] || routing.defaultLocale;
+    return NextResponse.redirect(
+      new URL(`/${locale}/ingen-behorighet`, request.nextUrl),
     );
   }
 

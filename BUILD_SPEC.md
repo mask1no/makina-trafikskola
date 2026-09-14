@@ -144,10 +144,11 @@ Identifiers, slugs and DB values use these. UI copy is translated via
 Shape in one paragraph: a `User` has a role and either a `StudentProfile` or a
 `TeacherProfile`. `Product` is the whole catalogue — packages, single lessons,
 course seats, theory access — with grant fields (`lessonCredits`,
-`theoryDays`, `includesRisk1/2`). Buying creates an `Order` + `OrderItem` +
+`includesTheory`, `includesRisk1/2`). Buying creates an `Order` + `OrderItem` +
 `Payment`; the Stripe webhook then writes `CreditTransaction` rows and/or a
-`TheoryAccess` row. A `Booking` consumes one credit via another
-`CreditTransaction`. Instructor time comes from recurring
+`TheoryAccess` row (`expiresAt` null = lifetime theory access). A `Booking`
+consumes one credit via another `CreditTransaction`. Instructor time comes from
+recurring
 `TeacherAvailability` minus `AvailabilityException` minus existing `Booking`.
 Risk 1 and Risk 2 are **not** bookings — they are `CourseOccasion` rows with
 seats, bought as `CourseBooking`.
@@ -229,7 +230,10 @@ Numbered so you can say "implement R7". Every rule here has a unit test.
 ### Theory
 - **R21** Paid question text, answers and explanations are never sent to the
   client without a valid `TheoryAccess` row. Server-side check on every fetch.
-  Never hide paid content with CSS.
+  Never hide paid content with CSS. Digital theory is a one-time purchase:
+  `TheoryAccess.expiresAt` is nullable and `null` means lifetime access.
+  A product grants theory when `includesTheory` is true. Lesson credits still
+  expire after `creditValidDays` (default 730).
 - **R22** Mock exam mirrors the real kunskapsprov exactly: 65 scored questions,
   50-minute timer, 52 correct to pass. Result shown as `54/65 · Godkänt`.
 
@@ -824,7 +828,7 @@ model Product {
 
   lessonCredits   Int         @default(0)
   lessonMinutes   Int         @default(50)
-  theoryDays      Int?
+  includesTheory  Boolean     @default(false)
   includesRisk1   Boolean     @default(false)
   includesRisk2   Boolean     @default(false)
   creditValidDays Int         @default(730)
@@ -940,7 +944,7 @@ model TheoryAccess {
   studentId         String
   student           User       @relation(fields: [studentId], references: [id])
   grantedAt         DateTime   @default(now())
-  expiresAt         DateTime
+  expiresAt         DateTime?  // null = lifetime access, never expires
   sourceOrderItemId String?
   sourceOrderItem   OrderItem? @relation(fields: [sourceOrderItemId], references: [id])
 
@@ -1321,7 +1325,7 @@ type Seed = {
   compareAtOre?: number;
   lessonCredits?: number;
   lessonMinutes?: number;
-  theoryDays?: number;
+  includesTheory?: boolean;
   includesRisk1?: boolean;
   includesRisk2?: boolean;
   badge?: string;
@@ -1385,14 +1389,14 @@ const PRODUCTS: Seed[] = [
     priceOre: 1045000,
     compareAtOre: 1175000,
     lessonCredits: 10,
-    theoryDays: 240,
+    includesTheory: true,
     includesRisk1: true,
     includesRisk2: true,
     accentHex: "#2563EB",
     sv: {
       name: "Intensivpaket Silver",
       shortDesc: "Snabbare väg till körkortet, med teori.",
-      features: ["10 körlektioner", "Risk 1 & Risk 2", "Digital teori 8 mån"],
+      features: ["10 körlektioner", "Risk 1 & Risk 2", "Digital teori utan tidsgräns"],
     },
   },
   {
@@ -1401,7 +1405,7 @@ const PRODUCTS: Seed[] = [
     priceOre: 1845000,
     compareAtOre: 1989000,
     lessonCredits: 20,
-    theoryDays: 365,
+    includesTheory: true,
     includesRisk1: true,
     includesRisk2: true,
     badge: "POPULARAST",
@@ -1409,7 +1413,7 @@ const PRODUCTS: Seed[] = [
     sv: {
       name: "Intensivpaket Guld",
       shortDesc: "Komplett paket för dig som vill ta körkort effektivt.",
-      features: ["20 körlektioner", "Risk 1 & Risk 2", "Digital teori 12 mån", "Prioriterad bokning"],
+      features: ["20 körlektioner", "Risk 1 & Risk 2", "Digital teori utan tidsgräns", "Prioriterad bokning"],
     },
   },
   {
@@ -1418,14 +1422,14 @@ const PRODUCTS: Seed[] = [
     priceOre: 2545000,
     compareAtOre: 2790000,
     lessonCredits: 30,
-    theoryDays: 365,
+    includesTheory: true,
     includesRisk1: true,
     includesRisk2: true,
     accentHex: "#7C3AED",
     sv: {
       name: "Intensivpaket Platinum",
       shortDesc: "Maximal förberedelse — vårt mest omfattande paket.",
-      features: ["30 körlektioner", "Risk 1 & Risk 2", "Digital teori 12 mån", "VIP-support"],
+      features: ["30 körlektioner", "Risk 1 & Risk 2", "Digital teori utan tidsgräns", "VIP-support"],
     },
   },
   {
@@ -1434,7 +1438,7 @@ const PRODUCTS: Seed[] = [
     priceOre: 2995000,
     compareAtOre: 3200000,
     lessonCredits: 35,
-    theoryDays: 730,
+    includesTheory: true,
     includesRisk1: true,
     includesRisk2: true,
     sv: {
@@ -1460,7 +1464,7 @@ const PRODUCTS: Seed[] = [
     kind: ProductKind.THEORY_ACCESS,
     priceOre: 9900,
     compareAtOre: 32000,
-    theoryDays: 365,
+    includesTheory: true,
     sv: {
       name: "Körkortsteori",
       shortDesc: "Över 1200 frågor med ljud och video.",
@@ -1500,7 +1504,7 @@ async function main() {
         compareAtOre: p.compareAtOre ?? null,
         lessonCredits: p.lessonCredits ?? 0,
         lessonMinutes: p.lessonMinutes ?? 50,
-        theoryDays: p.theoryDays ?? null,
+        includesTheory: p.includesTheory ?? false,
         includesRisk1: p.includesRisk1 ?? false,
         includesRisk2: p.includesRisk2 ?? false,
         badge: p.badge ?? null,

@@ -11,6 +11,7 @@ const staticPaths = [
   "/teori",
   "/teori/prov",
   "/boka",
+  "/kontakt",
   "/villkor",
   "/integritet",
   "/cookies",

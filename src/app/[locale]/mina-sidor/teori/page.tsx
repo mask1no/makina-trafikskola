@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 
 import { db } from "@/lib/db";
+import { getActiveTheoryAccess } from "@/lib/theory/access";
 import { Notice } from "@/components/Notice";
 import { PageHeader } from "@/components/PageHeader";
 import { StatCard } from "@/components/StatCard";
@@ -19,19 +20,10 @@ export default async function TheoryPage(
   const now = new Date();
   const [t, access, attempts, correct] = await Promise.all([
     getTranslations("student.theory"),
-    db.theoryAccess.findFirst({
-      where: { studentId, expiresAt: { gt: now } },
-      orderBy: { expiresAt: "desc" },
-    }),
+    getActiveTheoryAccess(db, studentId, now),
     db.theoryAttempt.count({ where: { studentId } }),
     db.theoryAttempt.count({ where: { studentId, correct: true } }),
   ]);
-  const formatter = new Intl.DateTimeFormat(params.locale, {
-    timeZone: "Europe/Stockholm",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
 
   return (
     <section>
@@ -39,7 +31,7 @@ export default async function TheoryPage(
       <div className="mt-6 grid gap-4 sm:grid-cols-2">
         <StatCard
           label={t("access")}
-          value={access ? t("activeUntil", { date: formatter.format(access.expiresAt) }) : t("inactive")}
+          value={access ? t("active") : t("inactive")}
           className="[&_[class*='text-3xl']]:text-lg"
         />
         <StatCard label={t("progress")} value={<span dir="ltr">{correct}/{attempts}</span>} detail={t("correct")} />

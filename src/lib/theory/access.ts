@@ -10,8 +10,11 @@ export function getActiveTheoryAccess(
   now: Date,
 ) {
   return tx.theoryAccess.findFirst({
-    where: { studentId, expiresAt: { gt: now } },
-    orderBy: { expiresAt: "desc" },
+    where: {
+      studentId,
+      OR: [{ expiresAt: null }, { expiresAt: { gt: now } }],
+    },
+    orderBy: { expiresAt: { sort: "desc", nulls: "first" } },
     select: { expiresAt: true },
   });
 }

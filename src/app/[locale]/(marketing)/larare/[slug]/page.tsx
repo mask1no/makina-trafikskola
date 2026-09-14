@@ -1,8 +1,8 @@
-import Image from "next/image";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
+import { Avatar } from "@/components/Avatar";
 import { isLocale } from "@/i18n/routing";
 import { LinkButton } from "@/components/LinkButton";
 
@@ -45,29 +45,17 @@ export default async function TeacherDetailPage(
   ]);
   if (!teacher) notFound();
   const name = `${teacher.user.firstName} ${teacher.user.lastName}`;
-  const initials = `${teacher.user.firstName[0] ?? ""}${teacher.user.lastName[0] ?? ""}`;
 
   return (
     <div className="section-shell">
       <article className="site-container">
         <div className="grid overflow-hidden rounded-lg border border-border bg-card shadow-card md:grid-cols-[.8fr_1.2fr]">
           <div className="grid min-h-72 place-items-center bg-surface p-8 text-ink-inverse">
-            {teacher.photoUrl ? (
-              <Image
-                src={teacher.photoUrl}
-                alt={name}
-                width={320}
-                height={400}
-                className="rtl-no-mirror h-full max-h-[28rem] w-full rounded-md object-cover"
-              />
-            ) : (
-              <div
-                aria-hidden="true"
-                className="grid size-40 place-items-center rounded-full bg-surface-raised text-5xl font-black"
-              >
-                {initials}
-              </div>
-            )}
+            <Avatar
+              name={name}
+              imageUrl={teacher.photoUrl}
+              size="hero"
+            />
           </div>
           <div className="p-6 sm:p-10">
             <p className="text-sm font-bold uppercase tracking-wider text-ink-muted">

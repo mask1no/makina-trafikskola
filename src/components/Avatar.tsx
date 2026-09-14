@@ -1,16 +1,19 @@
-import type { CSSProperties } from "react";
+"use client";
+
+import { useState } from "react";
 
 type AvatarProps = {
   name: string;
   imageUrl?: string | null;
-  size?: "sm" | "md" | "lg";
+  size?: "sm" | "md" | "lg" | "hero";
   className?: string;
 };
 
 const sizes = {
   sm: "size-10 text-xs",
   md: "size-12 text-sm",
-  lg: "size-16 text-base",
+  lg: "size-20 text-xl sm:size-24",
+  hero: "size-40 text-5xl sm:size-48",
 };
 
 export function Avatar({
@@ -19,6 +22,7 @@ export function Avatar({
   size = "md",
   className = "",
 }: AvatarProps) {
+  const [failed, setFailed] = useState(false);
   const initials = name
     .trim()
     .split(/\s+/)
@@ -26,18 +30,28 @@ export function Avatar({
     .map((part) => part[0])
     .join("")
     .toLocaleUpperCase();
-  const style = imageUrl
-    ? ({ backgroundImage: `url("${encodeURI(imageUrl)}")` } as CSSProperties)
-    : undefined;
+  const showImage = Boolean(imageUrl) && !failed;
 
   return (
     <span
       aria-label={name}
-      role={imageUrl ? "img" : undefined}
-      style={style}
-      className={`rtl-no-mirror inline-grid shrink-0 place-items-center rounded-full border border-border bg-surface-raised bg-cover bg-center font-extrabold text-ink-inverse shadow-soft ${sizes[size]} ${className}`}
+      role={showImage ? "img" : undefined}
+      className={`rtl-no-mirror relative inline-grid shrink-0 place-items-center overflow-hidden rounded-full border border-border bg-surface-raised font-extrabold text-ink-inverse shadow-soft ${sizes[size]} ${className}`}
     >
-      {imageUrl ? <span className="sr-only">{name}</span> : initials}
+      {showImage ? (
+        <>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={imageUrl ?? undefined}
+            alt=""
+            onError={() => setFailed(true)}
+            className="absolute inset-0 size-full object-cover"
+          />
+          <span className="sr-only">{name}</span>
+        </>
+      ) : (
+        initials
+      )}
     </span>
   );
 }

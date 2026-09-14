@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 
 import { getAvailableCreditBalance } from "@/lib/credits/ledger";
 import { db } from "@/lib/db";
+import { getActiveTheoryAccess } from "@/lib/theory/access";
 import { LinkButton } from "@/components/LinkButton";
 import { PageHeader } from "@/components/PageHeader";
 import { StatCard } from "@/components/StatCard";
@@ -27,10 +28,7 @@ export default async function StudentDashboard(
       include: { teacher: { include: { user: true } } },
     }),
     getAvailableCreditBalance(db, studentId, now),
-    db.theoryAccess.findFirst({
-      where: { studentId, expiresAt: { gt: now } },
-      orderBy: { expiresAt: "desc" },
-    }),
+    getActiveTheoryAccess(db, studentId, now),
   ]);
 
   const date = nextBooking
