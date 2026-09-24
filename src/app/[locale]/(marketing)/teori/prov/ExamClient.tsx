@@ -1,7 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
+
+import { TheoryQuestionImage } from "@/components/TheoryQuestionImage";
 
 type Question = {
   id: string;
@@ -22,6 +23,7 @@ type Copy = {
   passed: string;
   failed: string;
   error: string;
+  imageMissing: string;
 };
 
 type Result = { correctCount: number; questionCount: number; passed: boolean };
@@ -172,16 +174,11 @@ export function ExamClient({
         </p>
       </div>
       <h2 id="exam-question" className="mt-6 text-xl font-black">{question.text}</h2>
-      {question.imageUrl ? (
-        <Image
-          src={question.imageUrl}
-          alt={question.text}
-          width={800}
-          height={450}
-          unoptimized
-          className="mt-4 h-auto w-full rounded-md"
-        />
-      ) : null}
+      <TheoryQuestionImage
+        src={question.imageUrl}
+        alt={question.text}
+        missingLabel={copy.imageMissing}
+      />
       <fieldset className="mt-5 grid gap-3">
         <legend className="sr-only">{question.text}</legend>
         {question.answers.map((answer) => (

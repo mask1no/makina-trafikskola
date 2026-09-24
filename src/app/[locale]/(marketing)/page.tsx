@@ -6,6 +6,10 @@ import { LinkButton } from "@/components/LinkButton";
 import { ProductCard } from "@/components/ProductCard";
 import { TeacherCard } from "@/components/TeacherCard";
 import { isLocale } from "@/i18n/routing";
+import {
+  bookingEnabled,
+  instructorsEnabled,
+} from "@/lib/launch";
 import { formatPrice } from "@/lib/pricing/format";
 
 import { getProducts, getTeachers } from "./_lib/data";
@@ -27,9 +31,18 @@ export default async function MarketingHome(
     getProducts(params.locale),
     getTeachers(params.locale),
   ]);
-  const featuredProducts = products
-    .filter((product) => ["PACKAGE", "SINGLE_LESSON", "TEST_LESSON"].includes(product.kind))
-    .slice(0, 3);
+  const canBook = bookingEnabled();
+  const showInstructors = instructorsEnabled() && teachers.length > 0;
+  const featuredSlugs = ["en-korlektion", "testlektion", "korpaket-b3"] as const;
+  const featuredProducts = featuredSlugs.flatMap((slug) => {
+    const product = products.find((item) => item.slug === slug);
+    return product ? [product] : [];
+  });
+  const lessonImages: Record<(typeof featuredSlugs)[number], string> = {
+    "en-korlektion": "/lessons/korlektion.jpg",
+    testlektion: "/lessons/testlektion.jpg",
+    "korpaket-b3": "/lessons/tre-lektioner.jpg",
+  };
   const theoryProduct = products.find((product) => product.slug === "korkortsteori");
   const singleLesson = products.find((product) => product.slug === "en-korlektion");
   const entryPackage = products
@@ -69,7 +82,7 @@ export default async function MarketingHome(
         }}
       />
 
-      <section className="relative isolate min-h-[100svh] overflow-hidden bg-surface text-ink-inverse">
+      <section className="relative isolate min-h-[72svh] overflow-hidden bg-surface text-ink-inverse sm:min-h-[68svh]">
         <Image
           src="/hero.jpg"
           alt=""
@@ -82,7 +95,7 @@ export default async function MarketingHome(
           aria-hidden="true"
           className="absolute inset-0 bg-[linear-gradient(180deg,color-mix(in_srgb,var(--surface)_55%,transparent)_0%,color-mix(in_srgb,var(--surface)_78%,transparent)_48%,var(--surface)_100%)]"
         />
-        <div className="site-container relative z-10 flex min-h-[100svh] flex-col justify-end pb-14 pt-28 sm:pb-20">
+        <div className="site-container relative z-10 flex min-h-[72svh] flex-col justify-end pb-12 pt-24 sm:min-h-[68svh] sm:pb-16">
           <p className="brand-mark reveal text-accent">{t("home.hero.brand")}</p>
           <h1 className="display-title reveal reveal-delay-1 mt-5 max-w-4xl text-balance">
             {t("home.hero.title")}
@@ -91,21 +104,26 @@ export default async function MarketingHome(
             {t("home.hero.description")}
           </p>
           <div className="reveal reveal-delay-3 mt-8 flex flex-wrap gap-3">
-            <LinkButton href={`/${params.locale}/boka`}>
-              {t("common.bookNow")}
-            </LinkButton>
             <LinkButton
-              variant="secondary"
-              className="border-ink-inverse/30 text-ink-inverse hover:bg-ink-inverse/10"
-              href={`/${params.locale}/larare`}
+              href={`/${params.locale}/${canBook ? "boka" : "kontakt"}`}
             >
-              {t("home.hero.findTeacher")}
+              {canBook ? t("common.bookNow") : t("shell.contact")}
             </LinkButton>
+            {showInstructors ? (
+              <LinkButton
+                variant="secondary"
+                className="border-ink-inverse/30 text-ink-inverse hover:bg-ink-inverse/10"
+                href={`/${params.locale}/larare`}
+              >
+                {t("home.hero.findTeacher")}
+              </LinkButton>
+            ) : null}
           </div>
         </div>
       </section>
 
-      <section className="section-shell">
+      {showInstructors ? (
+        <section className="section-shell">
         <div className="site-container">
           <div className="max-w-2xl">
             <p className="text-sm font-bold uppercase tracking-wider text-ink-muted">
@@ -174,7 +192,8 @@ export default async function MarketingHome(
             </Link>
           </div>
         </div>
-      </section>
+        </section>
+      ) : null}
 
       <section className="section-shell border-y border-border bg-card">
         <div className="site-container">
@@ -189,7 +208,7 @@ export default async function MarketingHome(
               {t("common.viewAll")}
             </Link>
           </div>
-          <div className="mt-10 grid gap-5 md:grid-cols-3">
+          <div className="mt-10 grid gap-5 lg:grid-cols-3">
             {featuredProducts.map((product) => (
               <ProductCard
                 key={product.id}
@@ -223,6 +242,16 @@ export default async function MarketingHome(
                 swedishOnlyLabel={t("common.swedishOnly")}
                 unavailableLabel={t("product.notForSale")}
                 detailsLabel={t("common.readMore")}
+                imageSrc={
+                  product.slug in lessonImages
+                    ? lessonImages[product.slug as keyof typeof lessonImages]
+                    : undefined
+                }
+                imageAlt={
+                  product.slug in lessonImages
+                    ? t(`product.images.${product.slug}`)
+                    : undefined
+                }
                 savingsLabel={product.compareAtOre && product.compareAtOre > product.priceOre
                   ? t("product.save", { percent: Math.round((1 - product.priceOre / product.compareAtOre) * 100) })
                   : undefined}
@@ -290,7 +319,7 @@ export default async function MarketingHome(
           <div className="mt-8 divide-y divide-border border-y border-border">
             {faqItems.map((item) => (
               <details key={item.question} className="group">
-                <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-6 py-4 font-bold marker:hidden">
+                <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-6 py-4 font-bold marker:hidden [&::-webkit-details-marker]:hidden">
                   <span>{item.question}</span>
                   <span aria-hidden="true" className="text-xl transition group-open:rotate-45">+</span>
                 </summary>

@@ -15,7 +15,7 @@ import {
   renderPaymentFailed,
 } from "@/emails/payment";
 import { db } from "@/lib/db";
-import { sendEmail, sendSms } from "@/lib/notifications/senders";
+import { sendSms } from "@/lib/notifications/senders";
 
 const bookingPayloadSchema = z
   .object({
@@ -106,12 +106,7 @@ export async function dispatchNotifications(ids: string[], now: Date) {
         payload: notification.payload,
       });
 
-      if (notification.channel === "EMAIL") {
-        if (!notification.user.email) {
-          throw new Error("EMAIL_RECIPIENT_MISSING");
-        }
-        await sendEmail(notification.user.email, message);
-      } else if (notification.channel === "SMS") {
+      if (notification.channel === "SMS") {
         if (!notification.user.phone) {
           throw new Error("SMS_RECIPIENT_MISSING");
         }

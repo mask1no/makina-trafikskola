@@ -2,9 +2,12 @@
 
 import { useState } from "react";
 
+import { TheoryQuestionImage } from "@/components/TheoryQuestionImage";
+
 type Question = {
   id: string;
   text: string;
+  imageUrl: string | null;
   answers: { id: string; text: string }[];
 };
 
@@ -16,6 +19,7 @@ type Copy = {
   selectAnswer: string;
   signIn: string;
   error: string;
+  imageMissing: string;
 };
 
 export function StudyQuiz({
@@ -83,6 +87,11 @@ export function StudyQuiz({
             </div>
             <div className="p-6 sm:p-8">
             <p className="text-xl font-bold leading-8">{question.text}</p>
+            <TheoryQuestionImage
+              src={question.imageUrl}
+              alt={question.text}
+              missingLabel={copy.imageMissing}
+            />
             <fieldset className="mt-5 grid gap-3" disabled={Boolean(result)}>
               <legend className="sr-only">{question.text}</legend>
               {question.answers.map((answer) => (

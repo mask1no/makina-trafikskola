@@ -6,23 +6,18 @@ const requiredProductionEnvironment = z.object({
   STRIPE_SECRET_KEY: z.string().trim().min(1),
   STRIPE_WEBHOOK_SECRET: z.string().trim().min(1),
   NEXT_PUBLIC_SITE_URL: z.string().trim().url(),
+  ELKS_API_USERNAME: z.string().trim().min(1),
+  ELKS_API_PASSWORD: z.string().trim().min(1),
 });
 
 const optionalFeatureGroups = [
   {
     feature: "Google Maps and pickup autocomplete",
-    variables: [
-      "NEXT_PUBLIC_GOOGLE_MAPS_KEY",
-      "GOOGLE_MAPS_SERVER_KEY",
-    ],
+    variables: ["NEXT_PUBLIC_GOOGLE_MAPS_KEY"],
   },
   {
-    feature: "transactional email delivery",
-    variables: ["RESEND_API_KEY", "RESEND_FROM"],
-  },
-  {
-    feature: "SMS delivery",
-    variables: ["ELKS_API_USERNAME", "ELKS_API_PASSWORD"],
+    feature: "Google account sign-in",
+    variables: ["AUTH_GOOGLE_ID", "AUTH_GOOGLE_SECRET"],
   },
   {
     feature: "image uploads",

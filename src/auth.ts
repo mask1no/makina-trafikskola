@@ -1,6 +1,7 @@
 import type { DefaultSession } from "next-auth";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import Google from "next-auth/providers/google";
 import type { Role } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
@@ -25,13 +26,17 @@ declare module "@auth/core/jwt" {
   interface JWT {
     userId: string;
     role: Role;
+    checkedAt?: number;
   }
 }
 
-const passwordCredentialsSchema = z.object({
-  email: z.string().trim().toLowerCase().email(),
-  password: z.string().min(8).max(128),
-});
+const passwordCredentialsSchema = z
+  .object({
+    email: z.string().trim().toLowerCase().email().optional(),
+    phone: z.string().regex(/^\+46\d{7,12}$/).optional(),
+    password: z.string().min(8).max(128),
+  })
+  .refine((value) => Boolean(value.email || value.phone));
 
 const phoneCredentialsSchema = z.object({
   phone: z.string().regex(/^\+[1-9]\d{7,14}$/),
@@ -41,21 +46,39 @@ const phoneCredentialsSchema = z.object({
 });
 
 function clientIp(request: Request) {
-  return (
-    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
-    request.headers.get("x-real-ip") ??
-    "unknown"
-  );
+  const forwarded = request.headers.get("x-forwarded-for");
+  if (forwarded) {
+    const hops = forwarded
+      .split(",")
+      .map((part) => part.trim())
+      .filter(Boolean);
+    const trustedHop = hops.at(-1);
+    if (trustedHop) return trustedHop;
+  }
+  return request.headers.get("x-real-ip") ?? "unknown";
 }
+
+function splitName(name: string) {
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  return {
+    firstName: parts[0] ?? "Student",
+    lastName: parts.slice(1).join(" "),
+  };
+}
+
+const googleId = process.env.AUTH_GOOGLE_ID;
+const googleSecret = process.env.AUTH_GOOGLE_SECRET;
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   session: { strategy: "jwt" },
+  trustHost: true,
   providers: [
     Credentials({
       id: "email-password",
       name: "Email and password",
       credentials: {
         email: { type: "email" },
+        phone: { type: "tel" },
         password: { type: "password" },
       },
       async authorize(credentials, request) {
@@ -67,7 +90,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const now = new Date();
         if (
           !(await allowLoginAttempt(
-            parsed.data.email,
+            parsed.data.email ?? parsed.data.phone ?? "unknown",
             clientIp(request),
             now,
           ))
@@ -75,9 +98,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           return null;
         }
 
-        const user = await db.user.findUnique({
-          where: { email: parsed.data.email, deletedAt: null },
-        });
+        const user = parsed.data.phone
+          ? await db.user.findUnique({
+              where: { phone: parsed.data.phone, deletedAt: null },
+            })
+          : await db.user.findUnique({
+              where: { email: parsed.data.email, deletedAt: null },
+            });
         if (
           !user?.passwordHash ||
           !(await bcrypt.compare(parsed.data.password, user.passwordHash))
@@ -154,13 +181,85 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         };
       },
     }),
+    ...(googleId && googleSecret
+      ? [
+          Google({
+            clientId: googleId,
+            clientSecret: googleSecret,
+          }),
+        ]
+      : []),
   ],
   callbacks: {
-    jwt({ token, user }) {
+    async signIn({ user, account, profile }) {
+      if (account?.provider !== "google") return true;
+      const sub = account.providerAccountId;
+      if (!sub) return false;
+      let dbUser = await db.user.findUnique({ where: { googleSub: sub } });
+      if (!dbUser) {
+        const email =
+          typeof profile?.email === "string"
+            ? profile.email.trim().toLowerCase()
+            : null;
+        const emailVerified =
+          "email_verified" in (profile ?? {}) &&
+          profile?.email_verified === true;
+        const name = splitName(
+          typeof profile?.name === "string" ? profile.name : "Student",
+        );
+        const matchingEmail =
+          email && emailVerified
+            ? await db.user.findUnique({ where: { email } })
+            : null;
+        if (matchingEmail?.googleSub && matchingEmail.googleSub !== sub) {
+          return false;
+        }
+        dbUser = matchingEmail
+          ? await db.user.update({
+              where: { id: matchingEmail.id },
+              data: {
+                googleSub: sub,
+                emailVerifiedAt: matchingEmail.emailVerifiedAt ?? new Date(),
+                deletedAt: null,
+              },
+            })
+          : await db.user.create({
+              data: {
+                googleSub: sub,
+                email: emailVerified ? email : null,
+                emailVerifiedAt: emailVerified ? new Date() : null,
+                firstName: name.firstName,
+                lastName: name.lastName,
+                studentProfile: { create: {} },
+              },
+            });
+      }
+      if (dbUser.deletedAt) return false;
+      user.id = dbUser.id;
+      user.email = dbUser.email;
+      user.name = `${dbUser.firstName} ${dbUser.lastName}`.trim();
+      user.role = dbUser.role;
+      return true;
+    },
+    async jwt({ token, user }) {
       if (user?.id) {
         token.userId = user.id;
         token.role = user.role;
+        token.checkedAt = Date.now();
+        return token;
       }
+      const checkedAt =
+        typeof token.checkedAt === "number" ? token.checkedAt : 0;
+      if (!token.userId || Date.now() - checkedAt < 5 * 60 * 1000) {
+        return token;
+      }
+      const dbUser = await db.user.findUnique({
+        where: { id: token.userId },
+        select: { role: true, deletedAt: true },
+      });
+      if (!dbUser || dbUser.deletedAt) return null;
+      token.role = dbUser.role;
+      token.checkedAt = Date.now();
       return token;
     },
     session({ session, token }) {

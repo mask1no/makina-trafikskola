@@ -21,3 +21,8 @@ export function formatPrice(ore: number, locale: string) {
 
   return `${sign}${grouped}${decimals}${NON_BREAKING_SPACE}kr`;
 }
+
+export function perLessonOre(priceOre: number, lessonCredits: number) {
+  if (lessonCredits <= 0) return 0;
+  return Math.round(priceOre / lessonCredits / 100) * 100;
+}

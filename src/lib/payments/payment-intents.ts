@@ -60,7 +60,7 @@ export async function createPaymentIntentForOrder(
       studentId: true,
       status: true,
       totalOre: true,
-      student: { select: { localePref: true } },
+      student: { select: { localePref: true, email: true } },
       payment: {
         select: {
           id: true,
@@ -116,6 +116,9 @@ export async function createPaymentIntentForOrder(
           amount: order.totalOre,
           currency: [...currencies][0],
           automatic_payment_methods: { enabled: true },
+          ...(order.student.email
+            ? { receipt_email: order.student.email }
+            : {}),
           metadata: {
             orderId: order.id,
             ...metadata,

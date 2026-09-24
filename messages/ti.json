@@ -1,19 +1,19 @@
 {
   "placeholders": {
     "note": "ቅድሚ ምጅማር ነፍሲ ወከፍ [TOKEN] ኣብዚ ፋይል ተክእ። እዞም ቶከናት ኣብ ውዕል፣ ውልቃውነትን /kontaktን ይጥቀሙ።",
-    "ORGNR": "[ORGNR]",
-    "BESOKSADRESS": "[BESOKSADRESS]",
-    "POSTADRESS": "[POSTADRESS]",
-    "TELEFON": "[TELEFON]",
-    "EPOST": "[EPOST]"
+    "ORGNR": "559531-4146",
+    "BESOKSADRESS": "Centralvägen 5, 194 77 Upplands Väsby",
+    "POSTADRESS": "Centralvägen 5, 194 77 Upplands Väsby",
+    "TELEFON": "070-097 04 83",
+    "EPOST": "info@makina.se"
   },
   "company": {
     "legalName": "Makina Trafikskola AB",
-    "orgnr": "[ORGNR]",
-    "visitingAddress": "[BESOKSADRESS]",
-    "postalAddress": "[POSTADRESS]",
-    "phone": "[TELEFON]",
-    "email": "[EPOST]"
+    "orgnr": "559531-4146",
+    "visitingAddress": "Centralvägen 5, 194 77 Upplands Väsby",
+    "postalAddress": "Centralvägen 5, 194 77 Upplands Väsby",
+    "phone": "070-097 04 83",
+    "email": "info@makina.se"
   },
   "language": {
     "label": "ቋንቋ ምረጽ",
@@ -34,6 +34,7 @@
     "lessons": "ትምህርቲ ምዝዋር",
     "teachers": "መምህራን",
     "book": "ሕጂ ሓዝ",
+    "scrollTop": "ናብ ላዕሊ",
     "signIn": "እተው",
     "signOut": "ውጻእ",
     "account": "ናተይ ኣካውንት",
@@ -45,7 +46,7 @@
     "calendar": "ዘመን መቑጸሪ",
     "students": "ተማሃሮ",
     "contact": "ርከብ",
-    "openingHours": "ሰዓታት ክፈት: ሰኑ–ዓርቢ 09–17",
+    "openingHours": "ሰዓታት ክፈት: ሰኑ–ዓርቢ 08–21፣ ቀዳም 08–19",
     "copyright": "© {year} Makina Trafikskola",
     "footerDescription": "ንጹር መምርሒን ብቋንቋኻ ደገፍን ዘለዎ ትምህርቲ ምዝዋር።",
     "explore": "ዳህስስ",
@@ -163,8 +164,7 @@
   "lessons": {
     "eyebrow": "ዋጋታትን ፓኬጃትን",
     "title": "ንኹሉ ደረጃ ትምህርቲ ምዝዋር",
-    "description": "ንጽል ትምህርትን ፓኬጃትን ኣወዳድር። ኩሉ ዋጋታት ቫት የጠቓልል።",
-    "provisionalNotice": "ዋጋታት ከም ንድፊ ይረአዩ። ቤት ትምህርቲ መወዳእታ ዝርዝር ዋጋ ምስ ኣረጋገጸት ዕድጊ ይኽፈት።"
+    "description": "ንጽል ትምህርትን ፓኬጃትን ኣወዳድር። ኩሉ ዋጋታት ቫት የጠቓልል።"
   },
   "product": {
     "popular": "ዝያዳ ዝምረጽ",
@@ -176,7 +176,12 @@
     "emptyDescription": "እቲ ዝርዝር ይሕደስ ኣሎ። ቀልጢፍካ ተመለስ።",
     "included": "ዝጠቓለል",
     "priceIncludesVat": "ዋጋ ምስ ቫት",
-    "perLesson": "per lektion",
+    "perLesson": "ንነፍሲ ወከፍ ትምህርቲ",
+    "images": {
+      "en-korlektion": "ተማሃራይን መምህርን ኣብ ትምህርቲ ምዝዋር",
+      "testlektion": "መምህር ቅድሚ ናይ ግምገማ ትምህርቲ ምዝዋር ይገልጽ",
+      "korpaket-b3": "ሰለስተ ትምህርቲ፣ ተማሃራይ ኣብ ርጉእ መንገዲ ይዝውር"
+    },
     "validityMonths": "Gäller i {count} månader",
     "kind": {
       "SINGLE_LESSON": "ENSTAKA LEKTION",
@@ -190,8 +195,8 @@
     "availableDescription": "እዚ ፍርያት ንጡፍ እዩ፣ ሕጂ ክዕደግ ይኽእል።",
     "inactiveDescription": "ዋጋ ንምውድዳር ይረአ። ኩሉ ዝጠቓለለ ኣገልግሎት ክሳብ ዝዳሎ ክዕደግ ኣይክእልን።",
     "checkout": {
-      "terms": "ንድፊ ውዕል ዕድጊ ተቐቢለ።",
-      "withdrawal": "ንድፊ 14 መዓልቲ መሰል ምስራዝ ኣንቢበ፣ ኣገልግሎት ብመደቡ ክጅምር እሓትት።",
+      "terms": "ውዕል ዕድጊ ተቐቢለ።",
+      "withdrawal": "ብዛዕባ 14 መዓልቲ መሰል ምስራዝ ኣንቢበ፣ ኣገልግሎት ብመደቡ ክጅምር እሓትት።",
       "submit": "ናብ ክፍሊት ቀጽል",
       "redirecting": "ክፍሊት ይኽፈት ኣሎ…",
       "error": "ክፍሊት ክጅምር ኣይከኣለን። እቶ እሞ ደጊምካ ፈትን።"
@@ -297,7 +302,7 @@
     "teaser": {
       "eyebrow": "ናይ መራኸቢ ንድፊ",
       "title": "ንድፊ ብቋንቋኻ ኣጽንዕ",
-      "description": "ልዕሊ 1 200 ሕቶታት ምስ ድምጺን ቪድዮን። ብምድብ ተለማመድ፣ ናይ ምርኢት ፈተናታት ግበር፣ ኣብ ቅድሚ ፈተና ኣበይ ከም እትርከብ ርአ።",
+      "description": "ብምድብ ተለማመድ እሞ ከም ናይ ፍልጠት ፈተና ዝመስል ልምምድ ፈተና ግበር። ናሙና ብነጻ እዩ። ዝተረፈ ምስ ቲዮሪ ምግዛእ ይኽፈት።",
       "tryFree": "ነጻ ሕቶታት ፈትን",
       "buy": "ናይ ንድፊ መእተዊ ዓድግ",
       "pending": "ባንክ ሕቶታት ምስ ተዳለወ ይወጽእ"
@@ -319,6 +324,7 @@
     "selectAnswer": "መጀመርታ መልሲ ምረጽ።",
     "signInToAnswer": "መልስኻ ንምዕቃብ ከም ተማሃራይ እቶ።",
     "answerError": "መልሲ ክዕቀብ ኣይከኣለን። ደጊምካ ፈትን።",
+    "imageMissing": "ስእሊ የለን",
     "exam": {
       "eyebrow": "ናይ ፈተነ መርመራ",
       "title": "ከም ናይ ሓቂ ፈተና ተዳሎ",
@@ -430,9 +436,8 @@
     },
     "checkout": {
       "title": "ቅድሚ ክፍሊት ስምምዕ",
-      "draft": "ናይ ዓሚልን ሕጋዊ ክለሳን ዝጽበ ንድፊ።",
-      "termsConsent": "ንድፊ ውዕል ዕድጊ ኣንቢበ ተሰማሚዐ።",
-      "withdrawalConsent": "ብዛዕባ 14 መዓልቲ መሰል ምስራዝ ንድፊ ኣንቢበ፣ እቲ ኣገልግሎት ብመሰረት ቆጸራ ክጅምር እሓትት።",
+      "termsConsent": "ውዕል ዕድጊ ተቐቢለ።",
+      "withdrawalConsent": "ብዛዕባ 14 መዓልቲ መሰል ምስራዝ ኣንቢበ፣ እቲ ኣገልግሎት ብመሰረት ቆጸራ ክጅምር እሓትት።",
       "continue": "ናብ ውሑስ ክፍሊት ቀጽል"
     },
     "confirmation": {
@@ -458,6 +463,15 @@
     "lastName": "ስም ኣቦ",
     "email": "ኢመይል",
     "password": "መሕለፊ ቃል",
+    "fullName": "ምሉእ ስም",
+    "showPassword": "መሕለፊ ቃል ኣርእይ",
+    "hidePassword": "መሕለፊ ቃል ሕባእ",
+    "or": "ወይ",
+    "continueWithGoogle": "ብGoogle ቀጽል",
+    "resendWait": "ሓድሽ ኮድ ድሕሪ {seconds} ሰ",
+    "identifier": "ኢመይል ወይ ቁጽሪ ሞባይል",
+    "forgotLink": "መሕለፊ ቃል ረሲዕካ?",
+    "newPassword": "ሓድሽ መሕለፊ ቃል",
     "phone": "ቁጽሪ ሞባይል",
     "phonePlaceholder": "+46 70 123 45 67",
     "phoneHint": "ሓደ ግዜ ዝጥቀመሉ ኮድ ብSMS ንሰድድ። ቁጽሪ ንቦታ ምሓዝ፣ መዘኻኸሪን ሓገዝን ይጥቀም።",
@@ -465,8 +479,8 @@
     "codeSentHint": "ካብ SMS ዝመጸ ኮድ ኣእቱ። ዘይረኸብካዮ? ሓድሽ ኮድ ስደድ።",
     "methodLabel": "መንገዲ ምእታው",
     "methods": {
-      "email": "ኢመይልን መሕለፊ ቃልን",
-      "phone": "ኮድ SMS"
+      "email": "መሕለፊ ቃል",
+      "phone": "ኮድ ብSMS"
     },
     "sendCode": "ኮድ ስደድ",
     "resendCode": "ሓድሽ ኮድ ስደድ",
@@ -475,7 +489,7 @@
     "working": "በጃኻ ተጸበ…",
     "devCode": "ንናይ ከባቢ ልምዓት ጥራይ – ኮድ: {code}",
     "secure": "ውሑስ መእተዊ ሕሳብ",
-    "support": "ናብ ሕሳብካ ንምእታው ሓገዝ የድልየካ? ብዝተገልጸ መራኸቢ ምስ ቤት ትምህርቲ ተራኸብ።",
+    "support": "ንምእታው ሓገዝ የድልየካ? 070-097 04 83 ደውል ወይ ናብ info@makina.se ጽሓፍ።",
     "context": {
       "eyebrow": "Makina Trafikskola",
       "title": "ቦታ ምሓዝ፣ ቀሪን ንድፊን ብቋንቋኻ",
@@ -492,10 +506,21 @@
     },
     "register": {
       "title": "ሕሳብ ክፈት",
-      "description": "ብቁጽሪ ሞባይል ጀምር። ኮድ ንሰድድ – ድሕሪኡ ትኣቱ።",
+      "description": "ዝርዝር ኣእቱ። ሕሳብ ኮድ SMS ምስሰማማዕ ይኽፈት።",
       "submit": "ሕሳብ ክፈት",
       "hasAccount": "ድሮ ሕሳብ ኣለካ?",
       "login": "እቶ"
+    },
+    "forgot": {
+      "title": "መሕለፊ ቃል ረሲዕካ",
+      "description": "ቁጽሪ ሞባይልካ ጽሓፍ። ኮድ ንሰድድ፣ ድሕሪኡ ሓድሽ መሕለፊ ቃል ትመርጽ።",
+      "submit": "ሓድሽ መሕለፊ ቃል ዓቅብ",
+      "done": "መሕለፊ ቃል ተቐይሩ። ብሓድሽ መሕለፊ ቃል እቶ።"
+    },
+    "verifyPhone": {
+      "title": "ቁጽሪ ሞባይል ኣረጋግጽ",
+      "description": "ንኮድን መዘኻኸሪን ስዊድናዊ ቁጽሪ ሞባይል የድሊ። እቲ ቁጽሪ ናይ ካልእ ሕሳብ እንተኾይኑ Google ናብቲ ሕሳብ ይተሓሓዝ።",
+      "submit": "ቁጽሪ ኣረጋግጽ"
     }
   },
   "student": {
@@ -712,11 +737,11 @@
       ],
       "seller": {
         "title": "ሸያጢ",
-        "body": "እዚ ኣገልግሎት ብ Makina Trafikskola AB ይሽየጥ።\nቑጽሪ ትካል፦ [ORGNR]።\nናይ ምብጻሕ ኣድራሻ፦ [BESOKSADRESS]።\nናይ ፖስታ ኣድራሻ፦ [POSTADRESS]።\nኢመይል፦ [EPOST]።\nተሌፎን፦ [TELEFON]።"
+        "body": "እዚ ኣገልግሎት ብ Makina Trafikskola AB ይሽየጥ።\nቑጽሪ ትካል፦ 559531-4146።\nናይ ምብጻሕ ኣድራሻ፦ Centralvägen 5, 194 77 Upplands Väsby።\nናይ ፖስታ ኣድራሻ፦ Centralvägen 5, 194 77 Upplands Väsby።\nኢመይል፦ info@makina.se።\nተሌፎን፦ 070-097 04 83።"
       },
       "prices": {
         "title": "ዋጋን ክፍሊትን",
-        "body": "ኩሉ ዋጋ ብስዊድናዊ ክሮና ምስ ቫት ይረአ።\nብካርድ፣ Swish ወይ Klarna ብ Stripe ትኸፍል።\nዋጋ ካብ ዝርዝር ፍርያት ይወሰድ። ንስኻ ዝሰደድካ መጠን ኣይጥቀምን።"
+        "body": "ኩሉ ዋጋ ብስዊድናዊ ክሮና ምስ ቫት ይረአ።\nብካርድ፣ Swish ወይ Klarna ብ Stripe ትኸፍል።\nዋጋ ካብ ዝርዝር ፍርያት ይወሰድ።\nቅብሊት ብ Stripe ናብ ኢመይልካ ይለኣኽ። ንዕለትና ኢመይል ኣይንሰድድን።\nኮድን መዘኻኸሪን ብ SMS ይለኣኽ።"
       },
       "delivery": {
         "title": "ኣገልግሎት ከመይ ይበጽሕ",
@@ -728,15 +753,15 @@
       },
       "cancellation": {
         "title": "ምቕያር ግዜን ምስራዝን",
-        "body": "ኣብ ቦታ ምሓዘይ ብባዕልኻ ክትስርዝ ትኽእል።\nካብ 24 ሰዓት ንላዕሊ እንተሰረዝካ ክረዲት ይምለስ።\nድሕሪኡ እንተሰረዝካ ኣይምለስን።\nቤት ትምህርቲ እንተሰረዘት ኩሉ ግዜ ይምለስ።\nናይ መወዳእታ ግዜ ከም ሰዓት ይረአ፣ ከም \"24 ሰዓት\" ኣይኮነን።"
+        "body": "ኣብ ቦታ ምሓዘይ ብባዕልኻ ክትስርዝ ትኽእል።\nካብ 24 ሰዓት ንላዕሊ እንተሰረዝካ ክረዲት ይምለስ።\nድሕሪኡ እንተሰረዝካ ኣይምለስን።\nቤት ትምህርቲ እንተሰረዘት ኩሉ ግዜ ይምለስ።"
       },
       "withdrawal": {
         "title": "መሰል ምስራዝ",
-        "body": "ከም ሕጊ ርሑቕ ውዕል 14 መዓልቲ ክትስርዝ ትኽእል።\nእቲ ግዜ ውዕል ምስ ተኣተወ ይጅምር።\nልዑላውነት፦ ብንጹር ከምእትሰማማዕ ኣገልግሎት ኣብቲ ግዜ ክጅምር፣ መሰል ምስራዝ ከምእትስእን እንተኣረጋገጽካ፣ ነቲ ዝተዋህበ ክፋል እዚ ልዑላውነት ይሰርሕ።\nክትስርዝ እንተደሊኻ ናብ [EPOST] ጽሓፍ።"
+        "body": "ከም ሕጊ ርሑቕ ውዕል 14 መዓልቲ ክትስርዝ ትኽእል።\nእቲ ግዜ ውዕል ምስ ተኣተወ ይጅምር።\nልዑላውነት፦ ብንጹር ከምእትሰማማዕ ኣገልግሎት ኣብቲ ግዜ ክጅምር፣ መሰል ምስራዝ ከምእትስእን እንተኣረጋገጽካ፣ ነቲ ዝተዋህበ ክፋል እዚ ልዑላውነት ይሰርሕ።\nክትስርዝ እንተደሊኻ ናብ info@makina.se ጽሓፍ።"
       },
       "complaints": {
         "title": "ጥርዓን",
-        "body": "መጀመርታ ናብ [EPOST] ወይ [TELEFON] ተራኸብ።\nእንተዘይተሰማማዕና ናብ ARN፣ arn.se ክትከይድ ትኽእል።\nመድረኽ EU ንኦንላይ ክትጥቀም ትኽእል፦ https://ec.europa.eu/consumers/odr"
+        "body": "መጀመርታ ናብ info@makina.se ወይ 070-097 04 83 ተራኸብ።\nእንተዘይተሰማማዕና ናብ ARN፣ arn.se ክትከይድ ትኽእል።\nመድረኽ EU ንኦንላይ ክትጥቀም ትኽእል፦ https://ec.europa.eu/consumers/odr"
       },
       "law": {
         "title": "ዝሰርሕ ሕጊ",
@@ -758,7 +783,7 @@
       ],
       "controller": {
         "title": "ሓላፊ ውልቃዊ ሓበሬታ",
-        "body": "Makina Trafikskola AB ሓላፊ እዩ።\nቑጽሪ ትካል፦ [ORGNR]።\nኣድራሻ፦ [BESOKSADRESS]።\nኢመይል፦ [EPOST]።\nተሌፎን፦ [TELEFON]።"
+        "body": "Makina Trafikskola AB ሓላፊ እዩ።\nቑጽሪ ትካል፦ 559531-4146።\nኣድራሻ፦ Centralvägen 5, 194 77 Upplands Väsby።\nኢመይል፦ info@makina.se።\nተሌፎን፦ 070-097 04 83።"
       },
       "collected": {
         "title": "እንታይ ንእከብ",
@@ -961,12 +986,14 @@
     "pageTitle": "ቴክኒካዊ ጸገም ኣጋጢሙ",
     "retry": "ደጊምካ ፈትን",
     "NO_CREDITS": "ናይ ፓኬጅ ክሬዲት የብልካን። ዝኽፈል ሓደ ወይ ናይ ፈተነ ትምህርቲ ምረጽ።",
-    "CHECKOUT_CONSENT_REQUIRED": "ቅድሚ ምቕጻል ክልቲኡ ናይ ክፍሊት ንድፊ ተሰማማዕ።",
+    "CHECKOUT_CONSENT_REQUIRED": "ቅድሚ ምቕጻል ውዕል ዕድጊን መሰል ምስራዝን ተሰማማዕ።",
     "INVALID_PICKUP_COORDINATES": "ኣብ ሽወደን ቅኑዕ ናይ ምውሳድ ኣድራሻ ምረጽ።",
     "TEACHER_HAS_FUTURE_BOOKINGS": "ቅድሚ መምህር ምብዛን ዝመጹ ቦታ ምሓዝ ቀይር ወይ ሰርዝ።",
     "INVALID_INPUT": "ሓበሬታ ኣረጋግጽ እሞ ደጊምካ ፈትን።",
     "INVALID_CREDENTIALS": "ኢመይል ወይ መሕለፊ ቃል ጌጋ እዩ።",
-    "ACCOUNT_EXISTS": "በዚ ኢመይል ሕሳብ ኣሎ።",
+    "ACCOUNT_EXISTS": "በዚ ኢመይል ወይ ስልኪ ሕሳብ ኣሎ።",
+    "NO_ACCOUNT": "በዚ ቁጽሪ ስልኪ ሕሳብ የለን።",
+    "GOOGLE_ALREADY_LINKED": "እዚ ቁጽሪ ሞባይል ምስ ካልእ Google ሕሳብ ተተሓሒዙ ኣሎ።",
     "INVALID_OTP": "ኮድ ጌጋ ወይ ዝወደቐ እዩ። ሓድሽ ሕተት።",
     "INVALID_PHONE": "ቅኑዕ ቁጽሪ ሞባይል ኣእቱ፣ ንኣብነት 0701234567 ወይ +46701234567።",
     "SMS_PROVIDER_NOT_CONFIGURED": "ናይ SMS ምእታው ገና ኣይተዳለወን። ምስ ቤት ትምህርቲ ተራኸብ ወይ ኢመይል ተጠቐም።",
@@ -1020,7 +1047,7 @@
     "phone": "ተሌፎን",
     "email": "ኢመይል",
     "openingHours": "ሰዓታት ስራሕ",
-    "openingHoursValue": "ሰኑይ–ዓርቢ 09.00–17.00፣ Europe/Stockholm።",
+    "openingHoursValue": "ሰኑይ–ዓርቢ 08.00–21.00፣ ቀዳም 08.00–19.00፣ ሰንበት ዕጹው (Europe/Stockholm)።",
     "locationsTitle": "ቦታታትና",
     "locationsDescription": "ካብ ኣርባዕተ ከባቢታት ሰሜን ስቶኮልም ንሰርሕ። ኣብ Google Maps መንገዲ ክፈት።",
     "directions": "መግለጺ መንገዲ",

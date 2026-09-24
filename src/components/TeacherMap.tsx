@@ -2,7 +2,23 @@
 
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import { Component, type ReactNode } from "react";
 import type { TeacherMarker } from "./GoogleMapClient";
+
+class MapBoundary extends Component<
+  { fallback: ReactNode; children: ReactNode },
+  { failed: boolean }
+> {
+  state = { failed: false };
+
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+
+  render() {
+    return this.state.failed ? this.props.fallback : this.props.children;
+  }
+}
 
 const GoogleMapClient = dynamic(() => import("./GoogleMapClient"), {
   ssr: false,
@@ -69,14 +85,32 @@ export function TeacherMap({
     );
   }
 
+  const fallback = (
+    <div className="rtl-no-mirror grid min-h-[30rem] place-items-center overflow-hidden rounded-lg border border-border bg-page p-6 text-center">
+      <div>
+        <h2 className="text-lg font-black">{missingKeyTitle}</h2>
+        {fallbackHref && fallbackLabel ? (
+          <Link
+            href={fallbackHref}
+            className="mt-5 inline-flex min-h-11 items-center justify-center rounded-sm border border-border-strong bg-card px-4 font-bold text-ink"
+          >
+            {fallbackLabel}
+          </Link>
+        ) : null}
+      </div>
+    </div>
+  );
+
   return (
-    <GoogleMapClient
-      apiKey={apiKey}
-      center={center}
-      label={label}
-      markers={markers}
-      selectedTeacherId={selectedTeacherId}
-      onSelectTeacher={onSelectTeacher}
-    />
+    <MapBoundary fallback={fallback}>
+      <GoogleMapClient
+        apiKey={apiKey}
+        center={center}
+        label={label}
+        markers={markers}
+        selectedTeacherId={selectedTeacherId}
+        onSelectTeacher={onSelectTeacher}
+      />
+    </MapBoundary>
   );
 }

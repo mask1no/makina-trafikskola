@@ -9,6 +9,8 @@ const required = {
   STRIPE_SECRET_KEY: "sk_test_value",
   STRIPE_WEBHOOK_SECRET: "whsec_value",
   NEXT_PUBLIC_SITE_URL: "https://example.com",
+  ELKS_API_USERNAME: "elks-user",
+  ELKS_API_PASSWORD: "elks-pass",
 };
 
 describe("production environment validation", () => {

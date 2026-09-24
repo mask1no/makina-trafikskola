@@ -5,12 +5,14 @@ import { useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";
 
+import { SignupForm } from "../(auth)/auth-ui";
 import { Button } from "@/components/Button";
 import { Card } from "@/components/Card";
 import { CheckboxField } from "@/components/CheckboxField";
 import { EmptyState } from "@/components/EmptyState";
 import { Input } from "@/components/Input";
 import { Notice } from "@/components/Notice";
+import { Select } from "@/components/Select";
 import { SlotChip } from "@/components/SlotChip";
 import { Stepper } from "@/components/Stepper";
 import { TeacherMap } from "@/components/TeacherMap";
@@ -61,6 +63,7 @@ type Props = {
   initiallyAuthenticated: boolean;
   cancellationWindowHours: number;
   mapApiKey?: string;
+  googleEnabled?: boolean;
 };
 
 function localDateKey(value: string, timeZone = "Europe/Stockholm") {
@@ -87,6 +90,7 @@ export function BookingFlow({
   initiallyAuthenticated,
   cancellationWindowHours,
   mapApiKey,
+  googleEnabled = false,
 }: Props) {
   const t = useTranslations("booking");
   const errors = useTranslations("errors");
@@ -115,12 +119,6 @@ export function BookingFlow({
   const [selectedSlot, setSelectedSlot] = useState("");
   const [loadingSlots, setLoadingSlots] = useState(false);
   const [authenticated, setAuthenticated] = useState(initiallyAuthenticated);
-  const [otpRequested, setOtpRequested] = useState(false);
-  const [phone, setPhone] = useState("");
-  const [code, setCode] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [devCode, setDevCode] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [booking, setBooking] = useState<Booking | null>(null);
@@ -273,50 +271,6 @@ export function BookingFlow({
     setStep((current) => Math.min(4, current + 1));
   }
 
-  async function requestOtp() {
-    setBusy(true);
-    setError("");
-    try {
-      const response = await fetch("/api/auth/otp/request", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ phone }),
-      });
-      const payload = await response.json().catch(() => null);
-      if (!response.ok) throw new Error(payload?.error?.code ?? "UNKNOWN");
-      if (typeof payload?.phone === "string" && payload.phone) {
-        setPhone(payload.phone);
-      }
-      setDevCode(payload?.devCode ?? "");
-      setOtpRequested(true);
-    } catch (reason) {
-      setError(reason instanceof Error ? reason.message : "UNKNOWN");
-    } finally {
-      setBusy(false);
-    }
-  }
-
-  async function verifyOtp() {
-    setBusy(true);
-    setError("");
-    try {
-      const response = await fetch("/api/auth/otp/verify", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ phone, code, firstName, lastName }),
-      });
-      const payload =
-        response.status === 204 ? null : await response.json().catch(() => null);
-      if (!response.ok) throw new Error(payload?.error?.code ?? "INVALID_OTP");
-      setAuthenticated(true);
-      await createBooking(true);
-    } catch (reason) {
-      setError(reason instanceof Error ? reason.message : "UNKNOWN");
-    } finally {
-      setBusy(false);
-    }
-  }
-
   async function createBooking(authenticatedNow = false) {
     if (!authenticatedNow && !authenticated && !initiallyAuthenticated) {
       setStep(4);
@@ -455,7 +409,6 @@ export function BookingFlow({
             {!paymentUnavailable ? (
               <Card className="mt-5" elevated>
                 <p className="font-bold">{t("checkout.title")}</p>
-                <p className="mt-2 text-sm text-ink-muted">{t("checkout.draft")}</p>
                 <div className="mt-4 grid gap-3">
                   <CheckboxField
                     id="booking-terms"
@@ -523,7 +476,7 @@ export function BookingFlow({
 
       {step === 0 ? (
         <section>
-          <h1 className="text-3xl font-black">{t("step.what.title")}</h1>
+          <h2 className="text-3xl font-black">{t("step.what.title")}</h2>
           <p className="mt-2 text-ink-muted">{t("step.what.description")}</p>
           <div className="mt-6 grid gap-2">
             {(["single", "credits", "test"] as const).map((option) => {
@@ -567,7 +520,7 @@ export function BookingFlow({
 
       {step === 1 ? (
         <section>
-          <h1 className="text-3xl font-black">{t("step.where.title")}</h1>
+          <h2 className="text-3xl font-black">{t("step.where.title")}</h2>
           <div className="mt-6 grid gap-3 sm:grid-cols-2">
             {(["school", "pickup"] as const).map((mode) => (
               <button
@@ -586,22 +539,19 @@ export function BookingFlow({
             ))}
           </div>
           {placeMode === "school" ? (
-            <div className="mt-5 grid gap-2">
-              <label htmlFor="booking-location" className="text-sm font-semibold">
-                {t("step.where.location")}
-              </label>
-              <select
+            <div className="mt-5">
+              <Select
+                label={t("step.where.location")}
                 id="booking-location"
                 value={locationId}
                 onChange={(event) => setLocationId(event.target.value)}
-                className="min-h-11 rounded-sm border border-border bg-card px-4"
               >
                 {locations.map((location) => (
                   <option value={location.id} key={location.id}>
                     {location.name}
                   </option>
                 ))}
-              </select>
+              </Select>
             </div>
           ) : (
             <div className="mt-5">
@@ -633,7 +583,7 @@ export function BookingFlow({
 
       {step === 2 ? (
         <section>
-          <h1 className="text-3xl font-black">{t("step.who.title")}</h1>
+          <h2 className="text-3xl font-black">{t("step.who.title")}</h2>
           <fieldset className="mt-5">
             <legend className="font-bold">{t("step.who.languageFirst")}</legend>
             <div className="mt-3 flex flex-wrap gap-2">
@@ -709,7 +659,7 @@ export function BookingFlow({
 
       {step === 3 ? (
         <section>
-          <h1 className="text-3xl font-black">{t("step.when.title")}</h1>
+          <h2 className="text-3xl font-black">{t("step.when.title")}</h2>
           {slots[0] ? (
             <button
               type="button"
@@ -770,29 +720,20 @@ export function BookingFlow({
 
       {step === 4 ? (
         <section>
-          <h1 className="text-3xl font-black">{t("account.title")}</h1>
+          <h2 className="text-3xl font-black">{t("account.title")}</h2>
           <p className="mt-2 leading-7 text-ink-muted">
             {t("account.description")}
           </p>
-          <div className="mt-6 grid gap-4">
-            {!otpRequested ? (
-              <>
-                <Input label={t("account.firstName")} value={firstName} onChange={(event) => setFirstName(event.target.value)} autoComplete="given-name" />
-                <Input label={t("account.lastName")} value={lastName} onChange={(event) => setLastName(event.target.value)} autoComplete="family-name" />
-                <Input label={t("account.phone")} value={phone} onChange={(event) => setPhone(event.target.value)} type="tel" autoComplete="tel" placeholder="+46…" />
-              </>
-            ) : (
-              <Input label={t("account.code")} value={code} onChange={(event) => setCode(event.target.value)} inputMode="numeric" autoComplete="one-time-code" />
-            )}
+          <div className="mt-6">
+            <SignupForm
+              locale={locale}
+              googleEnabled={googleEnabled}
+              onAuthenticated={async () => {
+                setAuthenticated(true);
+                await createBooking(true);
+              }}
+            />
           </div>
-          {devCode ? (
-            <p className="mt-3 rounded-sm bg-page p-3 text-sm">
-              {t("account.devCode", { code: devCode })}
-            </p>
-          ) : null}
-          <Button className="mt-5 w-full" disabled={busy} onClick={otpRequested ? verifyOtp : requestOtp}>
-            {otpRequested ? t("account.verify") : t("account.send")}
-          </Button>
           <Link
             href={`/${locale}/logga-in?next=${encodeURIComponent(`/${locale}/boka`)}`}
             className="mt-4 flex min-h-11 items-center justify-center text-sm font-bold underline underline-offset-4"

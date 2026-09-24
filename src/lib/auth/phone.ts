@@ -24,6 +24,15 @@ export function normalizePhoneToE164(input: string): string | null {
   return raw;
 }
 
+/** Swedish mobiles only. Accepts 070…, 70…, 0046… and +46… */
+export function normalizeSwedishPhone(input: string): string | null {
+  const compact = input.trim().replace(/[\s\-().]/g, "");
+  const withTrunk = /^7\d{7,11}$/.test(compact) ? `0${compact}` : input;
+  const phone = normalizePhoneToE164(withTrunk);
+  if (!phone?.startsWith("+46")) return null;
+  return phone;
+}
+
 export const e164PhoneSchema = {
   regex: /^\+[1-9]\d{7,14}$/,
 } as const;

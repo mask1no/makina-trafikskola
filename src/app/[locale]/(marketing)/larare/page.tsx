@@ -1,13 +1,15 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 import { EmptyState } from "@/components/EmptyState";
 import { PageHeader } from "@/components/PageHeader";
 import { PillFilter } from "@/components/PillFilter";
 import { Select } from "@/components/Select";
 import { TeacherCard } from "@/components/TeacherCard";
-import { TeacherMap } from "@/components/TeacherMap";
+import { SelectableTeacherMap } from "@/components/SelectableTeacherMap";
 import { isLocale, locales } from "@/i18n/routing";
+import { instructorsEnabled } from "@/lib/launch";
 
 import { getLocations, getTeachers } from "../_lib/data";
 import type { Transmission } from "@prisma/client";
@@ -37,6 +39,7 @@ export default async function LararePage(
   const searchParams = await props.searchParams;
   const params = await props.params;
   if (!isLocale(params.locale)) return null;
+  if (!instructorsEnabled()) notFound();
   setRequestLocale(params.locale);
   const t = await getTranslations();
   const locations = await getLocations();
@@ -205,12 +208,13 @@ export default async function LararePage(
         </section>
 
         <div className="mt-10 grid gap-10 lg:grid-cols-[.9fr_1.1fr]">
-          <section id="teacher-results" aria-label={t("teachers.results")}>
+          <section id="teacher-results" aria-label={t("teachers.results")} className="order-2 lg:order-1">
             {teachers.length ? (
               <div className="grid gap-8">
                 {teachers.map((teacher) => (
                   <TeacherCard
                     key={teacher.id}
+                    cardId={`teacher-${teacher.id}`}
                     locale={params.locale}
                     slug={teacher.slug}
                     name={`${teacher.user.firstName} ${teacher.user.lastName}`}
@@ -240,9 +244,9 @@ export default async function LararePage(
           </section>
           <section
             aria-label={t("map.title")}
-            className="lg:sticky lg:top-24 lg:self-start"
+            className="order-1 lg:sticky lg:top-24 lg:order-2 lg:self-start"
           >
-            <TeacherMap
+            <SelectableTeacherMap
               apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY}
               center={center}
               markers={teachers.flatMap((teacher) =>

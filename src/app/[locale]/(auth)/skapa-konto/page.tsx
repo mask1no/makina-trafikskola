@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 
-import { AuthForm } from "../AuthForm";
+import { SignupForm } from "../auth-ui";
 
 export default async function RegisterPage(
   props: {
@@ -20,8 +20,13 @@ export default async function RegisterPage(
           {t("title")}
         </h1>
         <p className="mt-3 leading-7 text-ink-muted">{t("description")}</p>
-        <div className="mt-8">
-          <AuthForm locale={params.locale} mode="register" />
+        <div className="mx-auto mt-8 w-full max-w-[420px] rounded-lg border border-border bg-card p-5 sm:p-6">
+          <SignupForm
+            locale={params.locale}
+            googleEnabled={Boolean(
+              process.env.AUTH_GOOGLE_ID && process.env.AUTH_GOOGLE_SECRET,
+            )}
+          />
         </div>
         <p className="mt-10 text-sm leading-6 text-ink-muted">{authT("support")}</p>
       </div>

@@ -1,7 +1,7 @@
+import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { EmptyState } from "@/components/EmptyState";
-import { Notice } from "@/components/Notice";
 import { PageHeader } from "@/components/PageHeader";
 import { ProductCard } from "@/components/ProductCard";
 import { isLocale } from "@/i18n/routing";
@@ -9,6 +9,15 @@ import { isLocale } from "@/i18n/routing";
 import { getProducts } from "../_lib/data";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata(
+  props: { params: Promise<{ locale: string }> },
+): Promise<Metadata> {
+  const { locale } = await props.params;
+  if (!isLocale(locale)) return {};
+  const t = await getTranslations({ locale, namespace: "lessons" });
+  return { title: t("title"), description: t("description") };
+}
 
 export default async function KorlektionerPage(
   props: {
@@ -25,7 +34,6 @@ export default async function KorlektionerPage(
     <div className="section-shell">
       <div className="site-container">
         <PageHeader eyebrow={t("lessons.eyebrow")} title={t("lessons.title")} description={t("lessons.description")} />
-        <Notice className="mt-6 max-w-3xl">{t("lessons.provisionalNotice")}</Notice>
         {products.length ? (
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {products.map((product) => (
@@ -61,6 +69,22 @@ export default async function KorlektionerPage(
                 swedishOnlyLabel={t("common.swedishOnly")}
                 unavailableLabel={t("product.notForSale")}
                 detailsLabel={t("common.readMore")}
+                imageSrc={
+                  product.slug === "en-korlektion"
+                    ? "/lessons/korlektion.jpg"
+                    : product.slug === "testlektion"
+                      ? "/lessons/testlektion.jpg"
+                      : product.slug === "korpaket-b3"
+                        ? "/lessons/tre-lektioner.jpg"
+                        : undefined
+                }
+                imageAlt={
+                  product.slug === "en-korlektion" ||
+                  product.slug === "testlektion" ||
+                  product.slug === "korpaket-b3"
+                    ? t(`product.images.${product.slug}`)
+                    : undefined
+                }
                 savingsLabel={product.compareAtOre && product.compareAtOre > product.priceOre
                   ? t("product.save", { percent: Math.round((1 - product.priceOre / product.compareAtOre) * 100) })
                   : undefined}

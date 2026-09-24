@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { redirect, notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { z } from "zod";
@@ -11,6 +12,9 @@ import { getStripe, stripeIsConfigured } from "@/lib/stripe";
 import { StripePaymentElement } from "./StripePaymentElement";
 
 export const dynamic = "force-dynamic";
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
 
 const paramsSchema = z.object({
   locale: z.enum(["sv", "en", "ti", "ar", "so"]),

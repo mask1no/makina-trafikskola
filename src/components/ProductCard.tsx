@@ -1,8 +1,9 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { CSSProperties } from "react";
 
 import { Badge } from "@/components/Badge";
-import { formatPrice } from "@/lib/pricing/format";
+import { formatPrice, perLessonOre } from "@/lib/pricing/format";
 
 type ProductCardProps = {
   locale: string;
@@ -28,6 +29,8 @@ type ProductCardProps = {
   unavailableLabel: string;
   detailsLabel: string;
   savingsLabel?: string;
+  imageSrc?: string;
+  imageAlt?: string;
 };
 
 export function ProductCard(props: ProductCardProps) {
@@ -42,6 +45,17 @@ export function ProductCard(props: ProductCardProps) {
       }`}
       style={tierStyle}
     >
+      {props.imageSrc ? (
+        <div className="relative aspect-[16/10] overflow-hidden bg-surface">
+          <Image
+            src={props.imageSrc}
+            alt={props.imageAlt ?? ""}
+            fill
+            sizes="(min-width: 1024px) 30vw, 100vw"
+            className="rtl-no-mirror object-cover"
+          />
+        </div>
+      ) : null}
       <div className="p-6 pb-0">
         <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-ink-muted">
           {props.tierLabel}
@@ -96,7 +110,7 @@ export function ProductCard(props: ProductCardProps) {
           ) : null}
           {props.lessonCredits > 0 ? (
             <p className="mt-3 text-sm font-semibold text-ink">
-              <bdi>{formatPrice(Math.round(props.priceOre / props.lessonCredits), props.locale)}</bdi>{" "}
+              <bdi>{formatPrice(perLessonOre(props.priceOre, props.lessonCredits), props.locale)}</bdi>{" "}
               {props.perLessonLabel}
             </p>
           ) : null}

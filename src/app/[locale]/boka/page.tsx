@@ -1,12 +1,17 @@
+import type { Metadata } from "next";
 import { auth } from "@/auth";
 import { isLocale } from "@/i18n/routing";
 import { db } from "@/lib/db";
+import { bookingEnabled } from "@/lib/launch";
 import { notFound } from "next/navigation";
 import { orderedTeacherIds } from "@/lib/teachers/query";
 
 import { BookingFlow } from "./BookingFlow";
 
 export const dynamic = "force-dynamic";
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
 
 function configuredCancellationHours() {
   const value = Number(process.env.CANCELLATION_WINDOW_HOURS ?? "24");
@@ -22,6 +27,7 @@ export default async function BookingPage(
   const searchParams = await props.searchParams;
   const params = await props.params;
   if (!isLocale(params.locale)) notFound();
+  if (!bookingEnabled()) notFound();
 
   const session = await auth();
   const preferredLanguages =
@@ -110,6 +116,9 @@ export default async function BookingPage(
           }).filter((marker): marker is { lat: number; lng: number } => Boolean(marker)),
         }))}
         initialTeacherId={initialTeacherId}
+        googleEnabled={Boolean(
+          process.env.AUTH_GOOGLE_ID && process.env.AUTH_GOOGLE_SECRET,
+        )}
         initiallyAuthenticated={
           session?.user?.role === "STUDENT" && Boolean(session.user.id)
         }

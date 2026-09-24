@@ -1,19 +1,19 @@
 {
   "placeholders": {
     "note": "Ku beddel [TOKEN] kasta faylkan ka hor furitaanka. Isla calaamadaha ayaa loo isticmaalaa shuruudaha, sirta iyo /kontakt.",
-    "ORGNR": "[ORGNR]",
-    "BESOKSADRESS": "[BESOKSADRESS]",
-    "POSTADRESS": "[POSTADRESS]",
-    "TELEFON": "[TELEFON]",
-    "EPOST": "[EPOST]"
+    "ORGNR": "559531-4146",
+    "BESOKSADRESS": "Centralvägen 5, 194 77 Upplands Väsby",
+    "POSTADRESS": "Centralvägen 5, 194 77 Upplands Väsby",
+    "TELEFON": "070-097 04 83",
+    "EPOST": "info@makina.se"
   },
   "company": {
     "legalName": "Makina Trafikskola AB",
-    "orgnr": "[ORGNR]",
-    "visitingAddress": "[BESOKSADRESS]",
-    "postalAddress": "[POSTADRESS]",
-    "phone": "[TELEFON]",
-    "email": "[EPOST]"
+    "orgnr": "559531-4146",
+    "visitingAddress": "Centralvägen 5, 194 77 Upplands Väsby",
+    "postalAddress": "Centralvägen 5, 194 77 Upplands Väsby",
+    "phone": "070-097 04 83",
+    "email": "info@makina.se"
   },
   "language": {
     "label": "Dooro luqadda",
@@ -34,6 +34,7 @@
     "lessons": "Casharrada wadista",
     "teachers": "Macallimiinta",
     "book": "Hadda qabso",
+    "scrollTop": "Kor u noqo",
     "signIn": "Gal",
     "signOut": "Ka bax",
     "account": "Akoonkayga",
@@ -45,7 +46,7 @@
     "calendar": "Jadwalka",
     "students": "Ardayda",
     "contact": "Nala soo xiriir",
-    "openingHours": "Saacadaha furitaanka: Isn–Jim 09–17",
+    "openingHours": "Saacadaha furitaanka: Isn–Jim 08–21, Sab 08–19",
     "copyright": "© {year} Makina Trafikskola",
     "footerDescription": "Waxbarashada wadista oo leh hagid cad iyo taageero luqaddaada ah.",
     "explore": "Sahamin",
@@ -163,8 +164,7 @@
   "lessons": {
     "eyebrow": "Qiimayaasha iyo xirmooyinka",
     "title": "Casharro wadis marxalad kasta",
-    "description": "Isbarbar dhig casharrada keli ah iyo xirmooyinka. Dhammaan qiimayaasha waxa ku jira VAT.",
-    "provisionalNotice": "Qiimaha waxaa loo muujiyaa sidii qabyo. Iibsigu wuu furmayaa marka dugsigu xaqiijiyo liiska qiimaha ee kama dambaysta ah."
+    "description": "Isbarbar dhig casharrada keli ah iyo xirmooyinka. Dhammaan qiimayaasha waxa ku jira VAT."
   },
   "product": {
     "popular": "Ugu caansan",
@@ -176,7 +176,12 @@
     "emptyDescription": "Liiska waa la cusboonaysiinayaa. Mar dhow soo noqo.",
     "included": "Waxa ku jira",
     "priceIncludesVat": "Qiimaha VAT-ku ku jiro",
-    "perLesson": "per lektion",
+    "perLesson": "cashar kasta",
+    "images": {
+      "en-korlektion": "Arday iyo macallin inta casharka wadista socdo",
+      "testlektion": "Macallinku wuxuu ka hadlayaa wadista ka hor casharka qiimaynta",
+      "korpaket-b3": "Saddex cashar, ardaygu wuxuu wadaa waddo deggan"
+    },
     "validityMonths": "Gäller i {count} månader",
     "kind": {
       "SINGLE_LESSON": "ENSTAKA LEKTION",
@@ -190,8 +195,8 @@
     "availableDescription": "Alaabtani way shaqaynaysaa, haddana waa la iibsan karaa.",
     "inactiveDescription": "Qiimaha waxa loo muujiyey isbarbardhig. Alaabtan lama iibsan karo ilaa dhammaan adeegyadeeda la bixin karo.",
     "checkout": {
-      "terms": "Waan aqbalay qabyo-qoraalka shuruudaha iibsiga.",
-      "withdrawal": "Waan akhriyey qabyo-qoraalka xaqa ka-noqoshada 14 maalmood, waxaanan codsanayaa in adeeggu waqtigiisa ku bilowdo.",
+      "terms": "Waan aqbalay shuruudaha iibsiga.",
+      "withdrawal": "Waan akhriyey xaqa ka-noqoshada 14 maalmood, waxaanan codsanayaa in adeeggu waqtigiisa ku bilowdo.",
       "submit": "U gudub lacag-bixinta",
       "redirecting": "Lacag-bixinta waa la furayaa…",
       "error": "Lacag-bixinta lama bilaabi karin. Gal oo mar kale isku day."
@@ -297,7 +302,7 @@
     "teaser": {
       "eyebrow": "Aragtida shahaadada",
       "title": "Baro aragtida luqaddaada",
-      "description": "In ka badan 1,200 su'aalood oo leh maqal iyo fiidiyoow. Ku tababar qayb qayb, samee imtixaanno tijaabo ah oo arag meesha aad taagan tahay ka hor imtixaanka aqoonta.",
+      "description": "Ku tababar qayb qayb oo samee imtixaan tijaabo ah oo la mid ah imtixaanka aqoonta. Tusaale ayaa bilaash ah. Inta kale way furantaa markaad iibsato teoriga.",
       "tryFree": "Isku day su'aalaha bilaashka ah",
       "buy": "Iibso gelitaanka aragtida",
       "pending": "Waxaa la sii daayaa marka kaydka su'aalaha diyaar yahay"
@@ -319,6 +324,7 @@
     "selectAnswer": "Marka hore dooro jawaab.",
     "signInToAnswer": "Arday ahaan u gal si jawaabta loo kaydiyo.",
     "answerError": "Jawaabta lama kaydin karin. Mar kale isku day.",
+    "imageMissing": "Sawirka ma jiro",
     "exam": {
       "eyebrow": "Imtixaan tijaabo",
       "title": "Isu diyaari xaaladda imtixaanka",
@@ -430,9 +436,8 @@
     },
     "checkout": {
       "title": "Oggolaansho ka hor bixinta",
-      "draft": "Qoraal qabyo ah oo sugaya dib-u-eegista macmiilka iyo sharciga.",
-      "termsConsent": "Waan akhriyey oo aqbalay qabyo-qoraalka shuruudaha iibsiga.",
-      "withdrawalConsent": "Waan akhriyey qabyo-qoraalka xaqa ka-noqoshada 14 maalmood, waxaanan codsanayaa in adeeggu ku bilowdo waqtiga la ballamay.",
+      "termsConsent": "Waan aqbalay shuruudaha iibsiga.",
+      "withdrawalConsent": "Waan akhriyey xaqa ka-noqoshada 14 maalmood, waxaanan codsanayaa in adeeggu ku bilowdo waqtiga la ballamay.",
       "continue": "U gudub lacag-bixin ammaan ah"
     },
     "confirmation": {
@@ -458,6 +463,15 @@
     "lastName": "Magaca dambe",
     "email": "Iimayl",
     "password": "Furaha sirta",
+    "fullName": "Magaca oo dhan",
+    "showPassword": "Muuji furaha",
+    "hidePassword": "Qari furaha",
+    "or": "ama",
+    "continueWithGoogle": "Ku sii wad Google",
+    "resendWait": "Dir koodh cusub {seconds} ilbiriqsi",
+    "identifier": "Iimayl ama lambarka moobilka",
+    "forgotLink": "Ma illowday furaha?",
+    "newPassword": "Furaha cusub",
     "phone": "Lambarka moobilka",
     "phonePlaceholder": "+46 70 123 45 67",
     "phoneHint": "Waxaan kuu dirnaa koodh hal mar ah oo farriin qoraal ah. Lambarka waxaa loo isticmaalaa ballamaha, xusuusinaha iyo taageerada.",
@@ -465,8 +479,8 @@
     "codeSentHint": "Geli koodhka farriinta. Ma helin? Dir koodh cusub.",
     "methodLabel": "Habka gelitaanka",
     "methods": {
-      "email": "Iimayl iyo furaha sirta",
-      "phone": "Koodh farriin qoraal ah"
+      "email": "Furaha sirta",
+      "phone": "Koodh SMS"
     },
     "sendCode": "Dir koodhka",
     "resendCode": "Dir koodh cusub",
@@ -475,7 +489,7 @@
     "working": "Fadlan sug…",
     "devCode": "Horumarinta maxalliga oo keliya – koodh: {code}",
     "secure": "Gelitaan akoon oo ammaan ah",
-    "support": "Ma u baahan tahay caawimo gelitaanka akoonka? Kala xidhiidh dugsiga habka taageerada ee la shaaciyey.",
+    "support": "Ma u baahan tahay caawimo gelitaanka? Wac 070-097 04 83 ama email u dir info@makina.se.",
     "context": {
       "eyebrow": "Makina Trafikskola",
       "title": "Ballamaha, hadhaaga iyo aragtida luqaddaada",
@@ -492,10 +506,21 @@
     },
     "register": {
       "title": "Samee akoon",
-      "description": "Ku bilow lambarka moobilka. Waxaan dirnaa koodh – ka dib waad gashaa.",
+      "description": "Buuxi xogta. Akoonka waa la sameeyaa marka koodhka SMS sax yahay.",
       "submit": "Samee akoon",
       "hasAccount": "Akoon hore ma leedahay?",
       "login": "Gal"
+    },
+    "forgot": {
+      "title": "Illowday furaha",
+      "description": "Geli lambarka moobilka. Waxaan dirnaa koodh, ka dibna dooro furaha cusub.",
+      "submit": "Kaydi furaha cusub",
+      "done": "Furaha waa la beddelay. Ku gal furaha cusub."
+    },
+    "verifyPhone": {
+      "title": "Xaqiiji lambarka moobilka",
+      "description": "Waxaan u baahanahay lambar moobil Iswiidhan ah oo loogu talagalay koodhadhka iyo xusuusinta. Haddii lambarku hore akoon u lahaa, Google waxaa lagu xiraa akoonkaas.",
+      "submit": "Xaqiiji lambarka"
     }
   },
   "student": {
@@ -712,11 +737,11 @@
       ],
       "seller": {
         "title": "Iibiyaha",
-        "body": "Adeegga waxaa iibiya Makina Trafikskola AB.\nLambarka ururka: [ORGNR].\nCinwaanka booqashada: [BESOKSADRESS].\nCinwaanka boostada: [POSTADRESS].\nIimayl: [EPOST].\nTelefoon: [TELEFON]."
+        "body": "Adeegga waxaa iibiya Makina Trafikskola AB.\nLambarka ururka: 559531-4146.\nCinwaanka booqashada: Centralvägen 5, 194 77 Upplands Väsby.\nCinwaanka boostada: Centralvägen 5, 194 77 Upplands Väsby.\nIimayl: info@makina.se.\nTelefoon: 070-097 04 83."
       },
       "prices": {
         "title": "Qiimaha iyo lacag-bixinta",
-        "body": "Dhammaan qiimuhu waa kronor Iswidhish ah oo VAT ku jirto.\nWaxaad ku bixisaa kaadh, Swish ama Klarna iyada oo loo marayo Stripe.\nQiimaha waxaa laga qaadaa liiska alaabta marka la iibsado. Qadarka aad adigu dirto lama isticmaalo."
+        "body": "Dhammaan qiimuhu waa kronor Iswidhish ah oo VAT ku jirto.\nWaxaad ku bixisaa kaadh, Swish ama Klarna iyada oo loo marayo Stripe.\nQiimaha waxaa laga qaadaa liiska alaabta marka la iibsado.\nRasiidka waxaa dira Stripe oo ku taga iimaylkaaga. Annagu iimayl u ma dirno.\nKoodhadhka iyo xusuusinta waxaa lagu diraa SMS."
       },
       "delivery": {
         "title": "Sida adeegga loo geeyo",
@@ -728,15 +753,15 @@
       },
       "cancellation": {
         "title": "Dib-u-dejinta iyo baajinta",
-        "body": "Adiga ayaad baajin kartaa Ballamahayga.\nHaddii aad baajiso in ka badan 24 saacadood ka hor bilowga, dhibcaha waa laguu soo celiyaa.\nHaddii aad goor dambe baajiso, lama soo celiyo.\nHaddii dugsigu baajiyo, had iyo jeer waa laguu soo celiyaa.\nWaqtiga ugu dambeeya ee aad baajin karto waxaa loo muujiyaa saacad, ma aha \"24 saacadood\"."
+        "body": "Adiga ayaad baajin kartaa Ballamahayga.\nHaddii aad baajiso in ka badan 24 saacadood ka hor bilowga, dhibcaha waa laguu soo celiyaa.\nHaddii aad goor dambe baajiso, lama soo celiyo.\nHaddii dugsigu baajiyo, had iyo jeer waa laguu soo celiyaa."
       },
       "withdrawal": {
         "title": "Xaqqa ka-noqoshada",
-        "body": "Waxaad leedahay 14 maalmood oo ka-noqoshada sharciga iibsiga fog.\nMuddadu waxay bilaabataa marka heshiiska la galo.\nKa-reebitaan: haddii aad si cad u oggolaato in adeeggu ku bilaabmo muddadaas, oo aad xaqiijiso inaad lumin karto xaqqa, ka-reebitaanku wuxuu khuseeyaa qaybta horay loo keenay.\nLa soo xiriir [EPOST] haddii aad rabto inaad ka noqoto."
+        "body": "Waxaad leedahay 14 maalmood oo ka-noqoshada sharciga iibsiga fog.\nMuddadu waxay bilaabataa marka heshiiska la galo.\nKa-reebitaan: haddii aad si cad u oggolaato in adeeggu ku bilaabmo muddadaas, oo aad xaqiijiso inaad lumin karto xaqqa, ka-reebitaanku wuxuu khuseeyaa qaybta horay loo keenay.\nLa soo xiriir info@makina.se haddii aad rabto inaad ka noqoto."
       },
       "complaints": {
         "title": "Cabashooyinka",
-        "body": "Marka hore nala soo xiriir [EPOST] ama [TELEFON].\nHaddii aanaan ku heshiin, waxaad u gudbin kartaa ARN, arn.se.\nWaxaad sidoo kale isticmaali kartaa madal EU: https://ec.europa.eu/consumers/odr"
+        "body": "Marka hore nala soo xiriir info@makina.se ama 070-097 04 83.\nHaddii aanaan ku heshiin, waxaad u gudbin kartaa ARN, arn.se.\nWaxaad sidoo kale isticmaali kartaa madal EU: https://ec.europa.eu/consumers/odr"
       },
       "law": {
         "title": "Sharciga khuseeya",
@@ -758,7 +783,7 @@
       ],
       "controller": {
         "title": "Mas'uulka xogta",
-        "body": "Makina Trafikskola AB waa mas'uulka.\nLambarka ururka: [ORGNR].\nCinwaan: [BESOKSADRESS].\nIimayl: [EPOST].\nTelefoon: [TELEFON]."
+        "body": "Makina Trafikskola AB waa mas'uulka.\nLambarka ururka: 559531-4146.\nCinwaan: Centralvägen 5, 194 77 Upplands Väsby.\nIimayl: info@makina.se.\nTelefoon: 070-097 04 83."
       },
       "collected": {
         "title": "Waxa aanu ururinno",
@@ -961,7 +986,7 @@
     "pageTitle": "Cillad farsamo ayaa dhacday",
     "retry": "Mar kale isku day",
     "NO_CREDITS": "Xirmadaada cashar kuma hadhin. Dooro cashar keli ah ama tijaabo oo lacag leh.",
-    "CHECKOUT_CONSENT_REQUIRED": "Aqbal labada qoraal ee qabyada ah ka hor intaadan sii wadin.",
+    "CHECKOUT_CONSENT_REQUIRED": "Aqbal shuruudaha iibsiga iyo xaqa ka-noqoshada ka hor intaadan sii wadin.",
     "INVALID_PICKUP_COORDINATES": "Dooro cinwaan sax ah oo lagaaga qaado gudaha Iswiidhan.",
     "TEACHER_HAS_FUTURE_BOOKINGS": "Rar ama baaji ballamaha mustaqbalka ee macallinka ka hor intaadan joojin.",
     "COURSE_ALREADY_BOOKED": "Waxaad hore u haysataa kursi la xaqiijiyey koorsadan.",
@@ -969,7 +994,9 @@
     "PRODUCT_TRANSLATION_MISSING": "Koorsadu waxay ka maqan tahay xogta alaabta ee loo baahan yahay.",
     "INVALID_INPUT": "Xogta hubi oo mar kale isku day.",
     "INVALID_CREDENTIALS": "Iimaylka ama furaha sirta waa khalad.",
-    "ACCOUNT_EXISTS": "Akoon iimaylkan leh ayaa jira.",
+    "ACCOUNT_EXISTS": "Akoon leh iimaylkan ama lambarkan ayaa jira.",
+    "NO_ACCOUNT": "Akoon ku jira lambarkan ma jiro.",
+    "GOOGLE_ALREADY_LINKED": "Lambarkan waxaa hore loogu xiray akoon kale oo Google ah.",
     "INVALID_OTP": "Koodhku waa khalad ama wuu dhacay. Mid cusub codso.",
     "INVALID_PHONE": "Geli lambarka moobilka oo sax ah, tusaale 0701234567 ama +46701234567.",
     "SMS_PROVIDER_NOT_CONFIGURED": "Gelitaanka SMS weli lama diyaarin. La xidhiidh dugsiga ama isticmaal iimayl.",
@@ -1020,7 +1047,7 @@
     "phone": "Telefoon",
     "email": "Iimayl",
     "openingHours": "Saacadaha shaqada",
-    "openingHoursValue": "Isniin–Jimce 09.00–17.00, Europe/Stockholm.",
+    "openingHoursValue": "Isniin–Jimce 08.00–21.00, Sabti 08.00–19.00, Axad xiran (Europe/Stockholm).",
     "locationsTitle": "Goobahayaga",
     "locationsDescription": "Waxaanu ka shaqeynaa afar goobood oo woqooyiga Stockholm ah. Fur jihada Google Maps.",
     "directions": "Jihada",

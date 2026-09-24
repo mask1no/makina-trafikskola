@@ -34,6 +34,7 @@ model User {
   id                 String    @id @default(cuid())
   email              String?   @unique
   phone              String?   @unique          // E.164, +46...
+  googleSub          String?   @unique
   emailVerifiedAt    DateTime?
   phoneVerifiedAt    DateTime?
   passwordHash       String?                    // null when phone-OTP only
@@ -535,6 +536,7 @@ model TheoryQuestion {
   imageUrl   String?
   difficulty Int            @default(2)  // 1–3, drives exam composition
   active     Boolean        @default(true)
+  sourceRef  String?        @unique
   version    Int            @default(1)
   createdAt  DateTime       @default(now())
 
@@ -647,6 +649,21 @@ model Notification {
   error     String?
 
   @@index([sentAt, sendAfter])
+}
+
+model RateLimit {
+  key       String   @id
+  count     Int      @default(0)
+  expiresAt DateTime
+
+  @@index([expiresAt])
+}
+
+model OtpCode {
+  phoneHash String   @id
+  codeHash  String
+  attempts  Int      @default(0)
+  expiresAt DateTime
 }
 
 model AuditLog {

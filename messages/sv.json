@@ -1,19 +1,19 @@
 {
   "placeholders": {
     "note": "Replace every [TOKEN] in this file before launch. The same tokens are used on köpvillkor, integritet and /kontakt.",
-    "ORGNR": "[ORGNR]",
-    "BESOKSADRESS": "[BESOKSADRESS]",
-    "POSTADRESS": "[POSTADRESS]",
-    "TELEFON": "[TELEFON]",
-    "EPOST": "[EPOST]"
+    "ORGNR": "559531-4146",
+    "BESOKSADRESS": "Centralvägen 5, 194 77 Upplands Väsby",
+    "POSTADRESS": "Centralvägen 5, 194 77 Upplands Väsby",
+    "TELEFON": "070-097 04 83",
+    "EPOST": "info@makina.se"
   },
   "company": {
     "legalName": "Makina Trafikskola AB",
-    "orgnr": "[ORGNR]",
-    "visitingAddress": "[BESOKSADRESS]",
-    "postalAddress": "[POSTADRESS]",
-    "phone": "[TELEFON]",
-    "email": "[EPOST]"
+    "orgnr": "559531-4146",
+    "visitingAddress": "Centralvägen 5, 194 77 Upplands Väsby",
+    "postalAddress": "Centralvägen 5, 194 77 Upplands Väsby",
+    "phone": "070-097 04 83",
+    "email": "info@makina.se"
   },
   "language": {
     "label": "Välj språk",
@@ -34,6 +34,7 @@
     "lessons": "Körlektioner",
     "teachers": "Lärare",
     "book": "Boka nu",
+    "scrollTop": "Till toppen",
     "signIn": "Logga in",
     "signOut": "Logga ut",
     "account": "Mitt konto",
@@ -46,7 +47,7 @@
     "students": "Elever",
     "contact": "Kontakt",
     "orgnrLabel": "Org.nr",
-    "openingHours": "Öppettider: mån–fre 09–17",
+    "openingHours": "Öppettider: mån–fre 08–21, lör 08–19",
     "copyright": "© {year} Makina Trafikskola",
     "footerDescription": "Körutbildning med tydlig vägledning och stöd på ditt språk.",
     "explore": "Utforska",
@@ -68,7 +69,7 @@
   "home": {
     "hero": {
       "brand": "Makina",
-      "eyebrow": "Din väg till körkortet",
+      "eyebrow": "Din väg till frihet!",
       "title": "Kör tryggt, lär på ditt språk",
       "description": "Körlektioner, teori och erfarna lärare i Stockholm – samlat på ett ställe.",
       "findTeacher": "Hitta lärare",
@@ -142,8 +143,7 @@
   "lessons": {
     "eyebrow": "Priser och paket",
     "title": "Körlektioner för varje steg",
-    "description": "Jämför enstaka lektioner och paket. Alla priser visas inklusive moms.",
-    "provisionalNotice": "Prislistan visas som utkast. Köpen öppnas när skolan har bekräftat den slutliga prislistan."
+    "description": "Jämför enstaka lektioner och paket. Alla priser visas inklusive moms."
   },
   "product": {
     "popular": "Populärast",
@@ -156,6 +156,11 @@
     "included": "Det här ingår",
     "priceIncludesVat": "Pris inklusive moms",
     "perLesson": "per lektion",
+    "images": {
+      "en-korlektion": "Elev och lärare under en körlektion",
+      "testlektion": "Läraren går igenom körningen före en testlektion",
+      "korpaket-b3": "Tre körlektioner, eleven kör på en lugn väg"
+    },
     "validityMonths": "Gäller i {count} månader",
     "kind": {
       "SINGLE_LESSON": "ENSTAKA LEKTION",
@@ -168,7 +173,7 @@
     },
     "availableDescription": "Produkten är aktiv och kan köpas nu.",
     "inactiveDescription": "Priset visas för jämförelse. Produkten kan inte köpas förrän alla delar kan levereras.",
-    "checkout": {"terms": "Jag godkänner utkastet till köpvillkor.", "withdrawal": "Jag har läst utkastet om 14 dagars ångerrätt och begär att tjänsten får börja enligt bokningen.", "submit": "Fortsätt till betalning", "redirecting": "Öppnar betalning…", "error": "Betalningen kunde inte startas. Logga in och försök igen."}
+    "checkout": {"terms": "Jag godkänner köpvillkoren.", "withdrawal": "Jag har läst om 14 dagars ångerrätt och begär att tjänsten får börja enligt bokningen.", "submit": "Fortsätt till betalning", "redirecting": "Öppnar betalning…", "error": "Betalningen kunde inte startas. Logga in och försök igen."}
   },
   "checkout": {
     "eyebrow": "Säker betalning",
@@ -253,7 +258,7 @@
     "teaser": {
       "eyebrow": "Körkortsteori",
       "title": "Plugga teorin på ditt språk",
-      "description": "Över 1 200 frågor med ljud och video. Öva kategori för kategori, gör övningsprov och se var du står inför kunskapsprovet.",
+      "description": "Öva kategori för kategori och gör övningsprov i samma form som kunskapsprovet. Ett urval är gratis. Resten öppnas när du köper teori.",
       "tryFree": "Prova gratisfrågor",
       "buy": "Köp teoriåtkomst",
       "pending": "Släpps så snart frågebanken är klar"
@@ -262,7 +267,7 @@
     "freeCount": "{count, plural, =1 {1 gratisfråga} other {# gratisfrågor}}", "swedishOnly": "Endast på svenska", "examLink": "Öppna övningsprovet",
     "emptyTitle": "Inga gratisfrågor är publicerade", "emptyDescription": "Vi inväntar verifierat och licensierat frågeinnehåll.",
     "paidAccess": "Aktiv teoriåtkomst", "freeAccess": "Gratisfrågor", "questionNumber": "Fråga {number}",
-    "categoryEmptyTitle": "Inga frågor är tillgängliga", "categoryEmptyDescription": "Kategorin saknar frågor som du har åtkomst till.", "submitAnswer": "Rätta svaret", "correct": "Rätt", "incorrect": "Inte rätt", "selectAnswer": "Välj ett svar först.", "signInToAnswer": "Logga in som elev för att spara ditt svar.", "answerError": "Svaret kunde inte sparas. Försök igen.",
+    "categoryEmptyTitle": "Inga frågor är tillgängliga", "categoryEmptyDescription": "Kategorin saknar frågor som du har åtkomst till.", "submitAnswer": "Rätta svaret", "correct": "Rätt", "incorrect": "Inte rätt", "selectAnswer": "Välj ett svar först.", "signInToAnswer": "Logga in som elev för att spara ditt svar.", "answerError": "Svaret kunde inte sparas. Försök igen.", "imageMissing": "Bild saknas",
     "exam": {"eyebrow": "Övningsprov", "title": "Förbered dig som på kunskapsprovet", "description": "Provet rättas på servern och avslutas efter den fasta tiden.", "questions": "Frågor", "time": "Minuter", "pass": "Rätt för godkänt", "ready": "Frågebanken är redo för ett fullständigt prov.", "unavailable": "Det finns inte 65 aktiva frågor som ditt konto har åtkomst till ännu.", "signIn": "Logga in som elev för att kontrollera provåtkomst.", "start": "Starta provet på 50 minuter", "starting": "Startar provet…", "finish": "Avsluta provet", "finishing": "Rättar…", "next": "Spara och fortsätt", "selectAnswer": "Välj ett svar först.", "progress": "Fråga {current} av {total}", "timeRemaining": "Tid kvar", "passed": "Godkänt", "failed": "Inte godkänt", "error": "Provet kunde inte uppdateras. Försök igen."}
   },
   "localSchool": {
@@ -348,9 +353,8 @@
     },
     "checkout": {
       "title": "Samtycke före betalning",
-      "draft": "Utkast som inväntar kundens och juristens granskning.",
-      "termsConsent": "Jag har läst och godkänner utkastet till köpvillkor.",
-      "withdrawalConsent": "Jag har läst utkastet om 14 dagars ångerrätt och begär att den bokade tjänsten får börja enligt bokningen.",
+      "termsConsent": "Jag godkänner köpvillkoren.",
+      "withdrawalConsent": "Jag har läst om 14 dagars ångerrätt och begär att den bokade tjänsten får börja enligt bokningen.",
       "continue": "Fortsätt till säker betalning"
     },
     "confirmation": {
@@ -373,13 +377,22 @@
     "lastName": "Efternamn",
     "email": "E-post",
     "password": "Lösenord",
+    "fullName": "Fullständigt namn",
+    "showPassword": "Visa lösenord",
+    "hidePassword": "Dölj lösenord",
+    "or": "eller",
+    "continueWithGoogle": "Fortsätt med Google",
+    "resendWait": "Skicka ny kod om {seconds} s",
+    "identifier": "E-post eller mobilnummer",
+    "forgotLink": "Glömt lösenord?",
+    "newPassword": "Nytt lösenord",
     "phone": "Mobilnummer",
     "phonePlaceholder": "+46 70 123 45 67",
     "phoneHint": "Vi skickar en engångskod med sms. Numret används för bokningar, påminnelser och support.",
     "code": "Sexsiffrig kod",
     "codeSentHint": "Skriv in koden från sms:et. Saknar du den? Skicka en ny kod.",
     "methodLabel": "Inloggningssätt",
-    "methods": {"email": "E-post och lösenord", "phone": "Kod via sms"},
+    "methods": {"email": "Lösenord", "phone": "Kod via SMS"},
     "sendCode": "Skicka kod",
     "resendCode": "Skicka ny kod",
     "verifyCode": "Verifiera och fortsätt",
@@ -387,21 +400,32 @@
     "working": "Vänta…",
     "devCode": "Endast lokal utveckling – kod: {code}",
     "secure": "Säker åtkomst till ditt konto",
-    "support": "Behöver du hjälp att komma åt kontot? Kontakta skolan via den publicerade supportkanalen.",
+    "support": "Behöver du hjälp att komma åt kontot? Ring 070-097 04 83 eller mejla info@makina.se.",
     "context": {"eyebrow": "Makina Trafikskola", "title": "Bokningar, saldo och teori på ditt språk", "bookings": "Se och hantera dina körlektioner", "balance": "Kontrollera tillgängliga lektionskrediter", "messages": "Följ service- och betalningsmeddelanden"},
     "login": {
       "title": "Logga in",
       "description": "Snabbast med mobilnummer och sms-kod. Du kan också använda e-post.",
       "submit": "Logga in",
-      "noAccount": "Har du inget konto?",
+      "noAccount": "Inget konto?",
       "create": "Skapa konto"
     },
     "register": {
       "title": "Skapa konto",
-      "description": "Börja med mobilnummer. Vi skickar en kod – sedan är du inne.",
+      "description": "Fyll i uppgifterna. Kontot skapas när sms-koden stämmer.",
       "submit": "Skapa konto",
       "hasAccount": "Har du redan ett konto?",
       "login": "Logga in"
+    },
+    "forgot": {
+      "title": "Glömt lösenord",
+      "description": "Skriv ditt mobilnummer. Vi skickar en kod, sedan väljer du ett nytt lösenord.",
+      "submit": "Spara nytt lösenord",
+      "done": "Lösenordet är bytt. Logga in med det nya lösenordet."
+    },
+    "verifyPhone": {
+      "title": "Bekräfta mobilnummer",
+      "description": "Vi behöver ett svenskt mobilnummer för koder och påminnelser. Om numret redan tillhör ett konto kopplas Google dit.",
+      "submit": "Bekräfta nummer"
     }
   },
   "student": {
@@ -569,14 +593,14 @@
     "metadata": "Kontaktuppgifter till Makina Trafikskola i Stockholm.",
     "eyebrow": "Hitta oss",
     "title": "Kontakt",
-    "description": "Här hittar du namn, organisationsnummer, adresser och hur du når oss. Fyll i platshållarna före lansering.",
+    "description": "Här hittar du namn, organisationsnummer, adresser, öppettider och hur du når oss.",
     "orgnr": "Organisationsnummer",
     "visitingAddress": "Besöksadress",
     "postalAddress": "Postadress",
     "phone": "Telefon",
     "email": "E-post",
     "openingHours": "Öppettider",
-    "openingHoursValue": "Måndag–fredag 09.00–17.00, Europe/Stockholm.",
+    "openingHoursValue": "Måndag–fredag 08.00–21.00, lördag 08.00–19.00, söndag stängt (Europe/Stockholm).",
     "locationsTitle": "Våra platser",
     "locationsDescription": "Vi utgår från fyra orter norr om Stockholm. Öppna vägbeskrivning i Google Maps.",
     "directions": "Vägbeskrivning",
@@ -591,11 +615,11 @@
       "sectionOrder": ["seller", "prices", "delivery", "validity", "cancellation", "withdrawal", "complaints", "law"],
       "seller": {
         "title": "Säljare",
-        "body": "Tjänsten säljs av Makina Trafikskola AB.\nOrganisationsnummer: [ORGNR].\nBesöksadress: [BESOKSADRESS].\nPostadress: [POSTADRESS].\nE-post: [EPOST].\nTelefon: [TELEFON]."
+        "body": "Tjänsten säljs av Makina Trafikskola AB.\nOrganisationsnummer: 559531-4146.\nBesöksadress: Centralvägen 5, 194 77 Upplands Väsby.\nPostadress: Centralvägen 5, 194 77 Upplands Väsby.\nE-post: info@makina.se.\nTelefon: 070-097 04 83."
       },
       "prices": {
         "title": "Priser och betalning",
-        "body": "Alla priser visas i svenska kronor inklusive moms.\nDu betalar med kort, Swish eller Klarna via Stripe.\nPriset hämtas från produktlistan vid köpet. Ett belopp som du själv skickar används inte."
+        "body": "Alla priser visas i svenska kronor inklusive moms.\nDu betalar med kort, Swish eller Klarna via Stripe.\nPriset hämtas från produktlistan vid köpet.\nKvitton skickas av Stripe till din e-post. Vi skickar inte egna e-postmeddelanden.\nKoder och påminnelser skickas med sms."
       },
       "delivery": {
         "title": "Leverans av tjänsten",
@@ -607,15 +631,15 @@
       },
       "cancellation": {
         "title": "Ombokning och avbokning",
-        "body": "Du kan avboka själv under Mina bokningar.\nAvbokar du mer än 24 timmar före start får du tillbaka krediten.\nAvbokar du senare får du inte tillbaka krediten.\nOm skolan avbokar får du alltid tillbaka krediten.\nTiden du senast kan avboka visas som ett klockslag, inte som \"24 timmar\"."
+        "body": "Du kan avboka själv under Mina bokningar.\nAvbokar du mer än 24 timmar före start får du tillbaka krediten.\nAvbokar du senare får du inte tillbaka krediten.\nOm skolan avbokar får du alltid tillbaka krediten."
       },
       "withdrawal": {
         "title": "Ångerrätt",
-        "body": "Du har 14 dagars ångerrätt enligt distansavtalslagen.\nÅngerfristen börjar när avtalet ingås.\nUndantag: om du uttryckligen samtycker till att tjänsten börjar under ångerfristen, och bekräftar att du då kan förlora ångerrätten, gäller det undantaget för den del som redan har levererats.\nKontakta oss på [EPOST] om du vill ångra köpet."
+        "body": "Du har 14 dagars ångerrätt enligt distansavtalslagen.\nÅngerfristen börjar när avtalet ingås.\nUndantag: om du uttryckligen samtycker till att tjänsten börjar under ångerfristen, och bekräftar att du då kan förlora ångerrätten, gäller det undantaget för den del som redan har levererats.\nKontakta oss på info@makina.se om du vill ångra köpet."
       },
       "complaints": {
         "title": "Reklamation och klagomål",
-        "body": "Hör av dig till oss först på [EPOST] eller [TELEFON].\nOm vi inte kommer överens kan du vända dig till Allmänna reklamationsnämnden (ARN), arn.se.\nDu kan också använda EU:s plattform för tvistlösning online: https://ec.europa.eu/consumers/odr"
+        "body": "Hör av dig till oss först på info@makina.se eller 070-097 04 83.\nOm vi inte kommer överens kan du vända dig till Allmänna reklamationsnämnden (ARN), arn.se.\nDu kan också använda EU:s plattform för tvistlösning online: https://ec.europa.eu/consumers/odr"
       },
       "law": {
         "title": "Tillämplig lag",
@@ -629,7 +653,7 @@
       "sectionOrder": ["controller", "collected", "purpose", "retention", "recipients", "rights", "supervisory"],
       "controller": {
         "title": "Personuppgiftsansvarig",
-        "body": "Makina Trafikskola AB är personuppgiftsansvarig.\nOrganisationsnummer: [ORGNR].\nAdress: [BESOKSADRESS].\nE-post: [EPOST].\nTelefon: [TELEFON]."
+        "body": "Makina Trafikskola AB är personuppgiftsansvarig.\nOrganisationsnummer: 559531-4146.\nAdress: Centralvägen 5, 194 77 Upplands Väsby.\nE-post: info@makina.se.\nTelefon: 070-097 04 83."
       },
       "collected": {
         "title": "Vad vi samlar in",
@@ -717,11 +741,13 @@
     "pageTitle": "Vi fick ett tekniskt problem",
     "retry": "Försök igen",
     "NO_CREDITS": "Du har inga paketkrediter. Välj en betald enstaka lektion eller testlektion i stället.",
-    "CHECKOUT_CONSENT_REQUIRED": "Godkänn båda utkasten före betalning för att fortsätta.",
+    "CHECKOUT_CONSENT_REQUIRED": "Godkänn köpvillkoren och ångerrätten för att fortsätta.",
     "INVALID_PICKUP_COORDINATES": "Välj en giltig hämtningsadress i Sverige.",
     "INVALID_INPUT": "Kontrollera uppgifterna och försök igen.",
     "INVALID_CREDENTIALS": "E-post eller lösenord är fel.",
-    "ACCOUNT_EXISTS": "Det finns redan ett konto med den e-postadressen.",
+    "ACCOUNT_EXISTS": "Det finns redan ett konto med den e-postadressen eller det mobilnumret.",
+    "NO_ACCOUNT": "Det finns inget konto med det mobilnumret.",
+    "GOOGLE_ALREADY_LINKED": "Det här mobilnumret är redan kopplat till ett annat Google-konto.",
     "INVALID_OTP": "Koden är fel eller har gått ut. Begär en ny kod.",
     "INVALID_PHONE": "Ange ett giltigt mobilnummer, till exempel 0701234567 eller +46701234567.",
     "SMS_PROVIDER_NOT_CONFIGURED": "Sms-inloggning är inte konfigurerad ännu. Kontakta skolan eller använd e-post.",

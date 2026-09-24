@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
@@ -10,6 +11,15 @@ import { resolveContent } from "@/lib/content/fallback";
 import { db } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata(
+  props: { params: Promise<{ locale: string }> },
+): Promise<Metadata> {
+  const { locale } = await props.params;
+  if (!isLocale(locale)) return {};
+  const t = await getTranslations({ locale, namespace: "theory" });
+  return { title: t("title"), description: t("description") };
+}
 
 export default async function TeoriPage(
   props: {

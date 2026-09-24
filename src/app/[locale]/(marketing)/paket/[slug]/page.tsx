@@ -7,7 +7,7 @@ import type { Metadata } from "next";
 import { auth } from "@/auth";
 import { Badge } from "@/components/Badge";
 import { Notice } from "@/components/Notice";
-import { formatPrice } from "@/lib/pricing/format";
+import { formatPrice, perLessonOre } from "@/lib/pricing/format";
 import { isLocale } from "@/i18n/routing";
 
 import { getProduct } from "../../_lib/data";
@@ -153,7 +153,7 @@ export default async function ProductDetailPage(
             <p className="mt-4 font-semibold">
               <bdi>
                 {formatPrice(
-                  Math.round(product.priceOre / product.lessonCredits),
+                  perLessonOre(product.priceOre, product.lessonCredits),
                   params.locale,
                 )}
               </bdi>{" "}

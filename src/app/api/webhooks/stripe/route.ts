@@ -68,7 +68,7 @@ function stripeNotificationId(
     | "payment_failed"
     | "lesson_payment_needs_rebooking"
     | "course_payment_needs_rebooking",
-  channel: "EMAIL" | "INAPP" = "EMAIL",
+  channel: "SMS" | "INAPP" = "INAPP",
 ) {
   return `stripe:${eventId}:${template}:${channel}`;
 }
@@ -329,7 +329,7 @@ export async function processVerifiedStripeEvent(
                       "http://localhost:3000",
                   ).origin,
                 ).toString();
-                for (const channel of ["EMAIL", "INAPP"] as const) {
+                for (const channel of ["SMS", "INAPP"] as const) {
                   const notification =
                     await tx.notification.create({
                       data: {
@@ -414,7 +414,7 @@ export async function processVerifiedStripeEvent(
                     "http://localhost:3000",
                 ).origin,
               ).toString();
-              for (const channel of ["EMAIL", "INAPP"] as const) {
+              for (const channel of ["SMS", "INAPP"] as const) {
                 const notification =
                   await tx.notification.create({
                     data: {

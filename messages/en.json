@@ -1,19 +1,19 @@
 {
   "placeholders": {
     "note": "Replace every [TOKEN] in this file before launch. The same tokens are used on the terms, privacy and /kontakt pages.",
-    "ORGNR": "[ORGNR]",
-    "BESOKSADRESS": "[BESOKSADRESS]",
-    "POSTADRESS": "[POSTADRESS]",
-    "TELEFON": "[TELEFON]",
-    "EPOST": "[EPOST]"
+    "ORGNR": "559531-4146",
+    "BESOKSADRESS": "Centralvägen 5, 194 77 Upplands Väsby",
+    "POSTADRESS": "Centralvägen 5, 194 77 Upplands Väsby",
+    "TELEFON": "070-097 04 83",
+    "EPOST": "info@makina.se"
   },
   "company": {
     "legalName": "Makina Trafikskola AB",
-    "orgnr": "[ORGNR]",
-    "visitingAddress": "[BESOKSADRESS]",
-    "postalAddress": "[POSTADRESS]",
-    "phone": "[TELEFON]",
-    "email": "[EPOST]"
+    "orgnr": "559531-4146",
+    "visitingAddress": "Centralvägen 5, 194 77 Upplands Väsby",
+    "postalAddress": "Centralvägen 5, 194 77 Upplands Väsby",
+    "phone": "070-097 04 83",
+    "email": "info@makina.se"
   },
   "language": {
     "label": "Choose language",
@@ -34,6 +34,7 @@
     "lessons": "Driving lessons",
     "teachers": "Instructors",
     "book": "Book now",
+    "scrollTop": "Back to top",
     "signIn": "Log in",
     "signOut": "Log out",
     "account": "My account",
@@ -45,7 +46,7 @@
     "calendar": "Calendar",
     "students": "Students",
     "contact": "Contact",
-    "openingHours": "Opening hours: Mon–Fri 09–17",
+    "openingHours": "Opening hours: Mon–Fri 08–21, Sat 08–19",
     "copyright": "© {year} Makina Trafikskola",
     "footerDescription": "Driving education with clear guidance and support in your language.",
     "explore": "Explore",
@@ -163,8 +164,7 @@
   "lessons": {
     "eyebrow": "Prices and packages",
     "title": "Driving lessons for every step",
-    "description": "Compare single lessons and packages. All prices include VAT.",
-    "provisionalNotice": "Prices are shown as a draft. Purchases open when the school confirms the final price list."
+    "description": "Compare single lessons and packages. All prices include VAT."
   },
   "product": {
     "popular": "Most popular",
@@ -176,7 +176,12 @@
     "emptyDescription": "The selection is being updated. Please check back soon.",
     "included": "What is included",
     "priceIncludesVat": "Price including VAT",
-    "perLesson": "per lektion",
+    "perLesson": "per lesson",
+    "images": {
+      "en-korlektion": "Student and instructor during a driving lesson",
+      "testlektion": "The instructor goes through the drive before an assessment lesson",
+      "korpaket-b3": "Three lessons, the student driving on a quiet road"
+    },
     "validityMonths": "Gäller i {count} månader",
     "kind": {
       "SINGLE_LESSON": "ENSTAKA LEKTION",
@@ -190,8 +195,8 @@
     "availableDescription": "This product is active and available to buy now.",
     "inactiveDescription": "The price is shown for comparison. This product cannot be purchased until every included service can be delivered.",
     "checkout": {
-      "terms": "I accept the draft terms of purchase.",
-      "withdrawal": "I have read the draft 14-day withdrawal information and request that the service may begin as scheduled.",
+      "terms": "I accept the terms of purchase.",
+      "withdrawal": "I have read about the 14-day right of withdrawal and request that the service may begin as scheduled.",
       "submit": "Continue to payment",
       "redirecting": "Opening payment…",
       "error": "Payment could not be started. Sign in and try again."
@@ -297,7 +302,7 @@
     "teaser": {
       "eyebrow": "Driving theory",
       "title": "Study theory in your language",
-      "description": "Over 1,200 questions with audio and video. Practise category by category, take mock exams and see where you stand before the knowledge test.",
+      "description": "Practise by category and take a mock test in the same form as the knowledge test. A sample is free. The rest opens when you buy theory.",
       "tryFree": "Try free questions",
       "buy": "Buy theory access",
       "pending": "Releases when the question bank is ready"
@@ -319,6 +324,7 @@
     "selectAnswer": "Choose an answer first.",
     "signInToAnswer": "Sign in as a student to save your answer.",
     "answerError": "The answer could not be saved. Try again.",
+    "imageMissing": "Image missing",
     "exam": {
       "eyebrow": "Mock exam",
       "title": "Prepare under real exam conditions",
@@ -430,9 +436,8 @@
     },
     "checkout": {
       "title": "Consent before payment",
-      "draft": "Draft wording pending client and legal review.",
-      "termsConsent": "I have read and accept the draft terms of purchase.",
-      "withdrawalConsent": "I have read the draft information about the 14-day withdrawal right and request that the booked service may begin as scheduled.",
+      "termsConsent": "I accept the terms of purchase.",
+      "withdrawalConsent": "I have read about the 14-day right of withdrawal and request that the booked service may begin as scheduled.",
       "continue": "Continue to secure payment"
     },
     "confirmation": {
@@ -458,6 +463,15 @@
     "lastName": "Last name",
     "email": "Email",
     "password": "Password",
+    "fullName": "Full name",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "or": "or",
+    "continueWithGoogle": "Continue with Google",
+    "resendWait": "Send a new code in {seconds} s",
+    "identifier": "Email or mobile number",
+    "forgotLink": "Forgot password?",
+    "newPassword": "New password",
     "phone": "Mobile number",
     "phonePlaceholder": "+46 70 123 45 67",
     "phoneHint": "We send a one-time code by text message. Your number is used for bookings, reminders and support.",
@@ -465,8 +479,8 @@
     "codeSentHint": "Enter the code from the text message. Missing it? Send a new code.",
     "methodLabel": "Sign-in method",
     "methods": {
-      "email": "Email and password",
-      "phone": "Text message code"
+      "email": "Password",
+      "phone": "Code by SMS"
     },
     "sendCode": "Send code",
     "resendCode": "Send a new code",
@@ -475,7 +489,7 @@
     "working": "Please wait…",
     "devCode": "Local development only – code: {code}",
     "secure": "Secure account access",
-    "support": "Need help accessing your account? Contact the school through its published support channel.",
+    "support": "Need help signing in? Call 070-097 04 83 or email info@makina.se.",
     "context": {
       "eyebrow": "Makina Trafikskola",
       "title": "Bookings, balance and theory in your language",
@@ -487,15 +501,26 @@
       "title": "Log in",
       "description": "Fastest with a mobile number and text code. You can also use email.",
       "submit": "Log in",
-      "noAccount": "Do not have an account?",
+      "noAccount": "No account?",
       "create": "Create account"
     },
     "register": {
       "title": "Create account",
-      "description": "Start with your mobile number. We send a code – then you are in.",
+      "description": "Fill in your details. The account is created when the text code is correct.",
       "submit": "Create account",
       "hasAccount": "Already have an account?",
       "login": "Log in"
+    },
+    "forgot": {
+      "title": "Forgot password",
+      "description": "Enter your mobile number. We send a code, then you choose a new password.",
+      "submit": "Save new password",
+      "done": "Password updated. Log in with the new password."
+    },
+    "verifyPhone": {
+      "title": "Confirm your mobile number",
+      "description": "We need a Swedish mobile number for codes and reminders. If the number already belongs to an account, Google is linked to that account.",
+      "submit": "Confirm number"
     }
   },
   "student": {
@@ -712,11 +737,11 @@
       ],
       "seller": {
         "title": "Seller",
-        "body": "The service is sold by Makina Trafikskola AB.\nOrganisation number: [ORGNR].\nVisiting address: [BESOKSADRESS].\nPostal address: [POSTADRESS].\nEmail: [EPOST].\nPhone: [TELEFON]."
+        "body": "The service is sold by Makina Trafikskola AB.\nOrganisation number: 559531-4146.\nVisiting address: Centralvägen 5, 194 77 Upplands Väsby.\nPostal address: Centralvägen 5, 194 77 Upplands Väsby.\nEmail: info@makina.se.\nPhone: 070-097 04 83."
       },
       "prices": {
         "title": "Prices and payment",
-        "body": "All prices are shown in Swedish kronor including VAT.\nYou pay by card, Swish or Klarna via Stripe.\nThe price is taken from the product list at purchase. An amount you send yourself is not used."
+        "body": "All prices are shown in Swedish kronor including VAT.\nYou pay by card, Swish or Klarna via Stripe.\nThe price is taken from the product list at purchase.\nStripe sends the receipt to your email. We do not send our own emails.\nCodes and reminders are sent by text message."
       },
       "delivery": {
         "title": "How the service is delivered",
@@ -728,15 +753,15 @@
       },
       "cancellation": {
         "title": "Rescheduling and cancellation",
-        "body": "You can cancel yourself under My bookings.\nIf you cancel more than 24 hours before the start, you get the credit back.\nIf you cancel later, you do not get the credit back.\nIf the school cancels, you always get the credit back.\nThe latest time you can cancel is shown as a clock time, not as \"24 hours\"."
+        "body": "You can cancel yourself under My bookings.\nIf you cancel more than 24 hours before the start, you get the credit back.\nIf you cancel later, you do not get the credit back.\nIf the school cancels, you always get the credit back."
       },
       "withdrawal": {
         "title": "Right of withdrawal",
-        "body": "You have 14 days to withdraw under the distance-selling act.\nThe period starts when the contract is made.\nException: if you clearly agree that the service starts during that period, and confirm that you may then lose the withdrawal right, that exception applies to the part already delivered.\nContact us at [EPOST] if you want to withdraw."
+        "body": "You have 14 days to withdraw under the distance-selling act.\nThe period starts when the contract is made.\nException: if you clearly agree that the service starts during that period, and confirm that you may then lose the withdrawal right, that exception applies to the part already delivered.\nContact us at info@makina.se if you want to withdraw."
       },
       "complaints": {
         "title": "Complaints",
-        "body": "Contact us first at [EPOST] or [TELEFON].\nIf we do not agree, you can turn to the National Board for Consumer Disputes (ARN), arn.se.\nYou can also use the EU online dispute platform: https://ec.europa.eu/consumers/odr"
+        "body": "Contact us first at info@makina.se or 070-097 04 83.\nIf we do not agree, you can turn to the National Board for Consumer Disputes (ARN), arn.se.\nYou can also use the EU online dispute platform: https://ec.europa.eu/consumers/odr"
       },
       "law": {
         "title": "Governing law",
@@ -758,7 +783,7 @@
       ],
       "controller": {
         "title": "Controller",
-        "body": "Makina Trafikskola AB is the controller.\nOrganisation number: [ORGNR].\nAddress: [BESOKSADRESS].\nEmail: [EPOST].\nPhone: [TELEFON]."
+        "body": "Makina Trafikskola AB is the controller.\nOrganisation number: 559531-4146.\nAddress: Centralvägen 5, 194 77 Upplands Väsby.\nEmail: info@makina.se.\nPhone: 070-097 04 83."
       },
       "collected": {
         "title": "What we collect",
@@ -961,11 +986,13 @@
     "pageTitle": "We ran into a technical problem",
     "retry": "Try again",
     "NO_CREDITS": "You have no package credits. Choose a paid single or trial lesson instead.",
-    "CHECKOUT_CONSENT_REQUIRED": "Accept both draft checkout statements before continuing.",
+    "CHECKOUT_CONSENT_REQUIRED": "Accept the terms of purchase and the withdrawal information to continue.",
     "INVALID_PICKUP_COORDINATES": "Choose a valid pickup address in Sweden.",
     "INVALID_INPUT": "Check the details and try again.",
     "INVALID_CREDENTIALS": "The email or password is incorrect.",
-    "ACCOUNT_EXISTS": "An account with this email already exists.",
+    "ACCOUNT_EXISTS": "An account with this email or mobile number already exists.",
+    "NO_ACCOUNT": "No account uses this mobile number.",
+    "GOOGLE_ALREADY_LINKED": "This mobile number is already linked to another Google account.",
     "INVALID_OTP": "The code is incorrect or expired. Request a new code.",
     "INVALID_PHONE": "Enter a valid mobile number, for example 0701234567 or +46701234567.",
     "SMS_PROVIDER_NOT_CONFIGURED": "Text-message sign-in is not configured yet. Contact the school or use email.",
@@ -1020,7 +1047,7 @@
     "phone": "Phone",
     "email": "Email",
     "openingHours": "Opening hours",
-    "openingHoursValue": "Monday–Friday 09.00–17.00, Europe/Stockholm.",
+    "openingHoursValue": "Monday–Friday 08.00–21.00, Saturday 08.00–19.00, Sunday closed (Europe/Stockholm).",
     "locationsTitle": "Our locations",
     "locationsDescription": "We work from four places north of Stockholm. Open directions in Google Maps.",
     "directions": "Directions",

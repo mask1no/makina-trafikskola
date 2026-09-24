@@ -74,6 +74,7 @@ export default async function TeoriKategoriPage(
               selectAnswer: t("selectAnswer"),
               signIn: t("signInToAnswer"),
               error: t("answerError"),
+              imageMissing: t("imageMissing"),
             }}
           />
         ) : (

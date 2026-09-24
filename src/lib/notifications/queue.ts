@@ -20,7 +20,7 @@ export async function enqueueBookingNotifications(
 ) {
   const ids: string[] = [];
 
-  for (const channel of ["EMAIL", "SMS"] as const) {
+  for (const channel of ["SMS", "INAPP"] as const) {
     const notification = await tx.notification.create({
       data: {
         userId: input.userId,
@@ -56,7 +56,7 @@ export async function enqueueOrderReceipt(
     data: {
       id: input.notificationId,
       userId: input.userId,
-      channel: "EMAIL",
+      channel: "INAPP",
       template: "order_receipt",
       locale: input.locale,
       payload: input.payload,
@@ -82,7 +82,7 @@ export async function enqueuePaymentFailed(
     data: {
       id: input.notificationId,
       userId: input.userId,
-      channel: "EMAIL",
+      channel: "INAPP",
       template: "payment_failed",
       locale: input.locale,
       payload: input.payload,

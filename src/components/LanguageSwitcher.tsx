@@ -85,7 +85,6 @@ export function LanguageSwitcher() {
     if (previousPathRef.current === pathname) return;
     previousPathRef.current = pathname;
     // Route changes are an external navigation event that closes the menu.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setOpen(false);
   }, [pathname]);
 

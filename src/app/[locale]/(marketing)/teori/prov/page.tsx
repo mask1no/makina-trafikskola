@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
@@ -9,6 +10,9 @@ import { hasTheoryAccess } from "@/lib/theory/access";
 import { ExamClient } from "./ExamClient";
 
 export const dynamic = "force-dynamic";
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
 
 export default async function TeoriprovPage(
   props: {
@@ -81,6 +85,7 @@ export default async function TeoriprovPage(
               passed: t("passed"),
               failed: t("failed"),
               error: t("error"),
+              imageMissing: t("imageMissing"),
             }}
           />
         </div>

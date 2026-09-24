@@ -22,6 +22,9 @@ export async function runCoreCron(now: Date) {
       const [lock] = await tx.$queryRaw<Array<{ locked: boolean }>>`
         SELECT pg_try_advisory_xact_lock(hashtext('makina-core-cron')) AS locked
       `;
+      await tx.rateLimit.deleteMany({ where: { expiresAt: { lt: now } } });
+      await tx.otpCode.deleteMany({ where: { expiresAt: { lt: now } } });
+
       if (!lock?.locked) {
         return {
           skipped: true,
@@ -169,7 +172,7 @@ export async function runCoreCron(now: Date) {
 
       const reminderIds: string[] = [];
       for (const booking of reminderBookings) {
-        for (const channel of ["EMAIL", "SMS"] as const) {
+        for (const channel of ["SMS"] as const) {
           if (existingKeys.has(`${booking.id}:${channel}`)) continue;
           const notification = await tx.notification.create({
             data: {

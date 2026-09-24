@@ -55,7 +55,7 @@ function TabIcon({ icon }: { icon: BottomTabIcon }) {
 export function BottomTabBar({ tabs }: { tabs: Tab[] }) {
   const pathname = usePathname();
   return (
-    <nav className="fixed bottom-0 start-0 end-0 z-40 border-t border-border bg-card pb-[env(safe-area-inset-bottom)] shadow-float md:hidden">
+    <nav className="fixed bottom-0 start-0 end-0 z-40 border-t border-border bg-card pb-[env(safe-area-inset-bottom)] shadow-float lg:hidden">
       <ul className="grid grid-cols-5">
         {tabs.map((tab) => (
           <li key={tab.href}>

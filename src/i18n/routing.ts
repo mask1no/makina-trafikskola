@@ -7,6 +7,7 @@ export const routing = defineRouting({
   locales,
   defaultLocale: "sv",
   localePrefix: "always",
+  localeDetection: false,
 });
 
 export function isLocale(value: string): value is Locale {

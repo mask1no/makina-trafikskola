@@ -11,10 +11,10 @@ export async function CookieConsent({ locale }: { locale: string }) {
   return (
     <aside
       aria-label={t("title")}
-      className="fixed inset-x-4 bottom-20 z-50 mx-auto max-w-3xl rounded-lg border border-surface-soft bg-surface p-5 text-ink-inverse shadow-float sm:p-6 md:bottom-4"
+      className="fixed inset-x-4 bottom-20 z-50 ms-auto me-auto max-w-3xl rounded-lg border border-surface-soft bg-surface p-5 text-ink-inverse shadow-float sm:p-6 md:bottom-4"
     >
       <h2 className="text-lg font-extrabold tracking-tight">{t("title")}</h2>
-      <p className="mt-2 text-sm leading-6 text-ink-muted">
+      <p className="mt-2 text-sm leading-6 text-ink-inverse-muted">
         {t("description")}{" "}
         <Link className="font-bold text-ink-inverse underline underline-offset-4" href={`/${locale}/cookies`}>
           {t("readMore")}

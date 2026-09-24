@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
 import { PageHeader } from "@/components/PageHeader";
+import { TeacherMap } from "@/components/TeacherMap";
 import { isLocale } from "@/i18n/routing";
 import { db } from "@/lib/db";
 
@@ -144,6 +145,29 @@ export default async function ContactPage(
         <section className="mt-10">
           <h2 className="text-2xl font-black">{t("locationsTitle")}</h2>
           <p className="mt-3 max-w-2xl text-ink-muted">{t("locationsDescription")}</p>
+          {locations[0] ? (
+            <div className="mt-6">
+              <TeacherMap
+                apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY}
+                center={{ lat: locations[0].lat, lng: locations[0].lng }}
+                label={t("locationsTitle")}
+                missingKeyTitle={t("locationsTitle")}
+                missingKeyDescription={t("locationsDescription")}
+                fallbackHref={mapsDirections(
+                  locations[0].address,
+                  locations[0].city,
+                  locations[0].postalCode,
+                )}
+                fallbackLabel={t("directions")}
+                markers={locations.map((location) => ({
+                  id: location.id,
+                  teacherId: location.id,
+                  title: location.name,
+                  position: { lat: location.lat, lng: location.lng },
+                }))}
+              />
+            </div>
+          ) : null}
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
             {locations.map((location) => (
               <article key={location.id} className="rounded-md border border-border bg-card p-5 shadow-soft">

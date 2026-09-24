@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { Avatar } from "@/components/Avatar";
 import { isLocale } from "@/i18n/routing";
 import { LinkButton } from "@/components/LinkButton";
+import { instructorsEnabled } from "@/lib/launch";
 
 import { getTeacher } from "../../_lib/data";
 
@@ -17,6 +18,7 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const params = await props.params;
   if (!isLocale(params.locale)) return {};
+  if (!instructorsEnabled()) return { robots: { index: false, follow: false } };
   const teacher = await getTeacher(params.locale, params.slug);
   if (!teacher) return {};
   const name = `${teacher.user.firstName} ${teacher.user.lastName}`;
@@ -38,6 +40,7 @@ export default async function TeacherDetailPage(
 ) {
   const params = await props.params;
   if (!isLocale(params.locale)) notFound();
+  if (!instructorsEnabled()) notFound();
   setRequestLocale(params.locale);
   const [t, teacher] = await Promise.all([
     getTranslations(),

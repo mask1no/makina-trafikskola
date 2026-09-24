@@ -1,9 +1,6 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import type { Metadata } from "next";
-import {
-  Noto_Sans_Arabic,
-  Noto_Sans_Ethiopic,
-} from "next/font/google";
 import { headers } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -14,21 +11,14 @@ import { Avatar } from "@/components/Avatar";
 import { BottomTabBar, type BottomTabIcon } from "@/components/BottomTabBar";
 import { CookieConsent } from "@/components/CookieConsent";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { ScrollToTop } from "@/components/ScrollToTop";
 import { ServiceWorkerRegistration } from "@/components/ServiceWorkerRegistration";
 import { isLocale, locales } from "@/i18n/routing";
 import { db } from "@/lib/db";
-
-const notoArabic = Noto_Sans_Arabic({
-  subsets: ["arabic"],
-  variable: "--font-arabic",
-  display: "swap",
-});
-
-const notoEthiopic = Noto_Sans_Ethiopic({
-  subsets: ["ethiopic"],
-  variable: "--font-ethiopic",
-  display: "swap",
-});
+import {
+  bookingEnabled,
+  instructorsEnabled,
+} from "@/lib/launch";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -82,6 +72,9 @@ export async function generateMetadata(
   const siteOrigin = validSiteOrigin();
   const localizedPath = (locale: string) =>
     `/${locale}${suffix === "/" ? "" : suffix}`;
+  const canonical = siteOrigin
+    ? `${siteOrigin}${localizedPath(params.locale)}`
+    : localizedPath(params.locale);
   const languages = Object.fromEntries(
     locales.map((locale) => [
       locale,
@@ -89,21 +82,36 @@ export async function generateMetadata(
     ]),
   );
   return {
+    ...(siteOrigin ? { metadataBase: new URL(siteOrigin) } : {}),
     title: {
       default: t("title"),
       template: `%s · ${t("brand")}`,
     },
     description: t("description"),
     alternates: {
-      canonical: siteOrigin
-        ? `${siteOrigin}${localizedPath(params.locale)}`
-        : localizedPath(params.locale),
+      canonical,
       languages: {
         ...languages,
         "x-default": siteOrigin
           ? `${siteOrigin}${localizedPath("sv")}`
           : localizedPath("sv"),
       },
+    },
+    openGraph: {
+      type: "website",
+      siteName: t("brand"),
+      title: t("title"),
+      description: t("description"),
+      url: canonical,
+      locale: params.locale,
+      alternateLocale: locales.filter((locale) => locale !== params.locale),
+      images: [{ url: "/hero.jpg", alt: t("brand") }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: t("title"),
+      description: t("description"),
+      images: ["/hero.jpg"],
     },
     manifest: "/manifest.webmanifest",
   };
@@ -130,7 +138,24 @@ export default async function LocaleLayout(
     getTranslations("company"),
     auth(),
   ]);
+  const pathname = (await headers()).get("x-makina-pathname") ?? "";
+  if (session?.user.id && !pathname.includes("/verifiera-mobil")) {
+    const account = await db.user.findUnique({
+      where: { id: session.user.id },
+      select: { googleSub: true, phoneVerifiedAt: true, deletedAt: true },
+    });
+    if (account?.googleSub && !account.phoneVerifiedAt && !account.deletedAt) {
+      redirect(`/${params.locale}/verifiera-mobil`);
+    }
+  }
   const base = `/${params.locale}`;
+  const currentPage = (href: string) =>
+    pathname === href ||
+    (href !== base && pathname.startsWith(`${href}/`))
+      ? "page"
+      : undefined;
+  const canBook = bookingEnabled();
+  const showInstructors = instructorsEnabled();
   const teacherProfile =
     session?.user.role === "TEACHER"
       ? await db.teacherProfile.findUnique({
@@ -184,7 +209,9 @@ export default async function LocaleLayout(
           : [
               { href: base, label: t("home"), icon: "home" },
               { href: `${base}/korlektioner`, label: t("packages"), icon: "packages" },
-              { href: `${base}/larare`, label: t("teachers"), icon: "bookings" },
+              ...(showInstructors
+                ? [{ href: `${base}/larare`, label: t("teachers"), icon: "bookings" as const }]
+                : []),
               { href: `${base}/teori`, label: t("theory"), icon: "messages" },
               { href: `${base}/logga-in`, label: t("signIn"), icon: "profile" },
             ]
@@ -192,7 +219,7 @@ export default async function LocaleLayout(
 
   return (
     <NextIntlClientProvider>
-      <div className={`${notoArabic.variable} ${notoEthiopic.variable} min-h-screen bg-page pb-[calc(4rem+env(safe-area-inset-bottom))] md:pb-0`}>
+      <div className="min-h-screen bg-page pb-[calc(4.5rem+env(safe-area-inset-bottom))] lg:pb-0">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -205,19 +232,21 @@ export default async function LocaleLayout(
               <Logo compactOnMobile />
             </Link>
             <nav className="ms-auto hidden items-center gap-1 lg:flex" aria-label={t("navigation")}>
-              <Link className="inline-flex min-h-11 items-center rounded-sm px-3 text-sm font-bold transition hover:bg-surface-raised" href={base}>
+              <Link aria-current={currentPage(base)} className="inline-flex min-h-11 items-center rounded-sm px-3 text-sm font-bold transition hover:bg-surface-raised aria-[current=page]:bg-surface-raised" href={base}>
                 {t("home")}
               </Link>
-              <Link className="inline-flex min-h-11 items-center rounded-sm px-3 text-sm font-bold transition hover:bg-surface-raised" href={`${base}/korlektioner`}>
+              <Link aria-current={currentPage(`${base}/korlektioner`)} className="inline-flex min-h-11 items-center rounded-sm px-3 text-sm font-bold transition hover:bg-surface-raised aria-[current=page]:bg-surface-raised" href={`${base}/korlektioner`}>
                 {t("lessons")}
               </Link>
-              <Link className="inline-flex min-h-11 items-center rounded-sm px-3 text-sm font-bold transition hover:bg-surface-raised" href={`${base}/larare`}>
-                {t("teachers")}
-              </Link>
-              <Link className="inline-flex min-h-11 items-center rounded-sm px-3 text-sm font-bold transition hover:bg-surface-raised" href={`${base}/teori`}>
+              {showInstructors ? (
+                <Link aria-current={currentPage(`${base}/larare`)} className="inline-flex min-h-11 items-center rounded-sm px-3 text-sm font-bold transition hover:bg-surface-raised aria-[current=page]:bg-surface-raised" href={`${base}/larare`}>
+                  {t("teachers")}
+                </Link>
+              ) : null}
+              <Link aria-current={currentPage(`${base}/teori`)} className="inline-flex min-h-11 items-center rounded-sm px-3 text-sm font-bold transition hover:bg-surface-raised aria-[current=page]:bg-surface-raised" href={`${base}/teori`}>
                 {t("theory")}
               </Link>
-              <Link className="inline-flex min-h-11 items-center rounded-sm px-3 text-sm font-bold transition hover:bg-surface-raised" href={`${base}/kontakt`}>
+              <Link aria-current={currentPage(`${base}/kontakt`)} className="inline-flex min-h-11 items-center rounded-sm px-3 text-sm font-bold transition hover:bg-surface-raised aria-[current=page]:bg-surface-raised" href={`${base}/kontakt`}>
                 {t("contact")}
               </Link>
             </nav>
@@ -281,10 +310,10 @@ export default async function LocaleLayout(
               </details>
             )}
             <Link
-              href={`${base}/boka`}
+              href={canBook ? `${base}/boka` : `${base}/kontakt`}
               className="inline-flex min-h-11 items-center rounded-sm border border-accent bg-accent px-3 text-sm font-extrabold text-accent-ink shadow-soft transition hover:border-accent-hover hover:bg-accent-hover sm:px-5"
             >
-              {t("book")}
+              {canBook ? t("book") : t("contact")}
             </Link>
           </div>
         </header>
@@ -316,7 +345,9 @@ export default async function LocaleLayout(
               <p className="text-sm font-extrabold">{t("explore")}</p>
               <div className="mt-4 grid gap-1 text-sm text-ink-inverse-muted">
                 <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/korlektioner`}>{t("lessons")}</Link>
-                <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/larare`}>{t("teachers")}</Link>
+                {showInstructors ? (
+                  <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/larare`}>{t("teachers")}</Link>
+                ) : null}
                 <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/teori`}>{t("theory")}</Link>
                 <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/kontakt`}>{t("contact")}</Link>
               </div>
@@ -334,6 +365,7 @@ export default async function LocaleLayout(
           </div>
         </footer>
         <BottomTabBar tabs={tabs} />
+        <ScrollToTop label={t("scrollTop")} />
         <CookieConsent locale={params.locale} />
         <ServiceWorkerRegistration />
       </div>

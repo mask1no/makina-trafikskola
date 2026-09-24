@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 
-import { AuthForm } from "../AuthForm";
+import { LoginForm } from "../auth-ui";
 
 export default async function LoginPage(
   props: {
@@ -20,8 +20,13 @@ export default async function LoginPage(
           {t("title")}
         </h1>
         <p className="mt-3 leading-7 text-ink-muted">{t("description")}</p>
-        <div className="mt-8">
-          <AuthForm locale={params.locale} mode="login" />
+        <div className="mx-auto mt-8 w-full max-w-[420px] rounded-lg border border-border bg-card p-5 sm:p-6">
+          <LoginForm
+            locale={params.locale}
+            googleEnabled={Boolean(
+              process.env.AUTH_GOOGLE_ID && process.env.AUTH_GOOGLE_SECRET,
+            )}
+          />
         </div>
         <p className="mt-10 text-sm leading-6 text-ink-muted">{authT("support")}</p>
       </div>

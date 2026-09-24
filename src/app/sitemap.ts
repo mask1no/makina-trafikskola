@@ -2,15 +2,13 @@ import type { MetadataRoute } from "next";
 
 import { locales } from "@/i18n/routing";
 import { db } from "@/lib/db";
+import { instructorsEnabled } from "@/lib/launch";
 
 const staticPaths = [
   "",
   "/korlektioner",
-  "/larare",
   "/kurser",
   "/teori",
-  "/teori/prov",
-  "/boka",
   "/kontakt",
   "/villkor",
   "/integritet",
@@ -51,7 +49,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     new Set([
       ...staticPaths,
       ...products.map((product) => `/paket/${product.slug}`),
-      ...teachers.map((teacher) => `/larare/${teacher.slug}`),
+      ...(instructorsEnabled()
+        ? [
+            "/larare",
+            ...teachers.map((teacher) => `/larare/${teacher.slug}`),
+          ]
+        : []),
       ...categories.map((category) => `/teori/${category.slug}`),
       ...locations.map((location) => `/trafikskola/${location.slug}`),
     ]),
