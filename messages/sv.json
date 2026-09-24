@@ -124,7 +124,7 @@
       },
       "pickup": {
         "question": "Hämtar ni mig?",
-        "answer": "Ja, våra lärare kan möta dig där du är inom Stockholmsområdet. Du anger din adress när du bokar lektionen."
+        "answer": "Möjligheten till upphämtning beror på lektion och lärare. Kontakta oss med din adress så bekräftar vi vad som är möjligt."
       },
       "cancel": {
         "question": "Hur avbokar jag en lektion?",
@@ -136,7 +136,7 @@
       },
       "validity": {
         "question": "Hur länge gäller mitt paket?",
-        "answer": "Köpta lektioner gäller i 24 månader från köpdatum. Du ser alltid ditt saldo och sista giltighetsdag under Mina sidor."
+        "answer": "Giltighetstiden står på varje paket. Du ser alltid ditt saldo och sista giltighetsdag under Mina sidor."
       }
     }
   },

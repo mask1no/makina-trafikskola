@@ -133,31 +133,31 @@
       "area": "Stockholm area"
     },
     "faq": {
-      "eyebrow": "Vanliga frågor",
-      "title": "Svar innan du börjar",
+      "eyebrow": "Frequently asked questions",
+      "title": "Answers before you start",
       "cost": {
-        "question": "Vad kostar det att ta körkort hos Makina?",
-        "answer": "Priset beror på hur många lektioner du behöver. En enskild körlektion kostar {singlePrice} och våra paket börjar på {packagePrice}. Alla priser visas inklusive moms och du ser exakt vad som ingår innan du betalar."
+        "question": "How much does it cost to get a driving licence with Makina?",
+        "answer": "The cost depends on how many lessons you need. A single lesson costs {singlePrice}, and our packages start at {packagePrice}. All prices include VAT, and you can see exactly what is included before paying."
       },
       "languages": {
-        "question": "Kan jag få undervisning på mitt språk?",
-        "answer": "Ja. Våra lärare undervisar på svenska, engelska, tigrinja, arabiska och somaliska. Välj språk först när du söker lärare, så ser du bara de lärare som kan undervisa dig."
+        "question": "Can I take lessons in my language?",
+        "answer": "Yes. Our instructors teach in Swedish, English, Tigrinya, Arabic and Somali. Tell us which language you need when you contact us."
       },
       "pickup": {
-        "question": "Hämtar ni mig?",
-        "answer": "Ja, våra lärare kan möta dig där du är inom Stockholmsområdet. Du anger din adress när du bokar lektionen."
+        "question": "Can you pick me up?",
+        "answer": "Pickup arrangements depend on the lesson and instructor. Contact us with your address, and we will confirm what is possible."
       },
       "cancel": {
-        "question": "Hur avbokar jag en lektion?",
-        "answer": "Du avbokar själv under Mina bokningar. Avbokar du minst 24 timmar före lektionen kostar det ingenting och lektionen går tillbaka till ditt saldo. Avbokar du senare dras lektionen från saldot."
+        "question": "How do I cancel a lesson?",
+        "answer": "You can cancel under My bookings. If you cancel at least 24 hours before the lesson, the credit is returned to your balance. Later cancellations use the lesson credit."
       },
       "risk": {
-        "question": "Vad är skillnaden mellan Risk 1 och Risk 2?",
-        "answer": "Risk 1, riskettan, är en teoretisk utbildning om alkohol, droger, trötthet och andra risker. Risk 2 körs på halkbana och handlar om hastighet och körning under svåra förhållanden. Båda är obligatoriska för B-körkort."
+        "question": "What is the difference between Risk 1 and Risk 2?",
+        "answer": "Risk 1 is a theory course about alcohol, drugs, fatigue and other risks. Risk 2 is practical training on a skid track about speed and difficult driving conditions. Both are required for a category B licence."
       },
       "validity": {
-        "question": "Hur länge gäller mitt paket?",
-        "answer": "Köpta lektioner gäller i 24 månader från köpdatum. Du ser alltid ditt saldo och sista giltighetsdag under Mina sidor."
+        "question": "How long is my package valid?",
+        "answer": "The validity period is shown on each package. You can always see your balance and expiry date under My pages."
       }
     }
   },
@@ -182,15 +182,15 @@
       "testlektion": "The instructor goes through the drive before an assessment lesson",
       "korpaket-b3": "Three lessons, the student driving on a quiet road"
     },
-    "validityMonths": "Gäller i {count} månader",
+    "validityMonths": "Valid for {count} months",
     "kind": {
-      "SINGLE_LESSON": "ENSTAKA LEKTION",
-      "TEST_LESSON": "ENSTAKA LEKTION",
-      "PACKAGE": "KÖRPAKET",
-      "INTENSIVE_PACKAGE": "INTENSIVPAKET",
-      "THEORY_ACCESS": "TEORI",
-      "GUARANTEE": "GARANTI",
-      "COURSE_SEAT": "KURS"
+      "SINGLE_LESSON": "SINGLE LESSON",
+      "TEST_LESSON": "ASSESSMENT LESSON",
+      "PACKAGE": "LESSON PACKAGE",
+      "INTENSIVE_PACKAGE": "INTENSIVE PACKAGE",
+      "THEORY_ACCESS": "THEORY",
+      "GUARANTEE": "GUARANTEE",
+      "COURSE_SEAT": "COURSE"
     },
     "availableDescription": "This product is active and available to buy now.",
     "inactiveDescription": "The price is shown for comparison. This product cannot be purchased until every included service can be delivered.",

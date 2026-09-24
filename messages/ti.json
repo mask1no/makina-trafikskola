@@ -133,31 +133,31 @@
       "area": "ከባቢ ስቶክሆልም"
     },
     "faq": {
-      "eyebrow": "Vanliga frågor",
-      "title": "Svar innan du börjar",
+      "eyebrow": "ብዙሕ ግዜ ዝሕተቱ ሕቶታት",
+      "title": "ቅድሚ ምጅማርኩም መልስታት",
       "cost": {
-        "question": "Vad kostar det att ta körkort hos Makina?",
-        "answer": "Priset beror på hur många lektioner du behöver. En enskild körlektion kostar {singlePrice} och våra paket börjar på {packagePrice}. Alla priser visas inklusive moms och du ser exakt vad som ingår innan du betalar."
+        "question": "ኣብ Makina ፍቓድ ምዝዋር ንምውሳድ ክንደይ ይዋጋእ?",
+        "answer": "ዋጋ ብብዝሒ ዘድልየኩም ትምህርቲ ይውሰን። ሓደ ትምህርቲ {singlePrice} እዩ፣ ፓኬጃትና ድማ ካብ {packagePrice} ይጅምሩ። ኩሉ ዋጋታት VAT ዘጠቓለለ እዩ።"
       },
       "languages": {
-        "question": "Kan jag få undervisning på mitt språk?",
-        "answer": "Ja. Våra lärare undervisar på svenska, engelska, tigrinja, arabiska och somaliska. Välj språk först när du söker lärare, så ser du bara de lärare som kan undervisa dig."
+        "question": "ብቋንቋይ ትምህርቲ ክወስድ ይኽእል ድየ?",
+        "answer": "እወ። መምህራንና ብሽወደንኛ፣ እንግሊዝኛ፣ ትግርኛ፣ ዓረብኛን ሶማልኛን ይምህሩ። ክትውከሱና ከለኹም እትደልይዎ ቋንቋ ንገሩና።"
       },
       "pickup": {
-        "question": "Hämtar ni mig?",
-        "answer": "Ja, våra lärare kan möta dig där du är inom Stockholmsområdet. Du anger din adress när du bokar lektionen."
+        "question": "ክትወስዱኒ ትኽእሉ ዲኹም?",
+        "answer": "ምውሳድ ኣብ ዓይነት ትምህርትን መምህርን ይምርኮስ። ኣድራሻኹም ሒዝኩም ተወከሱና፣ እንታይ ከም ዝከኣል ከነረጋግጽ ኢና።"
       },
       "cancel": {
-        "question": "Hur avbokar jag en lektion?",
-        "answer": "Du avbokar själv under Mina bokningar. Avbokar du minst 24 timmar före lektionen kostar det ingenting och lektionen går tillbaka till ditt saldo. Avbokar du senare dras lektionen från saldot."
+        "question": "ትምህርቲ ብኸመይ እስርዝ?",
+        "answer": "ኣብ ቦታ ቆጸራታተይ ክትስርዙ ትኽእሉ። ቅድሚ ትምህርቲ ብውሑዱ 24 ሰዓት እንተሰሪዝኩም፣ ክሬዲት ናብ ሳልዶኹም ይምለስ።"
       },
       "risk": {
-        "question": "Vad är skillnaden mellan Risk 1 och Risk 2?",
-        "answer": "Risk 1, riskettan, är en teoretisk utbildning om alkohol, droger, trötthet och andra risker. Risk 2 körs på halkbana och handlar om hastighet och körning under svåra förhållanden. Båda är obligatoriska för B-körkort."
+        "question": "ኣብ መንጎ Risk 1ን Risk 2ን ዘሎ ፍልልይ እንታይ እዩ?",
+        "answer": "Risk 1 ብዛዕባ ኣልኮላት፣ ዕጸ-ፋርስ፣ ድኻምን ካልኦት ሓደጋታትን ዝምልከት ናይ ቲዮሪ ትምህርቲ እዩ። Risk 2 ድማ ብዛዕባ ፍጥነትን ኣብ ከበድቲ ኩነታት ምዝዋርን ግብራዊ ስልጠና እዩ። ክልቲኦም ንፍቓድ B ግዴታ እዮም።"
       },
       "validity": {
-        "question": "Hur länge gäller mitt paket?",
-        "answer": "Köpta lektioner gäller i 24 månader från köpdatum. Du ser alltid ditt saldo och sista giltighetsdag under Mina sidor."
+        "question": "ፓኬጅይ ክንደይ ግዜ ይሰርሕ?",
+        "answer": "ናይ ምስራሕ ግዜ ኣብ ነፍሲ ወከፍ ፓኬጅ ተጻሒፉ ኣሎ። ሳልዶኹምን ናይ መወዳእታ ዕለትን ኣብ ገጻተይ ኩሉ ግዜ ክትርእዩ ትኽእሉ።"
       }
     }
   },
@@ -182,15 +182,15 @@
       "testlektion": "መምህር ቅድሚ ናይ ግምገማ ትምህርቲ ምዝዋር ይገልጽ",
       "korpaket-b3": "ሰለስተ ትምህርቲ፣ ተማሃራይ ኣብ ርጉእ መንገዲ ይዝውር"
     },
-    "validityMonths": "Gäller i {count} månader",
+    "validityMonths": "ን{count} ወርሒ ይሰርሕ",
     "kind": {
-      "SINGLE_LESSON": "ENSTAKA LEKTION",
-      "TEST_LESSON": "ENSTAKA LEKTION",
-      "PACKAGE": "KÖRPAKET",
-      "INTENSIVE_PACKAGE": "INTENSIVPAKET",
-      "THEORY_ACCESS": "TEORI",
-      "GUARANTEE": "GARANTI",
-      "COURSE_SEAT": "KURS"
+      "SINGLE_LESSON": "ሓደ ትምህርቲ",
+      "TEST_LESSON": "ናይ ገምጋም ትምህርቲ",
+      "PACKAGE": "ፓኬጅ ትምህርቲ",
+      "INTENSIVE_PACKAGE": "ጽዑቕ ፓኬጅ",
+      "THEORY_ACCESS": "ቲዮሪ",
+      "GUARANTEE": "ውሕስነት",
+      "COURSE_SEAT": "ኮርስ"
     },
     "availableDescription": "እዚ ፍርያት ንጡፍ እዩ፣ ሕጂ ክዕደግ ይኽእል።",
     "inactiveDescription": "ዋጋ ንምውድዳር ይረአ። ኩሉ ዝጠቓለለ ኣገልግሎት ክሳብ ዝዳሎ ክዕደግ ኣይክእልን።",

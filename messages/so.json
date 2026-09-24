@@ -133,31 +133,31 @@
       "area": "Aagga Stockholm"
     },
     "faq": {
-      "eyebrow": "Vanliga frågor",
-      "title": "Svar innan du börjar",
+      "eyebrow": "Su'aalaha inta badan la isweydiiyo",
+      "title": "Jawaabaha ka hor intaadan bilaabin",
       "cost": {
-        "question": "Vad kostar det att ta körkort hos Makina?",
-        "answer": "Priset beror på hur många lektioner du behöver. En enskild körlektion kostar {singlePrice} och våra paket börjar på {packagePrice}. Alla priser visas inklusive moms och du ser exakt vad som ingår innan du betalar."
+        "question": "Immisa ayay ku kacaysaa laysanka wadista ee Makina?",
+        "answer": "Qiimuhu wuxuu ku xiran yahay tirada casharrada aad u baahan tahay. Hal cashar wuxuu ku kacayaa {singlePrice}, xirmooyinkeenuna waxay ka bilaabmaan {packagePrice}. Dhammaan qiimayaasha waxaa ku jira VAT, waxaadna arki kartaa waxa ku jira ka hor bixinta."
       },
       "languages": {
-        "question": "Kan jag få undervisning på mitt språk?",
-        "answer": "Ja. Våra lärare undervisar på svenska, engelska, tigrinja, arabiska och somaliska. Välj språk först när du söker lärare, så ser du bara de lärare som kan undervisa dig."
+        "question": "Ma ku qaadan karaa casharrada afkayga?",
+        "answer": "Haa. Macallimiinteennu waxay wax ku dhigaan Iswiidhish, Ingiriisi, Tigrinya, Carabi iyo Soomaali. Noo sheeg luqadda aad u baahan tahay markaad nala soo xiriirto."
       },
       "pickup": {
-        "question": "Hämtar ni mig?",
-        "answer": "Ja, våra lärare kan möta dig där du är inom Stockholmsområdet. Du anger din adress när du bokar lektionen."
+        "question": "Ma i soo qaadi kartaan?",
+        "answer": "Soo qaadistu waxay ku xiran tahay casharka iyo macallinka. Nala soo xiriir oo na sii cinwaankaaga si aan u xaqiijino waxa suurtagalka ah."
       },
       "cancel": {
-        "question": "Hur avbokar jag en lektion?",
-        "answer": "Du avbokar själv under Mina bokningar. Avbokar du minst 24 timmar före lektionen kostar det ingenting och lektionen går tillbaka till ditt saldo. Avbokar du senare dras lektionen från saldot."
+        "question": "Sideen u joojiyaa cashar?",
+        "answer": "Waxaad ka joojin kartaa qaybta Ballamahayga. Haddii aad joojiso ugu yaraan 24 saacadood ka hor casharka, deyntu waxay ku soo noqonaysaa hadhaagaaga. Joojinta dambe waxay isticmaashaa deynta casharka."
       },
       "risk": {
-        "question": "Vad är skillnaden mellan Risk 1 och Risk 2?",
-        "answer": "Risk 1, riskettan, är en teoretisk utbildning om alkohol, droger, trötthet och andra risker. Risk 2 körs på halkbana och handlar om hastighet och körning under svåra förhållanden. Båda är obligatoriska för B-körkort."
+        "question": "Waa maxay farqiga u dhexeeya Risk 1 iyo Risk 2?",
+        "answer": "Risk 1 waa koorso teori ah oo ku saabsan khamriga, daroogada, daalka iyo khataraha kale. Risk 2 waa tababar wax ku ool ah oo ku saabsan xawaaraha iyo wadista xaaladaha adag. Labaduba waa waajib laysanka B."
       },
       "validity": {
-        "question": "Hur länge gäller mitt paket?",
-        "answer": "Köpta lektioner gäller i 24 månader från köpdatum. Du ser alltid ditt saldo och sista giltighetsdag under Mina sidor."
+        "question": "Muddo intee le'eg ayay xirmadaydu shaqaynaysaa?",
+        "answer": "Muddada ansaxnimadu waxay ku qoran tahay xirmo kasta. Hadhaagaaga iyo taariikhda uu dhacayo waxaad mar walba ka arki kartaa Bogaggayga."
       }
     }
   },
@@ -182,15 +182,15 @@
       "testlektion": "Macallinku wuxuu ka hadlayaa wadista ka hor casharka qiimaynta",
       "korpaket-b3": "Saddex cashar, ardaygu wuxuu wadaa waddo deggan"
     },
-    "validityMonths": "Gäller i {count} månader",
+    "validityMonths": "Waxay shaqaynaysaa {count} bilood",
     "kind": {
-      "SINGLE_LESSON": "ENSTAKA LEKTION",
-      "TEST_LESSON": "ENSTAKA LEKTION",
-      "PACKAGE": "KÖRPAKET",
-      "INTENSIVE_PACKAGE": "INTENSIVPAKET",
+      "SINGLE_LESSON": "HAL CASHAR",
+      "TEST_LESSON": "CASHAR QIIMAYN",
+      "PACKAGE": "XIRMO CASHARRO",
+      "INTENSIVE_PACKAGE": "XIRMO DEGDEG AH",
       "THEORY_ACCESS": "TEORI",
-      "GUARANTEE": "GARANTI",
-      "COURSE_SEAT": "KURS"
+      "GUARANTEE": "DAMMAANAD",
+      "COURSE_SEAT": "KOORSO"
     },
     "availableDescription": "Alaabtani way shaqaynaysaa, haddana waa la iibsan karaa.",
     "inactiveDescription": "Qiimaha waxa loo muujiyey isbarbardhig. Alaabtan lama iibsan karo ilaa dhammaan adeegyadeeda la bixin karo.",

@@ -133,31 +133,31 @@
       "area": "منطقة ستوكهولم"
     },
     "faq": {
-      "eyebrow": "Vanliga frågor",
-      "title": "Svar innan du börjar",
+      "eyebrow": "الأسئلة الشائعة",
+      "title": "إجابات قبل أن تبدأ",
       "cost": {
-        "question": "Vad kostar det att ta körkort hos Makina?",
-        "answer": "Priset beror på hur många lektioner du behöver. En enskild körlektion kostar {singlePrice} och våra paket börjar på {packagePrice}. Alla priser visas inklusive moms och du ser exakt vad som ingår innan du betalar."
+        "question": "كم تبلغ تكلفة الحصول على رخصة قيادة مع Makina؟",
+        "answer": "تعتمد التكلفة على عدد الدروس التي تحتاجها. سعر الدرس الواحد {singlePrice} وتبدأ باقاتنا من {packagePrice}. تشمل جميع الأسعار ضريبة القيمة المضافة، وسترى ما تتضمنه الباقة قبل الدفع."
       },
       "languages": {
-        "question": "Kan jag få undervisning på mitt språk?",
-        "answer": "Ja. Våra lärare undervisar på svenska, engelska, tigrinja, arabiska och somaliska. Välj språk först när du söker lärare, så ser du bara de lärare som kan undervisa dig."
+        "question": "هل يمكنني أخذ الدروس بلغتي؟",
+        "answer": "نعم. يدرّس مدربونا بالسويدية والإنجليزية والتغرينية والعربية والصومالية. أخبرنا باللغة التي تحتاجها عند التواصل معنا."
       },
       "pickup": {
-        "question": "Hämtar ni mig?",
-        "answer": "Ja, våra lärare kan möta dig där du är inom Stockholmsområdet. Du anger din adress när du bokar lektionen."
+        "question": "هل يمكنكم اصطحابي؟",
+        "answer": "تعتمد إمكانية الاصطحاب على الدرس والمدرب. تواصل معنا وأرسل عنوانك لنؤكد لك الخيارات المتاحة."
       },
       "cancel": {
-        "question": "Hur avbokar jag en lektion?",
-        "answer": "Du avbokar själv under Mina bokningar. Avbokar du minst 24 timmar före lektionen kostar det ingenting och lektionen går tillbaka till ditt saldo. Avbokar du senare dras lektionen från saldot."
+        "question": "كيف ألغي درسًا؟",
+        "answer": "يمكنك الإلغاء من صفحة حجوزاتي. إذا ألغيت قبل الدرس بـ24 ساعة على الأقل، يعود الرصيد إلى حسابك. عند الإلغاء المتأخر يُخصم رصيد الدرس."
       },
       "risk": {
-        "question": "Vad är skillnaden mellan Risk 1 och Risk 2?",
-        "answer": "Risk 1, riskettan, är en teoretisk utbildning om alkohol, droger, trötthet och andra risker. Risk 2 körs på halkbana och handlar om hastighet och körning under svåra förhållanden. Båda är obligatoriska för B-körkort."
+        "question": "ما الفرق بين Risk 1 وRisk 2؟",
+        "answer": "Risk 1 دورة نظرية عن الكحول والمخدرات والتعب والمخاطر الأخرى. أما Risk 2 فتدريب عملي على مسار الانزلاق حول السرعة والقيادة في الظروف الصعبة. كلتاهما إلزامية لرخصة الفئة B."
       },
       "validity": {
-        "question": "Hur länge gäller mitt paket?",
-        "answer": "Köpta lektioner gäller i 24 månader från köpdatum. Du ser alltid ditt saldo och sista giltighetsdag under Mina sidor."
+        "question": "ما مدة صلاحية باقتي؟",
+        "answer": "تظهر مدة الصلاحية على كل باقة. ويمكنك دائمًا رؤية رصيدك وتاريخ انتهاء الصلاحية في صفحاتي."
       }
     }
   },
@@ -182,15 +182,15 @@
       "testlektion": "المعلّم يراجع القيادة قبل درس التقييم",
       "korpaket-b3": "ثلاثة دروس، والطالب يقود على طريق هادئ"
     },
-    "validityMonths": "Gäller i {count} månader",
+    "validityMonths": "صالحة لمدة {count} شهرًا",
     "kind": {
-      "SINGLE_LESSON": "ENSTAKA LEKTION",
-      "TEST_LESSON": "ENSTAKA LEKTION",
-      "PACKAGE": "KÖRPAKET",
-      "INTENSIVE_PACKAGE": "INTENSIVPAKET",
-      "THEORY_ACCESS": "TEORI",
-      "GUARANTEE": "GARANTI",
-      "COURSE_SEAT": "KURS"
+      "SINGLE_LESSON": "درس منفرد",
+      "TEST_LESSON": "درس تقييم",
+      "PACKAGE": "باقة دروس",
+      "INTENSIVE_PACKAGE": "باقة مكثفة",
+      "THEORY_ACCESS": "النظري",
+      "GUARANTEE": "ضمان",
+      "COURSE_SEAT": "دورة"
     },
     "availableDescription": "هذا المنتج نشط ومتاح للشراء الآن.",
     "inactiveDescription": "يظهر السعر للمقارنة. لا يمكن شراء هذا المنتج قبل أن تصبح جميع خدماته قابلة للتقديم.",
