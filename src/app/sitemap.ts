@@ -27,18 +27,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     return [];
   }
 
-  const [products, teachers, categories, locations] = await Promise.all([
-    db.product.findMany({ where: { active: true }, select: { slug: true } }),
-    db.teacherProfile.findMany({
-      where: { active: true },
-      select: { slug: true },
-    }),
-    db.theoryCategory.findMany({ select: { slug: true } }),
-    db.location.findMany({
-      where: { active: true },
-      select: { slug: true },
-    }),
-  ]);
+  let products: { slug: string }[] = [];
+  let teachers: { slug: string }[] = [];
+  let categories: { slug: string }[] = [];
+  let locations: { slug: string }[] = [];
+  try {
+    [products, teachers, categories, locations] = await Promise.all([
+      db.product.findMany({ where: { active: true }, select: { slug: true } }),
+      db.teacherProfile.findMany({
+        where: { active: true },
+        select: { slug: true },
+      }),
+      db.theoryCategory.findMany({ select: { slug: true } }),
+      db.location.findMany({
+        where: { active: true },
+        select: { slug: true },
+      }),
+    ]);
+  } catch {
+    // Static pages still ship when the database is unreachable at build time.
+  }
   const paths = Array.from(
     new Set([
       ...staticPaths,
