@@ -55,7 +55,7 @@
     "privacy": "Integritet",
     "cookies": "Cookies",
     "languageHelp": "Stöd på ditt språk",
-    "languageHelpDescription": "Filtrera lärare efter språk och hitta ett upplägg som passar dig."
+    "languageHelpDescription": "Kontakta oss på svenska, engelska, tigrinja, arabiska eller somaliska."
   },
   "common": {
     "bookNow": "Boka nu",
@@ -120,7 +120,7 @@
       },
       "languages": {
         "question": "Kan jag få undervisning på mitt språk?",
-        "answer": "Ja. Våra lärare undervisar på svenska, engelska, tigrinja, arabiska och somaliska. Välj språk först när du söker lärare, så ser du bara de lärare som kan undervisa dig."
+        "answer": "Ja. Våra lärare undervisar på svenska, engelska, tigrinja, arabiska och somaliska. Berätta vilket språk du behöver när du kontaktar oss."
       },
       "pickup": {
         "question": "Hämtar ni mig?",
