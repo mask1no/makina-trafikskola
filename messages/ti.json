@@ -40,7 +40,7 @@
     "account": "ናተይ ኣካውንት",
     "myPages": "ናተይ ገጻት",
     "createAccount": "ኣካውንት ፍጠር",
-    "balance": "ናተይ ቀሪ",
+    "balance": "ትምህርተይ",
     "teacherPortal": "ናይ መምህር ፖርታል",
     "adminPanel": "ናይ ኣድሚን ፓነል",
     "calendar": "ዘመን መቑጸሪ",
@@ -83,20 +83,20 @@
     "trust": {
       "label": "ኣብ Makina እትረኽቦ",
       "languages": {
-        "title": "Fem språk",
-        "description": "Svenska, engelska, tigrinja, arabiska och somaliska"
+        "title": "ሓሙሽተ ቋንቋታት",
+        "description": "ስዊድን፣ እንግሊዝኛ፣ ትግርኛ፣ ዓረብኛን ሶማልን"
       },
       "pickup": {
-        "title": "Vi hämtar dig",
-        "description": "Läraren möter dig där du är"
+        "title": "ንዓኻ ንመጽእ",
+        "description": "መምህር ኣብ ዘለኻ ይራኸበካ"
       },
       "lesson": {
-        "title": "50 minuter",
-        "description": "Samma lektionslängd i hela utbudet"
+        "title": "50 ደቒቕ",
+        "description": "ተመሳሳሊ ንውሓት ትምህርቲ ኣብ ኩሉ ኣቕርቦት"
       },
       "pricing": {
-        "title": "Öppna priser",
-        "description": "Se exakt vad som ingår innan du betalar"
+        "title": "ግልጽ ዋጋ",
+        "description": "ቅድሚ ክትከፍል ምንታይ ከም ዝሓዘ ርአ"
       }
     },
     "journey": {
@@ -121,9 +121,9 @@
     },
     "teachers": {
       "eyebrow": "ብቋንቋኻ ተማሃር",
-      "title": "Hitta din lärare",
+      "title": "መምህርካ ረኽብ",
       "description": "ቋንቋኻ ዝዛረብን ኣብ እትደልዮ ቦታ ዝምህርን መምህር ድለ።",
-      "languageLabel": "Filtrera lärare efter språk"
+      "languageLabel": "መማህራን ብቋንቋ ፈልጥ"
     },
     "location": {
       "eyebrow": "ኣብ ጥቓኻ",
@@ -229,11 +229,11 @@
     "title": "ዝሰማምዓካ መምህር ድለ",
     "description": "መጀመርታ ቋንቋ፣ ድሕሪኡ ቦታ ምረጽ።",
     "languageFilter": "1. ቋንቋ ምረጽ",
-    "languageQuestion": "Vilket språk vill du ha undervisning på?",
-    "anyLanguage": "Spelar ingen roll",
-    "noneAvailable": "Ingen lärare tillgänglig just nu",
-    "clearFilters": "Rensa filter",
-    "showAsList": "Visa lärare som lista",
+    "languageQuestion": "ብእንታይ ቋንቋ ትምህርቲ ክትወስድ ትደሊ?",
+    "anyLanguage": "ዝኾነ ቋንቋ",
+    "noneAvailable": "ሕጂ ዝርከብ መምህር የለን",
+    "clearFilters": "ፍልትራታት ኣጽርይ",
+    "showAsList": "መማህራን ከም ዝርዝር ኣርኢ",
     "locationFilter": "2. ቦታ ምረጽ",
     "results": "ውጽኢት መምህራን",
     "resultCount": "{count, plural, =0 {መምህር የለን} =1 {1 መምህር} other {# መምህራን}}",
@@ -264,6 +264,8 @@
     "unavailableTitle": "ካርታ ሕጂ ኣይርከብን",
     "unavailableDescription": "ካብቲ ዝርዝር መምህር ክትደሊን ክትመርጽን ትኽእል ኢኻ።",
     "pendingKey": "ካርታ ኣብ Google Maps ቁልፊ ምስ ተዳለወ ይነጥፍ።",
+    "book": "ሕዘ",
+    "close": "ዕጸው",
     "homeTeaserTitle": "ኣብ ቀረባኻ መምህር ርከብ",
     "homeTeaserDescription": "ብቋንቋ ኣጻርዩን መምህራን ኣበይ ከም ዘለዉ ርአ – ኣብ ገጽ መምህራን ካርታ ክፈት።",
     "homeTeaserCta": "ናይ መምህር ካርታ ክፈት"
@@ -502,7 +504,8 @@
       "description": "ብቁጽሪ ሞባይልን ኮድ SMSን ይቐልል። ኢመይል እውን ክትጥቀም ትኽእል።",
       "submit": "እቶ",
       "noAccount": "ሕሳብ የብልካን?",
-      "create": "ሕሳብ ክፈት"
+      "create": "ሕሳብ ክፈት",
+      "phoneAccountMissing": "በዚ ቁጽሪ ስልኪ ሕሳብ የለን።"
     },
     "register": {
       "title": "ሕሳብ ክፈት",
@@ -528,7 +531,7 @@
       "label": "ገጻተይ",
       "overview": "ሓፈሻ",
       "bookings": "ቦታ ምሓዝ",
-      "saldo": "ሒሳብ",
+      "saldo": "ትምህርተይ",
       "theory": "ቲዮሪ",
       "messages": "መልእኽትታት",
       "profile": "ፕሮፋይል"
@@ -538,8 +541,9 @@
       "nextBooking": "ዝቕጽል ትምህርቲ",
       "noBooking": "ዝመጽእ ቦታ ምሓዝ የብልካን።",
       "viewBookings": "ቦታ ምሓዝ ርአ",
-      "saldo": "ዝርከብ ትምህርቲ",
-      "viewSaldo": "ሒሳብ ርአ",
+      "saldo": "ትምህርተይ",
+      "viewSaldo": "ትምህርቲ ርአ",
+      "lessonsLeft": "{count, plural, =1 {1 ትምህርቲ ተሪፉ} other {# ትምህርትታት ተሪፎም}}",
       "theory": "ፍቓድ ቲዮሪ",
       "theoryActive": "ፍቓድ ቲዮሪኻ ንጡፍ እዩ።",
       "theoryInactive": "ንጡፍ ፍቓድ ቲዮሪ የለን።",
@@ -565,8 +569,10 @@
       }
     },
     "saldo": {
-      "title": "ሒሳበይ",
-      "available": "ዝርከብ ሒሳብ",
+      "title": "ትምህርተይ",
+      "available": "ክትዝውር ዝተረፈ",
+      "remaining": "{count, plural, =1 {1 ትምህርቲ ተሪፉ} other {# ትምህርትታት ተሪፎም}}",
+      "lotCount": "{count, plural, =1 {+1 ትምህርቲ} other {+# ትምህርትታት}}",
       "lessons": "ትምህርቲ ምዝዋር",
       "lots": "ንጡፍ ክረዲት",
       "expires": "ክሳብ {date} ይሰርሕ",
@@ -691,6 +697,17 @@
     "completeLesson": "ዛዝምን ዓቅብን",
     "updateReport": "ጸብጻብ ኣሐድስ",
     "empty": "ሎሚ ትምህርቲ የብልካን።",
+    "weekTitle": "ናይዚ ሰሙን ትምህርቲ",
+    "weekCount": "{count, plural, =0 {ኣብዚ ሰሙን ትምህርቲ የለን} =1 {ኣብዚ ሰሙን 1 ትምህርቲ} other {ኣብዚ ሰሙን # ትምህርትታት}}",
+    "weekEmpty": "ኣብዚ ሰሙን ትምህርቲ የብልካን።",
+    "views": { "today": "ሎሚ", "week": "ሰሙን" },
+    "students": {
+      "title": "ተማሃሮይ",
+      "lessonsDone": "{count, plural, =0 {ዝተዛዘመ ትምህርቲ የለን} =1 {1 ዝተዛዘመ ትምህርቲ} other {# ዝተዛዘሙ ትምህርትታት}}",
+      "nextLesson": "ዝቕጽል ትምህርቲ {when}",
+      "noNext": "ዝመጽእ ትምህርቲ የለን።",
+      "empty": "ገና ተማሃሮ የለዉን።"
+    },
     "noProfile": "ምስዚ ተጠቃሚ ዝተኣሳሰረ መምህር የለን።",
     "block": {
       "title": "ዝርከበሉ ግዜ ዕገት",
@@ -861,7 +878,37 @@
       "label": "ምምሕዳር",
       "calendar": "ናይ ሰሙን ካላንደር",
       "students": "ተማሃሮ",
-      "instructors": "ሓድሽ መምህር"
+      "instructors": "ሓድሽ መምህር",
+      "reviews": "ግምገማታት"
+    },
+    "dashboard": {
+      "eyebrow": "ምምሕዳር",
+      "title": "ሓፈሻ",
+      "description": "ናይ ሕጂ ቁጽርታት ቤት ትምህርቲ።",
+      "revenue": "ኣታዊ ናይዚ ወርሒ",
+      "revenueCompare": "{percent} ምስ ዝሓለፈ ወርሒ",
+      "revenueNoCompare": "ዝሓለፈ ወርሒ ኣታዊ የለን",
+      "lessonsToday": "ትምህርቲ ሎሚ",
+      "lessonsTodayEmpty": "ሎሚ ትምህርቲ የለን።",
+      "lessonLine": "{time} · {instructor} · {student}",
+      "bookingsWeek": "ቦታ ምሓዝ ናይ ዝመጽእ 7 መዓልታት",
+      "newStudents": "ሓደስቲ ተማሃሮ ናይዚ ወርሒ",
+      "creditsOutstanding": "ክትዝውር ዝተረፈ ትምህርቲ",
+      "reviewsWaiting": "ዝጽበያ ግምገማታት"
+    },
+    "reviews": {
+      "title": "ግምገማታት",
+      "description": "ዘይተሓትሙ ግምገማታት። ኣሕትም ወይ ምለስ።",
+      "empty": "ዝጽበይ ግምገማ የለን።",
+      "student": "ተማሃራይ",
+      "instructor": "መምህር",
+      "rating": "ደረጃ",
+      "comment": "ርእይቶ",
+      "date": "ዕለት",
+      "noComment": "ርእይቶ የለን።",
+      "publish": "ኣሕትም",
+      "reject": "ምለስ",
+      "saving": "ይዕቀብ ኣሎ…"
     },
     "calendar": {
       "eyebrow": "ምምሕዳር",
@@ -1030,6 +1077,7 @@
     "BOOKING_NOT_COMPLETED": "ንዝተዛዘመ ትምህርቲ ግምገማ ሃብ።",
     "REVIEW_EXISTS": "ነዚ ትምህርቲ ድሮ ገምጊምካዮ።",
     "UNKNOWN": "ጌጋ ተፈጢሩ። ደጊምካ ፈትን።",
+    "REVIEW_NOT_FOUND": "እዚ ግምገማ የለን።",
     "notFoundTitle": "እዚ ገጽ ኣይረኸብናዮን",
     "notFoundDescription": "ኣድራሻ ቅኑዕ ኣይኮነን። ናብ ቀዳማይ ገጽ፣ ትምህርቲ ምዝዋር፣ መምህራን ወይ ቦታ ምሓዝ ኪድ።",
     "forbiddenTitle": "ፍቓድ የብልካን",

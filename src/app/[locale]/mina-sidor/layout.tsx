@@ -32,7 +32,7 @@ export default async function StudentLayout(
   const links = [
     ["", t("overview")],
     ["/bokningar", t("bookings")],
-    ["/saldo", t("saldo")],
+    ["/lektioner", t("saldo")],
     ["/teori", t("theory")],
     ["/meddelanden", t("messages")],
     ["/profil", t("profile")],

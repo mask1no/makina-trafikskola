@@ -68,8 +68,8 @@ export default async function StudentDashboard(
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
           <StatCard
             label={t("saldo")}
-            value={credits.balance}
-            detail={<Link className="inline-flex min-h-11 items-center font-bold underline" href={`/${params.locale}/mina-sidor/saldo`}>{t("viewSaldo")}</Link>}
+            value={t("lessonsLeft", { count: credits.balance })}
+            detail={<Link className="inline-flex min-h-11 items-center font-bold underline" href={`/${params.locale}/mina-sidor/lektioner`}>{t("viewSaldo")}</Link>}
           />
           <StatCard
             label={t("theory")}

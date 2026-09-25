@@ -37,6 +37,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: "/:locale/mina-sidor/saldo",
+        destination: "/:locale/mina-sidor/lektioner",
+        permanent: true,
+      },
+      {
         source: "/th/home",
         destination: "/ti",
         permanent: true,

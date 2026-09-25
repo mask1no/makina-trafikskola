@@ -122,6 +122,19 @@ export default async function MarketingHome(
         </div>
       </section>
 
+      <section aria-label={t("home.trust.label")} className="border-b border-border bg-card">
+        <div className="site-container grid gap-6 py-8 sm:grid-cols-2 lg:grid-cols-4">
+          {(["languages", "pickup", "lesson", "pricing"] as const).map((key) => (
+            <div key={key}>
+              <h2 className="text-base font-black">{t(`home.trust.${key}.title`)}</h2>
+              <p className="mt-1 text-sm leading-6 text-ink-muted">
+                {t(`home.trust.${key}.description`)}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {showInstructors ? (
         <section className="section-shell">
         <div className="site-container">

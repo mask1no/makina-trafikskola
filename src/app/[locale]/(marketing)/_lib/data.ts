@@ -1,33 +1,8 @@
 import { db } from "@/lib/db";
 import type { Locale } from "@/i18n/routing";
 import type { Transmission } from "@prisma/client";
+import { resolveContent } from "@/lib/content/fallback";
 import { orderedTeacherIds } from "@/lib/teachers/query";
-
-type Localized = { locale: string };
-
-function resolveTranslation<T extends Localized>(
-  translations: T[],
-  locale: Locale,
-  fingerprint: (translation: T) => string,
-) {
-  const requested = translations.find((item) => item.locale === locale);
-  const swedish = translations.find((item) => item.locale === "sv");
-  const requestedIsPlaceholder =
-    locale !== "sv" &&
-    requested &&
-    swedish &&
-    fingerprint(requested) === fingerprint(swedish);
-  const translation =
-    (!requestedIsPlaceholder ? requested : undefined) ??
-    swedish ??
-    translations[0] ??
-    null;
-
-  return {
-    translation,
-    swedishOnly: locale !== "sv" && translation?.locale === "sv",
-  };
-}
 
 export async function getProducts(locale: Locale) {
   const products = await db.product.findMany({
@@ -36,11 +11,7 @@ export async function getProducts(locale: Locale) {
   });
 
   return products.flatMap((product) => {
-    const resolved = resolveTranslation(
-      product.translations,
-      locale,
-      (item) => item.shortDesc ?? "",
-    );
+    const resolved = resolveContent(product.translations, locale);
     if (!resolved.translation) return [];
     return [{ ...product, ...resolved }];
   });
@@ -52,11 +23,7 @@ export async function getProduct(locale: Locale, slug: string) {
     include: { translations: true },
   });
   if (!product) return null;
-  const resolved = resolveTranslation(
-    product.translations,
-    locale,
-    (item) => item.shortDesc ?? "",
-  );
+  const resolved = resolveContent(product.translations, locale);
   if (!resolved.translation) return null;
   return { ...product, ...resolved };
 }
@@ -95,7 +62,7 @@ export async function getTeachers(
     return teacher
       ? [{
           ...teacher,
-          ...resolveTranslation(teacher.translations, locale, (item) => item.bio),
+          ...resolveContent(teacher.translations, locale),
         }]
       : [];
   });
@@ -113,6 +80,6 @@ export async function getTeacher(locale: Locale, slug: string) {
   if (!teacher) return null;
   return {
     ...teacher,
-    ...resolveTranslation(teacher.translations, locale, (item) => item.bio),
+    ...resolveContent(teacher.translations, locale),
   };
 }

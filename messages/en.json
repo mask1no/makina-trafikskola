@@ -40,7 +40,7 @@
     "account": "My account",
     "myPages": "My pages",
     "createAccount": "Create account",
-    "balance": "My balance",
+    "balance": "My lessons",
     "teacherPortal": "Instructor portal",
     "adminPanel": "Admin panel",
     "calendar": "Calendar",
@@ -83,20 +83,20 @@
     "trust": {
       "label": "What you get with Makina",
       "languages": {
-        "title": "Fem språk",
-        "description": "Svenska, engelska, tigrinja, arabiska och somaliska"
+        "title": "Five languages",
+        "description": "Swedish, English, Tigrinya, Arabic and Somali"
       },
       "pickup": {
-        "title": "Vi hämtar dig",
-        "description": "Läraren möter dig där du är"
+        "title": "We pick you up",
+        "description": "The instructor meets you where you are"
       },
       "lesson": {
-        "title": "50 minuter",
-        "description": "Samma lektionslängd i hela utbudet"
+        "title": "50 minutes",
+        "description": "The same lesson length across the whole range"
       },
       "pricing": {
-        "title": "Öppna priser",
-        "description": "Se exakt vad som ingår innan du betalar"
+        "title": "Open prices",
+        "description": "See exactly what is included before you pay"
       }
     },
     "journey": {
@@ -121,9 +121,9 @@
     },
     "teachers": {
       "eyebrow": "Learn in your language",
-      "title": "Hitta din lärare",
+      "title": "Find your instructor",
       "description": "Find an instructor who speaks your language and teaches where you want to drive.",
-      "languageLabel": "Filtrera lärare efter språk"
+      "languageLabel": "Filter instructors by language"
     },
     "location": {
       "eyebrow": "Near you",
@@ -229,11 +229,11 @@
     "title": "Find the right instructor",
     "description": "Choose a language first, then a location, to find the instructor who suits you.",
     "languageFilter": "1. Choose language",
-    "languageQuestion": "Vilket språk vill du ha undervisning på?",
-    "anyLanguage": "Spelar ingen roll",
-    "noneAvailable": "Ingen lärare tillgänglig just nu",
-    "clearFilters": "Rensa filter",
-    "showAsList": "Visa lärare som lista",
+    "languageQuestion": "Which language do you want lessons in?",
+    "anyLanguage": "Any language",
+    "noneAvailable": "No instructor is available right now",
+    "clearFilters": "Clear filters",
+    "showAsList": "Show instructors as a list",
     "locationFilter": "2. Choose location",
     "results": "Instructor results",
     "resultCount": "{count, plural, =0 {No instructors} =1 {1 instructor} other {# instructors}}",
@@ -264,6 +264,8 @@
     "unavailableTitle": "The map is currently unavailable",
     "unavailableDescription": "You can still find and choose an instructor from the list.",
     "pendingKey": "The map activates when the Google Maps key is in place.",
+    "book": "Book",
+    "close": "Close",
     "homeTeaserTitle": "Find an instructor near you",
     "homeTeaserDescription": "Filter by language and see where instructors are – open the map on the instructors page.",
     "homeTeaserCta": "Open instructor map"
@@ -502,7 +504,8 @@
       "description": "Fastest with a mobile number and text code. You can also use email.",
       "submit": "Log in",
       "noAccount": "No account?",
-      "create": "Create account"
+      "create": "Create account",
+      "phoneAccountMissing": "No account uses that number."
     },
     "register": {
       "title": "Create account",
@@ -528,7 +531,7 @@
       "label": "My pages",
       "overview": "Overview",
       "bookings": "Bookings",
-      "saldo": "Balance",
+      "saldo": "My lessons",
       "theory": "Theory",
       "messages": "Messages",
       "profile": "Profile"
@@ -538,8 +541,9 @@
       "nextBooking": "Next driving lesson",
       "noBooking": "You have no upcoming booking.",
       "viewBookings": "View bookings",
-      "saldo": "Available lessons",
-      "viewSaldo": "View balance",
+      "saldo": "My lessons",
+      "viewSaldo": "View lessons",
+      "lessonsLeft": "{count, plural, =1 {1 lesson left} other {# lessons left}}",
       "theory": "Theory access",
       "theoryActive": "Your theory access is active.",
       "theoryInactive": "No active theory access.",
@@ -565,8 +569,10 @@
       }
     },
     "saldo": {
-      "title": "My balance",
-      "available": "Available balance",
+      "title": "My lessons",
+      "available": "Still to drive",
+      "remaining": "{count, plural, =1 {1 lesson left} other {# lessons left}}",
+      "lotCount": "{count, plural, =1 {+1 lesson} other {+# lessons}}",
       "lessons": "driving lessons",
       "lots": "Active credits",
       "expires": "Valid until {date}",
@@ -691,6 +697,20 @@
     "completeLesson": "Complete and save",
     "updateReport": "Update report",
     "empty": "You have no lessons today.",
+    "weekTitle": "This week's driving lessons",
+    "weekCount": "{count, plural, =0 {No lessons this week} =1 {1 lesson this week} other {# lessons this week}}",
+    "weekEmpty": "You have no lessons this week.",
+    "views": {
+      "today": "Today",
+      "week": "Week"
+    },
+    "students": {
+      "title": "My students",
+      "lessonsDone": "{count, plural, =0 {No completed lessons} =1 {1 completed lesson} other {# completed lessons}}",
+      "nextLesson": "Next lesson {when}",
+      "noNext": "No upcoming lesson.",
+      "empty": "No students yet."
+    },
     "noProfile": "No instructor profile is linked to this user.",
     "block": {
       "title": "Block availability",
@@ -861,7 +881,37 @@
       "label": "Administration",
       "calendar": "Week calendar",
       "students": "Students",
-      "instructors": "New instructor"
+      "instructors": "New instructor",
+      "reviews": "Reviews"
+    },
+    "dashboard": {
+      "eyebrow": "Administration",
+      "title": "Overview",
+      "description": "The school's numbers right now.",
+      "revenue": "Revenue this month",
+      "revenueCompare": "{percent} compared with last month",
+      "revenueNoCompare": "No revenue last month",
+      "lessonsToday": "Lessons today",
+      "lessonsTodayEmpty": "No lessons today.",
+      "lessonLine": "{time} · {instructor} · {student}",
+      "bookingsWeek": "Bookings in the next 7 days",
+      "newStudents": "New students this month",
+      "creditsOutstanding": "Lessons still to drive",
+      "reviewsWaiting": "Reviews waiting"
+    },
+    "reviews": {
+      "title": "Reviews",
+      "description": "Unpublished reviews. Publish or reject them.",
+      "empty": "No reviews are waiting.",
+      "student": "Student",
+      "instructor": "Instructor",
+      "rating": "Rating",
+      "comment": "Comment",
+      "date": "Date",
+      "noComment": "No comment.",
+      "publish": "Publish",
+      "reject": "Reject",
+      "saving": "Saving…"
     },
     "calendar": {
       "eyebrow": "Administration",
@@ -1030,6 +1080,7 @@
     "BOOKING_NOT_COMPLETED": "You can review a completed lesson.",
     "REVIEW_EXISTS": "You already reviewed this lesson.",
     "UNKNOWN": "Something went wrong. Try again.",
+    "REVIEW_NOT_FOUND": "That review does not exist.",
     "notFoundTitle": "We cannot find this page",
     "notFoundDescription": "The address is not right. Go to the home page, driving lessons, instructors or book a time.",
     "forbiddenTitle": "You do not have access",

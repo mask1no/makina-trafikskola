@@ -10,11 +10,9 @@ import { requireStudent } from "../_lib";
 
 export const dynamic = "force-dynamic";
 
-export default async function SaldoPage(
-  props: {
-    params: Promise<{ locale: string }>;
-  }
-) {
+export default async function LessonsPage(props: {
+  params: Promise<{ locale: string }>;
+}) {
   const params = await props.params;
   const studentId = await requireStudent(params.locale);
   const now = new Date();
@@ -42,7 +40,10 @@ export default async function SaldoPage(
     <section>
       <PageHeader title={t("title")} />
       <div className="mt-6 max-w-md">
-        <StatCard label={t("available")} value={credits.balance} detail={t("lessons")} />
+        <StatCard
+          label={t("available")}
+          value={t("remaining", { count: credits.balance })}
+        />
       </div>
       <h2 className="mt-8 text-xl font-bold">{t("lots")}</h2>
       <div className="mt-4 overflow-hidden rounded-md border border-border bg-card shadow-soft">
@@ -56,10 +57,12 @@ export default async function SaldoPage(
                   : t("noExpiry")}
               </p>
             </div>
-            <span className="text-lg font-black numbers-ltr text-success">+{lot.delta}</span>
+            <span className="text-lg font-black text-success">
+              {t("lotCount", { count: lot.delta })}
+            </span>
           </article>
         ))}
-        {!lots.length ? <EmptyState title={t("empty")} description={t("lessons")} /> : null}
+        {!lots.length ? <EmptyState title={t("empty")} description={t("remaining", { count: 0 })} /> : null}
       </div>
     </section>
   );

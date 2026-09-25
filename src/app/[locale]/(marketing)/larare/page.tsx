@@ -255,6 +255,12 @@ export default async function LararePage(
                   teacherId: teacher.id,
                   title: `${teacher.user.firstName} ${teacher.user.lastName}`,
                   position: { lat: location.lat, lng: location.lng },
+                  photoUrl: teacher.photoUrl,
+                  languages: teacher.languages.map((item) => t(`language.${item}`)),
+                  transmission: teacher.transmissions
+                    .map((item) => t(`teacher.transmission.${item.toLowerCase()}`))
+                    .join(", "),
+                  locationName: location.name,
                 })),
               )}
               label={t("map.interactiveLabel")}

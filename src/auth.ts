@@ -26,6 +26,7 @@ declare module "@auth/core/jwt" {
   interface JWT {
     userId: string;
     role: Role;
+    googleSub?: string;
     checkedAt?: number;
   }
 }
@@ -39,7 +40,7 @@ const passwordCredentialsSchema = z
   .refine((value) => Boolean(value.email || value.phone));
 
 const phoneCredentialsSchema = z.object({
-  phone: z.string().regex(/^\+[1-9]\d{7,14}$/),
+  phone: z.string().regex(/^\+46\d{7,12}$/),
   code: z.string().regex(/^\d{6}$/),
   firstName: z.string().trim().min(1).max(80).optional(),
   lastName: z.string().trim().min(1).max(80).optional(),
@@ -69,7 +70,13 @@ function splitName(name: string) {
 const googleId = process.env.AUTH_GOOGLE_ID;
 const googleSecret = process.env.AUTH_GOOGLE_SECRET;
 
-export const { handlers, auth, signIn, signOut } = NextAuth({
+export const {
+  handlers,
+  auth,
+  signIn,
+  signOut,
+  unstable_update: updateSession,
+} = NextAuth({
   session: { strategy: "jwt" },
   trustHost: true,
   providers: [
@@ -207,27 +214,31 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const name = splitName(
           typeof profile?.name === "string" ? profile.name : "Student",
         );
-        const matchingEmail =
-          email && emailVerified
-            ? await db.user.findUnique({ where: { email } })
+        const matchingEmail = email
+          ? await db.user.findUnique({ where: { email } })
+          : null;
+        const linkableEmail =
+          emailVerified &&
+          matchingEmail?.emailVerifiedAt &&
+          !matchingEmail.deletedAt
+            ? matchingEmail
             : null;
-        if (matchingEmail?.googleSub && matchingEmail.googleSub !== sub) {
+        if (linkableEmail?.googleSub && linkableEmail.googleSub !== sub) {
           return false;
         }
-        dbUser = matchingEmail
+        dbUser = linkableEmail
           ? await db.user.update({
-              where: { id: matchingEmail.id },
+              where: { id: linkableEmail.id },
               data: {
                 googleSub: sub,
-                emailVerifiedAt: matchingEmail.emailVerifiedAt ?? new Date(),
-                deletedAt: null,
               },
             })
           : await db.user.create({
               data: {
                 googleSub: sub,
-                email: emailVerified ? email : null,
-                emailVerifiedAt: emailVerified ? new Date() : null,
+                email: emailVerified && !matchingEmail ? email : null,
+                emailVerifiedAt:
+                  emailVerified && !matchingEmail ? new Date() : null,
                 firstName: name.firstName,
                 lastName: name.lastName,
                 studentProfile: { create: {} },
@@ -241,13 +252,64 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       user.role = dbUser.role;
       return true;
     },
-    async jwt({ token, user }) {
+    async jwt({ token, user, account, trigger, session }) {
       if (user?.id) {
         token.userId = user.id;
         token.role = user.role;
+        token.googleSub =
+          account?.provider === "google"
+            ? account.providerAccountId
+            : undefined;
         token.checkedAt = Date.now();
         return token;
       }
+
+      const requestedUserId =
+        trigger === "update" &&
+        typeof session?.user?.id === "string"
+          ? session.user.id
+          : null;
+      if (
+        requestedUserId &&
+        requestedUserId !== token.userId &&
+        token.userId &&
+        token.googleSub
+      ) {
+        const [currentUser, requestedUser] = await Promise.all([
+          db.user.findUnique({
+            where: { id: token.userId },
+            select: { deletedAt: true, googleSub: true },
+          }),
+          db.user.findUnique({
+            where: { id: requestedUserId },
+            select: {
+              id: true,
+              email: true,
+              firstName: true,
+              lastName: true,
+              role: true,
+              deletedAt: true,
+              googleSub: true,
+            },
+          }),
+        ]);
+        if (
+          currentUser?.deletedAt &&
+          !currentUser.googleSub &&
+          requestedUser &&
+          !requestedUser.deletedAt &&
+          requestedUser.googleSub === token.googleSub
+        ) {
+          token.userId = requestedUser.id;
+          token.email = requestedUser.email;
+          token.name =
+            `${requestedUser.firstName} ${requestedUser.lastName}`.trim();
+          token.role = requestedUser.role;
+          token.checkedAt = Date.now();
+          return token;
+        }
+      }
+
       const checkedAt =
         typeof token.checkedAt === "number" ? token.checkedAt : 0;
       if (!token.userId || Date.now() - checkedAt < 5 * 60 * 1000) {

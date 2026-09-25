@@ -72,18 +72,32 @@ export async function POST(request: Request) {
   }
 
   const now = new Date();
+  const forwarded = request.headers
+    .get("x-forwarded-for")
+    ?.split(",")
+    .map((value) => value.trim())
+    .filter(Boolean);
   const ip =
-    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+    forwarded?.at(-1) ??
     request.headers.get("x-real-ip") ??
     "unknown";
-  const allowed = await allowRateLimitedAction(
-    "registration",
-    `${ip}:${parsed.data.email}`,
-    5,
-    60 * 60,
-    now,
-  );
-  if (!allowed) {
+  const [phoneAllowed, emailAllowed] = await Promise.all([
+    allowRateLimitedAction(
+      "registration-phone",
+      `${ip}:${phone}`,
+      5,
+      60 * 60,
+      now,
+    ),
+    allowRateLimitedAction(
+      "registration-email",
+      `${ip}:${parsed.data.email}`,
+      5,
+      60 * 60,
+      now,
+    ),
+  ]);
+  if (!phoneAllowed || !emailAllowed) {
     return Response.json(
       { error: { code: "RATE_LIMITED", message: "RATE_LIMITED" } },
       { status: 429 },

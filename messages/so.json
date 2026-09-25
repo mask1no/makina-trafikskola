@@ -40,7 +40,7 @@
     "account": "Akoonkayga",
     "myPages": "Bogaggyada",
     "createAccount": "Samee akoon",
-    "balance": "Hadhayga",
+    "balance": "Casharradayda",
     "teacherPortal": "Portal-ka macallinka",
     "adminPanel": "Guddiga maamulka",
     "calendar": "Jadwalka",
@@ -83,20 +83,20 @@
     "trust": {
       "label": "Waxa aad Makina ka helayso",
       "languages": {
-        "title": "Fem språk",
-        "description": "Svenska, engelska, tigrinja, arabiska och somaliska"
+        "title": "Shan luqadood",
+        "description": "Iswiidhish, Ingiriis, Tigrinya, Carabi iyo Soomaali"
       },
       "pickup": {
-        "title": "Vi hämtar dig",
-        "description": "Läraren möter dig där du är"
+        "title": "Waan ku soo qaadnaa",
+        "description": "Macallinku wuxuu kula kulmaa meesha aad joogto"
       },
       "lesson": {
-        "title": "50 minuter",
-        "description": "Samma lektionslängd i hela utbudet"
+        "title": "50 daqiiqo",
+        "description": "Isku muddada casharka dhammaan xulashooyinka"
       },
       "pricing": {
-        "title": "Öppna priser",
-        "description": "Se exakt vad som ingår innan du betalar"
+        "title": "Qiimo furan",
+        "description": "Eeg waxa ku jira ka hor intaadan bixin"
       }
     },
     "journey": {
@@ -121,9 +121,9 @@
     },
     "teachers": {
       "eyebrow": "Ku baro luqaddaada",
-      "title": "Hitta din lärare",
+      "title": "Raadi macallinkaaga",
       "description": "Hel macallin ku hadla luqaddaada oo wax ka dhiga goobta aad rabto.",
-      "languageLabel": "Filtrera lärare efter språk"
+      "languageLabel": "Shaandhee macallimiinta luqadda"
     },
     "location": {
       "eyebrow": "Agtaada",
@@ -229,11 +229,11 @@
     "title": "Hel macallinka saxda ah",
     "description": "Marka hore dooro luqadda, dabadeed goobta, si aad u hesho macallinka kugu habboon.",
     "languageFilter": "1. Dooro luqadda",
-    "languageQuestion": "Vilket språk vill du ha undervisning på?",
-    "anyLanguage": "Spelar ingen roll",
-    "noneAvailable": "Ingen lärare tillgänglig just nu",
-    "clearFilters": "Rensa filter",
-    "showAsList": "Visa lärare som lista",
+    "languageQuestion": "Luqadee ayaad rabtaa in casharrada lagu bixiyo?",
+    "anyLanguage": "Luqad kasta",
+    "noneAvailable": "Macallin hadda ma jiro",
+    "clearFilters": "Nadiifi shaandhada",
+    "showAsList": "Tus macallimiinta sida liis",
     "locationFilter": "2. Dooro goobta",
     "results": "Natiijooyinka macallimiinta",
     "resultCount": "{count, plural, =0 {Macallin ma jiro} =1 {1 macallin} other {# macallin}}",
@@ -264,6 +264,8 @@
     "unavailableTitle": "Khariidaddu hadda ma shaqaynayso",
     "unavailableDescription": "Weli waxaad macallin ka heli kartaa oo ka dooran kartaa liiska.",
     "pendingKey": "Khariidadu waxay shaqaynaysaa marka furaha Google Maps la diyaariyo.",
+    "book": "Ballan",
+    "close": "Xir",
     "homeTeaserTitle": "Hel macallin kuu dhow",
     "homeTeaserDescription": "Ku shaandhee luqadda oo arag meelaha macallimiintu joogaan – fur khariidadda bogga macallimiinta.",
     "homeTeaserCta": "Fur khariidadda macallimiinta"
@@ -502,7 +504,8 @@
       "description": "U fudud lambarka moobilka iyo koodhka SMS. Waxaad sidoo kale isticmaali kartaa iimayl.",
       "submit": "Gal",
       "noAccount": "Akoon ma lihid?",
-      "create": "Samee akoon"
+      "create": "Samee akoon",
+      "phoneAccountMissing": "Akoon ku jira lambarkan ma jiro."
     },
     "register": {
       "title": "Samee akoon",
@@ -528,7 +531,7 @@
       "label": "Bogaggayga",
       "overview": "Guudmar",
       "bookings": "Ballamaha",
-      "saldo": "Hadhaaga",
+      "saldo": "Casharradayda",
       "theory": "Teori",
       "messages": "Farriimaha",
       "profile": "Akoonka"
@@ -538,8 +541,9 @@
       "nextBooking": "Casharka xiga",
       "noBooking": "Ballan soo socota ma lihid.",
       "viewBookings": "Eeg ballamaha",
-      "saldo": "Casharrada bannaan",
-      "viewSaldo": "Eeg hadhaaga",
+      "saldo": "Casharradayda",
+      "viewSaldo": "Eeg casharrada",
+      "lessonsLeft": "{count, plural, =1 {1 cashar ayaa haray} other {# cashar ayaa haray}}",
       "theory": "Gelitaanka teori",
       "theoryActive": "Gelitaanka teorigaagu waa shaqaynayaa.",
       "theoryInactive": "Gelitaan teori oo shaqaynaya ma jiro.",
@@ -565,8 +569,10 @@
       }
     },
     "saldo": {
-      "title": "Hadhaagayga",
-      "available": "Hadhaaga la heli karo",
+      "title": "Casharradayda",
+      "available": "Weli la wado",
+      "remaining": "{count, plural, =1 {1 cashar ayaa haray} other {# cashar ayaa haray}}",
+      "lotCount": "{count, plural, =1 {+1 cashar} other {+# cashar}}",
       "lessons": "casharro wadis",
       "lots": "Dhibcaha shaqaynaya",
       "expires": "Wuxuu dhacayaa {date}",
@@ -691,6 +697,17 @@
     "completeLesson": "Dhammaystir oo kaydi",
     "updateReport": "Cusboonaysii warbixinta",
     "empty": "Maanta casharro ma lihid.",
+    "weekTitle": "Casharrada toddobaadkan",
+    "weekCount": "{count, plural, =0 {Toddobaadkan cashar ma jiro} =1 {Toddobaadkan 1 cashar} other {Toddobaadkan # cashar}}",
+    "weekEmpty": "Toddobaadkan casharro ma lihid.",
+    "views": { "today": "Maanta", "week": "Toddobaad" },
+    "students": {
+      "title": "Ardaydayda",
+      "lessonsDone": "{count, plural, =0 {Cashar la dhammeeyey ma jiro} =1 {1 cashar oo la dhammeeyey} other {# cashar oo la dhammeeyey}}",
+      "nextLesson": "Casharka xiga {when}",
+      "noNext": "Cashar soo socda ma jiro.",
+      "empty": "Weli arday ma jiraan."
+    },
     "noProfile": "Akoonkan kuma xidhna macallin.",
     "block": {
       "title": "Xannib helitaanka",
@@ -861,7 +878,37 @@
       "label": "Maamulka",
       "calendar": "Jadwalka toddobaadka",
       "students": "Ardayda",
-      "instructors": "Macallin cusub"
+      "instructors": "Macallin cusub",
+      "reviews": "Faallooyin"
+    },
+    "dashboard": {
+      "eyebrow": "Maamulka",
+      "title": "Guudmar",
+      "description": "Tirada dugsiga hadda.",
+      "revenue": "Dakhliga bishan",
+      "revenueCompare": "{percent} marka loo barbardhigo bishii hore",
+      "revenueNoCompare": "Bishii hore dakhli ma jirin",
+      "lessonsToday": "Casharrada maanta",
+      "lessonsTodayEmpty": "Maanta cashar ma jiro.",
+      "lessonLine": "{time} · {instructor} · {student}",
+      "bookingsWeek": "Ballamaha 7-da maalmood ee soo socda",
+      "newStudents": "Arday cusub bishan",
+      "creditsOutstanding": "Casharro weli la wado",
+      "reviewsWaiting": "Faallooyin sugaya"
+    },
+    "reviews": {
+      "title": "Faallooyin",
+      "description": "Faallooyin aan la daabicin. Daabac ama diid.",
+      "empty": "Faallo sugaysa ma jirto.",
+      "student": "Ardayga",
+      "instructor": "Macallinka",
+      "rating": "Qiimeynta",
+      "comment": "Faallada",
+      "date": "Taariikhda",
+      "noComment": "Faallo ma jirto.",
+      "publish": "Daabac",
+      "reject": "Diid",
+      "saving": "Waa la kaydinayaa…"
     },
     "calendar": {
       "eyebrow": "Maamulka",
@@ -1030,6 +1077,7 @@
     "BOOKING_NOT_COMPLETED": "Waxaad qiimayn kartaa cashar la dhammaystiray.",
     "REVIEW_EXISTS": "Casharkan hore ayaad u qiimaysay.",
     "UNKNOWN": "Wax baa khaldamay. Mar kale isku day.",
+    "REVIEW_NOT_FOUND": "Faalladan ma jirto.",
     "notFoundTitle": "Boggan ma helno",
     "notFoundDescription": "Cinwaanku sax maaha. Tag bogga hore, casharrada wadista, macallimiinta ama ballan qabso.",
     "forbiddenTitle": "Oggolaansho uma lihid",

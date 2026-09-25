@@ -1,6 +1,7 @@
 import { addDays } from "date-fns";
 import { formatInTimeZone, fromZonedTime } from "date-fns-tz";
 import { getTranslations } from "next-intl/server";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { auth } from "@/auth";
@@ -20,9 +21,12 @@ const TIME_ZONE = "Europe/Stockholm";
 export default async function TeacherPortal(
   props: {
     params: Promise<{ locale: string }>;
+    searchParams: Promise<{ view?: string }>;
   }
 ) {
   const params = await props.params;
+  const searchParams = await props.searchParams;
+  const view = searchParams.view === "week" ? "week" : "today";
   const session = await auth();
   if (!session?.user?.id) {
     redirect(
@@ -47,7 +51,12 @@ export default async function TeacherPortal(
   const now = new Date();
   const localDay = formatInTimeZone(now, TIME_ZONE, "yyyy-MM-dd");
   const dayStart = fromZonedTime(`${localDay}T00:00:00`, TIME_ZONE);
-  const dayEnd = fromZonedTime(`${localDay}T23:59:59.999`, TIME_ZONE);
+  const rangeEndKey = formatInTimeZone(
+    addDays(now, view === "week" ? 6 : 0),
+    TIME_ZONE,
+    "yyyy-MM-dd",
+  );
+  const dayEnd = fromZonedTime(`${rangeEndKey}T23:59:59.999`, TIME_ZONE);
   const lessons = await db.booking.findMany({
     where: {
       teacherId: teacher.id,
@@ -77,8 +86,39 @@ export default async function TeacherPortal(
       }),
     ),
   );
+  const pupils = await db.user.findMany({
+    where: {
+      deletedAt: null,
+      bookings: {
+        some: {
+          teacherId: teacher.id,
+          status: { in: ["CONFIRMED", "COMPLETED"] },
+        },
+      },
+    },
+    orderBy: [{ firstName: "asc" }, { lastName: "asc" }],
+    select: {
+      id: true,
+      firstName: true,
+      lastName: true,
+      bookings: {
+        where: { teacherId: teacher.id },
+        select: { startsAt: true, status: true },
+        orderBy: { startsAt: "asc" },
+      },
+    },
+  });
   const timeFormatter = new Intl.DateTimeFormat(params.locale, {
     timeZone: TIME_ZONE,
+    hour: "2-digit",
+    minute: "2-digit",
+    ...(view === "week" ? { weekday: "short" as const, day: "numeric" as const, month: "short" as const } : {}),
+  });
+  const pupilDate = new Intl.DateTimeFormat(params.locale, {
+    timeZone: TIME_ZONE,
+    weekday: "short",
+    day: "numeric",
+    month: "short",
     hour: "2-digit",
     minute: "2-digit",
   });
@@ -89,9 +129,21 @@ export default async function TeacherPortal(
       <section>
         <PageHeader
           eyebrow={t("eyebrow")}
-          title={t("title")}
-          description={t("lessonCount", { count: lessons.length })}
+          title={view === "week" ? t("weekTitle") : t("title")}
+          description={t(view === "week" ? "weekCount" : "lessonCount", { count: lessons.length })}
         />
+        <div className="mt-6 grid grid-cols-2 gap-2">
+          {(["today", "week"] as const).map((value) => (
+            <Link
+              key={value}
+              href={`/${params.locale}/larare-portal${value === "week" ? "?view=week" : ""}`}
+              aria-current={view === value ? "page" : undefined}
+              className="inline-flex min-h-11 items-center justify-center rounded-sm border border-border bg-card px-3 text-sm font-bold aria-[current=page]:border-ink aria-[current=page]:bg-surface aria-[current=page]:text-ink-inverse"
+            >
+              {t(`views.${value}`)}
+            </Link>
+          ))}
+        </div>
         <div className="relative mt-8 grid gap-4 before:absolute before:bottom-6 before:start-[1.4rem] before:top-6 before:w-px before:bg-border sm:before:start-[3.45rem]">
           {lessons.map((lesson, index) => {
             const address = lesson.pickupAddress ?? lesson.location?.address;
@@ -156,7 +208,37 @@ export default async function TeacherPortal(
             );
           })}
           {!lessons.length ? (
-            <div className="relative z-10 bg-page"><EmptyState title={t("empty")} description={t("lessonCount", { count: 0 })} /></div>
+            <div className="relative z-10 bg-page"><EmptyState title={view === "week" ? t("weekEmpty") : t("empty")} description={t(view === "week" ? "weekCount" : "lessonCount", { count: 0 })} /></div>
+          ) : null}
+        </div>
+      </section>
+
+      <section className="mt-10">
+        <h2 className="text-xl font-black">{t("students.title")}</h2>
+        <div className="mt-4 grid gap-3">
+          {pupils.map((pupil) => {
+            const done = pupil.bookings.filter((booking) => booking.status === "COMPLETED").length;
+            const nextLesson = pupil.bookings.find(
+              (booking) => booking.status === "CONFIRMED" && booking.startsAt > now,
+            );
+            return (
+              <article key={pupil.id} className="rounded-md border border-border bg-card p-4 shadow-soft">
+                <h3 className="text-lg font-bold">
+                  {pupil.firstName} {pupil.lastName}
+                </h3>
+                <p className="mt-1 text-sm text-ink-muted">
+                  {t("students.lessonsDone", { count: done })}
+                </p>
+                <p className="mt-1 text-sm text-ink">
+                  {nextLesson
+                    ? t("students.nextLesson", { when: pupilDate.format(nextLesson.startsAt) })
+                    : t("students.noNext")}
+                </p>
+              </article>
+            );
+          })}
+          {!pupils.length ? (
+            <EmptyState title={t("students.empty")} description={t("students.noNext")} />
           ) : null}
         </div>
       </section>

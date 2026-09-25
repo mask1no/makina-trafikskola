@@ -413,6 +413,7 @@ export function LoginForm({
   const [busy, setBusy] = useState(false);
   const [formError, setFormError] = useState("");
   const [phoneError, setPhoneError] = useState("");
+  const [noPhoneAccount, setNoPhoneAccount] = useState(false);
 
   useEffect(() => {
     if (secondsLeft <= 0) return;
@@ -423,6 +424,7 @@ export function LoginForm({
   async function requestCode() {
     setFormError("");
     setPhoneError("");
+    setNoPhoneAccount(false);
     const normalized = normalizeSwedishPhone(phone);
     if (!normalized) {
       setPhoneError(errorText("INVALID_PHONE"));
@@ -433,7 +435,7 @@ export function LoginForm({
       const response = await fetch("/api/auth/otp/request", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ phone: normalized }),
+        body: JSON.stringify({ phone: normalized, purpose: "login" }),
       });
       const payload = await response.json().catch(() => null);
       if (!response.ok) throw new Error(payload?.error?.code ?? "UNKNOWN");
@@ -442,7 +444,12 @@ export function LoginForm({
       setCodeSent(true);
       setSecondsLeft(60);
     } catch (reason) {
-      setFormError(errorText(reason instanceof Error ? reason.message : "UNKNOWN"));
+      const code = reason instanceof Error ? reason.message : "UNKNOWN";
+      if (code === "NO_ACCOUNT") {
+        setNoPhoneAccount(true);
+      } else {
+        setFormError(errorText(code));
+      }
     } finally {
       setBusy(false);
     }
@@ -503,6 +510,7 @@ export function LoginForm({
               onClick={() => {
                 setMethod(value === "phone" ? "phone" : "password");
                 setFormError("");
+                setNoPhoneAccount(false);
                 setCodeSent(false);
                 setCode("");
               }}
@@ -519,7 +527,10 @@ export function LoginForm({
             label={t("phone")}
             placeholder={t("phonePlaceholder")}
             value={phone}
-            onChange={setPhone}
+            onChange={(value) => {
+              setPhone(value);
+              setNoPhoneAccount(false);
+            }}
             error={phoneError}
             disabled={codeSent}
           />
@@ -587,6 +598,14 @@ export function LoginForm({
       {formError ? (
         <p role="alert" className="text-sm text-danger">
           {formError}
+        </p>
+      ) : null}
+      {noPhoneAccount ? (
+        <p role="alert" className="text-sm text-danger">
+          {login("phoneAccountMissing")}{" "}
+          <Link className="font-bold underline" href={signupHref}>
+            {login("create")}
+          </Link>
         </p>
       ) : null}
       {method === "phone" && !codeSent ? (

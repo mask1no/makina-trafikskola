@@ -187,6 +187,7 @@ export default async function LocaleLayout(
           { href: `${base}/admin/calendar`, label: adminT("calendar"), icon: "bookings" },
           { href: `${base}/admin/students`, label: adminT("students"), icon: "profile" },
           { href: `${base}/admin/instructors/new`, label: adminT("instructors"), icon: "messages" },
+          { href: `${base}/admin/recensioner`, label: adminT("reviews"), icon: "profile" },
           { href: base, label: t("home"), icon: "home" },
           { href: `${base}/korlektioner`, label: t("packages"), icon: "packages" },
         ]
@@ -280,7 +281,7 @@ export default async function LocaleLayout(
                     <>
                       <Link className="flex min-h-11 items-center rounded-sm px-3 font-semibold hover:bg-card-muted" href={`${base}/mina-sidor`}>{t("myPages")}</Link>
                       <Link className="flex min-h-11 items-center rounded-sm px-3 font-semibold hover:bg-card-muted" href={`${base}/mina-sidor/bokningar`}>{t("bookings")}</Link>
-                      <Link className="flex min-h-11 items-center rounded-sm px-3 font-semibold hover:bg-card-muted" href={`${base}/mina-sidor/saldo`}>{t("balance")}</Link>
+                      <Link className="flex min-h-11 items-center rounded-sm px-3 font-semibold hover:bg-card-muted" href={`${base}/mina-sidor/lektioner`}>{t("balance")}</Link>
                       <Link className="flex min-h-11 items-center rounded-sm px-3 font-semibold hover:bg-card-muted" href={`${base}/mina-sidor/profil`}>{t("profile")}</Link>
                     </>
                   ) : session.user.role === "TEACHER" ? (
@@ -293,6 +294,7 @@ export default async function LocaleLayout(
                       <Link className="flex min-h-11 items-center rounded-sm px-3 font-semibold hover:bg-card-muted" href={`${base}/admin`}>{t("adminPanel")}</Link>
                       <Link className="flex min-h-11 items-center rounded-sm px-3 font-semibold hover:bg-card-muted" href={`${base}/admin/calendar`}>{t("calendar")}</Link>
                       <Link className="flex min-h-11 items-center rounded-sm px-3 font-semibold hover:bg-card-muted" href={`${base}/admin/students`}>{t("students")}</Link>
+                      <Link className="flex min-h-11 items-center rounded-sm px-3 font-semibold hover:bg-card-muted" href={`${base}/admin/recensioner`}>{adminT("reviews")}</Link>
                     </>
                   )}
                   <div className="my-1 border-t border-border" />

@@ -44,7 +44,7 @@ export async function runCoreCron(now: Date) {
           creditCharged: false,
           holdExpiresAt: { lte: now },
         },
-        select: { id: true },
+        select: { id: true, studentId: true, createdAt: true },
       });
       const expiredHolds = await tx.booking.updateMany({
         where: {
@@ -211,6 +211,40 @@ export async function runCoreCron(now: Date) {
         });
       }
 
+      const lessonHoldPayments = lessonHoldsToExpire.length
+        ? await tx.payment.findMany({
+            where: {
+              stripePaymentIntentId: { not: null },
+              status: { not: "SUCCEEDED" },
+              order: {
+                studentId: {
+                  in: [
+                    ...new Set(lessonHoldsToExpire.map((hold) => hold.studentId)),
+                  ],
+                },
+                status: { in: ["PENDING", "FAILED"] },
+              },
+            },
+            select: {
+              stripePaymentIntentId: true,
+              order: { select: { studentId: true, createdAt: true } },
+            },
+          })
+        : [];
+      const lessonPaymentIntentIds = lessonHoldsToExpire.flatMap((hold) => {
+        const match = lessonHoldPayments
+          .filter(
+            (payment) =>
+              payment.order.studentId === hold.studentId &&
+              payment.order.createdAt >= hold.createdAt &&
+              payment.stripePaymentIntentId,
+          )
+          .sort(
+            (a, b) => a.order.createdAt.getTime() - b.order.createdAt.getTime(),
+          )[0];
+        return match?.stripePaymentIntentId ? [match.stripePaymentIntentId] : [];
+      });
+
       const queuedReminders = await tx.notification.findMany({
         where: {
           template: "booking_reminder_24h",
@@ -226,11 +260,13 @@ export async function runCoreCron(now: Date) {
         expiredHolds: expiredHolds.count,
         expiredCourseHolds: expiredCourseHolds.count,
         expiredLessonHoldIds: lessonHoldsToExpire.map(({ id }) => id),
-        expiredPaymentIntentIds: courseHoldsToExpire.flatMap((hold) => {
-          const id =
-            hold.sourceOrderItem?.order.payment?.stripePaymentIntentId;
-          return id ? [id] : [];
-        }),
+        expiredPaymentIntentIds: [
+          ...courseHoldsToExpire.flatMap((hold) => {
+            const id = hold.sourceOrderItem?.order.payment?.stripePaymentIntentId;
+            return id ? [id] : [];
+          }),
+          ...lessonPaymentIntentIds,
+        ],
         expiries: expiryCount,
         purgedPickupDetails: purgedPickupDetails.count,
       };
@@ -246,17 +282,6 @@ export async function runCoreCron(now: Date) {
   if (!result.skipped && stripeIsConfigured()) {
     const stripe = getStripe();
     const paymentIntentIds = new Set(result.expiredPaymentIntentIds);
-    for (const bookingId of result.expiredLessonHoldIds) {
-      try {
-        const matches = await stripe.paymentIntents.search({
-          query: `metadata['bookingId']:'${bookingId}'`,
-          limit: 10,
-        });
-        for (const intent of matches.data) paymentIntentIds.add(intent.id);
-      } catch {
-        // A later cron run may retry discovery; the database hold is already safe.
-      }
-    }
     for (const paymentIntentId of paymentIntentIds) {
       try {
         const intent =

@@ -1,58 +1,29 @@
 "use client";
 
-import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
-import dynamic from "next/dynamic";
+import { useEffect, useMemo, useReducer } from "react";
 import { useTranslations } from "next-intl";
 
-import { SignupForm } from "../(auth)/auth-ui";
 import { Button } from "@/components/Button";
 import { Card } from "@/components/Card";
 import { CheckboxField } from "@/components/CheckboxField";
-import { EmptyState } from "@/components/EmptyState";
-import { Input } from "@/components/Input";
 import { Notice } from "@/components/Notice";
-import { Select } from "@/components/Select";
-import { SlotChip } from "@/components/SlotChip";
 import { Stepper } from "@/components/Stepper";
-import { TeacherMap } from "@/components/TeacherMap";
 
-const PickupAddressAutocomplete = dynamic(
-  () => import("@/components/PickupAddressAutocomplete"),
-  { ssr: false },
-);
-
-type Product = {
-  id: string;
-  kind: "SINGLE_LESSON" | "TEST_LESSON";
-  active: boolean;
-  lessonMinutes: number;
-  name: string;
-};
-
-type Location = {
-  id: string;
-  name: string;
-  address: string;
-  lat: number;
-  lng: number;
-};
-
-type Teacher = {
-  id: string;
-  name: string;
-  languages: string[];
-  locationIds: string[];
-  markers: { lat: number; lng: number }[];
-};
-
-type Slot = { startsAt: string; endsAt: string };
-type Booking = {
-  id: string;
-  startsAt: string;
-  holdExpiresAt: string | null;
-  creditCharged: boolean;
-};
+import { AccountStep } from "./steps/AccountStep";
+import { addCalendarDays, localDateKey } from "./steps/dates";
+import {
+  bookingReducer,
+  initialBookingState,
+  type Booking,
+  type Location,
+  type Product,
+  type Slot,
+  type Teacher,
+} from "./steps/state";
+import { WhatStep } from "./steps/WhatStep";
+import { WhenStep } from "./steps/WhenStep";
+import { WhereStep } from "./steps/WhereStep";
+import { WhoStep } from "./steps/WhoStep";
 
 type Props = {
   locale: string;
@@ -65,21 +36,6 @@ type Props = {
   mapApiKey?: string;
   googleEnabled?: boolean;
 };
-
-function localDateKey(value: string, timeZone = "Europe/Stockholm") {
-  return new Intl.DateTimeFormat("sv-SE", {
-    timeZone,
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  }).format(new Date(value));
-}
-
-function addCalendarDays(date: Date, days: number) {
-  const result = new Date(date);
-  result.setDate(result.getDate() + days);
-  return result;
-}
 
 export function BookingFlow({
   locale,
@@ -94,42 +50,15 @@ export function BookingFlow({
 }: Props) {
   const t = useTranslations("booking");
   const errors = useTranslations("errors");
-  const languageNames = useTranslations("language");
-  const [step, setStep] = useState(0);
-  const [kind, setKind] = useState<"single" | "credits" | "test">("single");
-  const [placeMode, setPlaceMode] = useState<"school" | "pickup">("school");
-  const [locationId, setLocationId] = useState(locations[0]?.id ?? "");
-  const [pickupAddress, setPickupAddress] = useState("");
-  const [pickupCoordinates, setPickupCoordinates] = useState<{
-    lat: number;
-    lng: number;
-  } | null>(null);
-  const initialTeacher = teachers.find(
-    (teacher) => teacher.id === initialTeacherId,
+  const [state, dispatch] = useReducer(
+    bookingReducer,
+    { locale, locations, teachers, initialTeacherId, initiallyAuthenticated },
+    initialBookingState,
   );
-  const [language, setLanguage] = useState(
-    initialTeacher?.languages.includes(locale)
-      ? locale
-      : initialTeacher?.languages[0] ?? locale,
-  );
-  const [teacherId, setTeacherId] = useState(initialTeacherId ?? "");
-  const [view, setView] = useState<"list" | "map">("list");
-  const [slots, setSlots] = useState<Slot[]>([]);
-  const [selectedDate, setSelectedDate] = useState("");
-  const [selectedSlot, setSelectedSlot] = useState("");
-  const [loadingSlots, setLoadingSlots] = useState(false);
-  const [authenticated, setAuthenticated] = useState(initiallyAuthenticated);
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState("");
-  const [booking, setBooking] = useState<Booking | null>(null);
-  const [paymentUnavailable, setPaymentUnavailable] = useState(false);
-  const [creditBalance, setCreditBalance] = useState<number | null>(null);
-  const [loadingCredits, setLoadingCredits] = useState(false);
-  const [termsAccepted, setTermsAccepted] = useState(false);
-  const [withdrawalAcknowledged, setWithdrawalAcknowledged] = useState(false);
+  const patch = (patch: Partial<typeof state>) => dispatch({ type: "patch", patch });
 
   const selectedProduct = products.find((product) =>
-    kind === "test"
+    state.kind === "test"
       ? product.kind === "TEST_LESSON"
       : product.kind === "SINGLE_LESSON",
   );
@@ -137,14 +66,14 @@ export function BookingFlow({
   const filteredTeachers = useMemo(
     () =>
       teachers
-        .filter((teacher) => teacher.languages.includes(language))
+        .filter((teacher) => teacher.languages.includes(state.language))
         .filter(
           (teacher) =>
-            placeMode === "pickup" ||
-            !locationId ||
-            teacher.locationIds.includes(locationId),
+            state.placeMode === "pickup" ||
+            !state.locationId ||
+            teacher.locationIds.includes(state.locationId),
         ),
-    [language, locationId, placeMode, teachers],
+    [state.language, state.locationId, state.placeMode, teachers],
   );
   const allLanguages = useMemo(
     () => Array.from(new Set(teachers.flatMap((teacher) => teacher.languages))),
@@ -160,24 +89,25 @@ export function BookingFlow({
   );
 
   useEffect(() => {
-    if (kind !== "credits" || !authenticated) return;
+    if (state.kind !== "credits" || !state.authenticated) return;
     const controller = new AbortController();
-    // This loading state intentionally tracks the external request lifecycle.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setLoadingCredits(true);
+    dispatch({ type: "patch", patch: { loadingCredits: true } });
     fetch("/api/me/credits", { signal: controller.signal })
       .then(async (response) => {
         const payload = await response.json();
         if (!response.ok) throw new Error(payload.error?.code ?? "UNKNOWN");
-        setCreditBalance(Number(payload.balance) || 0);
+        dispatch({ type: "patch", patch: { creditBalance: Number(payload.balance) || 0 } });
       })
       .catch((reason: unknown) => {
         if (reason instanceof DOMException && reason.name === "AbortError") return;
-        setError(reason instanceof Error ? reason.message : "UNKNOWN");
+        dispatch({
+          type: "patch",
+          patch: { error: reason instanceof Error ? reason.message : "UNKNOWN" },
+        });
       })
-      .finally(() => setLoadingCredits(false));
+      .finally(() => dispatch({ type: "patch", patch: { loadingCredits: false } }));
     return () => controller.abort();
-  }, [authenticated, kind]);
+  }, [dispatch, state.authenticated, state.kind]);
 
   const dates = useMemo(() => {
     const formatter = new Intl.DateTimeFormat(locale, {
@@ -196,16 +126,13 @@ export function BookingFlow({
   }, [locale]);
 
   useEffect(() => {
-    if (step !== 3 || !teacherId) return;
+    if (state.step !== 3 || !state.teacherId) return;
     const controller = new AbortController();
     const from = new Date();
     const to = addCalendarDays(from, 14);
-    // These states intentionally reset when the external availability request changes.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setLoadingSlots(true);
-    setError("");
+    dispatch({ type: "patch", patch: { loadingSlots: true, error: "" } });
     fetch(
-      `/api/availability?teacherId=${encodeURIComponent(teacherId)}&from=${encodeURIComponent(from.toISOString())}&to=${encodeURIComponent(to.toISOString())}&lessonMinutes=${lessonMinutes}`,
+      `/api/availability?teacherId=${encodeURIComponent(state.teacherId)}&from=${encodeURIComponent(from.toISOString())}&to=${encodeURIComponent(to.toISOString())}&lessonMinutes=${lessonMinutes}`,
       { signal: controller.signal },
     )
       .then(async (response) => {
@@ -214,33 +141,41 @@ export function BookingFlow({
         return payload as Slot[];
       })
       .then((available) => {
-        setSlots(available);
         const firstDate = available[0]
           ? localDateKey(available[0].startsAt)
           : dates[0]?.key ?? "";
-        setSelectedDate(firstDate);
-        setSelectedSlot(available[0]?.startsAt ?? "");
+        dispatch({
+          type: "patch",
+          patch: {
+            slots: available,
+            selectedDate: firstDate,
+            selectedSlot: available[0]?.startsAt ?? "",
+          },
+        });
       })
       .catch((reason: unknown) => {
         if (reason instanceof DOMException && reason.name === "AbortError") return;
-        setError(reason instanceof Error ? reason.message : "UNKNOWN");
+        dispatch({
+          type: "patch",
+          patch: { error: reason instanceof Error ? reason.message : "UNKNOWN" },
+        });
       })
-      .finally(() => setLoadingSlots(false));
+      .finally(() => dispatch({ type: "patch", patch: { loadingSlots: false } }));
     return () => controller.abort();
-  }, [dates, lessonMinutes, step, teacherId]);
+  }, [dates, dispatch, lessonMinutes, state.step, state.teacherId]);
 
-  const dateSlots = slots.filter(
-    (slot) => localDateKey(slot.startsAt) === selectedDate,
+  const dateSlots = state.slots.filter(
+    (slot) => localDateKey(slot.startsAt) === state.selectedDate,
   );
-  const selectedTeacher = teachers.find((teacher) => teacher.id === teacherId);
-  const selectedLocation = locations.find((location) => location.id === locationId);
-  const selectedDateLabel = selectedSlot
+  const selectedTeacher = teachers.find((teacher) => teacher.id === state.teacherId);
+  const selectedLocation = locations.find((location) => location.id === state.locationId);
+  const selectedDateLabel = state.selectedSlot
     ? new Intl.DateTimeFormat(locale, {
         timeZone: "Europe/Stockholm",
         weekday: "long",
         day: "numeric",
         month: "long",
-      }).format(new Date(selectedSlot))
+      }).format(new Date(state.selectedSlot))
     : "";
   const timeFormatter = new Intl.DateTimeFormat(locale, {
     timeZone: "Europe/Stockholm",
@@ -249,48 +184,47 @@ export function BookingFlow({
   });
 
   function next() {
-    setError("");
-    if (step === 1 && placeMode === "pickup" && pickupAddress.trim().length < 3) {
-      setError("SELECT_LOCATION_OR_PICKUP");
+    patch({ error: "" });
+    if (state.step === 1 && state.placeMode === "pickup" && state.pickupAddress.trim().length < 3) {
+      patch({ error: "SELECT_LOCATION_OR_PICKUP" });
       return;
     }
-    if (step === 2 && !teacherId) {
-      setError("TEACHER_REQUIRED");
+    if (state.step === 2 && !state.teacherId) {
+      patch({ error: "TEACHER_REQUIRED" });
       return;
     }
-    if (step === 3) {
-      if (!selectedSlot) {
-        setError("SLOT_REQUIRED");
+    if (state.step === 3) {
+      if (!state.selectedSlot) {
+        patch({ error: "SLOT_REQUIRED" });
         return;
       }
-      if (authenticated) {
+      if (state.authenticated) {
         void createBooking();
         return;
       }
     }
-    setStep((current) => Math.min(4, current + 1));
+    dispatch({ type: "step", update: (current) => Math.min(4, current + 1) });
   }
 
   async function createBooking(authenticatedNow = false) {
-    if (!authenticatedNow && !authenticated && !initiallyAuthenticated) {
-      setStep(4);
+    if (!authenticatedNow && !state.authenticated && !initiallyAuthenticated) {
+      dispatch({ type: "step", update: () => 4 });
       return;
     }
-    if (!selectedSlot) {
-      setError("SLOT_REQUIRED");
+    if (!state.selectedSlot) {
+      patch({ error: "SLOT_REQUIRED" });
       return;
     }
-    setBusy(true);
-    setError("");
+    patch({ busy: true, error: "" });
     try {
-      if (kind === "credits") {
+      if (state.kind === "credits") {
         const creditsResponse = await fetch("/api/me/credits");
         const creditsPayload = await creditsResponse.json();
         if (!creditsResponse.ok) {
           throw new Error(creditsPayload.error?.code ?? "UNKNOWN");
         }
         const balance = Number(creditsPayload.balance) || 0;
-        setCreditBalance(balance);
+        patch({ creditBalance: balance });
         if (balance < 1) throw new Error("NO_CREDITS");
       }
       const idempotencyKey = crypto.randomUUID();
@@ -301,18 +235,18 @@ export function BookingFlow({
           "idempotency-key": idempotencyKey,
         },
         body: JSON.stringify({
-          teacherId,
-          startsAt: selectedSlot,
+          teacherId: state.teacherId,
+          startsAt: state.selectedSlot,
           lessonMinutes,
-          requireCredit: kind === "credits",
-          ...(placeMode === "school"
-            ? { locationId }
+          requireCredit: state.kind === "credits",
+          ...(state.placeMode === "school"
+            ? { locationId: state.locationId }
             : {
-                pickupAddress: pickupAddress.trim(),
-                ...(pickupCoordinates
+                pickupAddress: state.pickupAddress.trim(),
+                ...(state.pickupCoordinates
                   ? {
-                      pickupLat: pickupCoordinates.lat,
-                      pickupLng: pickupCoordinates.lng,
+                      pickupLat: state.pickupCoordinates.lat,
+                      pickupLng: state.pickupCoordinates.lng,
                     }
                   : {}),
               }),
@@ -320,23 +254,21 @@ export function BookingFlow({
       });
       const payload = await response.json();
       if (!response.ok) throw new Error(payload.error?.code ?? "UNKNOWN");
-      const created = payload as Booking;
-      setBooking(created);
+      patch({ booking: payload as Booking });
     } catch (reason) {
-      setError(reason instanceof Error ? reason.message : "UNKNOWN");
+      patch({ error: reason instanceof Error ? reason.message : "UNKNOWN" });
     } finally {
-      setBusy(false);
+      patch({ busy: false });
     }
   }
 
   async function startCheckout() {
-    if (!booking || !selectedProduct) return;
-    if (!termsAccepted || !withdrawalAcknowledged) {
-      setError("CHECKOUT_CONSENT_REQUIRED");
+    if (!state.booking || !selectedProduct) return;
+    if (!state.termsAccepted || !state.withdrawalAcknowledged) {
+      patch({ error: "CHECKOUT_CONSENT_REQUIRED" });
       return;
     }
-    setBusy(true);
-    setError("");
+    patch({ busy: true, error: "" });
     try {
       const checkoutResponse = await fetch("/api/checkout", {
         method: "POST",
@@ -344,30 +276,30 @@ export function BookingFlow({
         body: JSON.stringify({
           productId: selectedProduct.id,
           quantity: 1,
-          bookingId: booking.id,
-          termsAccepted,
-          withdrawalAcknowledged,
+          bookingId: state.booking.id,
+          termsAccepted: state.termsAccepted,
+          withdrawalAcknowledged: state.withdrawalAcknowledged,
         }),
       });
       const checkout = await checkoutResponse.json();
       if (!checkoutResponse.ok) {
         if (checkout.error?.code === "PRODUCT_INACTIVE") {
-          setPaymentUnavailable(true);
+          patch({ paymentUnavailable: true });
           return;
         }
         throw new Error(checkout.error?.code ?? "UNKNOWN");
       }
       if (checkout.url) window.location.assign(checkout.url);
     } catch (reason) {
-      setError(reason instanceof Error ? reason.message : "UNKNOWN");
+      patch({ error: reason instanceof Error ? reason.message : "UNKNOWN" });
     } finally {
-      setBusy(false);
+      patch({ busy: false });
     }
   }
 
-  if (booking) {
+  if (state.booking) {
     const deadline = new Date(
-      new Date(booking.startsAt).getTime() -
+      new Date(state.booking.startsAt).getTime() -
         cancellationWindowHours * 60 * 60 * 1000,
     );
     const deadlineLabel = new Intl.DateTimeFormat(locale, {
@@ -390,45 +322,45 @@ export function BookingFlow({
           {t("confirmation.deadline", { deadline: deadlineLabel })}
         </p>
         <a
-          href={`/api/bookings/${booking.id}/calendar`}
+          href={`/api/bookings/${state.booking.id}/calendar`}
           className="mt-5 inline-flex min-h-11 items-center rounded-sm border border-border bg-card px-5 font-bold shadow-soft hover:border-border-strong"
         >
           {t("confirmation.calendar")}
         </a>
-        {booking.creditCharged ? (
+        {state.booking.creditCharged ? (
             <Notice className="mt-5" tone="success">{t("confirmation.creditUsed")}</Notice>
         ) : (
           <>
             <Notice className="mt-5">
               {t("confirmation.hold", {
-                expires: booking.holdExpiresAt
-                  ? timeFormatter.format(new Date(booking.holdExpiresAt))
+                expires: state.booking.holdExpiresAt
+                  ? timeFormatter.format(new Date(state.booking.holdExpiresAt))
                   : "",
               })}
             </Notice>
-            {!paymentUnavailable ? (
+            {!state.paymentUnavailable ? (
               <Card className="mt-5" elevated>
                 <p className="font-bold">{t("checkout.title")}</p>
                 <div className="mt-4 grid gap-3">
                   <CheckboxField
                     id="booking-terms"
                     label={t("checkout.termsConsent")}
-                    checked={termsAccepted}
-                    onChange={(event) => setTermsAccepted(event.target.checked)}
+                    checked={state.termsAccepted}
+                    onChange={(event) => patch({ termsAccepted: event.target.checked })}
                   />
                   <CheckboxField
                     id="booking-withdrawal"
                     label={t("checkout.withdrawalConsent")}
-                    checked={withdrawalAcknowledged}
+                    checked={state.withdrawalAcknowledged}
                     onChange={(event) =>
-                      setWithdrawalAcknowledged(event.target.checked)
+                      patch({ withdrawalAcknowledged: event.target.checked })
                     }
                   />
                 </div>
                 <Button
                   className="mt-4 w-full"
                   disabled={
-                    busy || !termsAccepted || !withdrawalAcknowledged
+                    state.busy || !state.termsAccepted || !state.withdrawalAcknowledged
                   }
                   onClick={startCheckout}
                 >
@@ -438,13 +370,13 @@ export function BookingFlow({
             ) : null}
           </>
         )}
-        {paymentUnavailable ? <Notice className="mt-4">{t("confirmation.provisional")}</Notice> : null}
-        {error ? (
+        {state.paymentUnavailable ? <Notice className="mt-4">{t("confirmation.provisional")}</Notice> : null}
+        {state.error ? (
           <p
             role="alert"
             className="mt-4 rounded-sm border border-danger p-3 text-sm text-danger"
           >
-            {errors.has(error) ? errors(error) : errors("UNKNOWN")}
+            {errors.has(state.error) ? errors(state.error) : errors("UNKNOWN")}
           </p>
         ) : null}
         </div>
@@ -467,301 +399,97 @@ export function BookingFlow({
           t("step.when.short"),
           t("account.short"),
         ]}
-        current={step}
-        completed={authenticated ? [4] : []}
+        current={state.step}
+        completed={state.authenticated ? [4] : []}
         progressLabel={t("progress")}
       />
       <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_18rem]">
       <div>
-
-      {step === 0 ? (
-        <section>
-          <h2 className="text-3xl font-black">{t("step.what.title")}</h2>
-          <p className="mt-2 text-ink-muted">{t("step.what.description")}</p>
-          <div className="mt-6 grid gap-2">
-            {(["single", "credits", "test"] as const).map((option) => {
-              const product =
-                option === "test"
-                  ? products.find((item) => item.kind === "TEST_LESSON")
-                  : products.find((item) => item.kind === "SINGLE_LESSON");
-              return (
-                <button
-                  type="button"
-                  key={option}
-                  onClick={() => setKind(option)}
-                  aria-pressed={kind === option}
-                  className={`min-h-20 border-b px-1 py-4 text-start transition ${
-                    kind === option
-                      ? "border-ink"
-                      : "border-border hover:border-ink-muted"
-                  }`}
-                >
-                  <span className="font-bold">{t(`step.what.${option}`)}</span>
-                  {option !== "credits" && product && !product.active ? (
-                    <span className="mt-1 block text-sm text-ink-muted">
-                      {t("provisional")}
-                    </span>
-                  ) : null}
-                  {option === "credits" && kind === "credits" ? (
-                    <span className="mt-1 block text-sm text-ink-muted">
-                      {loadingCredits
-                        ? t("credits.loading")
-                        : creditBalance === null
-                          ? t("credits.signIn")
-                          : t("credits.balance", { count: creditBalance })}
-                    </span>
-                  ) : null}
-                </button>
-              );
-            })}
-          </div>
-        </section>
+      {state.step === 0 ? (
+        <WhatStep
+          products={products}
+          kind={state.kind}
+          loadingCredits={state.loadingCredits}
+          creditBalance={state.creditBalance}
+          onKind={(kind) => patch({ kind })}
+        />
       ) : null}
-
-      {step === 1 ? (
-        <section>
-          <h2 className="text-3xl font-black">{t("step.where.title")}</h2>
-          <div className="mt-6 grid gap-3 sm:grid-cols-2">
-            {(["school", "pickup"] as const).map((mode) => (
-              <button
-                type="button"
-                key={mode}
-                onClick={() => setPlaceMode(mode)}
-                aria-pressed={placeMode === mode}
-                className={`min-h-24 border-b px-1 py-5 text-start font-bold transition ${
-                  placeMode === mode
-                    ? "border-ink"
-                    : "border-border hover:border-ink-muted"
-                }`}
-              >
-                {t(`step.where.${mode}`)}
-              </button>
-            ))}
-          </div>
-          {placeMode === "school" ? (
-            <div className="mt-5">
-              <Select
-                label={t("step.where.location")}
-                id="booking-location"
-                value={locationId}
-                onChange={(event) => setLocationId(event.target.value)}
-              >
-                {locations.map((location) => (
-                  <option value={location.id} key={location.id}>
-                    {location.name}
-                  </option>
-                ))}
-              </Select>
-            </div>
-          ) : (
-            <div className="mt-5">
-              {mapApiKey ? (
-                <PickupAddressAutocomplete
-                  apiKey={mapApiKey}
-                  label={t("step.where.address")}
-                  value={pickupAddress}
-                  onChange={(value, coordinates) => {
-                    setPickupAddress(value);
-                    setPickupCoordinates(coordinates ?? null);
-                  }}
-                />
-              ) : (
-                <Input
-                  label={t("step.where.address")}
-                  value={pickupAddress}
-                  onChange={(event) => {
-                    setPickupAddress(event.target.value);
-                    setPickupCoordinates(null);
-                  }}
-                  autoComplete="street-address"
-                />
-              )}
-            </div>
-          )}
-        </section>
+      {state.step === 1 ? (
+        <WhereStep
+          locations={locations}
+          placeMode={state.placeMode}
+          locationId={state.locationId}
+          pickupAddress={state.pickupAddress}
+          mapApiKey={mapApiKey}
+          onPlaceMode={(placeMode) => patch({ placeMode })}
+          onLocationId={(locationId) => patch({ locationId })}
+          onPickup={(pickupAddress, pickupCoordinates) =>
+            patch({ pickupAddress, pickupCoordinates })
+          }
+        />
       ) : null}
-
-      {step === 2 ? (
-        <section>
-          <h2 className="text-3xl font-black">{t("step.who.title")}</h2>
-          <fieldset className="mt-5">
-            <legend className="font-bold">{t("step.who.languageFirst")}</legend>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {allLanguages.map((item) => (
-                <button
-                  type="button"
-                  key={item}
-                  onClick={() => setLanguage(item)}
-                  aria-pressed={language === item}
-                  className={`min-h-11 rounded-full border px-4 text-sm font-semibold ${
-                    language === item
-                      ? "border-accent bg-accent text-accent-ink"
-                      : "border-border bg-card"
-                  }`}
-                >
-                  {languageNames.has(item)
-                    ? languageNames(item)
-                    : item.toUpperCase()}
-                </button>
-              ))}
-            </div>
-          </fieldset>
-          <div className="mt-5 flex gap-2">
-            <Button variant={view === "list" ? "primary" : "tertiary"} onClick={() => setView("list")}>
-              {t("step.who.list")}
-            </Button>
-            <Button variant={view === "map" ? "primary" : "tertiary"} onClick={() => setView("map")}>
-              {t("step.who.map")}
-            </Button>
-          </div>
-          {view === "map" && locations[0] ? (
-            <div className="mt-5">
-              <TeacherMap
-                apiKey={mapApiKey}
-                center={{ lat: locations[0].lat, lng: locations[0].lng }}
-                label={t("step.who.mapLabel")}
-                missingKeyTitle={t("step.who.mapUnavailable")}
-                missingKeyDescription={t("step.who.mapUnavailableDescription")}
-                markers={teacherMarkers}
-                selectedTeacherId={teacherId}
-                onSelectTeacher={setTeacherId}
-              />
-            </div>
-          ) : (
-            <div className="mt-5 grid gap-3">
-              {filteredTeachers.map((teacher) => (
-                <button
-                  type="button"
-                  key={teacher.id}
-                  onClick={() => setTeacherId(teacher.id)}
-                  aria-pressed={teacherId === teacher.id}
-                  className={`min-h-20 rounded-md border bg-card p-5 text-start shadow-soft transition hover:border-border-strong ${
-                    teacherId === teacher.id ? "border-ink ring-2 ring-accent" : "border-border"
-                  }`}
-                >
-                  <span className="font-bold">{teacher.name}</span>
-                  <span className="mt-1 block text-sm text-ink-muted">
-                    {teacher.languages
-                      .map((item) =>
-                        languageNames.has(item) ? languageNames(item) : item,
-                      )
-                      .join(" · ")}
-                  </span>
-                </button>
-              ))}
-              {!filteredTeachers.length ? (
-                <EmptyState title={t("step.who.emptyTitle")} description={t("step.who.empty")} />
-              ) : null}
-            </div>
-          )}
-        </section>
+      {state.step === 2 ? (
+        <WhoStep
+          locations={locations}
+          language={state.language}
+          languages={allLanguages}
+          view={state.view}
+          teachers={filteredTeachers}
+          teacherId={state.teacherId}
+          markers={teacherMarkers}
+          mapApiKey={mapApiKey}
+          onLanguage={(language) => patch({ language })}
+          onView={(view) => patch({ view })}
+          onTeacher={(teacherId) => patch({ teacherId })}
+        />
       ) : null}
-
-      {step === 3 ? (
-        <section>
-          <h2 className="text-3xl font-black">{t("step.when.title")}</h2>
-          {slots[0] ? (
-            <button
-              type="button"
-              onClick={() => {
-                setSelectedDate(localDateKey(slots[0].startsAt));
-                setSelectedSlot(slots[0].startsAt);
-              }}
-              className="mt-5 flex min-h-14 w-full items-center justify-between rounded-md bg-surface px-4 text-start font-bold text-ink-inverse"
-            >
-              <span>{t("step.when.firstAvailable")}</span>
-              <span dir="ltr">{timeFormatter.format(new Date(slots[0].startsAt))}</span>
-            </button>
-          ) : null}
-          <div className="mt-5 flex gap-2 overflow-x-auto pb-2">
-            {dates.map((date) => (
-              <button
-                type="button"
-                key={date.key}
-                onClick={() => {
-                  setSelectedDate(date.key);
-                  setSelectedSlot("");
-                }}
-                aria-pressed={selectedDate === date.key}
-                className={`min-h-14 min-w-24 rounded-sm border px-3 text-sm ${
-                  selectedDate === date.key
-                    ? "border-accent bg-accent text-accent-ink"
-                    : "border-border bg-card"
-                }`}
-              >
-                {date.label}
-              </button>
-            ))}
-          </div>
-          {loadingSlots ? (
-            <div role="status" className="mt-5 grid grid-cols-3 gap-3 sm:grid-cols-4">
-              <span className="sr-only">{t("step.when.loading")}</span>
-              {Array.from({ length: 8 }, (_, index) => <span key={index} className="min-h-11 animate-pulse rounded-sm bg-page" />)}
-            </div>
-          ) : null}
-          {!loadingSlots ? (
-            <div className="mt-5 grid grid-cols-3 gap-3 sm:grid-cols-4">
-              {dateSlots.map((slot) => (
-                <SlotChip
-                  key={slot.startsAt}
-                  selected={selectedSlot === slot.startsAt}
-                  onClick={() => setSelectedSlot(slot.startsAt)}
-                >
-                  <span dir="ltr">{timeFormatter.format(new Date(slot.startsAt))}</span>
-                </SlotChip>
-              ))}
-            </div>
-          ) : null}
-          {!loadingSlots && !dateSlots.length ? (
-            <div className="mt-5"><EmptyState title={t("step.when.emptyTitle")} description={t("step.when.empty")} /></div>
-          ) : null}
-        </section>
+      {state.step === 3 ? (
+        <WhenStep
+          slots={state.slots}
+          dates={dates}
+          selectedDate={state.selectedDate}
+          selectedSlot={state.selectedSlot}
+          loadingSlots={state.loadingSlots}
+          dateSlots={dateSlots}
+          timeFormatter={timeFormatter}
+          onFirstAvailable={(slot) =>
+            patch({
+              selectedDate: localDateKey(slot.startsAt),
+              selectedSlot: slot.startsAt,
+            })
+          }
+          onDate={(selectedDate) => patch({ selectedDate, selectedSlot: "" })}
+          onSlot={(selectedSlot) => patch({ selectedSlot })}
+        />
       ) : null}
-
-      {step === 4 ? (
-        <section>
-          <h2 className="text-3xl font-black">{t("account.title")}</h2>
-          <p className="mt-2 leading-7 text-ink-muted">
-            {t("account.description")}
-          </p>
-          <div className="mt-6">
-            <SignupForm
-              locale={locale}
-              googleEnabled={googleEnabled}
-              onAuthenticated={async () => {
-                setAuthenticated(true);
-                await createBooking(true);
-              }}
-            />
-          </div>
-          <Link
-            href={`/${locale}/logga-in?next=${encodeURIComponent(`/${locale}/boka`)}`}
-            className="mt-4 flex min-h-11 items-center justify-center text-sm font-bold underline underline-offset-4"
-          >
-            {t("account.emailLink")}
-          </Link>
-        </section>
+      {state.step === 4 ? (
+        <AccountStep
+          locale={locale}
+          googleEnabled={googleEnabled}
+          onAuthenticated={async () => {
+            patch({ authenticated: true });
+            await createBooking(true);
+          }}
+        />
       ) : null}
-
-      {error ? (
+      {state.error ? (
         <p role="alert" className="rounded-sm border border-danger p-3 text-sm text-danger">
-          {errors.has(error) ? errors(error) : errors("UNKNOWN")}
+          {errors.has(state.error) ? errors(state.error) : errors("UNKNOWN")}
         </p>
       ) : null}
-
       <div className="flex gap-3">
-        {step > 0 ? (
-          <Button variant="tertiary" onClick={() => setStep((current) => current - 1)}>
+        {state.step > 0 ? (
+          <Button variant="tertiary" onClick={() => dispatch({ type: "step", update: (current) => current - 1 })}>
             {t("back")}
           </Button>
         ) : null}
-        {step < 3 ? (
+        {state.step < 3 ? (
           <Button className="ms-auto" onClick={next}>
             {t("next")}
           </Button>
-        ) : step === 3 ? (
-          <Button className="ms-auto" disabled={busy || !selectedSlot} onClick={next}>
-            {authenticated ? t("confirm") : t("next")}
+        ) : state.step === 3 ? (
+          <Button className="ms-auto" disabled={state.busy || !state.selectedSlot} onClick={next}>
+            {state.authenticated ? t("confirm") : t("next")}
           </Button>
         ) : null}
       </div>
@@ -770,10 +498,10 @@ export function BookingFlow({
           <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-ink-muted">{t("summary.eyebrow")}</p>
           <h2 className="mt-2 text-xl font-black">{t("summary.title")}</h2>
           <dl className="mt-5 grid gap-4 text-sm">
-            <div className="border-b border-border pb-4"><dt className="text-ink-muted">{t("summary.lesson")}</dt><dd className="mt-1 font-bold">{t(`step.what.${kind}`)}</dd></div>
-            <div className="border-b border-border pb-4"><dt className="text-ink-muted">{t("summary.place")}</dt><dd className="mt-1 font-bold">{placeMode === "school" ? selectedLocation?.name ?? t("summary.notSelected") : pickupAddress || t("summary.notSelected")}</dd></div>
+            <div className="border-b border-border pb-4"><dt className="text-ink-muted">{t("summary.lesson")}</dt><dd className="mt-1 font-bold">{t(`step.what.${state.kind}`)}</dd></div>
+            <div className="border-b border-border pb-4"><dt className="text-ink-muted">{t("summary.place")}</dt><dd className="mt-1 font-bold">{state.placeMode === "school" ? selectedLocation?.name ?? t("summary.notSelected") : state.pickupAddress || t("summary.notSelected")}</dd></div>
             <div className="border-b border-border pb-4"><dt className="text-ink-muted">{t("summary.teacher")}</dt><dd className="mt-1 font-bold">{selectedTeacher?.name ?? t("summary.notSelected")}</dd></div>
-            <div><dt className="text-ink-muted">{t("summary.time")}</dt><dd className="mt-1 font-bold">{selectedSlot ? <><span>{selectedDateLabel}</span><span className="block [direction:ltr]">{timeFormatter.format(new Date(selectedSlot))}</span></> : t("summary.notSelected")}</dd></div>
+            <div><dt className="text-ink-muted">{t("summary.time")}</dt><dd className="mt-1 font-bold">{state.selectedSlot ? <><span>{selectedDateLabel}</span><span className="block [direction:ltr]">{timeFormatter.format(new Date(state.selectedSlot))}</span></> : t("summary.notSelected")}</dd></div>
           </dl>
           <p className="mt-5 text-sm leading-6 text-ink-muted">{t("summary.reassurance")}</p>
       </aside>

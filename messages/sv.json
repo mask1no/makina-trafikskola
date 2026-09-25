@@ -40,7 +40,7 @@
     "account": "Mitt konto",
     "myPages": "Mina sidor",
     "createAccount": "Skapa konto",
-    "balance": "Mitt saldo",
+    "balance": "Mina lektioner",
     "teacherPortal": "Lärarportal",
     "adminPanel": "Adminpanel",
     "calendar": "Kalender",
@@ -237,6 +237,8 @@
     "unavailableTitle": "Kartan är inte tillgänglig just nu",
     "unavailableDescription": "Du kan fortfarande hitta och välja lärare i listan.",
     "pendingKey": "Kartan aktiveras när Google Maps-nyckeln är på plats.",
+    "book": "Boka",
+    "close": "Stäng",
     "homeTeaserTitle": "Hitta lärare nära dig",
     "homeTeaserDescription": "Filtrera på språk och se var lärarna finns – öppna kartan på lärarsidan.",
     "homeTeaserCta": "Öppna lärarkartan"
@@ -407,7 +409,8 @@
       "description": "Snabbast med mobilnummer och sms-kod. Du kan också använda e-post.",
       "submit": "Logga in",
       "noAccount": "Inget konto?",
-      "create": "Skapa konto"
+      "create": "Skapa konto",
+      "phoneAccountMissing": "Inget konto med det numret."
     },
     "register": {
       "title": "Skapa konto",
@@ -433,7 +436,7 @@
       "label": "Mina sidor",
       "overview": "Översikt",
       "bookings": "Bokningar",
-      "saldo": "Saldo",
+      "saldo": "Mina lektioner",
       "theory": "Teori",
       "messages": "Meddelanden",
       "profile": "Profil"
@@ -443,8 +446,9 @@
       "nextBooking": "Nästa körlektion",
       "noBooking": "Du har ingen kommande bokning.",
       "viewBookings": "Visa bokningar",
-      "saldo": "Tillgängliga lektioner",
-      "viewSaldo": "Visa saldo",
+      "saldo": "Mina lektioner",
+      "viewSaldo": "Visa lektioner",
+      "lessonsLeft": "{count, plural, =1 {1 lektion kvar} other {# lektioner kvar}}",
       "theory": "Teoriåtkomst",
       "theoryActive": "Din teoriåtkomst är aktiv.",
       "theoryInactive": "Ingen aktiv teoriåtkomst.",
@@ -470,8 +474,10 @@
       }
     },
     "saldo": {
-      "title": "Mitt saldo",
-      "available": "Tillgängligt saldo",
+      "title": "Mina lektioner",
+      "available": "Kvar att köra",
+      "remaining": "{count, plural, =1 {1 lektion kvar} other {# lektioner kvar}}",
+      "lotCount": "{count, plural, =1 {+1 lektion} other {+# lektioner}}",
       "lessons": "körlektioner",
       "lots": "Aktiva krediter",
       "expires": "Gäller till {date}",
@@ -560,6 +566,17 @@
     "completeLesson": "Slutför och spara",
     "updateReport": "Uppdatera rapport",
     "empty": "Du har inga lektioner idag.",
+    "weekTitle": "Veckans körlektioner",
+    "weekCount": "{count, plural, =0 {Inga lektioner den här veckan} =1 {1 lektion den här veckan} other {# lektioner den här veckan}}",
+    "weekEmpty": "Du har inga lektioner den här veckan.",
+    "views": {"today": "Idag", "week": "Vecka"},
+    "students": {
+      "title": "Mina elever",
+      "lessonsDone": "{count, plural, =0 {Inga genomförda lektioner} =1 {1 genomförd lektion} other {# genomförda lektioner}}",
+      "nextLesson": "Nästa lektion {when}",
+      "noNext": "Ingen kommande lektion.",
+      "empty": "Inga elever ännu."
+    },
     "noProfile": "Inget lärarkonto är kopplat till den här användaren.",
     "block": {
       "title": "Blockera tillgänglighet",
@@ -723,7 +740,36 @@
     }
   },
   "admin": {
-    "nav": {"label": "Administration", "calendar": "Veckokalender", "students": "Elever", "instructors": "Ny lärare"},
+    "nav": {"label": "Administration", "calendar": "Veckokalender", "students": "Elever", "instructors": "Ny lärare", "reviews": "Recensioner"},
+    "dashboard": {
+      "eyebrow": "Administration",
+      "title": "Översikt",
+      "description": "Siffror för skolan just nu.",
+      "revenue": "Intäkter den här månaden",
+      "revenueCompare": "{percent} jämfört med förra månaden",
+      "revenueNoCompare": "Ingen intäkt förra månaden",
+      "lessonsToday": "Lektioner idag",
+      "lessonsTodayEmpty": "Inga lektioner idag.",
+      "lessonLine": "{time} · {instructor} · {student}",
+      "bookingsWeek": "Bokningar närmaste 7 dagarna",
+      "newStudents": "Nya elever den här månaden",
+      "creditsOutstanding": "Lektioner kvar att köra",
+      "reviewsWaiting": "Recensioner som väntar"
+    },
+    "reviews": {
+      "title": "Recensioner",
+      "description": "Opublicerade omdömen. Publicera eller avvisa.",
+      "empty": "Inga recensioner väntar.",
+      "student": "Elev",
+      "instructor": "Lärare",
+      "rating": "Betyg",
+      "comment": "Kommentar",
+      "date": "Datum",
+      "noComment": "Ingen kommentar.",
+      "publish": "Publicera",
+      "reject": "Avvisa",
+      "saving": "Sparar…"
+    },
     "calendar": {
       "eyebrow": "Administration", "title": "Veckokalender", "description": "Se bokningar för alla aktiva lärare och hantera en bokning.", "previous": "Föregående vecka", "next": "Nästa vecka", "instructor": "Lärare", "completed": "Genomförd", "empty": "Det finns inga aktiva lärare.",
       "controls": {"manage": "Hantera", "close": "Stäng", "action": "Åtgärd", "move": "Flytta tid", "reassign": "Byt lärare", "cancel": "Avboka", "newTime": "Ny lokal tid", "newInstructor": "Ny lärare", "reason": "Skriftlig orsak", "save": "Spara ändring", "saving": "Sparar…"}
@@ -785,6 +831,7 @@
     "BOOKING_NOT_COMPLETED": "Du kan lämna en recension efter en genomförd lektion.",
     "REVIEW_EXISTS": "Du har redan lämnat en recension för lektionen.",
     "UNKNOWN": "Något gick fel. Försök igen.",
+    "REVIEW_NOT_FOUND": "Recensionen finns inte.",
     "notFoundTitle": "Vi hittar inte sidan",
     "notFoundDescription": "Adressen stämmer inte. Gå till startsidan, körlektioner, lärare eller boka en tid.",
     "forbiddenTitle": "Du har inte behörighet",

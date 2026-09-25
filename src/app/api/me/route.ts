@@ -77,6 +77,7 @@ export async function DELETE(request: Request) {
         data: {
           email: null,
           phone: null,
+          googleSub: null,
           emailVerifiedAt: null,
           phoneVerifiedAt: null,
           passwordHash: null,

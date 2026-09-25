@@ -2,15 +2,17 @@ import { randomInt } from "node:crypto";
 
 import { z } from "zod";
 
-import { normalizePhoneToE164 } from "@/lib/auth/phone";
-import { sendOtpSms } from "@/lib/auth/sms";
 import { storeOtp } from "@/lib/auth/otp-store";
+import { normalizeSwedishPhone } from "@/lib/auth/phone";
+import { sendOtpSms } from "@/lib/auth/sms";
+import { db } from "@/lib/db";
 
 export const runtime = "nodejs";
 
 const requestSchema = z
   .object({
     phone: z.string().trim().min(3).max(32),
+    purpose: z.enum(["login", "signup", "password-reset", "phone-link"]).optional(),
   })
   .strict();
 
@@ -36,11 +38,21 @@ export async function POST(request: Request) {
     );
   }
 
-  const phone = normalizePhoneToE164(parsed.data.phone);
+  const phone = normalizeSwedishPhone(parsed.data.phone);
   if (!phone) {
     return errorResponse("INVALID_PHONE", 400, {
       phone: ["INVALID_PHONE"],
     });
+  }
+
+  if (parsed.data.purpose === "login") {
+    const account = await db.user.findUnique({
+      where: { phone, deletedAt: null },
+      select: { id: true },
+    });
+    if (!account) {
+      return errorResponse("NO_ACCOUNT", 404);
+    }
   }
 
   const now = new Date();

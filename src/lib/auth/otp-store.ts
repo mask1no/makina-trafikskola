@@ -1,5 +1,6 @@
 import { createHash } from "node:crypto";
 
+import type { Prisma } from "@prisma/client";
 import bcrypt from "bcryptjs";
 
 import { db } from "@/lib/db";
@@ -83,17 +84,18 @@ export async function consumeOtp(
   phone: string,
   code: string,
   now: Date,
+  client: Pick<Prisma.TransactionClient, "otpCode"> = db,
 ): Promise<boolean> {
   const key = phoneKey(phone);
-  const entry = await db.otpCode.findUnique({ where: { phoneHash: key } });
+  const entry = await client.otpCode.findUnique({ where: { phoneHash: key } });
   if (!entry || entry.expiresAt < now) return false;
 
   if (!(await bcrypt.compare(code, entry.codeHash))) {
     const attempts = entry.attempts + 1;
     if (attempts >= MAX_OTP_ATTEMPTS) {
-      await db.otpCode.delete({ where: { phoneHash: key } });
+      await client.otpCode.delete({ where: { phoneHash: key } });
     } else {
-      await db.otpCode.update({
+      await client.otpCode.update({
         where: { phoneHash: key },
         data: { attempts },
       });
@@ -101,7 +103,7 @@ export async function consumeOtp(
     return false;
   }
 
-  await db.otpCode.delete({ where: { phoneHash: key } });
+  await client.otpCode.delete({ where: { phoneHash: key } });
   return true;
 }
 

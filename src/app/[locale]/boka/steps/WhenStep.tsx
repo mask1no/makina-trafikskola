@@ -1,0 +1,92 @@
+"use client";
+
+import { useTranslations } from "next-intl";
+
+import { EmptyState } from "@/components/EmptyState";
+import { SlotChip } from "@/components/SlotChip";
+
+import type { Slot } from "./state";
+
+export function WhenStep({
+  slots,
+  dates,
+  selectedDate,
+  selectedSlot,
+  loadingSlots,
+  dateSlots,
+  timeFormatter,
+  onFirstAvailable,
+  onDate,
+  onSlot,
+}: {
+  slots: Slot[];
+  dates: { key: string; label: string }[];
+  selectedDate: string;
+  selectedSlot: string;
+  loadingSlots: boolean;
+  dateSlots: Slot[];
+  timeFormatter: Intl.DateTimeFormat;
+  onFirstAvailable: (slot: Slot) => void;
+  onDate: (key: string) => void;
+  onSlot: (startsAt: string) => void;
+}) {
+  const t = useTranslations("booking");
+  return (
+    <section>
+      <h2 className="text-3xl font-black">{t("step.when.title")}</h2>
+      {slots[0] ? (
+        <button
+          type="button"
+          onClick={() => onFirstAvailable(slots[0])}
+          className="mt-5 flex min-h-14 w-full items-center justify-between rounded-md bg-surface px-4 text-start font-bold text-ink-inverse"
+        >
+          <span>{t("step.when.firstAvailable")}</span>
+          <span dir="ltr">{timeFormatter.format(new Date(slots[0].startsAt))}</span>
+        </button>
+      ) : null}
+      <div className="mt-5 flex gap-2 overflow-x-auto pb-2">
+        {dates.map((date) => (
+          <button
+            type="button"
+            key={date.key}
+            onClick={() => onDate(date.key)}
+            aria-pressed={selectedDate === date.key}
+            className={`min-h-14 min-w-24 rounded-sm border px-3 text-sm ${
+              selectedDate === date.key
+                ? "border-accent bg-accent text-accent-ink"
+                : "border-border bg-card"
+            }`}
+          >
+            {date.label}
+          </button>
+        ))}
+      </div>
+      {loadingSlots ? (
+        <div role="status" className="mt-5 grid grid-cols-3 gap-3 sm:grid-cols-4">
+          <span className="sr-only">{t("step.when.loading")}</span>
+          {Array.from({ length: 8 }, (_, index) => (
+            <span key={index} className="min-h-11 animate-pulse rounded-sm bg-page" />
+          ))}
+        </div>
+      ) : null}
+      {!loadingSlots ? (
+        <div className="mt-5 grid grid-cols-3 gap-3 sm:grid-cols-4">
+          {dateSlots.map((slot) => (
+            <SlotChip
+              key={slot.startsAt}
+              selected={selectedSlot === slot.startsAt}
+              onClick={() => onSlot(slot.startsAt)}
+            >
+              <span dir="ltr">{timeFormatter.format(new Date(slot.startsAt))}</span>
+            </SlotChip>
+          ))}
+        </div>
+      ) : null}
+      {!loadingSlots && !dateSlots.length ? (
+        <div className="mt-5">
+          <EmptyState title={t("step.when.emptyTitle")} description={t("step.when.empty")} />
+        </div>
+      ) : null}
+    </section>
+  );
+}

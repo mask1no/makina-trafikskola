@@ -40,7 +40,7 @@
     "account": "حسابي",
     "myPages": "صفحاتي",
     "createAccount": "إنشاء حساب",
-    "balance": "رصيدي",
+    "balance": "دروسي",
     "teacherPortal": "بوابة المدرب",
     "adminPanel": "لوحة الإدارة",
     "calendar": "التقويم",
@@ -83,20 +83,20 @@
     "trust": {
       "label": "ما تحصل عليه مع ماكينا",
       "languages": {
-        "title": "Fem språk",
-        "description": "Svenska, engelska, tigrinja, arabiska och somaliska"
+        "title": "خمس لغات",
+        "description": "السويدية والإنجليزية والتغرينية والعربية والصومالية"
       },
       "pickup": {
-        "title": "Vi hämtar dig",
-        "description": "Läraren möter dig där du är"
+        "title": "نأتي إليك",
+        "description": "يلتقيك المدرب حيث تكون"
       },
       "lesson": {
-        "title": "50 minuter",
-        "description": "Samma lektionslängd i hela utbudet"
+        "title": "50 دقيقة",
+        "description": "نفس مدة الدرس في كل العروض"
       },
       "pricing": {
-        "title": "Öppna priser",
-        "description": "Se exakt vad som ingår innan du betalar"
+        "title": "أسعار واضحة",
+        "description": "انظر بالضبط ما يشمله السعر قبل الدفع"
       }
     },
     "journey": {
@@ -121,9 +121,9 @@
     },
     "teachers": {
       "eyebrow": "تعلّم بلغتك",
-      "title": "Hitta din lärare",
+      "title": "اعثر على مدربك",
       "description": "اعثر على مدرب يتحدث لغتك ويدرّس في المكان الذي تريده.",
-      "languageLabel": "Filtrera lärare efter språk"
+      "languageLabel": "صفِّ المدربين حسب اللغة"
     },
     "location": {
       "eyebrow": "بالقرب منك",
@@ -229,11 +229,11 @@
     "title": "اعثر على المدرب المناسب",
     "description": "اختر اللغة أولًا ثم الموقع للعثور على المدرب المناسب لك.",
     "languageFilter": "1. اختر اللغة",
-    "languageQuestion": "Vilket språk vill du ha undervisning på?",
-    "anyLanguage": "Spelar ingen roll",
-    "noneAvailable": "Ingen lärare tillgänglig just nu",
-    "clearFilters": "Rensa filter",
-    "showAsList": "Visa lärare som lista",
+    "languageQuestion": "بأي لغة تريد الدروس؟",
+    "anyLanguage": "أي لغة",
+    "noneAvailable": "لا يوجد مدرب متاح الآن",
+    "clearFilters": "مسح عوامل التصفية",
+    "showAsList": "عرض المدربين كقائمة",
     "locationFilter": "2. اختر الموقع",
     "results": "نتائج المدربين",
     "resultCount": "{count, plural, =0 {لا يوجد مدربون} =1 {مدرب واحد} other {# مدربين}}",
@@ -264,6 +264,8 @@
     "unavailableTitle": "الخريطة غير متاحة حاليًا",
     "unavailableDescription": "لا يزال بإمكانك العثور على مدرب واختياره من القائمة.",
     "pendingKey": "تُفعَّل الخريطة عندما يكون مفتاح Google Maps جاهزًا.",
+    "book": "احجز",
+    "close": "إغلاق",
     "homeTeaserTitle": "اعثر على مدرب قريب منك",
     "homeTeaserDescription": "صفِّ حسب اللغة وشاهد أماكن المدربين – افتح الخريطة في صفحة المدربين.",
     "homeTeaserCta": "افتح خريطة المدربين"
@@ -502,7 +504,8 @@
       "description": "الأسرع برقم الجوال ورمز الرسالة. يمكنك أيضًا استخدام البريد.",
       "submit": "تسجيل الدخول",
       "noAccount": "لا حساب؟",
-      "create": "إنشاء حساب"
+      "create": "إنشاء حساب",
+      "phoneAccountMissing": "لا يوجد حساب بهذا الرقم."
     },
     "register": {
       "title": "إنشاء حساب",
@@ -528,7 +531,7 @@
       "label": "صفحاتي",
       "overview": "نظرة عامة",
       "bookings": "الحجوزات",
-      "saldo": "الرصيد",
+      "saldo": "دروسي",
       "theory": "النظري",
       "messages": "الرسائل",
       "profile": "الملف"
@@ -538,8 +541,9 @@
       "nextBooking": "درس القيادة القادم",
       "noBooking": "ليس لديك حجز قادم.",
       "viewBookings": "عرض الحجوزات",
-      "saldo": "الدروس المتاحة",
-      "viewSaldo": "عرض الرصيد",
+      "saldo": "دروسي",
+      "viewSaldo": "عرض الدروس",
+      "lessonsLeft": "{count, plural, =1 {درس واحد متبقٍ} other {# دروس متبقية}}",
       "theory": "الوصول للنظري",
       "theoryActive": "وصولك للنظري نشط.",
       "theoryInactive": "لا يوجد وصول نشط للنظري.",
@@ -565,8 +569,10 @@
       }
     },
     "saldo": {
-      "title": "رصيدي",
-      "available": "الرصيد المتاح",
+      "title": "دروسي",
+      "available": "ما تبقى للقيادة",
+      "remaining": "{count, plural, =1 {درس واحد متبقٍ} other {# دروس متبقية}}",
+      "lotCount": "{count, plural, =1 {+درس واحد} other {+# دروس}}",
       "lessons": "دروس قيادة",
       "lots": "الأرصدة النشطة",
       "expires": "صالح حتى {date}",
@@ -691,6 +697,17 @@
     "completeLesson": "إكمال وحفظ",
     "updateReport": "تحديث التقرير",
     "empty": "ليس لديك دروس اليوم.",
+    "weekTitle": "دروس القيادة هذا الأسبوع",
+    "weekCount": "{count, plural, =0 {لا دروس هذا الأسبوع} =1 {درس واحد هذا الأسبوع} other {# دروس هذا الأسبوع}}",
+    "weekEmpty": "ليس لديك دروس هذا الأسبوع.",
+    "views": { "today": "اليوم", "week": "الأسبوع" },
+    "students": {
+      "title": "طلابي",
+      "lessonsDone": "{count, plural, =0 {لا دروس مكتملة} =1 {درس مكتمل واحد} other {# دروس مكتملة}}",
+      "nextLesson": "الدرس القادم {when}",
+      "noNext": "لا يوجد درس قادم.",
+      "empty": "لا يوجد طلاب بعد."
+    },
     "noProfile": "لا يوجد ملف مدرب مرتبط بهذا المستخدم.",
     "block": {
       "title": "حظر التوفر",
@@ -861,7 +878,37 @@
       "label": "الإدارة",
       "calendar": "تقويم الأسبوع",
       "students": "الطلاب",
-      "instructors": "مدرب جديد"
+      "instructors": "مدرب جديد",
+      "reviews": "التقييمات"
+    },
+    "dashboard": {
+      "eyebrow": "الإدارة",
+      "title": "نظرة عامة",
+      "description": "أرقام المدرسة الآن.",
+      "revenue": "الإيرادات هذا الشهر",
+      "revenueCompare": "{percent} مقارنة بالشهر الماضي",
+      "revenueNoCompare": "لا إيرادات الشهر الماضي",
+      "lessonsToday": "دروس اليوم",
+      "lessonsTodayEmpty": "لا دروس اليوم.",
+      "lessonLine": "{time} · {instructor} · {student}",
+      "bookingsWeek": "حجوزات الأيام السبعة القادمة",
+      "newStudents": "طلاب جدد هذا الشهر",
+      "creditsOutstanding": "دروس متبقية للقيادة",
+      "reviewsWaiting": "تقييمات بانتظار المراجعة"
+    },
+    "reviews": {
+      "title": "التقييمات",
+      "description": "تقييمات غير منشورة. انشرها أو ارفضها.",
+      "empty": "لا توجد تقييمات بانتظار المراجعة.",
+      "student": "الطالب",
+      "instructor": "المدرب",
+      "rating": "التقييم",
+      "comment": "التعليق",
+      "date": "التاريخ",
+      "noComment": "لا تعليق.",
+      "publish": "نشر",
+      "reject": "رفض",
+      "saving": "جارٍ الحفظ…"
     },
     "calendar": {
       "eyebrow": "الإدارة",
@@ -1030,6 +1077,7 @@
     "BOOKING_NOT_COMPLETED": "يمكنك تقييم درس مكتمل.",
     "REVIEW_EXISTS": "لقد قيّمت هذا الدرس بالفعل.",
     "UNKNOWN": "حدث خطأ. حاول مجددًا.",
+    "REVIEW_NOT_FOUND": "هذا التقييم غير موجود.",
     "notFoundTitle": "لا نجد هذه الصفحة",
     "notFoundDescription": "العنوان غير صحيح. اذهب إلى الرئيسية أو دروس القيادة أو المدربين أو احجز موعداً.",
     "forbiddenTitle": "ليست لديك صلاحية",

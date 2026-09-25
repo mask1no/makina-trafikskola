@@ -1,7 +1,8 @@
-import { AuthError } from "next-auth";
+import { Prisma } from "@prisma/client";
 import { z } from "zod";
 
-import { auth, signIn } from "@/auth";
+import { auth, updateSession } from "@/auth";
+import { consumeOtp } from "@/lib/auth/otp-store";
 import { normalizeSwedishPhone } from "@/lib/auth/phone";
 import { db } from "@/lib/db";
 
@@ -14,14 +15,16 @@ const linkSchema = z
   })
   .strict();
 
-function isNextRedirect(error: unknown) {
-  return (
-    typeof error === "object" &&
-    error !== null &&
-    "digest" in error &&
-    typeof (error as { digest: unknown }).digest === "string" &&
-    (error as { digest: string }).digest.startsWith("NEXT_REDIRECT")
-  );
+class PhoneLinkError extends Error {
+  constructor(
+    readonly code:
+      | "INVALID_OTP"
+      | "FORBIDDEN"
+      | "GOOGLE_ALREADY_LINKED",
+    readonly status: number,
+  ) {
+    super(code);
+  }
 }
 
 export async function POST(request: Request) {
@@ -62,78 +65,75 @@ export async function POST(request: Request) {
     );
   }
 
-  const shell = await db.user.findUnique({
-    where: { id: session.user.id },
-  });
-  if (!shell?.googleSub || shell.deletedAt) {
-    return Response.json(
-      { error: { code: "FORBIDDEN", message: "FORBIDDEN" } },
-      { status: 403 },
-    );
-  }
-
-  const existing = await db.user.findUnique({
-    where: { phone, deletedAt: null },
-  });
-  if (existing?.googleSub && existing.googleSub !== shell.googleSub) {
-    return Response.json(
-      {
-        error: {
-          code: "GOOGLE_ALREADY_LINKED",
-          message: "GOOGLE_ALREADY_LINKED",
-        },
-      },
-      { status: 409 },
-    );
-  }
-
-  const googleSub = shell.googleSub;
   try {
-    await signIn("phone-otp", {
-      phone,
-      code: parsed.data.code,
-      firstName: shell.firstName,
-      lastName: shell.lastName || undefined,
-      redirect: false,
-    });
-  } catch (error) {
-    if (!isNextRedirect(error)) {
-      if (error instanceof AuthError) {
-        return Response.json(
-          { error: { code: "INVALID_OTP", message: "INVALID_OTP" } },
-          { status: 401 },
-        );
-      }
-      throw error;
-    }
-  }
+    const linkedUser = await db.$transaction(
+      async (tx) => {
+        const now = new Date();
+        if (!(await consumeOtp(phone, parsed.data.code, now, tx))) {
+          throw new PhoneLinkError("INVALID_OTP", 401);
+        }
 
-  const phoneUser = await db.user.findUnique({
-    where: { phone, deletedAt: null },
-  });
-  if (!phoneUser) {
-    return Response.json(
-      { error: { code: "INVALID_OTP", message: "INVALID_OTP" } },
-      { status: 401 },
+        const shell = await tx.user.findUnique({
+          where: { id: session.user.id },
+        });
+        if (!shell?.googleSub || shell.deletedAt) {
+          throw new PhoneLinkError("FORBIDDEN", 403);
+        }
+
+        const phoneUser = await tx.user.findUnique({
+          where: { phone, deletedAt: null },
+        });
+        if (!phoneUser || phoneUser.id === shell.id) {
+          return tx.user.update({
+            where: { id: shell.id },
+            data: { phone, phoneVerifiedAt: now },
+            select: { id: true },
+          });
+        }
+
+        if (
+          phoneUser.googleSub &&
+          phoneUser.googleSub !== shell.googleSub
+        ) {
+          throw new PhoneLinkError("GOOGLE_ALREADY_LINKED", 409);
+        }
+
+        await tx.user.update({
+          where: { id: shell.id },
+          data: {
+            email: null,
+            googleSub: null,
+            deletedAt: now,
+          },
+        });
+
+        return tx.user.update({
+          where: { id: phoneUser.id },
+          data: {
+            googleSub: shell.googleSub,
+            phoneVerifiedAt: phoneUser.phoneVerifiedAt ?? now,
+            ...(phoneUser.email || !shell.email
+              ? {}
+              : {
+                  email: shell.email,
+                  emailVerifiedAt: shell.emailVerifiedAt,
+                }),
+          },
+          select: { id: true },
+        });
+      },
+      { isolationLevel: Prisma.TransactionIsolationLevel.Serializable },
     );
-  }
 
-  if (phoneUser.id !== shell.id) {
-    await db.user.update({
-      where: { id: shell.id },
-      data: { googleSub: null },
-    });
+    await updateSession({ user: { id: linkedUser.id } });
+    return new Response(null, { status: 204 });
+  } catch (error) {
+    if (error instanceof PhoneLinkError) {
+      return Response.json(
+        { error: { code: error.code, message: error.code } },
+        { status: error.status },
+      );
+    }
+    throw error;
   }
-  await db.user.update({
-    where: { id: phoneUser.id },
-    data: { googleSub, phoneVerifiedAt: phoneUser.phoneVerifiedAt ?? new Date() },
-  });
-  if (phoneUser.id !== shell.id) {
-    await db.user.update({
-      where: { id: shell.id },
-      data: { deletedAt: new Date() },
-    });
-  }
-
-  return new Response(null, { status: 204 });
 }
