@@ -265,6 +265,7 @@
     "unavailableDescription": "You can still find and choose an instructor from the list.",
     "pendingKey": "The map activates when the Google Maps key is in place.",
     "book": "Book",
+    "contact": "Contact us",
     "close": "Close",
     "homeTeaserTitle": "Find an instructor near you",
     "homeTeaserDescription": "Filter by language and see where instructors are – open the map on the instructors page.",
@@ -347,7 +348,8 @@
       "timeRemaining": "Time remaining",
       "passed": "Passed",
       "failed": "Not passed",
-      "error": "The exam could not be updated. Try again."
+      "error": "The exam could not be updated. Try again.",
+      "imageMissing": "The image could not be displayed."
     }
   },
   "localSchool": {
@@ -1103,6 +1105,13 @@
     "locationsDescription": "You can find us at Centralvägen 5 in Upplands Väsby. Open directions in Google Maps.",
     "directions": "Directions",
     "languagesTitle": "Which language do you need?",
-    "languagesBody": "We teach in Swedish, English, Tigrinya, Arabic and Somali. Say which language you want when you book. We then match you with an instructor who speaks it."
+    "languagesBody": "We teach in Swedish, English, Tigrinya, Arabic and Somali. Say which language you want when you book. We then match you with an instructor who speaks it.",
+    "staffTitle": "Our team",
+    "staffDescription": "Meet the team at Makina Trafikskola. Contact the school if you would like to book a particular instructor.",
+    "staffRoles": {
+      "trafikskolechef": "Driving school manager",
+      "utbildningsledare": "Head of training",
+      "trafiklarare": "Driving instructor"
+    }
   }
 }

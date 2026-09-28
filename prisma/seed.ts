@@ -5,8 +5,8 @@
  * Väsby market position.
  *
  * Money is öre (BUILD_SPEC I1): 1845000 = 18 450 kr.
- * VAT is provisionally 25% for every product and still requires confirmation
- * from the client's accountant before launch (BUILD_SPEC §11.7).
+ * Private driving-licence education is subject to 25% VAT in Sweden according
+ * to Skatteverket. Displayed catalogue prices include VAT.
  *
  *   npx prisma db seed
  */
@@ -225,7 +225,6 @@ type Seed = {
   translations: Record<Locale, Translation>;
 };
 
-// Provisional until the client's accountant confirms VAT.
 const PRODUCTS: Seed[] = [
   {
     slug: "en-korlektion",
@@ -709,7 +708,7 @@ async function main() {
       sortOrder: i * 10,
       priceOre: p.priceOre,
       compareAtOre: p.compareAtOre ?? null,
-      vatRatePct: 25, // Provisional until the client's accountant confirms it.
+      vatRatePct: 25,
       currency: "SEK",
       lessonCredits: p.lessonCredits ?? 0,
       lessonMinutes: p.lessonMinutes ?? 50,

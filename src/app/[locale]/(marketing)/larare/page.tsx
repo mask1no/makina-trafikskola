@@ -9,7 +9,7 @@ import { Select } from "@/components/Select";
 import { TeacherCard } from "@/components/TeacherCard";
 import { SelectableTeacherMap } from "@/components/SelectableTeacherMap";
 import { isLocale, locales } from "@/i18n/routing";
-import { instructorsEnabled } from "@/lib/launch";
+import { bookingEnabled, instructorsEnabled } from "@/lib/launch";
 
 import { getLocations, getTeachers } from "../_lib/data";
 import type { Transmission } from "@prisma/client";
@@ -40,6 +40,7 @@ export default async function LararePage(
   const params = await props.params;
   if (!isLocale(params.locale)) return null;
   if (!instructorsEnabled()) notFound();
+  const canBook = bookingEnabled();
   setRequestLocale(params.locale);
   const t = await getTranslations();
   const locations = await getLocations();
@@ -248,6 +249,7 @@ export default async function LararePage(
           >
             <SelectableTeacherMap
               apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY}
+              bookingAvailable={canBook}
               center={center}
               markers={teachers.flatMap((teacher) =>
                 teacher.locations.map(({ location }, index) => ({

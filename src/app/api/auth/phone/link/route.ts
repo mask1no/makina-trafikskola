@@ -2,7 +2,7 @@ import { Prisma } from "@prisma/client";
 import { z } from "zod";
 
 import { auth, updateSession } from "@/auth";
-import { consumeOtp } from "@/lib/auth/otp-store";
+import { allowLoginAttempt, consumeOtp } from "@/lib/auth/otp-store";
 import { normalizeSwedishPhone } from "@/lib/auth/phone";
 import { db } from "@/lib/db";
 
@@ -65,14 +65,33 @@ export async function POST(request: Request) {
     );
   }
 
+  const now = new Date();
+  const forwarded = request.headers.get("x-forwarded-for");
+  const ip =
+    forwarded
+      ?.split(",")
+      .map((part) => part.trim())
+      .filter(Boolean)
+      .at(-1) ??
+    request.headers.get("x-real-ip") ??
+    "unknown";
+  if (!(await allowLoginAttempt(`phone-link:${phone}`, ip, now))) {
+    return Response.json(
+      { error: { code: "RATE_LIMITED", message: "RATE_LIMITED" } },
+      { status: 429 },
+    );
+  }
+
+  if (!(await consumeOtp(phone, parsed.data.code, now))) {
+    return Response.json(
+      { error: { code: "INVALID_OTP", message: "INVALID_OTP" } },
+      { status: 401 },
+    );
+  }
+
   try {
     const linkedUser = await db.$transaction(
       async (tx) => {
-        const now = new Date();
-        if (!(await consumeOtp(phone, parsed.data.code, now, tx))) {
-          throw new PhoneLinkError("INVALID_OTP", 401);
-        }
-
         const shell = await tx.user.findUnique({
           where: { id: session.user.id },
         });

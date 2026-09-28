@@ -33,6 +33,8 @@ export default defineConfig({
     env: {
       ...process.env,
       AUTH_URL: "http://localhost:3100",
+      BOOKING_ENABLED: "1",
+      INSTRUCTORS_ENABLED: "1",
     },
     reuseExistingServer: false,
     timeout: 120_000,

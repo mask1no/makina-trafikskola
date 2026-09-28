@@ -26,6 +26,7 @@ const GoogleMapClient = dynamic(() => import("./GoogleMapClient"), {
 
 type TeacherMapProps = {
   apiKey?: string;
+  bookingAvailable?: boolean;
   center: { lat: number; lng: number };
   label: string;
   missingKeyTitle: string;
@@ -39,6 +40,7 @@ type TeacherMapProps = {
 
 export function TeacherMap({
   apiKey,
+  bookingAvailable = true,
   center,
   label,
   missingKeyTitle,
@@ -105,6 +107,7 @@ export function TeacherMap({
     <MapBoundary fallback={fallback}>
       <GoogleMapClient
         apiKey={apiKey}
+        bookingAvailable={bookingAvailable}
         center={center}
         label={label}
         markers={markers}

@@ -6,8 +6,18 @@ import { PageHeader } from "@/components/PageHeader";
 import { TeacherMap } from "@/components/TeacherMap";
 import { isLocale } from "@/i18n/routing";
 import { db } from "@/lib/db";
+import { bookingEnabled } from "@/lib/launch";
 
 export const dynamic = "force-dynamic";
+
+const publicStaff = [
+  { name: "Aron Kessete Kessete", role: "trafikskolechef" },
+  { name: "Goitom Mikael", role: "utbildningsledare" },
+  { name: "Kidane Askelawi", role: "trafiklarare" },
+  { name: "Azizullah Hasanzada", role: "trafiklarare" },
+  { name: "Habtom Negassi Araya", role: "trafiklarare" },
+  { name: "Daniel Araya", role: "trafiklarare" },
+] as const;
 
 export async function generateMetadata(
   props: {
@@ -143,12 +153,31 @@ export default async function ContactPage(
         </section>
 
         <section className="mt-10">
+          <h2 className="text-2xl font-black">{t("staffTitle")}</h2>
+          <p className="mt-3 max-w-2xl text-ink-muted">{t("staffDescription")}</p>
+          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {publicStaff.map((staffMember) => (
+              <article
+                key={staffMember.name}
+                className="rounded-md border border-border bg-card p-5 shadow-soft"
+              >
+                <h3 className="text-lg font-extrabold">{staffMember.name}</h3>
+                <p className="mt-2 text-sm text-ink-muted">
+                  {t(`staffRoles.${staffMember.role}`)}
+                </p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-10">
           <h2 className="text-2xl font-black">{t("locationsTitle")}</h2>
           <p className="mt-3 max-w-2xl text-ink-muted">{t("locationsDescription")}</p>
           {locations[0] ? (
             <div className="mt-6">
               <TeacherMap
                 apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY}
+                bookingAvailable={bookingEnabled()}
                 center={{ lat: locations[0].lat, lng: locations[0].lng }}
                 label={t("locationsTitle")}
                 missingKeyTitle={t("locationsTitle")}

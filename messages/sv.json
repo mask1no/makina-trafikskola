@@ -238,6 +238,7 @@
     "unavailableDescription": "Du kan fortfarande hitta och välja lärare i listan.",
     "pendingKey": "Kartan aktiveras när Google Maps-nyckeln är på plats.",
     "book": "Boka",
+    "contact": "Kontakta oss",
     "close": "Stäng",
     "homeTeaserTitle": "Hitta lärare nära dig",
     "homeTeaserDescription": "Filtrera på språk och se var lärarna finns – öppna kartan på lärarsidan.",
@@ -270,7 +271,7 @@
     "emptyTitle": "Inga gratisfrågor är publicerade", "emptyDescription": "Vi inväntar verifierat och licensierat frågeinnehåll.",
     "paidAccess": "Aktiv teoriåtkomst", "freeAccess": "Gratisfrågor", "questionNumber": "Fråga {number}",
     "categoryEmptyTitle": "Inga frågor är tillgängliga", "categoryEmptyDescription": "Kategorin saknar frågor som du har åtkomst till.", "submitAnswer": "Rätta svaret", "correct": "Rätt", "incorrect": "Inte rätt", "selectAnswer": "Välj ett svar först.", "signInToAnswer": "Logga in som elev för att spara ditt svar.", "answerError": "Svaret kunde inte sparas. Försök igen.", "imageMissing": "Bild saknas",
-    "exam": {"eyebrow": "Övningsprov", "title": "Förbered dig som på kunskapsprovet", "description": "Provet rättas på servern och avslutas efter den fasta tiden.", "questions": "Frågor", "time": "Minuter", "pass": "Rätt för godkänt", "ready": "Frågebanken är redo för ett fullständigt prov.", "unavailable": "Det finns inte 65 aktiva frågor som ditt konto har åtkomst till ännu.", "signIn": "Logga in som elev för att kontrollera provåtkomst.", "start": "Starta provet på 50 minuter", "starting": "Startar provet…", "finish": "Avsluta provet", "finishing": "Rättar…", "next": "Spara och fortsätt", "selectAnswer": "Välj ett svar först.", "progress": "Fråga {current} av {total}", "timeRemaining": "Tid kvar", "passed": "Godkänt", "failed": "Inte godkänt", "error": "Provet kunde inte uppdateras. Försök igen."}
+    "exam": {"eyebrow": "Övningsprov", "title": "Förbered dig som på kunskapsprovet", "description": "Provet rättas på servern och avslutas efter den fasta tiden.", "questions": "Frågor", "time": "Minuter", "pass": "Rätt för godkänt", "ready": "Frågebanken är redo för ett fullständigt prov.", "unavailable": "Det finns inte 65 aktiva frågor som ditt konto har åtkomst till ännu.", "signIn": "Logga in som elev för att kontrollera provåtkomst.", "start": "Starta provet på 50 minuter", "starting": "Startar provet…", "finish": "Avsluta provet", "finishing": "Rättar…", "next": "Spara och fortsätt", "selectAnswer": "Välj ett svar först.", "progress": "Fråga {current} av {total}", "timeRemaining": "Tid kvar", "passed": "Godkänt", "failed": "Inte godkänt", "error": "Provet kunde inte uppdateras. Försök igen.", "imageMissing": "Bilden kunde inte visas."}
   },
   "localSchool": {
     "eyebrow": "Trafikskola nära dig", "title": "Trafikskola i {city}", "description": "Se vår bekräftade plats och tillgängliga lärare i {city}.",
@@ -622,7 +623,14 @@
     "locationsDescription": "Du hittar oss på Centralvägen 5 i Upplands Väsby. Öppna vägbeskrivning i Google Maps.",
     "directions": "Vägbeskrivning",
     "languagesTitle": "Vilket språk behöver du?",
-    "languagesBody": "Vi undervisar på svenska, engelska, tigrinja, arabiska och somaliska. Säg vilket språk du vill ha när du bokar. Då matchar vi dig med en lärare som kan det."
+    "languagesBody": "Vi undervisar på svenska, engelska, tigrinja, arabiska och somaliska. Säg vilket språk du vill ha när du bokar. Då matchar vi dig med en lärare som kan det.",
+    "staffTitle": "Vår personal",
+    "staffDescription": "Möt teamet på Makina Trafikskola. Kontakta skolan om du vill boka en viss trafiklärare.",
+    "staffRoles": {
+      "trafikskolechef": "Trafikskolechef",
+      "utbildningsledare": "Utbildningsledare",
+      "trafiklarare": "Trafiklärare"
+    }
   },
   "legal": {
     "terms": {
@@ -636,31 +644,31 @@
       },
       "prices": {
         "title": "Priser och betalning",
-        "body": "Alla priser visas i svenska kronor inklusive moms.\nDu betalar med kort, Swish eller Klarna via Stripe.\nPriset hämtas från produktlistan vid köpet.\nKvitton skickas av Stripe till din e-post. Vi skickar inte egna e-postmeddelanden.\nKoder och påminnelser skickas med sms."
+        "body": "Alla priser visas i svenska kronor inklusive 25 procent moms. Det pris som visas när du beställer gäller för köpet.\nDu betalar med kort, Swish eller Klarna via Stripe. Betalningen är genomförd först när den har godkänts av betaltjänsten.\nKvitton skickas av Stripe till den e-postadress du anger. Makina Trafikskola skickar bokningskoder och påminnelser med sms."
       },
       "delivery": {
         "title": "Leverans av tjänsten",
-        "body": "Körlektioner bokar du i kalendern på webbplatsen. Lektionen körs med din lärare på avtalad tid.\nDigital teori öppnas när betalningen är bekräftad.\nKurser som Riskettan och Risktvåan gäller en plats på ett valt tillfälle."
+        "body": "Körlektioner bokas i kalendern på webbplatsen och genomförs med vald trafiklärare på avtalad tid och plats. Du ansvarar för att lämna korrekta kontaktuppgifter och komma i tid.\nDigital teori öppnas när betalningen har bekräftats. Kurser som Riskettan, Risktvåan och handledarutbildning gäller en plats på det kurstillfälle som anges i bokningen.\nSkolan får byta trafiklärare, fordon eller lokal om det behövs för att genomföra utbildningen på ett säkert och likvärdigt sätt."
       },
       "validity": {
         "title": "Giltighetstid",
-        "body": "Lektionskrediter gäller i 24 månader från köpet.\nDigital teori är ett engångsköp. Den har ingen tidsgräns."
+        "body": "Lektionskrediter och paket gäller i 24 månader från köpdagen om inget annat uttryckligen anges före köpet. Outnyttjade krediter förfaller när giltighetstiden löper ut.\nDigital teori är ett engångsköp och har ingen tidsgräns så länge tjänsten tillhandahålls. Din åtkomst är personlig och får inte delas med någon annan."
       },
       "cancellation": {
         "title": "Ombokning och avbokning",
-        "body": "Du kan avboka själv under Mina bokningar.\nAvbokar du mer än 24 timmar före start får du tillbaka krediten.\nAvbokar du senare får du inte tillbaka krediten.\nOm skolan avbokar får du alltid tillbaka krediten."
+        "body": "Du kan avboka en körlektion under Mina bokningar. Avbokar du mer än 24 timmar före lektionens start återförs krediten till ditt saldo. Avbokar du 24 timmar eller mindre före start, eller uteblir från lektionen, förbrukas krediten.\nOm skolan ställer in en körlektion återförs krediten alltid. Skolan försöker erbjuda en ny tid men ersätter inte andra kostnader som uppstår till följd av den inställda lektionen.\nVillkor för avbokning av en kursplats visas vid bokningen. Om skolan ställer in ett kurstillfälle erbjuds ombokning eller återbetalning."
       },
       "withdrawal": {
         "title": "Ångerrätt",
-        "body": "Du har 14 dagars ångerrätt enligt distansavtalslagen.\nÅngerfristen börjar när avtalet ingås.\nUndantag: om du uttryckligen samtycker till att tjänsten börjar under ångerfristen, och bekräftar att du då kan förlora ångerrätten, gäller det undantaget för den del som redan har levererats.\nKontakta oss på info@makina.se om du vill ångra köpet."
+        "body": "När du köper på webbplatsen har du som konsument normalt 14 dagars ångerrätt enligt distansavtalslagen. Ångerfristen räknas från dagen då avtalet ingås.\nOm du uttryckligen begär att en tjänst ska börja under ångerfristen får skolan ta betalt för den del som har utförts innan du ångrar dig. När en tjänst har fullgjorts helt kan ångerrätten upphöra om du i förväg har samtyckt till att tjänsten påbörjas och godkänt att ångerrätten då går förlorad.\nFör digital teori kan ångerrätten upphöra när leveransen börjar, om du uttryckligen har samtyckt till omedelbar leverans och godkänt att ångerrätten då går förlorad.\nMeddela oss tydligt på info@makina.se om du vill använda ångerrätten. Ange namn, kontaktuppgifter och vilket köp det gäller. Godkänd återbetalning görs utan onödigt dröjsmål och senast inom 14 dagar från att vi tog emot ditt meddelande, med samma betalningssätt när det är möjligt."
       },
       "complaints": {
         "title": "Reklamation och klagomål",
-        "body": "Hör av dig till oss först på info@makina.se eller 070-097 04 83.\nOm vi inte kommer överens kan du vända dig till Allmänna reklamationsnämnden (ARN), arn.se.\nDu kan också använda EU:s plattform för tvistlösning online: https://ec.europa.eu/consumers/odr"
+        "body": "Om en tjänst är felaktig ska du reklamera inom skälig tid efter att du märkt felet. Beskriv vad som har hänt och vilket köp eller vilken bokning det gäller.\nKontakta oss först på info@makina.se eller 070-097 04 83 så försöker vi lösa ärendet. Om vi inte kommer överens kan du anmäla tvisten till Allmänna reklamationsnämnden (ARN), Box 174, 101 23 Stockholm, arn.se. Vi medverkar i ARN:s prövning och följer deras rekommendationer."
       },
       "law": {
         "title": "Tillämplig lag",
-        "body": "Svensk lag gäller för avtalet.\nTvist prövas av svensk allmän domstol, om inte tvingande konsumentregler säger något annat."
+        "body": "Svensk lag gäller för avtalet. Tvingande konsumenträtt gäller alltid framför villkor som är mindre förmånliga för dig.\nEn tvist som inte kan lösas i samförstånd eller genom ARN prövas av svensk allmän domstol."
       }
     },
     "privacy": {

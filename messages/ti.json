@@ -265,6 +265,7 @@
     "unavailableDescription": "ካብቲ ዝርዝር መምህር ክትደሊን ክትመርጽን ትኽእል ኢኻ።",
     "pendingKey": "ካርታ ኣብ Google Maps ቁልፊ ምስ ተዳለወ ይነጥፍ።",
     "book": "ሕዘ",
+    "contact": "ርኸቡና",
     "close": "ዕጸው",
     "homeTeaserTitle": "ኣብ ቀረባኻ መምህር ርከብ",
     "homeTeaserDescription": "ብቋንቋ ኣጻርዩን መምህራን ኣበይ ከም ዘለዉ ርአ – ኣብ ገጽ መምህራን ካርታ ክፈት።",
@@ -347,7 +348,8 @@
       "timeRemaining": "ዝተረፈ ግዜ",
       "passed": "ሓሊፉ",
       "failed": "ኣይሓለፈን",
-      "error": "ፈተና ክሕደስ ኣይከኣለን። ደጊምካ ፈትን።"
+      "error": "ፈተና ክሕደስ ኣይከኣለን። ደጊምካ ፈትን።",
+      "imageMissing": "እቲ ስእሊ ክረአ ኣይከኣለን።"
     }
   },
   "localSchool": {
@@ -1100,6 +1102,13 @@
     "locationsDescription": "ኣብ Centralvägen 5, Upplands Väsby ትረኽቡና። ኣብ Google Maps መንገዲ ክፈቱ።",
     "directions": "መግለጺ መንገዲ",
     "languagesTitle": "የናይ ቋንቋ የድልየካ?",
-    "languagesBody": "ብስዊድንኛ፣ እንግሊዘኛ፣ ትግርኛ፣ ዓረብኛን ሶማልኛን ንምህር። ኣብ ቦታ ምሓዝ እትደሊ ቋንቋ በል። መምህር እቲ ቋንቋ ዝዛረብ ንሰማምዓካ።"
+    "languagesBody": "ብስዊድንኛ፣ እንግሊዘኛ፣ ትግርኛ፣ ዓረብኛን ሶማልኛን ንምህር። ኣብ ቦታ ምሓዝ እትደሊ ቋንቋ በል። መምህር እቲ ቋንቋ ዝዛረብ ንሰማምዓካ።",
+    "staffTitle": "ሰራሕተኛታትና",
+    "staffDescription": "ንጉጅለ Makina Trafikskola ፍለጥ። ፍሉይ መምህር ምዝዋር ክትሕዝ እንተደሊኻ ንቤት ትምህርቲ ርኸብ።",
+    "staffRoles": {
+      "trafikskolechef": "ሓላፊ ቤት ትምህርቲ ምዝዋር",
+      "utbildningsledare": "ሓላፊ ስልጠና",
+      "trafiklarare": "መምህር ምዝዋር"
+    }
   }
 }

@@ -28,6 +28,7 @@ export type TeacherMarker = {
 
 type GoogleMapClientProps = {
   apiKey: string;
+  bookingAvailable: boolean;
   center: { lat: number; lng: number };
   label: string;
   markers: TeacherMarker[];
@@ -45,7 +46,13 @@ function initials(name: string) {
     .toLocaleUpperCase();
 }
 
-function MarkerDetails({ marker }: { marker: TeacherMarker }) {
+function MarkerDetails({
+  bookingAvailable,
+  marker,
+}: {
+  bookingAvailable: boolean;
+  marker: TeacherMarker;
+}) {
   const t = useTranslations("map");
   const locale = useLocale();
   return (
@@ -66,10 +73,14 @@ function MarkerDetails({ marker }: { marker: TeacherMarker }) {
         <p className="text-sm text-ink-muted">{marker.locationName}</p>
       ) : null}
       <Link
-        href={`/${locale}/boka?teacher=${marker.teacherId}`}
+        href={
+          bookingAvailable
+            ? `/${locale}/boka?teacher=${marker.teacherId}`
+            : `/${locale}/kontakt`
+        }
         className="inline-flex min-h-11 items-center justify-center rounded-sm bg-accent px-4 font-bold text-accent-ink"
       >
-        {t("book")}
+        {t(bookingAvailable ? "book" : "contact")}
       </Link>
     </div>
   );
@@ -77,6 +88,7 @@ function MarkerDetails({ marker }: { marker: TeacherMarker }) {
 
 export default function GoogleMapClient({
   apiKey,
+  bookingAvailable,
   center,
   label,
   markers,
@@ -154,14 +166,20 @@ export default function GoogleMapClient({
               position={openMarker.position}
               onCloseClick={() => setOpenId(null)}
             >
-              <MarkerDetails marker={openMarker} />
+              <MarkerDetails
+                bookingAvailable={bookingAvailable}
+                marker={openMarker}
+              />
             </InfoWindow>
           ) : null}
         </Map>
       </div>
       {openMarker && mobile ? (
         <BottomSheet title={openMarker.title} open>
-          <MarkerDetails marker={openMarker} />
+          <MarkerDetails
+            bookingAvailable={bookingAvailable}
+            marker={openMarker}
+          />
           <button
             type="button"
             className="mt-4 inline-flex min-h-11 items-center font-bold underline"

@@ -84,7 +84,12 @@ export function initialBookingState(input: {
     step: 0,
     kind: "single",
     placeMode: "school",
-    locationId: input.locations[0]?.id ?? "",
+    locationId:
+      initialTeacher?.locationIds.find((locationId) =>
+        input.locations.some((location) => location.id === locationId),
+      ) ??
+      input.locations[0]?.id ??
+      "",
     pickupAddress: "",
     pickupCoordinates: null,
     language: initialTeacher?.languages.includes(input.locale)

@@ -265,6 +265,7 @@
     "unavailableDescription": "Weli waxaad macallin ka heli kartaa oo ka dooran kartaa liiska.",
     "pendingKey": "Khariidadu waxay shaqaynaysaa marka furaha Google Maps la diyaariyo.",
     "book": "Ballan",
+    "contact": "Nala soo xiriir",
     "close": "Xir",
     "homeTeaserTitle": "Hel macallin kuu dhow",
     "homeTeaserDescription": "Ku shaandhee luqadda oo arag meelaha macallimiintu joogaan – fur khariidadda bogga macallimiinta.",
@@ -347,7 +348,8 @@
       "timeRemaining": "Waqtiga hadhay",
       "passed": "Gudbay",
       "failed": "Ma gudbin",
-      "error": "Imtixaanka lama cusboonaysiin karin. Mar kale isku day."
+      "error": "Imtixaanka lama cusboonaysiin karin. Mar kale isku day.",
+      "imageMissing": "Sawirka lama soo bandhigi karin."
     }
   },
   "localSchool": {
@@ -1100,6 +1102,13 @@
     "locationsDescription": "Waxaad naga heli kartaa Centralvägen 5 ee Upplands Väsby. Ka fur tilmaamaha Google Maps.",
     "directions": "Jihada",
     "languagesTitle": "Luqad intee le'eg ayaad u baahan tahay?",
-    "languagesBody": "Waxaanu ku barnaa Iswidhish, Ingiriisi, Tigrinya, Carabi iyo Soomaali. Sheeg luqadda aad rabto marka aad ballansato. Waxaanu kugu xidhiidhinaynaa macallin ku hadla."
+    "languagesBody": "Waxaanu ku barnaa Iswidhish, Ingiriisi, Tigrinya, Carabi iyo Soomaali. Sheeg luqadda aad rabto marka aad ballansato. Waxaanu kugu xidhiidhinaynaa macallin ku hadla.",
+    "staffTitle": "Shaqaalaheenna",
+    "staffDescription": "Baro kooxda Makina Trafikskola. La xiriir dugsiga haddii aad rabto inaad qabsato macallin gaar ah.",
+    "staffRoles": {
+      "trafikskolechef": "Maamulaha dugsiga wadista",
+      "utbildningsledare": "Madaxa tababarka",
+      "trafiklarare": "Macallinka wadista"
+    }
   }
 }

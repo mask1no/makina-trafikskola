@@ -7,6 +7,7 @@ import type { TeacherMarker } from "@/components/GoogleMapClient";
 
 type SelectableTeacherMapProps = {
   apiKey?: string;
+  bookingAvailable: boolean;
   center: { lat: number; lng: number };
   label: string;
   missingKeyTitle: string;
