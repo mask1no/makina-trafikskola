@@ -11,7 +11,15 @@ test("renders key public routes on mobile", async ({ page }, testInfo) => {
     },
   ]);
 
-  for (const path of ["", "/korlektioner", "/larare", "/kurser", "/teori", "/teori/prov"]) {
+  for (const path of [
+    "",
+    "/korlektioner",
+    "/larare",
+    "/kurser",
+    "/teori",
+    "/teori/prov",
+    "/kontakt",
+  ]) {
     const response = await page.goto(`/${locale}${path}`);
     expect(response?.ok(), `${locale}${path}`).toBeTruthy();
     await expect(page.locator("html")).toHaveAttribute("lang", locale);

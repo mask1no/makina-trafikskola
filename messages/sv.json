@@ -694,7 +694,7 @@
       },
       "recipients": {
         "title": "Mottagare och underbiträden",
-        "body": "Stripe hanterar betalningar.\nResend skickar e-post.\n46elks skickar SMS.\nGoogle Maps visar kartor och adresser.\nSentry tar emot felrapporter.\nRailway hostar tjänsten.\nCloudflare R2 lagrar filer och säkerhetskopior.\nVissa av dessa kan föra uppgifter till land utanför EU/EES. Då används godkända skyddsåtgärder, till exempel standardavtalsklausuler."
+        "body": "Stripe hanterar betalningar.\n46elks skickar SMS.\nGoogle Maps visar kartor och adresser.\nSentry tar emot felrapporter.\nRailway hostar tjänsten.\nCloudflare R2 lagrar filer och säkerhetskopior.\nVissa av dessa kan föra uppgifter till land utanför EU/EES. Då används godkända skyddsåtgärder, till exempel standardavtalsklausuler."
       },
       "rights": {
         "title": "Dina rättigheter",

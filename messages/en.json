@@ -821,7 +821,7 @@
       },
       "recipients": {
         "title": "Recipients and sub-processors",
-        "body": "Stripe handles payments.\nResend sends email.\n46elks sends SMS.\nGoogle Maps shows maps and addresses.\nSentry receives error reports.\nRailway hosts the service.\nCloudflare R2 stores files and backups.\nSome of these may transfer data outside the EU/EEA. Then approved safeguards are used, for example standard contractual clauses."
+        "body": "Stripe handles payments.\n46elks sends SMS.\nGoogle Maps shows maps and addresses.\nSentry receives error reports.\nRailway hosts the service.\nCloudflare R2 stores files and backups.\nSome of these may transfer data outside the EU/EEA. Then approved safeguards are used, for example standard contractual clauses."
       },
       "rights": {
         "title": "Your rights",

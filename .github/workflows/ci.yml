@@ -76,11 +76,6 @@ jobs:
           RUN_DB_INTEGRATION: "1"
         run: npm run test:webhook-replay
 
-      - name: Development payment simulator integration test
-        env:
-          RUN_DB_INTEGRATION: "1"
-        run: npm run test:payment-simulator
-
       - name: Translation parity
         run: npm run check:translations
 

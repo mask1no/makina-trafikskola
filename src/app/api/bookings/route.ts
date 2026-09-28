@@ -77,7 +77,10 @@ function isExclusionViolation(error: unknown) {
   return (
     error instanceof Error &&
     (error.message.includes('code: "23P01"') ||
-      error.message.includes("booking_no_overlap"))
+      error.message.includes("booking_no_overlap") ||
+      error.message.includes('code: "40P01"') ||
+      error.message.includes('code: "40001"') ||
+      error.message.includes("deadlock detected"))
   );
 }
 

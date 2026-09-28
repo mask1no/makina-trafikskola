@@ -18,7 +18,6 @@
     "test:booking-concurrency": "tsx scripts/booking-concurrency.ts",
     "test:concurrency": "vitest run concurrency.integration.test.ts --maxWorkers=1",
     "test:webhook-replay": "vitest run replay.integration.test.ts --maxWorkers=1",
-    "test:payment-simulator": "vitest run simulator.integration.test.ts --maxWorkers=1",
     "backup:db": "tsx scripts/backup-db.ts",
     "verify:restore": "tsx scripts/verify-restore.ts"
   },

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
+import { Avatar } from "@/components/Avatar";
 import { PageHeader } from "@/components/PageHeader";
 import { TeacherMap } from "@/components/TeacherMap";
 import { isLocale } from "@/i18n/routing";
@@ -161,10 +162,15 @@ export default async function ContactPage(
                 key={staffMember.name}
                 className="rounded-md border border-border bg-card p-5 shadow-soft"
               >
-                <h3 className="text-lg font-extrabold">{staffMember.name}</h3>
-                <p className="mt-2 text-sm text-ink-muted">
-                  {t(`staffRoles.${staffMember.role}`)}
-                </p>
+                <div className="flex items-center gap-4">
+                  <Avatar name={staffMember.name} size="lg" />
+                  <div>
+                    <h3 className="text-lg font-extrabold">{staffMember.name}</h3>
+                    <p className="mt-1 text-sm text-ink-muted">
+                      {t(`staffRoles.${staffMember.role}`)}
+                    </p>
+                  </div>
+                </div>
               </article>
             ))}
           </div>
