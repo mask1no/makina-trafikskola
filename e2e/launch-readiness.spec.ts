@@ -28,6 +28,21 @@ test.describe("public localized experience", () => {
     await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
   });
 
+  test("offers localized free theory questions", async ({ page }) => {
+    await page.goto("/ar/teori/del-1");
+    await expect(
+      page.getByRole("heading", { name: "قواعد المرور", level: 1 }),
+    ).toBeVisible();
+    await expect(page.getByRole("radio")).toHaveCount(9);
+  });
+
+  test("keeps the Google account option visible", async ({ page }) => {
+    await page.goto("/en/skapa-konto");
+    await expect(
+      page.getByRole("button", { name: "Continue with Google" }),
+    ).toBeVisible();
+  });
+
   test("preserves an instructor deep link in booking", async ({ page }) => {
     await page.goto("/en/larare/sara-johansson");
     await page.getByRole("link", { name: /Sara/ }).last().click();

@@ -264,6 +264,8 @@
     "unavailableTitle": "Khariidaddu hadda ma shaqaynayso",
     "unavailableDescription": "Weli waxaad macallin ka heli kartaa oo ka dooran kartaa liiska.",
     "pendingKey": "Khariidadu waxay shaqaynaysaa marka furaha Google Maps la diyaariyo.",
+    "interactionTitle": "Khariidadda ka eeg macallimiinta",
+    "interactionHint": "Dhaqaaji khariidadda oo dooro calaamad si aad u aragto macallinka, luqadaha, nooca gaadhiga iyo goobta waxbaridda.",
     "book": "Ballan",
     "contact": "Nala soo xiriir",
     "close": "Xir",
@@ -308,9 +310,18 @@
       "description": "Ku tababar qayb qayb oo samee imtixaan tijaabo ah oo la mid ah imtixaanka aqoonta. Tusaale ayaa bilaash ah. Inta kale way furantaa markaad iibsato teoriga.",
       "tryFree": "Isku day su'aalaha bilaashka ah",
       "buy": "Iibso gelitaanka aragtida",
-      "pending": "Waxaa la sii daayaa marka kaydka su'aalaha diyaar yahay"
+      "pending": "Waxaa la sii daayaa marka kaydka su'aalaha diyaar yahay",
+      "oneTime": "Hal mar iibso",
+      "features": {
+        "categories": "Qaybo cad",
+        "practice": "Su'aalo tababar oo bilaash ah",
+        "languages": "Taageero shan luqadood ah"
+      }
     },
     "licensingPending": "Kaydka su'aalaha oo dhan waxa la daabacayaa marka xuquuqda nuxurka la xaqiijiyo.",
+    "questionsAvailable": "su'aalo bilaash ah oo diyaar u ah tijaabo",
+    "freeIntro": "Ku bilow tusaale bilaash ah",
+    "startPractice": "Bilow tababarka",
     "freeCount": "{count, plural, =1 {1 su'aal bilaash ah} other {# su'aalood oo bilaash ah}}",
     "swedishOnly": "Af Iswiidhish oo keliya",
     "examLink": "Fur imtixaanka tijaabada",
@@ -472,6 +483,7 @@
     "hidePassword": "Qari furaha",
     "or": "ama",
     "continueWithGoogle": "Ku sii wad Google",
+    "googleUnavailable": "Gelitaanka Google wuxuu shaqaynayaa marka koontada Google ee dugsiga la xidho.",
     "resendWait": "Dir koodh cusub {seconds} ilbiriqsi",
     "identifier": "Iimayl ama lambarka moobilka",
     "forgotLink": "Ma illowday furaha?",
@@ -1105,6 +1117,9 @@
     "languagesBody": "Waxaanu ku barnaa Iswidhish, Ingiriisi, Tigrinya, Carabi iyo Soomaali. Sheeg luqadda aad rabto marka aad ballansato. Waxaanu kugu xidhiidhinaynaa macallin ku hadla.",
     "staffTitle": "Shaqaalaheenna",
     "staffDescription": "Baro kooxda Makina Trafikskola. La xiriir dugsiga haddii aad rabto inaad qabsato macallin gaar ah.",
+    "contactViaSchool": "Kala xiriir dugsiga",
+    "callSchool": "Wac dugsiga",
+    "emailSchool": "Iimayl u dir dugsiga",
     "staffRoles": {
       "trafikskolechef": "Maamulaha dugsiga wadista",
       "utbildningsledare": "Madaxa tababarka",

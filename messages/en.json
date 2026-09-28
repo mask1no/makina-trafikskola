@@ -264,6 +264,8 @@
     "unavailableTitle": "The map is currently unavailable",
     "unavailableDescription": "You can still find and choose an instructor from the list.",
     "pendingKey": "The map activates when the Google Maps key is in place.",
+    "interactionTitle": "Explore instructors on the map",
+    "interactionHint": "Move around the map and choose a marker to see the instructor, languages, transmission and teaching location.",
     "book": "Book",
     "contact": "Contact us",
     "close": "Close",
@@ -308,9 +310,18 @@
       "description": "Practise by category and take a mock test in the same form as the knowledge test. A sample is free. The rest opens when you buy theory.",
       "tryFree": "Try free questions",
       "buy": "Buy theory access",
-      "pending": "Releases when the question bank is ready"
+      "pending": "Releases when the question bank is ready",
+      "oneTime": "One-time purchase",
+      "features": {
+        "categories": "Clear categories",
+        "practice": "Free practice questions",
+        "languages": "Support in five languages"
+      }
     },
     "licensingPending": "The complete question bank will be published only after content rights are confirmed.",
+    "questionsAvailable": "free questions ready to try",
+    "freeIntro": "Start with a free sample",
+    "startPractice": "Start practising",
     "freeCount": "{count, plural, =1 {1 free question} other {# free questions}}",
     "swedishOnly": "Swedish only",
     "examLink": "Open mock exam",
@@ -472,6 +483,7 @@
     "hidePassword": "Hide password",
     "or": "or",
     "continueWithGoogle": "Continue with Google",
+    "googleUnavailable": "Google sign-in activates when the school’s Google account is connected.",
     "resendWait": "Send a new code in {seconds} s",
     "identifier": "Email or mobile number",
     "forgotLink": "Forgot password?",
@@ -1108,6 +1120,9 @@
     "languagesBody": "We teach in Swedish, English, Tigrinya, Arabic and Somali. Say which language you want when you book. We then match you with an instructor who speaks it.",
     "staffTitle": "Our team",
     "staffDescription": "Meet the team at Makina Trafikskola. Contact the school if you would like to book a particular instructor.",
+    "contactViaSchool": "Contact through the school",
+    "callSchool": "Call the school",
+    "emailSchool": "Email the school",
     "staffRoles": {
       "trafikskolechef": "Driving school manager",
       "utbildningsledare": "Head of training",

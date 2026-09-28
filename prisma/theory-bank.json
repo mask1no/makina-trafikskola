@@ -1,0 +1,160 @@
+{
+  "questions": [
+    {
+      "id": "original-free-red-light",
+      "parm": 1,
+      "question_sv": "Vad ska du göra när trafiksignalen visar rött?",
+      "options_sv": [
+        "Stanna före stopplinjen eller signalen",
+        "Köra vidare om korsningen ser tom ut",
+        "Sakta ner men fortsätta genom korsningen"
+      ],
+      "explanation_sv": "Rött ljus betyder stopp. Du ska stanna före stopplinjen eller, om den saknas, före signalen.",
+      "translations": {
+        "en": {
+          "question": "What must you do when the traffic light is red?",
+          "options": [
+            "Stop before the stop line or signal",
+            "Continue if the junction looks empty",
+            "Slow down but continue through the junction"
+          ],
+          "explanation": "A red light means stop. Stop before the stop line or, if there is none, before the signal."
+        },
+        "ti": {
+          "question": "መብራህቲ ትራፊክ ቀይሕ እንተኾይኑ እንታይ ክትገብር ኣለካ?",
+          "options": [
+            "ቅድሚ መስመር ደው ምባል ወይ ቅድሚ መብራህቲ ደው ምባል",
+            "መስቀላዊ መንገዲ ባዶ እንተመሲሉ ምቕጻል",
+            "ፍጥነት ምንካይ ግን ብመስቀላዊ መንገዲ ምቕጻል"
+          ],
+          "explanation": "ቀይሕ መብራህቲ ደው ምባል ማለት እዩ። ቅድሚ መስመር ደው ምባል፣ መስመር እንተዘየለ ድማ ቅድሚ መብራህቲ ደው ምባል ኣለካ።"
+        },
+        "ar": {
+          "question": "ماذا يجب أن تفعل عندما تكون إشارة المرور حمراء؟",
+          "options": [
+            "تتوقف قبل خط الوقوف أو الإشارة",
+            "تتابع إذا بدا التقاطع خالياً",
+            "تخفف السرعة وتواصل عبر التقاطع"
+          ],
+          "explanation": "الضوء الأحمر يعني التوقف. توقف قبل خط الوقوف، أو قبل الإشارة إذا لم يوجد خط."
+        },
+        "so": {
+          "question": "Maxaad samaynaysaa marka nalka taraafikadu cas yahay?",
+          "options": [
+            "Joog ka hor xariiqda joogsiga ama nalka",
+            "Sii wad haddii isgoysku madhan u muuqdo",
+            "Xawaaraha yaree laakiin isgoyska ka gudub"
+          ],
+          "explanation": "Nalka cas wuxuu ka dhigan yahay joogso. Joog ka hor xariiqda joogsiga ama, haddii aanu jirin, ka hor nalka."
+        }
+      },
+      "correct_index": 0,
+      "needs_image": false,
+      "status": "ok"
+    },
+    {
+      "id": "original-free-lane-change",
+      "parm": 1,
+      "question_sv": "Vad är viktigast att kontrollera precis innan du byter körfält?",
+      "options_sv": [
+        "Bara hastighetsmätaren",
+        "Speglarna och döda vinkeln",
+        "Bara trafiken långt framför dig"
+      ],
+      "explanation_sv": "Kontrollera speglarna och döda vinkeln innan du byter körfält. Ge tecken i god tid och byt bara när det kan ske säkert.",
+      "translations": {
+        "en": {
+          "question": "What is most important to check immediately before changing lanes?",
+          "options": [
+            "Only the speedometer",
+            "The mirrors and blind spot",
+            "Only traffic far ahead"
+          ],
+          "explanation": "Check the mirrors and blind spot before changing lanes. Signal in good time and move only when it is safe."
+        },
+        "ti": {
+          "question": "መስመር ቅድሚ ምቕያርካ እቲ ዝያዳ ኣገዳሲ ክትቆጻጸሮ ዘለካ እንታይ እዩ?",
+          "options": [
+            "መለክዒ ፍጥነት ጥራይ",
+            "መስትያታትን ዘይርአ ኩርናዕን",
+            "ኣብ ርሑቕ ቅድሜኻ ዘሎ ትራፊክ ጥራይ"
+          ],
+          "explanation": "መስመር ቅድሚ ምቕያርካ መስትያታትን ዘይርአ ኩርናዕን ተቖጻጸር። ኣቐዲምካ ምልክት ሃብን ውሑስ ምስ ኮነ ጥራይ ቀይርን።"
+        },
+        "ar": {
+          "question": "ما أهم شيء يجب فحصه مباشرة قبل تغيير المسار؟",
+          "options": [
+            "عداد السرعة فقط",
+            "المرايا والنقطة العمياء",
+            "حركة المرور البعيدة أمامك فقط"
+          ],
+          "explanation": "افحص المرايا والنقطة العمياء قبل تغيير المسار. استخدم الإشارة مبكراً ولا تغيّر المسار إلا عندما يكون ذلك آمناً."
+        },
+        "so": {
+          "question": "Maxaa ugu muhiimsan inaad hubiso isla ka hor intaadan haadka beddelin?",
+          "options": [
+            "Cabbirka xawaaraha oo keliya",
+            "Muraayadaha iyo meesha aan la arki karin",
+            "Gaadiidka fog ee kaa horreeya oo keliya"
+          ],
+          "explanation": "Hubi muraayadaha iyo meesha aan la arki karin ka hor beddelka haadka. Calaamadee waqti fiican, una gudub keliya marka ay ammaan tahay."
+        }
+      },
+      "correct_index": 1,
+      "needs_image": false,
+      "status": "ok"
+    },
+    {
+      "id": "original-free-slippery-road",
+      "parm": 1,
+      "question_sv": "Hur bör avståndet till bilen framför ändras när vägen är hal?",
+      "options_sv": [
+        "Avståndet bör ökas",
+        "Avståndet kan minskas",
+        "Avståndet behöver inte ändras"
+      ],
+      "explanation_sv": "På halt väglag blir bromssträckan längre. Ett större avstånd ger mer tid att reagera och stanna.",
+      "translations": {
+        "en": {
+          "question": "How should the distance to the vehicle ahead change on a slippery road?",
+          "options": [
+            "The distance should increase",
+            "The distance can decrease",
+            "The distance does not need to change"
+          ],
+          "explanation": "Braking distance increases on slippery roads. A larger gap gives you more time to react and stop."
+        },
+        "ti": {
+          "question": "መንገዲ ሸታሕታሕ እንተኾይኑ ካብታ ኣብ ቅድሜኻ ዘላ መኪና ዘሎ ርሕቀት ከመይ ክቕየር ኣለዎ?",
+          "options": [
+            "እቲ ርሕቀት ክውስኽ ኣለዎ",
+            "እቲ ርሕቀት ክንኪ ይኽእል",
+            "እቲ ርሕቀት ክቕየር ኣየድልን"
+          ],
+          "explanation": "ኣብ ሸታሕታሕ መንገዲ ርሕቀት ምዕጻው ይነውሕ። ዝዓበየ ርሕቀት ንምምላስን ደው ንምባልን ዝያዳ ግዜ ይህበካ።"
+        },
+        "ar": {
+          "question": "كيف يجب أن تتغير المسافة إلى المركبة أمامك عندما يكون الطريق زلقاً؟",
+          "options": [
+            "يجب زيادة المسافة",
+            "يمكن تقليل المسافة",
+            "لا حاجة إلى تغيير المسافة"
+          ],
+          "explanation": "تزداد مسافة التوقف على الطريق الزلق. تمنحك المسافة الأكبر وقتاً أطول للاستجابة والتوقف."
+        },
+        "so": {
+          "question": "Sidee ayay tahay in masaafada gaadhiga kaa horreeya isu beddesho marka waddadu simbiriirixan tahay?",
+          "options": [
+            "Masaafada waa in la kordhiyaa",
+            "Masaafada waa la yareyn karaa",
+            "Masaafada looma baahna in la beddelo"
+          ],
+          "explanation": "Masaafada biriiggu way dheeraataa marka waddadu simbiriirixan tahay. Kala fogaansho weyn wuxuu ku siinayaa wakhti badan oo aad ku falceliso kuna joogsato."
+        }
+      },
+      "correct_index": 0,
+      "needs_image": false,
+      "status": "ok"
+    }
+  ]
+}

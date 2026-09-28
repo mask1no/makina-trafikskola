@@ -264,6 +264,8 @@
     "unavailableTitle": "ካርታ ሕጂ ኣይርከብን",
     "unavailableDescription": "ካብቲ ዝርዝር መምህር ክትደሊን ክትመርጽን ትኽእል ኢኻ።",
     "pendingKey": "ካርታ ኣብ Google Maps ቁልፊ ምስ ተዳለወ ይነጥፍ።",
+    "interactionTitle": "መምህራን ኣብ ካርታ ዳህስስ",
+    "interactionHint": "ካርታ ኣንቀሳቕስ እሞ መምህር፣ ቋንቋታት፣ ዓይነት መኪናን ቦታ ትምህርትን ንምርኣይ ምልክት ምረጽ።",
     "book": "ሕዘ",
     "contact": "ርኸቡና",
     "close": "ዕጸው",
@@ -308,9 +310,18 @@
       "description": "ብምድብ ተለማመድ እሞ ከም ናይ ፍልጠት ፈተና ዝመስል ልምምድ ፈተና ግበር። ናሙና ብነጻ እዩ። ዝተረፈ ምስ ቲዮሪ ምግዛእ ይኽፈት።",
       "tryFree": "ነጻ ሕቶታት ፈትን",
       "buy": "ናይ ንድፊ መእተዊ ዓድግ",
-      "pending": "ባንክ ሕቶታት ምስ ተዳለወ ይወጽእ"
+      "pending": "ባንክ ሕቶታት ምስ ተዳለወ ይወጽእ",
+      "oneTime": "ሓንሳብ ዝግዛእ",
+      "features": {
+        "categories": "ንጹር ምድባት",
+        "practice": "ነጻ ናይ ልምምድ ሕቶታት",
+        "languages": "ደገፍ ብሓሙሽተ ቋንቋታት"
+      }
     },
     "licensingPending": "ምሉእ ባንክ ሕቶታት መሰል ትሕዝቶ ምስ ተረጋገጸ ጥራይ ይዝርጋሕ።",
+    "questionsAvailable": "ነጻ ሕቶታት ንምፍታን ድሉዋት",
+    "freeIntro": "ብነጻ ናሙና ጀምር",
+    "startPractice": "ልምምድ ጀምር",
     "freeCount": "{count, plural, =1 {1 ነጻ ሕቶ} other {# ነጻ ሕቶታት}}",
     "swedishOnly": "ብሽወደንኛ ጥራይ",
     "examLink": "ናይ ፈተነ መርመራ ክፈት",
@@ -472,6 +483,7 @@
     "hidePassword": "መሕለፊ ቃል ሕባእ",
     "or": "ወይ",
     "continueWithGoogle": "ብGoogle ቀጽል",
+    "googleUnavailable": "ናይ ቤት ትምህርቲ Google ሕሳብ ምስ ተራኸበ ብGoogle ምእታው ይነጥፍ።",
     "resendWait": "ሓድሽ ኮድ ድሕሪ {seconds} ሰ",
     "identifier": "ኢመይል ወይ ቁጽሪ ሞባይል",
     "forgotLink": "መሕለፊ ቃል ረሲዕካ?",
@@ -1105,6 +1117,9 @@
     "languagesBody": "ብስዊድንኛ፣ እንግሊዘኛ፣ ትግርኛ፣ ዓረብኛን ሶማልኛን ንምህር። ኣብ ቦታ ምሓዝ እትደሊ ቋንቋ በል። መምህር እቲ ቋንቋ ዝዛረብ ንሰማምዓካ።",
     "staffTitle": "ሰራሕተኛታትና",
     "staffDescription": "ንጉጅለ Makina Trafikskola ፍለጥ። ፍሉይ መምህር ምዝዋር ክትሕዝ እንተደሊኻ ንቤት ትምህርቲ ርኸብ።",
+    "contactViaSchool": "ብቤት ትምህርቲ ርክብ",
+    "callSchool": "ናብ ቤት ትምህርቲ ደውል",
+    "emailSchool": "ንቤት ትምህርቲ ኢመይል ስደድ",
     "staffRoles": {
       "trafikskolechef": "ሓላፊ ቤት ትምህርቲ ምዝዋር",
       "utbildningsledare": "ሓላፊ ስልጠና",

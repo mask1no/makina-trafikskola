@@ -76,33 +76,6 @@ export const CLIENT_DATA = {
       lat: 59.5194,
       lng: 17.9088,
     },
-    {
-      slug: "sollentuna",
-      name: "Sollentuna",
-      address: "Turebergs torg 1",
-      city: "Sollentuna",
-      postalCode: "191 47",
-      lat: 59.428,
-      lng: 17.9511,
-    },
-    {
-      slug: "kista",
-      name: "Kista",
-      address: "Danmarksgatan 14",
-      city: "Kista",
-      postalCode: "164 53",
-      lat: 59.4026,
-      lng: 17.9432,
-    },
-    {
-      slug: "marsta",
-      name: "Märsta",
-      address: "Stationsgatan 20",
-      city: "Märsta",
-      postalCode: "195 34",
-      lat: 59.6211,
-      lng: 17.8589,
-    },
   ],
   instructors: [
     {
@@ -138,7 +111,7 @@ export const CLIENT_DATA = {
       languages: ["ar", "so", "sv"],
       transmissions: [Transmission.AUTOMATIC],
       yearsExperience: 6,
-      locationSlug: "sollentuna",
+      locationSlug: "upplands-vasby",
       days: [1, 2, 3, 4, 5],
       startTime: "07:00",
       endTime: "15:00",
@@ -163,7 +136,7 @@ export const CLIENT_DATA = {
       languages: ["ti", "sv", "en"],
       transmissions: [Transmission.MANUAL, Transmission.AUTOMATIC],
       yearsExperience: 15,
-      locationSlug: "kista",
+      locationSlug: "upplands-vasby",
       days: [2, 3, 4, 5, 6],
       startTime: "09:00",
       endTime: "17:00",
@@ -188,7 +161,7 @@ export const CLIENT_DATA = {
       languages: ["sv", "en"],
       transmissions: [Transmission.MANUAL, Transmission.AUTOMATIC],
       yearsExperience: 3,
-      locationSlug: "marsta",
+      locationSlug: "upplands-vasby",
       days: [1, 2, 3, 4, 5],
       startTime: "12:00",
       endTime: "20:00",
@@ -697,6 +670,10 @@ async function main() {
     });
     locationsBySlug.set(location.slug, row.id);
   }
+  await db.location.updateMany({
+    where: { slug: { in: ["sollentuna", "kista", "marsta"] } },
+    data: { active: false },
+  });
 
   const seededProductIds = new Map<string, string>();
   for (const [i, p] of productsToSeed.entries()) {

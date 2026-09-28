@@ -3,7 +3,6 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
 import { Avatar } from "@/components/Avatar";
-import { PageHeader } from "@/components/PageHeader";
 import { TeacherMap } from "@/components/TeacherMap";
 import { isLocale } from "@/i18n/routing";
 import { db } from "@/lib/db";
@@ -109,13 +108,39 @@ export default async function ContactPage(
         }}
       />
       <div className="site-container max-w-5xl">
-        <PageHeader
-          eyebrow={t("eyebrow")}
-          title={t("title")}
-          description={t("description")}
-        />
+        <header className="relative overflow-hidden rounded-lg bg-surface p-7 text-ink-inverse shadow-float sm:p-10 lg:p-14">
+          <div
+            aria-hidden="true"
+            className="absolute -end-16 -top-20 size-64 rounded-full bg-accent opacity-20 blur-3xl"
+          />
+          <div className="relative grid gap-10 lg:grid-cols-[1fr_auto] lg:items-end">
+            <div className="max-w-2xl">
+              <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-accent">
+                {t("eyebrow")}
+              </p>
+              <h1 className="section-title mt-3">{t("title")}</h1>
+              <p className="mt-5 text-lg leading-8 text-ink-inverse-muted">
+                {t("description")}
+              </p>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+              <a
+                className="inline-flex min-h-12 items-center justify-center rounded-sm bg-accent px-5 font-black text-accent-ink"
+                href={telHref(phone)}
+              >
+                <span className="numbers-ltr">{phone}</span>
+              </a>
+              <a
+                className="inline-flex min-h-12 items-center justify-center rounded-sm border border-ink-inverse/25 px-5 font-bold text-ink-inverse"
+                href={`mailto:${email}`}
+              >
+                {email}
+              </a>
+            </div>
+          </div>
+        </header>
 
-        <section className="mt-10 rounded-lg border border-border bg-card p-6 shadow-soft sm:p-8">
+        <section className="relative z-10 mx-3 -mt-4 rounded-lg border border-border bg-card p-6 shadow-card sm:mx-6 sm:p-8">
           <h2 className="text-xl font-black">{legalName}</h2>
           <dl className="mt-5 grid gap-4 sm:grid-cols-2">
             <div>
@@ -160,7 +185,7 @@ export default async function ContactPage(
             {publicStaff.map((staffMember) => (
               <article
                 key={staffMember.name}
-                className="rounded-md border border-border bg-card p-5 shadow-soft"
+                className="group flex min-h-64 flex-col justify-between rounded-lg border border-border bg-card p-5 shadow-card transition duration-300 hover:-translate-y-1 hover:border-border-strong hover:shadow-float"
               >
                 <div className="flex items-center gap-4">
                   <Avatar name={staffMember.name} size="lg" />
@@ -169,6 +194,25 @@ export default async function ContactPage(
                     <p className="mt-1 text-sm text-ink-muted">
                       {t(`staffRoles.${staffMember.role}`)}
                     </p>
+                  </div>
+                </div>
+                <div className="mt-6 border-t border-border pt-4">
+                  <p className="text-xs font-bold uppercase tracking-wider text-ink-subtle">
+                    {t("contactViaSchool")}
+                  </p>
+                  <div className="mt-2 flex flex-wrap gap-4 text-sm font-bold">
+                    <a
+                      className="inline-flex min-h-11 items-center underline underline-offset-4"
+                      href={telHref(phone)}
+                    >
+                      {t("callSchool")}
+                    </a>
+                    <a
+                      className="inline-flex min-h-11 items-center underline underline-offset-4"
+                      href={`mailto:${email}`}
+                    >
+                      {t("emailSchool")}
+                    </a>
                   </div>
                 </div>
               </article>

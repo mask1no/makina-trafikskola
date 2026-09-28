@@ -247,6 +247,12 @@ export default async function LararePage(
             aria-label={t("map.title")}
             className="order-1 lg:sticky lg:top-24 lg:order-2 lg:self-start"
           >
+            <div className="mb-3 rounded-md border border-border bg-card p-4 shadow-soft">
+              <p className="text-sm font-bold">{t("map.interactionTitle")}</p>
+              <p className="mt-1 text-sm leading-6 text-ink-muted">
+                {t("map.interactionHint")}
+              </p>
+            </div>
             <SelectableTeacherMap
               apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY}
               bookingAvailable={canBook}

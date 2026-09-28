@@ -5,12 +5,28 @@ import { PrismaClient } from "@prisma/client";
 import { z } from "zod";
 
 const LOCALES = ["sv", "en", "ti", "ar", "so"] as const;
+const NON_SWEDISH_LOCALES = ["en", "ti", "ar", "so"] as const;
+
+const localizedQuestionSchema = z.object({
+  question: z.string().trim().min(1),
+  options: z.array(z.string().trim().min(1)).min(2),
+  explanation: z.string().trim().min(1),
+});
 
 const bankQuestionSchema = z.object({
   id: z.string().trim().min(1),
   parm: z.number().int().min(1).max(9),
   question_sv: z.string().trim().min(1),
   options_sv: z.array(z.string().trim().min(1)).min(2),
+  explanation_sv: z.string().trim().min(1).optional(),
+  translations: z
+    .object({
+      en: localizedQuestionSchema.optional(),
+      ti: localizedQuestionSchema.optional(),
+      ar: localizedQuestionSchema.optional(),
+      so: localizedQuestionSchema.optional(),
+    })
+    .optional(),
   correct_index: z.number().int().min(0),
   needs_image: z.boolean(),
   status: z.enum(["ok", "review"]),
@@ -23,6 +39,39 @@ const bankFileSchema = z.union([
 
 export const theoryBankPath = path.join(process.cwd(), "prisma", "theory-bank.json");
 
+const CATEGORY_NAMES: Record<
+  number,
+  Record<(typeof LOCALES)[number], string>
+> = {
+  1: {
+    sv: "Trafikregler",
+    en: "Traffic rules",
+    ti: "ሕግታት ትራፊክ",
+    ar: "قواعد المرور",
+    so: "Xeerarka waddooyinka",
+  },
+  2: {
+    sv: "Trafiksäkerhet",
+    en: "Road safety",
+    ti: "ድሕነት ትራፊክ",
+    ar: "السلامة المرورية",
+    so: "Badbaadada waddooyinka",
+  },
+  3: {
+    sv: "Människan i trafiken",
+    en: "People in traffic",
+    ti: "ሰብ ኣብ ትራፊክ",
+    ar: "الإنسان في المرور",
+    so: "Dadka waddooyinka",
+  },
+  4: { sv: "Fordon", en: "Vehicles", ti: "ተሽከርከርቲ", ar: "المركبات", so: "Gaadiidka" },
+  5: { sv: "Miljö", en: "Environment", ti: "ከባቢ", ar: "البيئة", so: "Deegaanka" },
+  6: { sv: "Landsväg", en: "Rural roads", ti: "ገጠራዊ መንገዲ", ar: "الطرق الريفية", so: "Waddooyinka miyiga" },
+  7: { sv: "Stadstrafik", en: "Urban traffic", ti: "ትራፊክ ከተማ", ar: "المرور داخل المدن", so: "Gaadiidka magaalada" },
+  8: { sv: "Parkering", en: "Parking", ti: "ምዕራፍ", ar: "الوقوف", so: "Baarkinka" },
+  9: { sv: "Blandade frågor", en: "Mixed questions", ti: "ዝተፈላለዩ ሕቶታት", ar: "أسئلة متنوعة", so: "Su'aalo isku dhafan" },
+};
+
 export async function importTheory(db: PrismaClient) {
   const raw = await readFile(theoryBankPath, "utf8");
   const parsed = bankFileSchema.parse(JSON.parse(raw));
@@ -31,13 +80,13 @@ export async function importTheory(db: PrismaClient) {
   const categories = new Map<number, { id: string }>();
   for (let parm = 1; parm <= 9; parm += 1) {
     const slug = `del-${parm}`;
-    const name = `Del ${parm}`;
     const category = await db.theoryCategory.upsert({
       where: { slug },
       update: { order: parm },
       create: { slug, order: parm },
     });
     for (const locale of LOCALES) {
+      const name = CATEGORY_NAMES[parm]?.[locale] ?? `Del ${parm}`;
       await db.theoryCategoryTranslation.upsert({
         where: { categoryId_locale: { categoryId: category.id, locale } },
         update: { name },
@@ -76,11 +125,39 @@ export async function importTheory(db: PrismaClient) {
       },
     });
 
-    await db.theoryQuestionTranslation.upsert({
-      where: { questionId_locale: { questionId: row.id, locale: "sv" } },
-      update: { text: question.question_sv },
-      create: { questionId: row.id, locale: "sv", text: question.question_sv },
-    });
+    const translations = [
+      {
+        locale: "sv" as const,
+        question: question.question_sv,
+        options: question.options_sv,
+        explanation: question.explanation_sv,
+      },
+      ...NON_SWEDISH_LOCALES.flatMap((locale) => {
+        const translation = question.translations?.[locale];
+        return translation ? [{ locale, ...translation }] : [];
+      }),
+    ];
+
+    for (const translation of translations) {
+      await db.theoryQuestionTranslation.upsert({
+        where: {
+          questionId_locale: {
+            questionId: row.id,
+            locale: translation.locale,
+          },
+        },
+        update: {
+          text: translation.question,
+          explanation: translation.explanation,
+        },
+        create: {
+          questionId: row.id,
+          locale: translation.locale,
+          text: translation.question,
+          explanation: translation.explanation,
+        },
+      });
+    }
 
     for (const [index, text] of question.options_sv.entries()) {
       const answerId = `bank-${question.id}-a${index}`;
@@ -103,6 +180,15 @@ export async function importTheory(db: PrismaClient) {
         update: { text },
         create: { answerId, locale: "sv", text },
       });
+      for (const locale of NON_SWEDISH_LOCALES) {
+        const translatedText = question.translations?.[locale]?.options[index];
+        if (!translatedText) continue;
+        await db.theoryAnswerTranslation.upsert({
+          where: { answerId_locale: { answerId, locale } },
+          update: { text: translatedText },
+          create: { answerId, locale, text: translatedText },
+        });
+      }
     }
   }
 

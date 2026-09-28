@@ -237,6 +237,8 @@
     "unavailableTitle": "Kartan är inte tillgänglig just nu",
     "unavailableDescription": "Du kan fortfarande hitta och välja lärare i listan.",
     "pendingKey": "Kartan aktiveras när Google Maps-nyckeln är på plats.",
+    "interactionTitle": "Utforska lärarna på kartan",
+    "interactionHint": "Flytta kartan och välj en markör för att se lärare, språk, växellåda och undervisningsplats.",
     "book": "Boka",
     "contact": "Kontakta oss",
     "close": "Stäng",
@@ -264,9 +266,18 @@
       "description": "Öva kategori för kategori och gör övningsprov i samma form som kunskapsprovet. Ett urval är gratis. Resten öppnas när du köper teori.",
       "tryFree": "Prova gratisfrågor",
       "buy": "Köp teoriåtkomst",
-      "pending": "Släpps så snart frågebanken är klar"
+      "pending": "Släpps så snart frågebanken är klar",
+      "oneTime": "Engångsköp",
+      "features": {
+        "categories": "Tydliga kategorier",
+        "practice": "Gratis övningsfrågor",
+        "languages": "Stöd på fem språk"
+      }
     },
     "licensingPending": "Den fullständiga frågebanken publiceras först när innehållsrättigheterna är bekräftade.",
+    "questionsAvailable": "gratisfrågor redo att prova",
+    "freeIntro": "Börja med ett kostnadsfritt smakprov",
+    "startPractice": "Starta övningen",
     "freeCount": "{count, plural, =1 {1 gratisfråga} other {# gratisfrågor}}", "swedishOnly": "Endast på svenska", "examLink": "Öppna övningsprovet",
     "emptyTitle": "Inga gratisfrågor är publicerade", "emptyDescription": "Vi inväntar verifierat och licensierat frågeinnehåll.",
     "paidAccess": "Aktiv teoriåtkomst", "freeAccess": "Gratisfrågor", "questionNumber": "Fråga {number}",
@@ -385,6 +396,7 @@
     "hidePassword": "Dölj lösenord",
     "or": "eller",
     "continueWithGoogle": "Fortsätt med Google",
+    "googleUnavailable": "Google-inloggning aktiveras när skolans Google-konto är anslutet.",
     "resendWait": "Skicka ny kod om {seconds} s",
     "identifier": "E-post eller mobilnummer",
     "forgotLink": "Glömt lösenord?",
@@ -626,6 +638,9 @@
     "languagesBody": "Vi undervisar på svenska, engelska, tigrinja, arabiska och somaliska. Säg vilket språk du vill ha när du bokar. Då matchar vi dig med en lärare som kan det.",
     "staffTitle": "Vår personal",
     "staffDescription": "Möt teamet på Makina Trafikskola. Kontakta skolan om du vill boka en viss trafiklärare.",
+    "contactViaSchool": "Kontakt via skolan",
+    "callSchool": "Ring skolan",
+    "emailSchool": "E-posta skolan",
     "staffRoles": {
       "trafikskolechef": "Trafikskolechef",
       "utbildningsledare": "Utbildningsledare",

@@ -100,6 +100,12 @@ export default function GoogleMapClient({
   const [openId, setOpenId] = useState<string | null>(null);
   const [mobile, setMobile] = useState(false);
   const openMarker = markers.find((marker) => marker.id === openId) ?? null;
+  const teacherChoices = markers.filter(
+    (marker, index) =>
+      markers.findIndex(
+        (candidate) => candidate.teacherId === marker.teacherId,
+      ) === index,
+  );
 
   useEffect(() => {
     const query = window.matchMedia("(max-width: 767px)");
@@ -117,7 +123,7 @@ export default function GoogleMapClient({
   return (
     <APIProvider apiKey={apiKey}>
       <div
-        className="rtl-no-mirror h-[28rem] overflow-hidden rounded-lg"
+        className="rtl-no-mirror relative h-[28rem] overflow-hidden rounded-lg"
         aria-label={label}
       >
         <Map
@@ -173,6 +179,26 @@ export default function GoogleMapClient({
             </InfoWindow>
           ) : null}
         </Map>
+        {teacherChoices.length > 1 ? (
+          <div className="absolute inset-x-3 bottom-3 z-10 flex gap-2 overflow-x-auto rounded-md bg-card p-2 shadow-card">
+            {teacherChoices.map((marker) => (
+              <button
+                key={marker.teacherId}
+                type="button"
+                aria-pressed={openMarker?.teacherId === marker.teacherId}
+                onClick={() => select(marker)}
+                className="flex min-h-11 shrink-0 items-center gap-2 rounded-full border border-border bg-card pe-4 ps-2 text-sm font-bold text-ink transition hover:border-border-strong aria-pressed:border-accent aria-pressed:bg-accent-soft"
+              >
+                <Avatar
+                  name={marker.title}
+                  imageUrl={marker.photoUrl}
+                  size="sm"
+                />
+                {marker.title}
+              </button>
+            ))}
+          </div>
+        ) : null}
       </div>
       {openMarker && mobile ? (
         <BottomSheet title={openMarker.title} open>

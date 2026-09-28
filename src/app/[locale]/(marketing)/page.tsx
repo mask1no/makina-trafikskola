@@ -17,6 +17,47 @@ import { getProducts, getTeachers } from "./_lib/data";
 export const dynamic = "force-dynamic";
 
 const LANGUAGE_FILTERS = ["sv", "en", "ti", "ar", "so"] as const;
+const LANGUAGE_MARKS = ["SV", "EN", "ትግ", "ع", "SO"] as const;
+
+function TrustIcon({
+  kind,
+}: {
+  kind: "pickup" | "lesson" | "pricing";
+}) {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 48 48"
+      className="size-12"
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+    >
+      {kind === "pickup" ? (
+        <>
+          <path d="M8 29h32l-3-10a5 5 0 0 0-5-4H16a5 5 0 0 0-5 4L8 29Z" />
+          <path d="M7 29v7h5m29-7v7h-5M15 29h18" />
+          <circle cx="14" cy="34" r="3" />
+          <circle cx="34" cy="34" r="3" />
+          <path d="M24 7c4 0 7 3 7 7 0 5-7 10-7 10s-7-5-7-10c0-4 3-7 7-7Z" />
+          <circle cx="24" cy="14" r="2" />
+        </>
+      ) : kind === "lesson" ? (
+        <>
+          <circle cx="24" cy="24" r="17" />
+          <path d="M24 14v11l7 4M18 5h12" />
+        </>
+      ) : (
+        <>
+          <path d="M13 7h22v34l-4-3-4 3-3-3-4 3-4-3-3 3V7Z" />
+          <path d="M19 16h10M19 23h10M19 30h6" />
+        </>
+      )}
+    </svg>
+  );
+}
 
 export default async function MarketingHome(
   props: {
@@ -122,16 +163,50 @@ export default async function MarketingHome(
         </div>
       </section>
 
-      <section aria-label={t("home.trust.label")} className="border-b border-border bg-card">
-        <div className="site-container grid gap-6 py-8 sm:grid-cols-2 lg:grid-cols-4">
-          {(["languages", "pickup", "lesson", "pricing"] as const).map((key) => (
-            <div key={key}>
-              <h2 className="text-base font-black">{t(`home.trust.${key}.title`)}</h2>
-              <p className="mt-1 text-sm leading-6 text-ink-muted">
-                {t(`home.trust.${key}.description`)}
-              </p>
-            </div>
-          ))}
+      <section
+        aria-label={t("home.trust.label")}
+        className="relative z-20 bg-page pb-10 sm:-mt-8"
+      >
+        <div className="site-container grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {(["languages", "pickup", "lesson", "pricing"] as const).map(
+            (key, index) => (
+              <article
+                key={key}
+                className="group min-h-56 rounded-lg border border-border bg-card p-6 shadow-card transition duration-300 hover:-translate-y-1 hover:border-border-strong hover:shadow-float"
+              >
+                <div className="flex min-h-14 items-center text-ink">
+                  {key === "languages" ? (
+                    <div
+                      aria-hidden="true"
+                      className="rtl-no-mirror flex gap-1"
+                    >
+                      {LANGUAGE_MARKS.map((language) => (
+                        <span
+                          key={language}
+                          className="grid size-11 place-items-center rounded-full border-2 border-card bg-page text-xs font-black shadow-soft"
+                        >
+                          {language}
+                        </span>
+                      ))}
+                    </div>
+                  ) : (
+                    <span className="grid size-14 place-items-center rounded-md bg-accent-soft text-ink transition group-hover:bg-accent">
+                      <TrustIcon kind={key} />
+                    </span>
+                  )}
+                </div>
+                <p className="mt-6 text-xs font-black uppercase tracking-[0.16em] text-ink-subtle">
+                  0{index + 1}
+                </p>
+                <h2 className="mt-2 text-xl font-black">
+                  {t(`home.trust.${key}.title`)}
+                </h2>
+                <p className="mt-2 text-sm leading-6 text-ink-muted">
+                  {t(`home.trust.${key}.description`)}
+                </p>
+              </article>
+            ),
+          )}
         </div>
       </section>
 
@@ -290,34 +365,74 @@ export default async function MarketingHome(
         </div>
       </section>
 
-      <section className="section-shell">
+      <section className="section-shell overflow-hidden">
         <div className="site-container">
-          <div className="max-w-3xl border-y border-border py-10 sm:flex sm:items-end sm:justify-between sm:gap-12">
-            <div>
-              <p className="text-sm font-bold uppercase tracking-wider text-ink-muted">
+          <div className="relative overflow-hidden rounded-lg bg-surface text-ink-inverse shadow-float">
+            <div
+              aria-hidden="true"
+              className="absolute -end-24 -top-32 size-80 rounded-full bg-accent opacity-15 blur-3xl"
+            />
+            <div className="relative grid lg:grid-cols-[1.1fr_.9fr]">
+              <div className="p-7 sm:p-10 lg:p-14">
+                <p className="text-sm font-bold uppercase tracking-wider text-accent">
                 {t("theory.teaser.eyebrow")}
-              </p>
-              <h2 className="mt-3 text-3xl font-black">{t("theory.teaser.title")}</h2>
-              <p className="mt-4 leading-7 text-ink-muted">{t("theory.teaser.description")}</p>
-              {theoryProduct ? (
-                <p className="numbers-ltr mt-5 text-3xl font-black">
-                  {formatPrice(theoryProduct.priceOre, params.locale)}
                 </p>
-              ) : null}
-            </div>
-            <div className="mt-8 flex shrink-0 flex-wrap gap-3 sm:mt-0 sm:justify-end">
-              <LinkButton href={`/${params.locale}/teori`}>
-                {t("theory.teaser.tryFree")}
-              </LinkButton>
-              {theoryProduct?.active ? (
-                <LinkButton variant="secondary" href={`/${params.locale}/paket/korkortsteori`}>
-                  {t("theory.teaser.buy")}
-                </LinkButton>
-              ) : (
-                <span className="inline-flex min-h-11 items-center text-sm font-bold text-ink-muted">
-                  {t("theory.teaser.pending")}
-                </span>
-              )}
+                <h2 className="mt-3 max-w-xl text-3xl font-black sm:text-5xl">
+                  {t("theory.teaser.title")}
+                </h2>
+                <p className="mt-5 max-w-xl leading-7 text-ink-inverse-muted">
+                  {t("theory.teaser.description")}
+                </p>
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {(["categories", "practice", "languages"] as const).map(
+                    (item) => (
+                      <span
+                        key={item}
+                        className="inline-flex min-h-11 items-center rounded-full border border-ink-inverse/20 px-4 text-sm font-bold"
+                      >
+                        {t(`theory.teaser.features.${item}`)}
+                      </span>
+                    ),
+                  )}
+                </div>
+                <div className="mt-8 flex flex-wrap gap-3">
+                  <LinkButton href={`/${params.locale}/teori`}>
+                    {t("theory.teaser.tryFree")}
+                  </LinkButton>
+                  {theoryProduct?.active ? (
+                    <LinkButton
+                      variant="secondary"
+                      className="border-ink-inverse/30 text-ink-inverse hover:bg-ink-inverse/10"
+                      href={`/${params.locale}/paket/korkortsteori`}
+                    >
+                      {t("theory.teaser.buy")}
+                    </LinkButton>
+                  ) : (
+                    <span className="inline-flex min-h-11 items-center text-sm font-bold text-ink-inverse-muted">
+                      {t("theory.teaser.pending")}
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div className="relative min-h-80 border-t border-ink-inverse/10 bg-surface-raised lg:border-s lg:border-t-0">
+                <Image
+                  src="/illustration-theory.svg"
+                  alt=""
+                  fill
+                  sizes="(min-width: 1024px) 40vw, 100vw"
+                  className="rtl-no-mirror object-contain p-8 sm:p-12"
+                />
+                {theoryProduct ? (
+                  <div className="absolute bottom-5 end-5 rounded-md bg-card p-4 text-ink shadow-card">
+                    <p className="text-xs font-black uppercase tracking-wider text-ink-muted">
+                      {t("theory.teaser.oneTime")}
+                    </p>
+                    <p className="numbers-ltr mt-1 text-2xl font-black">
+                      {formatPrice(theoryProduct.priceOre, params.locale)}
+                    </p>
+                  </div>
+                ) : null}
+              </div>
             </div>
           </div>
         </div>
