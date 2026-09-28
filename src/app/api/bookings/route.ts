@@ -77,10 +77,7 @@ function isExclusionViolation(error: unknown) {
   return (
     error instanceof Error &&
     (error.message.includes('code: "23P01"') ||
-      error.message.includes("booking_no_overlap") ||
-      error.message.includes('code: "40P01"') ||
-      error.message.includes('code: "40001"') ||
-      error.message.includes("deadlock detected"))
+      error.message.includes("booking_no_overlap"))
   );
 }
 
@@ -172,6 +169,19 @@ export async function POST(request: Request) {
   try {
     const result = await db.$transaction(
       async (tx) => {
+        const lockKeys = [
+          `student:${session.user.id}`,
+          `teacher-slot:${parsed.data.teacherId}:${requestedSlot.startsAt.toISOString()}`,
+        ].sort();
+        for (const lockKey of lockKeys) {
+          await tx.$queryRaw`
+            SELECT pg_advisory_xact_lock(
+              hashtext('makina-booking'),
+              hashtext(${lockKey})
+            ) IS NULL AS locked
+          `;
+        }
+
         const repeated = await tx.booking.findUnique({
           where: { idempotencyKey: parsed.data.idempotencyKey },
         });
@@ -244,7 +254,7 @@ export async function POST(request: Request) {
 
         return { booking: created, notificationIds };
       },
-      { isolationLevel: Prisma.TransactionIsolationLevel.Serializable },
+      { isolationLevel: Prisma.TransactionIsolationLevel.ReadCommitted },
     );
 
     await dispatchNotifications(result.notificationIds, now);
