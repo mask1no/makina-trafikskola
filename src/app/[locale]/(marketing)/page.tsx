@@ -4,6 +4,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { LinkButton } from "@/components/LinkButton";
 import { ProductCard } from "@/components/ProductCard";
+import { StaticMapArtwork } from "@/components/StaticMapArtwork";
 import { TeacherCard } from "@/components/TeacherCard";
 import { isLocale } from "@/i18n/routing";
 import {
@@ -260,14 +261,8 @@ export default async function MarketingHome(
               className="group relative min-h-[22rem] overflow-hidden bg-surface text-ink-inverse"
               aria-label={t("map.homeTeaserCta")}
             >
-              <Image
-                src="/hero.jpg"
-                alt=""
-                fill
-                sizes="(min-width: 1024px) 40vw, 100vw"
-                className="rtl-no-mirror object-cover object-[40%_center] opacity-70 transition duration-500 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_20%,var(--surface)_92%)]" />
+              <StaticMapArtwork className="absolute inset-0 size-full transition duration-500 group-hover:scale-105" />
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,color-mix(in_srgb,var(--surface)_5%,transparent)_0%,var(--surface)_92%)]" />
               <div className="relative z-10 flex h-full flex-col justify-end p-6 sm:p-8">
                 <h3 className="text-2xl font-black">{t("map.homeTeaserTitle")}</h3>
                 <p className="mt-3 max-w-sm text-sm leading-6 text-ink-inverse-muted">

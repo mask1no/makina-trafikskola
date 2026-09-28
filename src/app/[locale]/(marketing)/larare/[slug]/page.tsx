@@ -5,7 +5,8 @@ import { notFound } from "next/navigation";
 import { Avatar } from "@/components/Avatar";
 import { isLocale } from "@/i18n/routing";
 import { LinkButton } from "@/components/LinkButton";
-import { instructorsEnabled } from "@/lib/launch";
+import { StaticMapArtwork } from "@/components/StaticMapArtwork";
+import { bookingEnabled, instructorsEnabled } from "@/lib/launch";
 
 import { getTeacher } from "../../_lib/data";
 
@@ -48,6 +49,7 @@ export default async function TeacherDetailPage(
   ]);
   if (!teacher) notFound();
   const name = `${teacher.user.firstName} ${teacher.user.lastName}`;
+  const canBook = bookingEnabled();
 
   return (
     <div className="section-shell">
@@ -104,10 +106,12 @@ export default async function TeacherDetailPage(
               </div>
             </dl>
             <LinkButton
-              href={`/${params.locale}/boka?teacher=${teacher.id}`}
+              href={`/${params.locale}/${canBook ? `boka?teacher=${teacher.id}` : "kontakt"}`}
               className="mt-8"
             >
-              {t("teacher.bookWith", { name: teacher.user.firstName })}
+              {canBook
+                ? t("teacher.bookWith", { name: teacher.user.firstName })
+                : t("shell.contact")}
             </LinkButton>
           </div>
         </div>
@@ -120,7 +124,9 @@ export default async function TeacherDetailPage(
                 : t("map.unavailableDescription")}
             </p>
           </div>
-          <div className="static-map rtl-no-mirror relative min-h-64 border-t border-border md:border-s md:border-t-0" role="img" aria-label={t("map.staticLabel")} />
+          <div className="relative min-h-64 border-t border-border md:border-s md:border-t-0" role="img" aria-label={t("map.staticLabel")}>
+            <StaticMapArtwork className="absolute inset-0 size-full" />
+          </div>
         </section>
       </article>
     </div>

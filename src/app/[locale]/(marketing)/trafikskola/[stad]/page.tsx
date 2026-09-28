@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { EmptyState } from "@/components/EmptyState";
 import { Notice } from "@/components/Notice";
 import { PageHeader } from "@/components/PageHeader";
+import { StaticMapArtwork } from "@/components/StaticMapArtwork";
 import { isLocale } from "@/i18n/routing";
 import { db } from "@/lib/db";
 
@@ -109,7 +110,9 @@ export default async function TrafikskolaPage(
             <Notice className="mt-5">{t("addressPending")}</Notice>
           )}
           </div>
-          <div className="static-map rtl-no-mirror relative min-h-72 border-t border-border md:border-s md:border-t-0" role="img" aria-label={t("title", { city: location.city })} />
+          <div className="relative min-h-72 border-t border-border md:border-s md:border-t-0" role="img" aria-label={t("title", { city: location.city })}>
+            <StaticMapArtwork className="absolute inset-0 size-full" />
+          </div>
         </section>
         <section className="mt-8">
           <h2 className="text-2xl font-black">{t("teachersTitle")}</h2>
