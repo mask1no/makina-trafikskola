@@ -128,7 +128,7 @@ describe.skipIf(!runIntegration)("booking API concurrency", () => {
       where: { studentId: { in: studentIds } },
     });
     await db.notification.deleteMany({
-      where: { userId: { in: studentIds } },
+      where: { userId: { in: [...studentIds, teacherUserId].filter(Boolean) } },
     });
     if (teacherId) {
       await db.teacherAvailability.deleteMany({ where: { teacherId } });

@@ -43,7 +43,7 @@ export function InstructorStatusControl({
   }
 
   return (
-    <li className="rounded-sm border border-border bg-card p-4">
+    <div className="rounded-sm border border-border bg-card p-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <p className="font-bold">{instructor.name}</p>
@@ -69,6 +69,6 @@ export function InstructorStatusControl({
           {errors.has(error) ? errors(error) : errors("UNKNOWN")}
         </Notice>
       ) : null}
-    </li>
+    </div>
   );
 }

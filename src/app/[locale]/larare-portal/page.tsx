@@ -5,14 +5,22 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { auth } from "@/auth";
+import { Badge } from "@/components/Badge";
 import { Button } from "@/components/Button";
+import { Notice } from "@/components/Notice";
 import { EmptyState } from "@/components/EmptyState";
 import { Input } from "@/components/Input";
 import { PageHeader } from "@/components/PageHeader";
 import { Textarea } from "@/components/Textarea";
 import { db } from "@/lib/db";
 
-import { blockAvailability, reportLesson } from "./actions";
+import {
+  blockAvailability,
+  createCalendarToken,
+  reportLesson,
+  rotateCalendarToken,
+} from "./actions";
+import { CalendarLink } from "./CalendarLink";
 
 export const dynamic = "force-dynamic";
 
@@ -21,7 +29,7 @@ const TIME_ZONE = "Europe/Stockholm";
 export default async function TeacherPortal(
   props: {
     params: Promise<{ locale: string }>;
-    searchParams: Promise<{ view?: string }>;
+    searchParams: Promise<{ view?: string; error?: string }>;
   }
 ) {
   const params = await props.params;
@@ -41,7 +49,11 @@ export default async function TeacherPortal(
     getTranslations("teacherPortal"),
     db.teacherProfile.findUnique({
       where: { userId: session.user.id },
-      select: { id: true },
+      select: {
+        id: true,
+        calendarToken: true,
+        user: { select: { phone: true } },
+      },
     }),
   ]);
   if (!teacher) {
@@ -129,6 +141,12 @@ export default async function TeacherPortal(
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
       <section>
+        {searchParams.error === "LESSON_NOT_STARTED" ? (
+          <Notice tone="danger" className="mt-4">{t("lessonNotStarted")}</Notice>
+        ) : null}
+        {!teacher.user.phone ? (
+          <Notice tone="danger" className="mt-4">{t("noPhone")}</Notice>
+        ) : null}
         <PageHeader
           eyebrow={t("eyebrow")}
           title={view === "week" ? t("weekTitle") : t("title")}
@@ -164,6 +182,9 @@ export default async function TeacherPortal(
                     <h2 className="break-words text-lg font-bold">
                       {lesson.student.firstName} {lesson.student.lastName}
                     </h2>
+                    {!lesson.creditCharged ? (
+                      <Badge className="mt-2" tone="danger">{t("awaitingPayment")}</Badge>
+                    ) : null}
                     <div className="mt-2 grid text-sm">
                       {lesson.student.phone ? (
                         <a className="inline-flex min-h-11 items-center font-bold underline" href={`tel:${lesson.student.phone}`} dir="ltr">
@@ -194,6 +215,7 @@ export default async function TeacherPortal(
                     {previous?.nextFocus ?? previous?.summary ?? t("noPreviousNote")}
                   </p>
                 </div>
+                {lesson.creditCharged ? (
                 <form id={`lesson-report-${lesson.id}`} action={reportLesson} className="mt-4 grid scroll-mt-24 gap-3">
                   <input type="hidden" name="bookingId" value={lesson.id} />
                   <input type="hidden" name="locale" value={params.locale} />
@@ -214,6 +236,7 @@ export default async function TeacherPortal(
                     {lesson.status === "COMPLETED" ? t("updateReport") : t("completeLesson")}
                   </Button>
                 </form>
+                ) : null}
               </article>
             );
           })}
@@ -254,6 +277,27 @@ export default async function TeacherPortal(
             <EmptyState title={t("students.empty")} description={t("students.noNext")} />
           ) : null}
         </div>
+      </section>
+
+      <section className="mt-10 rounded-md border border-border bg-card p-5 shadow-soft sm:p-6">
+        <h2 className="text-xl font-bold">{t("calendar.title")}</h2>
+        <p className="mt-2 text-sm text-ink-muted">{t("calendar.description")}</p>
+        <p className="mt-2 text-sm text-ink-muted">{t("calendar.delay")}</p>
+        {teacher.calendarToken ? (
+          <>
+            <CalendarLink
+              url={`${process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"}/api/teachers/calendar/${teacher.calendarToken}`}
+              label={t("calendar.copy")}
+            />
+            <form action={rotateCalendarToken} className="mt-3">
+              <Button type="submit" variant="tertiary">{t("calendar.rotate")}</Button>
+            </form>
+          </>
+        ) : (
+          <form action={createCalendarToken} className="mt-4">
+            <Button type="submit">{t("calendar.create")}</Button>
+          </form>
+        )}
       </section>
 
       <section className="mt-10 rounded-md border border-border bg-card p-5 shadow-soft sm:p-6">

@@ -91,6 +91,7 @@ model TeacherProfile {
   ratingCount       Int            @default(0)
   travelBufferMin   Int            @default(15)
   maxPickupRadiusKm Int            @default(15)
+  calendarToken     String?        @unique
 
   translations    TeacherTranslation[]
   locations       TeacherLocation[]

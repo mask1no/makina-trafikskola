@@ -14,11 +14,13 @@ const transmissionValues = ["MANUAL", "AUTOMATIC"] as const;
 
 export function InstructorForm({ locations }: { locations: Location[] }) {
   const t = useTranslations("admin.instructors");
+  const authT = useTranslations("auth");
   const languageNames = useTranslations("language");
   const errors = useTranslations("errors");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [slug, setSlug] = useState("");
   const [yearsExperience, setYearsExperience] = useState("0");
@@ -62,6 +64,7 @@ export function InstructorForm({ locations }: { locations: Location[] }) {
           firstName,
           lastName,
           email,
+          phone,
           initialPassword: password,
           slug,
           yearsExperience: Number(yearsExperience),
@@ -99,6 +102,7 @@ export function InstructorForm({ locations }: { locations: Location[] }) {
       setFirstName("");
       setLastName("");
       setEmail("");
+      setPhone("");
       setPassword("");
       setSlug("");
       setImage(null);
@@ -148,6 +152,18 @@ export function InstructorForm({ locations }: { locations: Location[] }) {
               />
           );
         })}
+        <Input
+          id="instructor-phone"
+          name="phone"
+          type="tel"
+          label={t("phone")}
+          value={phone}
+          onChange={(event) => setPhone(event.target.value)}
+          autoComplete="tel"
+          required
+          dir="ltr"
+        />
+        <p className="text-sm text-ink-muted sm:col-span-2">{authT("phoneHint")}</p>
       </fieldset>
 
       <fieldset>

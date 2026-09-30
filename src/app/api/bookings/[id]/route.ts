@@ -8,14 +8,21 @@ import {
   requireRole,
 } from "@/lib/auth/guards";
 import { loadAvailability } from "@/lib/bookings/availability";
-import { getCancellationCreditReason } from "@/lib/bookings/cancellation";
+import {
+  getCancellationCreditReason,
+  getCancellationDeadline,
+} from "@/lib/bookings/cancellation";
 import {
   isBookingExclusionViolation,
   isSerializationOrTxTimeout,
 } from "@/lib/bookings/errors";
 import { db } from "@/lib/db";
 import { dispatchNotifications } from "@/lib/notifications/dispatch";
-import { enqueueBookingNotifications } from "@/lib/notifications/queue";
+import { bookingNotificationContext } from "@/lib/notifications/context";
+import {
+  enqueueBookingNotifications,
+  enqueueTeacherBookingNotification,
+} from "@/lib/notifications/queue";
 
 export const runtime = "nodejs";
 
@@ -132,13 +139,70 @@ export async function PATCH(
       return errorResponse("SLOT_TAKEN", 409, { slots: slots ?? [] });
     }
 
+    const cancellationWindowHours = configuredNumber(
+      "CANCELLATION_WINDOW_HOURS",
+      24,
+    );
+    if (
+      session.user.role === "STUDENT" &&
+      now >= getCancellationDeadline(booking.startsAt, cancellationWindowHours)
+    ) {
+      return errorResponse("OUTSIDE_CANCELLATION_WINDOW", 409);
+    }
+
     try {
-      const updated = await db.booking.update({
-        where: { id: booking.id },
-        data: { startsAt: slot.startsAt, endsAt: slot.endsAt },
+      const updated = await db.$transaction(async (tx) => {
+        const changed = await tx.booking.updateMany({
+          where: { id: booking.id, status: "CONFIRMED" },
+          data: { startsAt: slot.startsAt, endsAt: slot.endsAt },
+        });
+        if (changed.count !== 1) throw new Error("BOOKING_NOT_ACTIVE");
+        const moved = await tx.booking.findUniqueOrThrow({
+          where: { id: booking.id },
+        });
+        const context = await bookingNotificationContext(tx, booking.id);
+        const studentChannels =
+          session.user.role === "STUDENT"
+            ? (["INAPP"] as const)
+            : (["SMS", "INAPP"] as const);
+        const notificationIds = await enqueueBookingNotifications(tx, {
+          userId: booking.studentId,
+          locale: booking.student.localePref,
+          template: "booking_moved",
+          bookingId: booking.id,
+          startsAt: moved.startsAt,
+          previousStartsAt: booking.startsAt,
+          teacherFirstName: context.teacherFirstName,
+          placeLabel: context.placeLabel,
+          channels: [...studentChannels],
+          now,
+        });
+        if (session.user.role !== "TEACHER") {
+          notificationIds.push(
+            await enqueueTeacherBookingNotification(tx, {
+              userId: context.teacherUserId,
+              locale: context.teacherLocale,
+              template: "teacher_booking_moved",
+              bookingId: booking.id,
+              startsAt: moved.startsAt,
+              previousStartsAt: booking.startsAt,
+              studentFirstName: context.studentFirstName,
+              placeLabel: context.placeLabel,
+              now,
+            }),
+          );
+        }
+        return { moved, notificationIds };
       });
-      return Response.json(updated);
+      await dispatchNotifications(updated.notificationIds, now);
+      return Response.json(updated.moved);
     } catch (error) {
+      if (
+        error instanceof Error &&
+        error.message === "BOOKING_NOT_ACTIVE"
+      ) {
+        return errorResponse("BOOKING_NOT_ACTIVE", 409);
+      }
       if (isBookingExclusionViolation(error)) {
         const refreshed = await loadAvailability({
           teacherId: booking.teacherId,
@@ -204,6 +268,10 @@ export async function PATCH(
         });
       }
 
+      const context = await bookingNotificationContext(tx, booking.id);
+      const creditRefunded = Boolean(
+        creditReason && creditReason !== "LATE_CANCELLATION_CHARGE",
+      );
       const notificationIds = await enqueueBookingNotifications(tx, {
         userId: booking.studentId,
         locale: booking.student.localePref,
@@ -212,8 +280,23 @@ export async function PATCH(
           : "booking_cancelled_by_teacher",
         bookingId: booking.id,
         startsAt: booking.startsAt,
+        creditRefunded: cancelledByStudent ? undefined : creditRefunded,
+        channels: cancelledByStudent ? ["INAPP"] : ["SMS", "INAPP"],
         now,
       });
+      if (session.user.role !== "TEACHER") {
+        notificationIds.push(
+          await enqueueTeacherBookingNotification(tx, {
+            userId: context.teacherUserId,
+            locale: context.teacherLocale,
+            template: "teacher_booking_cancelled",
+            bookingId: booking.id,
+            startsAt: booking.startsAt,
+            studentFirstName: context.studentFirstName,
+            now,
+          }),
+        );
+      }
 
       const cancelled = await tx.booking.findUniqueOrThrow({
         where: { id: booking.id },

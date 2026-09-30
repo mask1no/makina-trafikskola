@@ -22,6 +22,12 @@ const bookingPayloadSchema = z
     bookingId: z.string().cuid(),
     startsAt: z.coerce.date(),
     cancellationDeadline: z.coerce.date().optional(),
+    previousStartsAt: z.coerce.date().optional(),
+    studentFirstName: z.string().max(80).optional(),
+    teacherFirstName: z.string().max(80).optional(),
+    placeLabel: z.string().max(200).optional(),
+    schoolPhone: z.string().max(40).optional(),
+    creditRefunded: z.boolean().optional(),
   })
   .strict();
 
@@ -30,6 +36,18 @@ const bookingTemplates = new Set<BookingTemplate>([
   "booking_cancelled_by_student",
   "booking_cancelled_by_teacher",
   "booking_reminder_24h",
+  "booking_moved",
+  "teacher_booking_new",
+  "teacher_booking_cancelled",
+  "teacher_booking_moved",
+]);
+
+const staleTemplates = new Set<BookingTemplate>([
+  "booking_confirmed",
+  "booking_reminder_24h",
+  "booking_moved",
+  "teacher_booking_new",
+  "teacher_booking_moved",
 ]);
 
 function renderNotification(notification: {
@@ -44,6 +62,12 @@ function renderNotification(notification: {
       locale: notification.locale,
       startsAt: payload.startsAt,
       cancellationDeadline: payload.cancellationDeadline,
+      previousStartsAt: payload.previousStartsAt,
+      studentFirstName: payload.studentFirstName,
+      teacherFirstName: payload.teacherFirstName,
+      placeLabel: payload.placeLabel,
+      schoolPhone: payload.schoolPhone,
+      creditRefunded: payload.creditRefunded,
     });
   }
 
@@ -92,6 +116,25 @@ export async function dispatchNotifications(ids: string[], now: Date) {
 
   for (const notification of notifications) {
     try {
+      if (staleTemplates.has(notification.template as BookingTemplate)) {
+        const payload = bookingPayloadSchema.parse(notification.payload);
+        const booking = await db.booking.findUnique({
+          where: { id: payload.bookingId },
+          select: { status: true, startsAt: true },
+        });
+        if (
+          !booking ||
+          booking.status !== "CONFIRMED" ||
+          booking.startsAt.getTime() !== payload.startsAt.getTime()
+        ) {
+          await db.notification.update({
+            where: { id: notification.id },
+            data: { sentAt: now, error: "STALE" },
+          });
+          continue;
+        }
+      }
+
       if (notification.channel === "INAPP") {
         await db.notification.update({
           where: { id: notification.id },

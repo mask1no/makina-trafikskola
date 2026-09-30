@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
+import { connection } from "next/server";
+
 import { auth } from "@/auth";
+import { googleSignInEnabled } from "@/lib/auth/google";
 import { isLocale } from "@/i18n/routing";
 import { db } from "@/lib/db";
 import { bookingEnabled } from "@/lib/launch";
@@ -24,6 +27,7 @@ export default async function BookingPage(
     searchParams: Promise<{ teacher?: string }>;
   }
 ) {
+  await connection();
   const searchParams = await props.searchParams;
   const params = await props.params;
   if (!isLocale(params.locale)) notFound();
@@ -116,9 +120,7 @@ export default async function BookingPage(
           }).filter((marker): marker is { lat: number; lng: number } => Boolean(marker)),
         }))}
         initialTeacherId={initialTeacherId}
-        googleEnabled={Boolean(
-          process.env.AUTH_GOOGLE_ID && process.env.AUTH_GOOGLE_SECRET,
-        )}
+        googleEnabled={googleSignInEnabled()}
         initiallyAuthenticated={
           session?.user?.role === "STUDENT" && Boolean(session.user.id)
         }

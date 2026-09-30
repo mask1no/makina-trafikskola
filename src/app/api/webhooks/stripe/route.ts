@@ -16,7 +16,9 @@ import {
   resolvePaidCourseHold,
 } from "@/lib/courses/entitlements";
 import { db } from "@/lib/db";
+import { bookingNotificationContext } from "@/lib/notifications/context";
 import { dispatchNotifications } from "@/lib/notifications/dispatch";
+import { enqueueBookingNotifications, enqueueTeacherBookingNotification } from "@/lib/notifications/queue";
 import {
   enqueueOrderReceipt,
   enqueuePaymentFailed,
@@ -75,7 +77,9 @@ function stripeNotificationId(
     | "order_receipt"
     | "payment_failed"
     | "lesson_payment_needs_rebooking"
-    | "course_payment_needs_rebooking",
+    | "course_payment_needs_rebooking"
+    | "booking_confirmed"
+    | "teacher_booking_new",
   channel: "SMS" | "INAPP" = "INAPP",
 ) {
   return `stripe:${eventId}:${template}:${channel}`;
@@ -427,6 +431,49 @@ export async function processVerifiedStripeEvent(
                     reason: "BOOKING_CONSUMED",
                   },
                 });
+                const context = await bookingNotificationContext(
+                  tx,
+                  heldBooking.id,
+                );
+                queuedNotificationIds.push(
+                  ...(await enqueueBookingNotifications(tx, {
+                    userId: order.studentId,
+                    locale: order.student.localePref,
+                    template: "booking_confirmed",
+                    bookingId: heldBooking.id,
+                    startsAt: heldBooking.startsAt,
+                    teacherFirstName: context.teacherFirstName,
+                    placeLabel: context.placeLabel,
+                    schoolPhone: context.schoolPhone,
+                    now: eventTime,
+                    ids: {
+                      SMS: stripeNotificationId(
+                        event.id,
+                        "booking_confirmed",
+                        "SMS",
+                      ),
+                      INAPP: stripeNotificationId(
+                        event.id,
+                        "booking_confirmed",
+                        "INAPP",
+                      ),
+                    },
+                  })),
+                  await enqueueTeacherBookingNotification(tx, {
+                    id: stripeNotificationId(
+                      event.id,
+                      "teacher_booking_new",
+                    ),
+                    userId: context.teacherUserId,
+                    locale: context.teacherLocale,
+                    template: "teacher_booking_new",
+                    bookingId: heldBooking.id,
+                    startsAt: heldBooking.startsAt,
+                    studentFirstName: context.studentFirstName,
+                    placeLabel: context.placeLabel,
+                    now: eventTime,
+                  }),
+                );
               }
             } else if (heldBooking && holdResolution === "REBOOK") {
               await tx.booking.updateMany({

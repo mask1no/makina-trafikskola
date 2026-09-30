@@ -483,7 +483,6 @@
     "hidePassword": "إخفاء كلمة المرور",
     "or": "أو",
     "continueWithGoogle": "المتابعة مع Google",
-    "googleUnavailable": "يتفعّل تسجيل الدخول عبر Google عند ربط حساب المدرسة.",
     "resendWait": "أرسل رمزًا جديدًا بعد {seconds} ث",
     "identifier": "البريد أو رقم الجوال",
     "forgotLink": "نسيت كلمة المرور؟",
@@ -654,6 +653,7 @@
         "bookingCancelledByStudent": "تم إلغاء الحجز",
         "bookingCancelledByTeacher": "ألغى المدرب الحجز",
         "bookingReminder": "تذكير بالحجز",
+        "bookingMoved": "تم نقل الدرس",
         "paymentReceipt": "إيصال الدفع",
         "paymentFailed": "فشل الدفع",
         "lessonPaymentNeedsRebooking": "يحتاج الدرس المدفوع إلى حجز جديد",
@@ -723,7 +723,19 @@
       "noNext": "لا يوجد درس قادم.",
       "empty": "لا يوجد طلاب بعد."
     },
+    "awaitingPayment": "بانتظار الدفع",
+    "noPhone": "لن تصلك رسائل عن الحجوزات حتى تُدخل المدرسة رقم جوالك.",
+    "lessonNotStarted": "لم يبدأ الدرس بعد. يمكن حفظ التقرير بعد البدء.",
     "noProfile": "لا يوجد ملف مدرب مرتبط بهذا المستخدم.",
+    "calendar": {
+      "title": "التقويم",
+      "description": "أضف الرابط في تقويم Google أو على iPhone. قد يستغرق تقويم Google بضع ساعات. الرسائل النصية هي التنبيه الفوري.",
+      "delay": "قد يستغرق تقويم Google بضع ساعات للتحديث. الرسائل تصل فورًا.",
+      "copy": "انسخ الرابط",
+      "create": "أنشئ رابط التقويم",
+      "rotate": "بدّل الرابط",
+      "summary": "درس قيادة – {name}"
+    },
     "block": {
       "title": "حظر التوفر",
       "description": "اترك الوقت فارغًا لحظر اليوم كله.",
@@ -1007,6 +1019,7 @@
       "account": "الحساب",
       "firstName": "الاسم الأول",
       "lastName": "اسم العائلة",
+      "phone": "رقم الجوال",
       "email": "البريد",
       "initialPassword": "كلمة مرور مؤقتة",
       "slug": "عنوان الملف",
@@ -1046,6 +1059,12 @@
       "activate": "تفعيل",
       "deactivate": "تعطيل",
       "saving": "جارٍ الحفظ…"
+    },
+    "instructorPhone": {
+      "label": "رقم الجوال",
+      "missing": "غير موجود",
+      "save": "احفظ الرقم",
+      "saving": "جارٍ الحفظ…"
     }
   },
   "errors": {
@@ -1065,6 +1084,9 @@
     "GOOGLE_ALREADY_LINKED": "رقم الجوال هذا مرتبط بحساب Google آخر.",
     "INVALID_OTP": "الرمز غير صحيح أو انتهت صلاحيته. اطلب رمزًا جديدًا.",
     "INVALID_PHONE": "أدخل رقم جوال صالحًا، مثل 0701234567 أو +46701234567.",
+    "PHONE_IN_USE": "رقم الجوال مستخدم بالفعل. أدخل رقمًا آخر.",
+    "OUTSIDE_CANCELLATION_WINDOW": "لا يمكن نقل الدرس قبل أقل من 24 ساعة من البدء. تواصل مع المدرسة.",
+    "LESSON_NOT_STARTED": "لم يبدأ الدرس بعد.",
     "SMS_PROVIDER_NOT_CONFIGURED": "تسجيل الدخول عبر الرسائل غير مُعد بعد. تواصل مع المدرسة أو استخدم البريد.",
     "SMS_DELIVERY_FAILED": "تعذر إرسال الرسالة. تحقق من الرقم وحاول مجددًا.",
     "RATE_LIMITED": "محاولات كثيرة. انتظر وحاول مجددًا.",

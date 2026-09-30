@@ -18,7 +18,11 @@ import {
 import { getCreditBalance } from "@/lib/credits/ledger";
 import { db } from "@/lib/db";
 import { dispatchNotifications } from "@/lib/notifications/dispatch";
-import { enqueueBookingNotifications } from "@/lib/notifications/queue";
+import { bookingNotificationContext } from "@/lib/notifications/context";
+import {
+  enqueueBookingNotifications,
+  enqueueTeacherBookingNotification,
+} from "@/lib/notifications/queue";
 
 export const runtime = "nodejs";
 
@@ -243,6 +247,7 @@ export async function POST(request: Request) {
           created.startsAt,
           configuredNumber("CANCELLATION_WINDOW_HOURS", 24),
         );
+        const context = await bookingNotificationContext(tx, created.id);
         const notificationIds = await enqueueBookingNotifications(tx, {
           userId: session.user.id,
           locale: student.localePref,
@@ -250,8 +255,26 @@ export async function POST(request: Request) {
           bookingId: created.id,
           startsAt: created.startsAt,
           cancellationDeadline,
+          teacherFirstName: context.teacherFirstName,
+          placeLabel: context.placeLabel,
+          schoolPhone: context.schoolPhone,
+          channels: creditCharged ? ["SMS", "INAPP"] : ["INAPP"],
           now,
         });
+        if (creditCharged) {
+          notificationIds.push(
+            await enqueueTeacherBookingNotification(tx, {
+              userId: context.teacherUserId,
+              locale: context.teacherLocale,
+              template: "teacher_booking_new",
+              bookingId: created.id,
+              startsAt: created.startsAt,
+              studentFirstName: context.studentFirstName,
+              placeLabel: context.placeLabel,
+              now,
+            }),
+          );
+        }
 
         return { booking: created, notificationIds };
       },

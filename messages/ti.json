@@ -483,7 +483,6 @@
     "hidePassword": "መሕለፊ ቃል ሕባእ",
     "or": "ወይ",
     "continueWithGoogle": "ብGoogle ቀጽል",
-    "googleUnavailable": "ናይ ቤት ትምህርቲ Google ሕሳብ ምስ ተራኸበ ብGoogle ምእታው ይነጥፍ።",
     "resendWait": "ሓድሽ ኮድ ድሕሪ {seconds} ሰ",
     "identifier": "ኢመይል ወይ ቁጽሪ ሞባይል",
     "forgotLink": "መሕለፊ ቃል ረሲዕካ?",
@@ -654,6 +653,7 @@
         "bookingCancelledByStudent": "ቦታ ምሓዝ ተሰሪዙ",
         "bookingCancelledByTeacher": "መምህር ሰሪዝዎ",
         "bookingReminder": "መዘኻኸሪ ቦታ ምሓዝ",
+        "bookingMoved": "ትምህርቲ ተቐይሩ",
         "paymentReceipt": "ቅብሊት ክፍሊት",
         "paymentFailed": "ክፍሊት ኣይተዓወተን",
         "lessonPaymentNeedsRebooking": "ዝተኸፍለ ትምህርቲ ሓድሽ ግዜ የድልዮ",
@@ -723,7 +723,19 @@
       "noNext": "ዝመጽእ ትምህርቲ የለን።",
       "empty": "ገና ተማሃሮ የለዉን።"
     },
+    "awaitingPayment": "ክፍሊት ይጽበ",
+    "noPhone": "ቤት ትምህርቲ ቁጽሪ ሞባይልካ ክሳብ ዘእትው ናይ ቦታ ምሓዝ ኤስኤምኤስ ኣይትቅበልን።",
+    "lessonNotStarted": "ትምህርቲ ገና ኣይጀመረን። ጸብጻብ ድሕሪ ጅማሮ ክዕቀብ ይኽእል።",
     "noProfile": "ምስዚ ተጠቃሚ ዝተኣሳሰረ መምህር የለን።",
+    "calendar": {
+      "title": "ዘመን መቑጸሪ",
+      "description": "ነቲ ሊንክ ኣብ Google Calendar ወይ iPhone ወስኽ። Google Calendar ሓጺር ሰዓታት ክወስድ ይኽእል። ኤስኤምኤስ ቅልጡፍ መጠንቀቕታ እዩ።",
+      "delay": "Google Calendar ንምዕራፍ ሓጺር ሰዓታት ክወስድ ይኽእል። ኤስኤምኤስ ብቕልጡፍ ይበጽሕ።",
+      "copy": "ሊንክ ቅዳሕ",
+      "create": "ናይ ዘመን መቑጸሪ ሊንክ ፍጠር",
+      "rotate": "ሊንክ ቀይር",
+      "summary": "ናይ ምዝዋር ትምህርቲ – {name}"
+    },
     "block": {
       "title": "ዝርከበሉ ግዜ ዕገት",
       "description": "ምሉእ መዓልቲ ንምዕጋት ግዜ ባዶ ግደፍ።",
@@ -1007,6 +1019,7 @@
       "account": "ሕሳብ",
       "firstName": "ስም",
       "lastName": "ስም ኣቦ",
+      "phone": "ቁጽሪ ሞባይል",
       "email": "ኢመይል",
       "initialPassword": "ግዝያዊ መሕለፊ ቃል",
       "slug": "ኣድራሻ ፕሮፋይል",
@@ -1046,6 +1059,12 @@
       "activate": "ኣንጥፍ",
       "deactivate": "ኣቦዝን",
       "saving": "ይዕቀብ…"
+    },
+    "instructorPhone": {
+      "label": "ቁጽሪ ሞባይል",
+      "missing": "የለን",
+      "save": "ቁጽሪ ዕቀብ",
+      "saving": "ይዕቀብ…"
     }
   },
   "errors": {
@@ -1062,6 +1081,9 @@
     "GOOGLE_ALREADY_LINKED": "እዚ ቁጽሪ ሞባይል ምስ ካልእ Google ሕሳብ ተተሓሒዙ ኣሎ።",
     "INVALID_OTP": "ኮድ ጌጋ ወይ ዝወደቐ እዩ። ሓድሽ ሕተት።",
     "INVALID_PHONE": "ቅኑዕ ቁጽሪ ሞባይል ኣእቱ፣ ንኣብነት 0701234567 ወይ +46701234567።",
+    "PHONE_IN_USE": "እቲ ቁጽሪ ሞባይል ድሮ ተጠቒሙ ኣሎ። ካልእ ቁጽሪ ኣእቱ።",
+    "OUTSIDE_CANCELLATION_WINDOW": "ትምህርቲ ቅድሚ ጅማሮ ካብ 24 ሰዓት ንታሕቲ ክንቀሳቐስ ኣይክእልን። ቤት ትምህርቲ ተወከስ።",
+    "LESSON_NOT_STARTED": "ትምህርቲ ገና ኣይጀመረን።",
     "SMS_PROVIDER_NOT_CONFIGURED": "ናይ SMS ምእታው ገና ኣይተዳለወን። ምስ ቤት ትምህርቲ ተራኸብ ወይ ኢመይል ተጠቐም።",
     "SMS_DELIVERY_FAILED": "SMS ክሰደድ ኣይከኣለን። ቁጽሪ ኣረጋግጽ እሞ ደጊምካ ፈትን።",
     "RATE_LIMITED": "ብዙሕ ፈተነ። ጽናሕ እሞ ደጊምካ ፈትን።",

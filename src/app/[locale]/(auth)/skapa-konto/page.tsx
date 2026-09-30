@@ -1,4 +1,7 @@
+import { connection } from "next/server";
 import { getTranslations } from "next-intl/server";
+
+import { googleSignInEnabled } from "@/lib/auth/google";
 
 import { SignupForm } from "../auth-ui";
 
@@ -7,6 +10,7 @@ export default async function RegisterPage(
     params: Promise<{ locale: string }>;
   }
 ) {
+  await connection();
   const params = await props.params;
   const [t, authT] = await Promise.all([
     getTranslations("auth.register"),
@@ -23,9 +27,7 @@ export default async function RegisterPage(
         <div className="mx-auto mt-8 w-full max-w-[420px] rounded-lg border border-border bg-card p-5 sm:p-6">
           <SignupForm
             locale={params.locale}
-            googleEnabled={Boolean(
-              process.env.AUTH_GOOGLE_ID && process.env.AUTH_GOOGLE_SECRET,
-            )}
+            googleEnabled={googleSignInEnabled()}
           />
         </div>
         <p className="mt-10 text-sm leading-6 text-ink-muted">{authT("support")}</p>

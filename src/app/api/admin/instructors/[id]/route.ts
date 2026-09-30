@@ -6,17 +6,21 @@ import {
   AuthorizationError,
   requireRole,
 } from "@/lib/auth/guards";
+import { normalizeSwedishPhone } from "@/lib/auth/phone";
 import { canDeactivateInstructor } from "@/lib/bookings/cancellation";
 import { db } from "@/lib/db";
 
 export const runtime = "nodejs";
 
-const requestSchema = z
-  .object({
-    id: z.string().cuid(),
-    active: z.boolean(),
-  })
-  .strict();
+const requestSchema = z.union([
+  z.object({ id: z.string().cuid(), active: z.boolean() }).strict(),
+  z
+    .object({
+      id: z.string().cuid(),
+      phone: z.string().trim().min(1).max(30),
+    })
+    .strict(),
+]);
 
 function apiError(code: string, status: number) {
   return Response.json({ error: { code, message: code } }, { status });
@@ -57,14 +61,58 @@ export async function PATCH(
 
   const teacher = await db.teacherProfile.findUnique({
     where: { id: parsed.data.id },
-    select: { id: true, active: true },
+    select: {
+      id: true,
+      active: true,
+      userId: true,
+      user: { select: { phone: true } },
+    },
   });
   if (!teacher) return apiError("TEACHER_NOT_FOUND", 404);
+
+  if ("phone" in parsed.data) {
+    const phone = normalizeSwedishPhone(parsed.data.phone);
+    if (!phone) return apiError("INVALID_PHONE", 400);
+    try {
+      await db.$transaction(async (tx) => {
+        await tx.user.update({
+          where: { id: teacher.userId },
+          data: { phone },
+        });
+        await tx.auditLog.create({
+          data: {
+            actorId,
+            action: "instructor.phone",
+            entityType: "User",
+            entityId: teacher.userId,
+            before: {
+              phoneLast4: teacher.user.phone?.slice(-4) ?? null,
+            },
+            after: { phoneLast4: phone.slice(-4) },
+          },
+        });
+      });
+      return Response.json({ id: teacher.id, phoneLast4: phone.slice(-4) });
+    } catch (error) {
+      if (
+        error instanceof Prisma.PrismaClientKnownRequestError &&
+        error.code === "P2002"
+      ) {
+        return apiError("PHONE_IN_USE", 409);
+      }
+      throw error;
+    }
+  }
+
+  if (!("active" in parsed.data)) {
+    return apiError("INVALID_INPUT", 400);
+  }
+  const { active } = parsed.data;
 
   try {
     const updated = await db.$transaction(
       async (tx) => {
-        if (!parsed.data.active) {
+        if (!active) {
           const futureBookings = await tx.booking.count({
             where: {
               teacherId: teacher.id,
@@ -79,7 +127,7 @@ export async function PATCH(
 
         const changed = await tx.teacherProfile.update({
           where: { id: teacher.id },
-          data: { active: parsed.data.active },
+          data: { active },
           select: { id: true, active: true },
         });
         await tx.auditLog.create({

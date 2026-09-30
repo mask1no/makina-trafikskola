@@ -483,7 +483,6 @@
     "hidePassword": "Qari furaha",
     "or": "ama",
     "continueWithGoogle": "Ku sii wad Google",
-    "googleUnavailable": "Gelitaanka Google wuxuu shaqaynayaa marka koontada Google ee dugsiga la xidho.",
     "resendWait": "Dir koodh cusub {seconds} ilbiriqsi",
     "identifier": "Iimayl ama lambarka moobilka",
     "forgotLink": "Ma illowday furaha?",
@@ -654,6 +653,7 @@
         "bookingCancelledByStudent": "Ballanta waa la baajiyey",
         "bookingCancelledByTeacher": "Macallinka ayaa baajiyey",
         "bookingReminder": "Xusuusin ballan",
+        "bookingMoved": "Casharka waa la raray",
         "paymentReceipt": "Rasiidka lacagta",
         "paymentFailed": "Lacag-bixintu way fashilantay",
         "lessonPaymentNeedsRebooking": "Casharka la bixiyey wuxuu u baahan yahay qabasho cusub",
@@ -723,7 +723,19 @@
       "noNext": "Cashar soo socda ma jiro.",
       "empty": "Weli arday ma jiraan."
     },
+    "awaitingPayment": "Wuxuu sugayaa lacag bixinta",
+    "noPhone": "SMS ballan ma helaysid ilaa dugsigu lambarkaaga moobilka geliyo.",
+    "lessonNotStarted": "Casharku weli ma bilaaban. Warbixinta waa la kaydin karaa ka dib bilowga.",
     "noProfile": "Akoonkan kuma xidhna macallin.",
+    "calendar": {
+      "title": "Kalandar",
+      "description": "Ku dar isku xirka Google Calendar ama iPhone. Google Calendar waxay qaadan kartaa saacado. SMS ayaa ah digniinta degdega ah.",
+      "delay": "Google Calendar waxay qaadan kartaa saacado si ay u cusboonaysiiso. SMS isla markiiba ayay timaadaa.",
+      "copy": "Nuqul ka samee isku xirka",
+      "create": "Samee isku xirka kalandarka",
+      "rotate": "Beddel isku xirka",
+      "summary": "Cashar wadid – {name}"
+    },
     "block": {
       "title": "Xannib helitaanka",
       "description": "Waqtiyada bannaan ka tag si maalinta oo dhan loo xannibo.",
@@ -1007,6 +1019,7 @@
       "account": "Akoon",
       "firstName": "Magaca hore",
       "lastName": "Magaca dambe",
+      "phone": "Lambarka moobilka",
       "email": "Iimayl",
       "initialPassword": "Fure ku meel gaar ah",
       "slug": "Cinwaanka bogga",
@@ -1046,6 +1059,12 @@
       "activate": "Hawl geli",
       "deactivate": "Jooji",
       "saving": "Waa la kaydinayaa…"
+    },
+    "instructorPhone": {
+      "label": "Lambarka moobilka",
+      "missing": "Maqan",
+      "save": "Kaydi lambarka",
+      "saving": "Waa la kaydinayaa…"
     }
   },
   "errors": {
@@ -1065,6 +1084,9 @@
     "GOOGLE_ALREADY_LINKED": "Lambarkan waxaa hore loogu xiray akoon kale oo Google ah.",
     "INVALID_OTP": "Koodhku waa khalad ama wuu dhacay. Mid cusub codso.",
     "INVALID_PHONE": "Geli lambarka moobilka oo sax ah, tusaale 0701234567 ama +46701234567.",
+    "PHONE_IN_USE": "Lambarkaas moobilka waa la isticmaalay. Geli mid kale.",
+    "OUTSIDE_CANCELLATION_WINDOW": "Casharka lama rari karo wax ka yar 24 saacadood ka hor bilowga. La xiriir dugsiga.",
+    "LESSON_NOT_STARTED": "Casharku weli ma bilaaban.",
     "SMS_PROVIDER_NOT_CONFIGURED": "Gelitaanka SMS weli lama diyaarin. La xidhiidh dugsiga ama isticmaal iimayl.",
     "SMS_DELIVERY_FAILED": "Farriinta lama diri karin. Hubi lambarka oo isku day mar kale.",
     "RATE_LIMITED": "Isku dayo badan. Sug oo mar kale isku day.",

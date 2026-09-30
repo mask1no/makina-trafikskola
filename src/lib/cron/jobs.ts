@@ -1,9 +1,10 @@
-import { addHours, subDays } from "date-fns";
+import { addHours, subDays, subHours } from "date-fns";
 import { Prisma } from "@prisma/client";
 
 import { lockBookingKeys, studentLockKey } from "@/lib/bookings/locks";
 import { db } from "@/lib/db";
 import { calculateCreditExpiries } from "@/lib/credits/expiry";
+import { bookingNotificationContext } from "@/lib/notifications/context";
 import { dispatchNotifications } from "@/lib/notifications/dispatch";
 import { canCancelExpiredHoldPaymentIntent } from "@/lib/payments/stripe-events";
 import { getStripe, stripeIsConfigured } from "@/lib/stripe";
@@ -142,60 +143,69 @@ export async function runCoreCron(now: Date) {
         }
       }
 
-      const reminderBookings = await tx.booking.findMany({
+      const reminderCandidates = await tx.booking.findMany({
         where: {
           status: "CONFIRMED",
+          creditCharged: true,
           startsAt: { gt: now, lte: addHours(now, 24) },
         },
         select: {
           id: true,
           studentId: true,
           startsAt: true,
+          createdAt: true,
           student: { select: { localePref: true } },
         },
       });
-      const bookingIds = reminderBookings.map((booking) => booking.id);
-      const existing = bookingIds.length
-        ? await tx.notification.findMany({
-            where: { template: "booking_reminder_24h" },
-            select: { channel: true, payload: true },
-          })
-        : [];
+      const reminderBookings = reminderCandidates.filter(
+        (booking) =>
+          booking.createdAt.getTime() <
+          booking.startsAt.getTime() - 24 * 60 * 60 * 1000,
+      );
+      const existing = await tx.notification.findMany({
+        where: {
+          template: "booking_reminder_24h",
+          sendAfter: { gte: subHours(now, 48) },
+        },
+        select: { payload: true },
+      });
       const existingKeys = new Set(
         existing.flatMap((notification) => {
           const payload =
             notification.payload &&
             typeof notification.payload === "object" &&
             !Array.isArray(notification.payload)
-              ? (notification.payload as ReminderPayload)
+              ? (notification.payload as ReminderPayload & {
+                  startsAt?: unknown;
+                })
               : {};
-          const bookingId = payload.bookingId;
-          return typeof bookingId === "string"
-            ? [`${bookingId}:${notification.channel}`]
+          return typeof payload.bookingId === "string" &&
+            typeof payload.startsAt === "string"
+            ? [`${payload.bookingId}:${payload.startsAt}`]
             : [];
         }),
       );
 
-      const reminderIds: string[] = [];
       for (const booking of reminderBookings) {
-        for (const channel of ["SMS"] as const) {
-          if (existingKeys.has(`${booking.id}:${channel}`)) continue;
-          const notification = await tx.notification.create({
-            data: {
-              userId: booking.studentId,
-              channel,
-              template: "booking_reminder_24h",
-              locale: booking.student.localePref,
-              payload: {
-                bookingId: booking.id,
-                startsAt: booking.startsAt.toISOString(),
-              },
-              sendAfter: now,
+        const startsAt = booking.startsAt.toISOString();
+        if (existingKeys.has(`${booking.id}:${startsAt}`)) continue;
+        const context = await bookingNotificationContext(tx, booking.id);
+        await tx.notification.create({
+          data: {
+            userId: booking.studentId,
+            channel: "SMS",
+            template: "booking_reminder_24h",
+            locale: booking.student.localePref,
+            payload: {
+              bookingId: booking.id,
+              startsAt,
+              teacherFirstName: context.teacherFirstName,
+              ...(context.placeLabel ? { placeLabel: context.placeLabel } : {}),
+              schoolPhone: context.schoolPhone,
             },
-            select: { id: true },
-          });
-          reminderIds.push(notification.id);
-        }
+            sendAfter: now,
+          },
+        });
       }
 
       await tx.teacherProfile.updateMany({
@@ -253,9 +263,9 @@ export async function runCoreCron(now: Date) {
 
       const queuedReminders = await tx.notification.findMany({
         where: {
-          template: "booking_reminder_24h",
+          channel: "SMS",
           sentAt: null,
-          sendAfter: { lte: now },
+          sendAfter: { gte: subHours(now, 6), lte: now },
         },
         select: { id: true },
       });

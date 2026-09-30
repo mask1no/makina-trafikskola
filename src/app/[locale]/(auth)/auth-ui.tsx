@@ -147,6 +147,7 @@ function GoogleButton({
   destination: string;
 }) {
   const t = useTranslations("auth");
+  if (!enabled) return null;
   return (
     <div className="grid gap-4">
       <p className="text-center text-sm text-ink-muted">{t("or")}</p>
@@ -154,9 +155,7 @@ function GoogleButton({
         type="button"
         variant="tertiary"
         className="w-full bg-card"
-        disabled={!enabled}
         onClick={() => {
-          if (!enabled) return;
           const locale = destination.split("/").filter(Boolean)[0] ?? "sv";
           const callbackUrl = `/${locale}/verifiera-mobil?next=${encodeURIComponent(destination)}`;
           void signIn("google", { callbackUrl });
@@ -170,11 +169,6 @@ function GoogleButton({
         </span>
         {label}
       </Button>
-      {!enabled ? (
-        <p className="text-center text-xs leading-5 text-ink-muted">
-          {t("googleUnavailable")}
-        </p>
-      ) : null}
     </div>
   );
 }

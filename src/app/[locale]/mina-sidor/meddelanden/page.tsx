@@ -16,6 +16,8 @@ function templateKey(template: string) {
       return "bookingCancelledByTeacher" as const;
     case "booking_reminder_24h":
       return "bookingReminder" as const;
+    case "booking_moved":
+      return "bookingMoved" as const;
     case "order_receipt":
       return "paymentReceipt" as const;
     case "payment_failed":
@@ -37,7 +39,7 @@ export default async function MessagesPage(
   const [t, notifications] = await Promise.all([
     getTranslations("student.messages"),
     db.notification.findMany({
-      where: { userId: session!.user.id },
+      where: { userId: session!.user.id, channel: "INAPP" },
       orderBy: [{ sendAfter: "desc" }, { id: "desc" }],
       take: 50,
       select: {

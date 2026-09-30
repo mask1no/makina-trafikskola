@@ -11,7 +11,11 @@ import {
 import { loadAvailability } from "@/lib/bookings/availability";
 import { db } from "@/lib/db";
 import { dispatchNotifications } from "@/lib/notifications/dispatch";
-import { enqueueBookingNotifications } from "@/lib/notifications/queue";
+import { bookingNotificationContext } from "@/lib/notifications/context";
+import {
+  enqueueBookingNotifications,
+  enqueueTeacherBookingNotification,
+} from "@/lib/notifications/queue";
 
 export const runtime = "nodejs";
 
@@ -150,14 +154,27 @@ export async function PATCH(
             after: { status: "CANCELLED_BY_TEACHER" },
           },
         });
+        const context = await bookingNotificationContext(tx, booking.id);
         const notificationIds = await enqueueBookingNotifications(tx, {
           userId: booking.studentId,
           locale: booking.student.localePref,
           template: "booking_cancelled_by_teacher",
           bookingId: booking.id,
           startsAt: booking.startsAt,
+          creditRefunded: booking.creditCharged,
           now,
         });
+        notificationIds.push(
+          await enqueueTeacherBookingNotification(tx, {
+            userId: context.teacherUserId,
+            locale: context.teacherLocale,
+            template: "teacher_booking_cancelled",
+            bookingId: booking.id,
+            startsAt: booking.startsAt,
+            studentFirstName: context.studentFirstName,
+            now,
+          }),
+        );
         const updated = await tx.booking.findUniqueOrThrow({
           where: { id: booking.id },
         });
@@ -237,11 +254,65 @@ export async function PATCH(
             },
           },
         });
-        return moved;
+        const context = await bookingNotificationContext(tx, booking.id);
+        const notificationIds = await enqueueBookingNotifications(tx, {
+          userId: booking.studentId,
+          locale: booking.student.localePref,
+          template: "booking_moved",
+          bookingId: booking.id,
+          startsAt: moved.startsAt,
+          previousStartsAt: booking.startsAt,
+          teacherFirstName: context.teacherFirstName,
+          placeLabel: context.placeLabel,
+          now,
+        });
+        if (booking.teacherId === moved.teacherId) {
+          notificationIds.push(
+            await enqueueTeacherBookingNotification(tx, {
+              userId: context.teacherUserId,
+              locale: context.teacherLocale,
+              template: "teacher_booking_moved",
+              bookingId: booking.id,
+              startsAt: moved.startsAt,
+              previousStartsAt: booking.startsAt,
+              studentFirstName: context.studentFirstName,
+              placeLabel: context.placeLabel,
+              now,
+            }),
+          );
+        } else {
+          const previousTeacher = await tx.teacherProfile.findUniqueOrThrow({
+            where: { id: booking.teacherId },
+            select: { userId: true, user: { select: { localePref: true } } },
+          });
+          notificationIds.push(
+            await enqueueTeacherBookingNotification(tx, {
+              userId: previousTeacher.userId,
+              locale: previousTeacher.user.localePref,
+              template: "teacher_booking_cancelled",
+              bookingId: booking.id,
+              startsAt: booking.startsAt,
+              studentFirstName: context.studentFirstName,
+              now,
+            }),
+            await enqueueTeacherBookingNotification(tx, {
+              userId: context.teacherUserId,
+              locale: context.teacherLocale,
+              template: "teacher_booking_new",
+              bookingId: booking.id,
+              startsAt: moved.startsAt,
+              studentFirstName: context.studentFirstName,
+              placeLabel: context.placeLabel,
+              now,
+            }),
+          );
+        }
+        return { moved, notificationIds };
       },
       { isolationLevel: Prisma.TransactionIsolationLevel.Serializable },
     );
-    return Response.json(updated);
+    await dispatchNotifications(updated.notificationIds, now);
+    return Response.json(updated.moved);
   } catch (error) {
     if (error instanceof Error && error.message === "BOOKING_NOT_ACTIVE") {
       return errorResponse("BOOKING_NOT_ACTIVE", 409);

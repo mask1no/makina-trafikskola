@@ -4,6 +4,7 @@ import { db } from "@/lib/db";
 import { PageHeader } from "@/components/PageHeader";
 
 import { InstructorForm } from "./InstructorForm";
+import { InstructorPhoneControl } from "./InstructorPhoneControl";
 import { InstructorStatusControl } from "./InstructorStatusControl";
 
 export const dynamic = "force-dynamic";
@@ -22,7 +23,7 @@ export default async function NewInstructorPage() {
       select: {
         id: true,
         active: true,
-        user: { select: { firstName: true, lastName: true } },
+        user: { select: { firstName: true, lastName: true, phone: true } },
       },
     }),
   ]);
@@ -33,14 +34,21 @@ export default async function NewInstructorPage() {
         <PageHeader eyebrow={t("eyebrow")} title={statusT("title")} description={statusT("description")} />
         <ul className="mt-6 grid gap-3 sm:grid-cols-2">
           {instructors.map((instructor) => (
-            <InstructorStatusControl
-              key={instructor.id}
-              instructor={{
-                id: instructor.id,
-                active: instructor.active,
-                name: `${instructor.user.firstName} ${instructor.user.lastName}`,
-              }}
-            />
+            <li key={instructor.id} className="grid gap-2">
+              <InstructorStatusControl
+                instructor={{
+                  id: instructor.id,
+                  active: instructor.active,
+                  name: `${instructor.user.firstName} ${instructor.user.lastName}`,
+                }}
+              />
+              <InstructorPhoneControl
+                instructor={{
+                  id: instructor.id,
+                  phone: instructor.user.phone,
+                }}
+              />
+            </li>
           ))}
         </ul>
       </section>

@@ -1,5 +1,8 @@
 "use server";
 
+import { randomBytes } from "node:crypto";
+
+import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { fromZonedTime } from "date-fns-tz";
@@ -7,6 +10,7 @@ import { fromZonedTime } from "date-fns-tz";
 import { auth } from "@/auth";
 import { requireRole } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
+import { bookingNotificationContext } from "@/lib/notifications/context";
 import { dispatchNotifications } from "@/lib/notifications/dispatch";
 import { enqueueBookingNotifications } from "@/lib/notifications/queue";
 
@@ -32,6 +36,7 @@ export async function reportLesson(formData: FormData) {
     select: {
       id: true,
       status: true,
+      startsAt: true,
       teacherId: true,
       teacher: { select: { userId: true } },
     },
@@ -45,6 +50,9 @@ export async function reportLesson(formData: FormData) {
   }
   if (!["CONFIRMED", "COMPLETED"].includes(booking.status)) {
     throw new Error("BOOKING_NOT_ACTIVE");
+  }
+  if (booking.startsAt > new Date()) {
+    redirect(`/${parsed.locale}/larare-portal?error=LESSON_NOT_STARTED`);
   }
 
   await db.$transaction([
@@ -172,6 +180,7 @@ export async function blockAvailability(formData: FormData) {
           },
         });
       }
+      const context = await bookingNotificationContext(tx, booking.id);
       ids.push(
         ...(await enqueueBookingNotifications(tx, {
           userId: booking.studentId,
@@ -179,6 +188,9 @@ export async function blockAvailability(formData: FormData) {
           template: "booking_cancelled_by_teacher",
           bookingId: booking.id,
           startsAt: booking.startsAt,
+          creditRefunded: booking.creditCharged,
+          teacherFirstName: context.teacherFirstName,
+          placeLabel: context.placeLabel,
           now,
         })),
       );
@@ -187,4 +199,38 @@ export async function blockAvailability(formData: FormData) {
   });
   await dispatchNotifications(notificationIds, now);
   revalidatePath(`/${parsed.locale}/larare-portal`);
+}
+
+async function ownTeacher() {
+  const session = requireRole(await auth(), ["TEACHER"]);
+  const teacher = await db.teacherProfile.findUnique({
+    where: { userId: session.user.id },
+    select: { id: true },
+  });
+  if (!teacher) throw new Error("TEACHER_NOT_FOUND");
+  return teacher;
+}
+
+export async function createCalendarToken() {
+  const teacher = await ownTeacher();
+  const token = randomBytes(32).toString("base64url");
+  await db.teacherProfile.updateMany({
+    where: { id: teacher.id, calendarToken: null },
+    data: { calendarToken: token },
+  });
+  for (const locale of ["sv", "en", "ti", "ar", "so"]) {
+    revalidatePath(`/${locale}/larare-portal`);
+  }
+}
+
+export async function rotateCalendarToken() {
+  const teacher = await ownTeacher();
+  const token = randomBytes(32).toString("base64url");
+  await db.teacherProfile.update({
+    where: { id: teacher.id },
+    data: { calendarToken: token },
+  });
+  for (const locale of ["sv", "en", "ti", "ar", "so"]) {
+    revalidatePath(`/${locale}/larare-portal`);
+  }
 }

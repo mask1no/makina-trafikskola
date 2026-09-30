@@ -396,7 +396,6 @@
     "hidePassword": "Dölj lösenord",
     "or": "eller",
     "continueWithGoogle": "Fortsätt med Google",
-    "googleUnavailable": "Google-inloggning aktiveras när skolans Google-konto är anslutet.",
     "resendWait": "Skicka ny kod om {seconds} s",
     "identifier": "E-post eller mobilnummer",
     "forgotLink": "Glömt lösenord?",
@@ -538,7 +537,7 @@
       "correct": "rätt besvarade frågor",
       "provisional": "Teoriprodukten är ännu inte aktiverad eftersom pris och frågebank inväntar bekräftelse."
     },
-    "messages": {"title": "Meddelanden", "description": "Dina senaste servicemeddelanden. Personuppgifter från meddelandets data visas inte här.", "empty": "Du har inga meddelanden.", "sent": "Skickat", "scheduled": "Planerat", "limited": "De 50 senaste meddelandena visas.", "templates": {"bookingConfirmed": "Bokning bekräftad", "bookingCancelledByStudent": "Bokning avbokad", "bookingCancelledByTeacher": "Bokning avbokad av läraren", "bookingReminder": "Bokningspåminnelse", "paymentReceipt": "Betalningskvitto", "paymentFailed": "Betalningen misslyckades", "lessonPaymentNeedsRebooking": "Betald lektion behöver bokas om", "coursePaymentNeedsRebooking": "Betald kursplats behöver bokas om", "generic": "Servicemeddelande"}, "bodies": {"lessonPaymentNeedsRebooking": "Betalningen lyckades efter att reservationen gått ut. Din oanvända lektionskredit finns kvar; välj en ny tid.", "coursePaymentNeedsRebooking": "Betalningen lyckades efter att reservationen gått ut. Din oanvända kursrättighet finns kvar; välj ett nytt tillfälle."}, "channels": {"EMAIL": "E-post", "SMS": "SMS", "PUSH": "Pushnotis", "INAPP": "I appen"}},
+    "messages": {"title": "Meddelanden", "description": "Dina senaste servicemeddelanden. Personuppgifter från meddelandets data visas inte här.", "empty": "Du har inga meddelanden.", "sent": "Skickat", "scheduled": "Planerat", "limited": "De 50 senaste meddelandena visas.", "templates": {"bookingConfirmed": "Bokning bekräftad", "bookingCancelledByStudent": "Bokning avbokad", "bookingCancelledByTeacher": "Bokning avbokad av läraren", "bookingReminder": "Bokningspåminnelse", "bookingMoved": "Lektionen är flyttad", "paymentReceipt": "Betalningskvitto", "paymentFailed": "Betalningen misslyckades", "lessonPaymentNeedsRebooking": "Betald lektion behöver bokas om", "coursePaymentNeedsRebooking": "Betald kursplats behöver bokas om", "generic": "Servicemeddelande"}, "bodies": {"lessonPaymentNeedsRebooking": "Betalningen lyckades efter att reservationen gått ut. Din oanvända lektionskredit finns kvar; välj en ny tid.", "coursePaymentNeedsRebooking": "Betalningen lyckades efter att reservationen gått ut. Din oanvända kursrättighet finns kvar; välj ett nytt tillfälle."}, "channels": {"EMAIL": "E-post", "SMS": "SMS", "PUSH": "Pushnotis", "INAPP": "I appen"}},
     "profile": {
       "title": "Min profil",
       "name": "Namn",
@@ -591,7 +590,19 @@
       "noNext": "Ingen kommande lektion.",
       "empty": "Inga elever ännu."
     },
+    "awaitingPayment": "Väntar på betalning",
+    "noPhone": "Du får inga sms om bokningar förrän skolan har lagt in ditt mobilnummer.",
+    "lessonNotStarted": "Lektionen har inte börjat ännu. Rapporten kan sparas efter start.",
     "noProfile": "Inget lärarkonto är kopplat till den här användaren.",
+    "calendar": {
+      "title": "Kalender",
+      "description": "Lägg länken i Google Kalender eller iPhone. Google Kalender kan ta några timmar att uppdatera. Sms är den direkta aviseringen.",
+      "delay": "Google Kalender kan ta några timmar att uppdatera. Sms kommer direkt.",
+      "copy": "Kopiera länk",
+      "create": "Skapa kalenderlänk",
+      "rotate": "Byt länk",
+      "summary": "Körlektion – {name}"
+    },
     "block": {
       "title": "Blockera tillgänglighet",
       "description": "Lämna tiderna tomma för att blockera hela dagen.",
@@ -807,9 +818,10 @@
       "adjustment": {"title": "Justera krediter", "delta": "Förändring", "reason": "Obligatorisk skriftlig orsak", "submit": "Registrera justering", "saving": "Sparar…"}
     },
     "instructors": {
-      "eyebrow": "Administration", "title": "Lägg till lärare", "description": "Skapa konto, språk, växellådor, platser och återkommande lokala arbetstider.", "account": "Konto", "firstName": "Förnamn", "lastName": "Efternamn", "email": "E-post", "initialPassword": "Tillfälligt lösenord", "slug": "Profiladress", "yearsExperience": "Års erfarenhet", "languages": "Språk", "transmissions": "Växellådor", "transmission": {"MANUAL": "Manuell", "AUTOMATIC": "Automat"}, "locations": "Platser", "noLocations": "Inga aktiva platser finns. Lärare kan inte skapas.", "hours": "Arbetstider", "hoursDescription": "Tiderna är lokal väggtid i Europe/Stockholm.", "from": "Från", "to": "Till", "day": {"0": "Söndag", "1": "Måndag", "2": "Tisdag", "3": "Onsdag", "4": "Torsdag", "5": "Fredag", "6": "Lördag"}, "photo": "Profilbild", "photoHelp": "Valfri JPEG-, PNG- eller WebP-bild, högst 5 MB.", "submit": "Skapa lärare", "saving": "Skapar…", "created": "Läraren har skapats."
+      "eyebrow": "Administration", "title": "Lägg till lärare", "description": "Skapa konto, språk, växellådor, platser och återkommande lokala arbetstider.", "account": "Konto", "firstName": "Förnamn", "lastName": "Efternamn", "phone": "Mobilnummer", "email": "E-post", "initialPassword": "Tillfälligt lösenord", "slug": "Profiladress", "yearsExperience": "Års erfarenhet", "languages": "Språk", "transmissions": "Växellådor", "transmission": {"MANUAL": "Manuell", "AUTOMATIC": "Automat"}, "locations": "Platser", "noLocations": "Inga aktiva platser finns. Lärare kan inte skapas.", "hours": "Arbetstider", "hoursDescription": "Tiderna är lokal väggtid i Europe/Stockholm.", "from": "Från", "to": "Till", "day": {"0": "Söndag", "1": "Måndag", "2": "Tisdag", "3": "Onsdag", "4": "Torsdag", "5": "Fredag", "6": "Lördag"}, "photo": "Profilbild", "photoHelp": "Valfri JPEG-, PNG- eller WebP-bild, högst 5 MB.", "submit": "Skapa lärare", "saving": "Skapar…", "created": "Läraren har skapats."
     },
-    "instructorStatus": {"title": "Hantera lärare", "description": "Aktivera eller inaktivera lärare. Framtida bekräftade bokningar måste först flyttas eller avbokas.", "active": "Aktiv", "inactive": "Inaktiv", "activate": "Aktivera", "deactivate": "Inaktivera", "saving": "Sparar…"}
+    "instructorStatus": {"title": "Hantera lärare", "description": "Aktivera eller inaktivera lärare. Framtida bekräftade bokningar måste först flyttas eller avbokas.", "active": "Aktiv", "inactive": "Inaktiv", "activate": "Aktivera", "deactivate": "Inaktivera", "saving": "Sparar…"},
+    "instructorPhone": {"label": "Mobilnummer", "missing": "Saknas", "save": "Spara nummer", "saving": "Sparar…"}
   },
   "errors": {
     "pageTitle": "Vi fick ett tekniskt problem",
@@ -824,6 +836,9 @@
     "GOOGLE_ALREADY_LINKED": "Det här mobilnumret är redan kopplat till ett annat Google-konto.",
     "INVALID_OTP": "Koden är fel eller har gått ut. Begär en ny kod.",
     "INVALID_PHONE": "Ange ett giltigt mobilnummer, till exempel 0701234567 eller +46701234567.",
+    "PHONE_IN_USE": "Det mobilnumret används redan. Ange ett annat nummer.",
+    "OUTSIDE_CANCELLATION_WINDOW": "Lektionen kan inte flyttas mindre än 24 timmar före start. Kontakta skolan.",
+    "LESSON_NOT_STARTED": "Lektionen har inte börjat ännu.",
     "SMS_PROVIDER_NOT_CONFIGURED": "Sms-inloggning är inte konfigurerad ännu. Kontakta skolan eller använd e-post.",
     "SMS_DELIVERY_FAILED": "Sms kunde inte skickas. Kontrollera numret och försök igen.",
     "RATE_LIMITED": "För många försök. Vänta och försök igen.",

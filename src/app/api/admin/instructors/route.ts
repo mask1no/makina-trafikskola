@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import { Prisma } from "@prisma/client";
 import { z } from "zod";
 
+import { normalizeSwedishPhone } from "@/lib/auth/phone";
 import { auth } from "@/auth";
 import { AuthorizationError, requireRole } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
@@ -14,6 +15,7 @@ const requestSchema = z
     firstName: z.string().trim().min(1).max(80),
     lastName: z.string().trim().min(1).max(80),
     email: z.string().trim().toLowerCase().email(),
+    phone: z.string().trim().min(1).max(30),
     initialPassword: z.string().min(8).max(128),
     slug: z
       .string()
@@ -103,6 +105,8 @@ export async function POST(request: Request) {
     select: { id: true },
   });
   if (existingSlug) return errorResponse("SLUG_EXISTS", 409);
+  const phone = normalizeSwedishPhone(parsed.data.phone);
+  if (!phone) return errorResponse("INVALID_PHONE", 400);
 
   const passwordHash = await bcrypt.hash(parsed.data.initialPassword, 12);
   try {
@@ -113,6 +117,7 @@ export async function POST(request: Request) {
             firstName: parsed.data.firstName,
             lastName: parsed.data.lastName,
             email: parsed.data.email,
+            phone,
             passwordHash,
             role: "TEACHER",
             localePref: parsed.data.languages[0],
@@ -168,6 +173,13 @@ export async function POST(request: Request) {
       error instanceof Prisma.PrismaClientKnownRequestError &&
       error.code === "P2002"
     ) {
+      const target = error.meta?.target;
+      const targetText = Array.isArray(target)
+        ? target.join(" ")
+        : String(target ?? "");
+      if (targetText.includes("phone")) {
+        return errorResponse("PHONE_IN_USE", 409);
+      }
       return errorResponse("ACCOUNT_OR_SLUG_EXISTS", 409);
     }
     throw error;

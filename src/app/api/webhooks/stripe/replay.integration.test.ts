@@ -375,9 +375,13 @@ describe.skipIf(!runIntegration)("Stripe webhook replay", () => {
           expect(charged || hold).toBe(true);
         }
       } finally {
-        if (raceStudentIds.length > 0) {
+        if (raceStudentIds.length > 0 || raceTeacherUserId) {
           await db.notification.deleteMany({
-            where: { userId: { in: raceStudentIds } },
+            where: {
+              userId: {
+                in: [...raceStudentIds, raceTeacherUserId].filter(Boolean),
+              },
+            },
           });
           await db.creditTransaction.deleteMany({
             where: { studentId: { in: raceStudentIds } },
