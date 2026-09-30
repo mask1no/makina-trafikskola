@@ -15,6 +15,10 @@ Things that look like mistakes but are deliberate:
   a receipt must show what the customer actually saw, not today's price.
 - Product.active defaults to false. Nothing is on sale until the client
   confirms the canonical price list.
+- Product.creditValidDays defaults to 365. Lesson credits and packages expire
+  12 months after purchase. This replaced the earlier 730-day default.
+- TeacherProfile.calendarToken is an optional unique secret for the teacher's
+  private ICS feed. Null until the teacher creates a link.
 
 Booking overlap is enforced by a database exclusion constraint in
 prisma/migrations/*_booking_exclusion/migration.sql, not by application code.

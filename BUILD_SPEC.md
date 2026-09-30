@@ -417,6 +417,29 @@ Routes (Swedish slugs for the `sv` locale):
 /[locale]/{villkor,integritet,cookies}
 ```
 
+### Notifications
+
+SMS is the instant alert. Stripe sends payment receipts. The school does not send email.
+
+| Event | Student | Teacher |
+| --- | --- | --- |
+| Credit booking | booking_confirmed SMS + in-app | teacher_booking_new SMS |
+| Unpaid hold | in-app only | nothing |
+| Paid hold confirmed | booking_confirmed SMS + in-app | teacher_booking_new SMS |
+| Student cancels | in-app only | teacher_booking_cancelled SMS |
+| Teacher cancels or blocks a day | booking_cancelled_by_teacher SMS + in-app | nothing |
+| Admin cancels | booking_cancelled_by_teacher SMS + in-app | teacher_booking_cancelled SMS |
+| Student reschedules | in-app booking_moved | teacher_booking_moved SMS |
+| Teacher reschedules | booking_moved SMS + in-app | nothing |
+| Admin moves, same teacher | booking_moved SMS + in-app | teacher_booking_moved SMS |
+| Admin reassigns | booking_moved SMS + in-app | old teacher cancelled, new teacher new |
+
+A student cannot move a lesson once the cancellation deadline has passed. Teacher SMS and the calendar feed contain the student's first name only: no phone number, surname, or lesson note.
+
+Teachers can create a private ICS link (`TeacherProfile.calendarToken`) for Google Calendar and iPhone. Google Calendar may take a few hours to refresh. The feed lists charged confirmed and completed lessons only.
+
+Payment methods are card, Swish, and Klarna. There is no instalment plan.
+
 ---
 
 ## 8. UI system

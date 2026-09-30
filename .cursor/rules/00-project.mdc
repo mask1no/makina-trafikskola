@@ -3,8 +3,8 @@ description: Makina Trafikskola — project context. Always applied.
 alwaysApply: true
 ---
 
-Next.js 14 App Router · TypeScript strict · Tailwind · Prisma/Postgres ·
-next-intl · Auth.js v5 · Stripe · Railway.
+Next.js 16 App Router · TypeScript strict · React 19 · Tailwind · Prisma/Postgres ·
+next-intl · NextAuth 5 · Stripe · Railway.
 
 Driving school in Stockholm. Students are largely newly arrived Swedes.
 Locales: sv (default), en, ti (Tigrinya), ar (Arabic, RTL), so (Somali).

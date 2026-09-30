@@ -48,7 +48,16 @@ test("has no horizontal overflow and shows the tab bar only under md", async ({ 
     { width: 768, height: 1024 },
   ] as const) {
     await page.setViewportSize({ width: viewport.width, height: viewport.height });
-    for (const path of ["", "/paket/korpaket-b5", "/boka"]) {
+    for (const path of [
+      "",
+      "/korlektioner",
+      "/paket/korpaket-b5",
+      "/kontakt",
+      "/teori",
+      "/logga-in",
+      "/skapa-konto",
+      "/boka",
+    ]) {
       const response = await page.goto(`/${locale}${path}`);
       expect(response?.ok(), `${locale}${path} @${viewport.width}`).toBeTruthy();
       const fits = await page.evaluate(
