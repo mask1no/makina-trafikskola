@@ -156,7 +156,7 @@ export function LanguageSwitcher() {
             openMenu();
           }
         }}
-        className="inline-flex min-h-11 items-center gap-2 whitespace-nowrap rounded-sm border border-surface-soft bg-surface-raised px-3 text-sm font-semibold text-ink-inverse outline-none transition hover:border-ink-muted focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-accent"
+        className="inline-flex min-h-11 items-center gap-1.5 whitespace-nowrap rounded-sm border border-surface-soft bg-surface-raised px-2 text-sm font-semibold text-ink-inverse outline-none transition hover:border-ink-muted focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-accent sm:gap-2 sm:px-3"
       >
         <svg
           aria-hidden="true"

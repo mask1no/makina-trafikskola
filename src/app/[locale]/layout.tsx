@@ -207,10 +207,9 @@ export default async function LocaleLayout(
   const tabs = (
     session?.user.role === "ADMIN"
       ? [
-          { href: `${base}/admin/calendar`, label: adminT("calendar"), icon: "bookings" },
-          { href: `${base}/admin/students`, label: adminT("students"), icon: "profile" },
-          { href: `${base}/admin/instructors/new`, label: adminT("instructors"), icon: "messages" },
-          { href: `${base}/admin/recensioner`, label: adminT("reviews"), icon: "profile" },
+          { href: `${base}/admin`, label: t("admin"), icon: "profile" },
+          { href: `${base}/admin/calendar`, label: t("calendar"), icon: "bookings" },
+          { href: `${base}/admin/students`, label: t("students"), icon: "messages" },
           { href: base, label: t("home"), icon: "home" },
           { href: `${base}/korlektioner`, label: t("packages"), icon: "packages" },
         ]
@@ -251,7 +250,7 @@ export default async function LocaleLayout(
           }}
         />
         <header className="sticky top-0 z-40 border-b border-surface-soft bg-surface text-ink-inverse shadow-soft">
-          <div className="site-container flex min-h-16 flex-nowrap items-center gap-2 lg:min-h-[4.5rem] lg:gap-2">
+          <div className="site-container flex min-h-16 min-w-0 flex-nowrap items-center gap-1.5 sm:gap-2 lg:min-h-[4.5rem]">
             <Link href={base} className="inline-flex min-h-11 min-w-0 shrink items-center">
               <Logo compactOnMobile />
             </Link>
@@ -304,7 +303,7 @@ export default async function LocaleLayout(
                 </Link>
               </>
             ) : (
-              <details data-header-menu className="group relative hidden shrink-0 md:block">
+              <details data-header-menu className="group relative shrink-0">
                 <summary
                   aria-label={t("account")}
                   className="flex min-h-11 cursor-pointer list-none items-center rounded-full outline-none ring-offset-surface focus-visible:ring-2 focus-visible:ring-accent [&::-webkit-details-marker]:hidden"
@@ -363,7 +362,7 @@ export default async function LocaleLayout(
             )}
             <Link
               href={canBook ? `${base}/boka` : `${base}/kontakt`}
-              className="inline-flex min-h-11 shrink-0 items-center whitespace-nowrap rounded-sm border border-accent bg-accent px-3 text-sm font-extrabold text-accent-ink shadow-soft transition hover:border-accent-hover hover:bg-accent-hover sm:px-4"
+              className="inline-flex min-h-11 shrink-0 items-center whitespace-nowrap rounded-sm border border-accent bg-accent px-2.5 text-sm font-extrabold text-accent-ink shadow-soft transition hover:border-accent-hover hover:bg-accent-hover sm:px-4"
             >
               {canBook ? t("book") : t("contact")}
             </Link>

@@ -124,7 +124,7 @@ export default async function MarketingHome(
         }}
       />
 
-      <section className="relative isolate min-h-[72svh] overflow-hidden bg-surface text-ink-inverse sm:min-h-[68svh]">
+      <section className="relative isolate flex min-h-[72svh] flex-col justify-end overflow-x-clip bg-surface text-ink-inverse sm:min-h-[68svh]">
         <Image
           src="/hero.jpg"
           alt=""
@@ -137,7 +137,7 @@ export default async function MarketingHome(
           aria-hidden="true"
           className="absolute inset-0 bg-[linear-gradient(180deg,color-mix(in_srgb,var(--surface)_55%,transparent)_0%,color-mix(in_srgb,var(--surface)_78%,transparent)_48%,var(--surface)_100%)]"
         />
-        <div className="site-container relative z-10 flex min-h-[72svh] flex-col justify-end pb-12 pt-24 sm:min-h-[68svh] sm:pb-16">
+        <div className="site-container relative z-10 flex flex-col justify-end pb-12 pt-24 sm:pb-16">
           <p className="brand-mark reveal text-accent">{t("home.hero.brand")}</p>
           <h1 className="display-title reveal reveal-delay-1 mt-5 max-w-4xl text-balance">
             {t("home.hero.title")}

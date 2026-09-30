@@ -56,7 +56,10 @@ export function BottomTabBar({ tabs }: { tabs: Tab[] }) {
   const pathname = usePathname();
   return (
     <nav className="fixed bottom-0 start-0 end-0 z-40 border-t border-border bg-card pb-[env(safe-area-inset-bottom)] shadow-float md:hidden">
-      <ul className="grid grid-cols-5">
+      <ul
+        className="grid"
+        style={{ gridTemplateColumns: `repeat(${tabs.length}, minmax(0, 1fr))` }}
+      >
         {tabs.map((tab) => (
           <li key={tab.href} className="min-w-0">
             <Link
@@ -67,10 +70,10 @@ export function BottomTabBar({ tabs }: { tabs: Tab[] }) {
                   ? "page"
                   : undefined
               }
-              className="relative flex min-h-16 flex-col items-center justify-center gap-1 px-0.5 text-center text-[11px] font-bold leading-tight text-ink-muted transition after:absolute after:top-0 after:h-0.5 after:w-8 after:rounded-full after:bg-transparent aria-[current=page]:bg-card-muted aria-[current=page]:text-ink aria-[current=page]:after:bg-accent"
+              className="relative flex min-h-16 flex-col items-center justify-center gap-1 px-1 text-center text-[10px] font-bold leading-tight text-ink-muted transition after:absolute after:top-0 after:h-0.5 after:w-8 after:rounded-full after:bg-transparent aria-[current=page]:bg-card-muted aria-[current=page]:text-ink aria-[current=page]:after:bg-accent sm:text-[11px]"
             >
               <TabIcon icon={tab.icon} />
-              <span className="w-full break-words hyphens-auto">{tab.label}</span>
+              <span className="line-clamp-2 w-full">{tab.label}</span>
             </Link>
           </li>
         ))}
