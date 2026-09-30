@@ -1148,6 +1148,7 @@
     "languagesBody": "We teach in Swedish, English, Tigrinya, Arabic and Somali. Say which language you want when you book. We then match you with an instructor who speaks it.",
     "staffTitle": "Our team",
     "staffDescription": "Meet the team at Makina Trafikskola. Contact the school if you would like to book a particular instructor.",
+    "speaks": "Teaches in {language}",
     "contactViaSchool": "Contact through the school",
     "callSchool": "Call the school",
     "emailSchool": "Email the school",

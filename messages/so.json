@@ -1145,6 +1145,7 @@
     "languagesBody": "Waxaanu ku barnaa Iswidhish, Ingiriisi, Tigrinya, Carabi iyo Soomaali. Sheeg luqadda aad rabto marka aad ballansato. Waxaanu kugu xidhiidhinaynaa macallin ku hadla.",
     "staffTitle": "Shaqaalaheenna",
     "staffDescription": "Baro kooxda Makina Trafikskola. La xiriir dugsiga haddii aad rabto inaad qabsato macallin gaar ah.",
+    "speaks": "Wuxuu ku baraa {language}",
     "contactViaSchool": "Kala xiriir dugsiga",
     "callSchool": "Wac dugsiga",
     "emailSchool": "Iimayl u dir dugsiga",

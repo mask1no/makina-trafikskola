@@ -655,6 +655,7 @@
     "languagesBody": "Vi undervisar på svenska, engelska, tigrinja, arabiska och somaliska. Säg vilket språk du vill ha när du bokar. Då matchar vi dig med en lärare som kan det.",
     "staffTitle": "Vår personal",
     "staffDescription": "Möt teamet på Makina Trafikskola. Kontakta skolan om du vill boka en viss trafiklärare.",
+    "speaks": "Undervisar på {language}",
     "contactViaSchool": "Kontakt via skolan",
     "callSchool": "Ring skolan",
     "emailSchool": "E-posta skolan",

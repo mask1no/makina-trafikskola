@@ -12,12 +12,12 @@ import { pageCanonical, withSocial } from "@/lib/seo/metadata";
 export const dynamic = "force-dynamic";
 
 const publicStaff = [
-  { name: "Aron Kessete", role: "trafikskolechef" },
-  { name: "Goitom Mikael", role: "utbildningsledare" },
-  { name: "Kidane Askelawi", role: "trafiklarare" },
-  { name: "Azizullah Hasanzada", role: "trafiklarare" },
-  { name: "Habtom Negassi Araya", role: "trafiklarare" },
-  { name: "Daniel Araya", role: "trafiklarare" },
+  { name: "Aron Kessete", role: "trafikskolechef", language: "ti" },
+  { name: "Goitom Mikael", role: "utbildningsledare", language: "ti" },
+  { name: "Kidane Askelawi", role: "trafiklarare", language: "ti" },
+  { name: "Azizullah Hasanzada", role: "trafiklarare", language: "ar" },
+  { name: "Habtom Negassi Araya", role: "trafiklarare", language: "ti" },
+  { name: "Daniel Araya", role: "trafiklarare", language: "ti" },
 ] as const;
 
 export async function generateMetadata(
@@ -58,9 +58,10 @@ export default async function ContactPage(
   if (!isLocale(params.locale)) notFound();
   setRequestLocale(params.locale);
 
-  const [t, company, locations] = await Promise.all([
+  const [t, company, languageNames, locations] = await Promise.all([
     getTranslations("contact"),
     getTranslations("company"),
+    getTranslations("language"),
     db.location.findMany({
       where: { active: true },
       orderBy: { name: "asc" },
@@ -202,6 +203,9 @@ export default async function ContactPage(
                     <h3 className="text-lg font-extrabold">{staffMember.name}</h3>
                     <p className="mt-1 text-sm text-ink-muted">
                       {t(`staffRoles.${staffMember.role}`)}
+                    </p>
+                    <p className="mt-1 text-sm font-semibold text-ink">
+                      {t("speaks", { language: languageNames(staffMember.language) })}
                     </p>
                   </div>
                 </div>
