@@ -26,17 +26,9 @@ export async function CookieConsent({ locale }: { locale: string }) {
           type="submit"
           name="consent"
           value="necessary"
-          className="min-h-11 rounded-sm border border-ink-muted px-4 text-sm font-bold transition hover:border-card hover:bg-surface-raised"
-        >
-          {t("necessary")}
-        </button>
-        <button
-          type="submit"
-          name="consent"
-          value="accepted"
           className="min-h-11 rounded-sm border border-accent bg-accent px-4 text-sm font-bold text-accent-ink shadow-soft transition hover:border-accent-hover hover:bg-accent-hover"
         >
-          {t("accept")}
+          {t("ok")}
         </button>
       </form>
     </aside>

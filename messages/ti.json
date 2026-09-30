@@ -77,7 +77,7 @@
       "cardTitle": "ካብ ቀዳማይ ትምህርቲ ንጹር መደብ",
       "cardDescription": "ቋንቋ፣ ዓይነት መኪናን መምህርን ብድሌትካ ምረጽ።",
       "reviews": "ግምገማታት",
-      "pickupProof": "ንመጽእ ንውሰድካ",
+      "pickupProof": "ምውሳድ ብምስምማዕ",
       "languageProof": "ትምህርቲ ብ 5 ቋንቋታት"
     },
     "trust": {
@@ -87,8 +87,8 @@
         "description": "ስዊድን፣ እንግሊዝኛ፣ ትግርኛ፣ ዓረብኛን ሶማልን"
       },
       "pickup": {
-        "title": "ንዓኻ ንመጽእ",
-        "description": "መምህር ኣብ ዘለኻ ይራኸበካ"
+        "title": "ምውሳድ",
+        "description": "ኣብ ዘለኻ ብምስምማዕ ክንራኸበካ ንኽእል"
       },
       "lesson": {
         "title": "50 ደቒቕ",
@@ -149,7 +149,7 @@
       },
       "cancel": {
         "question": "ትምህርቲ ብኸመይ እስርዝ?",
-        "answer": "ኣብ ቦታ ቆጸራታተይ ክትስርዙ ትኽእሉ። ቅድሚ ትምህርቲ ብውሑዱ 24 ሰዓት እንተሰሪዝኩም፣ ክሬዲት ናብ ሳልዶኹም ይምለስ።"
+        "answer": "ኣብ ቦታ ቆጸራታተይ ክትስርዙ ትኽእሉ። ቅድሚ ትምህርቲ ካብ 24 ሰዓት ንላዕሊ እንተሰሪዝኩም፣ ክሬዲት ናብ ሳልዶኹም ይምለስ። ድሒርኩም እንተሰሪዝኩም ክሬዲት ኣይምለስን።"
       },
       "risk": {
         "question": "ኣብ መንጎ Risk 1ን Risk 2ን ዘሎ ፍልልይ እንታይ እዩ?",
@@ -170,8 +170,8 @@
     "popular": "ዝያዳ ዝምረጽ",
     "notForSale": "ገና ንመሸጣ ኣይቀረበን",
     "visualLabel": "ትምህርቲ ምዝዋር",
-    "save": "{percent}% ዕቑር",
-    "saveAmount": "{amount} ትዕቅብ",
+    "save": "ካብ ብቻ ምዕዳግ {percent}% ዝተሓተ",
+    "saveAmount": "{amount} ትዕቅብ እንተድኣ ብቻ ብቻ ተዓዲጉ",
     "emptyTitle": "ዝረአ ፍርያት የለን",
     "emptyDescription": "እቲ ዝርዝር ይሕደስ ኣሎ። ቀልጢፍካ ተመለስ።",
     "included": "ዝጠቓለል",
@@ -318,15 +318,15 @@
         "languages": "ደገፍ ብሓሙሽተ ቋንቋታት"
       }
     },
-    "licensingPending": "ምሉእ ባንክ ሕቶታት መሰል ትሕዝቶ ምስ ተረጋገጸ ጥራይ ይዝርጋሕ።",
+    "licensingPending": "ምሉእ ባንክ ሕቶታት ክኸፍት እዩ ምስ ትገዝእ ናይ ቴዎሪ መእተዊ።",
     "questionsAvailable": "ነጻ ሕቶታት ንምፍታን ድሉዋት",
     "freeIntro": "ብነጻ ናሙና ጀምር",
     "startPractice": "ልምምድ ጀምር",
     "freeCount": "{count, plural, =1 {1 ነጻ ሕቶ} other {# ነጻ ሕቶታት}}",
     "swedishOnly": "ብሽወደንኛ ጥራይ",
     "examLink": "ናይ ፈተነ መርመራ ክፈት",
-    "emptyTitle": "ነጻ ሕቶታት ኣይተዘርግሑን",
-    "emptyDescription": "ዝተረጋገጸን ፍቓድ ዘለዎን ትሕዝቶ ይጽበ ኣሎ።",
+    "emptyTitle": "ነጻ ሕቶታት ድሕሪ ቀረባ ክሕተሙ እዮም",
+    "emptyDescription": "ናይ ቤት ትምህርቲ ሕቶታት ንእቱ። ድሕሪ ቀረባ ተመለስ።",
     "paidAccess": "ንጡፍ ፍቓድ ክልሰ ሓሳብ",
     "freeAccess": "ነጻ ሕቶታት",
     "questionNumber": "ሕቶ {number}",
@@ -739,12 +739,16 @@
     "title": "Makina Trafikskola – ትምህርቲ ምዝዋር ኣብ ስቶክሆልም",
     "description": "ኣብ ስቶክሆልም ብብዙሕ ቋንቋታት ደገፍ ዘለዎ ትምህርቲ ምዝዋር።"
   },
+  "pricing": {
+    "valueSeparately": "ዋጋ እንተብቻ ብቻ እንተተዓዲጉ: {price}"
+  },
   "cookieConsent": {
     "title": "ምርጫ ኩኪ",
     "description": "ንምእታው፣ ቋንቋን ምርጫ ኩኪኻን ኣድለይቲ ኩኪታት ንጥቀም። ናይ ትንተና ወይ ምልክታ ኩኪታት ኣይሰርሑን።",
     "readMore": "ብዛዕባ ኩኪ ኣንብብ",
     "necessary": "ኣድለይቲ ጥራይ",
-    "accept": "ተቐበል"
+    "accept": "ተቐበል",
+    "ok": "ሕራይ"
   },
   "offline": {
     "eyebrow": "ርክብ የለን",
@@ -781,7 +785,7 @@
       },
       "validity": {
         "title": "ግዜ ምስራሕ",
-        "body": "ናይ ትምህርቲ ክረዲት ካብ ዕድጊ ን24 ወርሒ ይሰርሕ።\nዲጂታላዊ ቲዮሪ ሓንሳብ ዕድጊ እዩ። ግዜ ገደብ የብሉን።"
+        "body": "ናይ ትምህርቲ ክረዲትን ፓኬታትን ካብ ዕድጊ ን12 ወርሒ ይሰርሑ። ዘይተጠቕመ ክረዲት ይውዳእ።\nዲጂታላዊ ቲዮሪ ሓንሳብ ዕድጊ እዩ። ግዜ ገደብ የብሉን።"
       },
       "cancellation": {
         "title": "ምቕያር ግዜን ምስራዝን",
@@ -831,7 +835,7 @@
       },
       "recipients": {
         "title": "ተቐበልትን ንኡሳን ኣገልገልትን",
-        "body": "Stripe ክፍሊት የካይድ።\n46elks SMS ይሰድድ።\nGoogle Maps ካርታ የርኢ።\nSentry ጌጋ ይቕበል።\nRailway ነቲ ኣገልግሎት የእንግድ።\nCloudflare R2 ፋይላትን ምትሕብባርን የቐምጥ።\nገለ ካብዚኦም ሓበሬታ ካብ EU ወጻኢ ከሰጉሩ ይኽእሉ። ሽዑ ዝተፈቕደ ምክልኻል ይጥቀም።"
+        "body": "Stripe ክፍሊት የካይድ።\nKlarna ክፍሊት የካይድ Klarna ኣብ ሳንዱቕ ምስ ትመርጽ።\n46elks SMS ይሰድድ።\nGoogle ብGoogle ምእታው የካይድ ካርታን ኣድራሻን የርኢ።\nSentry ጌጋ ይቕበል።\nRailway ነቲ ኣገልግሎት የእንግድ።\nCloudflare R2 ፋይላትን ምትሕብባርን የቐምጥ።\nገለ ካብዚኦም ሓበሬታ ካብ EU ወጻኢ ከሰጉሩ ይኽእሉ። ሽዑ ዝተፈቕደ ምክልኻል ይጥቀም።"
       },
       "rights": {
         "title": "መሰላትካ",

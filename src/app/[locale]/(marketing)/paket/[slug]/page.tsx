@@ -7,7 +7,14 @@ import type { Metadata } from "next";
 import { auth } from "@/auth";
 import { Badge } from "@/components/Badge";
 import { Notice } from "@/components/Notice";
-import { formatPrice, perLessonOre } from "@/lib/pricing/format";
+import { bookingEnabled } from "@/lib/launch";
+import {
+  formatPrice,
+  perLessonOre,
+  showPerLessonPrice,
+  showValidity,
+} from "@/lib/pricing/format";
+import { pageCanonical, withSocial } from "@/lib/seo/metadata";
 import { isLocale } from "@/i18n/routing";
 
 import { getProduct } from "../../_lib/data";
@@ -29,9 +36,19 @@ export async function generateMetadata(
   if (!isLocale(params.locale)) return {};
   const product = await getProduct(params.locale, params.slug);
   if (!product) return {};
+  const title = product.translation.name;
+  const description = product.translation.shortDesc ?? "";
+  const canonical = pageCanonical(params.locale, `/paket/${params.slug}`);
   return {
-    title: product.translation.name,
-    description: product.translation.shortDesc ?? undefined,
+    title,
+    description,
+    alternates: { canonical },
+    ...withSocial({
+      title,
+      description,
+      canonical,
+      locale: params.locale,
+    }),
     robots: product.active ? undefined : { index: false, follow: true },
   };
 }
@@ -50,6 +67,13 @@ export default async function ProductDetailPage(
     auth(),
   ]);
   if (!product) notFound();
+  const salesOpen = bookingEnabled();
+  const separateValue =
+    product.kind !== "GUARANTEE" &&
+    product.compareAtOre &&
+    product.compareAtOre > product.priceOre
+      ? product.compareAtOre
+      : null;
 
   const tierStyle = product.accentHex
     ? ({ "--tier-accent": product.accentHex } as CSSProperties)
@@ -116,7 +140,7 @@ export default async function ProductDetailPage(
                 {t("common.swedishOnly")}
               </Badge>
             ) : null}
-            {!product.active ? <Badge tone="danger">{t("product.notForSale")}</Badge> : null}
+            {!product.active && salesOpen ? <Badge tone="danger">{t("product.notForSale")}</Badge> : null}
           </div>
           <h1 className="display-title mt-6 text-balance">{product.translation.name}</h1>
           {product.translation.shortDesc ? (
@@ -124,32 +148,25 @@ export default async function ProductDetailPage(
               {product.translation.shortDesc}
             </p>
           ) : null}
-          <h2 className="mt-10 text-2xl font-black">{t("product.included")}</h2>
-          <ul className="mt-5 grid gap-3 sm:grid-cols-2">
-            {product.translation.features.map((feature) => (
-              <li className="flex gap-3" key={feature}>
-                <span aria-hidden="true" className="text-success">✓</span>
-                <span>{feature}</span>
-              </li>
-            ))}
-          </ul>
           </div>
         </div>
         <aside className="h-fit rounded-lg border border-border bg-card p-6 shadow-card lg:sticky lg:top-24 sm:p-8">
           <p className="text-4xl font-black [direction:ltr]">
             {formatPrice(product.priceOre, params.locale)}
           </p>
-          {product.compareAtOre && product.compareAtOre > product.priceOre ? (
+          {separateValue ? (
             <>
-              <p className="mt-2 text-ink-muted line-through [direction:ltr]">
-                {formatPrice(product.compareAtOre, params.locale)}
+              <p className="mt-2 text-sm text-ink-muted">
+                {t("pricing.valueSeparately", {
+                  price: formatPrice(separateValue, params.locale),
+                })}
               </p>
               <p className="mt-2 font-bold text-success">
-                {t("product.saveAmount", { amount: formatPrice(product.compareAtOre - product.priceOre, params.locale) })}
+                {t("product.saveAmount", { amount: formatPrice(separateValue - product.priceOre, params.locale) })}
               </p>
             </>
           ) : null}
-          {product.lessonCredits > 0 ? (
+          {showPerLessonPrice(product) ? (
             <p className="mt-4 font-semibold">
               <bdi>
                 {formatPrice(
@@ -160,11 +177,13 @@ export default async function ProductDetailPage(
               {t("product.perLesson")}
             </p>
           ) : null}
-          <p className="mt-2 text-sm text-ink-muted">
-            {t("product.validityMonths", {
-              count: Math.round(product.creditValidDays / 30),
-            })}
-          </p>
+          {showValidity(product.kind) ? (
+            <p className="mt-2 text-sm text-ink-muted">
+              {t("product.validityMonths", {
+                count: Math.round(product.creditValidDays / 30),
+              })}
+            </p>
+          ) : null}
           <p className="mt-1 text-sm text-ink-muted">
             {t("product.priceIncludesVat")}
           </p>

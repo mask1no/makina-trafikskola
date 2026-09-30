@@ -10,6 +10,7 @@ import { isLocale } from "@/i18n/routing";
 import { resolveContent } from "@/lib/content/fallback";
 import { db } from "@/lib/db";
 import { formatPrice } from "@/lib/pricing/format";
+import { pageCanonical, withSocial } from "@/lib/seo/metadata";
 
 import { CourseBookingControl } from "./CourseBookingControl";
 
@@ -21,7 +22,15 @@ export async function generateMetadata(
   const { locale } = await props.params;
   if (!isLocale(locale)) return {};
   const t = await getTranslations({ locale, namespace: "courses" });
-  return { title: t("title"), description: t("description") };
+  const title = t("title");
+  const description = t("description");
+  const canonical = pageCanonical(locale, "/kurser");
+  return {
+    title,
+    description,
+    alternates: { canonical },
+    ...withSocial({ title, description, canonical, locale }),
+  };
 }
 
 export default async function KurserPage(

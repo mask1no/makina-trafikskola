@@ -8,6 +8,7 @@ import { LinkButton } from "@/components/LinkButton";
 import { isLocale } from "@/i18n/routing";
 import { resolveContent } from "@/lib/content/fallback";
 import { db } from "@/lib/db";
+import { pageCanonical, withSocial } from "@/lib/seo/metadata";
 
 export const dynamic = "force-dynamic";
 
@@ -17,7 +18,15 @@ export async function generateMetadata(
   const { locale } = await props.params;
   if (!isLocale(locale)) return {};
   const t = await getTranslations({ locale, namespace: "theory" });
-  return { title: t("title"), description: t("description") };
+  const title = t("title");
+  const description = t("description");
+  const canonical = pageCanonical(locale, "/teori");
+  return {
+    title,
+    description,
+    alternates: { canonical },
+    ...withSocial({ title, description, canonical, locale }),
+  };
 }
 
 export default async function TeoriPage(

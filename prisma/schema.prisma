@@ -185,7 +185,7 @@ model Product {
   includesTheory  Boolean     @default(false)
   includesRisk1   Boolean     @default(false)
   includesRisk2   Boolean     @default(false)
-  creditValidDays Int         @default(730)
+  creditValidDays Int         @default(365)
 
   badge           String?                      // "POPULARAST"
   accentHex       String?                      // tier colour — data, not CSS

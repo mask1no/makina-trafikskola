@@ -7,11 +7,12 @@ import { TeacherMap } from "@/components/TeacherMap";
 import { isLocale } from "@/i18n/routing";
 import { db } from "@/lib/db";
 import { bookingEnabled } from "@/lib/launch";
+import { pageCanonical, withSocial } from "@/lib/seo/metadata";
 
 export const dynamic = "force-dynamic";
 
 const publicStaff = [
-  { name: "Aron Kessete Kessete", role: "trafikskolechef" },
+  { name: "Aron Kessete", role: "trafikskolechef" },
   { name: "Goitom Mikael", role: "utbildningsledare" },
   { name: "Kidane Askelawi", role: "trafiklarare" },
   { name: "Azizullah Hasanzada", role: "trafiklarare" },
@@ -27,7 +28,15 @@ export async function generateMetadata(
   const params = await props.params;
   if (!isLocale(params.locale)) return {};
   const t = await getTranslations({ locale: params.locale, namespace: "contact" });
-  return { title: t("title"), description: t("metadata") };
+  const title = t("title");
+  const description = t("metadata");
+  const canonical = pageCanonical(params.locale, "/kontakt");
+  return {
+    title,
+    description,
+    alternates: { canonical },
+    ...withSocial({ title, description, canonical, locale: params.locale }),
+  };
 }
 
 function mapsDirections(address: string, city: string, postalCode: string) {

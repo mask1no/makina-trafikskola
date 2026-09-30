@@ -8,6 +8,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { StaticMapArtwork } from "@/components/StaticMapArtwork";
 import { isLocale } from "@/i18n/routing";
 import { db } from "@/lib/db";
+import { pageCanonical, withSocial } from "@/lib/seo/metadata";
 
 export const dynamic = "force-dynamic";
 
@@ -27,9 +28,22 @@ export async function generateMetadata(
     locale: params.locale,
     namespace: "localSchool",
   });
+  const title = t("metadataTitle", { city: location.city });
+  const description = t("metadataDescription", { city: location.city });
+  const canonical = pageCanonical(
+    params.locale,
+    `/trafikskola/${params.stad}`,
+  );
   return {
-    title: t("metadataTitle", { city: location.city }),
-    description: t("metadataDescription", { city: location.city }),
+    title,
+    description,
+    alternates: { canonical },
+    ...withSocial({
+      title,
+      description,
+      canonical,
+      locale: params.locale,
+    }),
   };
 }
 

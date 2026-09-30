@@ -297,14 +297,18 @@ export default async function MarketingHome(
                 key={product.id}
                 locale={params.locale}
                 slug={product.slug}
+                kind={product.kind}
                 active={product.active}
+                bookingEnabled={canBook}
                 name={product.translation.name}
                 description={product.translation.shortDesc}
-                features={product.translation.features}
                 priceOre={product.priceOre}
                 compareAtOre={product.compareAtOre}
                 accentHex={product.accentHex}
                 lessonCredits={product.lessonCredits}
+                includesTheory={product.includesTheory}
+                includesRisk1={product.includesRisk1}
+                includesRisk2={product.includesRisk2}
                 creditValidDays={product.creditValidDays}
                 tierLabel={t(
                   `product.kind.${
@@ -313,12 +317,20 @@ export default async function MarketingHome(
                       : product.kind
                   }`,
                 )}
-                includedLabel={t("product.included")}
                 perLessonLabel={t("product.perLesson")}
                 validityLabel={t("product.validityMonths", {
                   count: Math.round(product.creditValidDays / 30),
                 })}
                 vatLabel={t("product.priceIncludesVat")}
+                valueSeparatelyLabel={
+                  product.kind !== "GUARANTEE" &&
+                  product.compareAtOre &&
+                  product.compareAtOre > product.priceOre
+                    ? t("pricing.valueSeparately", {
+                        price: formatPrice(product.compareAtOre, params.locale),
+                      })
+                    : undefined
+                }
                 badge={product.badge}
                 badgeLabel={product.badge ? t("product.popular") : undefined}
                 swedishOnly={product.swedishOnly}
@@ -335,9 +347,17 @@ export default async function MarketingHome(
                     ? t(`product.images.${product.slug}`)
                     : undefined
                 }
-                savingsLabel={product.compareAtOre && product.compareAtOre > product.priceOre
-                  ? t("product.save", { percent: Math.round((1 - product.priceOre / product.compareAtOre) * 100) })
-                  : undefined}
+                savingsLabel={
+                  product.kind !== "GUARANTEE" &&
+                  product.compareAtOre &&
+                  product.compareAtOre > product.priceOre
+                    ? t("product.save", {
+                        percent: Math.round(
+                          (1 - product.priceOre / product.compareAtOre) * 100,
+                        ),
+                      })
+                    : undefined
+                }
               />
             ))}
           </div>

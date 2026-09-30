@@ -5,6 +5,10 @@ import { EmptyState } from "@/components/EmptyState";
 import { PageHeader } from "@/components/PageHeader";
 import { ProductCard } from "@/components/ProductCard";
 import { isLocale } from "@/i18n/routing";
+import { bookingEnabled } from "@/lib/launch";
+import { formatPrice } from "@/lib/pricing/format";
+
+import { pageCanonical, withSocial } from "@/lib/seo/metadata";
 
 import { getProducts } from "../_lib/data";
 
@@ -16,7 +20,15 @@ export async function generateMetadata(
   const { locale } = await props.params;
   if (!isLocale(locale)) return {};
   const t = await getTranslations({ locale, namespace: "lessons" });
-  return { title: t("title"), description: t("description") };
+  const title = t("title");
+  const description = t("description");
+  const canonical = pageCanonical(locale, "/korlektioner");
+  return {
+    title,
+    description,
+    alternates: { canonical },
+    ...withSocial({ title, description, canonical, locale }),
+  };
 }
 
 export default async function KorlektionerPage(
@@ -29,6 +41,7 @@ export default async function KorlektionerPage(
   setRequestLocale(params.locale);
   const t = await getTranslations();
   const products = await getProducts(params.locale);
+  const canBook = bookingEnabled();
 
   return (
     <div className="section-shell">
@@ -41,14 +54,18 @@ export default async function KorlektionerPage(
                 key={product.id}
                 locale={params.locale}
                 slug={product.slug}
+                kind={product.kind}
                 active={product.active}
+                bookingEnabled={canBook}
                 name={product.translation.name}
                 description={product.translation.shortDesc}
-                features={product.translation.features}
                 priceOre={product.priceOre}
                 compareAtOre={product.compareAtOre}
                 accentHex={product.accentHex}
                 lessonCredits={product.lessonCredits}
+                includesTheory={product.includesTheory}
+                includesRisk1={product.includesRisk1}
+                includesRisk2={product.includesRisk2}
                 creditValidDays={product.creditValidDays}
                 tierLabel={t(
                   `product.kind.${
@@ -57,12 +74,20 @@ export default async function KorlektionerPage(
                       : product.kind
                   }`,
                 )}
-                includedLabel={t("product.included")}
                 perLessonLabel={t("product.perLesson")}
                 validityLabel={t("product.validityMonths", {
                   count: Math.round(product.creditValidDays / 30),
                 })}
                 vatLabel={t("product.priceIncludesVat")}
+                valueSeparatelyLabel={
+                  product.kind !== "GUARANTEE" &&
+                  product.compareAtOre &&
+                  product.compareAtOre > product.priceOre
+                    ? t("pricing.valueSeparately", {
+                        price: formatPrice(product.compareAtOre, params.locale),
+                      })
+                    : undefined
+                }
                 badge={product.badge}
                 badgeLabel={product.badge ? t("product.popular") : undefined}
                 swedishOnly={product.swedishOnly}
@@ -85,9 +110,17 @@ export default async function KorlektionerPage(
                     ? t(`product.images.${product.slug}`)
                     : undefined
                 }
-                savingsLabel={product.compareAtOre && product.compareAtOre > product.priceOre
-                  ? t("product.save", { percent: Math.round((1 - product.priceOre / product.compareAtOre) * 100) })
-                  : undefined}
+                savingsLabel={
+                  product.kind !== "GUARANTEE" &&
+                  product.compareAtOre &&
+                  product.compareAtOre > product.priceOre
+                    ? t("product.save", {
+                        percent: Math.round(
+                          (1 - product.priceOre / product.compareAtOre) * 100,
+                        ),
+                      })
+                    : undefined
+                }
               />
             ))}
           </div>

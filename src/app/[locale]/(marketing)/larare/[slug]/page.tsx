@@ -7,6 +7,7 @@ import { isLocale } from "@/i18n/routing";
 import { LinkButton } from "@/components/LinkButton";
 import { StaticMapArtwork } from "@/components/StaticMapArtwork";
 import { bookingEnabled, instructorsEnabled } from "@/lib/launch";
+import { pageCanonical, withSocial } from "@/lib/seo/metadata";
 
 import { getTeacher } from "../../_lib/data";
 
@@ -27,10 +28,19 @@ export async function generateMetadata(
     locale: params.locale,
     namespace: "metadata",
   });
+  const title = name;
+  const description = teacher.translation?.bio?.trim() || t("description");
+  const canonical = pageCanonical(params.locale, `/larare/${params.slug}`);
   return {
-    title: name,
-    description: teacher.translation?.bio?.trim() || t("description"),
-    ...(teacher.photoUrl ? { openGraph: { images: [teacher.photoUrl] } } : {}),
+    title,
+    description,
+    alternates: { canonical },
+    ...withSocial({
+      title,
+      description,
+      canonical,
+      locale: params.locale,
+    }),
   };
 }
 

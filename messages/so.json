@@ -77,7 +77,7 @@
       "cardTitle": "Qorshe cad laga bilaabo casharka koowaad",
       "cardDescription": "Dooro luqadda, nooca gear-ka iyo macallinka baahidaada ku salaysan.",
       "reviews": "faallooyin",
-      "pickupProof": "Waan ku soo qaadaynaa",
+      "pickupProof": "Soo qaadis heshiis kadib",
       "languageProof": "Waxbarid 5 luqadood"
     },
     "trust": {
@@ -87,8 +87,8 @@
         "description": "Iswiidhish, Ingiriis, Tigrinya, Carabi iyo Soomaali"
       },
       "pickup": {
-        "title": "Waan ku soo qaadnaa",
-        "description": "Macallinku wuxuu kula kulmaa meesha aad joogto"
+        "title": "Soo qaadis",
+        "description": "Waxaan kula kulmi karnaa meesha aad joogto heshiis kadib"
       },
       "lesson": {
         "title": "50 daqiiqo",
@@ -149,7 +149,7 @@
       },
       "cancel": {
         "question": "Sideen u joojiyaa cashar?",
-        "answer": "Waxaad ka joojin kartaa qaybta Ballamahayga. Haddii aad joojiso ugu yaraan 24 saacadood ka hor casharka, deyntu waxay ku soo noqonaysaa hadhaagaaga. Joojinta dambe waxay isticmaashaa deynta casharka."
+        "answer": "Waxaad ka joojin kartaa qaybta Ballamahayga. Haddii aad joojiso in ka badan 24 saacadood ka hor casharka, deyntu waxay ku soo noqonaysaa hadhaagaaga. Joojinta dambe waxay isticmaashaa deynta casharka."
       },
       "risk": {
         "question": "Waa maxay farqiga u dhexeeya Risk 1 iyo Risk 2?",
@@ -170,8 +170,8 @@
     "popular": "Ugu caansan",
     "notForSale": "Weli iib ma aha",
     "visualLabel": "Waxbarashada wadista",
-    "save": "Kaydi {percent}%",
-    "saveAmount": "Waxaad kaydinaysaa {amount}",
+    "save": "{percent}% ka jaban inaad si gooni gooni u iibsato",
+    "saveAmount": "Waxaad kaydisaa {amount} marka loo eego inaad si gooni gooni u iibsato",
     "emptyTitle": "Alaab la muujiyo ma jirto",
     "emptyDescription": "Liiska waa la cusboonaysiinayaa. Mar dhow soo noqo.",
     "included": "Waxa ku jira",
@@ -318,15 +318,15 @@
         "languages": "Taageero shan luqadood ah"
       }
     },
-    "licensingPending": "Kaydka su'aalaha oo dhan waxa la daabacayaa marka xuquuqda nuxurka la xaqiijiyo.",
+    "licensingPending": "Kaydka su'aalaha oo dhan wuu furmaa marka aad iibsato gelitaanka teori.",
     "questionsAvailable": "su'aalo bilaash ah oo diyaar u ah tijaabo",
     "freeIntro": "Ku bilow tusaale bilaash ah",
     "startPractice": "Bilow tababarka",
     "freeCount": "{count, plural, =1 {1 su'aal bilaash ah} other {# su'aalood oo bilaash ah}}",
     "swedishOnly": "Af Iswiidhish oo keliya",
     "examLink": "Fur imtixaanka tijaabada",
-    "emptyTitle": "Su'aalo bilaash ah lama daabicin",
-    "emptyDescription": "Waxa la sugayaa su'aalo la xaqiijiyay oo shati leh.",
+    "emptyTitle": "Su'aalaha bilaashka ah dhowaan ayaa la daabici doonaa",
+    "emptyDescription": "Waxaan gelinaynaa su'aalaha dugsiga. Dhowaan soo noqo.",
     "paidAccess": "Oggolaansho aragti oo firfircoon",
     "freeAccess": "Su'aalo bilaash ah",
     "questionNumber": "Su'aasha {number}",
@@ -739,12 +739,16 @@
     "title": "Makina Trafikskola – waxbarashada wadista ee Stockholm",
     "description": "Casharro iyo tababar laysanka wadista oo Stockholm ah, taageerana ku leh luqado badan."
   },
+  "pricing": {
+    "valueSeparately": "Qiimaha haddii si gooni gooni loo iibsado: {price}"
+  },
   "cookieConsent": {
     "title": "Dejinta kukiyada",
     "description": "Waxaan isticmaalnaa kukiyo lagama maarmaan u ah gelitaanka, luqadda iyo kaydinta doorashadaada. Kukiyo falanqayn ama xayaysiis ma shaqaynayaan.",
     "readMore": "Akhri kukiyada",
     "necessary": "Kuwa lagama maarmaanka ah oo keliya",
-    "accept": "Ogolow"
+    "accept": "Ogolow",
+    "ok": "Haye"
   },
   "offline": {
     "eyebrow": "Xidhiidh ma jiro",
@@ -781,7 +785,7 @@
       },
       "validity": {
         "title": "Mudada ay shaqeyso",
-        "body": "Dhibcaha casharradu waxay shaqeeyaan 24 bilood laga bilaabo iibsiga.\nTeoriga dijitaalka ah waa iibsi hal mar. Xilli xadidan ma laha."
+        "body": "Dhibcaha casharrada iyo xirmooyinku waxay shaqeeyaan 12 bilood laga bilaabo iibsiga. Dhibcaha aan la isticmaalin way dhacaan.\nTeoriga dijitaalka ah waa iibsi hal mar. Xilli xadidan ma laha."
       },
       "cancellation": {
         "title": "Dib-u-dejinta iyo baajinta",
@@ -831,7 +835,7 @@
       },
       "recipients": {
         "title": "Qaataha iyo ka-hortagayaasha",
-        "body": "Stripe ayaa lacagaha maamula.\n46elks ayaa SMS dira.\nGoogle Maps ayaa khariidadaha muujiya.\nSentry ayaa khaladaadka qaata.\nRailway ayaa martigeliya.\nCloudflare R2 ayaa faylasha iyo kaydinta haya.\nQaar ayaa xogta u gudbin kara meel ka baxsan EU. Markaas waxaa la isticmaalaa ilaalin la oggolaaday."
+        "body": "Stripe ayaa lacagaha maamula.\nKlarna ayaa lacagta maamusha marka aad Klarna ka doorato sanduuqa.\n46elks ayaa SMS dira.\nGoogle ayaa maamusha gelitaanka Google waxayna muujisaa khariidado iyo cinwaanno.\nSentry ayaa khaladaadka qaata.\nRailway ayaa martigeliya.\nCloudflare R2 ayaa faylasha iyo kaydinta haya.\nQaar ayaa xogta u gudbin kara meel ka baxsan EU. Markaas waxaa la isticmaalaa ilaalin la oggolaaday."
       },
       "rights": {
         "title": "Xuquuqdaada",

@@ -77,13 +77,13 @@
       "cardTitle": "En tydlig plan från första lektionen",
       "cardDescription": "Välj språk, växellåda och lärare efter dina behov.",
       "reviews": "omdömen",
-      "pickupProof": "Vi hämtar dig",
+      "pickupProof": "Upphämtning efter överenskommelse",
       "languageProof": "Undervisning på 5 språk"
     },
     "trust": {
       "label": "Det här får du hos Makina",
       "languages": {"title": "Fem språk", "description": "Svenska, engelska, tigrinja, arabiska och somaliska"},
-      "pickup": {"title": "Vi hämtar dig", "description": "Läraren möter dig där du är"},
+      "pickup": {"title": "Upphämtning", "description": "Vi kan möta dig där du är efter överenskommelse"},
       "lesson": {"title": "50 minuter", "description": "Samma lektionslängd i hela utbudet"},
       "pricing": {"title": "Öppna priser", "description": "Se exakt vad som ingår innan du betalar"}
     },
@@ -128,7 +128,7 @@
       },
       "cancel": {
         "question": "Hur avbokar jag en lektion?",
-        "answer": "Du avbokar själv under Mina bokningar. Avbokar du minst 24 timmar före lektionen kostar det ingenting och lektionen går tillbaka till ditt saldo. Avbokar du senare dras lektionen från saldot."
+        "answer": "Du avbokar själv under Mina bokningar. Avbokar du mer än 24 timmar före lektionen kostar det ingenting och lektionen går tillbaka till ditt saldo. Avbokar du senare dras lektionen från saldot."
       },
       "risk": {
         "question": "Vad är skillnaden mellan Risk 1 och Risk 2?",
@@ -149,8 +149,8 @@
     "popular": "Populärast",
     "notForSale": "Inte till försäljning ännu",
     "visualLabel": "Körutbildning",
-    "save": "Spara {percent} %",
-    "saveAmount": "Du sparar {amount}",
+    "save": "{percent} % lägre än att köpa separat",
+    "saveAmount": "Du sparar {amount} jämfört med att köpa separat",
     "emptyTitle": "Inga produkter att visa",
     "emptyDescription": "Utbudet uppdateras. Kom tillbaka snart.",
     "included": "Det här ingår",
@@ -274,12 +274,12 @@
         "languages": "Stöd på fem språk"
       }
     },
-    "licensingPending": "Den fullständiga frågebanken publiceras först när innehållsrättigheterna är bekräftade.",
+    "licensingPending": "Hela frågebanken öppnas när du köper teoriåtkomst.",
     "questionsAvailable": "gratisfrågor redo att prova",
     "freeIntro": "Börja med ett kostnadsfritt smakprov",
     "startPractice": "Starta övningen",
     "freeCount": "{count, plural, =1 {1 gratisfråga} other {# gratisfrågor}}", "swedishOnly": "Endast på svenska", "examLink": "Öppna övningsprovet",
-    "emptyTitle": "Inga gratisfrågor är publicerade", "emptyDescription": "Vi inväntar verifierat och licensierat frågeinnehåll.",
+    "emptyTitle": "Gratisfrågorna publiceras snart", "emptyDescription": "Vi lägger in skolans egna frågor. Kom tillbaka snart.",
     "paidAccess": "Aktiv teoriåtkomst", "freeAccess": "Gratisfrågor", "questionNumber": "Fråga {number}",
     "categoryEmptyTitle": "Inga frågor är tillgängliga", "categoryEmptyDescription": "Kategorin saknar frågor som du har åtkomst till.", "submitAnswer": "Rätta svaret", "correct": "Rätt", "incorrect": "Inte rätt", "selectAnswer": "Välj ett svar först.", "signInToAnswer": "Logga in som elev för att spara ditt svar.", "answerError": "Svaret kunde inte sparas. Försök igen.", "imageMissing": "Bild saknas",
     "exam": {"eyebrow": "Övningsprov", "title": "Förbered dig som på kunskapsprovet", "description": "Provet rättas på servern och avslutas efter den fasta tiden.", "questions": "Frågor", "time": "Minuter", "pass": "Rätt för godkänt", "ready": "Frågebanken är redo för ett fullständigt prov.", "unavailable": "Det finns inte 65 aktiva frågor som ditt konto har åtkomst till ännu.", "signIn": "Logga in som elev för att kontrollera provåtkomst.", "start": "Starta provet på 50 minuter", "starting": "Startar provet…", "finish": "Avsluta provet", "finishing": "Rättar…", "next": "Spara och fortsätt", "selectAnswer": "Välj ett svar först.", "progress": "Fråga {current} av {total}", "timeRemaining": "Tid kvar", "passed": "Godkänt", "failed": "Inte godkänt", "error": "Provet kunde inte uppdateras. Försök igen.", "imageMissing": "Bilden kunde inte visas."}
@@ -607,12 +607,16 @@
     "title": "Makina Trafikskola – körutbildning i Stockholm",
     "description": "Körlektioner och körkortsutbildning i Stockholm med stöd på flera språk."
   },
+  "pricing": {
+    "valueSeparately": "Värde om köpt separat: {price}"
+  },
   "cookieConsent": {
     "title": "Cookieinställningar",
     "description": "Vi använder nödvändiga cookies för inloggning, språk och dina cookieval. Inga analys- eller marknadsföringscookies är aktiverade.",
     "readMore": "Läs om cookies",
     "necessary": "Endast nödvändiga",
-    "accept": "Godkänn"
+    "accept": "Godkänn",
+    "ok": "OK"
   },
   "offline": {
     "eyebrow": "Anslutning saknas",
@@ -668,7 +672,7 @@
       },
       "validity": {
         "title": "Giltighetstid",
-        "body": "Lektionskrediter och paket gäller i 24 månader från köpdagen om inget annat uttryckligen anges före köpet. Outnyttjade krediter förfaller när giltighetstiden löper ut.\nDigital teori är ett engångsköp och har ingen tidsgräns så länge tjänsten tillhandahålls. Din åtkomst är personlig och får inte delas med någon annan."
+        "body": "Lektionskrediter och paket gäller i 12 månader från köpet. Outnyttjade krediter förfaller när giltighetstiden löper ut.\nDigital teori är ett engångsköp och har ingen tidsgräns så länge tjänsten tillhandahålls. Din åtkomst är personlig och får inte delas med någon annan."
       },
       "cancellation": {
         "title": "Ombokning och avbokning",
@@ -710,7 +714,7 @@
       },
       "recipients": {
         "title": "Mottagare och underbiträden",
-        "body": "Stripe hanterar betalningar.\n46elks skickar SMS.\nGoogle Maps visar kartor och adresser.\nSentry tar emot felrapporter.\nRailway hostar tjänsten.\nCloudflare R2 lagrar filer och säkerhetskopior.\nVissa av dessa kan föra uppgifter till land utanför EU/EES. Då används godkända skyddsåtgärder, till exempel standardavtalsklausuler."
+        "body": "Stripe hanterar betalningar.\nKlarna hanterar betalning när du väljer Klarna i kassan.\n46elks skickar SMS.\nGoogle hanterar inloggning med Google och visar kartor och adresser.\nSentry tar emot felrapporter.\nRailway hostar tjänsten.\nCloudflare R2 lagrar filer och säkerhetskopior.\nVissa av dessa kan föra uppgifter till land utanför EU/EES. Då används godkända skyddsåtgärder, till exempel standardavtalsklausuler."
       },
       "rights": {
         "title": "Dina rättigheter",

@@ -1,7 +1,6 @@
 import { randomUUID } from "node:crypto";
 
 import { addDays } from "date-fns";
-import { toZonedTime } from "date-fns-tz";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 
 const authState = vi.hoisted(() => ({ studentId: "" }));
@@ -59,7 +58,7 @@ describe.skipIf(!runIntegration)("Stripe webhook replay", () => {
         priceOre: 100000,
         vatRatePct: 25,
         lessonCredits: 5,
-        creditValidDays: 730,
+        creditValidDays: 365,
         translations: {
           create: {
             locale: "sv",
@@ -175,9 +174,6 @@ describe.skipIf(!runIntegration)("Stripe webhook replay", () => {
       let raceProductId = "";
 
       try {
-        const future = addDays(new Date(), 21);
-        future.setUTCMinutes(0, 0, 0);
-        const stockholmDay = toZonedTime(future, "Europe/Stockholm").getDay();
         const location = await db.location.create({
           data: {
             slug: `${fixture}-race`,
@@ -203,12 +199,12 @@ describe.skipIf(!runIntegration)("Stripe webhook replay", () => {
                 transmissions: ["MANUAL"],
                 locations: { create: { locationId: raceLocationId } },
                 availability: {
-                  create: {
-                    dayOfWeek: stockholmDay,
-                    startTime: "00:00",
-                    endTime: "23:59",
+                  create: [0, 1, 2, 3, 4, 5, 6].map((dayOfWeek) => ({
+                    dayOfWeek,
+                    startTime: "08:00",
+                    endTime: "18:00",
                     locationId: raceLocationId,
-                  },
+                  })),
                 },
               },
             },
@@ -217,20 +213,7 @@ describe.skipIf(!runIntegration)("Stripe webhook replay", () => {
         });
         raceTeacherUserId = teacher.id;
         raceTeacherId = teacher.teacherProfile!.id;
-        const slots = await loadAvailability({
-          teacherId: raceTeacherId,
-          from: addDays(future, -1),
-          to: addDays(future, 1),
-          lessonMinutes: 50,
-          now: new Date(),
-          minNoticeHours: 12,
-        });
-        const spacedSlots = (slots ?? []).filter(
-          (_, index) => index % 2 === 0,
-        );
-        if (spacedSlots.length < 5) {
-          throw new Error(`TEST_SLOTS_SHORT:${slots?.length ?? 0}`);
-        }
+        const usedStarts = new Set<number>();
 
         const product = await db.product.create({
           data: {
@@ -325,8 +308,19 @@ describe.skipIf(!runIntegration)("Stripe webhook replay", () => {
             secret: webhookSecret,
           });
           authState.studentId = student.id;
-          const slot = spacedSlots[index];
+          const openSlots = await loadAvailability({
+            teacherId: raceTeacherId,
+            from: addDays(new Date(), 20),
+            to: addDays(new Date(), 34),
+            lessonMinutes: 50,
+            now: new Date(),
+            minNoticeHours: 12,
+          });
+          const slot = openSlots?.find(
+            (candidate) => !usedStarts.has(candidate.startsAt.getTime()),
+          );
           if (!slot) throw new Error("TEST_SLOT_MISSING");
+          usedStarts.add(slot.startsAt.getTime());
           const [webhook, booking] = await Promise.all([
             POST(
               new Request("http://localhost/api/webhooks/stripe", {
@@ -357,7 +351,10 @@ describe.skipIf(!runIntegration)("Stripe webhook replay", () => {
           ]);
 
           expect(webhook.status, await webhook.clone().text()).toBe(200);
-          expect(booking.status, await booking.clone().text()).toBe(201);
+          expect(
+            booking.status,
+            `${slot.startsAt.toISOString()} ${await booking.clone().text()}`,
+          ).toBe(201);
           const booked = (await booking.json()) as {
             creditCharged: boolean;
             holdExpiresAt: string | null;

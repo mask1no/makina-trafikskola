@@ -26,3 +26,34 @@ export function perLessonOre(priceOre: number, lessonCredits: number) {
   if (lessonCredits <= 0) return 0;
   return Math.round(priceOre / lessonCredits / 100) * 100;
 }
+
+const PER_LESSON_KINDS = new Set([
+  "PACKAGE",
+  "SINGLE_LESSON",
+  "TEST_LESSON",
+]);
+
+export function showValidity(kind: string) {
+  return (
+    kind === "PACKAGE" ||
+    kind === "SINGLE_LESSON" ||
+    kind === "TEST_LESSON" ||
+    kind === "GUARANTEE"
+  );
+}
+
+export function showPerLessonPrice(product: {
+  lessonCredits: number;
+  kind: string;
+  includesTheory: boolean;
+  includesRisk1: boolean;
+  includesRisk2: boolean;
+}) {
+  return (
+    product.lessonCredits > 0 &&
+    PER_LESSON_KINDS.has(product.kind) &&
+    !product.includesTheory &&
+    !product.includesRisk1 &&
+    !product.includesRisk2
+  );
+}

@@ -233,7 +233,7 @@ Numbered so you can say "implement R7". Every rule here has a unit test.
   Never hide paid content with CSS. Digital theory is a one-time purchase:
   `TheoryAccess.expiresAt` is nullable and `null` means lifetime access.
   A product grants theory when `includesTheory` is true. Lesson credits still
-  expire after `creditValidDays` (default 730).
+  expire after `creditValidDays` (default 365).
 - **R22** Mock exam mirrors the real kunskapsprov exactly: 65 scored questions,
   50-minute timer, 52 correct to pass. Result shown as `54/65 · Godkänt`.
 
@@ -601,7 +601,7 @@ URLs."*
       `/th/home/`) — export the old sitemap before switching DNS
 - [ ] Per-locale metadata, `hreflang` + `x-default`, sitemap per locale
 - [ ] schema.org `DrivingSchool` with NAP, `Product`/`Offer` on packages
-- [ ] Cookie banner, privacy policy, köpvillkor with 24-month credit validity
+- [ ] Cookie banner, privacy policy, köpvillkor with 12-month credit validity
       and the 24 h rule, self-serve account deletion, GDPR export
 - [ ] Ångerrätt (14-day distance-selling) checkbox and terms at checkout
 - [ ] Nightly `pg_dump` to R2 **with a restore you have actually tested**
@@ -637,7 +637,7 @@ building today. These change data, not architecture.
    bought, online sale means overselling risk.
 7. **VAT rate** on lessons, packages and theory access, from their accountant.
 8. **Cancellation and refund policy** in their own words, including package
-   refunds. Default: 24 h, 24-month validity.
+   refunds. Default: 24 h, 12-month validity.
 9. **Existing customers** — who currently holds theory access or unused
    credits, and how they migrate. Nobody may lose what they paid for.
 10. **Old sitemap export**, before anything changes.
@@ -682,7 +682,7 @@ NEXT_PUBLIC_SITE_URL=
 BOOKING_ENABLED=0             # 0 hides public booking
 INSTRUCTORS_ENABLED=0         # 0 hides public instructor pages
 CANCELLATION_WINDOW_HOURS=24
-CREDIT_VALIDITY_DAYS=730
+CREDIT_VALIDITY_DAYS=365
 MIN_BOOKING_NOTICE_HOURS=12
 BOOKING_HOLD_MINUTES=15
 ```
