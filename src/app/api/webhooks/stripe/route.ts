@@ -2,7 +2,14 @@ import { addDays, fromUnixTime } from "date-fns";
 import { Prisma } from "@prisma/client";
 import type Stripe from "stripe";
 
+import { isUniqueViolationOn } from "@/lib/bookings/errors";
 import { resolvePaidLessonHold } from "@/lib/bookings/hold";
+import {
+  CreditLockBusyError,
+  lockBookingKeys,
+  lockStudentCredits,
+  studentLockKey,
+} from "@/lib/bookings/locks";
 import { getCreditBalance } from "@/lib/credits/ledger";
 import {
   productGrantsCourseKind,
@@ -18,6 +25,7 @@ import {
   normalizeStripeEvent,
   refundableUnusedCredits,
   shouldFulfillPayment,
+  type NormalizedStripeEvent,
 } from "@/lib/payments/stripe-events";
 import { getStripe } from "@/lib/stripe";
 
@@ -115,6 +123,26 @@ export async function POST(request: Request) {
   return processVerifiedStripeEvent(event);
 }
 
+async function studentIdForCreditLock(
+  normalized: NormalizedStripeEvent | null,
+) {
+  if (normalized?.kind === "charge_refunded" && normalized.paymentIntentId) {
+    const payment = await db.payment.findUnique({
+      where: { stripePaymentIntentId: normalized.paymentIntentId },
+      select: { order: { select: { studentId: true } } },
+    });
+    return payment?.order.studentId ?? null;
+  }
+  if (normalized?.kind === "payment_succeeded" && normalized.bookingId) {
+    const order = await db.order.findUnique({
+      where: { id: normalized.orderId },
+      select: { studentId: true },
+    });
+    return order?.studentId ?? null;
+  }
+  return null;
+}
+
 export async function processVerifiedStripeEvent(
   event: Stripe.Event,
   receivedAt = new Date(),
@@ -149,9 +177,15 @@ export async function processVerifiedStripeEvent(
         ? [stripeNotificationId(event.id, "payment_failed")]
         : [];
 
-  try {
-    notificationIds = await db.$transaction(
+  const creditStudentId = await studentIdForCreditLock(normalized);
+
+  for (let attempt = 1; attempt <= 20; attempt += 1) {
+    try {
+      notificationIds = await db.$transaction(
       async (tx) => {
+        if (creditStudentId) {
+          await lockStudentCredits(tx, creditStudentId);
+        }
         const queuedNotificationIds: string[] = [];
         await tx.stripeEvent.create({
           data: { id: event.id, type: event.type },
@@ -362,6 +396,7 @@ export async function processVerifiedStripeEvent(
             const heldBooking = await tx.booking.findUnique({
               where: { id: bookingId },
             });
+            await lockBookingKeys(tx, [studentLockKey(order.studentId)]);
             const availableBalance = await getCreditBalance(
               tx,
               order.studentId,
@@ -534,7 +569,6 @@ export async function processVerifiedStripeEvent(
                   items: {
                     include: {
                       product: true,
-                      credits: true,
                       courseBookings: {
                         include: {
                           occasion: { select: { startsAt: true } },
@@ -574,15 +608,26 @@ export async function processVerifiedStripeEvent(
             },
           });
 
+          await lockBookingKeys(tx, [
+            studentLockKey(payment.order.studentId),
+          ]);
           for (const item of payment.order.items) {
             const purchasedCredits =
               item.product.lessonCredits * item.quantity;
             const desiredReversal = Math.floor(
               (purchasedCredits * refundedOre) / payment.amountOre,
             );
-            const reversedAlready = -item.credits
-              .filter((credit) => credit.reason === "PAYMENT_REFUND")
-              .reduce((sum, credit) => sum + credit.delta, 0);
+            const refundedCredits = await tx.creditTransaction.findMany({
+              where: {
+                orderItemId: item.id,
+                reason: "PAYMENT_REFUND",
+              },
+              select: { delta: true },
+            });
+            const reversedAlready = -refundedCredits.reduce(
+              (sum, credit) => sum + credit.delta,
+              0,
+            );
             const availableBalance = await getCreditBalance(
               tx,
               payment.order.studentId,
@@ -637,14 +682,25 @@ export async function processVerifiedStripeEvent(
         return queuedNotificationIds;
       },
       { isolationLevel: Prisma.TransactionIsolationLevel.Serializable },
-    );
-  } catch (error) {
-    if (
-      error instanceof Prisma.PrismaClientKnownRequestError &&
-      error.code === "P2002"
-    ) {
-      notificationIds = replayNotificationIds;
-    } else {
+      );
+      break;
+    } catch (error) {
+      if (
+        error instanceof CreditLockBusyError ||
+        (error instanceof Error && error.message === "CREDIT_LOCK_BUSY")
+      ) {
+        if (attempt === 20) throw error;
+        await new Promise((resolve) => setTimeout(resolve, 25));
+        continue;
+      }
+      if (
+        error instanceof Prisma.PrismaClientKnownRequestError &&
+        error.code === "P2002" &&
+        isUniqueViolationOn(error, "StripeEvent")
+      ) {
+        notificationIds = replayNotificationIds;
+        break;
+      }
       throw error;
     }
   }

@@ -4,7 +4,10 @@ import { z } from "zod";
 
 import { auth } from "@/auth";
 import { AuthorizationError, requireRole } from "@/lib/auth/guards";
-import { isBookingExclusionViolation } from "@/lib/bookings/errors";
+import {
+  isBookingExclusionViolation,
+  isSerializationOrTxTimeout,
+} from "@/lib/bookings/errors";
 import { loadAvailability } from "@/lib/bookings/availability";
 import { db } from "@/lib/db";
 import { dispatchNotifications } from "@/lib/notifications/dispatch";
@@ -111,7 +114,9 @@ export async function PATCH(
 
   const now = new Date();
   if (parsed.data.action === "cancel") {
-    const result = await db.$transaction(
+    let result;
+    try {
+      result = await db.$transaction(
       async (tx) => {
         const changed = await tx.booking.updateMany({
           where: { id: booking.id, status: "CONFIRMED" },
@@ -159,7 +164,16 @@ export async function PATCH(
         return { updated, notificationIds };
       },
       { isolationLevel: Prisma.TransactionIsolationLevel.Serializable },
-    );
+      );
+    } catch (error) {
+      if (
+        (error instanceof Error && error.message === "BOOKING_NOT_ACTIVE") ||
+        isSerializationOrTxTimeout(error)
+      ) {
+        return errorResponse("BOOKING_NOT_ACTIVE", 409);
+      }
+      throw error;
+    }
     await dispatchNotifications(result.notificationIds, now);
     return Response.json(result.updated);
   }
@@ -187,13 +201,19 @@ export async function PATCH(
   try {
     const updated = await db.$transaction(
       async (tx) => {
-        const changed = await tx.booking.update({
-          where: { id: booking.id },
+        const changed = await tx.booking.updateMany({
+          where: { id: booking.id, status: "CONFIRMED" },
           data: {
             teacherId: targetTeacherId,
             startsAt: targetSlot.startsAt,
             endsAt: targetSlot.endsAt,
           },
+        });
+        if (changed.count !== 1) {
+          throw new Error("BOOKING_NOT_ACTIVE");
+        }
+        const moved = await tx.booking.findUniqueOrThrow({
+          where: { id: booking.id },
         });
         await tx.auditLog.create({
           data: {
@@ -210,20 +230,26 @@ export async function PATCH(
               endsAt: booking.endsAt.toISOString(),
             },
             after: {
-              teacherId: changed.teacherId,
-              startsAt: changed.startsAt.toISOString(),
-              endsAt: changed.endsAt.toISOString(),
+              teacherId: moved.teacherId,
+              startsAt: moved.startsAt.toISOString(),
+              endsAt: moved.endsAt.toISOString(),
               reason: parsed.data.reason,
             },
           },
         });
-        return changed;
+        return moved;
       },
       { isolationLevel: Prisma.TransactionIsolationLevel.Serializable },
     );
     return Response.json(updated);
   } catch (error) {
-    if (isBookingExclusionViolation(error)) {
+    if (error instanceof Error && error.message === "BOOKING_NOT_ACTIVE") {
+      return errorResponse("BOOKING_NOT_ACTIVE", 409);
+    }
+    if (
+      isBookingExclusionViolation(error) ||
+      isSerializationOrTxTimeout(error)
+    ) {
       return errorResponse("SLOT_TAKEN", 409);
     }
     throw error;

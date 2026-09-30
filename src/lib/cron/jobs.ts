@@ -1,6 +1,7 @@
 import { addHours, subDays } from "date-fns";
 import { Prisma } from "@prisma/client";
 
+import { lockBookingKeys, studentLockKey } from "@/lib/bookings/locks";
 import { db } from "@/lib/db";
 import { calculateCreditExpiries } from "@/lib/credits/expiry";
 import { dispatchNotifications } from "@/lib/notifications/dispatch";
@@ -22,8 +23,6 @@ export async function runCoreCron(now: Date) {
       const [lock] = await tx.$queryRaw<Array<{ locked: boolean }>>`
         SELECT pg_try_advisory_xact_lock(hashtext('makina-core-cron')) AS locked
       `;
-      await tx.rateLimit.deleteMany({ where: { expiresAt: { lt: now } } });
-      await tx.otpCode.deleteMany({ where: { expiresAt: { lt: now } } });
 
       if (!lock?.locked) {
         return {
@@ -37,6 +36,9 @@ export async function runCoreCron(now: Date) {
           purgedPickupDetails: 0,
         };
       }
+
+      await tx.rateLimit.deleteMany({ where: { expiresAt: { lt: now } } });
+      await tx.otpCode.deleteMany({ where: { expiresAt: { lt: now } } });
 
       const lessonHoldsToExpire = await tx.booking.findMany({
         where: {
@@ -108,7 +110,11 @@ export async function runCoreCron(now: Date) {
         select: { studentId: true },
       });
       let expiryCount = 0;
-      for (const { studentId } of students) {
+      const studentIds = students
+        .map(({ studentId }) => studentId)
+        .sort((left, right) => (left < right ? -1 : left > right ? 1 : 0));
+      for (const studentId of studentIds) {
+        await lockBookingKeys(tx, [studentLockKey(studentId)]);
         const ledger = await tx.creditTransaction.findMany({
           where: { studentId },
           select: {

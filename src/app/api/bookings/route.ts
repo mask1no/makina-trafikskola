@@ -9,6 +9,12 @@ import {
 } from "@/lib/auth/guards";
 import { allowRateLimitedAction } from "@/lib/auth/otp-store";
 import { loadAvailability } from "@/lib/bookings/availability";
+import { isSerializationOrTxTimeout } from "@/lib/bookings/errors";
+import {
+  lockBookingKeys,
+  studentLockKey,
+  teacherSlotLockKey,
+} from "@/lib/bookings/locks";
 import { getCreditBalance } from "@/lib/credits/ledger";
 import { db } from "@/lib/db";
 import { dispatchNotifications } from "@/lib/notifications/dispatch";
@@ -169,18 +175,13 @@ export async function POST(request: Request) {
   try {
     const result = await db.$transaction(
       async (tx) => {
-        const lockKeys = [
-          `student:${session.user.id}`,
-          `teacher-slot:${parsed.data.teacherId}:${requestedSlot.startsAt.toISOString()}`,
-        ].sort();
-        for (const lockKey of lockKeys) {
-          await tx.$queryRaw`
-            SELECT pg_advisory_xact_lock(
-              hashtext('makina-booking'),
-              hashtext(${lockKey})
-            ) IS NULL AS locked
-          `;
-        }
+        await lockBookingKeys(tx, [
+          studentLockKey(session.user.id),
+          teacherSlotLockKey(
+            parsed.data.teacherId,
+            requestedSlot.startsAt,
+          ),
+        ]);
 
         const repeated = await tx.booking.findUnique({
           where: { idempotencyKey: parsed.data.idempotencyKey },
@@ -288,13 +289,12 @@ export async function POST(request: Request) {
       if (repeated?.studentId === session.user.id) {
         return Response.json(repeated);
       }
+      if (repeated && repeated.studentId !== session.user.id) {
+        return errorResponse("IDEMPOTENCY_KEY_REUSED", 409);
+      }
     }
 
-    if (
-      isExclusionViolation(error) ||
-      (error instanceof Prisma.PrismaClientKnownRequestError &&
-        ["P2028", "P2034"].includes(error.code))
-    ) {
+    if (isExclusionViolation(error) || isSerializationOrTxTimeout(error)) {
       const refreshedSlots = await loadAvailability({
         teacherId: parsed.data.teacherId,
         from,

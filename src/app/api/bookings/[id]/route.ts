@@ -9,7 +9,10 @@ import {
 } from "@/lib/auth/guards";
 import { loadAvailability } from "@/lib/bookings/availability";
 import { getCancellationCreditReason } from "@/lib/bookings/cancellation";
-import { isBookingExclusionViolation } from "@/lib/bookings/errors";
+import {
+  isBookingExclusionViolation,
+  isSerializationOrTxTimeout,
+} from "@/lib/bookings/errors";
 import { db } from "@/lib/db";
 import { dispatchNotifications } from "@/lib/notifications/dispatch";
 import { enqueueBookingNotifications } from "@/lib/notifications/queue";
@@ -170,7 +173,9 @@ export async function PATCH(
     cancellationWindowHours,
   });
 
-  const result = await db.$transaction(
+  let result;
+  try {
+    result = await db.$transaction(
     async (tx) => {
       const updated = await tx.booking.updateMany({
         where: { id: booking.id, status: "CONFIRMED" },
@@ -216,7 +221,16 @@ export async function PATCH(
       return { cancelled, notificationIds };
     },
     { isolationLevel: Prisma.TransactionIsolationLevel.Serializable },
-  );
+    );
+  } catch (error) {
+    if (
+      (error instanceof Error && error.message === "BOOKING_NOT_ACTIVE") ||
+      isSerializationOrTxTimeout(error)
+    ) {
+      return errorResponse("BOOKING_NOT_ACTIVE", 409);
+    }
+    throw error;
+  }
 
   await dispatchNotifications(result.notificationIds, now);
   return Response.json(result.cancelled);

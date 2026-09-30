@@ -25,12 +25,14 @@ vi.mock("@/lib/notifications/dispatch", () => ({
 }));
 
 import { POST } from "@/app/api/bookings/route";
+import { PATCH as patchBooking } from "@/app/api/bookings/[id]/route";
 import { loadAvailability } from "@/lib/bookings/availability";
 import { db } from "@/lib/db";
 
 const runIntegration = process.env.RUN_DB_INTEGRATION === "1";
 const fixture = `api-booking-race-${randomUUID()}`;
 const studentIds: string[] = [];
+const seededStudentIds: string[] = [];
 let teacherUserId = "";
 let teacherId = "";
 let locationId = "";
@@ -114,6 +116,7 @@ describe.skipIf(!runIntegration)("booking API concurrency", () => {
         },
       });
       studentIds.push(student.id);
+      seededStudentIds.push(student.id);
     }
   });
 
@@ -143,9 +146,9 @@ describe.skipIf(!runIntegration)("booking API concurrency", () => {
   it(
     "accepts exactly one of twenty requests for the same slot",
     async () => {
-      authState.studentIds = [...studentIds];
+      authState.studentIds = [...seededStudentIds];
       const responses = await Promise.all(
-        studentIds.map((_, index) =>
+        seededStudentIds.map((_, index) =>
           POST(
             new Request("http://localhost/api/bookings", {
               method: "POST",
@@ -188,4 +191,194 @@ describe.skipIf(!runIntegration)("booking API concurrency", () => {
     },
     30_000,
   );
+
+  async function createStudent(credits: number) {
+    const student = await db.user.create({
+      data: {
+        email: `${fixture}-extra-${randomUUID()}@example.invalid`,
+        firstName: "Concurrency",
+        lastName: "Extra",
+        role: "STUDENT",
+        ...(credits > 0
+          ? {
+              credits: {
+                create: {
+                  delta: credits,
+                  reason: "PURCHASE" as const,
+                  expiresAt: addDays(new Date(), 365),
+                },
+              },
+            }
+          : {}),
+      },
+    });
+    studentIds.push(student.id);
+    return student.id;
+  }
+
+  async function openSlots(count: number) {
+    const slots = await loadAvailability({
+      teacherId,
+      from: addDays(startsAt, -1),
+      to: addDays(startsAt, 2),
+      lessonMinutes: 50,
+      now: new Date(),
+      minNoticeHours: 12,
+    });
+    if (!slots || slots.length < count) {
+      throw new Error(`TEST_SLOTS_SHORT:${slots?.length ?? 0}`);
+    }
+    return slots.slice(0, count);
+  }
+
+  function postBooking(
+    studentId: string,
+    slot: Date,
+    idempotencyKey: string,
+    requireCredit = false,
+  ) {
+    return POST(
+      new Request("http://localhost/api/bookings", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          "idempotency-key": idempotencyKey,
+        },
+        body: JSON.stringify({
+          teacherId,
+          startsAt: slot.toISOString(),
+          lessonMinutes: 50,
+          locationId,
+          requireCredit,
+        }),
+      }),
+    );
+  }
+
+  function cancelBooking(bookingId: string) {
+    return patchBooking(
+      new Request(`http://localhost/api/bookings/${bookingId}`, {
+        method: "PATCH",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ action: "cancel" }),
+      }),
+      { params: Promise.resolve({ id: bookingId }) },
+    );
+  }
+
+  it("charges one credit and holds the other three parallel slots", async () => {
+    const studentId = await createStudent(1);
+    const slots = await openSlots(4);
+    authState.studentIds = [studentId, studentId, studentId, studentId];
+    const responses = await Promise.all(
+      slots.map((slot, index) =>
+        postBooking(studentId, slot.startsAt, `${fixture}:split:${index}`),
+      ),
+    );
+    const bodies = await Promise.all(
+      responses.map(async (response) => ({
+        status: response.status,
+        body: (await response.json()) as {
+          creditCharged?: boolean;
+          holdExpiresAt?: string | null;
+          error?: { code?: string };
+        },
+      })),
+    );
+    expect(
+      bodies.map(({ status }) => status),
+      JSON.stringify(bodies),
+    ).toEqual([201, 201, 201, 201]);
+    const charged = bodies.filter(({ body }) => body.creditCharged === true);
+    const holds = bodies.filter(
+      ({ body }) => body.creditCharged === false && body.holdExpiresAt,
+    );
+    expect(charged).toHaveLength(1);
+    expect(holds).toHaveLength(3);
+    const ledger = await db.creditTransaction.findMany({
+      where: { studentId },
+    });
+    expect(ledger.reduce((sum, entry) => sum + entry.delta, 0)).toBe(0);
+  });
+
+  it("returns one booking when the same idempotency key is posted in parallel", async () => {
+    const studentId = await createStudent(0);
+    const [slot] = await openSlots(1);
+    const idempotencyKey = `${fixture}:same-key`;
+    authState.studentIds = [studentId, studentId, studentId, studentId];
+    const responses = await Promise.all(
+      [0, 1, 2, 3].map(() =>
+        postBooking(studentId, slot.startsAt, idempotencyKey),
+      ),
+    );
+    const bodies = await Promise.all(
+      responses.map(async (response) => ({
+        status: response.status,
+        body: (await response.json()) as { id?: string; error?: { code?: string } },
+      })),
+    );
+    expect(
+      bodies.every(({ status }) => status === 200 || status === 201),
+      JSON.stringify(bodies),
+    ).toBe(true);
+    const ids = bodies.map(({ body }) => body.id);
+    expect(new Set(ids).size).toBe(1);
+    expect(ids[0]).toBeTruthy();
+    expect(
+      await db.booking.count({ where: { idempotencyKey } }),
+    ).toBe(1);
+  });
+
+  it("rejects an idempotency key that belongs to another student", async () => {
+    const studentA = await createStudent(0);
+    const studentB = await createStudent(0);
+    const [slot] = await openSlots(1);
+    const idempotencyKey = `${fixture}:other-student`;
+    authState.studentIds = [studentA];
+    const created = await postBooking(studentA, slot.startsAt, idempotencyKey);
+    expect(created.status).toBe(201);
+    authState.studentIds = [studentB];
+    const reused = await postBooking(studentB, slot.startsAt, idempotencyKey);
+    expect(reused.status).toBe(409);
+    await expect(reused.json()).resolves.toMatchObject({
+      error: { code: "IDEMPOTENCY_KEY_REUSED" },
+    });
+  });
+
+  it("refunds a credit booking once when two cancels race", async () => {
+    const studentId = await createStudent(1);
+    const [slot] = await openSlots(1);
+    authState.studentIds = [studentId];
+    const created = await postBooking(
+      studentId,
+      slot.startsAt,
+      `${fixture}:cancel-once`,
+      true,
+    );
+    expect(created.status).toBe(201);
+    const booking = (await created.json()) as { id: string; creditCharged: boolean };
+    expect(booking.creditCharged).toBe(true);
+
+    authState.studentIds = [studentId, studentId];
+    const responses = await Promise.all([
+      cancelBooking(booking.id),
+      cancelBooking(booking.id),
+    ]);
+    const outcomes = await Promise.all(
+      responses.map(async (response) => ({
+        status: response.status,
+        body: (await response.json()) as { error?: { code?: string } },
+      })),
+    );
+    const statuses = outcomes.map(({ status }) => status).sort();
+    expect(statuses, JSON.stringify(outcomes)).toEqual([200, 409]);
+    expect(
+      outcomes.find(({ status }) => status === 409)?.body.error?.code,
+    ).toBe("BOOKING_NOT_ACTIVE");
+    expect(
+      await db.creditTransaction.count({
+        where: { bookingId: booking.id, reason: "CANCELLATION_REFUND" },
+      }),
+    ).toBe(1);
+  });
 });
