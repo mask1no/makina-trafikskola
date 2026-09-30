@@ -56,7 +56,7 @@ export default async function LessonsPage(props: {
                 {lot.expiresAt
                   ? t.rich("expires", {
                       date: formatter.format(lot.expiresAt),
-                      time: (chunks) => <bdi dir="ltr">{chunks}</bdi>,
+                      time: (chunks) => <bdi>{chunks}</bdi>,
                     })
                   : t("noExpiry")}
               </p>

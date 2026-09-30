@@ -325,9 +325,7 @@ export function BookingFlow({
         <p className="mt-3 break-words text-ink-muted">
           {t.rich("confirmation.deadline", {
             deadline: deadlineLabel,
-            time: (chunks) => (
-              <bdi dir="ltr">{chunks}</bdi>
-            ),
+            time: (chunks) => <bdi>{chunks}</bdi>,
           })}
         </p>
         <a
@@ -345,9 +343,7 @@ export function BookingFlow({
                 expires: state.booking.holdExpiresAt
                   ? timeFormatter.format(new Date(state.booking.holdExpiresAt))
                   : "",
-                time: (chunks) => (
-                  <bdi dir="ltr">{chunks}</bdi>
-                ),
+                time: (chunks) => <bdi>{chunks}</bdi>,
               })}
             </Notice>
             {!state.paymentUnavailable ? (
@@ -515,7 +511,7 @@ export function BookingFlow({
             <div className="border-b border-border pb-4"><dt className="text-ink-muted">{t("summary.lesson")}</dt><dd className="mt-1 font-bold">{t(`step.what.${state.kind}`)}</dd></div>
             <div className="border-b border-border pb-4"><dt className="text-ink-muted">{t("summary.place")}</dt><dd className="mt-1 font-bold">{state.placeMode === "school" ? selectedLocation?.name ?? t("summary.notSelected") : state.pickupAddress || t("summary.notSelected")}</dd></div>
             <div className="border-b border-border pb-4"><dt className="text-ink-muted">{t("summary.teacher")}</dt><dd className="mt-1 font-bold">{selectedTeacher?.name ?? t("summary.notSelected")}</dd></div>
-            <div><dt className="text-ink-muted">{t("summary.time")}</dt><dd className="mt-1 font-bold">{state.selectedSlot ? <><bdi dir="ltr">{selectedDateLabel}</bdi><bdi dir="ltr" className="block">{timeFormatter.format(new Date(state.selectedSlot))}</bdi></> : t("summary.notSelected")}</dd></div>
+            <div><dt className="text-ink-muted">{t("summary.time")}</dt><dd className="mt-1 font-bold">{state.selectedSlot ? <><bdi>{selectedDateLabel}</bdi><bdi dir="ltr" className="block">{timeFormatter.format(new Date(state.selectedSlot))}</bdi></> : t("summary.notSelected")}</dd></div>
           </dl>
           <p className="mt-5 text-sm leading-6 text-ink-muted">{t("summary.reassurance")}</p>
       </aside>

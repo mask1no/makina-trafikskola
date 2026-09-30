@@ -243,7 +243,7 @@ export default async function TeacherPortal(
                   {nextLesson
                     ? t.rich("students.nextLesson", {
                         when: pupilDate.format(nextLesson.startsAt),
-                        time: (chunks) => <bdi dir="ltr">{chunks}</bdi>,
+                        time: (chunks) => <bdi>{chunks}</bdi>,
                       })
                     : t("students.noNext")}
                 </p>

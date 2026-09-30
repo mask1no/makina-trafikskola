@@ -569,6 +569,7 @@
       "empty": "ليس لديك حجوزات.",
       "pickup": "مكان الاصطحاب",
       "cancel": "إلغاء",
+      "keepBooking": "الإبقاء على الحجز",
       "cancelLateWarning": "انتهت مهلة الإلغاء ولن يُعاد الرصيد. هل تريد الإلغاء رغم ذلك؟",
       "cancelRefundWarning": "الإلغاء الآن يعيد الرصيد. المهلة هي <time>{deadline}</time>. هل تريد المتابعة؟",
       "deadline": "يمكنك الإلغاء حتى <time>{deadline}</time>.",

@@ -52,7 +52,7 @@ export default async function StudentDashboard(
           {nextBooking ? (
             <>
               <p className="mt-3 break-words text-2xl font-black tracking-tight sm:text-3xl">
-                <bdi dir="ltr">{date}</bdi>
+                <bdi>{date}</bdi>
               </p>
               <p className="mt-2 text-ink-muted">
                 <bdi>

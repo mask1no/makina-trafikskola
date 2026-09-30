@@ -96,7 +96,7 @@ export function BookingList({
             <span aria-hidden="true" className="absolute bottom-0 start-0 top-0 w-1 bg-border" />
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div className="min-w-0 flex-1">
-                <p className="break-words text-lg font-black numbers-ltr">
+                <p className="break-words text-lg font-black">
                   <bdi>{dateFormatter.format(new Date(booking.startsAt))}</bdi>
                 </p>
                 <p className="mt-1 text-sm text-ink-muted">
@@ -122,7 +122,7 @@ export function BookingList({
               <p className="mt-4 break-words text-sm text-ink-muted">
                 {t.rich("deadline", {
                   deadline: dateFormatter.format(deadline),
-                  time: (chunks) => <bdi dir="ltr">{chunks}</bdi>,
+                  time: (chunks) => <bdi>{chunks}</bdi>,
                 })}
               </p>
             ) : null}
@@ -153,7 +153,7 @@ export function BookingList({
                           cancellationWindowHours * 60 * 60 * 1000,
                       ),
                     ),
-                    time: (chunks) => <bdi dir="ltr">{chunks}</bdi>,
+                    time: (chunks) => <bdi>{chunks}</bdi>,
                   })}
             </p>
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
@@ -161,7 +161,7 @@ export function BookingList({
                 variant="tertiary"
                 onClick={() => setPendingCancellation(null)}
               >
-                {t("statuses.CONFIRMED")}
+                {t("keepBooking")}
               </Button>
               <Button
                 disabled={cancelling === pendingCancellation.id}

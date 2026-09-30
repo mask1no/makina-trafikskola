@@ -569,6 +569,7 @@
       "empty": "Ballamo ma lihid.",
       "pickup": "Goobta laga soo qaadayo",
       "cancel": "Baaji",
+      "keepBooking": "Hay ballanta",
       "cancelLateWarning": "Wakhtigii baajintu wuu dhaafay, dhibcahana lama soo celinayo. Ma baajisaa?",
       "cancelRefundWarning": "Hadda haddii aad baajiso dhibcaha waa laguu celinayaa. Wakhtigu waa <time>{deadline}</time>. Ma sii waddaa?",
       "deadline": "Waad baajin kartaa ilaa <time>{deadline}</time>.",

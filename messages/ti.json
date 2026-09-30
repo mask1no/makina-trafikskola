@@ -569,6 +569,7 @@
       "empty": "ቦታ ምሓዝ የብልካን።",
       "pickup": "ናይ ምውሳድ ቦታ",
       "cancel": "ሰርዝ",
+      "keepBooking": "ምሓዝ ኣቐምጥ",
       "cancelLateWarning": "ናይ ምስራዝ ግዜ ሓሊፉ፣ ክረዲት ኣይምለስን። ገና ክትስርዝ ትደሊ?",
       "cancelRefundWarning": "ሕጂ እንተሰሪዝካ ክረዲት ይምለስ። መወዳእታ <time>{deadline}</time> እዩ። ቀጽል?",
       "deadline": "ክሳብ <time>{deadline}</time> ክትስርዝ ትኽእል።",

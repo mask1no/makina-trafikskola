@@ -64,3 +64,25 @@ test("has no horizontal overflow and shows the tab bar only under md", async ({ 
     }
   }
 });
+
+test("arabic booking dates are not forced left to right", async ({ page }, testInfo) => {
+  const locale = testInfo.project.name.replace("mobile-", "");
+  test.skip(locale !== "ar");
+  await page.context().addCookies([
+    {
+      name: "makina-cookie-consent",
+      value: "necessary",
+      domain: "localhost",
+      path: "/",
+    },
+  ]);
+  await page.setViewportSize({ width: 390, height: 844 });
+  const response = await page.goto("/ar/boka");
+  expect(response?.ok()).toBeTruthy();
+  const forced = await page.locator("main").evaluate((main) =>
+    Array.from(main.querySelectorAll<HTMLElement>("[dir='ltr']")).some((element) =>
+      /[\u0600-\u06FF]/.test(element.textContent ?? ""),
+    ),
+  );
+  expect(forced).toBe(false);
+});

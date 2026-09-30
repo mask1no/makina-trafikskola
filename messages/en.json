@@ -569,6 +569,7 @@
       "empty": "You have no bookings.",
       "pickup": "Pickup location",
       "cancel": "Cancel",
+      "keepBooking": "Keep booking",
       "cancelLateWarning": "The cancellation deadline has passed. Your credit will not be refunded. Cancel anyway?",
       "cancelRefundWarning": "Cancelling now returns your credit. The deadline is <time>{deadline}</time>. Continue?",
       "deadline": "You can cancel until <time>{deadline}</time>.",

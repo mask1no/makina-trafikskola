@@ -9,6 +9,7 @@ import { notFound } from "next/navigation";
 import { auth, signOut } from "@/auth";
 import { Avatar } from "@/components/Avatar";
 import { BottomTabBar, type BottomTabIcon } from "@/components/BottomTabBar";
+import { CloseDetailsOnNavigate } from "@/components/CloseDetailsOnNavigate";
 import { CookieConsent } from "@/components/CookieConsent";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { ScrollToTop } from "@/components/ScrollToTop";
@@ -271,7 +272,7 @@ export default async function LocaleLayout(
             </div>
             {!session?.user ? (
               <>
-                <details className="relative hidden shrink-0 md:block lg:hidden">
+                <details data-header-menu className="relative hidden shrink-0 md:block lg:hidden">
                   <summary
                     aria-label={t("account")}
                     className="flex size-11 cursor-pointer list-none items-center justify-center rounded-full border border-surface-soft text-ink-inverse outline-none ring-offset-surface focus-visible:ring-2 focus-visible:ring-accent [&::-webkit-details-marker]:hidden"
@@ -303,7 +304,7 @@ export default async function LocaleLayout(
                 </Link>
               </>
             ) : (
-              <details className="group relative hidden shrink-0 md:block">
+              <details data-header-menu className="group relative hidden shrink-0 md:block">
                 <summary
                   aria-label={t("account")}
                   className="flex min-h-11 cursor-pointer list-none items-center rounded-full outline-none ring-offset-surface focus-visible:ring-2 focus-visible:ring-accent [&::-webkit-details-marker]:hidden"
@@ -416,6 +417,7 @@ export default async function LocaleLayout(
           </div>
         </footer>
         <BottomTabBar tabs={tabs} />
+        <CloseDetailsOnNavigate />
         <ScrollToTop label={t("scrollTop")} />
         <CookieConsent locale={params.locale} />
         <ServiceWorkerRegistration />

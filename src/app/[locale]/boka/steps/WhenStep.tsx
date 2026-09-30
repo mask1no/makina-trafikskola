@@ -57,7 +57,7 @@ export function WhenStep({
                 : "border-border bg-card"
             }`}
           >
-            <bdi dir="ltr">{date.label}</bdi>
+            <bdi>{date.label}</bdi>
           </button>
         ))}
       </div>

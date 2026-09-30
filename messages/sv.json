@@ -473,6 +473,7 @@
       "empty": "Du har inga bokningar.",
       "pickup": "Hämtningsplats",
       "cancel": "Avboka",
+      "keepBooking": "Behåll bokningen",
       "cancelLateWarning": "Avbokningsfristen har passerat. Krediten återbetalas inte. Vill du ändå avboka?",
       "cancelRefundWarning": "Avbokar du nu återförs krediten. Fristen är <time>{deadline}</time>. Vill du fortsätta?",
       "deadline": "Kan avbokas fram till <time>{deadline}</time>.",
