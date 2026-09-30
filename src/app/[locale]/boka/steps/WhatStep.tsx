@@ -34,7 +34,7 @@ export function WhatStep({
               key={option}
               onClick={() => onKind(option)}
               aria-pressed={kind === option}
-              className={`min-h-20 border-b px-1 py-4 text-start transition ${
+              className={`min-h-20 break-words hyphens-auto border-b px-1 py-4 text-start transition ${
                 kind === option
                   ? "border-ink"
                   : "border-border hover:border-ink-muted"

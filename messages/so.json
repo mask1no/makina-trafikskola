@@ -458,10 +458,10 @@
     "confirmation": {
       "eyebrow": "Ballanta waa la diiwaangeliyey",
       "title": "Waqtigaaga waa la qabtay",
-      "deadline": "Waad baajin kartaa ilaa {deadline}.",
+      "deadline": "Waad baajin kartaa ilaa <time>{deadline}</time>.",
       "calendar": "Ku dar jadwalka",
       "creditUsed": "Hal cashar ayaa laga jaray hadhaagaaga.",
-      "hold": "Waqtiga waa laguu hayaa ilaa {expires} inta lacag-bixintu dhammaystirmayso.",
+      "hold": "Waqtiga waa laguu hayaa ilaa <time>{expires}</time> inta lacag-bixintu dhammaystirmayso.",
       "provisional": "Liiska qiimaha weli lama xaqiijin, sidaas darteed lacag-bixintu si ku meel gaar ah uma shaqayso. Qabashada 15 daqiiqo isma beddelayso."
     },
     "calendar": {
@@ -569,9 +569,10 @@
       "empty": "Ballamo ma lihid.",
       "pickup": "Goobta laga soo qaadayo",
       "cancel": "Baaji",
+      "keepBooking": "Hay ballanta",
       "cancelLateWarning": "Wakhtigii baajintu wuu dhaafay, dhibcahana lama soo celinayo. Ma baajisaa?",
-      "cancelRefundWarning": "Hadda haddii aad baajiso dhibcaha waa laguu celinayaa. Wakhtigu waa {deadline}. Ma sii waddaa?",
-      "deadline": "Waad baajin kartaa ilaa {deadline}.",
+      "cancelRefundWarning": "Hadda haddii aad baajiso dhibcaha waa laguu celinayaa. Wakhtigu waa <time>{deadline}</time>. Ma sii waddaa?",
+      "deadline": "Waad baajin kartaa ilaa <time>{deadline}</time>.",
       "status": "Xaalad: {status}",
       "statuses": {
         "CONFIRMED": "La xaqiijiyey",
@@ -589,7 +590,7 @@
       "lotCount": "{count, plural, =1 {+1 cashar} other {+# cashar}}",
       "lessons": "casharro wadis",
       "lots": "Dhibcaha shaqaynaya",
-      "expires": "Wuxuu dhacayaa {date}",
+      "expires": "Wuxuu dhacayaa <time>{date}</time>",
       "noExpiry": "Taariikh dhicitaan ma leh",
       "empty": "Dhibco shaqaynaya ma lihid.",
       "reasons": {
@@ -718,7 +719,7 @@
     "students": {
       "title": "Ardaydayda",
       "lessonsDone": "{count, plural, =0 {Cashar la dhammeeyey ma jiro} =1 {1 cashar oo la dhammeeyey} other {# cashar oo la dhammeeyey}}",
-      "nextLesson": "Casharka xiga {when}",
+      "nextLesson": "Casharka xiga <time>{when}</time>",
       "noNext": "Cashar soo socda ma jiro.",
       "empty": "Weli arday ma jiraan."
     },

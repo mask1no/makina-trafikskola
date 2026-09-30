@@ -458,10 +458,10 @@
     "confirmation": {
       "eyebrow": "تم تسجيل الحجز",
       "title": "تم حجز موعدك",
-      "deadline": "يمكنك الإلغاء حتى {deadline}.",
+      "deadline": "يمكنك الإلغاء حتى <time>{deadline}</time>.",
       "calendar": "إضافة إلى التقويم",
       "creditUsed": "تم خصم درس واحد من رصيدك.",
-      "hold": "الموعد محفوظ لك حتى {expires} ريثما يكتمل الدفع.",
+      "hold": "الموعد محفوظ لك حتى <time>{expires}</time> ريثما يكتمل الدفع.",
       "provisional": "لم تُؤكد قائمة الأسعار بعد، لذا الدفع غير متاح مؤقتًا. يبقى الحجز المؤقت لمدة 15 دقيقة."
     },
     "calendar": {
@@ -569,9 +569,10 @@
       "empty": "ليس لديك حجوزات.",
       "pickup": "مكان الاصطحاب",
       "cancel": "إلغاء",
+      "keepBooking": "الإبقاء على الحجز",
       "cancelLateWarning": "انتهت مهلة الإلغاء ولن يُعاد الرصيد. هل تريد الإلغاء رغم ذلك؟",
-      "cancelRefundWarning": "الإلغاء الآن يعيد الرصيد. المهلة هي {deadline}. هل تريد المتابعة؟",
-      "deadline": "يمكنك الإلغاء حتى {deadline}.",
+      "cancelRefundWarning": "الإلغاء الآن يعيد الرصيد. المهلة هي <time>{deadline}</time>. هل تريد المتابعة؟",
+      "deadline": "يمكنك الإلغاء حتى <time>{deadline}</time>.",
       "status": "الحالة: {status}",
       "statuses": {
         "CONFIRMED": "مؤكد",
@@ -589,7 +590,7 @@
       "lotCount": "{count, plural, =1 {+درس واحد} other {+# دروس}}",
       "lessons": "دروس قيادة",
       "lots": "الأرصدة النشطة",
-      "expires": "صالح حتى {date}",
+      "expires": "صالح حتى <time>{date}</time>",
       "noExpiry": "بلا تاريخ انتهاء",
       "empty": "لا توجد أرصدة نشطة.",
       "reasons": {
@@ -718,7 +719,7 @@
     "students": {
       "title": "طلابي",
       "lessonsDone": "{count, plural, =0 {لا دروس مكتملة} =1 {درس مكتمل واحد} other {# دروس مكتملة}}",
-      "nextLesson": "الدرس القادم {when}",
+      "nextLesson": "الدرس القادم <time>{when}</time>",
       "noNext": "لا يوجد درس قادم.",
       "empty": "لا يوجد طلاب بعد."
     },

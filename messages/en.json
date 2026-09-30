@@ -458,10 +458,10 @@
     "confirmation": {
       "eyebrow": "Booking registered",
       "title": "Your time is booked",
-      "deadline": "You can cancel until {deadline}.",
+      "deadline": "You can cancel until <time>{deadline}</time>.",
       "calendar": "Add to calendar",
       "creditUsed": "One lesson has been deducted from your balance.",
-      "hold": "This time is held for you until {expires} while payment is completed.",
+      "hold": "This time is held for you until <time>{expires}</time> while payment is completed.",
       "provisional": "The price list is not confirmed, so payment is temporarily unavailable. Your 15-minute hold is unchanged."
     },
     "calendar": {
@@ -569,9 +569,10 @@
       "empty": "You have no bookings.",
       "pickup": "Pickup location",
       "cancel": "Cancel",
+      "keepBooking": "Keep booking",
       "cancelLateWarning": "The cancellation deadline has passed. Your credit will not be refunded. Cancel anyway?",
-      "cancelRefundWarning": "Cancelling now returns your credit. The deadline is {deadline}. Continue?",
-      "deadline": "You can cancel until {deadline}.",
+      "cancelRefundWarning": "Cancelling now returns your credit. The deadline is <time>{deadline}</time>. Continue?",
+      "deadline": "You can cancel until <time>{deadline}</time>.",
       "status": "Status: {status}",
       "statuses": {
         "CONFIRMED": "Confirmed",
@@ -589,7 +590,7 @@
       "lotCount": "{count, plural, =1 {+1 lesson} other {+# lessons}}",
       "lessons": "driving lessons",
       "lots": "Active credits",
-      "expires": "Valid until {date}",
+      "expires": "Valid until <time>{date}</time>",
       "noExpiry": "No expiry date",
       "empty": "You have no active credits.",
       "reasons": {
@@ -721,7 +722,7 @@
     "students": {
       "title": "My students",
       "lessonsDone": "{count, plural, =0 {No completed lessons} =1 {1 completed lesson} other {# completed lessons}}",
-      "nextLesson": "Next lesson {when}",
+      "nextLesson": "Next lesson <time>{when}</time>",
       "noNext": "No upcoming lesson.",
       "empty": "No students yet."
     },

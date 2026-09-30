@@ -98,7 +98,7 @@ export default async function BookingPage(
     : undefined;
 
   return (
-    <div className="site-container max-w-5xl py-8 sm:py-12">
+    <div className="site-container max-w-5xl overflow-x-clip py-4 md:py-12">
       <BookingFlow
         locale={params.locale}
         products={localizedProducts}

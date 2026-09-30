@@ -34,6 +34,7 @@ export default async function LessonsPage(props: {
     day: "numeric",
     month: "long",
     year: "numeric",
+    numberingSystem: "latn",
   });
 
   return (
@@ -49,15 +50,18 @@ export default async function LessonsPage(props: {
       <div className="mt-4 overflow-hidden rounded-md border border-border bg-card shadow-soft">
         {lots.map((lot) => (
           <article key={lot.id} className="flex min-h-20 items-center justify-between gap-4 border-b border-border p-4 last:border-b-0">
-            <div>
-              <p className="font-bold">{t(`reasons.${lot.reason}`)}</p>
-              <p className="mt-1 text-sm text-ink-muted">
+            <div className="min-w-0">
+              <p className="break-words font-bold">{t(`reasons.${lot.reason}`)}</p>
+              <p className="mt-1 break-words text-sm text-ink-muted">
                 {lot.expiresAt
-                  ? t("expires", { date: formatter.format(lot.expiresAt) })
+                  ? t.rich("expires", {
+                      date: formatter.format(lot.expiresAt),
+                      time: (chunks) => <bdi>{chunks}</bdi>,
+                    })
                   : t("noExpiry")}
               </p>
             </div>
-            <span className="text-lg font-black text-success">
+            <span className="shrink-0 text-lg font-black text-success">
               {t("lotCount", { count: lot.delta })}
             </span>
           </article>

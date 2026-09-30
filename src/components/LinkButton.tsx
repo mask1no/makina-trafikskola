@@ -22,7 +22,7 @@ export function LinkButton({
 }: LinkButtonProps) {
   return (
     <Link
-      className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-sm border px-5 py-2.5 text-sm font-bold tracking-tight transition duration-200 ease-premium active:translate-y-px ${variants[variant]} ${className}`}
+      className={`inline-flex min-h-11 max-w-full items-center justify-center gap-2 whitespace-normal break-words hyphens-auto rounded-sm border px-5 py-2.5 text-center text-sm font-bold tracking-tight transition duration-200 ease-premium active:translate-y-px ${variants[variant]} ${className}`}
       {...props}
     />
   );

@@ -55,10 +55,10 @@ function TabIcon({ icon }: { icon: BottomTabIcon }) {
 export function BottomTabBar({ tabs }: { tabs: Tab[] }) {
   const pathname = usePathname();
   return (
-    <nav className="fixed bottom-0 start-0 end-0 z-40 border-t border-border bg-card pb-[env(safe-area-inset-bottom)] shadow-float lg:hidden">
+    <nav className="fixed bottom-0 start-0 end-0 z-40 border-t border-border bg-card pb-[env(safe-area-inset-bottom)] shadow-float md:hidden">
       <ul className="grid grid-cols-5">
         {tabs.map((tab) => (
-          <li key={tab.href}>
+          <li key={tab.href} className="min-w-0">
             <Link
               href={tab.href}
               aria-current={
@@ -67,10 +67,10 @@ export function BottomTabBar({ tabs }: { tabs: Tab[] }) {
                   ? "page"
                   : undefined
               }
-              className="relative flex min-h-16 flex-col items-center justify-center gap-1 px-1 text-center text-[11px] font-bold text-ink-muted transition after:absolute after:top-0 after:h-0.5 after:w-8 after:rounded-full after:bg-transparent aria-[current=page]:bg-card-muted aria-[current=page]:text-ink aria-[current=page]:after:bg-accent"
+              className="relative flex min-h-16 flex-col items-center justify-center gap-1 px-0.5 text-center text-[11px] font-bold leading-tight text-ink-muted transition after:absolute after:top-0 after:h-0.5 after:w-8 after:rounded-full after:bg-transparent aria-[current=page]:bg-card-muted aria-[current=page]:text-ink aria-[current=page]:after:bg-accent"
             >
               <TabIcon icon={tab.icon} />
-              <span>{tab.label}</span>
+              <span className="w-full break-words hyphens-auto">{tab.label}</span>
             </Link>
           </li>
         ))}

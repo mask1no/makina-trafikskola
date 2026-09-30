@@ -45,9 +45,9 @@ criterion; "20 parallel requests produce one booking" is.
 **Two habits that save the most time.** When Cursor proposes a schema change,
 reject it and point at §4. And run the §9 acceptance criteria before moving on.
 
-**Before going live**, two answers from the client are mandatory (§11): the
-canonical price list, and whether they own the 1200 theory questions. Every
-`Product` is seeded `active: false` for exactly that reason.
+**Before going live**, the canonical price list from the client is still
+mandatory (§11). Every `Product` is seeded `active: false` for exactly that
+reason. The theory bank is the school's own 585 questions (§11.2).
 
 ---
 
@@ -483,9 +483,11 @@ One step per screen on mobile, progress bar on top, never a long-scroll form.
 3. **Vem** — instructor list, **language filter first**, map/list toggle
 4. **När** — 14-day date strip + slot grid, "Första lediga tid" pinned on top
 
-Then inline account creation (phone + OTP, three fields, no signup wall) →
-credits or checkout → confirmation showing the absolute cancellation deadline
-(R17), plus an SMS. Email is not sent.
+Then inline account creation: full name, email, phone (+46 only), password,
+and an SMS code. There is no separate signup wall. Login is an SMS code, email
+or phone plus password, or Google. Google users verify their phone once by SMS.
+Then credits or checkout → confirmation showing the absolute cancellation
+deadline (R17), plus an SMS. Email is not sent.
 
 ### 8.5 Performance
 
@@ -608,8 +610,8 @@ URLs."*
       recompute instructor ratings
 - [ ] Full mobile QA in all five locales including RTL
 - [ ] Google Maps key referrer-restricted; billing alerts on the client's account
-- [ ] Every recurring service (Railway, Stripe, Google Cloud, Resend, 46elks,
-      domain) on accounts owned and paid for by the client's company
+- [ ] Every recurring service (Railway, Stripe, Google Cloud, 46elks, domain)
+      on accounts owned and paid for by the client's company
 
 ---
 
@@ -622,10 +624,9 @@ building today. These change data, not architecture.
    is 5 lessons + Risk 1 & 2 at 6 125 kr; live Körpaket B5 is 5 lessons, no
    risk courses, 3 634 kr. Silver/Guld/Platinum match. *Blocks Task 6 going
    live.* Default: seeded live prices, marked `PROVISIONAL`.
-2. **Theory question source and licensing** — do they own the 1200 questions or
-   licence them from a supplier? The real Trafikverket exam is confidential by
-   law, so every commercial bank is written in-house; reselling a licensed bank
-   through a new platform may breach the licence. *Blocks the theory import.*
+2. **Theory question bank** — the school's own bank of 585 questions, imported
+   with `npm run theory:import`. The real bank file is not committed to the
+   repository.
 3. **Fifth language** — their own copy says the theory books exist in Swedish,
    Tigrinya, Arabic and **Amharic**, not Somali. *Blocks translation spend.*
    Default: Somali, matching the mockup.

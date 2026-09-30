@@ -39,6 +39,35 @@
 html {
   background: var(--surface);
   scroll-behavior: smooth;
+  scroll-padding-top: 4rem;
+  scroll-padding-bottom: calc(4.5rem + env(safe-area-inset-bottom));
+}
+
+@media (min-width: 768px) {
+  html {
+    scroll-padding-bottom: 0px;
+  }
+}
+
+@media (min-width: 1024px) {
+  html {
+    scroll-padding-top: 4.5rem;
+  }
+}
+
+html[lang="ti"] {
+  line-height: 1.7;
+}
+
+html[lang="ti"] .display-title,
+html[lang="ti"] .section-title,
+html[lang="ti"] .brand-mark {
+  line-height: 1.45;
+}
+
+html[lang="sv"],
+html[lang="so"] {
+  hyphens: auto;
 }
 
 body {
@@ -122,6 +151,7 @@ textarea {
     font-weight: 900;
     letter-spacing: -0.055em;
     line-height: 0.96;
+    overflow-wrap: break-word;
   }
 
   .brand-mark {
@@ -136,6 +166,7 @@ textarea {
     font-weight: 850;
     letter-spacing: -0.04em;
     line-height: 1.02;
+    overflow-wrap: break-word;
   }
 
   .reveal {

@@ -19,7 +19,7 @@ export function NavPills({
   const pathname = usePathname();
 
   return (
-    <nav aria-label={label} className="overflow-x-auto">
+    <nav aria-label={label} className="max-w-full overflow-x-auto">
       <ul className="flex min-w-max gap-1 rounded-md border border-border bg-card-muted p-1">
         {items.map((item) => {
           const current =

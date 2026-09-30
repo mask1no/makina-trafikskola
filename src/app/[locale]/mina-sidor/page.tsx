@@ -39,6 +39,7 @@ export default async function StudentDashboard(
         month: "long",
         hour: "2-digit",
         minute: "2-digit",
+        numberingSystem: "latn",
       }).format(nextBooking.startsAt)
     : null;
 
@@ -50,7 +51,9 @@ export default async function StudentDashboard(
           <p className="text-sm font-bold text-ink-muted">{t("nextBooking")}</p>
           {nextBooking ? (
             <>
-              <p className="mt-3 text-2xl font-black tracking-tight sm:text-3xl">{date}</p>
+              <p className="mt-3 break-words text-2xl font-black tracking-tight sm:text-3xl">
+                <bdi>{date}</bdi>
+              </p>
               <p className="mt-2 text-ink-muted">
                 <bdi>
                   {nextBooking.teacher.user.firstName}{" "}
