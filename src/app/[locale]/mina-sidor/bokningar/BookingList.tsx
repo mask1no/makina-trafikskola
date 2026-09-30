@@ -41,6 +41,7 @@ export function BookingList({
     month: "short",
     hour: "2-digit",
     minute: "2-digit",
+    numberingSystem: "latn",
   });
 
   function openCancellation(booking: BookingItem) {
@@ -94,9 +95,9 @@ export function BookingList({
           <article key={booking.id} className="relative overflow-hidden rounded-md border border-border bg-card p-5 shadow-soft sm:p-6">
             <span aria-hidden="true" className="absolute bottom-0 start-0 top-0 w-1 bg-border" />
             <div className="flex flex-wrap items-start justify-between gap-4">
-              <div>
-                <p className="text-lg font-black numbers-ltr">
-                  {dateFormatter.format(new Date(booking.startsAt))}
+              <div className="min-w-0 flex-1">
+                <p className="break-words text-lg font-black numbers-ltr">
+                  <bdi>{dateFormatter.format(new Date(booking.startsAt))}</bdi>
                 </p>
                 <p className="mt-1 text-sm text-ink-muted">
                   <bdi>{booking.teacherName}</bdi>
@@ -109,6 +110,7 @@ export function BookingList({
               {booking.status === "CONFIRMED" ? (
                 <Button
                   variant="tertiary"
+                  className="min-h-11 min-w-11 shrink-0"
                   disabled={cancelling === booking.id}
                   onClick={() => openCancellation(booking)}
                 >
@@ -117,8 +119,11 @@ export function BookingList({
               ) : null}
             </div>
             {booking.status === "CONFIRMED" ? (
-              <p className="mt-4 text-sm text-ink-muted">
-                {t("deadline", { deadline: dateFormatter.format(deadline) })}
+              <p className="mt-4 break-words text-sm text-ink-muted">
+                {t.rich("deadline", {
+                  deadline: dateFormatter.format(deadline),
+                  time: (chunks) => <bdi dir="ltr">{chunks}</bdi>,
+                })}
               </p>
             ) : null}
           </article>
@@ -141,13 +146,14 @@ export function BookingList({
             <p className="leading-7 text-ink-muted">
               {lateCancellation
                 ? t("cancelLateWarning")
-                : t("cancelRefundWarning", {
+                : t.rich("cancelRefundWarning", {
                     deadline: dateFormatter.format(
                       new Date(
                         new Date(pendingCancellation.startsAt).getTime() -
                           cancellationWindowHours * 60 * 60 * 1000,
                       ),
                     ),
+                    time: (chunks) => <bdi dir="ltr">{chunks}</bdi>,
                   })}
             </p>
             <div className="mt-6 grid gap-3 sm:grid-cols-2">

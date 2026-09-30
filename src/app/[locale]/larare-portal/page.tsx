@@ -112,6 +112,7 @@ export default async function TeacherPortal(
     timeZone: TIME_ZONE,
     hour: "2-digit",
     minute: "2-digit",
+    numberingSystem: "latn",
     ...(view === "week" ? { weekday: "short" as const, day: "numeric" as const, month: "short" as const } : {}),
   });
   const pupilDate = new Intl.DateTimeFormat(params.locale, {
@@ -121,6 +122,7 @@ export default async function TeacherPortal(
     month: "short",
     hour: "2-digit",
     minute: "2-digit",
+    numberingSystem: "latn",
   });
   const tomorrow = formatInTimeZone(addDays(now, 1), TIME_ZONE, "yyyy-MM-dd");
 
@@ -144,47 +146,55 @@ export default async function TeacherPortal(
             </Link>
           ))}
         </div>
-        <div className="relative mt-8 grid gap-4 before:absolute before:bottom-6 before:start-[1.4rem] before:top-6 before:w-px before:bg-border sm:before:start-[3.45rem]">
+        <div className="relative mt-8 grid gap-4 sm:before:absolute sm:before:bottom-6 sm:before:start-[3.45rem] sm:before:top-6 sm:before:w-px sm:before:bg-border">
           {lessons.map((lesson, index) => {
-            const address = lesson.pickupAddress ?? lesson.location?.address;
+            const pickup = lesson.pickupAddress;
+            const address = pickup ?? lesson.location?.address;
             const previous = previousNotes[index]?.lessonReport;
+            const mapsHref = address
+              ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`
+              : null;
             return (
-              <article key={lesson.id} className="relative ms-12 rounded-md border border-border bg-card p-5 shadow-soft sm:ms-28 sm:p-6">
-                <p className="absolute end-[calc(100%+1rem)] top-4 rounded-sm border border-border bg-card px-2 py-1 text-sm font-black numbers-ltr sm:end-[calc(100%+1.25rem)]" dir="ltr">
-                    {timeFormatter.format(lesson.startsAt)}
+              <article key={lesson.id} className="relative min-w-0 rounded-md border border-border bg-card p-5 shadow-soft sm:ms-28 sm:p-6">
+                <p className="text-sm font-black numbers-ltr sm:absolute sm:end-[calc(100%+1.25rem)] sm:top-4 sm:rounded-sm sm:border sm:border-border sm:bg-card sm:px-2 sm:py-1" dir="ltr">
+                    <bdi>{timeFormatter.format(lesson.startsAt)}</bdi>
                 </p>
-                <span aria-hidden="true" className="absolute -start-[1.95rem] top-7 size-3 rounded-full border-2 border-card bg-accent sm:-start-[5.2rem]" />
-                <div className="flex flex-wrap items-start justify-between gap-4">
-                  <div>
-                    <h2 className="text-lg font-bold">
+                <span aria-hidden="true" className="absolute top-7 hidden size-3 rounded-full border-2 border-card bg-accent sm:block sm:-start-[5.2rem]" />
+                <div className="min-w-0">
+                    <h2 className="break-words text-lg font-bold">
                       {lesson.student.firstName} {lesson.student.lastName}
                     </h2>
-                    <div className="mt-2 flex flex-wrap gap-3 text-sm">
+                    <div className="mt-2 grid text-sm">
                       {lesson.student.phone ? (
-                        <a className="inline-flex min-h-11 items-center font-bold underline" href={`tel:${lesson.student.phone}`}>
-                          {t("call")}
+                        <a className="inline-flex min-h-11 items-center font-bold underline" href={`tel:${lesson.student.phone}`} dir="ltr">
+                          <bdi>{lesson.student.phone}</bdi>
                         </a>
                       ) : null}
-                      {address ? (
+                      {mapsHref ? (
                         <a
-                          className="inline-flex min-h-11 items-center font-bold underline"
-                          href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`}
+                          className="inline-flex min-h-11 items-center break-words font-bold underline"
+                          href={mapsHref}
                           target="_blank"
                           rel="noreferrer"
                         >
-                          {t("openAddress")}
+                          {pickup ?? lesson.location?.name ?? address}
                         </a>
                       ) : null}
+                      <a
+                        href={`#lesson-report-${lesson.id}`}
+                        className="inline-flex min-h-11 items-center font-bold underline"
+                      >
+                        {lesson.status === "COMPLETED" ? t("updateReport") : t("completeLesson")}
+                      </a>
                     </div>
-                  </div>
                 </div>
-                <div className="mt-4 rounded-sm bg-page p-4">
+                <div className="mt-4 min-w-0 rounded-sm bg-page p-4">
                   <p className="text-sm font-bold">{t("previousNote")}</p>
-                  <p className="mt-1 text-sm text-ink-muted">
+                  <p className="mt-1 truncate text-sm text-ink-muted">
                     {previous?.nextFocus ?? previous?.summary ?? t("noPreviousNote")}
                   </p>
                 </div>
-                <form action={reportLesson} className="mt-4 grid gap-3">
+                <form id={`lesson-report-${lesson.id}`} action={reportLesson} className="mt-4 grid scroll-mt-24 gap-3">
                   <input type="hidden" name="bookingId" value={lesson.id} />
                   <input type="hidden" name="locale" value={params.locale} />
                   <Textarea
@@ -229,9 +239,12 @@ export default async function TeacherPortal(
                 <p className="mt-1 text-sm text-ink-muted">
                   {t("students.lessonsDone", { count: done })}
                 </p>
-                <p className="mt-1 text-sm text-ink">
+                <p className="mt-1 break-words text-sm text-ink">
                   {nextLesson
-                    ? t("students.nextLesson", { when: pupilDate.format(nextLesson.startsAt) })
+                    ? t.rich("students.nextLesson", {
+                        when: pupilDate.format(nextLesson.startsAt),
+                        time: (chunks) => <bdi dir="ltr">{chunks}</bdi>,
+                      })
                     : t("students.noNext")}
                 </p>
               </article>

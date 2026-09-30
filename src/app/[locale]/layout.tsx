@@ -26,7 +26,7 @@ export function generateStaticParams() {
 
 function Logo({ compactOnMobile = false }: { compactOnMobile?: boolean }) {
   return (
-    <span className="rtl-no-mirror inline-flex items-center gap-2.5">
+    <span className="rtl-no-mirror inline-flex min-w-0 items-center gap-2.5">
       <svg
         aria-hidden="true"
         viewBox="0 0 36 36"
@@ -39,8 +39,15 @@ function Logo({ compactOnMobile = false }: { compactOnMobile?: boolean }) {
           fill="var(--accent-ink)"
         />
       </svg>
-      <span className={`${compactOnMobile ? "hidden sm:inline" : ""} text-base font-black tracking-[-0.035em] sm:text-lg`}>
-        Makina <span className="hidden font-semibold text-ink-inverse-muted sm:inline">Trafikskola</span>
+      <span className={`${compactOnMobile ? "hidden truncate sm:inline" : "truncate"} text-base font-black tracking-[-0.035em] sm:text-lg`}>
+        Makina{" "}
+        <span
+          className={`hidden font-semibold text-ink-inverse-muted ${
+            compactOnMobile ? "sm:inline lg:hidden xl:inline" : "sm:inline"
+          }`}
+        >
+          Trafikskola
+        </span>
       </span>
     </span>
   );
@@ -156,6 +163,21 @@ export default async function LocaleLayout(
       : undefined;
   const canBook = bookingEnabled();
   const showInstructors = instructorsEnabled();
+  const navItems = [
+    { href: base, label: t("home") },
+    { href: `${base}/korlektioner`, label: t("lessons") },
+    ...(showInstructors
+      ? [{ href: `${base}/larare`, label: t("teachers") }]
+      : []),
+    { href: `${base}/teori`, label: t("theory") },
+    { href: `${base}/kontakt`, label: t("contact") },
+  ];
+  const inlineNavClass =
+    "inline-flex min-h-11 shrink-0 items-center whitespace-nowrap rounded-sm px-1.5 text-[13px] font-bold transition hover:bg-surface-raised aria-[current=page]:bg-surface-raised xl:px-3 xl:text-sm";
+  const menuLinkClass =
+    "flex min-h-11 items-center rounded-sm px-3 font-semibold hover:bg-card-muted";
+  const menuPanelClass =
+    "absolute end-0 top-[calc(100%+0.5rem)] z-50 min-w-56 max-w-[calc(100vw-2rem)] rounded-md border border-border bg-card p-2 text-sm text-ink shadow-float";
   const teacherProfile =
     session?.user.role === "TEACHER"
       ? await db.teacherProfile.findUnique({
@@ -220,7 +242,7 @@ export default async function LocaleLayout(
 
   return (
     <NextIntlClientProvider>
-      <div className="min-h-screen bg-page pb-[calc(4.5rem+env(safe-area-inset-bottom))] lg:pb-0">
+      <div className="min-h-screen bg-page pb-[calc(4.5rem+env(safe-area-inset-bottom))] md:pb-0">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -228,41 +250,60 @@ export default async function LocaleLayout(
           }}
         />
         <header className="sticky top-0 z-40 border-b border-surface-soft bg-surface text-ink-inverse shadow-soft">
-          <div className="site-container flex min-h-16 items-center gap-3 lg:min-h-[4.5rem]">
-            <Link href={base} className="inline-flex min-h-11 items-center">
+          <div className="site-container flex min-h-16 flex-nowrap items-center gap-2 lg:min-h-[4.5rem] lg:gap-2">
+            <Link href={base} className="inline-flex min-h-11 min-w-0 shrink items-center">
               <Logo compactOnMobile />
             </Link>
-            <nav className="ms-auto hidden items-center gap-1 lg:flex" aria-label={t("navigation")}>
-              <Link aria-current={currentPage(base)} className="inline-flex min-h-11 items-center rounded-sm px-3 text-sm font-bold transition hover:bg-surface-raised aria-[current=page]:bg-surface-raised" href={base}>
-                {t("home")}
-              </Link>
-              <Link aria-current={currentPage(`${base}/korlektioner`)} className="inline-flex min-h-11 items-center rounded-sm px-3 text-sm font-bold transition hover:bg-surface-raised aria-[current=page]:bg-surface-raised" href={`${base}/korlektioner`}>
-                {t("lessons")}
-              </Link>
-              {showInstructors ? (
-                <Link aria-current={currentPage(`${base}/larare`)} className="inline-flex min-h-11 items-center rounded-sm px-3 text-sm font-bold transition hover:bg-surface-raised aria-[current=page]:bg-surface-raised" href={`${base}/larare`}>
-                  {t("teachers")}
+            <nav className="hidden min-w-0 items-center gap-0.5 lg:flex xl:gap-1" aria-label={t("navigation")}>
+              {navItems.map((item) => (
+                <Link
+                  key={item.href}
+                  aria-current={currentPage(item.href)}
+                  className={inlineNavClass}
+                  href={item.href}
+                >
+                  {item.label}
                 </Link>
-              ) : null}
-              <Link aria-current={currentPage(`${base}/teori`)} className="inline-flex min-h-11 items-center rounded-sm px-3 text-sm font-bold transition hover:bg-surface-raised aria-[current=page]:bg-surface-raised" href={`${base}/teori`}>
-                {t("theory")}
-              </Link>
-              <Link aria-current={currentPage(`${base}/kontakt`)} className="inline-flex min-h-11 items-center rounded-sm px-3 text-sm font-bold transition hover:bg-surface-raised aria-[current=page]:bg-surface-raised" href={`${base}/kontakt`}>
-                {t("contact")}
-              </Link>
+              ))}
             </nav>
-            <div className="ms-auto lg:ms-2">
+            <div className="ms-auto shrink-0 lg:ms-2">
               <LanguageSwitcher />
             </div>
             {!session?.user ? (
-              <Link
-                href={`${base}/logga-in`}
-                className="hidden min-h-11 items-center px-2 text-sm font-bold underline-offset-4 hover:underline lg:inline-flex"
-              >
-                {t("signIn")}
-              </Link>
+              <>
+                <details className="relative hidden shrink-0 md:block lg:hidden">
+                  <summary
+                    aria-label={t("account")}
+                    className="flex size-11 cursor-pointer list-none items-center justify-center rounded-full border border-surface-soft text-ink-inverse outline-none ring-offset-surface focus-visible:ring-2 focus-visible:ring-accent [&::-webkit-details-marker]:hidden"
+                  >
+                    <svg aria-hidden="true" viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="1.75">
+                      <circle cx="12" cy="8" r="3.25" />
+                      <path d="M5.5 19.5c.8-3.2 3-4.75 6.5-4.75s5.7 1.55 6.5 4.75" strokeLinecap="round" />
+                    </svg>
+                  </summary>
+                  <div className={menuPanelClass}>
+                    <nav aria-label={t("navigation")} className="grid">
+                      {navItems.map((item) => (
+                        <Link key={item.href} className={menuLinkClass} href={item.href}>
+                          {item.label}
+                        </Link>
+                      ))}
+                    </nav>
+                    <div className="my-1 border-t border-border" />
+                    <Link className={menuLinkClass} href={`${base}/logga-in`}>
+                      {t("signIn")}
+                    </Link>
+                  </div>
+                </details>
+                <Link
+                  href={`${base}/logga-in`}
+                  className="hidden min-h-11 shrink-0 items-center whitespace-nowrap px-2 text-sm font-bold underline-offset-4 hover:underline lg:inline-flex"
+                >
+                  {t("signIn")}
+                </Link>
+              </>
             ) : (
-              <details className="group relative hidden lg:block">
+              <details className="group relative hidden shrink-0 md:block">
                 <summary
                   aria-label={t("account")}
                   className="flex min-h-11 cursor-pointer list-none items-center rounded-full outline-none ring-offset-surface focus-visible:ring-2 focus-visible:ring-accent [&::-webkit-details-marker]:hidden"
@@ -276,25 +317,33 @@ export default async function LocaleLayout(
                     size="sm"
                   />
                 </summary>
-                <div className="absolute end-0 top-[calc(100%+0.5rem)] z-50 min-w-56 rounded-md border border-border bg-card p-2 text-sm text-ink shadow-float">
+                <div className={menuPanelClass}>
+                  <nav aria-label={t("navigation")} className="grid lg:hidden">
+                    {navItems.map((item) => (
+                      <Link key={item.href} className={menuLinkClass} href={item.href}>
+                        {item.label}
+                      </Link>
+                    ))}
+                    <div className="my-1 border-t border-border" />
+                  </nav>
                   {session.user.role === "STUDENT" ? (
                     <>
-                      <Link className="flex min-h-11 items-center rounded-sm px-3 font-semibold hover:bg-card-muted" href={`${base}/mina-sidor`}>{t("myPages")}</Link>
-                      <Link className="flex min-h-11 items-center rounded-sm px-3 font-semibold hover:bg-card-muted" href={`${base}/mina-sidor/bokningar`}>{t("bookings")}</Link>
-                      <Link className="flex min-h-11 items-center rounded-sm px-3 font-semibold hover:bg-card-muted" href={`${base}/mina-sidor/lektioner`}>{t("balance")}</Link>
-                      <Link className="flex min-h-11 items-center rounded-sm px-3 font-semibold hover:bg-card-muted" href={`${base}/mina-sidor/profil`}>{t("profile")}</Link>
+                      <Link className={menuLinkClass} href={`${base}/mina-sidor`}>{t("myPages")}</Link>
+                      <Link className={menuLinkClass} href={`${base}/mina-sidor/bokningar`}>{t("bookings")}</Link>
+                      <Link className={menuLinkClass} href={`${base}/mina-sidor/lektioner`}>{t("balance")}</Link>
+                      <Link className={menuLinkClass} href={`${base}/mina-sidor/profil`}>{t("profile")}</Link>
                     </>
                   ) : session.user.role === "TEACHER" ? (
                     <>
-                      <Link className="flex min-h-11 items-center rounded-sm px-3 font-semibold hover:bg-card-muted" href={`${base}/larare-portal`}>{t("teacherPortal")}</Link>
-                      <Link className="flex min-h-11 items-center rounded-sm px-3 font-semibold hover:bg-card-muted" href={teacherProfile ? `${base}/larare/${teacherProfile.slug}` : `${base}/larare`}>{t("profile")}</Link>
+                      <Link className={menuLinkClass} href={`${base}/larare-portal`}>{t("teacherPortal")}</Link>
+                      <Link className={menuLinkClass} href={teacherProfile ? `${base}/larare/${teacherProfile.slug}` : `${base}/larare`}>{t("profile")}</Link>
                     </>
                   ) : (
                     <>
-                      <Link className="flex min-h-11 items-center rounded-sm px-3 font-semibold hover:bg-card-muted" href={`${base}/admin`}>{t("adminPanel")}</Link>
-                      <Link className="flex min-h-11 items-center rounded-sm px-3 font-semibold hover:bg-card-muted" href={`${base}/admin/calendar`}>{t("calendar")}</Link>
-                      <Link className="flex min-h-11 items-center rounded-sm px-3 font-semibold hover:bg-card-muted" href={`${base}/admin/students`}>{t("students")}</Link>
-                      <Link className="flex min-h-11 items-center rounded-sm px-3 font-semibold hover:bg-card-muted" href={`${base}/admin/recensioner`}>{adminT("reviews")}</Link>
+                      <Link className={menuLinkClass} href={`${base}/admin`}>{t("adminPanel")}</Link>
+                      <Link className={menuLinkClass} href={`${base}/admin/calendar`}>{t("calendar")}</Link>
+                      <Link className={menuLinkClass} href={`${base}/admin/students`}>{t("students")}</Link>
+                      <Link className={menuLinkClass} href={`${base}/admin/recensioner`}>{adminT("reviews")}</Link>
                     </>
                   )}
                   <div className="my-1 border-t border-border" />
@@ -313,7 +362,7 @@ export default async function LocaleLayout(
             )}
             <Link
               href={canBook ? `${base}/boka` : `${base}/kontakt`}
-              className="inline-flex min-h-11 items-center rounded-sm border border-accent bg-accent px-3 text-sm font-extrabold text-accent-ink shadow-soft transition hover:border-accent-hover hover:bg-accent-hover sm:px-5"
+              className="inline-flex min-h-11 shrink-0 items-center whitespace-nowrap rounded-sm border border-accent bg-accent px-3 text-sm font-extrabold text-accent-ink shadow-soft transition hover:border-accent-hover hover:bg-accent-hover sm:px-4"
             >
               {canBook ? t("book") : t("contact")}
             </Link>

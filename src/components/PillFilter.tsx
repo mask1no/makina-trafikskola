@@ -17,7 +17,7 @@ export function PillFilter({
   disabled = false,
   title,
 }: PillFilterProps) {
-  const className = `inline-flex min-h-11 items-center border-b-2 px-1 py-2 text-sm font-bold transition duration-200 ease-premium ${
+  const className = `inline-flex min-h-11 max-w-full items-center whitespace-normal break-words hyphens-auto border-b-2 px-1 py-2 text-sm font-bold transition duration-200 ease-premium ${
     active
       ? "border-ink text-ink"
       : disabled

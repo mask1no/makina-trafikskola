@@ -374,10 +374,10 @@
     "confirmation": {
       "eyebrow": "Bokningen är registrerad",
       "title": "Din tid är bokad",
-      "deadline": "Kan avbokas fram till {deadline}.",
+      "deadline": "Kan avbokas fram till <time>{deadline}</time>.",
       "calendar": "Lägg till i kalender",
       "creditUsed": "En lektion har dragits från ditt saldo.",
-      "hold": "Tiden hålls åt dig till {expires} medan betalningen slutförs.",
+      "hold": "Tiden hålls åt dig till <time>{expires}</time> medan betalningen slutförs.",
       "provisional": "Prislistan är ännu inte bekräftad, så betalning är tillfälligt otillgänglig. Din 15-minutersreservation påverkas inte."
     },
     "calendar": {"summary": "Körlektion med Makina Trafikskola", "description": "Avbokningsfrist: {deadline}."}
@@ -474,8 +474,8 @@
       "pickup": "Hämtningsplats",
       "cancel": "Avboka",
       "cancelLateWarning": "Avbokningsfristen har passerat. Krediten återbetalas inte. Vill du ändå avboka?",
-      "cancelRefundWarning": "Avbokar du nu återförs krediten. Fristen är {deadline}. Vill du fortsätta?",
-      "deadline": "Kan avbokas fram till {deadline}.",
+      "cancelRefundWarning": "Avbokar du nu återförs krediten. Fristen är <time>{deadline}</time>. Vill du fortsätta?",
+      "deadline": "Kan avbokas fram till <time>{deadline}</time>.",
       "status": "Status: {status}",
       "statuses": {
         "CONFIRMED": "Bekräftad",
@@ -493,7 +493,7 @@
       "lotCount": "{count, plural, =1 {+1 lektion} other {+# lektioner}}",
       "lessons": "körlektioner",
       "lots": "Aktiva krediter",
-      "expires": "Gäller till {date}",
+      "expires": "Gäller till <time>{date}</time>",
       "noExpiry": "Utan slutdatum",
       "empty": "Du har inga aktiva krediter.",
       "reasons": {
@@ -586,7 +586,7 @@
     "students": {
       "title": "Mina elever",
       "lessonsDone": "{count, plural, =0 {Inga genomförda lektioner} =1 {1 genomförd lektion} other {# genomförda lektioner}}",
-      "nextLesson": "Nästa lektion {when}",
+      "nextLesson": "Nästa lektion <time>{when}</time>",
       "noNext": "Ingen kommande lektion.",
       "empty": "Inga elever ännu."
     },

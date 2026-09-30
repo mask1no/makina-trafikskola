@@ -48,7 +48,7 @@ export function WhoStep({
               key={item}
               onClick={() => onLanguage(item)}
               aria-pressed={language === item}
-              className={`min-h-11 rounded-full border px-4 text-sm font-semibold ${
+              className={`min-h-11 max-w-full break-words hyphens-auto rounded-full border px-4 text-sm font-semibold ${
                 language === item
                   ? "border-accent bg-accent text-accent-ink"
                   : "border-border bg-card"

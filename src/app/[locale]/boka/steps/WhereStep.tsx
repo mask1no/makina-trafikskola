@@ -43,7 +43,7 @@ export function WhereStep({
             key={mode}
             onClick={() => onPlaceMode(mode)}
             aria-pressed={placeMode === mode}
-            className={`min-h-24 border-b px-1 py-5 text-start font-bold transition ${
+            className={`min-h-24 break-words hyphens-auto border-b px-1 py-5 text-start font-bold transition ${
               placeMode === mode
                 ? "border-ink"
                 : "border-border hover:border-ink-muted"

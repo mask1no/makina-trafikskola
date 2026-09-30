@@ -458,10 +458,10 @@
     "confirmation": {
       "eyebrow": "ቦታ ምሓዝ ተመዝጊቡ",
       "title": "ግዜኻ ተሓዚኡ",
-      "deadline": "ክሳብ {deadline} ክትስርዝ ትኽእል።",
+      "deadline": "ክሳብ <time>{deadline}</time> ክትስርዝ ትኽእል።",
       "calendar": "ናብ ካላንደር ወስኽ",
       "creditUsed": "ሓደ ትምህርቲ ካብ ሒሳብካ ተቐኒሱ።",
-      "hold": "ክሳብ {expires} ክፍሊት ዝዛዘም ግዜኻ ተታሒዙልካ።",
+      "hold": "ክሳብ <time>{expires}</time> ክፍሊት ዝዛዘም ግዜኻ ተታሒዙልካ።",
       "provisional": "ዝርዝር ዋጋ ገና ኣይተረጋገጸን፣ ስለዚ ክፍሊት ግዝያዊ ኣይርከብን። ናይ 15 ደቒቕ ምሓዝካ ኣይቀየርን።"
     },
     "calendar": {
@@ -570,8 +570,8 @@
       "pickup": "ናይ ምውሳድ ቦታ",
       "cancel": "ሰርዝ",
       "cancelLateWarning": "ናይ ምስራዝ ግዜ ሓሊፉ፣ ክረዲት ኣይምለስን። ገና ክትስርዝ ትደሊ?",
-      "cancelRefundWarning": "ሕጂ እንተሰሪዝካ ክረዲት ይምለስ። መወዳእታ {deadline} እዩ። ቀጽል?",
-      "deadline": "ክሳብ {deadline} ክትስርዝ ትኽእል።",
+      "cancelRefundWarning": "ሕጂ እንተሰሪዝካ ክረዲት ይምለስ። መወዳእታ <time>{deadline}</time> እዩ። ቀጽል?",
+      "deadline": "ክሳብ <time>{deadline}</time> ክትስርዝ ትኽእል።",
       "status": "ኩነታት: {status}",
       "statuses": {
         "CONFIRMED": "ተረጋጊጹ",
@@ -589,7 +589,7 @@
       "lotCount": "{count, plural, =1 {+1 ትምህርቲ} other {+# ትምህርትታት}}",
       "lessons": "ትምህርቲ ምዝዋር",
       "lots": "ንጡፍ ክረዲት",
-      "expires": "ክሳብ {date} ይሰርሕ",
+      "expires": "ክሳብ <time>{date}</time> ይሰርሕ",
       "noExpiry": "መወዳእታ የብሉን",
       "empty": "ንጡፍ ክረዲት የብልካን።",
       "reasons": {
@@ -718,7 +718,7 @@
     "students": {
       "title": "ተማሃሮይ",
       "lessonsDone": "{count, plural, =0 {ዝተዛዘመ ትምህርቲ የለን} =1 {1 ዝተዛዘመ ትምህርቲ} other {# ዝተዛዘሙ ትምህርትታት}}",
-      "nextLesson": "ዝቕጽል ትምህርቲ {when}",
+      "nextLesson": "ዝቕጽል ትምህርቲ <time>{when}</time>",
       "noNext": "ዝመጽእ ትምህርቲ የለን።",
       "empty": "ገና ተማሃሮ የለዉን።"
     },

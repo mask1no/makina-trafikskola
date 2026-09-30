@@ -115,6 +115,7 @@ export function BookingFlow({
       weekday: "short",
       day: "numeric",
       month: "short",
+      numberingSystem: "latn",
     });
     return Array.from({ length: 14 }, (_, index) => {
       const date = addCalendarDays(new Date(), index);
@@ -175,12 +176,14 @@ export function BookingFlow({
         weekday: "long",
         day: "numeric",
         month: "long",
+        numberingSystem: "latn",
       }).format(new Date(state.selectedSlot))
     : "";
   const timeFormatter = new Intl.DateTimeFormat(locale, {
     timeZone: "Europe/Stockholm",
     hour: "2-digit",
     minute: "2-digit",
+    numberingSystem: "latn",
   });
 
   function next() {
@@ -309,6 +312,7 @@ export function BookingFlow({
       month: "short",
       hour: "2-digit",
       minute: "2-digit",
+      numberingSystem: "latn",
     }).format(deadline);
     return (
       <section className="mx-auto max-w-3xl overflow-hidden rounded-lg border border-border bg-card shadow-card">
@@ -318,8 +322,13 @@ export function BookingFlow({
           <h1 className="mt-2 text-3xl font-black sm:text-4xl">{t("confirmation.title")}</h1>
         </div>
         <div className="p-6 sm:p-10">
-        <p className="mt-3 text-ink-muted">
-          {t("confirmation.deadline", { deadline: deadlineLabel })}
+        <p className="mt-3 break-words text-ink-muted">
+          {t.rich("confirmation.deadline", {
+            deadline: deadlineLabel,
+            time: (chunks) => (
+              <bdi dir="ltr">{chunks}</bdi>
+            ),
+          })}
         </p>
         <a
           href={`/api/bookings/${state.booking.id}/calendar`}
@@ -332,10 +341,13 @@ export function BookingFlow({
         ) : (
           <>
             <Notice className="mt-5">
-              {t("confirmation.hold", {
+              {t.rich("confirmation.hold", {
                 expires: state.booking.holdExpiresAt
                   ? timeFormatter.format(new Date(state.booking.holdExpiresAt))
                   : "",
+                time: (chunks) => (
+                  <bdi dir="ltr">{chunks}</bdi>
+                ),
               })}
             </Notice>
             {!state.paymentUnavailable ? (
@@ -385,11 +397,11 @@ export function BookingFlow({
   }
 
   return (
-    <div className="grid gap-6">
+    <div className="grid min-w-0 gap-4 md:gap-6">
       <header className="max-w-2xl">
-        <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-ink-muted">{t("eyebrow")}</p>
-        <h1 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">{t("title")}</h1>
-        <p className="mt-3 leading-7 text-ink-muted">{t("description")}</p>
+        <p className="hidden text-xs font-extrabold uppercase tracking-[0.18em] text-ink-muted md:block">{t("eyebrow")}</p>
+        <h1 className="text-2xl font-black tracking-tight md:mt-3 md:text-4xl">{t("title")}</h1>
+        <p className="mt-3 hidden leading-7 text-ink-muted md:block">{t("description")}</p>
       </header>
       <Stepper
         steps={[
@@ -403,8 +415,8 @@ export function BookingFlow({
         completed={state.authenticated ? [4] : []}
         progressLabel={t("progress")}
       />
-      <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_18rem]">
-      <div>
+      <div className="grid min-w-0 items-start gap-8 lg:grid-cols-[minmax(0,1fr)_18rem]">
+      <div className="min-w-0">
       {state.step === 0 ? (
         <WhatStep
           products={products}
@@ -477,7 +489,8 @@ export function BookingFlow({
           {errors.has(state.error) ? errors(state.error) : errors("UNKNOWN")}
         </p>
       ) : null}
-      <div className="flex gap-3">
+      {state.step < 4 ? (
+      <div className="sticky bottom-[calc(4.5rem+env(safe-area-inset-bottom))] z-30 -mx-4 flex gap-3 border-t border-border bg-card px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-soft sm:-mx-6 sm:px-6 md:static md:bottom-auto md:mx-0 md:mt-2 md:border-0 md:bg-transparent md:px-0 md:py-0 md:shadow-none">
         {state.step > 0 ? (
           <Button variant="tertiary" onClick={() => dispatch({ type: "step", update: (current) => current - 1 })}>
             {t("back")}
@@ -487,12 +500,13 @@ export function BookingFlow({
           <Button className="ms-auto" onClick={next}>
             {t("next")}
           </Button>
-        ) : state.step === 3 ? (
+        ) : (
           <Button className="ms-auto" disabled={state.busy || !state.selectedSlot} onClick={next}>
             {state.authenticated ? t("confirm") : t("next")}
           </Button>
-        ) : null}
+        )}
       </div>
+      ) : null}
       </div>
       <aside className="hidden border-s border-border ps-8 lg:sticky lg:top-24 lg:block">
           <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-ink-muted">{t("summary.eyebrow")}</p>
@@ -501,7 +515,7 @@ export function BookingFlow({
             <div className="border-b border-border pb-4"><dt className="text-ink-muted">{t("summary.lesson")}</dt><dd className="mt-1 font-bold">{t(`step.what.${state.kind}`)}</dd></div>
             <div className="border-b border-border pb-4"><dt className="text-ink-muted">{t("summary.place")}</dt><dd className="mt-1 font-bold">{state.placeMode === "school" ? selectedLocation?.name ?? t("summary.notSelected") : state.pickupAddress || t("summary.notSelected")}</dd></div>
             <div className="border-b border-border pb-4"><dt className="text-ink-muted">{t("summary.teacher")}</dt><dd className="mt-1 font-bold">{selectedTeacher?.name ?? t("summary.notSelected")}</dd></div>
-            <div><dt className="text-ink-muted">{t("summary.time")}</dt><dd className="mt-1 font-bold">{state.selectedSlot ? <><span>{selectedDateLabel}</span><span className="block [direction:ltr]">{timeFormatter.format(new Date(state.selectedSlot))}</span></> : t("summary.notSelected")}</dd></div>
+            <div><dt className="text-ink-muted">{t("summary.time")}</dt><dd className="mt-1 font-bold">{state.selectedSlot ? <><bdi dir="ltr">{selectedDateLabel}</bdi><bdi dir="ltr" className="block">{timeFormatter.format(new Date(state.selectedSlot))}</bdi></> : t("summary.notSelected")}</dd></div>
           </dl>
           <p className="mt-5 text-sm leading-6 text-ink-muted">{t("summary.reassurance")}</p>
       </aside>

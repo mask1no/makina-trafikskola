@@ -53,7 +53,7 @@ export function LanguageSwitcher() {
 
   useEffect(() => {
     if (!open) return;
-    const desktop = window.matchMedia("(min-width: 1024px)").matches;
+    const desktop = window.matchMedia("(min-width: 768px)").matches;
     const items = desktop ? desktopItemsRef.current : mobileItemsRef.current;
     items[activeIndex]?.focus();
   }, [activeIndex, open]);
@@ -187,15 +187,15 @@ export function LanguageSwitcher() {
 
       {open ? (
         <>
-          <div className="absolute end-0 top-[calc(100%+0.5rem)] z-50 hidden min-w-52 rounded-md border border-border bg-card p-2 text-ink shadow-float lg:block">
+          <div className="absolute end-0 top-[calc(100%+0.5rem)] z-50 hidden min-w-52 rounded-md border border-border bg-card p-2 text-ink shadow-float md:block">
             {options(desktopItemsRef)}
           </div>
           <div
             aria-hidden="true"
-            className="fixed inset-0 z-40 bg-surface/60 lg:hidden"
+            className="fixed inset-0 z-40 bg-surface/60 md:hidden"
             onClick={() => closeMenu()}
           />
-          <div className="lg:hidden">
+          <div className="md:hidden">
             <BottomSheet title={t("label")}>
               {options(mobileItemsRef)}
             </BottomSheet>

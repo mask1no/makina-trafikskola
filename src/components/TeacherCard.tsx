@@ -23,7 +23,7 @@ export function TeacherCard(props: TeacherCardProps) {
     <article
       id={props.cardId}
       data-teacher={props.cardId ? "" : undefined}
-      className="group flex h-full flex-col border-b border-border pb-6 transition duration-300 hover:border-ink data-[selected=true]:border-accent"
+      className="group flex h-full min-w-0 flex-col break-words hyphens-auto border-b border-border pb-6 transition duration-300 hover:border-ink data-[selected=true]:border-accent"
     >
       <div className="flex items-start gap-4">
         <Avatar
