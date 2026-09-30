@@ -270,6 +270,11 @@
     "book": "Book",
     "contact": "Contact us",
     "close": "Close",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out",
+    "recenter": "Show all",
+    "onMap": "{count, plural, =1 {1 instructor} other {# instructors}}",
+    "areaFallback": "Stockholm",
     "homeTeaserTitle": "Find an instructor near you",
     "homeTeaserDescription": "Filter by language and see where the instructors are.",
     "homeTeaserCta": "Open instructor map"

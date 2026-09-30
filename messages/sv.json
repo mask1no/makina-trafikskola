@@ -243,6 +243,11 @@
     "book": "Boka",
     "contact": "Kontakta oss",
     "close": "Stäng",
+    "zoomIn": "Zooma in",
+    "zoomOut": "Zooma ut",
+    "recenter": "Visa alla",
+    "onMap": "{count, plural, =1 {1 lärare} other {# lärare}}",
+    "areaFallback": "Stockholm",
     "homeTeaserTitle": "Hitta lärare nära dig",
     "homeTeaserDescription": "Filtrera på språk och se var lärarna finns.",
     "homeTeaserCta": "Öppna lärarkartan"

@@ -270,6 +270,11 @@
     "book": "Ballan",
     "contact": "Nala soo xiriir",
     "close": "Xir",
+    "zoomIn": "Soo dhowe",
+    "zoomOut": "Ka fogee",
+    "recenter": "Muuji dhammaan",
+    "onMap": "{count, plural, =1 {1 macallin} other {# macallin}}",
+    "areaFallback": "Stockholm",
     "homeTeaserTitle": "Hel macallin kuu dhow",
     "homeTeaserDescription": "Ku shaandhee luqadda oo arag meelaha macallimiintu joogaan.",
     "homeTeaserCta": "Fur khariidadda macallimiinta"

@@ -90,6 +90,34 @@ function PersonPin({
   );
 }
 
+function frameMap(
+  map: google.maps.Map,
+  positions: Array<{ lat: number; lng: number }>,
+) {
+  if (positions.length === 0) return;
+  const bounds = new google.maps.LatLngBounds();
+  for (const position of positions) bounds.extend(position);
+  map.fitBounds(bounds, { top: 56, right: 40, bottom: 56, left: 40 });
+  google.maps.event.addListenerOnce(map, "idle", () => {
+    const zoom = map.getZoom();
+    if (zoom == null) return;
+    if (zoom > 16) map.setZoom(16);
+    if (zoom < 13) map.setZoom(13);
+  });
+}
+
+function MapHandle({
+  mapRef,
+}: {
+  mapRef: { current: google.maps.Map | null };
+}) {
+  const map = useMap();
+  useEffect(() => {
+    mapRef.current = map;
+  }, [map, mapRef]);
+  return null;
+}
+
 function FrameTeachers({
   positions,
 }: {
@@ -103,22 +131,69 @@ function FrameTeachers({
     .join("|");
 
   useEffect(() => {
-    if (!map || positionsRef.current.length === 0) return;
-    const bounds = new google.maps.LatLngBounds();
-    for (const position of positionsRef.current) bounds.extend(position);
-    map.fitBounds(bounds, { top: 72, right: 48, bottom: 72, left: 48 });
-    const listener = google.maps.event.addListenerOnce(map, "idle", () => {
-      const zoom = map.getZoom();
-      if (zoom == null) return;
-      if (zoom > 16) map.setZoom(16);
-      if (zoom < 13) map.setZoom(13);
-    });
-    return () => {
-      google.maps.event.removeListener(listener);
-    };
+    if (!map) return;
+    frameMap(map, positionsRef.current);
   }, [key, map]);
 
   return null;
+}
+
+const controlClass =
+  "grid size-11 place-items-center rounded-sm border border-ink-inverse/15 bg-card text-xl font-black leading-none text-ink shadow-soft transition duration-500 ease-premium hover:border-accent";
+
+function ZoomRail({
+  onZoomIn,
+  onZoomOut,
+  onRecenter,
+  zoomInLabel,
+  zoomOutLabel,
+  recenterLabel,
+}: {
+  onZoomIn: () => void;
+  onZoomOut: () => void;
+  onRecenter: () => void;
+  zoomInLabel: string;
+  zoomOutLabel: string;
+  recenterLabel: string;
+}) {
+  return (
+    <div className="flex gap-2 sm:flex-col">
+      <button
+        type="button"
+        aria-label={zoomInLabel}
+        onClick={onZoomIn}
+        className={controlClass}
+      >
+        +
+      </button>
+      <button
+        type="button"
+        aria-label={zoomOutLabel}
+        onClick={onZoomOut}
+        className={controlClass}
+      >
+        −
+      </button>
+      <button
+        type="button"
+        aria-label={recenterLabel}
+        onClick={onRecenter}
+        className="grid size-11 place-items-center rounded-sm border border-accent bg-accent text-accent-ink shadow-soft transition duration-500 ease-premium hover:border-accent-hover hover:bg-accent-hover"
+      >
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          className="size-5"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.75"
+        >
+          <circle cx="12" cy="12" r="3" />
+          <path d="M12 3v3M12 18v3M3 12h3M18 12h3" strokeLinecap="round" />
+        </svg>
+      </button>
+    </div>
+  );
 }
 
 function MarkerDetails({
@@ -174,7 +249,16 @@ export default function GoogleMapClient({
   const mapId = process.env.NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID;
   const [openId, setOpenId] = useState<string | null>(null);
   const [mobile, setMobile] = useState(false);
+  const mapRef = useRef<google.maps.Map | null>(null);
   const placed = useMemo(() => fanOutPositions(markers), [markers]);
+  const pinPositions = useMemo(
+    () => placed.map((marker) => marker.displayPosition),
+    [placed],
+  );
+  const showingPeople = markers.some((marker) => marker.languages?.length);
+  const placeLabel =
+    markers.find((marker) => marker.locationName)?.locationName ??
+    t("areaFallback");
   const openMarker = placed.find((marker) => marker.id === openId) ?? null;
   const teacherChoices = markers.filter(
     (marker, index) =>
@@ -196,71 +280,90 @@ export default function GoogleMapClient({
     setOpenId(marker.id);
   }
 
+  function changeZoom(delta: number) {
+    const map = mapRef.current;
+    if (!map) return;
+    map.setZoom(Math.min(20, Math.max(8, (map.getZoom() ?? 13) + delta)));
+  }
+
+  function recenter() {
+    const map = mapRef.current;
+    if (!map) return;
+    frameMap(map, pinPositions);
+  }
+
+  function zoomRail() {
+    return (
+      <ZoomRail
+        onZoomIn={() => changeZoom(1)}
+        onZoomOut={() => changeZoom(-1)}
+        onRecenter={recenter}
+        zoomInLabel={t("zoomIn")}
+        zoomOutLabel={t("zoomOut")}
+        recenterLabel={t("recenter")}
+      />
+    );
+  }
+
   return (
     <APIProvider apiKey={apiKey}>
-      {teacherChoices.length > 1 ? (
-        <div className="mb-3 flex gap-2 overflow-x-auto">
-          {teacherChoices.map((marker) => (
-            <button
-              key={marker.teacherId}
-              type="button"
-              aria-pressed={openMarker?.teacherId === marker.teacherId}
-              onClick={() => select(marker)}
-              className="flex min-h-11 shrink-0 items-center gap-2 rounded-full border border-border bg-card pe-4 ps-2 text-sm font-bold text-ink shadow-soft transition duration-500 ease-premium hover:border-border-strong aria-pressed:border-accent aria-pressed:bg-accent-soft"
-            >
-              <Avatar
-                name={marker.title}
-                imageUrl={marker.photoUrl}
-                size="sm"
-              />
-              {marker.title}
-            </button>
-          ))}
-        </div>
-      ) : null}
       <div
-        className="rtl-no-mirror relative h-[28rem] overflow-hidden rounded-lg"
+        className="rtl-no-mirror overflow-hidden rounded-lg bg-surface p-3 text-ink-inverse shadow-float sm:p-4"
         aria-label={label}
       >
-        <Map
-          defaultCenter={center}
-          defaultZoom={13}
-          gestureHandling="cooperative"
-          disableDefaultUI
-          mapId={mapId || undefined}
-        >
-          <FrameTeachers
-            positions={placed.map((marker) => marker.displayPosition)}
-          />
-          {mapId
-            ? placed.map((marker) => {
+        <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
+          <p className="flex min-w-0 items-center gap-2 text-base font-black">
+            <span
+              aria-hidden="true"
+              className="size-2 shrink-0 rounded-full bg-accent shadow-[0_0_0_4px_color-mix(in_srgb,var(--accent)_28%,transparent)]"
+            />
+            <span className="truncate">{placeLabel}</span>
+          </p>
+          <div className="flex shrink-0 items-center gap-3">
+            {showingPeople ? (
+              <p className="text-sm font-bold text-ink-inverse-muted">
+                {t("onMap", { count: teacherChoices.length })}
+              </p>
+            ) : null}
+            <div className="sm:hidden">{zoomRail()}</div>
+          </div>
+        </div>
+        <div className="flex items-stretch gap-3">
+          <div className="relative h-[26rem] min-w-0 flex-1 overflow-hidden rounded-md border border-ink-inverse/10 sm:h-[28rem]">
+            <Map
+              defaultCenter={center}
+              defaultZoom={13}
+              gestureHandling="cooperative"
+              disableDefaultUI
+              mapId={mapId || undefined}
+              className="size-full"
+            >
+              <MapHandle mapRef={mapRef} />
+              <FrameTeachers positions={pinPositions} />
+              {placed.map((marker) => {
                 const selected =
                   selectedTeacherId === marker.teacherId ||
                   openMarker?.id === marker.id;
-                return (
-                  <AdvancedMarker
-                    key={marker.id}
-                    position={marker.displayPosition}
-                    title={marker.title}
-                    zIndex={selected ? 10 : 1}
-                    onClick={() => select(marker)}
-                  >
-                    <PersonPin name={marker.title} selected={selected} />
-                  </AdvancedMarker>
-                );
-              })
-            : placed.map((marker) => {
-                const selected =
-                  selectedTeacherId === marker.teacherId ||
-                  openMarker?.id === marker.id;
-                const person = Boolean(marker.languages?.length);
+                if (mapId) {
+                  return (
+                    <AdvancedMarker
+                      key={marker.id}
+                      position={marker.displayPosition}
+                      title={marker.title}
+                      zIndex={selected ? 10 : 1}
+                      onClick={() => select(marker)}
+                    >
+                      <PersonPin name={marker.title} selected={selected} />
+                    </AdvancedMarker>
+                  );
+                }
                 return (
                   <Marker
                     key={marker.id}
                     position={marker.displayPosition}
                     title={marker.title}
                     icon={
-                      person
+                      marker.languages?.length
                         ? personMarkerIcon(marker.title, selected)
                         : undefined
                     }
@@ -270,18 +373,41 @@ export default function GoogleMapClient({
                   />
                 );
               })}
-          {openMarker && !mobile ? (
-            <InfoWindow
-              position={openMarker.displayPosition}
-              onCloseClick={() => setOpenId(null)}
-            >
-              <MarkerDetails
-                bookingAvailable={bookingAvailable}
-                marker={openMarker}
-              />
-            </InfoWindow>
-          ) : null}
-        </Map>
+              {openMarker && !mobile ? (
+                <InfoWindow
+                  position={openMarker.displayPosition}
+                  onCloseClick={() => setOpenId(null)}
+                >
+                  <MarkerDetails
+                    bookingAvailable={bookingAvailable}
+                    marker={openMarker}
+                  />
+                </InfoWindow>
+              ) : null}
+            </Map>
+          </div>
+          <div className="hidden sm:block">{zoomRail()}</div>
+        </div>
+        {showingPeople && teacherChoices.length > 1 ? (
+          <div className="mt-3 flex gap-2 overflow-x-auto">
+            {teacherChoices.map((marker) => (
+              <button
+                key={marker.teacherId}
+                type="button"
+                aria-pressed={openMarker?.teacherId === marker.teacherId}
+                onClick={() => select(marker)}
+                className="flex min-h-11 shrink-0 items-center gap-2 rounded-full border border-ink-inverse/15 bg-card pe-4 ps-2 text-sm font-bold text-ink shadow-soft transition duration-500 ease-premium hover:border-accent aria-pressed:border-accent aria-pressed:bg-accent"
+              >
+                <Avatar
+                  name={marker.title}
+                  imageUrl={marker.photoUrl}
+                  size="sm"
+                />
+                {marker.title}
+              </button>
+            ))}
+          </div>
+        ) : null}
       </div>
       {openMarker && mobile ? (
         <BottomSheet title={openMarker.title} open>

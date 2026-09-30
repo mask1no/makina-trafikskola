@@ -270,6 +270,11 @@
     "book": "احجز",
     "contact": "اتصل بنا",
     "close": "إغلاق",
+    "zoomIn": "تكبير",
+    "zoomOut": "تصغير",
+    "recenter": "عرض الكل",
+    "onMap": "{count, plural, =1 {مدرّب واحد} other {# مدرّبين}}",
+    "areaFallback": "ستوكهولم",
     "homeTeaserTitle": "اعثر على مدرب قريب منك",
     "homeTeaserDescription": "صفِّ حسب اللغة وشاهد أماكن المدربين.",
     "homeTeaserCta": "افتح خريطة المدربين"
