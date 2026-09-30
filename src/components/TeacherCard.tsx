@@ -23,14 +23,14 @@ export function TeacherCard(props: TeacherCardProps) {
     <article
       id={props.cardId}
       data-teacher={props.cardId ? "" : undefined}
-      className="group flex h-full min-w-0 flex-col break-words hyphens-auto border-b border-border pb-6 transition duration-300 hover:border-ink data-[selected=true]:border-accent"
+      className="group flex h-full min-w-0 flex-col break-words hyphens-auto border-b border-border pb-6 transition duration-700 ease-premium hover:border-ink data-[selected=true]:border-accent"
     >
       <div className="flex items-start gap-4">
         <Avatar
           name={props.name}
           imageUrl={props.photoUrl}
           size="lg"
-          className="transition duration-300 group-hover:scale-[1.03]"
+          className="transition duration-700 ease-premium group-hover:scale-[1.03]"
         />
         <div className="min-w-0 pt-1">
           <h3 className="text-xl font-extrabold tracking-tight">

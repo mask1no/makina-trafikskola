@@ -6,6 +6,7 @@ import { LinkButton } from "@/components/LinkButton";
 import { ProductCard } from "@/components/ProductCard";
 import { StaticMapArtwork } from "@/components/StaticMapArtwork";
 import { TeacherCard } from "@/components/TeacherCard";
+import { TeacherMap } from "@/components/TeacherMap";
 import { isLocale } from "@/i18n/routing";
 import {
   bookingEnabled,
@@ -90,6 +91,25 @@ export default async function MarketingHome(
   const entryPackage = products
     .filter((product) => product.kind === "PACKAGE")
     .sort((a, b) => a.priceOre - b.priceOre)[0];
+  const homeMapMarkers = teachers.flatMap((teacher) =>
+    teacher.locations.map(({ location }, index) => ({
+      id: `${teacher.id}-${index}`,
+      teacherId: teacher.id,
+      title: `${teacher.user.firstName} ${teacher.user.lastName}`,
+      position: { lat: location.lat, lng: location.lng },
+      photoUrl: teacher.photoUrl,
+      languages: teacher.languages.map((language) => t(`language.${language}`)),
+      transmission: teacher.transmissions
+        .map((item) => t(`teacher.transmission.${item.toLowerCase()}`))
+        .join(", "),
+      locationName: location.name,
+    })),
+  );
+  const homeMapCenter = homeMapMarkers[0]?.position ?? {
+    lat: 59.3293,
+    lng: 18.0686,
+  };
+  const mapsKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY;
   const faqItems = [
     {
       question: t("home.faq.cost.question"),
@@ -173,13 +193,13 @@ export default async function MarketingHome(
             (key, index) => (
               <article
                 key={key}
-                className="group min-h-56 rounded-lg border border-border bg-card p-6 shadow-card transition duration-300 hover:-translate-y-1 hover:border-border-strong hover:shadow-float"
+                className="group min-h-56 rounded-lg border border-border bg-card p-6 shadow-card transition duration-700 ease-premium hover:-translate-y-1 hover:border-border-strong hover:shadow-float"
               >
                 <div className="flex min-h-14 items-center text-ink">
                   {key === "languages" ? (
                     <div
                       aria-hidden="true"
-                      className="rtl-no-mirror flex gap-1"
+                      className="rtl-no-mirror flex w-full max-w-full flex-wrap justify-center gap-1 lg:justify-start"
                     >
                       {LANGUAGE_MARKS.map((language) => (
                         <span
@@ -191,7 +211,7 @@ export default async function MarketingHome(
                       ))}
                     </div>
                   ) : (
-                    <span className="grid size-14 place-items-center rounded-md bg-accent-soft text-ink transition group-hover:bg-accent">
+                    <span className="grid size-14 place-items-center rounded-md bg-accent-soft text-ink transition duration-700 ease-premium group-hover:bg-accent">
                       <TrustIcon kind={key} />
                     </span>
                   )}
@@ -256,23 +276,42 @@ export default async function MarketingHome(
                 />
               ))}
             </div>
-            <Link
-              href={`/${params.locale}/larare`}
-              className="group relative min-h-[22rem] overflow-hidden bg-surface text-ink-inverse"
-              aria-label={t("map.homeTeaserCta")}
-            >
-              <StaticMapArtwork className="absolute inset-0 size-full transition duration-500 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-[linear-gradient(180deg,color-mix(in_srgb,var(--surface)_5%,transparent)_0%,var(--surface)_92%)]" />
-              <div className="relative z-10 flex h-full flex-col justify-end p-6 sm:p-8">
+            <div className="flex flex-col gap-4">
+              <div>
                 <h3 className="text-2xl font-black">{t("map.homeTeaserTitle")}</h3>
-                <p className="mt-3 max-w-sm text-sm leading-6 text-ink-inverse-muted">
+                <p className="mt-3 max-w-sm text-sm leading-6 text-ink-muted">
                   {t("map.homeTeaserDescription")}
                 </p>
-                <span className="mt-6 inline-flex min-h-11 items-center font-bold underline underline-offset-4">
-                  {t("map.homeTeaserCta")}
-                </span>
               </div>
-            </Link>
+              {mapsKey && homeMapMarkers.length ? (
+                <TeacherMap
+                  apiKey={mapsKey}
+                  bookingAvailable={canBook}
+                  center={homeMapCenter}
+                  label={t("map.interactiveLabel")}
+                  missingKeyTitle={t("map.unavailableTitle")}
+                  missingKeyDescription={t("map.unavailableDescription")}
+                  fallbackHref={`/${params.locale}/larare`}
+                  fallbackLabel={t("map.homeTeaserCta")}
+                  markers={homeMapMarkers}
+                />
+              ) : (
+                <Link
+                  href={`/${params.locale}/larare`}
+                  className="group relative min-h-[22rem] overflow-hidden bg-surface text-ink-inverse"
+                  aria-label={t("map.homeTeaserCta")}
+                >
+                  <StaticMapArtwork className="absolute inset-0 size-full transition duration-700 ease-premium group-hover:scale-105" />
+                  <div className="absolute inset-0 bg-[linear-gradient(180deg,color-mix(in_srgb,var(--surface)_5%,transparent)_0%,var(--surface)_92%)]" />
+                </Link>
+              )}
+              <Link
+                href={`/${params.locale}/larare`}
+                className="inline-flex min-h-11 items-center font-bold underline underline-offset-4"
+              >
+                {t("map.homeTeaserCta")}
+              </Link>
+            </div>
           </div>
         </div>
         </section>
@@ -398,18 +437,34 @@ export default async function MarketingHome(
                 <p className="mt-5 max-w-xl leading-7 text-ink-inverse-muted">
                   {t("theory.teaser.description")}
                 </p>
-                <div className="mt-6 flex flex-wrap gap-2">
+                <ul className="mt-6 grid gap-3">
                   {(["categories", "practice", "languages"] as const).map(
                     (item) => (
-                      <span
+                      <li
                         key={item}
-                        className="inline-flex min-h-11 items-center rounded-full border border-ink-inverse/20 px-4 text-sm font-bold"
+                        className="flex items-center gap-3 text-sm font-bold"
                       >
+                        <span
+                          aria-hidden="true"
+                          className="grid size-6 shrink-0 place-items-center rounded-full bg-success text-ink-inverse"
+                        >
+                          <svg
+                            viewBox="0 0 16 16"
+                            className="size-3.5"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2.25"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path d="m3.5 8.5 3 3 6-7" />
+                          </svg>
+                        </span>
                         {t(`theory.teaser.features.${item}`)}
-                      </span>
+                      </li>
                     ),
                   )}
-                </div>
+                </ul>
                 <div className="mt-8 flex flex-wrap gap-3">
                   <LinkButton href={`/${params.locale}/teori`}>
                     {t("theory.teaser.tryFree")}

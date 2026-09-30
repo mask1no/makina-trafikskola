@@ -239,12 +239,12 @@
     "unavailableDescription": "Du kan fortfarande hitta och välja lärare i listan.",
     "pendingKey": "Kartan aktiveras när Google Maps-nyckeln är på plats.",
     "interactionTitle": "Utforska lärarna på kartan",
-    "interactionHint": "Flytta kartan och välj en markör för att se lärare, språk, växellåda och undervisningsplats.",
+    "interactionHint": "Varje lärare syns på kartan. Tryck på en lärare för språk, växellåda och plats.",
     "book": "Boka",
     "contact": "Kontakta oss",
     "close": "Stäng",
     "homeTeaserTitle": "Hitta lärare nära dig",
-    "homeTeaserDescription": "Filtrera på språk och se var lärarna finns – öppna kartan på lärarsidan.",
+    "homeTeaserDescription": "Filtrera på språk och se var lärarna finns.",
     "homeTeaserCta": "Öppna lärarkartan"
   },
   "courses": {
@@ -265,7 +265,7 @@
       "eyebrow": "Körkortsteori",
       "title": "Plugga teorin på ditt språk",
       "description": "Öva kategori för kategori och gör övningsprov i samma form som kunskapsprovet. Ett urval är gratis. Resten öppnas när du köper teori.",
-      "tryFree": "Prova gratisfrågor",
+      "tryFree": "Öva gratis",
       "buy": "Köp teoriåtkomst",
       "pending": "Släpps så snart frågebanken är klar",
       "oneTime": "Engångsköp",

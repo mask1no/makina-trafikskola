@@ -105,7 +105,7 @@ export default async function TeoriPage(
                 <Link
                   key={category.id}
                   href={`/${params.locale}/teori/${category.slug}`}
-                    className="group flex min-h-52 flex-col justify-between rounded-lg border border-border bg-card p-6 shadow-card transition duration-300 hover:-translate-y-1 hover:border-border-strong hover:shadow-float"
+                    className="group flex min-h-52 flex-col justify-between rounded-lg border border-border bg-card p-6 shadow-card transition duration-700 ease-premium hover:-translate-y-1 hover:border-border-strong hover:shadow-float"
                 >
                     <div className="flex items-start justify-between gap-4">
                       <span className="grid size-12 place-items-center rounded-full bg-accent text-lg font-black text-accent-ink">
@@ -113,7 +113,7 @@ export default async function TeoriPage(
                       </span>
                       <span
                         aria-hidden="true"
-                        className="rtl-directional text-2xl transition group-hover:scale-110"
+                        className="rtl-directional text-2xl transition duration-700 ease-premium group-hover:scale-110"
                       >
                         →
                       </span>

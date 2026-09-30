@@ -266,12 +266,12 @@
     "unavailableDescription": "You can still find and choose an instructor from the list.",
     "pendingKey": "The map activates when the Google Maps key is in place.",
     "interactionTitle": "Explore instructors on the map",
-    "interactionHint": "Move around the map and choose a marker to see the instructor, languages, transmission and teaching location.",
+    "interactionHint": "Each instructor is on the map. Tap a person for language, gearbox and place.",
     "book": "Book",
     "contact": "Contact us",
     "close": "Close",
     "homeTeaserTitle": "Find an instructor near you",
-    "homeTeaserDescription": "Filter by language and see where instructors are – open the map on the instructors page.",
+    "homeTeaserDescription": "Filter by language and see where the instructors are.",
     "homeTeaserCta": "Open instructor map"
   },
   "courses": {
@@ -309,7 +309,7 @@
       "eyebrow": "Driving theory",
       "title": "Study theory in your language",
       "description": "Practise by category and take a mock test in the same form as the knowledge test. A sample is free. The rest opens when you buy theory.",
-      "tryFree": "Try free questions",
+      "tryFree": "Practise for free",
       "buy": "Buy theory access",
       "pending": "Releases when the question bank is ready",
       "oneTime": "One-time purchase",

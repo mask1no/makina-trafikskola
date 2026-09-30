@@ -51,7 +51,7 @@ export function ProductCard(props: ProductCardProps) {
 
   return (
     <article
-      className={`group relative flex h-full flex-col overflow-hidden break-words hyphens-auto rounded-lg border border-s-4 border-s-[var(--tier-accent,var(--accent))] bg-card shadow-soft transition duration-200 hover:-translate-y-0.5 hover:shadow-card ${
+      className={`group relative flex h-full flex-col overflow-hidden break-words hyphens-auto rounded-lg border border-s-4 border-s-[var(--tier-accent,var(--accent))] bg-card shadow-soft transition duration-700 ease-premium hover:-translate-y-0.5 hover:shadow-card ${
         props.active ? "border-border" : "border-border-strong"
       }`}
       style={tierStyle}

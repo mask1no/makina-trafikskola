@@ -195,7 +195,7 @@ export default async function ContactPage(
             {publicStaff.map((staffMember) => (
               <article
                 key={staffMember.name}
-                className="group flex min-h-64 flex-col justify-between rounded-lg border border-border bg-card p-5 shadow-card transition duration-300 hover:-translate-y-1 hover:border-border-strong hover:shadow-float"
+                className="group flex min-h-64 flex-col justify-between rounded-lg border border-border bg-card p-5 shadow-card transition duration-700 ease-premium hover:-translate-y-1 hover:border-border-strong hover:shadow-float"
               >
                 <div className="flex items-center gap-4">
                   <Avatar name={staffMember.name} size="lg" />

@@ -266,12 +266,12 @@
     "unavailableDescription": "Weli waxaad macallin ka heli kartaa oo ka dooran kartaa liiska.",
     "pendingKey": "Khariidadu waxay shaqaynaysaa marka furaha Google Maps la diyaariyo.",
     "interactionTitle": "Khariidadda ka eeg macallimiinta",
-    "interactionHint": "Dhaqaaji khariidadda oo dooro calaamad si aad u aragto macallinka, luqadaha, nooca gaadhiga iyo goobta waxbaridda.",
+    "interactionHint": "Macallin kasta wuxuu ku yaal khariidadda. Taabo qofka si aad u aragto luqadda, gaadhiga iyo goobta.",
     "book": "Ballan",
     "contact": "Nala soo xiriir",
     "close": "Xir",
     "homeTeaserTitle": "Hel macallin kuu dhow",
-    "homeTeaserDescription": "Ku shaandhee luqadda oo arag meelaha macallimiintu joogaan – fur khariidadda bogga macallimiinta.",
+    "homeTeaserDescription": "Ku shaandhee luqadda oo arag meelaha macallimiintu joogaan.",
     "homeTeaserCta": "Fur khariidadda macallimiinta"
   },
   "courses": {
@@ -309,7 +309,7 @@
       "eyebrow": "Aragtida shahaadada",
       "title": "Baro aragtida luqaddaada",
       "description": "Ku tababar qayb qayb oo samee imtixaan tijaabo ah oo la mid ah imtixaanka aqoonta. Tusaale ayaa bilaash ah. Inta kale way furantaa markaad iibsato teoriga.",
-      "tryFree": "Isku day su'aalaha bilaashka ah",
+      "tryFree": "Ku tababar bilaash",
       "buy": "Iibso gelitaanka aragtida",
       "pending": "Waxaa la sii daayaa marka kaydka su'aalaha diyaar yahay",
       "oneTime": "Hal mar iibso",
