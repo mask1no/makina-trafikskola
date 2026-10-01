@@ -55,7 +55,7 @@
     "privacy": "Privacy",
     "cookies": "Cookies",
     "languageHelp": "Support in your language",
-    "languageHelpDescription": "Lessons in Swedish, English, Tigrinya and Arabic. Somali is coming soon.",
+    "languageHelpDescription": "Contact us in Swedish, English, Tigrinya or Arabic. Somali is coming soon.",
     "orgnrLabel": "Org. no.",
     "call": "Call",
     "callUs": "Call us",
@@ -143,7 +143,8 @@
       },
       "cancel": {
         "question": "How do I cancel a lesson?",
-        "answer": "You can cancel under My bookings. If you cancel more than 24 hours before the lesson, the credit is returned to your balance. Later cancellations use the lesson credit."
+        "answer": "You can cancel under My bookings. If you cancel more than 24 hours before the lesson, the credit is returned to your balance. Later cancellations use the lesson credit.",
+        "answerPhone": "Call {phone} to cancel or move a lesson. More than 24 hours before the start it costs nothing and the lesson returns to your balance. A later cancellation uses the lesson credit."
       },
       "risk": {
         "question": "What is the difference between Risk 1 and Risk 2?",
@@ -151,7 +152,7 @@
       },
       "validity": {
         "question": "How long is my package valid?",
-        "answer": "Driving lessons and packages are valid for 12 months. Digital theory has no time limit."
+        "answer": "Driving lessons and packages are valid for 12 months from purchase. Your balance and the last valid date are shown under My pages. Digital theory has no time limit."
       }
     },
     "theory": {

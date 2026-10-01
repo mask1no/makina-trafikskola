@@ -55,7 +55,7 @@
     "privacy": "Asturnaanta",
     "cookies": "Kukiyada",
     "languageHelp": "Taageero luqaddaada ah",
-    "languageHelpDescription": "Waxbarasho Iswiidhish, Ingiriis, Tigrinya iyo Carabi. Soomaaligu wuu soo socdaa.",
+    "languageHelpDescription": "Nagala soo xiriir Iswiidhish, Ingiriis, Tigrinya ama Carabi. Soomaaligu wuu soo socdaa.",
     "orgnrLabel": "Lambarka ururka",
     "call": "Wac",
     "callUs": "Nagu soo wac",
@@ -143,7 +143,8 @@
       },
       "cancel": {
         "question": "Sideen u joojiyaa cashar?",
-        "answer": "Waxaad ka joojin kartaa qaybta Ballamahayga. Haddii aad joojiso in ka badan 24 saacadood ka hor casharka, deyntu waxay ku soo noqonaysaa hadhaagaaga. Joojinta dambe waxay isticmaashaa deynta casharka."
+        "answer": "Waxaad ka joojin kartaa qaybta Ballamahayga. Haddii aad joojiso in ka badan 24 saacadood ka hor casharka, deyntu waxay ku soo noqonaysaa hadhaagaaga. Joojinta dambe waxay isticmaashaa deynta casharka.",
+        "answerPhone": "Wac {phone} si aad u joojiso ama u beddesho cashar. In ka badan 24 saacadood ka hor bilowga waa bilaash, casharkuna wuxuu ku soo noqdaa hadhaagaaga. Joojinta dambe waxay ka baxdaa hadhaaga."
       },
       "risk": {
         "question": "Waa maxay farqiga u dhexeeya Risk 1 iyo Risk 2?",
@@ -151,7 +152,7 @@
       },
       "validity": {
         "question": "Muddo intee le'eg ayay xirmadaydu shaqaynaysaa?",
-        "answer": "Casharrada wadista iyo xirmooyinku waxay shaqeeyaan 12 bilood. Teoriga dhijitaalka ah wakhti kuma xirna."
+        "answer": "Casharrada wadista iyo xirmooyinku waxay shaqeeyaan 12 bilood laga bilaabo iibka. Hadhaaga iyo taariikhda ugu dambeysa waxaa laga arkaa Boggeyga. Teoriga dhijitaalka ah wakhti kuma xirna."
       }
     },
     "theory": {

@@ -232,7 +232,10 @@ async function HomeBelow({
     },
     ...(["languages", "pickup", "cancel", "risk", "validity"] as const).map((key) => ({
       question: t(`home.faq.${key}.question`),
-      answer: t(`home.faq.${key}.answer`),
+      answer:
+        key === "cancel" && !canBook
+          ? t("home.faq.cancel.answerPhone", { phone: t("company.phone") })
+          : t(`home.faq.${key}.answer`),
     })),
   ];
 

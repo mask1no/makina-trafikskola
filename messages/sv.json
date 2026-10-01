@@ -56,7 +56,7 @@
     "privacy": "Integritet",
     "cookies": "Cookies",
     "languageHelp": "Stöd på ditt språk",
-    "languageHelpDescription": "Undervisning på svenska, engelska, tigrinja och arabiska. Somaliska kommer snart.",
+    "languageHelpDescription": "Kontakta oss på svenska, engelska, tigrinja eller arabiska. Somaliska kommer snart.",
     "call": "Ring",
     "callUs": "Ring oss",
     "callName": "Ring {phone}",
@@ -143,7 +143,8 @@
       },
       "cancel": {
         "question": "Hur avbokar jag en lektion?",
-        "answer": "Du avbokar själv under Mina bokningar. Avbokar du mer än 24 timmar före lektionen kostar det ingenting och lektionen går tillbaka till ditt saldo. Avbokar du senare dras lektionen från saldot."
+        "answer": "Du avbokar själv under Mina bokningar. Avbokar du mer än 24 timmar före lektionen kostar det ingenting och lektionen går tillbaka till ditt saldo. Avbokar du senare dras lektionen från saldot.",
+        "answerPhone": "Ring {phone} för att avboka eller flytta en lektion. Mer än 24 timmar före start kostar det ingenting och lektionen går tillbaka till ditt saldo. Senare avbokning dras från saldot."
       },
       "risk": {
         "question": "Vad är skillnaden mellan Risk 1 och Risk 2?",
@@ -151,7 +152,7 @@
       },
       "validity": {
         "question": "Hur länge gäller mitt paket?",
-        "answer": "Körlektioner och paket gäller i 12 månader. Digital teori har ingen tidsgräns."
+        "answer": "Körlektioner och paket gäller i 12 månader från köpet. Saldot och sista giltighetsdag visas under Mina sidor. Digital teori har ingen tidsgräns."
       }
     },
     "theory": {
