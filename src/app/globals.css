@@ -198,33 +198,8 @@ textarea {
     overflow-wrap: break-word;
   }
 
-  .reveal {
-    animation: makina-reveal 120ms cubic-bezier(0.22, 1, 0.36, 1) both;
-  }
-
-  .reveal-delay-1 {
-    animation-delay: 40ms;
-  }
-
-  .reveal-delay-2 {
-    animation-delay: 80ms;
-  }
-
-  .reveal-delay-3 {
-    animation-delay: 120ms;
-  }
-
   .hero-pan {
     animation: none;
-  }
-
-  @keyframes makina-reveal {
-    from {
-      transform: translateY(8px);
-    }
-    to {
-      transform: translateY(0);
-    }
   }
 
   @keyframes makina-hero-pan {
@@ -283,10 +258,6 @@ textarea {
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .reveal,
-    .reveal-delay-1,
-    .reveal-delay-2,
-    .reveal-delay-3,
     .hero-pan,
     .benefit-track {
       animation: none;

@@ -2,15 +2,6 @@ import { z } from "zod";
 
 import { formatPrice } from "../lib/pricing/format";
 
-export const paymentTemplateSchema = z.enum([
-  "order_receipt",
-  "payment_failed",
-  "lesson_payment_needs_rebooking",
-  "course_payment_needs_rebooking",
-]);
-
-export type PaymentTemplate = z.infer<typeof paymentTemplateSchema>;
-
 const receiptItemSchema = z
   .object({
     productName: z.string().trim().min(1).max(500),

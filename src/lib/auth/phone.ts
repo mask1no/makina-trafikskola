@@ -32,7 +32,3 @@ export function normalizeSwedishPhone(input: string): string | null {
   if (!phone?.startsWith("+46")) return null;
   return phone;
 }
-
-export const e164PhoneSchema = {
-  regex: /^\+[1-9]\d{7,14}$/,
-} as const;

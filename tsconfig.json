@@ -41,7 +41,6 @@
     "vitest.config.mts",
     "tailwind.config.ts",
     ".next/types/**/*.ts",
-    ".next-task8/types/**/*.ts",
     ".next/dev/types/**/*.ts"
   ],
   "exclude": [

@@ -20,13 +20,13 @@ function BenefitIcon() {
 function Cards({ items, hidden = false }: { items: BenefitCard[]; hidden?: boolean }) {
   return (
     <ul
-      className={`benefit-row m-0 flex list-none gap-3 p-0 pe-3 ${hidden ? "benefit-copy" : ""}`}
+      className={`m-0 flex list-none gap-3 p-0 pe-3 ${hidden ? "benefit-copy" : ""}`}
       {...(hidden ? { "aria-hidden": true, inert: true } : {})}
     >
       {items.map((item) => (
         <li
           key={`${hidden ? "copy-" : ""}${item.id}`}
-          className={`benefit-card flex h-[9.5rem] shrink-0 snap-start flex-col justify-between rounded-lg border border-border bg-card p-4 shadow-soft ${
+          className={`flex h-[9.5rem] shrink-0 snap-start flex-col justify-between rounded-lg border border-border bg-card p-4 shadow-soft ${
             item.size === "lg" ? "w-[22rem] max-w-[85vw]" : "w-[16rem] max-w-[85vw]"
           }`}
         >

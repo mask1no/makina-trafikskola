@@ -41,5 +41,3 @@ export function Notice({
     </div>
   );
 }
-
-export const Alert = Notice;

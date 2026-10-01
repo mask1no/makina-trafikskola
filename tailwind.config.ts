@@ -2,7 +2,6 @@ import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
@@ -53,12 +52,8 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-app)", "Arial", "sans-serif"],
       },
-      fontSize: {
-        "2xs": ["0.6875rem", { lineHeight: "1rem" }],
-      },
       letterSpacing: {
         tighter: "-0.04em",
-        tightest: "-0.055em",
       },
       boxShadow: {
         soft: "var(--shadow-sm)",

@@ -128,8 +128,3 @@ export async function allowRateLimitedAction(
   const result = await bumpRateLimit(key, windowSeconds, now);
   return result.count <= limit;
 }
-
-export async function deleteExpiredAuthRows(now: Date) {
-  await db.rateLimit.deleteMany({ where: { expiresAt: { lt: now } } });
-  await db.otpCode.deleteMany({ where: { expiresAt: { lt: now } } });
-}
