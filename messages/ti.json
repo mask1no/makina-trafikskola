@@ -231,7 +231,7 @@
     "description": "መጀመርታ ቋንቋ፣ ድሕሪኡ ቦታ ምረጽ።",
     "languageFilter": "1. ቋንቋ ምረጽ",
     "languageQuestion": "ብእንታይ ቋንቋ ትምህርቲ ክትወስድ ትደሊ?",
-    "anyLanguage": "ዝኾነ ቋንቋ",
+    "anyLanguage": "ኩሎም ቋንቋታት",
     "noneAvailable": "ሕጂ ዝርከብ መምህር የለን",
     "clearFilters": "ፍልትራታት ኣጽርይ",
     "showAsList": "መማህራን ከም ዝርዝር ኣርኢ",
@@ -273,8 +273,6 @@
     "zoomIn": "ኣዕቢ",
     "zoomOut": "ኣንእስ",
     "recenter": "ኩሎም ኣርኢ",
-    "onMap": "{count, plural, =1 {1 መምህር} other {# መማህራን}}",
-    "areaFallback": "ስቶክሆልም",
     "homeTeaserTitle": "ኣብ ቀረባኻ መምህር ርከብ",
     "homeTeaserDescription": "ብቋንቋ ኣጻርዩን መምህራን ኣበይ ከም ዘለዉ ርአ።",
     "homeTeaserCta": "ናይ መምህር ካርታ ክፈት"

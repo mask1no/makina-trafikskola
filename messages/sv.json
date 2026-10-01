@@ -204,7 +204,7 @@
     "description": "Välj språk först och därefter plats för att hitta den lärare som passar dig.",
     "languageFilter": "1. Välj språk",
     "languageQuestion": "Vilket språk vill du ha undervisning på?",
-    "anyLanguage": "Spelar ingen roll",
+    "anyLanguage": "Alla språk",
     "noneAvailable": "Ingen lärare tillgänglig just nu",
     "clearFilters": "Rensa filter",
     "showAsList": "Visa lärare som lista",
@@ -246,8 +246,6 @@
     "zoomIn": "Zooma in",
     "zoomOut": "Zooma ut",
     "recenter": "Visa alla",
-    "onMap": "{count, plural, =1 {1 lärare} other {# lärare}}",
-    "areaFallback": "Stockholm",
     "homeTeaserTitle": "Hitta lärare nära dig",
     "homeTeaserDescription": "Filtrera på språk och se var lärarna finns.",
     "homeTeaserCta": "Öppna lärarkartan"

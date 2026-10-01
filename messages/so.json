@@ -231,7 +231,7 @@
     "description": "Marka hore dooro luqadda, dabadeed goobta, si aad u hesho macallinka kugu habboon.",
     "languageFilter": "1. Dooro luqadda",
     "languageQuestion": "Luqadee ayaad rabtaa in casharrada lagu bixiyo?",
-    "anyLanguage": "Luqad kasta",
+    "anyLanguage": "Dhammaan luqadaha",
     "noneAvailable": "Macallin hadda ma jiro",
     "clearFilters": "Nadiifi shaandhada",
     "showAsList": "Tus macallimiinta sida liis",
@@ -273,8 +273,6 @@
     "zoomIn": "Soo dhowe",
     "zoomOut": "Ka fogee",
     "recenter": "Muuji dhammaan",
-    "onMap": "{count, plural, =1 {1 macallin} other {# macallin}}",
-    "areaFallback": "Stockholm",
     "homeTeaserTitle": "Hel macallin kuu dhow",
     "homeTeaserDescription": "Ku shaandhee luqadda oo arag meelaha macallimiintu joogaan.",
     "homeTeaserCta": "Fur khariidadda macallimiinta"

@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 
 import { EmptyState } from "@/components/EmptyState";
 import { PageHeader } from "@/components/PageHeader";
-import { PillFilter } from "@/components/PillFilter";
 import { Select } from "@/components/Select";
 import { TeacherCard } from "@/components/TeacherCard";
 import { SelectableTeacherMap } from "@/components/SelectableTeacherMap";
@@ -15,6 +14,26 @@ import { getLocations, getTeachers } from "../_lib/data";
 import type { Transmission } from "@prisma/client";
 
 export const dynamic = "force-dynamic";
+
+function FilterChoice({
+  href,
+  active,
+  children,
+}: {
+  href: string;
+  active: boolean;
+  children: string;
+}) {
+  return (
+    <Link
+      href={href}
+      aria-current={active ? "true" : undefined}
+      className="inline-flex min-h-11 items-center rounded-full border border-border bg-page px-3 text-sm font-bold text-ink transition duration-200 ease-premium hover:border-ink aria-[current=true]:border-ink aria-[current=true]:bg-surface aria-[current=true]:text-ink-inverse"
+    >
+      {children}
+    </Link>
+  );
+}
 
 function filterHref(
   locale: string,
@@ -84,56 +103,66 @@ export default async function LararePage(
           description={t("teachers.description")}
         />
 
-        <section className="mt-12" aria-labelledby="language-filter">
-          <h2 id="language-filter" className="text-2xl font-black tracking-tight sm:text-3xl">
-            {t("teachers.languageQuestion")}
-          </h2>
-          <div className="mt-6 flex flex-wrap gap-2">
-            {locales.map((option) => {
-              const count = languageCounts[option];
-              return (
-                <PillFilter
-                  key={option}
-                  label={`${t(`language.${option}`)} (${count})`}
-                  value={option}
-                  active={language === option}
-                  disabled={count === 0}
-                  title={count === 0 ? t("teachers.noneAvailable") : undefined}
-                  href={filterHref(params.locale, option, location, transmission)}
-                />
-              );
-            })}
-            <PillFilter
-              label={t("teachers.anyLanguage")}
-              value=""
-              active={!language}
-              href={filterHref(params.locale, undefined, location, transmission)}
-            />
-          </div>
+        <section className="mt-12 rounded-lg border border-border bg-card p-5 shadow-soft sm:p-6" aria-label={t("teachers.languageQuestion")}>
+          <div className="grid gap-8 lg:grid-cols-3">
+            <div>
+              <h2 className="text-sm font-bold uppercase tracking-wider text-ink-muted">
+                {t("teachers.languageFilter")}
+              </h2>
+              <div className="mt-4 flex flex-wrap gap-2">
+                <FilterChoice
+                  href={filterHref(params.locale, undefined, location, transmission)}
+                  active={!language}
+                >
+                  {t("teachers.anyLanguage")}
+                </FilterChoice>
+                {locales.map((option) => {
+                  const count = languageCounts[option];
+                  const name = `${t(`language.${option}`)} (${count})`;
+                  if (count === 0) {
+                    return (
+                      <span
+                        key={option}
+                        title={t("teachers.noneAvailable")}
+                        className="inline-flex min-h-11 items-center rounded-full border border-border px-3 text-sm font-bold text-ink-subtle"
+                      >
+                        {name}
+                      </span>
+                    );
+                  }
+                  return (
+                    <FilterChoice
+                      key={option}
+                      href={filterHref(params.locale, option, location, transmission)}
+                      active={language === option}
+                    >
+                      {name}
+                    </FilterChoice>
+                  );
+                })}
+              </div>
+            </div>
 
-          <div className="mt-10 grid gap-8 border-t border-border pt-8 md:grid-cols-2">
             <div>
               <h3 className="text-sm font-bold uppercase tracking-wider text-ink-muted">
                 {t("teachers.locationFilter")}
               </h3>
               {locations.length <= 4 ? (
-                <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2">
-                  <Link
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <FilterChoice
                     href={filterHref(params.locale, language, undefined, transmission)}
-                    aria-current={!location ? "true" : undefined}
-                    className="inline-flex min-h-11 items-center border-b-2 border-transparent text-sm font-bold text-ink-muted transition aria-[current=true]:border-ink aria-[current=true]:text-ink"
+                    active={!location}
                   >
                     {t("common.allLocations")}
-                  </Link>
+                  </FilterChoice>
                   {locations.map((item) => (
-                    <Link
+                    <FilterChoice
                       key={item.id}
                       href={filterHref(params.locale, language, item.id, transmission)}
-                      aria-current={location === item.id ? "true" : undefined}
-                      className="inline-flex min-h-11 items-center border-b-2 border-transparent text-sm font-bold text-ink-muted transition aria-[current=true]:border-ink aria-[current=true]:text-ink"
+                      active={location === item.id}
                     >
                       {item.name}
-                    </Link>
+                    </FilterChoice>
                   ))}
                 </div>
               ) : (
@@ -168,26 +197,21 @@ export default async function LararePage(
               <h3 className="text-sm font-bold uppercase tracking-wider text-ink-muted">
                 {t("teachers.transmissionFilter")}
               </h3>
-              <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2">
+              <div className="mt-4 flex flex-wrap gap-2">
                 {(
                   [
                     [undefined, t("teachers.allTransmissions")],
                     ["MANUAL", t("teacher.transmission.manual")],
                     ["AUTOMATIC", t("teacher.transmission.automatic")],
                   ] as const
-                ).map(([value, label]) => (
-                  <Link
+                ).map(([value, choiceLabel]) => (
+                  <FilterChoice
                     key={value ?? "all"}
                     href={filterHref(params.locale, language, location, value)}
-                    aria-current={
-                      transmission === value || (!transmission && !value)
-                        ? "true"
-                        : undefined
-                    }
-                    className="inline-flex min-h-11 items-center border-b-2 border-transparent text-sm font-bold text-ink-muted transition aria-[current=true]:border-ink aria-[current=true]:text-ink"
+                    active={transmission === value || (!transmission && !value)}
                   >
-                    {label}
-                  </Link>
+                    {choiceLabel}
+                  </FilterChoice>
                 ))}
               </div>
             </div>

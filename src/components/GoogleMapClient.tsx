@@ -157,7 +157,7 @@ function ZoomRail({
   recenterLabel: string;
 }) {
   return (
-    <div className="flex gap-2 sm:flex-col">
+    <div className="flex flex-col gap-2">
       <button
         type="button"
         aria-label={zoomInLabel}
@@ -256,9 +256,6 @@ export default function GoogleMapClient({
     [placed],
   );
   const showingPeople = markers.some((marker) => marker.languages?.length);
-  const placeLabel =
-    markers.find((marker) => marker.locationName)?.locationName ??
-    t("areaFallback");
   const openMarker = placed.find((marker) => marker.id === openId) ?? null;
   const teacherChoices = markers.filter(
     (marker, index) =>
@@ -307,29 +304,8 @@ export default function GoogleMapClient({
 
   return (
     <APIProvider apiKey={apiKey}>
-      <div
-        className="rtl-no-mirror overflow-hidden rounded-lg bg-surface p-3 text-ink-inverse shadow-float sm:p-4"
-        aria-label={label}
-      >
-        <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
-          <p className="flex min-w-0 items-center gap-2 text-base font-black">
-            <span
-              aria-hidden="true"
-              className="size-2 shrink-0 rounded-full bg-accent shadow-[0_0_0_4px_color-mix(in_srgb,var(--accent)_28%,transparent)]"
-            />
-            <span className="truncate">{placeLabel}</span>
-          </p>
-          <div className="flex shrink-0 items-center gap-3">
-            {showingPeople ? (
-              <p className="text-sm font-bold text-ink-inverse-muted">
-                {t("onMap", { count: teacherChoices.length })}
-              </p>
-            ) : null}
-            <div className="sm:hidden">{zoomRail()}</div>
-          </div>
-        </div>
-        <div className="flex items-stretch gap-3">
-          <div className="relative h-[26rem] min-w-0 flex-1 overflow-hidden rounded-md border border-ink-inverse/10 sm:h-[28rem]">
+      <div className="rtl-no-mirror" aria-label={label}>
+        <div className="relative h-[28rem] overflow-hidden rounded-lg border border-ink bg-card">
             <Map
               defaultCenter={center}
               defaultZoom={13}
@@ -385,8 +361,7 @@ export default function GoogleMapClient({
                 </InfoWindow>
               ) : null}
             </Map>
-          </div>
-          <div className="hidden sm:block">{zoomRail()}</div>
+          <div className="absolute end-3 top-3 z-10">{zoomRail()}</div>
         </div>
         {showingPeople && teacherChoices.length > 1 ? (
           <div className="mt-3 flex gap-2 overflow-x-auto">
@@ -396,7 +371,7 @@ export default function GoogleMapClient({
                 type="button"
                 aria-pressed={openMarker?.teacherId === marker.teacherId}
                 onClick={() => select(marker)}
-                className="flex min-h-11 shrink-0 items-center gap-2 rounded-full border border-ink-inverse/15 bg-card pe-4 ps-2 text-sm font-bold text-ink shadow-soft transition duration-500 ease-premium hover:border-accent aria-pressed:border-accent aria-pressed:bg-accent"
+                className="flex min-h-11 shrink-0 items-center gap-2 rounded-full border border-border bg-card pe-4 ps-2 text-sm font-bold text-ink shadow-soft transition duration-500 ease-premium hover:border-ink aria-pressed:border-ink aria-pressed:bg-surface aria-pressed:text-ink-inverse"
               >
                 <Avatar
                   name={marker.title}

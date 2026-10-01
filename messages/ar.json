@@ -231,7 +231,7 @@
     "description": "اختر اللغة أولًا ثم الموقع للعثور على المدرب المناسب لك.",
     "languageFilter": "1. اختر اللغة",
     "languageQuestion": "بأي لغة تريد الدروس؟",
-    "anyLanguage": "أي لغة",
+    "anyLanguage": "كل اللغات",
     "noneAvailable": "لا يوجد مدرب متاح الآن",
     "clearFilters": "مسح عوامل التصفية",
     "showAsList": "عرض المدربين كقائمة",
@@ -273,8 +273,6 @@
     "zoomIn": "تكبير",
     "zoomOut": "تصغير",
     "recenter": "عرض الكل",
-    "onMap": "{count, plural, =1 {مدرّب واحد} other {# مدرّبين}}",
-    "areaFallback": "ستوكهولم",
     "homeTeaserTitle": "اعثر على مدرب قريب منك",
     "homeTeaserDescription": "صفِّ حسب اللغة وشاهد أماكن المدربين.",
     "homeTeaserCta": "افتح خريطة المدربين"

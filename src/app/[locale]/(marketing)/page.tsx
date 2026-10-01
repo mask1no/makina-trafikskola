@@ -19,12 +19,11 @@ import { getProducts, getTeachers } from "./_lib/data";
 export const dynamic = "force-dynamic";
 
 const LANGUAGE_FILTERS = ["sv", "en", "ti", "ar", "so"] as const;
-const LANGUAGE_MARKS = ["SV", "EN", "ትግ", "ع", "SO"] as const;
 
 function TrustIcon({
   kind,
 }: {
-  kind: "pickup" | "lesson" | "pricing";
+  kind: "languages" | "pickup" | "lesson" | "pricing";
 }) {
   return (
     <svg
@@ -37,7 +36,13 @@ function TrustIcon({
       strokeLinejoin="round"
       strokeWidth="2"
     >
-      {kind === "pickup" ? (
+      {kind === "languages" ? (
+        <>
+          <circle cx="18" cy="24" r="8" />
+          <circle cx="32" cy="20" r="6" />
+          <path d="M8 40c1.2-6 5-9 10-9s8.8 3 10 9M26 40c.6-4 2.6-6 6-6 2.4 0 4.2 1 5.2 2.8" />
+        </>
+      ) : kind === "pickup" ? (
         <>
           <path d="M8 29h32l-3-10a5 5 0 0 0-5-4H16a5 5 0 0 0-5 4L8 29Z" />
           <path d="M7 29v7h5m29-7v7h-5M15 29h18" />
@@ -195,27 +200,9 @@ export default async function MarketingHome(
                 key={key}
                 className="group min-h-56 rounded-lg border border-border bg-card p-6 shadow-card transition duration-700 ease-premium hover:-translate-y-1 hover:border-border-strong hover:shadow-float"
               >
-                <div className="flex min-h-14 items-center text-ink">
-                  {key === "languages" ? (
-                    <div
-                      aria-hidden="true"
-                      className="rtl-no-mirror flex w-full max-w-full flex-wrap justify-center gap-1 lg:justify-start"
-                    >
-                      {LANGUAGE_MARKS.map((language) => (
-                        <span
-                          key={language}
-                          className="grid size-11 place-items-center rounded-full border-2 border-card bg-page text-xs font-black shadow-soft"
-                        >
-                          {language}
-                        </span>
-                      ))}
-                    </div>
-                  ) : (
-                    <span className="grid size-14 place-items-center rounded-md bg-accent-soft text-ink transition duration-700 ease-premium group-hover:bg-accent">
-                      <TrustIcon kind={key} />
-                    </span>
-                  )}
-                </div>
+                <span className="grid size-14 place-items-center rounded-md bg-accent-soft text-ink transition duration-700 ease-premium group-hover:bg-accent">
+                  <TrustIcon kind={key} />
+                </span>
                 <p className="mt-6 text-xs font-black uppercase tracking-[0.16em] text-ink-subtle">
                   0{index + 1}
                 </p>
