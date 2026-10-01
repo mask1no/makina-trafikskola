@@ -6,6 +6,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { StatCard } from "@/components/StatCard";
 import { calculateAvailableCreditBalance } from "@/lib/credits/ledger";
 import { db } from "@/lib/db";
+import { formatLessonTime, stockholmParts } from "@/lib/format/datetime";
 import { formatPrice } from "@/lib/pricing/format";
 
 export const dynamic = "force-dynamic";
@@ -13,13 +14,9 @@ export const dynamic = "force-dynamic";
 const TIME_ZONE = "Europe/Stockholm";
 
 function stockholmMonthStart(now: Date, monthOffset: number) {
-  const parts = new Intl.DateTimeFormat("en-US", {
-    timeZone: TIME_ZONE,
-    year: "numeric",
-    month: "numeric",
-  }).formatToParts(now);
-  const year = Number(parts.find((part) => part.type === "year")?.value);
-  const month = Number(parts.find((part) => part.type === "month")?.value);
+  const parts = stockholmParts(now);
+  const year = parts.year;
+  const month = parts.month;
   const shifted = new Date(Date.UTC(year, month - 1 + monthOffset, 1));
   const key = `${shifted.getUTCFullYear()}-${String(shifted.getUTCMonth() + 1).padStart(2, "0")}-01T00:00:00`;
   return fromZonedTime(key, TIME_ZONE);
@@ -123,12 +120,6 @@ export default async function AdminPage(props: {
   for (const entries of byStudent.values()) {
     creditsOutstanding += calculateAvailableCreditBalance(entries, now).balance;
   }
-  const timeFormatter = new Intl.DateTimeFormat(params.locale, {
-    timeZone: TIME_ZONE,
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-
   return (
     <section>
       <PageHeader
@@ -160,7 +151,7 @@ export default async function AdminPage(props: {
             {lessonsToday.map((lesson) => (
               <li key={lesson.id} className="text-sm leading-6 text-ink">
                 {t("lessonLine", {
-                  time: timeFormatter.format(lesson.startsAt),
+                  time: formatLessonTime(lesson.startsAt, params.locale),
                   instructor: `${lesson.teacher.user.firstName} ${lesson.teacher.user.lastName}`,
                   student: `${lesson.student.firstName} ${lesson.student.lastName}`,
                 })}

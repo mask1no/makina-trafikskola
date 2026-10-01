@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { Component, type ReactNode } from "react";
+import { Component, useEffect, useRef, useState, type ReactNode } from "react";
 import type { TeacherMarker } from "./GoogleMapClient";
 
 class MapBoundary extends Component<
@@ -104,16 +104,53 @@ export function TeacherMap({
   );
 
   return (
-    <MapBoundary fallback={fallback}>
-      <GoogleMapClient
-        apiKey={apiKey}
-        bookingAvailable={bookingAvailable}
-        center={center}
-        label={label}
-        markers={markers}
-        selectedTeacherId={selectedTeacherId}
-        onSelectTeacher={onSelectTeacher}
-      />
-    </MapBoundary>
+    <DeferredMap
+      label={fallbackLabel ?? label}
+      map={
+        <MapBoundary fallback={fallback}>
+          <GoogleMapClient
+            apiKey={apiKey}
+            bookingAvailable={bookingAvailable}
+            center={center}
+            label={label}
+            markers={markers}
+            selectedTeacherId={selectedTeacherId}
+            onSelectTeacher={onSelectTeacher}
+          />
+        </MapBoundary>
+      }
+    />
+  );
+}
+
+function DeferredMap({ label, map }: { label: string; map: ReactNode }) {
+  const [visible, setVisible] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const node = ref.current;
+    if (!node || visible) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) setVisible(true);
+      },
+      { rootMargin: "200px" },
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [visible]);
+
+  return (
+    <div ref={ref} className="min-h-[30rem]">
+      {visible ? (
+        map
+      ) : (
+        <div className="grid min-h-[30rem] place-items-center rounded-lg border border-border bg-page">
+          <button type="button" className="inline-flex min-h-11 items-center rounded-sm bg-surface px-5 font-bold text-ink-inverse" onClick={() => setVisible(true)}>
+            {label}
+          </button>
+        </div>
+      )}
+    </div>
   );
 }

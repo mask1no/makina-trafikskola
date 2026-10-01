@@ -125,10 +125,13 @@ function FrameTeachers({
 }) {
   const map = useMap();
   const positionsRef = useRef(positions);
-  positionsRef.current = positions;
   const key = positions
     .map((position) => `${position.lat.toFixed(5)},${position.lng.toFixed(5)}`)
     .join("|");
+
+  useEffect(() => {
+    positionsRef.current = positions;
+  }, [positions]);
 
   useEffect(() => {
     if (!map) return;

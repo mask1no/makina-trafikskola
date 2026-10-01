@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { Card } from "@/components/Card";
 import { EmptyState } from "@/components/EmptyState";
 import { PageHeader } from "@/components/PageHeader";
+import { formatDate } from "@/lib/format/datetime";
 import { db } from "@/lib/db";
 
 import { ReviewActions } from "./ReviewActions";
@@ -30,13 +31,6 @@ export default async function ReviewsPage(props: {
       },
     }),
   ]);
-  const dateFormatter = new Intl.DateTimeFormat(params.locale, {
-    timeZone: "Europe/Stockholm",
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  });
-
   return (
     <section>
       <PageHeader title={t("title")} description={t("description")} />
@@ -62,7 +56,7 @@ export default async function ReviewsPage(props: {
               </div>
               <div>
                 <dt className="font-semibold text-ink-muted">{t("date")}</dt>
-                <dd className="mt-1">{dateFormatter.format(review.createdAt)}</dd>
+                <dd className="mt-1">{formatDate(review.createdAt, params.locale, { day: "numeric", month: "short", year: "numeric" })}</dd>
               </div>
               <div className="sm:col-span-2">
                 <dt className="font-semibold text-ink-muted">{t("comment")}</dt>

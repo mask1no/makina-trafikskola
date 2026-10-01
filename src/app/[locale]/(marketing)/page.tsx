@@ -2,69 +2,29 @@ import Image from "next/image";
 import Link from "next/link";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
+import { BenefitMarquee } from "@/components/BenefitMarquee";
+import { SectionHeader } from "@/components/SectionHeader";
 import { LinkButton } from "@/components/LinkButton";
 import { ProductCard } from "@/components/ProductCard";
 import { StaticMapArtwork } from "@/components/StaticMapArtwork";
 import { TeacherCard } from "@/components/TeacherCard";
-import { TeacherMap } from "@/components/TeacherMap";
+import { LazyTeacherMap } from "@/components/LazyTeacherMap";
 import { isLocale } from "@/i18n/routing";
 import {
   bookingEnabled,
   instructorsEnabled,
 } from "@/lib/launch";
+import { isOpenNow, todayHours } from "@/lib/company/opening-hours";
+import { displayPhone, telHref } from "@/lib/format/phone";
+import { benefitItems } from "@/lib/home/benefits";
 import { formatPrice } from "@/lib/pricing/format";
+import { freeTheoryQuestionCount } from "@/lib/theory/questions";
 
 import { getProducts, getTeachers } from "./_lib/data";
 
 export const dynamic = "force-dynamic";
 
 const LANGUAGE_FILTERS = ["sv", "en", "ti", "ar", "so"] as const;
-
-function TrustIcon({
-  kind,
-}: {
-  kind: "languages" | "pickup" | "lesson" | "pricing";
-}) {
-  return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 48 48"
-      className="size-12"
-      fill="none"
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="2"
-    >
-      {kind === "languages" ? (
-        <>
-          <circle cx="18" cy="24" r="8" />
-          <circle cx="32" cy="20" r="6" />
-          <path d="M8 40c1.2-6 5-9 10-9s8.8 3 10 9M26 40c.6-4 2.6-6 6-6 2.4 0 4.2 1 5.2 2.8" />
-        </>
-      ) : kind === "pickup" ? (
-        <>
-          <path d="M8 29h32l-3-10a5 5 0 0 0-5-4H16a5 5 0 0 0-5 4L8 29Z" />
-          <path d="M7 29v7h5m29-7v7h-5M15 29h18" />
-          <circle cx="14" cy="34" r="3" />
-          <circle cx="34" cy="34" r="3" />
-          <path d="M24 7c4 0 7 3 7 7 0 5-7 10-7 10s-7-5-7-10c0-4 3-7 7-7Z" />
-          <circle cx="24" cy="14" r="2" />
-        </>
-      ) : kind === "lesson" ? (
-        <>
-          <circle cx="24" cy="24" r="17" />
-          <path d="M24 14v11l7 4M18 5h12" />
-        </>
-      ) : (
-        <>
-          <path d="M13 7h22v34l-4-3-4 3-3-3-4 3-4-3-3 3V7Z" />
-          <path d="M19 16h10M19 23h10M19 30h6" />
-        </>
-      )}
-    </svg>
-  );
-}
 
 export default async function MarketingHome(
   props: {
@@ -75,22 +35,63 @@ export default async function MarketingHome(
   if (!isLocale(params.locale)) return null;
   setRequestLocale(params.locale);
   const t = await getTranslations();
-  const [products, teachers] = await Promise.all([
+  const [products, teachers, freeQuestions] = await Promise.all([
     getProducts(params.locale),
     getTeachers(params.locale),
+    freeTheoryQuestionCount(),
   ]);
   const canBook = bookingEnabled();
   const showInstructors = instructorsEnabled() && teachers.length > 0;
-  const featuredSlugs = ["en-korlektion", "testlektion", "korpaket-b3"] as const;
-  const featuredProducts = featuredSlugs.flatMap((slug) => {
-    const product = products.find((item) => item.slug === slug);
-    return product ? [product] : [];
-  });
-  const lessonImages: Record<(typeof featuredSlugs)[number], string> = {
-    "en-korlektion": "/lessons/korlektion.jpg",
-    testlektion: "/lessons/testlektion.jpg",
-    "korpaket-b3": "/lessons/tre-lektioner.jpg",
-  };
+  const now = new Date();
+  const openNow = isOpenNow(now);
+  const hoursToday = todayHours(now);
+  const singleLessons = products
+    .filter((product) => product.kind === "SINGLE_LESSON")
+    .sort((a, b) => a.priceOre - b.priceOre);
+  const testLesson = products.find((product) => product.kind === "TEST_LESSON");
+  const popular =
+    products.find((product) => Boolean(product.badge)) ??
+    products
+      .filter(
+        (product) =>
+          product.kind === "GUARANTEE" ||
+          (product.kind === "PACKAGE" &&
+            (product.includesTheory || product.includesRisk1 || product.includesRisk2)),
+      )
+      .sort((a, b) => a.priceOre - b.priceOre)[0];
+  const featuredProducts = [singleLessons[0], testLesson, popular].filter(
+    (product, index, list): product is NonNullable<typeof product> =>
+      Boolean(product) && list.findIndex((item) => item?.id === product?.id) === index,
+  );
+  const lessonImage = (kind: string) =>
+    kind === "SINGLE_LESSON"
+      ? "/lessons/korlektion.jpg"
+      : kind === "TEST_LESSON"
+        ? "/lessons/testlektion.jpg"
+        : "/lessons/tre-lektioner.jpg";
+  const benefitCards = benefitItems({
+    bookingEnabled: canBook,
+    products,
+    hasRiskCourse: products.some(
+      (product) =>
+        product.kind === "COURSE_SEAT" &&
+        (product.includesRisk1 || product.includesRisk2),
+    ),
+  }).map((item) => ({
+    id: item.id,
+    size: item.size,
+    title: t(`home.benefits.${item.id}.title`),
+    body:
+      item.id === "testLesson"
+        ? t("home.benefits.testLesson.body", {
+            price: formatPrice(item.priceOre ?? 0, params.locale),
+          })
+        : item.id === "local"
+          ? t("home.benefits.local.body", {
+              address: t("company.visitingAddress"),
+            })
+          : t(`home.benefits.${item.id}.body`),
+  }));
   const theoryProduct = products.find((product) => product.slug === "korkortsteori");
   const singleLesson = products.find((product) => product.slug === "en-korlektion");
   const entryPackage = products
@@ -149,74 +150,78 @@ export default async function MarketingHome(
         }}
       />
 
-      <section className="relative isolate flex min-h-[72svh] flex-col justify-end overflow-x-clip bg-surface text-ink-inverse sm:min-h-[68svh]">
+      <section className="relative isolate flex min-h-[60svh] flex-col justify-end overflow-x-clip bg-surface text-ink-inverse lg:min-h-[64svh] lg:max-h-[720px]">
+        {/* TODO: replace /hero.jpg with a real school photo at least 2400px wide. */}
         <Image
           src="/hero.jpg"
           alt=""
           priority
           fill
           sizes="100vw"
-          className="rtl-no-mirror hero-pan object-cover object-[68%_center]"
+          className="rtl-no-mirror hero-pan object-cover object-[center_30%] lg:object-[68%_center]"
         />
         <div
           aria-hidden="true"
           className="absolute inset-0 bg-[linear-gradient(180deg,color-mix(in_srgb,var(--surface)_55%,transparent)_0%,color-mix(in_srgb,var(--surface)_78%,transparent)_48%,var(--surface)_100%)]"
         />
-        <div className="site-container relative z-10 flex flex-col justify-end pb-12 pt-24 sm:pb-16">
-          <p className="brand-mark reveal text-accent">{t("home.hero.brand")}</p>
-          <h1 className="display-title reveal reveal-delay-1 mt-5 max-w-4xl text-balance">
-            {t("home.hero.title")}
-          </h1>
-          <p className="reveal reveal-delay-2 mt-5 max-w-xl text-lg leading-8 text-ink-inverse-muted sm:text-xl">
-            {t("home.hero.description")}
-          </p>
-          <div className="reveal reveal-delay-3 mt-8 flex flex-wrap gap-3">
-            <LinkButton
-              href={`/${params.locale}/${canBook ? "boka" : "kontakt"}`}
-            >
-              {canBook ? t("common.bookNow") : t("shell.contact")}
-            </LinkButton>
-            {showInstructors ? (
+        <div className="site-container relative z-10 grid items-end gap-8 pb-10 pt-24 lg:grid-cols-2 lg:pb-16">
+          <div>
+            <p className="brand-mark reveal text-accent">{t("home.hero.brand")}</p>
+            <h1 className="display-title reveal reveal-delay-1 mt-4 max-w-3xl text-balance lg:text-[clamp(2.75rem,4vw,4.5rem)]">
+              {t("home.hero.title")}
+            </h1>
+            <p className="reveal reveal-delay-2 mt-4 max-w-xl text-base leading-7 text-ink-inverse-muted sm:text-lg">
+              {t("home.hero.description")}
+            </p>
+            <div className="reveal reveal-delay-3 mt-6 flex flex-col gap-3 md:flex-row">
+              {canBook ? (
+                <LinkButton href={`/${params.locale}/boka`} className="w-full md:w-auto">
+                  {t("common.bookNow")}
+                </LinkButton>
+              ) : (
+                <a
+                  href={telHref(t("company.phone"))}
+                  className="inline-flex min-h-11 w-full items-center justify-center rounded-sm border border-accent bg-accent px-5 text-sm font-bold text-accent-ink md:w-auto"
+                >
+                  {t("shell.callName", { phone: displayPhone(t("company.phone")) })}
+                </a>
+              )}
               <LinkButton
                 variant="secondary"
-                className="border-ink-inverse/30 text-ink-inverse hover:bg-ink-inverse/10"
-                href={`/${params.locale}/larare`}
+                className="w-full border-ink-inverse/30 text-ink-inverse hover:bg-ink-inverse/10 md:w-auto"
+                href={`/${params.locale}/korlektioner`}
               >
-                {t("home.hero.findTeacher")}
+                {t("shell.seePrices")}
               </LinkButton>
-            ) : null}
+            </div>
           </div>
+          <aside className="hidden rounded-lg border border-ink-inverse/15 bg-surface-raised p-6 text-ink-inverse lg:block">
+            {singleLessons[0] ? (
+              <p className="text-sm font-bold text-ink-inverse-muted">
+                {t("shell.fromPrice", { price: formatPrice(singleLessons[0].priceOre, params.locale) })}
+              </p>
+            ) : null}
+            <a className="mt-3 inline-flex min-h-11 items-center text-2xl font-black numbers-ltr" href={telHref(t("company.phone"))}>
+              {displayPhone(t("company.phone"))}
+            </a>
+            <p className="mt-4 text-sm">
+              <span className="font-black">{openNow ? t("shell.openNow") : t("shell.closed")}</span>
+              {hoursToday ? <span className="numbers-ltr"> · {hoursToday.open}–{hoursToday.close}</span> : null}
+            </p>
+            <p className="mt-2 text-sm text-ink-inverse-muted">{t("company.visitingAddress")}</p>
+          </aside>
         </div>
       </section>
 
-      <section
-        aria-label={t("home.trust.label")}
-        className="relative z-20 bg-page pb-10 sm:-mt-8"
-      >
-        <div className="site-container grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {(["languages", "pickup", "lesson", "pricing"] as const).map(
-            (key, index) => (
-              <article
-                key={key}
-                className="group min-h-56 rounded-lg border border-border bg-card p-6 shadow-card transition duration-700 ease-premium hover:-translate-y-1 hover:border-border-strong hover:shadow-float"
-              >
-                <span className="grid size-14 place-items-center rounded-md bg-accent-soft text-ink transition duration-700 ease-premium group-hover:bg-accent">
-                  <TrustIcon kind={key} />
-                </span>
-                <p className="mt-6 text-xs font-black uppercase tracking-[0.16em] text-ink-subtle">
-                  0{index + 1}
-                </p>
-                <h2 className="mt-2 text-xl font-black">
-                  {t(`home.trust.${key}.title`)}
-                </h2>
-                <p className="mt-2 text-sm leading-6 text-ink-muted">
-                  {t(`home.trust.${key}.description`)}
-                </p>
-              </article>
-            ),
-          )}
-        </div>
-      </section>
+      <div className="relative z-20 bg-page pb-8 lg:-mt-8">
+        <BenefitMarquee
+          label={t("home.benefits.label")}
+          pauseLabel={t("shell.pause")}
+          playLabel={t("shell.play")}
+          items={benefitCards}
+          rows={2}
+        />
+      </div>
 
       {showInstructors ? (
         <section className="section-shell">
@@ -256,6 +261,7 @@ export default async function MarketingHome(
                   locationNames={teacher.locations.map(({ location }) => location.name)}
                   experienceLabel={t("teacher.yearsExperience", {
                     count: teacher.yearsExperience,
+                    n: String(teacher.yearsExperience),
                   })}
                   detailsLabel={t("teacher.viewProfile")}
                   swedishOnly={teacher.swedishOnly}
@@ -271,7 +277,7 @@ export default async function MarketingHome(
                 </p>
               </div>
               {mapsKey && homeMapMarkers.length ? (
-                <TeacherMap
+                <LazyTeacherMap
                   apiKey={mapsKey}
                   bookingAvailable={canBook}
                   center={homeMapCenter}
@@ -317,10 +323,10 @@ export default async function MarketingHome(
               {t("common.viewAll")}
             </Link>
           </div>
-          <div className="mt-10 grid gap-5 lg:grid-cols-3">
+          <div className="mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 md:grid md:grid-cols-2 md:overflow-visible lg:grid-cols-3">
             {featuredProducts.map((product) => (
+            <div key={product.id} className="w-[85%] shrink-0 snap-start md:w-auto">
               <ProductCard
-                key={product.id}
                 locale={params.locale}
                 slug={product.slug}
                 kind={product.kind}
@@ -363,15 +369,15 @@ export default async function MarketingHome(
                 swedishOnlyLabel={t("common.swedishOnly")}
                 unavailableLabel={t("product.notForSale")}
                 detailsLabel={t("common.readMore")}
-                imageSrc={
-                  product.slug in lessonImages
-                    ? lessonImages[product.slug as keyof typeof lessonImages]
-                    : undefined
-                }
+                featured={product.id === popular?.id}
+                featuredLabel={t("shell.mostChosen")}
+                imageSrc={lessonImage(product.kind)}
                 imageAlt={
-                  product.slug in lessonImages
+                  product.slug === "en-korlektion" ||
+                  product.slug === "testlektion" ||
+                  product.slug === "korpaket-b3"
                     ? t(`product.images.${product.slug}`)
-                    : undefined
+                    : product.translation.name
                 }
                 savingsLabel={
                   product.kind !== "GUARANTEE" &&
@@ -385,6 +391,7 @@ export default async function MarketingHome(
                     : undefined
                 }
               />
+            </div>
             ))}
           </div>
         </div>
@@ -394,10 +401,10 @@ export default async function MarketingHome(
         <div className="site-container">
           <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-accent">{t("home.journey.eyebrow")}</p>
           <h2 className="section-title mt-3 max-w-2xl">{t("home.journey.title")}</h2>
-          <ol className="mt-12 grid gap-10 md:grid-cols-3 md:gap-8">
+          <ol className="mt-8 grid gap-6 md:mt-12 md:grid-cols-3 md:gap-8">
             {(["choose", "book", "learn"] as const).map((step, index) => (
-              <li key={step}>
-                <span className="numbers-ltr text-sm font-black text-accent">0{index + 1}</span>
+              <li key={step} className="border-t border-ink-inverse/20 pt-4 md:pt-6">
+                <span className="numbers-ltr text-sm font-black text-accent">{index + 1}</span>
                 <h3 className="mt-4 text-xl font-black">{t(`home.journey.${step}.title`)}</h3>
                 <p className="mt-3 text-sm leading-6 text-ink-inverse-muted">{t(`home.journey.${step}.description`)}</p>
               </li>
@@ -422,10 +429,14 @@ export default async function MarketingHome(
                   {t("theory.teaser.title")}
                 </h2>
                 <p className="mt-5 max-w-xl leading-7 text-ink-inverse-muted">
-                  {t("theory.teaser.description")}
+                  {freeQuestions > 0
+                    ? t("theory.teaser.description")
+                    : t("home.theory.comingSoon")}
                 </p>
                 <ul className="mt-6 grid gap-3">
-                  {(["categories", "practice", "languages"] as const).map(
+                  {(["categories", "practice", "languages"] as const)
+                    .filter((item) => freeQuestions > 0 || item !== "practice")
+                    .map(
                     (item) => (
                       <li
                         key={item}
@@ -453,9 +464,11 @@ export default async function MarketingHome(
                   )}
                 </ul>
                 <div className="mt-8 flex flex-wrap gap-3">
-                  <LinkButton href={`/${params.locale}/teori`}>
-                    {t("theory.teaser.tryFree")}
-                  </LinkButton>
+                  {freeQuestions > 0 ? (
+                    <LinkButton href={`/${params.locale}/teori`}>
+                      {t("theory.teaser.tryFree")}
+                    </LinkButton>
+                  ) : null}
                   {theoryProduct?.active ? (
                     <LinkButton
                       variant="secondary"
@@ -496,12 +509,9 @@ export default async function MarketingHome(
       </section>
 
       <section className="section-shell border-t border-border">
-        <div className="site-container">
-          <p className="text-sm font-bold uppercase tracking-wider text-ink-muted">
-            {t("home.faq.eyebrow")}
-          </p>
-          <h2 className="section-title mt-3">{t("home.faq.title")}</h2>
-          <div className="mt-8 divide-y divide-border border-y border-border">
+        <div className="site-container grid gap-8 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:items-start">
+          <SectionHeader eyebrow={t("home.faq.eyebrow")} title={t("home.faq.title")} />
+          <div className="divide-y divide-border border-y border-border">
             {faqItems.map((item) => (
               <details key={item.question} className="group">
                 <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-6 py-4 font-bold marker:hidden [&::-webkit-details-marker]:hidden">

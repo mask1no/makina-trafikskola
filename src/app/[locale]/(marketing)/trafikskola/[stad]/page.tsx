@@ -8,6 +8,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { StaticMapArtwork } from "@/components/StaticMapArtwork";
 import { isLocale } from "@/i18n/routing";
 import { db } from "@/lib/db";
+import { isAddressConfirmed } from "@/lib/locations/address";
 import { pageCanonical, withSocial } from "@/lib/seo/metadata";
 
 export const dynamic = "force-dynamic";
@@ -76,7 +77,7 @@ export default async function TrafikskolaPage(
     }),
   ]);
   if (!location) notFound();
-  const hasConfirmedAddress = !location.address.trim().toUpperCase().startsWith("TODO");
+  const hasConfirmedAddress = isAddressConfirmed(location.address);
   const hasCoordinates =
     Number.isFinite(location.lat) &&
     Number.isFinite(location.lng) &&

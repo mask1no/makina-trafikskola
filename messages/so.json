@@ -55,8 +55,20 @@
     "privacy": "Asturnaanta",
     "cookies": "Kukiyada",
     "languageHelp": "Taageero luqaddaada ah",
-    "languageHelpDescription": "Nagula soo xiriir Iswiidhish, Ingiriisi, Tigrinya, Carabi ama Soomaali.",
-    "orgnrLabel": "Lambarka ururka"
+    "languageHelpDescription": "Waxbarasho Iswiidhish, Ingiriis, Tigrinya iyo Carabi. Soomaaligu wuu soo socdaa.",
+    "orgnrLabel": "Lambarka ururka",
+    "call": "Wac",
+    "callUs": "Nagu soo wac",
+    "callName": "Wac {phone}",
+    "seePrices": "Eeg qiimaha",
+    "openNow": "Hadda furan",
+    "closed": "Xiran",
+    "directions": "Jihada",
+    "mostChosen": "Ugu badan la doortay",
+    "pause": "Hakad",
+    "play": "Ciyaar",
+    "fromPrice": "Laga bilaabo {price}",
+    "legal": "Sharciga"
   },
   "common": {
     "bookNow": "Hadda qabso",
@@ -79,26 +91,7 @@
       "cardDescription": "Dooro luqadda, nooca gear-ka iyo macallinka baahidaada ku salaysan.",
       "reviews": "faallooyin",
       "pickupProof": "Soo qaadis heshiis kadib",
-      "languageProof": "Waxbarid 5 luqadood"
-    },
-    "trust": {
-      "label": "Waxa aad Makina ka helayso",
-      "languages": {
-        "title": "Shan luqadood",
-        "description": "Iswiidhish, Ingiriis, Tigrinya, Carabi iyo Soomaali"
-      },
-      "pickup": {
-        "title": "Soo qaadis",
-        "description": "Waxaan kula kulmi karnaa meesha aad joogto heshiis kadib"
-      },
-      "lesson": {
-        "title": "50 daqiiqo",
-        "description": "Isku muddada casharka dhammaan xulashooyinka"
-      },
-      "pricing": {
-        "title": "Qiimo furan",
-        "description": "Eeg waxa ku jira ka hor intaadan bixin"
-      }
+      "languageProof": "Iswiidhish, Ingiriis, Tigrinya iyo Carabi"
     },
     "journey": {
       "eyebrow": "Sida ay u shaqayso",
@@ -142,7 +135,7 @@
       },
       "languages": {
         "question": "Ma ku qaadan karaa casharrada afkayga?",
-        "answer": "Haa. Macallimiinteennu waxay wax ku dhigaan Iswiidhish, Ingiriisi, Tigrinya, Carabi iyo Soomaali. Noo sheeg luqadda aad u baahan tahay markaad nala soo xiriirto."
+        "answer": "Waxbarasho Iswiidhish, Ingiriis, Tigrinya iyo Carabi. Soomaaligu wuu soo socdaa."
       },
       "pickup": {
         "question": "Ma i soo qaadi kartaan?",
@@ -158,14 +151,92 @@
       },
       "validity": {
         "question": "Muddo intee le'eg ayay xirmadaydu shaqaynaysaa?",
-        "answer": "Muddada ansaxnimadu waxay ku qoran tahay xirmo kasta. Hadhaagaaga iyo taariikhda uu dhacayo waxaad mar walba ka arki kartaa Bogaggayga."
+        "answer": "Casharrada wadista iyo xirmooyinku waxay shaqeeyaan 12 bilood. Teoriga dhijitaalka ah wakhti kuma xirna."
+      }
+    },
+    "theory": {
+      "comingSoon": "Teoriga shan luqadood ayaa dhowaan soo baxaysa."
+    },
+    "benefits": {
+      "label": "Waxa aad ka hesho Makina",
+      "language": {
+        "title": "Luqaddaada",
+        "body": "Waxbarasho Iswiidhish, Ingiriis, Tigrinya iyo Carabi. Soomaaligu wuu soo socdaa."
+      },
+      "pickup": {
+        "title": "Soo qaadis",
+        "body": "Soo qaadis heshiis ayaa lagu sameeyaa."
+      },
+      "lesson": {
+        "title": "50 daqiiqo",
+        "body": "Cashar kasta oo wadista ah waa 50 daqiiqo."
+      },
+      "prices": {
+        "title": "Qiimaha",
+        "body": "Dhammaan qiimuhu waxay ku jiraan VAT."
+      },
+      "testLesson": {
+        "title": "Cashar tijaabo",
+        "body": "Cashar tijaabo ah {price}"
+      },
+      "risk": {
+        "title": "Tababarka khatarta",
+        "body": "Riskettan ama risktvåan ayaa ku jira liiska."
+      },
+      "guarantee": {
+        "title": "Dammaanad",
+        "body": "Xirmo dammaanad ah ayaa ku jirta liiska."
+      },
+      "payment": {
+        "title": "Bixinta",
+        "body": "Kaadh, Swish iyo Klarna."
+      },
+      "local": {
+        "title": "Soo booqo",
+        "body": "{address}"
+      },
+      "cancel": {
+        "title": "Joojin",
+        "body": "Ka jooji wax ka badan 24 saacadood ka hor bilowga bilaash."
+      },
+      "reminder": {
+        "title": "Xusuusin",
+        "body": "SMS maalin ka hor casharka."
+      },
+      "selfBook": {
+        "title": "Is ballansho",
+        "body": "Dooro waqti marka ballanta ay furan tahay."
       }
     }
   },
   "lessons": {
     "eyebrow": "Qiimayaasha iyo xirmooyinka",
     "title": "Casharro wadis marxalad kasta",
-    "description": "Isbarbar dhig casharrada keli ah iyo xirmooyinka. Dhammaan qiimayaasha waxa ku jira VAT."
+    "description": "Isbarbar dhig casharrada keli ah iyo xirmooyinka. Dhammaan qiimayaasha waxa ku jira VAT.",
+    "groups": {
+      "label": "Kooxaha alaabta",
+      "single": {
+        "title": "Casharro keli ah",
+        "intro": "Hal cashar wadista ah ama cashar tijaabo."
+      },
+      "packages": {
+        "title": "Xirmooyin",
+        "intro": "Dhowr cashar oo wadista ah oo hal xirmo ah."
+      },
+      "intensive": {
+        "title": "Degdeg",
+        "intro": "Xirmooyin leh tababar khatar, teori ama dammaanad."
+      },
+      "courses": {
+        "title": "Koorsooyin",
+        "intro": "Kursiyo sida riskettan iyo risktvåan."
+      },
+      "theory": {
+        "title": "Teori",
+        "intro": "Teori dhijitaal ah oo aan wakhti lahayn."
+      }
+    },
+    "testCallout": "Ma hubo waxa aad u baahan tahay? Ku bilow cashar tijaabo."
   },
   "product": {
     "popular": "Ugu caansan",
@@ -201,7 +272,8 @@
       "submit": "U gudub lacag-bixinta",
       "redirecting": "Lacag-bixinta waa la furayaa…",
       "error": "Lacag-bixinta lama bilaabi karin. Gal oo mar kale isku day."
-    }
+    },
+    "cancelNote": "Ka jooji wax ka badan 24 saacadood ka hor bilowga bilaash."
   },
   "checkout": {
     "eyebrow": "Lacag-bixin ammaan ah",
@@ -237,14 +309,14 @@
     "showAsList": "Tus macallimiinta sida liis",
     "locationFilter": "2. Dooro goobta",
     "results": "Natiijooyinka macallimiinta",
-    "resultCount": "{count, plural, =0 {Macallin ma jiro} =1 {1 macallin} other {# macallin}}",
+    "resultCount": "{count, plural, =0 {Macallin ma jiro} =1 {1 macallin} other {{n} macallin}}",
     "emptyTitle": "Macallin ku habboon ma jiro",
     "emptyDescription": "Isku day luqad ama goob kale.",
     "transmissionFilter": "3. Dooro nooca gear-ka",
     "allTransmissions": "Dhammaan noocyada gear-ka"
   },
   "teacher": {
-    "yearsExperience": "{count, plural, =0 {Macallin cusub} =1 {1 sano oo khibrad ah} other {# sano oo khibrad ah}}",
+    "yearsExperience": "{count, plural, =0 {Macallin cusub} =1 {1 sano oo khibrad ah} other {{n} sano oo khibrad ah}}",
     "viewProfile": "Eeg macluumaadka",
     "transmission": {
       "manual": "Gacanta",
@@ -285,7 +357,7 @@
     "language": "Luqadda",
     "venue": "Goobta",
     "seats": "Kuraasta bannaan",
-    "seatsLeft": "{count, plural, =0 {Way buuxdaa} =1 {1 kursi ayaa hadhay} other {# kursi ayaa hadhay}}",
+    "seatsLeft": "{count, plural, =0 {Way buuxdaa} =1 {1 kursi ayaa hadhay} other {{n} kursi ayaa hadhay}}",
     "inactive": "Alaabta koorsadan weli iib looma furin.",
     "emptyTitle": "Koorso lama qorshayn",
     "emptyDescription": "Koorsooyin cusub ayaa halkan ka muuqan doona marka la xaqiijiyo.",
@@ -319,14 +391,14 @@
       "features": {
         "categories": "Qaybo cad",
         "practice": "Su'aalo tababar oo bilaash ah",
-        "languages": "Taageero shan luqadood ah"
+        "languages": "Iswiidhish, Ingiriis, Tigrinya iyo Carabi. Soomaaligu wuu soo socdaa."
       }
     },
     "licensingPending": "Kaydka su'aalaha oo dhan wuu furmaa marka aad iibsato gelitaanka teori.",
     "questionsAvailable": "su'aalo bilaash ah oo diyaar u ah tijaabo",
     "freeIntro": "Ku bilow tusaale bilaash ah",
     "startPractice": "Bilow tababarka",
-    "freeCount": "{count, plural, =1 {1 su'aal bilaash ah} other {# su'aalood oo bilaash ah}}",
+    "freeCount": "{count, plural, =1 {1 su'aal bilaash ah} other {{n} su'aalood oo bilaash ah}}",
     "swedishOnly": "Af Iswiidhish oo keliya",
     "examLink": "Fur imtixaanka tijaabada",
     "emptyTitle": "Su'aalaha bilaashka ah dhowaan ayaa la daabici doonaa",
@@ -441,7 +513,7 @@
     "credits": {
       "loading": "Hadhaagaaga waa la hubinayaa…",
       "signIn": "Gal si aad u hubiso casharrada xirmadaada.",
-      "balance": "{count, plural, =0 {Casharro la heli karo ma jiraan} =1 {1 cashar ayaa la heli karaa} other {# cashar ayaa la heli karaa}}"
+      "balance": "{count, plural, =0 {Casharro la heli karo ma jiraan} =1 {1 cashar ayaa la heli karaa} other {{n} cashar ayaa la heli karaa}}"
     },
     "summary": {
       "eyebrow": "Ballantaada",
@@ -560,7 +632,7 @@
       "viewBookings": "Eeg ballamaha",
       "saldo": "Casharradayda",
       "viewSaldo": "Eeg casharrada",
-      "lessonsLeft": "{count, plural, =1 {1 cashar ayaa haray} other {# cashar ayaa haray}}",
+      "lessonsLeft": "{count, plural, =1 {1 cashar ayaa haray} other {{n} cashar ayaa haray}}",
       "theory": "Gelitaanka teori",
       "theoryActive": "Gelitaanka teorigaagu waa shaqaynayaa.",
       "theoryInactive": "Gelitaan teori oo shaqaynaya ma jiro.",
@@ -589,8 +661,8 @@
     "saldo": {
       "title": "Casharradayda",
       "available": "Weli la wado",
-      "remaining": "{count, plural, =1 {1 cashar ayaa haray} other {# cashar ayaa haray}}",
-      "lotCount": "{count, plural, =1 {+1 cashar} other {+# cashar}}",
+      "remaining": "{count, plural, =1 {1 cashar ayaa haray} other {{n} cashar ayaa haray}}",
+      "lotCount": "{count, plural, =1 {+1 cashar} other {+{n} cashar}}",
       "lessons": "casharro wadis",
       "lots": "Dhibcaha shaqaynaya",
       "expires": "Wuxuu dhacayaa <time>{date}</time>",
@@ -706,7 +778,7 @@
   "teacherPortal": {
     "eyebrow": "Bogga macallinka",
     "title": "Casharrada maanta",
-    "lessonCount": "{count, plural, =0 {Maanta cashar ma jiro} =1 {Maanta 1 cashar} other {Maanta # cashar}}",
+    "lessonCount": "{count, plural, =0 {Maanta cashar ma jiro} =1 {Maanta 1 cashar} other {Maanta {n} cashar}}",
     "call": "Wac ardayga",
     "openAddress": "Fur cinwaanka",
     "previousNote": "Qoraalkii hore",
@@ -717,12 +789,15 @@
     "updateReport": "Cusboonaysii warbixinta",
     "empty": "Maanta casharro ma lihid.",
     "weekTitle": "Casharrada toddobaadkan",
-    "weekCount": "{count, plural, =0 {Toddobaadkan cashar ma jiro} =1 {Toddobaadkan 1 cashar} other {Toddobaadkan # cashar}}",
+    "weekCount": "{count, plural, =0 {Toddobaadkan cashar ma jiro} =1 {Toddobaadkan 1 cashar} other {Toddobaadkan {n} cashar}}",
     "weekEmpty": "Toddobaadkan casharro ma lihid.",
-    "views": { "today": "Maanta", "week": "Toddobaad" },
+    "views": {
+      "today": "Maanta",
+      "week": "Toddobaad"
+    },
     "students": {
       "title": "Ardaydayda",
-      "lessonsDone": "{count, plural, =0 {Cashar la dhammeeyey ma jiro} =1 {1 cashar oo la dhammeeyey} other {# cashar oo la dhammeeyey}}",
+      "lessonsDone": "{count, plural, =0 {Cashar la dhammeeyey ma jiro} =1 {1 cashar oo la dhammeeyey} other {{n} cashar oo la dhammeeyey}}",
       "nextLesson": "Casharka xiga <time>{when}</time>",
       "noNext": "Cashar soo socda ma jiro.",
       "empty": "Weli arday ma jiraan."
@@ -1145,10 +1220,9 @@
     "locationsDescription": "Waxaad naga heli kartaa Centralvägen 5 ee Upplands Väsby. Ka fur tilmaamaha Google Maps.",
     "directions": "Jihada",
     "languagesTitle": "Luqad intee le'eg ayaad u baahan tahay?",
-    "languagesBody": "Waxaanu ku barnaa Iswidhish, Ingiriisi, Tigrinya, Carabi iyo Soomaali. Sheeg luqadda aad rabto marka aad ballansato. Waxaanu kugu xidhiidhinaynaa macallin ku hadla.",
+    "languagesBody": "Waxbarasho Iswiidhish, Ingiriis, Tigrinya iyo Carabi. Soomaaligu wuu soo socdaa.",
     "staffTitle": "Shaqaalaheenna",
     "staffDescription": "Baro kooxda Makina Trafikskola. La xiriir dugsiga haddii aad rabto inaad qabsato macallin gaar ah.",
-    "speaks": "Wuxuu ku baraa {language}",
     "contactViaSchool": "Kala xiriir dugsiga",
     "callSchool": "Wac dugsiga",
     "emailSchool": "Iimayl u dir dugsiga",
@@ -1156,6 +1230,15 @@
       "trafikskolechef": "Maamulaha dugsiga wadista",
       "utbildningsledare": "Madaxa tababarka",
       "trafiklarare": "Macallinka wadista"
+    },
+    "day": {
+      "0": "Axad",
+      "1": "Isniin",
+      "2": "Talaado",
+      "3": "Arbaco",
+      "4": "Khamiis",
+      "5": "Jimce",
+      "6": "Sabti"
     }
   }
 }

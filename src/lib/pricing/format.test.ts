@@ -39,6 +39,7 @@ describe("showPerLessonPrice", () => {
     expect(showPerLessonPrice({ ...lesson, includesRisk1: true })).toBe(false);
     expect(showPerLessonPrice({ ...lesson, includesRisk2: true })).toBe(false);
     expect(showPerLessonPrice({ ...lesson, lessonCredits: 0 })).toBe(false);
+    expect(showPerLessonPrice({ ...lesson, lessonCredits: 1 })).toBe(false);
     expect(showPerLessonPrice({ ...lesson, kind: "GUARANTEE" })).toBe(false);
     expect(showPerLessonPrice({ ...lesson, kind: "COURSE_SEAT" })).toBe(false);
     expect(showPerLessonPrice({ ...lesson, kind: "THEORY_ACCESS" })).toBe(false);

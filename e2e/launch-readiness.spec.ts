@@ -37,6 +37,7 @@ test.describe("public localized experience", () => {
   });
 
   test("keeps the Google account option visible", async ({ page }) => {
+    test.skip(!process.env.AUTH_GOOGLE_ID, "Google sign-in is not configured.");
     await page.goto("/en/skapa-konto");
     await expect(
       page.getByRole("button", { name: "Continue with Google" }),
@@ -61,7 +62,7 @@ test("stores cookie consent", async ({ page }) => {
   await page.goto("/en");
   const banner = page.getByRole("complementary", { name: "Cookie settings" });
   await expect(banner).toBeVisible();
-  await banner.getByRole("button", { name: "Accept" }).click();
+  await banner.getByRole("button", { name: "OK" }).click();
   await expect(banner).toBeHidden();
   await page.reload();
   await expect(banner).toBeHidden();

@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 
 import { EmptyState } from "@/components/EmptyState";
+import { formatLessonTime } from "@/lib/format/datetime";
 import { SlotChip } from "@/components/SlotChip";
 
 import type { Slot } from "./state";
@@ -14,7 +15,7 @@ export function WhenStep({
   selectedSlot,
   loadingSlots,
   dateSlots,
-  timeFormatter,
+  locale,
   onFirstAvailable,
   onDate,
   onSlot,
@@ -25,7 +26,7 @@ export function WhenStep({
   selectedSlot: string;
   loadingSlots: boolean;
   dateSlots: Slot[];
-  timeFormatter: Intl.DateTimeFormat;
+  locale: string;
   onFirstAvailable: (slot: Slot) => void;
   onDate: (key: string) => void;
   onSlot: (startsAt: string) => void;
@@ -41,7 +42,7 @@ export function WhenStep({
           className="mt-5 flex min-h-14 w-full items-center justify-between rounded-md bg-surface px-4 text-start font-bold text-ink-inverse"
         >
           <span className="min-w-0 break-words">{t("step.when.firstAvailable")}</span>
-          <bdi dir="ltr" className="shrink-0">{timeFormatter.format(new Date(slots[0].startsAt))}</bdi>
+          <bdi dir="ltr" className="shrink-0">{formatLessonTime(new Date(slots[0].startsAt), locale)}</bdi>
         </button>
       ) : null}
       <div className="mt-5 flex max-w-full snap-x snap-mandatory gap-2 overflow-x-auto overscroll-x-contain pb-2">
@@ -77,7 +78,7 @@ export function WhenStep({
               selected={selectedSlot === slot.startsAt}
               onClick={() => onSlot(slot.startsAt)}
             >
-              <bdi dir="ltr">{timeFormatter.format(new Date(slot.startsAt))}</bdi>
+              <bdi dir="ltr">{formatLessonTime(new Date(slot.startsAt), locale)}</bdi>
             </SlotChip>
           ))}
         </div>

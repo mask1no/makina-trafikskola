@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Button } from "@/components/Button";
 import { CheckboxField } from "@/components/CheckboxField";
 import { Notice } from "@/components/Notice";
+import { telHref } from "@/lib/format/phone";
 
 type Copy = {
   accountRequired: string;
@@ -20,6 +21,9 @@ type Copy = {
 export function PurchaseControl({
   productId,
   active,
+  salesOpen,
+  phone,
+  callLabel,
   authenticated,
   signInHref,
   inactiveLabel,
@@ -27,6 +31,9 @@ export function PurchaseControl({
 }: {
   productId: string;
   active: boolean;
+  salesOpen: boolean;
+  phone: string;
+  callLabel: string;
   authenticated: boolean;
   signInHref: string;
   inactiveLabel: string;
@@ -60,6 +67,17 @@ export function PurchaseControl({
       setError(copy.error);
       setBusy(false);
     }
+  }
+
+  if (!salesOpen) {
+    return (
+      <a
+        href={telHref(phone)}
+        className="mt-8 inline-flex min-h-11 w-full items-center justify-center rounded-sm border border-surface bg-surface px-5 font-bold text-ink-inverse"
+      >
+        {callLabel}
+      </a>
+    );
   }
 
   if (!active) {

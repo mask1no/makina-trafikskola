@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 
 import { getAvailableCreditBalance } from "@/lib/credits/ledger";
+import { formatStockholm } from "@/lib/format/datetime";
 import { db } from "@/lib/db";
 import { getActiveTheoryAccess } from "@/lib/theory/access";
 import { LinkButton } from "@/components/LinkButton";
@@ -32,15 +33,13 @@ export default async function StudentDashboard(
   ]);
 
   const date = nextBooking
-    ? new Intl.DateTimeFormat(params.locale, {
-        timeZone: "Europe/Stockholm",
+    ? formatStockholm(nextBooking.startsAt, params.locale, {
         weekday: "long",
         day: "numeric",
         month: "long",
         hour: "2-digit",
         minute: "2-digit",
-        numberingSystem: "latn",
-      }).format(nextBooking.startsAt)
+      })
     : null;
 
   return (
@@ -71,7 +70,7 @@ export default async function StudentDashboard(
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
           <StatCard
             label={t("saldo")}
-            value={t("lessonsLeft", { count: credits.balance })}
+            value={t("lessonsLeft", { count: credits.balance, n: String(credits.balance) })}
             detail={<Link className="inline-flex min-h-11 items-center font-bold underline" href={`/${params.locale}/mina-sidor/lektioner`}>{t("viewSaldo")}</Link>}
           />
           <StatCard

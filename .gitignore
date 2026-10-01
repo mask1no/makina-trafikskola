@@ -31,6 +31,9 @@ yarn-error.log*
 .env
 .env*.local
 
+# The real theory bank is imported locally and must not be committed.
+/prisma/theory-bank.json
+
 # vercel
 .vercel
 

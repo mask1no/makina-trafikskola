@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 
 import { calculateAvailableCreditBalance } from "@/lib/credits/ledger";
+import { formatStockholm } from "@/lib/format/datetime";
 import { formatPrice } from "@/lib/pricing/format";
 import { db } from "@/lib/db";
 import { Badge } from "@/components/Badge";
@@ -103,11 +104,11 @@ export default async function AdminStudentsPage(
   const balance = selected
     ? calculateAvailableCreditBalance(selected.credits, now).balance
     : 0;
-  const formatter = new Intl.DateTimeFormat(params.locale, {
-    timeZone: "Europe/Stockholm",
-    dateStyle: "medium",
-    timeStyle: "short",
-  });
+  const formatStamp = (date: Date) =>
+    formatStockholm(date, params.locale, {
+      dateStyle: "medium",
+      timeStyle: "short",
+    });
 
   return (
     <section>
@@ -132,7 +133,7 @@ export default async function AdminStudentsPage(
       <div className="mt-8 grid gap-6 lg:grid-cols-[20rem_1fr]">
         <aside className="rounded-md border border-border bg-card p-3">
           <h2 className="px-2 py-2 font-bold">
-            {t("results", { count: students.length })}
+            {t("results", { count: String(students.length) })}
           </h2>
           <div className="mt-2 grid gap-1">
             {students.map((student) => (
@@ -189,7 +190,7 @@ export default async function AdminStudentsPage(
                       </Badge>
                     </div>
                     <p className="mt-1 text-sm text-ink-muted">
-                      {formatter.format(order.createdAt)}
+                      {formatStamp(order.createdAt)}
                     </p>
                     {order.payment ? (
                       <p className="mt-2 text-sm">
@@ -235,7 +236,7 @@ export default async function AdminStudentsPage(
                         {allT(`student.saldo.reasons.${credit.reason}`)}
                       </p>
                       <p className="mt-1 text-sm text-ink-muted">
-                        {formatter.format(credit.createdAt)}
+                        {formatStamp(credit.createdAt)}
                       </p>
                       {credit.note ? (
                         <p className="mt-2 text-sm">{credit.note}</p>

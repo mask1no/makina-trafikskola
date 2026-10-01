@@ -1,3 +1,5 @@
+import { formatLessonDateTime } from "@/lib/format/datetime";
+
 export type BookingTemplate =
   | "booking_confirmed"
   | "booking_cancelled_by_student"
@@ -92,16 +94,7 @@ function clean(value: string | undefined) {
 }
 
 function formatLessonTime(date: Date, locale: SupportedLocale) {
-  return new Intl.DateTimeFormat(localeTags[locale], {
-    timeZone: "Europe/Stockholm",
-    weekday: "short",
-    day: "numeric",
-    month: "short",
-    hour: "2-digit",
-    minute: "2-digit",
-    hourCycle: "h23",
-    numberingSystem: "latn",
-  }).format(date);
+  return formatLessonDateTime(date, localeTags[locale]);
 }
 
 function teacherSuffix(locale: SupportedLocale, teacher?: string) {

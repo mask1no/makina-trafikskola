@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/Button";
+import { formatStockholm } from "@/lib/format/datetime";
 import { Badge } from "@/components/Badge";
 import { BottomSheet } from "@/components/BottomSheet";
 import { EmptyState } from "@/components/EmptyState";
@@ -34,15 +35,14 @@ export function BookingList({
     useState<BookingItem | null>(null);
   const [lateCancellation, setLateCancellation] = useState(false);
   const [error, setError] = useState("");
-  const dateFormatter = new Intl.DateTimeFormat(locale, {
-    timeZone: "Europe/Stockholm",
-    weekday: "long",
-    day: "numeric",
-    month: "short",
-    hour: "2-digit",
-    minute: "2-digit",
-    numberingSystem: "latn",
-  });
+  const formatWhen = (date: Date) =>
+    formatStockholm(date, locale, {
+      weekday: "long",
+      day: "numeric",
+      month: "short",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
 
   function openCancellation(booking: BookingItem) {
     const deadline = new Date(
@@ -97,7 +97,7 @@ export function BookingList({
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div className="min-w-0 flex-1">
                 <p className="break-words text-lg font-black">
-                  <bdi>{dateFormatter.format(new Date(booking.startsAt))}</bdi>
+                  <bdi>{formatWhen(new Date(booking.startsAt))}</bdi>
                 </p>
                 <p className="mt-1 text-sm text-ink-muted">
                   <bdi>{booking.teacherName}</bdi>
@@ -121,7 +121,7 @@ export function BookingList({
             {booking.status === "CONFIRMED" ? (
               <p className="mt-4 break-words text-sm text-ink-muted">
                 {t.rich("deadline", {
-                  deadline: dateFormatter.format(deadline),
+                  deadline: formatWhen(deadline),
                   time: (chunks) => <bdi>{chunks}</bdi>,
                 })}
               </p>
@@ -147,7 +147,7 @@ export function BookingList({
               {lateCancellation
                 ? t("cancelLateWarning")
                 : t.rich("cancelRefundWarning", {
-                    deadline: dateFormatter.format(
+                    deadline: formatWhen(
                       new Date(
                         new Date(pendingCancellation.startsAt).getTime() -
                           cancellationWindowHours * 60 * 60 * 1000,

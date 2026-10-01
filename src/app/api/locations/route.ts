@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { invalidInput } from "@/lib/api/http";
+import { publicAddress } from "@/lib/locations/address";
 import { db } from "@/lib/db";
 
 const querySchema = z.object({}).strict();
@@ -28,9 +29,7 @@ export async function GET(request: Request) {
   return Response.json(
     locations.map((location) => ({
       ...location,
-      address: location.address.trim().toUpperCase().startsWith("TODO")
-        ? null
-        : location.address,
+      address: publicAddress(location.address),
     })),
   );
 }

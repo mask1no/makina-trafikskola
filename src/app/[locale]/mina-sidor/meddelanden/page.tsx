@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 
 import { auth } from "@/auth";
+import { formatStockholm } from "@/lib/format/datetime";
 import { db } from "@/lib/db";
 import { Badge } from "@/components/Badge";
 import { EmptyState } from "@/components/EmptyState";
@@ -51,11 +52,11 @@ export default async function MessagesPage(
       },
     }),
   ]);
-  const formatter = new Intl.DateTimeFormat(locale, {
-    dateStyle: "medium",
-    timeStyle: "short",
-    timeZone: "Europe/Stockholm",
-  });
+  const formatSent = (date: Date) =>
+    formatStockholm(date, locale, {
+      dateStyle: "medium",
+      timeStyle: "short",
+    });
 
   return (
     <section>
@@ -77,7 +78,7 @@ export default async function MessagesPage(
                 </Badge>
               </div>
               <p className="mt-2 text-sm text-ink-muted">
-                {formatter.format(notification.sentAt ?? notification.sendAfter)}
+                {formatSent(notification.sentAt ?? notification.sendAfter)}
                 {" · "}
                 {notification.sentAt ? t("sent") : t("scheduled")}
               </p>

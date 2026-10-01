@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { apiError, invalidInput } from "@/lib/api/http";
+import { publicAddress } from "@/lib/locations/address";
 import { resolveContent } from "@/lib/content/fallback";
 import { db } from "@/lib/db";
 import { locales } from "@/i18n/routing";
@@ -45,9 +46,7 @@ export async function GET(request: Request, props: { params: Promise<{ slug: str
       id: location.id,
       slug: location.slug,
       name: location.name,
-      address: location.address.trim().toUpperCase().startsWith("TODO")
-        ? null
-        : location.address,
+      address: publicAddress(location.address),
       city: location.city,
       postalCode: location.postalCode,
       lat: location.lat,

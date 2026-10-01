@@ -80,7 +80,7 @@ export default async function TeacherDetailPage(
               <bdi>{name}</bdi>
             </h1>
             <p className="mt-3 text-ink-muted">
-              {t("teacher.yearsExperience", { count: teacher.yearsExperience })}
+              {t("teacher.yearsExperience", { count: teacher.yearsExperience, n: String(teacher.yearsExperience) })}
             </p>
             {teacher.swedishOnly ? (
               <span className="mt-4 inline-block rounded-full bg-page px-3 py-1 text-xs text-ink-muted">

@@ -15,13 +15,18 @@
   --ink-inverse: #ffffff;
   --ink-inverse-muted: #a7a7af;
   --ink-muted: #6b6b73;
-  --ink-subtle: #8b8b94;
+  --ink-subtle: #73737c;
   --accent: #f5b429;
   --accent-hover: #e0a21c;
   --accent-soft: #fff6dc;
   --accent-ink: #0d0d0f;
-  --success: #1fa971;
+  --success: #15803d;
+  --success-strong: #1fa971;
   --success-soft: #eaf8f2;
+  --header-height: 4rem;
+  --header-height-lg: 4.5rem;
+  --tab-bar-height: 4.5rem;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
   --danger: #dc2626;
   --danger-soft: #fef0f0;
   --radius-sm: 12px;
@@ -39,8 +44,8 @@
 html {
   background: var(--surface);
   scroll-behavior: smooth;
-  scroll-padding-top: 4rem;
-  scroll-padding-bottom: calc(4.5rem + env(safe-area-inset-bottom));
+  scroll-padding-top: var(--header-height);
+  scroll-padding-bottom: calc(var(--tab-bar-height) + var(--safe-bottom));
 }
 
 @media (min-width: 768px) {
@@ -51,7 +56,7 @@ html {
 
 @media (min-width: 1024px) {
   html {
-    scroll-padding-top: 4.5rem;
+    scroll-padding-top: var(--header-height-lg);
   }
 }
 
@@ -63,6 +68,22 @@ html[lang="ti"] .display-title,
 html[lang="ti"] .section-title,
 html[lang="ti"] .brand-mark {
   line-height: 1.45;
+}
+
+html[lang="ar"] .display-title,
+html[lang="ti"] .display-title,
+html[lang="ar"] .section-title,
+html[lang="ti"] .section-title,
+html[lang="ar"] .brand-mark,
+html[lang="ti"] .brand-mark,
+html[lang="ar"] [class*="tracking-"],
+html[lang="ti"] [class*="tracking-"] {
+  letter-spacing: normal;
+}
+
+html[lang="ar"] .uppercase,
+html[lang="ar"] [class*="uppercase"] {
+  text-transform: none;
 }
 
 html[lang="sv"],
@@ -93,7 +114,15 @@ body {
 
 :focus-visible {
   outline: 3px solid var(--accent);
-  outline-offset: 3px;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px var(--ink);
+}
+
+.bg-surface :focus-visible,
+.bg-surface:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+  box-shadow: none;
 }
 
 a,
@@ -174,19 +203,19 @@ textarea {
   }
 
   .reveal-delay-1 {
-    animation-delay: 90ms;
+    animation-delay: 40ms;
   }
 
   .reveal-delay-2 {
-    animation-delay: 180ms;
+    animation-delay: 80ms;
   }
 
   .reveal-delay-3 {
-    animation-delay: 270ms;
+    animation-delay: 120ms;
   }
 
   .hero-pan {
-    animation: makina-hero-pan 18s ease-in-out infinite alternate;
+    animation: none;
   }
 
   @keyframes makina-reveal {
@@ -219,6 +248,49 @@ textarea {
     .site-container {
       padding-inline: 2rem;
     }
+
+    .hero-pan {
+      animation: makina-hero-pan 18s ease-in-out infinite alternate;
+    }
+  }
+
+  .benefit-viewport {
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  }
+
+  .benefit-track {
+    display: flex;
+    width: max-content;
+    animation: benefit-marquee 45s linear infinite;
+  }
+
+  .benefit-track-reverse {
+    animation-duration: 55s;
+    animation-direction: reverse;
+  }
+
+  [dir="rtl"] .benefit-track {
+    animation-direction: reverse;
+  }
+
+  [dir="rtl"] .benefit-track-reverse {
+    animation-direction: normal;
+  }
+
+  .benefit-marquee-region:hover .benefit-track,
+  .benefit-marquee-region:focus-within .benefit-track,
+  [data-paused] .benefit-track {
+    animation-play-state: paused;
+  }
+
+  @keyframes benefit-marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -226,8 +298,22 @@ textarea {
     .reveal-delay-1,
     .reveal-delay-2,
     .reveal-delay-3,
-    .hero-pan {
+    .hero-pan,
+    .benefit-track {
       animation: none;
+    }
+
+    .benefit-copy {
+      display: none;
+    }
+
+    .benefit-viewport {
+      overflow-x: auto;
+      mask-image: none;
+    }
+
+    .benefit-track {
+      width: 100%;
     }
   }
 }

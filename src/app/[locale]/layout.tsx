@@ -15,6 +15,8 @@ import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { ServiceWorkerRegistration } from "@/components/ServiceWorkerRegistration";
 import { isLocale, locales } from "@/i18n/routing";
+import { openingHoursSpecification } from "@/lib/company/opening-hours";
+import { displayPhone, telHref } from "@/lib/format/phone";
 import { db } from "@/lib/db";
 import {
   bookingEnabled,
@@ -200,49 +202,46 @@ export default async function LocaleLayout(
       addressCountry: "SE",
     },
     areaServed: { "@type": "City", name: "Stockholm" },
-    availableLanguage: [...locales],
+    availableLanguage: ["sv", "en", "ti", "ar"],
+    openingHoursSpecification: openingHoursSpecification(),
     ...(siteUrl ? { url: `${siteUrl}/${params.locale}` } : {}),
   };
 
+  const centerTab = {
+    href: canBook ? `${base}/boka` : telHref(company("phone")),
+    label: canBook ? t("book") : t("call"),
+    icon: canBook ? "bookings" : "call",
+  } as const;
   const tabs = (
     session?.user.role === "ADMIN"
       ? [
           { href: `${base}/admin`, label: t("admin"), icon: "profile" },
           { href: `${base}/admin/calendar`, label: t("calendar"), icon: "bookings" },
-          { href: `${base}/admin/students`, label: t("students"), icon: "messages" },
           { href: base, label: t("home"), icon: "home" },
-          { href: `${base}/korlektioner`, label: t("packages"), icon: "packages" },
+          { href: `${base}/admin/students`, label: t("students"), icon: "messages" },
         ]
       : session?.user.role === "TEACHER"
         ? [
             { href: `${base}/larare-portal`, label: teacherT("eyebrow"), icon: "bookings" },
             { href: base, label: t("home"), icon: "home" },
             { href: `${base}/korlektioner`, label: t("lessons"), icon: "packages" },
-            { href: `${base}/larare`, label: t("teachers"), icon: "profile" },
             { href: `${base}/teori`, label: t("theory"), icon: "messages" },
           ]
-        : session?.user.role === "STUDENT"
-          ? [
+        : [
             { href: base, label: t("home"), icon: "home" },
             { href: `${base}/korlektioner`, label: t("packages"), icon: "packages" },
-            { href: `${base}/mina-sidor/bokningar`, label: t("bookings"), icon: "bookings" },
-            { href: `${base}/mina-sidor/meddelanden`, label: t("messages"), icon: "messages" },
-            { href: `${base}/mina-sidor/profil`, label: t("profile"), icon: "profile" },
+            { href: `${base}/teori`, label: t("theory"), icon: "messages" },
+            {
+              href: session?.user ? `${base}/mina-sidor` : `${base}/logga-in`,
+              label: session?.user ? t("myPages") : t("signIn"),
+              icon: "profile",
+            },
           ]
-          : [
-              { href: base, label: t("home"), icon: "home" },
-              { href: `${base}/korlektioner`, label: t("packages"), icon: "packages" },
-              ...(showInstructors
-                ? [{ href: `${base}/larare`, label: t("teachers"), icon: "bookings" as const }]
-                : []),
-              { href: `${base}/teori`, label: t("theory"), icon: "messages" },
-              { href: `${base}/logga-in`, label: t("signIn"), icon: "profile" },
-            ]
   ) satisfies { href: string; label: string; icon: BottomTabIcon }[];
 
   return (
     <NextIntlClientProvider>
-      <div className="min-h-screen bg-page pb-[calc(4.5rem+env(safe-area-inset-bottom))] md:pb-0">
+      <div className="min-h-screen bg-page pb-[calc(var(--tab-bar-height)+var(--safe-bottom))] md:pb-0">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -250,7 +249,7 @@ export default async function LocaleLayout(
           }}
         />
         <header className="sticky top-0 z-40 border-b border-surface-soft bg-surface text-ink-inverse shadow-soft">
-          <div className="site-container flex min-h-16 min-w-0 flex-nowrap items-center gap-1.5 sm:gap-2 lg:min-h-[4.5rem]">
+          <div className="site-container flex min-h-[var(--header-height)] min-w-0 flex-nowrap items-center gap-1.5 sm:gap-2 lg:min-h-[var(--header-height-lg)]">
             <Link href={base} className="inline-flex min-h-11 min-w-0 shrink items-center">
               <Logo compactOnMobile />
             </Link>
@@ -271,7 +270,7 @@ export default async function LocaleLayout(
             </div>
             {!session?.user ? (
               <>
-                <details data-header-menu className="relative hidden shrink-0 md:block lg:hidden">
+                <details data-header-menu className="relative shrink-0 lg:hidden">
                   <summary
                     aria-label={t("account")}
                     className="flex size-11 cursor-pointer list-none items-center justify-center rounded-full border border-surface-soft text-ink-inverse outline-none ring-offset-surface focus-visible:ring-2 focus-visible:ring-accent [&::-webkit-details-marker]:hidden"
@@ -360,18 +359,28 @@ export default async function LocaleLayout(
                 </div>
               </details>
             )}
-            <Link
-              href={canBook ? `${base}/boka` : `${base}/kontakt`}
-              className="inline-flex min-h-11 shrink-0 items-center whitespace-nowrap rounded-sm border border-accent bg-accent px-2.5 text-sm font-extrabold text-accent-ink shadow-soft transition hover:border-accent-hover hover:bg-accent-hover sm:px-4"
-            >
-              {canBook ? t("book") : t("contact")}
-            </Link>
+            {canBook ? (
+              <Link
+                href={`${base}/boka`}
+                className="hidden min-h-11 shrink-0 items-center whitespace-nowrap rounded-sm border border-accent bg-accent px-4 text-sm font-extrabold text-accent-ink shadow-soft md:inline-flex"
+              >
+                {t("book")}
+              </Link>
+            ) : (
+              <a
+                href={telHref(company("phone"))}
+                className="hidden min-h-11 shrink-0 items-center whitespace-nowrap rounded-sm border border-accent bg-accent px-4 text-sm font-extrabold text-accent-ink shadow-soft md:inline-flex"
+              >
+                {t("callUs")}
+                <span className="ms-2 hidden numbers-ltr lg:inline">{displayPhone(company("phone"))}</span>
+              </a>
+            )}
           </div>
         </header>
         <main>{children}</main>
         <footer className="border-t border-surface-soft bg-surface py-12 text-ink-inverse sm:py-16">
-          <div className="site-container grid gap-10 md:grid-cols-12">
-            <div className="md:col-span-5">
+          <div className="site-container grid gap-10 lg:grid-cols-4">
+            <div>
               <Logo />
               <p className="mt-5 max-w-sm text-sm leading-6 text-ink-inverse-muted">
                 {t("footerDescription")}
@@ -381,8 +390,8 @@ export default async function LocaleLayout(
                 <p className="numbers-ltr">{t("orgnrLabel")}: {company("orgnr")}</p>
                 <p>{company("visitingAddress")}</p>
                 <p>
-                  <a className="inline-flex min-h-11 items-center hover:text-ink-inverse numbers-ltr" href={`tel:${company("phone").replace(/[^\d+]/g, "") || company("phone")}`}>
-                    {company("phone")}
+                  <a className="inline-flex min-h-11 items-center hover:text-ink-inverse numbers-ltr" href={telHref(company("phone"))}>
+                    {displayPhone(company("phone"))}
                   </a>
                 </p>
                 <p>
@@ -392,7 +401,7 @@ export default async function LocaleLayout(
                 </p>
               </address>
             </div>
-            <div className="md:col-span-3">
+            <div>
               <p className="text-sm font-extrabold">{t("explore")}</p>
               <div className="mt-4 grid gap-1 text-sm text-ink-inverse-muted">
                 <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/korlektioner`}>{t("lessons")}</Link>
@@ -403,19 +412,24 @@ export default async function LocaleLayout(
                 <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/kontakt`}>{t("contact")}</Link>
               </div>
             </div>
-            <div className="md:col-span-4">
+            <div>
+              <p className="text-sm font-extrabold">{t("legal")}</p>
+              <div className="mt-4 grid gap-1 text-sm text-ink-inverse-muted">
+                <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/villkor`}>{t("terms")}</Link>
+                <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/integritet`}>{t("privacy")}</Link>
+                <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/cookies`}>{t("cookies")}</Link>
+              </div>
+            </div>
+            <div>
               <p className="text-sm font-extrabold">{t("languageHelp")}</p>
-              <p className="mt-4 max-w-sm text-sm leading-6 text-ink-inverse-muted">{t("languageHelpDescription")}</p>
+              <p className="mt-4 max-w-[70ch] text-sm leading-6 text-ink-inverse-muted">{t("languageHelpDescription")}</p>
             </div>
           </div>
-          <div className="site-container mt-10 flex flex-wrap gap-x-6 gap-y-2 border-t border-surface-soft pt-6 text-xs font-semibold text-ink-inverse-muted">
-            <Link className="inline-flex min-h-11 items-center hover:text-ink-inverse" href={`${base}/kontakt`}>{t("contact")}</Link>
-            <Link className="inline-flex min-h-11 items-center hover:text-ink-inverse" href={`${base}/villkor`}>{t("terms")}</Link>
-            <Link className="inline-flex min-h-11 items-center hover:text-ink-inverse" href={`${base}/integritet`}>{t("privacy")}</Link>
-            <Link className="inline-flex min-h-11 items-center hover:text-ink-inverse" href={`${base}/cookies`}>{t("cookies")}</Link>
+          <div className="site-container mt-10 border-t border-surface-soft pt-6 text-xs font-semibold text-ink-inverse-muted">
+            <p>{t("copyright", { year: new Date().getFullYear() })}</p>
           </div>
         </footer>
-        <BottomTabBar tabs={tabs} />
+        <BottomTabBar tabs={tabs} center={centerTab} />
         <CloseDetailsOnNavigate />
         <ScrollToTop label={t("scrollTop")} />
         <CookieConsent locale={params.locale} />

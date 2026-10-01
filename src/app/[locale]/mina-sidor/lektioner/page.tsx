@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 
 import { getAvailableCreditBalance } from "@/lib/credits/ledger";
+import { formatDate } from "@/lib/format/datetime";
 import { db } from "@/lib/db";
 import { EmptyState } from "@/components/EmptyState";
 import { PageHeader } from "@/components/PageHeader";
@@ -29,21 +30,13 @@ export default async function LessonsPage(props: {
       select: { id: true, delta: true, reason: true, expiresAt: true },
     }),
   ]);
-  const formatter = new Intl.DateTimeFormat(params.locale, {
-    timeZone: "Europe/Stockholm",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-    numberingSystem: "latn",
-  });
-
   return (
     <section>
       <PageHeader title={t("title")} />
       <div className="mt-6 max-w-md">
         <StatCard
           label={t("available")}
-          value={t("remaining", { count: credits.balance })}
+          value={t("remaining", { count: credits.balance, n: String(credits.balance) })}
         />
       </div>
       <h2 className="mt-8 text-xl font-bold">{t("lots")}</h2>
@@ -55,18 +48,18 @@ export default async function LessonsPage(props: {
               <p className="mt-1 break-words text-sm text-ink-muted">
                 {lot.expiresAt
                   ? t.rich("expires", {
-                      date: formatter.format(lot.expiresAt),
+                      date: formatDate(lot.expiresAt, params.locale),
                       time: (chunks) => <bdi>{chunks}</bdi>,
                     })
                   : t("noExpiry")}
               </p>
             </div>
             <span className="shrink-0 text-lg font-black text-success">
-              {t("lotCount", { count: lot.delta })}
+              {t("lotCount", { count: lot.delta, n: String(lot.delta) })}
             </span>
           </article>
         ))}
-        {!lots.length ? <EmptyState title={t("empty")} description={t("remaining", { count: 0 })} /> : null}
+        {!lots.length ? <EmptyState title={t("empty")} description={t("remaining", { count: 0, n: "0" })} /> : null}
       </div>
     </section>
   );

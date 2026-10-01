@@ -7,7 +7,8 @@ TOKENS
 - Use CSS variables from globals.css. No hex literal in any component.
   --surface #0D0D0F · --surface-raised #17171A · --page #F5F5F7 · --card #FFF
   --ink #0D0D0F · --ink-inverse #FFF · --ink-muted #6B6B73 · --border #E5E5EA
-  --accent #F5B429 (gold) · --accent-ink #0D0D0F · --success #1FA971 · --danger #DC2626
+  --accent #F5B429 (gold) · --accent-ink #0D0D0F · --ink-subtle #73737C
+  --success #15803D (text) · --success-strong #1FA971 (fills) · --danger #DC2626
   radii 12 / 16 / 20px, 4px spacing scale.
 - Gold is for surfaces, borders and primary buttons. Never gold text on white.
 - Product tier colours come from Product.accentHex — data, not CSS classes.

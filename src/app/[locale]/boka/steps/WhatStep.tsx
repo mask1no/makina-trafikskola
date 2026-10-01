@@ -52,7 +52,7 @@ export function WhatStep({
                     ? t("credits.loading")
                     : creditBalance === null
                       ? t("credits.signIn")
-                      : t("credits.balance", { count: creditBalance })}
+                      : t("credits.balance", { count: creditBalance, n: String(creditBalance) })}
                 </span>
               ) : null}
             </button>

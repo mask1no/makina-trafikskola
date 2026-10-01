@@ -219,7 +219,7 @@ export default async function LararePage(
 
           <div className="mt-8 flex flex-wrap items-center justify-between gap-3">
             <p className="text-sm font-semibold text-ink-muted">
-              {t("teachers.resultCount", { count: teachers.length })}
+              {t("teachers.resultCount", { count: teachers.length, n: String(teachers.length) })}
             </p>
             {hasActiveFilter ? (
               <Link
@@ -253,6 +253,7 @@ export default async function LararePage(
                     )}
                     experienceLabel={t("teacher.yearsExperience", {
                       count: teacher.yearsExperience,
+                      n: String(teacher.yearsExperience),
                     })}
                     detailsLabel={t("teacher.viewProfile")}
                     swedishOnly={teacher.swedishOnly}

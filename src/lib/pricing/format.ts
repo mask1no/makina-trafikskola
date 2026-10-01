@@ -50,7 +50,7 @@ export function showPerLessonPrice(product: {
   includesRisk2: boolean;
 }) {
   return (
-    product.lessonCredits > 0 &&
+    product.lessonCredits > 1 &&
     PER_LESSON_KINDS.has(product.kind) &&
     !product.includesTheory &&
     !product.includesRisk1 &&

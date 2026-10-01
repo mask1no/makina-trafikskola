@@ -1,6 +1,7 @@
 import { formatInTimeZone, fromZonedTime } from "date-fns-tz";
 import { getTranslations } from "next-intl/server";
 
+import { formatDate, formatLessonTime } from "@/lib/format/datetime";
 import { db } from "@/lib/db";
 import { LinkButton } from "@/components/LinkButton";
 import { PageHeader } from "@/components/PageHeader";
@@ -70,17 +71,12 @@ export default async function AdminCalendarPage(
   const days = Array.from({ length: 7 }, (_, index) =>
     addDateKey(weekStartKey, index),
   );
-  const dayFormatter = new Intl.DateTimeFormat(params.locale, {
-    timeZone: TIME_ZONE,
-    weekday: "short",
-    day: "numeric",
-    month: "short",
-  });
-  const timeFormatter = new Intl.DateTimeFormat(params.locale, {
-    timeZone: TIME_ZONE,
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+  const formatDay = (date: Date) =>
+    formatDate(date, params.locale, {
+      weekday: "short",
+      day: "numeric",
+      month: "short",
+    });
   const teacherOptions = teachers.map((teacher) => ({
     id: teacher.id,
     name: `${teacher.user.firstName} ${teacher.user.lastName}`,
@@ -123,14 +119,14 @@ export default async function AdminCalendarPage(
           return (
             <section key={day} className="rounded-md border border-border bg-card p-4 shadow-soft">
               <h2 className="font-black">
-                {dayFormatter.format(fromZonedTime(`${day}T12:00:00`, TIME_ZONE))}
+                {formatDay(fromZonedTime(`${day}T12:00:00`, TIME_ZONE))}
               </h2>
               <div className="mt-3 grid gap-3">
                 {dayBookings.map(({ booking, teacher }) => (
                   <article key={booking.id} className="rounded-sm border border-border bg-card-muted p-3">
                     <div className="flex items-start justify-between gap-3">
                       <div>
-                        <p className="font-black numbers-ltr">{timeFormatter.format(booking.startsAt)}</p>
+                        <p className="font-black numbers-ltr">{formatLessonTime(booking.startsAt, params.locale)}</p>
                         <p className="mt-1 font-bold">{booking.student.firstName} {booking.student.lastName}</p>
                       </div>
                       <p className="text-sm text-ink-muted">{teacher.user.firstName} {teacher.user.lastName}</p>
@@ -164,7 +160,7 @@ export default async function AdminCalendarPage(
               key={day}
               className="border-b border-e border-border p-3 text-center font-bold last:border-e-0"
             >
-              {dayFormatter.format(fromZonedTime(`${day}T12:00:00`, TIME_ZONE))}
+              {formatDay(fromZonedTime(`${day}T12:00:00`, TIME_ZONE))}
             </div>
           ))}
           {teachers.map((teacher) => (
@@ -190,7 +186,7 @@ export default async function AdminCalendarPage(
                           className="rounded-sm border border-border bg-page p-2 text-sm"
                         >
                           <p className="font-black" dir="ltr">
-                            {timeFormatter.format(booking.startsAt)}
+                            {formatLessonTime(booking.startsAt, params.locale)}
                           </p>
                           <p className="mt-1 font-bold">
                             {booking.student.firstName}{" "}

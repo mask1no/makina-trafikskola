@@ -56,7 +56,19 @@
     "privacy": "Integritet",
     "cookies": "Cookies",
     "languageHelp": "Stöd på ditt språk",
-    "languageHelpDescription": "Kontakta oss på svenska, engelska, tigrinja, arabiska eller somaliska."
+    "languageHelpDescription": "Undervisning på svenska, engelska, tigrinja och arabiska. Somaliska kommer snart.",
+    "call": "Ring",
+    "callUs": "Ring oss",
+    "callName": "Ring {phone}",
+    "seePrices": "Se priser",
+    "openNow": "Öppet nu",
+    "closed": "Stängt",
+    "directions": "Vägbeskrivning",
+    "mostChosen": "Mest valt",
+    "pause": "Pausa",
+    "play": "Spela",
+    "fromPrice": "Från {price}",
+    "legal": "Juridiskt"
   },
   "common": {
     "bookNow": "Boka nu",
@@ -79,21 +91,23 @@
       "cardDescription": "Välj språk, växellåda och lärare efter dina behov.",
       "reviews": "omdömen",
       "pickupProof": "Upphämtning efter överenskommelse",
-      "languageProof": "Undervisning på 5 språk"
-    },
-    "trust": {
-      "label": "Det här får du hos Makina",
-      "languages": {"title": "Fem språk", "description": "Svenska, engelska, tigrinja, arabiska och somaliska"},
-      "pickup": {"title": "Upphämtning", "description": "Vi kan möta dig där du är efter överenskommelse"},
-      "lesson": {"title": "50 minuter", "description": "Samma lektionslängd i hela utbudet"},
-      "pricing": {"title": "Öppna priser", "description": "Se exakt vad som ingår innan du betalar"}
+      "languageProof": "Svenska, engelska, tigrinja och arabiska"
     },
     "journey": {
       "eyebrow": "Så fungerar det",
       "title": "Från första val till tryggare körning",
-      "choose": {"title": "Välj ditt upplägg", "description": "Jämför en lektion eller ett paket i lugn och ro."},
-      "book": {"title": "Hitta lärare och tid", "description": "Filtrera på språk, plats och växellåda."},
-      "learn": {"title": "Följ din plan", "description": "Utvecklas steg för steg med tydlig vägledning."}
+      "choose": {
+        "title": "Välj ditt upplägg",
+        "description": "Jämför en lektion eller ett paket i lugn och ro."
+      },
+      "book": {
+        "title": "Hitta lärare och tid",
+        "description": "Filtrera på språk, plats och växellåda."
+      },
+      "learn": {
+        "title": "Följ din plan",
+        "description": "Utvecklas steg för steg med tydlig vägledning."
+      }
     },
     "products": {
       "eyebrow": "Körutbildning",
@@ -121,7 +135,7 @@
       },
       "languages": {
         "question": "Kan jag få undervisning på mitt språk?",
-        "answer": "Ja. Våra lärare undervisar på svenska, engelska, tigrinja, arabiska och somaliska. Berätta vilket språk du behöver när du kontaktar oss."
+        "answer": "Undervisning på svenska, engelska, tigrinja och arabiska. Somaliska kommer snart."
       },
       "pickup": {
         "question": "Hämtar ni mig?",
@@ -137,14 +151,92 @@
       },
       "validity": {
         "question": "Hur länge gäller mitt paket?",
-        "answer": "Giltighetstiden står på varje paket. Du ser alltid ditt saldo och sista giltighetsdag under Mina sidor."
+        "answer": "Körlektioner och paket gäller i 12 månader. Digital teori har ingen tidsgräns."
+      }
+    },
+    "theory": {
+      "comingSoon": "Teorin på fem språk släpps snart."
+    },
+    "benefits": {
+      "label": "Det här får du hos Makina",
+      "language": {
+        "title": "Ditt språk",
+        "body": "Undervisning på svenska, engelska, tigrinja och arabiska. Somaliska kommer snart."
+      },
+      "pickup": {
+        "title": "Upphämtning",
+        "body": "Upphämtning efter överenskommelse."
+      },
+      "lesson": {
+        "title": "50 minuter",
+        "body": "Varje körlektion är 50 minuter."
+      },
+      "prices": {
+        "title": "Priser",
+        "body": "Alla priser visas inklusive moms."
+      },
+      "testLesson": {
+        "title": "Testlektion",
+        "body": "Testlektion för {price}"
+      },
+      "risk": {
+        "title": "Riskutbildning",
+        "body": "Riskettan eller risktvåan finns i utbudet."
+      },
+      "guarantee": {
+        "title": "Garanti",
+        "body": "Ett garantipaket finns i utbudet."
+      },
+      "payment": {
+        "title": "Betalning",
+        "body": "Kort, Swish och Klarna."
+      },
+      "local": {
+        "title": "Hos oss",
+        "body": "{address}"
+      },
+      "cancel": {
+        "title": "Avbokning",
+        "body": "Avboka mer än 24 timmar före start utan kostnad."
+      },
+      "reminder": {
+        "title": "Påminnelse",
+        "body": "SMS dagen före lektionen."
+      },
+      "selfBook": {
+        "title": "Boka själv",
+        "body": "Välj tid när bokningen är öppen."
       }
     }
   },
   "lessons": {
     "eyebrow": "Priser och paket",
     "title": "Körlektioner för varje steg",
-    "description": "Jämför enstaka lektioner och paket. Alla priser visas inklusive moms."
+    "description": "Jämför enstaka lektioner och paket. Alla priser visas inklusive moms.",
+    "groups": {
+      "label": "Produktgrupper",
+      "single": {
+        "title": "Enstaka lektioner",
+        "intro": "En körlektion eller en testlektion."
+      },
+      "packages": {
+        "title": "Paket",
+        "intro": "Flera körlektioner i ett paket."
+      },
+      "intensive": {
+        "title": "Intensiv",
+        "intro": "Paket med riskutbildning, teori eller garanti."
+      },
+      "courses": {
+        "title": "Kurser",
+        "intro": "Kursplatser som riskettan och risktvåan."
+      },
+      "theory": {
+        "title": "Teori",
+        "intro": "Digital teori utan tidsgräns."
+      }
+    },
+    "testCallout": "Osäker på vad du behöver? Börja med en testlektion."
   },
   "product": {
     "popular": "Populärast",
@@ -174,7 +266,14 @@
     },
     "availableDescription": "Produkten är aktiv och kan köpas nu.",
     "inactiveDescription": "Priset visas för jämförelse. Produkten kan inte köpas förrän alla delar kan levereras.",
-    "checkout": {"terms": "Jag godkänner köpvillkoren.", "withdrawal": "Jag har läst om 14 dagars ångerrätt och begär att tjänsten får börja enligt bokningen.", "submit": "Fortsätt till betalning", "redirecting": "Öppnar betalning…", "error": "Betalningen kunde inte startas. Logga in och försök igen."}
+    "checkout": {
+      "terms": "Jag godkänner köpvillkoren.",
+      "withdrawal": "Jag har läst om 14 dagars ångerrätt och begär att tjänsten får börja enligt bokningen.",
+      "submit": "Fortsätt till betalning",
+      "redirecting": "Öppnar betalning…",
+      "error": "Betalningen kunde inte startas. Logga in och försök igen."
+    },
+    "cancelNote": "Avboka mer än 24 timmar före utan kostnad."
   },
   "checkout": {
     "eyebrow": "Säker betalning",
@@ -210,14 +309,14 @@
     "showAsList": "Visa lärare som lista",
     "locationFilter": "2. Välj plats",
     "results": "Lärarresultat",
-    "resultCount": "{count, plural, =0 {Inga lärare} =1 {1 lärare} other {# lärare}}",
+    "resultCount": "{count, plural, =0 {Inga lärare} =1 {1 lärare} other {{n} lärare}}",
     "emptyTitle": "Ingen lärare matchar",
     "emptyDescription": "Prova ett annat språk eller en annan plats.",
     "transmissionFilter": "3. Välj växellåda",
     "allTransmissions": "Alla växellådor"
   },
   "teacher": {
-    "yearsExperience": "{count, plural, =0 {Ny lärare} =1 {1 års erfarenhet} other {# års erfarenhet}}",
+    "yearsExperience": "{count, plural, =0 {Ny lärare} =1 {1 års erfarenhet} other {{n} års erfarenhet}}",
     "viewProfile": "Visa profil",
     "transmission": {
       "manual": "Manuell",
@@ -254,16 +353,33 @@
     "eyebrow": "Riskutbildningar och kurser",
     "title": "Kommande kurstillfällen",
     "description": "Se verkliga, schemalagda kurstillfällen och återstående platser.",
-    "when": "Tid", "language": "Språk", "venue": "Plats", "seats": "Lediga platser",
-    "seatsLeft": "{count, plural, =0 {Fullbokad} =1 {1 plats kvar} other {# platser kvar}}",
+    "when": "Tid",
+    "language": "Språk",
+    "venue": "Plats",
+    "seats": "Lediga platser",
+    "seatsLeft": "{count, plural, =0 {Fullbokad} =1 {1 plats kvar} other {{n} platser kvar}}",
     "inactive": "Kursprodukten är inte aktiverad för köp ännu.",
     "emptyTitle": "Inga kurstillfällen är schemalagda",
     "emptyDescription": "Nya tillfällen visas här när de har bekräftats.",
-    "kind": {"RISK1": "Riskettan", "RISK2": "Risktvåan", "HANDLEDARUTBILDNING": "Handledarutbildning", "INTRO_THEORY": "Introduktionsteori"},
-    "booking": {"terms": "Jag godkänner köpvillkoren.", "withdrawal": "Jag begär att kursbokningen påbörjas under ångerfristen och förstår hur det påverkar ångerrätten.", "submit": "Boka kursplats", "submitting": "Kontrollerar plats och betalning…", "confirmed": "Kursplatsen är bekräftad med din betalda rättighet.", "failed": "Bokningen kunde inte slutföras. Försök igen."}
+    "kind": {
+      "RISK1": "Riskettan",
+      "RISK2": "Risktvåan",
+      "HANDLEDARUTBILDNING": "Handledarutbildning",
+      "INTRO_THEORY": "Introduktionsteori"
+    },
+    "booking": {
+      "terms": "Jag godkänner köpvillkoren.",
+      "withdrawal": "Jag begär att kursbokningen påbörjas under ångerfristen och förstår hur det påverkar ångerrätten.",
+      "submit": "Boka kursplats",
+      "submitting": "Kontrollerar plats och betalning…",
+      "confirmed": "Kursplatsen är bekräftad med din betalda rättighet.",
+      "failed": "Bokningen kunde inte slutföras. Försök igen."
+    }
   },
   "theory": {
-    "eyebrow": "Körkortsteori", "title": "Öva med verifierade frågor", "description": "Gratisfrågor visas utan köp. Betalt innehåll kräver en aktiv teoriåtkomst.",
+    "eyebrow": "Körkortsteori",
+    "title": "Öva med verifierade frågor",
+    "description": "Gratisfrågor visas utan köp. Betalt innehåll kräver en aktiv teoriåtkomst.",
     "teaser": {
       "eyebrow": "Körkortsteori",
       "title": "Plugga teorin på ditt språk",
@@ -275,24 +391,64 @@
       "features": {
         "categories": "Tydliga kategorier",
         "practice": "Gratis övningsfrågor",
-        "languages": "Stöd på fem språk"
+        "languages": "Svenska, engelska, tigrinja och arabiska. Somaliska kommer snart."
       }
     },
     "licensingPending": "Hela frågebanken öppnas när du köper teoriåtkomst.",
     "questionsAvailable": "gratisfrågor redo att prova",
     "freeIntro": "Börja med ett kostnadsfritt smakprov",
     "startPractice": "Starta övningen",
-    "freeCount": "{count, plural, =1 {1 gratisfråga} other {# gratisfrågor}}", "swedishOnly": "Endast på svenska", "examLink": "Öppna övningsprovet",
-    "emptyTitle": "Gratisfrågorna publiceras snart", "emptyDescription": "Vi lägger in skolans egna frågor. Kom tillbaka snart.",
-    "paidAccess": "Aktiv teoriåtkomst", "freeAccess": "Gratisfrågor", "questionNumber": "Fråga {number}",
-    "categoryEmptyTitle": "Inga frågor är tillgängliga", "categoryEmptyDescription": "Kategorin saknar frågor som du har åtkomst till.", "submitAnswer": "Rätta svaret", "correct": "Rätt", "incorrect": "Inte rätt", "selectAnswer": "Välj ett svar först.", "signInToAnswer": "Logga in som elev för att spara ditt svar.", "answerError": "Svaret kunde inte sparas. Försök igen.", "imageMissing": "Bild saknas",
-    "exam": {"eyebrow": "Övningsprov", "title": "Förbered dig som på kunskapsprovet", "description": "Provet rättas på servern och avslutas efter den fasta tiden.", "questions": "Frågor", "time": "Minuter", "pass": "Rätt för godkänt", "ready": "Frågebanken är redo för ett fullständigt prov.", "unavailable": "Det finns inte 65 aktiva frågor som ditt konto har åtkomst till ännu.", "signIn": "Logga in som elev för att kontrollera provåtkomst.", "start": "Starta provet på 50 minuter", "starting": "Startar provet…", "finish": "Avsluta provet", "finishing": "Rättar…", "next": "Spara och fortsätt", "selectAnswer": "Välj ett svar först.", "progress": "Fråga {current} av {total}", "timeRemaining": "Tid kvar", "passed": "Godkänt", "failed": "Inte godkänt", "error": "Provet kunde inte uppdateras. Försök igen.", "imageMissing": "Bilden kunde inte visas."}
+    "freeCount": "{count, plural, =1 {1 gratisfråga} other {{n} gratisfrågor}}",
+    "swedishOnly": "Endast på svenska",
+    "examLink": "Öppna övningsprovet",
+    "emptyTitle": "Gratisfrågorna publiceras snart",
+    "emptyDescription": "Vi lägger in skolans egna frågor. Kom tillbaka snart.",
+    "paidAccess": "Aktiv teoriåtkomst",
+    "freeAccess": "Gratisfrågor",
+    "questionNumber": "Fråga {number}",
+    "categoryEmptyTitle": "Inga frågor är tillgängliga",
+    "categoryEmptyDescription": "Kategorin saknar frågor som du har åtkomst till.",
+    "submitAnswer": "Rätta svaret",
+    "correct": "Rätt",
+    "incorrect": "Inte rätt",
+    "selectAnswer": "Välj ett svar först.",
+    "signInToAnswer": "Logga in som elev för att spara ditt svar.",
+    "answerError": "Svaret kunde inte sparas. Försök igen.",
+    "imageMissing": "Bild saknas",
+    "exam": {
+      "eyebrow": "Övningsprov",
+      "title": "Förbered dig som på kunskapsprovet",
+      "description": "Provet rättas på servern och avslutas efter den fasta tiden.",
+      "questions": "Frågor",
+      "time": "Minuter",
+      "pass": "Rätt för godkänt",
+      "ready": "Frågebanken är redo för ett fullständigt prov.",
+      "unavailable": "Det finns inte 65 aktiva frågor som ditt konto har åtkomst till ännu.",
+      "signIn": "Logga in som elev för att kontrollera provåtkomst.",
+      "start": "Starta provet på 50 minuter",
+      "starting": "Startar provet…",
+      "finish": "Avsluta provet",
+      "finishing": "Rättar…",
+      "next": "Spara och fortsätt",
+      "selectAnswer": "Välj ett svar först.",
+      "progress": "Fråga {current} av {total}",
+      "timeRemaining": "Tid kvar",
+      "passed": "Godkänt",
+      "failed": "Inte godkänt",
+      "error": "Provet kunde inte uppdateras. Försök igen.",
+      "imageMissing": "Bilden kunde inte visas."
+    }
   },
   "localSchool": {
-    "eyebrow": "Trafikskola nära dig", "title": "Trafikskola i {city}", "description": "Se vår bekräftade plats och tillgängliga lärare i {city}.",
-    "addressPending": "Den exakta besöksadressen inväntar bekräftelse.", "teachersTitle": "Lärare på platsen",
-    "emptyTitle": "Inga lärare är kopplade ännu", "emptyDescription": "Lärare visas här när deras placering har bekräftats.",
-    "metadataTitle": "Trafikskola i {city}", "metadataDescription": "Körlektioner och körkortsutbildning i {city}."
+    "eyebrow": "Trafikskola nära dig",
+    "title": "Trafikskola i {city}",
+    "description": "Se vår bekräftade plats och tillgängliga lärare i {city}.",
+    "addressPending": "Den exakta besöksadressen inväntar bekräftelse.",
+    "teachersTitle": "Lärare på platsen",
+    "emptyTitle": "Inga lärare är kopplade ännu",
+    "emptyDescription": "Lärare visas här när deras placering har bekräftats.",
+    "metadataTitle": "Trafikskola i {city}",
+    "metadataDescription": "Körlektioner och körkortsutbildning i {city}."
   },
   "booking": {
     "eyebrow": "Boka körlektion",
@@ -357,7 +513,7 @@
     "credits": {
       "loading": "Kontrollerar ditt saldo…",
       "signIn": "Logga in för att kontrollera dina paketkrediter.",
-      "balance": "{count, plural, =0 {Inga lektioner tillgängliga} =1 {1 lektion tillgänglig} other {# lektioner tillgängliga}}"
+      "balance": "{count, plural, =0 {Inga lektioner tillgängliga} =1 {1 lektion tillgänglig} other {{n} lektioner tillgängliga}}"
     },
     "summary": {
       "eyebrow": "Din bokning",
@@ -384,7 +540,10 @@
       "hold": "Tiden hålls åt dig till <time>{expires}</time> medan betalningen slutförs.",
       "provisional": "Prislistan är ännu inte bekräftad, så betalning är tillfälligt otillgänglig. Din 15-minutersreservation påverkas inte."
     },
-    "calendar": {"summary": "Körlektion med Makina Trafikskola", "description": "Avbokningsfrist: {deadline}."}
+    "calendar": {
+      "summary": "Körlektion med Makina Trafikskola",
+      "description": "Avbokningsfrist: {deadline}."
+    }
   },
   "auth": {
     "required": "Du behöver ett konto för att boka och betala. Det tar 30 sekunder.",
@@ -410,7 +569,10 @@
     "code": "Sexsiffrig kod",
     "codeSentHint": "Skriv in koden från sms:et. Saknar du den? Skicka en ny kod.",
     "methodLabel": "Inloggningssätt",
-    "methods": {"email": "Lösenord", "phone": "Kod via SMS"},
+    "methods": {
+      "email": "Lösenord",
+      "phone": "Kod via SMS"
+    },
     "sendCode": "Skicka kod",
     "resendCode": "Skicka ny kod",
     "verifyCode": "Verifiera och fortsätt",
@@ -419,7 +581,13 @@
     "devCode": "Endast lokal utveckling – kod: {code}",
     "secure": "Säker åtkomst till ditt konto",
     "support": "Behöver du hjälp att komma åt kontot? Ring 070-097 04 83 eller mejla info@makina.se.",
-    "context": {"eyebrow": "Makina Trafikskola", "title": "Bokningar, saldo och teori på ditt språk", "bookings": "Se och hantera dina körlektioner", "balance": "Kontrollera tillgängliga lektionskrediter", "messages": "Följ service- och betalningsmeddelanden"},
+    "context": {
+      "eyebrow": "Makina Trafikskola",
+      "title": "Bokningar, saldo och teori på ditt språk",
+      "bookings": "Se och hantera dina körlektioner",
+      "balance": "Kontrollera tillgängliga lektionskrediter",
+      "messages": "Följ service- och betalningsmeddelanden"
+    },
     "login": {
       "title": "Logga in",
       "description": "Snabbast med mobilnummer och sms-kod. Du kan också använda e-post.",
@@ -464,7 +632,7 @@
       "viewBookings": "Visa bokningar",
       "saldo": "Mina lektioner",
       "viewSaldo": "Visa lektioner",
-      "lessonsLeft": "{count, plural, =1 {1 lektion kvar} other {# lektioner kvar}}",
+      "lessonsLeft": "{count, plural, =1 {1 lektion kvar} other {{n} lektioner kvar}}",
       "theory": "Teoriåtkomst",
       "theoryActive": "Din teoriåtkomst är aktiv.",
       "theoryInactive": "Ingen aktiv teoriåtkomst.",
@@ -493,8 +661,8 @@
     "saldo": {
       "title": "Mina lektioner",
       "available": "Kvar att köra",
-      "remaining": "{count, plural, =1 {1 lektion kvar} other {# lektioner kvar}}",
-      "lotCount": "{count, plural, =1 {+1 lektion} other {+# lektioner}}",
+      "remaining": "{count, plural, =1 {1 lektion kvar} other {{n} lektioner kvar}}",
+      "lotCount": "{count, plural, =1 {+1 lektion} other {+{n} lektioner}}",
       "lessons": "körlektioner",
       "lots": "Aktiva krediter",
       "expires": "Gäller till <time>{date}</time>",
@@ -521,8 +689,16 @@
       "retryDescription": "Betalningen är inte slutförd. Fortsätt till den säkra betalningen för att försöka igen.",
       "retry": "Försök betala igen",
       "late": {
-        "lesson": {"title": "Betalningen lyckades – välj en ny tid", "description": "Din 15-minutersreservation hann löpa ut. Den köpta lektionen finns kvar exakt en gång som en oanvänd kredit. Den gamla tiden har inte återtagits.", "action": "Boka en ny lektionstid"},
-        "course": {"title": "Betalningen lyckades – välj ett nytt kurstillfälle", "description": "Din 15-minutersreservation hann löpa ut. Den köpta kursplatsen finns kvar exakt en gång som en oanvänd kursrättighet. Den gamla platsen har inte återtagits.", "action": "Välj ett nytt kurstillfälle"}
+        "lesson": {
+          "title": "Betalningen lyckades – välj en ny tid",
+          "description": "Din 15-minutersreservation hann löpa ut. Den köpta lektionen finns kvar exakt en gång som en oanvänd kredit. Den gamla tiden har inte återtagits.",
+          "action": "Boka en ny lektionstid"
+        },
+        "course": {
+          "title": "Betalningen lyckades – välj ett nytt kurstillfälle",
+          "description": "Din 15-minutersreservation hann löpa ut. Den köpta kursplatsen finns kvar exakt en gång som en oanvänd kursrättighet. Den gamla platsen har inte återtagits.",
+          "action": "Välj ett nytt kurstillfälle"
+        }
       },
       "statuses": {
         "PENDING": "Väntar på betalning",
@@ -541,7 +717,36 @@
       "correct": "rätt besvarade frågor",
       "provisional": "Teoriprodukten är ännu inte aktiverad eftersom pris och frågebank inväntar bekräftelse."
     },
-    "messages": {"title": "Meddelanden", "description": "Dina senaste servicemeddelanden. Personuppgifter från meddelandets data visas inte här.", "empty": "Du har inga meddelanden.", "sent": "Skickat", "scheduled": "Planerat", "limited": "De 50 senaste meddelandena visas.", "templates": {"bookingConfirmed": "Bokning bekräftad", "bookingCancelledByStudent": "Bokning avbokad", "bookingCancelledByTeacher": "Bokning avbokad av läraren", "bookingReminder": "Bokningspåminnelse", "bookingMoved": "Lektionen är flyttad", "paymentReceipt": "Betalningskvitto", "paymentFailed": "Betalningen misslyckades", "lessonPaymentNeedsRebooking": "Betald lektion behöver bokas om", "coursePaymentNeedsRebooking": "Betald kursplats behöver bokas om", "generic": "Servicemeddelande"}, "bodies": {"lessonPaymentNeedsRebooking": "Betalningen lyckades efter att reservationen gått ut. Din oanvända lektionskredit finns kvar; välj en ny tid.", "coursePaymentNeedsRebooking": "Betalningen lyckades efter att reservationen gått ut. Din oanvända kursrättighet finns kvar; välj ett nytt tillfälle."}, "channels": {"EMAIL": "E-post", "SMS": "SMS", "PUSH": "Pushnotis", "INAPP": "I appen"}},
+    "messages": {
+      "title": "Meddelanden",
+      "description": "Dina senaste servicemeddelanden. Personuppgifter från meddelandets data visas inte här.",
+      "empty": "Du har inga meddelanden.",
+      "sent": "Skickat",
+      "scheduled": "Planerat",
+      "limited": "De 50 senaste meddelandena visas.",
+      "templates": {
+        "bookingConfirmed": "Bokning bekräftad",
+        "bookingCancelledByStudent": "Bokning avbokad",
+        "bookingCancelledByTeacher": "Bokning avbokad av läraren",
+        "bookingReminder": "Bokningspåminnelse",
+        "bookingMoved": "Lektionen är flyttad",
+        "paymentReceipt": "Betalningskvitto",
+        "paymentFailed": "Betalningen misslyckades",
+        "lessonPaymentNeedsRebooking": "Betald lektion behöver bokas om",
+        "coursePaymentNeedsRebooking": "Betald kursplats behöver bokas om",
+        "generic": "Servicemeddelande"
+      },
+      "bodies": {
+        "lessonPaymentNeedsRebooking": "Betalningen lyckades efter att reservationen gått ut. Din oanvända lektionskredit finns kvar; välj en ny tid.",
+        "coursePaymentNeedsRebooking": "Betalningen lyckades efter att reservationen gått ut. Din oanvända kursrättighet finns kvar; välj ett nytt tillfälle."
+      },
+      "channels": {
+        "EMAIL": "E-post",
+        "SMS": "SMS",
+        "PUSH": "Pushnotis",
+        "INAPP": "I appen"
+      }
+    },
     "profile": {
       "title": "Min profil",
       "name": "Namn",
@@ -573,7 +778,7 @@
   "teacherPortal": {
     "eyebrow": "Lärarportal",
     "title": "Dagens körlektioner",
-    "lessonCount": "{count, plural, =0 {Inga lektioner idag} =1 {1 lektion idag} other {# lektioner idag}}",
+    "lessonCount": "{count, plural, =0 {Inga lektioner idag} =1 {1 lektion idag} other {{n} lektioner idag}}",
     "call": "Ring eleven",
     "openAddress": "Öppna adress",
     "previousNote": "Föregående anteckning",
@@ -584,12 +789,15 @@
     "updateReport": "Uppdatera rapport",
     "empty": "Du har inga lektioner idag.",
     "weekTitle": "Veckans körlektioner",
-    "weekCount": "{count, plural, =0 {Inga lektioner den här veckan} =1 {1 lektion den här veckan} other {# lektioner den här veckan}}",
+    "weekCount": "{count, plural, =0 {Inga lektioner den här veckan} =1 {1 lektion den här veckan} other {{n} lektioner den här veckan}}",
     "weekEmpty": "Du har inga lektioner den här veckan.",
-    "views": {"today": "Idag", "week": "Vecka"},
+    "views": {
+      "today": "Idag",
+      "week": "Vecka"
+    },
     "students": {
       "title": "Mina elever",
-      "lessonsDone": "{count, plural, =0 {Inga genomförda lektioner} =1 {1 genomförd lektion} other {# genomförda lektioner}}",
+      "lessonsDone": "{count, plural, =0 {Inga genomförda lektioner} =1 {1 genomförd lektion} other {{n} genomförda lektioner}}",
       "nextLesson": "Nästa lektion <time>{when}</time>",
       "noNext": "Ingen kommande lektion.",
       "empty": "Inga elever ännu."
@@ -655,10 +863,9 @@
     "locationsDescription": "Du hittar oss på Centralvägen 5 i Upplands Väsby. Öppna vägbeskrivning i Google Maps.",
     "directions": "Vägbeskrivning",
     "languagesTitle": "Vilket språk behöver du?",
-    "languagesBody": "Vi undervisar på svenska, engelska, tigrinja, arabiska och somaliska. Säg vilket språk du vill ha när du bokar. Då matchar vi dig med en lärare som kan det.",
+    "languagesBody": "Undervisning på svenska, engelska, tigrinja och arabiska. Somaliska kommer snart.",
     "staffTitle": "Vår personal",
     "staffDescription": "Möt teamet på Makina Trafikskola. Kontakta skolan om du vill boka en viss trafiklärare.",
-    "speaks": "Undervisar på {language}",
     "contactViaSchool": "Kontakt via skolan",
     "callSchool": "Ring skolan",
     "emailSchool": "E-posta skolan",
@@ -666,6 +873,15 @@
       "trafikskolechef": "Trafikskolechef",
       "utbildningsledare": "Utbildningsledare",
       "trafiklarare": "Trafiklärare"
+    },
+    "day": {
+      "0": "Söndag",
+      "1": "Måndag",
+      "2": "Tisdag",
+      "3": "Onsdag",
+      "4": "Torsdag",
+      "5": "Fredag",
+      "6": "Lördag"
     }
   },
   "legal": {
@@ -673,7 +889,16 @@
       "metadata": "Köpvillkor för Makina Trafikskola.",
       "eyebrow": "Juridisk information",
       "title": "Köpvillkor",
-      "sectionOrder": ["seller", "prices", "delivery", "validity", "cancellation", "withdrawal", "complaints", "law"],
+      "sectionOrder": [
+        "seller",
+        "prices",
+        "delivery",
+        "validity",
+        "cancellation",
+        "withdrawal",
+        "complaints",
+        "law"
+      ],
       "seller": {
         "title": "Säljare",
         "body": "Tjänsten säljs av Makina Trafikskola AB.\nOrganisationsnummer: 559531-4146.\nBesöksadress: Centralvägen 5, 194 77 Upplands Väsby.\nPostadress: Centralvägen 5, 194 77 Upplands Väsby.\nE-post: info@makina.se.\nTelefon: 070-097 04 83."
@@ -711,7 +936,15 @@
       "metadata": "Integritetspolicy för Makina Trafikskola.",
       "eyebrow": "Juridisk information",
       "title": "Integritetspolicy",
-      "sectionOrder": ["controller", "collected", "purpose", "retention", "recipients", "rights", "supervisory"],
+      "sectionOrder": [
+        "controller",
+        "collected",
+        "purpose",
+        "retention",
+        "recipients",
+        "rights",
+        "supervisory"
+      ],
       "controller": {
         "title": "Personuppgiftsansvarig",
         "body": "Makina Trafikskola AB är personuppgiftsansvarig.\nOrganisationsnummer: 559531-4146.\nAdress: Centralvägen 5, 194 77 Upplands Väsby.\nE-post: info@makina.se.\nTelefon: 070-097 04 83."
@@ -745,7 +978,11 @@
       "metadata": "Cookiepolicy för Makina Trafikskola.",
       "eyebrow": "Juridisk information",
       "title": "Cookiepolicy",
-      "sectionOrder": ["necessary", "analytics", "change"],
+      "sectionOrder": [
+        "necessary",
+        "analytics",
+        "change"
+      ],
       "necessary": {
         "title": "Cookies vi använder",
         "body": "Vi sätter bara cookies som behövs för att webbplatsen ska fungera. Tabellen nedan visar namn, syfte och hur länge de sparas."
@@ -784,7 +1021,13 @@
     }
   },
   "admin": {
-    "nav": {"label": "Administration", "calendar": "Veckokalender", "students": "Elever", "instructors": "Ny lärare", "reviews": "Recensioner"},
+    "nav": {
+      "label": "Administration",
+      "calendar": "Veckokalender",
+      "students": "Elever",
+      "instructors": "Ny lärare",
+      "reviews": "Recensioner"
+    },
     "dashboard": {
       "eyebrow": "Administration",
       "title": "Översikt",
@@ -815,18 +1058,130 @@
       "saving": "Sparar…"
     },
     "calendar": {
-      "eyebrow": "Administration", "title": "Veckokalender", "description": "Se bokningar för alla aktiva lärare och hantera en bokning.", "previous": "Föregående vecka", "next": "Nästa vecka", "instructor": "Lärare", "completed": "Genomförd", "empty": "Det finns inga aktiva lärare.",
-      "controls": {"manage": "Hantera", "close": "Stäng", "action": "Åtgärd", "move": "Flytta tid", "reassign": "Byt lärare", "cancel": "Avboka", "newTime": "Ny lokal tid", "newInstructor": "Ny lärare", "reason": "Skriftlig orsak", "save": "Spara ändring", "saving": "Sparar…"}
+      "eyebrow": "Administration",
+      "title": "Veckokalender",
+      "description": "Se bokningar för alla aktiva lärare och hantera en bokning.",
+      "previous": "Föregående vecka",
+      "next": "Nästa vecka",
+      "instructor": "Lärare",
+      "completed": "Genomförd",
+      "empty": "Det finns inga aktiva lärare.",
+      "controls": {
+        "manage": "Hantera",
+        "close": "Stäng",
+        "action": "Åtgärd",
+        "move": "Flytta tid",
+        "reassign": "Byt lärare",
+        "cancel": "Avboka",
+        "newTime": "Ny lokal tid",
+        "newInstructor": "Ny lärare",
+        "reason": "Skriftlig orsak",
+        "save": "Spara ändring",
+        "saving": "Sparar…"
+      }
     },
     "students": {
-      "eyebrow": "Administration", "title": "Elever", "description": "Sök elev, granska saldo och betalningar eller justera krediter.", "searchLabel": "Namn eller e-post", "search": "Sök", "results": "{count} resultat", "noEmail": "Ingen e-post", "empty": "Inga elever matchar sökningen.", "selectStudent": "Välj en elev för att visa detaljer.", "balance": "Beräknat aktivt saldo", "payments": "Betalningar", "paymentLine": "{provider} · {method} · {status} · återbetalat {refunded}", "unknownMethod": "okänd metod", "orderStatus": {"PENDING": "Väntar", "PAID": "Betald", "FAILED": "Misslyckad", "REFUNDED": "Återbetald", "PARTIALLY_REFUNDED": "Delvis återbetald"}, "paymentStatus": {"PENDING": "Väntar", "SUCCEEDED": "Genomförd", "FAILED": "Misslyckad", "REFUNDED": "Återbetald"}, "provider": {"STRIPE": "Stripe", "MANUAL": "Manuell"}, "method": {"card": "Kort", "swish": "Swish", "klarna": "Klarna"}, "noPayment": "Ingen betalning registrerad", "noPayments": "Inga betalningar.", "ledger": "Kredittransaktioner", "noLedger": "Inga kredittransaktioner.",
-      "adjustment": {"title": "Justera krediter", "delta": "Förändring", "reason": "Obligatorisk skriftlig orsak", "submit": "Registrera justering", "saving": "Sparar…"}
+      "eyebrow": "Administration",
+      "title": "Elever",
+      "description": "Sök elev, granska saldo och betalningar eller justera krediter.",
+      "searchLabel": "Namn eller e-post",
+      "search": "Sök",
+      "results": "{count} resultat",
+      "noEmail": "Ingen e-post",
+      "empty": "Inga elever matchar sökningen.",
+      "selectStudent": "Välj en elev för att visa detaljer.",
+      "balance": "Beräknat aktivt saldo",
+      "payments": "Betalningar",
+      "paymentLine": "{provider} · {method} · {status} · återbetalat {refunded}",
+      "unknownMethod": "okänd metod",
+      "orderStatus": {
+        "PENDING": "Väntar",
+        "PAID": "Betald",
+        "FAILED": "Misslyckad",
+        "REFUNDED": "Återbetald",
+        "PARTIALLY_REFUNDED": "Delvis återbetald"
+      },
+      "paymentStatus": {
+        "PENDING": "Väntar",
+        "SUCCEEDED": "Genomförd",
+        "FAILED": "Misslyckad",
+        "REFUNDED": "Återbetald"
+      },
+      "provider": {
+        "STRIPE": "Stripe",
+        "MANUAL": "Manuell"
+      },
+      "method": {
+        "card": "Kort",
+        "swish": "Swish",
+        "klarna": "Klarna"
+      },
+      "noPayment": "Ingen betalning registrerad",
+      "noPayments": "Inga betalningar.",
+      "ledger": "Kredittransaktioner",
+      "noLedger": "Inga kredittransaktioner.",
+      "adjustment": {
+        "title": "Justera krediter",
+        "delta": "Förändring",
+        "reason": "Obligatorisk skriftlig orsak",
+        "submit": "Registrera justering",
+        "saving": "Sparar…"
+      }
     },
     "instructors": {
-      "eyebrow": "Administration", "title": "Lägg till lärare", "description": "Skapa konto, språk, växellådor, platser och återkommande lokala arbetstider.", "account": "Konto", "firstName": "Förnamn", "lastName": "Efternamn", "phone": "Mobilnummer", "email": "E-post", "initialPassword": "Tillfälligt lösenord", "slug": "Profiladress", "yearsExperience": "Års erfarenhet", "languages": "Språk", "transmissions": "Växellådor", "transmission": {"MANUAL": "Manuell", "AUTOMATIC": "Automat"}, "locations": "Platser", "noLocations": "Inga aktiva platser finns. Lärare kan inte skapas.", "hours": "Arbetstider", "hoursDescription": "Tiderna är lokal väggtid i Europe/Stockholm.", "from": "Från", "to": "Till", "day": {"0": "Söndag", "1": "Måndag", "2": "Tisdag", "3": "Onsdag", "4": "Torsdag", "5": "Fredag", "6": "Lördag"}, "photo": "Profilbild", "photoHelp": "Valfri JPEG-, PNG- eller WebP-bild, högst 5 MB.", "submit": "Skapa lärare", "saving": "Skapar…", "created": "Läraren har skapats."
+      "eyebrow": "Administration",
+      "title": "Lägg till lärare",
+      "description": "Skapa konto, språk, växellådor, platser och återkommande lokala arbetstider.",
+      "account": "Konto",
+      "firstName": "Förnamn",
+      "lastName": "Efternamn",
+      "phone": "Mobilnummer",
+      "email": "E-post",
+      "initialPassword": "Tillfälligt lösenord",
+      "slug": "Profiladress",
+      "yearsExperience": "Års erfarenhet",
+      "languages": "Språk",
+      "transmissions": "Växellådor",
+      "transmission": {
+        "MANUAL": "Manuell",
+        "AUTOMATIC": "Automat"
+      },
+      "locations": "Platser",
+      "noLocations": "Inga aktiva platser finns. Lärare kan inte skapas.",
+      "hours": "Arbetstider",
+      "hoursDescription": "Tiderna är lokal väggtid i Europe/Stockholm.",
+      "from": "Från",
+      "to": "Till",
+      "day": {
+        "0": "Söndag",
+        "1": "Måndag",
+        "2": "Tisdag",
+        "3": "Onsdag",
+        "4": "Torsdag",
+        "5": "Fredag",
+        "6": "Lördag"
+      },
+      "photo": "Profilbild",
+      "photoHelp": "Valfri JPEG-, PNG- eller WebP-bild, högst 5 MB.",
+      "submit": "Skapa lärare",
+      "saving": "Skapar…",
+      "created": "Läraren har skapats."
     },
-    "instructorStatus": {"title": "Hantera lärare", "description": "Aktivera eller inaktivera lärare. Framtida bekräftade bokningar måste först flyttas eller avbokas.", "active": "Aktiv", "inactive": "Inaktiv", "activate": "Aktivera", "deactivate": "Inaktivera", "saving": "Sparar…"},
-    "instructorPhone": {"label": "Mobilnummer", "missing": "Saknas", "save": "Spara nummer", "saving": "Sparar…"}
+    "instructorStatus": {
+      "title": "Hantera lärare",
+      "description": "Aktivera eller inaktivera lärare. Framtida bekräftade bokningar måste först flyttas eller avbokas.",
+      "active": "Aktiv",
+      "inactive": "Inaktiv",
+      "activate": "Aktivera",
+      "deactivate": "Inaktivera",
+      "saving": "Sparar…"
+    },
+    "instructorPhone": {
+      "label": "Mobilnummer",
+      "missing": "Saknas",
+      "save": "Spara nummer",
+      "saving": "Sparar…"
+    }
   },
   "errors": {
     "pageTitle": "Vi fick ett tekniskt problem",

@@ -1,0 +1,95 @@
+import { expect, test } from "@playwright/test";
+
+const locales = ["sv", "en", "ti", "ar", "so"] as const;
+
+async function allowCookies(page: import("@playwright/test").Page) {
+  await page.context().addCookies([
+    {
+      name: "makina-cookie-consent",
+      value: "necessary",
+      domain: "localhost",
+      path: "/",
+    },
+  ]);
+}
+
+test.describe("marketing layout", () => {
+  test.beforeEach(async ({ page }) => {
+    await allowCookies(page);
+  });
+
+  for (const viewport of [
+    { width: 390, height: 844 },
+    { width: 1280, height: 800 },
+  ]) {
+    for (const locale of locales) {
+      test(`${locale} has no horizontal overflow at ${viewport.width}`, async ({ page }) => {
+        await page.setViewportSize(viewport);
+        for (const path of ["", "/korlektioner", "/paket/en-korlektion", "/kontakt"]) {
+          const response = await page.goto(`/${locale}${path}`);
+          expect(response?.ok(), `${locale}${path}`).toBeTruthy();
+          const fits = await page.evaluate(
+            () => document.documentElement.scrollWidth <= window.innerWidth + 1,
+          );
+          expect(fits, `${locale}${path}`).toBeTruthy();
+        }
+      });
+    }
+  }
+
+  test("booking-off call actions and a single contact link", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/sv");
+    const heroCall = page.getByRole("link", { name: /^Ring / });
+    test.skip((await heroCall.count()) === 0, "This server has booking enabled.");
+
+    await expect(heroCall).toBeVisible();
+    await expect(page.locator("nav.fixed.bottom-0 a")).toHaveCount(5);
+    await expect(page.locator("nav.fixed.bottom-0 a[href^='tel:']")).toHaveCount(1);
+  });
+
+  test("header shows Kontakt once", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto("/sv");
+    await expect(page.locator("header").getByRole("link", { name: "Kontakt" })).toHaveCount(1);
+  });
+
+  test("marquee copy is hidden and pause toggles", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto("/sv");
+    const copy = page.locator(".benefit-copy");
+    await expect(copy.first()).toHaveAttribute("aria-hidden", "true");
+    const pause = page.getByRole("button", { name: "Pausa" });
+    await pause.click();
+    await expect(page.getByRole("button", { name: "Spela" })).toHaveAttribute("aria-pressed", "true");
+  });
+
+  test("reduced motion does not animate the marquee", async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto("/sv");
+    const duration = await page.locator(".benefit-track").first().evaluate((node) =>
+      getComputedStyle(node).animationName,
+    );
+    expect(duration === "none" || duration === "").toBeTruthy();
+  });
+
+  test("does not promise free theory when none is published", async ({ page }) => {
+    await page.goto("/sv");
+    const comingSoon = page.getByText("Teorin på fem språk släpps snart.");
+    if ((await comingSoon.count()) === 0) {
+      test.skip(true, "Free theory questions are published in this database.");
+    }
+    await expect(page.getByText("Öva gratis")).toHaveCount(0);
+    await expect(page.getByText("Gratis övningsfrågor")).toHaveCount(0);
+    await expect(page.getByText("Ett urval är gratis")).toHaveCount(0);
+  });
+
+  test("tablet header stays on one line and hides the tab bar", async ({ page }) => {
+    await page.setViewportSize({ width: 768, height: 1024 });
+    await page.goto("/sv");
+    await expect(page.locator("nav.fixed.bottom-0")).toBeHidden();
+    const wraps = await page.getByRole("banner").evaluate((node) => node.scrollWidth <= node.clientWidth + 1);
+    expect(wraps).toBeTruthy();
+  });
+});

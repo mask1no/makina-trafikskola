@@ -1,10 +1,7 @@
-export function localDateKey(value: string, timeZone = "Europe/Stockholm") {
-  return new Intl.DateTimeFormat("sv-SE", {
-    timeZone,
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  }).format(new Date(value));
+import { stockholmDateKey } from "@/lib/format/datetime";
+
+export function localDateKey(value: string) {
+  return stockholmDateKey(new Date(value));
 }
 
 export function addCalendarDays(date: Date, days: number) {

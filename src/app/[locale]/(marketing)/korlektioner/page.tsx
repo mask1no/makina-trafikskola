@@ -7,6 +7,7 @@ import { ProductCard } from "@/components/ProductCard";
 import { isLocale } from "@/i18n/routing";
 import { bookingEnabled } from "@/lib/launch";
 import { formatPrice } from "@/lib/pricing/format";
+import { groupProducts } from "@/lib/pricing/group";
 
 import { pageCanonical, withSocial } from "@/lib/seo/metadata";
 
@@ -42,14 +43,39 @@ export default async function KorlektionerPage(
   const t = await getTranslations();
   const products = await getProducts(params.locale);
   const canBook = bookingEnabled();
+  const sections = groupProducts(products);
 
   return (
     <div className="section-shell">
       <div className="site-container">
         <PageHeader eyebrow={t("lessons.eyebrow")} title={t("lessons.title")} description={t("lessons.description")} />
-        {products.length ? (
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {products.map((product) => (
+        {sections.length ? (
+          <>
+            <nav className="sticky top-[var(--header-height)] z-30 -mx-4 mt-8 flex gap-2 overflow-x-auto bg-page px-4 py-3 lg:hidden" aria-label={t("lessons.groups.label")}>
+              {sections.map((section) => (
+                <a key={section.key} href={`#${section.key}`} className="inline-flex min-h-11 shrink-0 items-center rounded-full border border-border bg-card px-4 text-sm font-bold">
+                  {t(`lessons.groups.${section.key}.title`)}
+                </a>
+              ))}
+            </nav>
+            <aside className="sticky top-[calc(var(--header-height-lg)+1.5rem)] float-start me-8 mt-12 hidden w-52 lg:block">
+              <nav className="grid gap-1" aria-label={t("lessons.groups.label")}>
+                {sections.map((section) => (
+                  <a key={section.key} href={`#${section.key}`} className="inline-flex min-h-11 items-center rounded-sm px-3 font-bold hover:bg-card">
+                    {t(`lessons.groups.${section.key}.title`)}
+                  </a>
+                ))}
+              </nav>
+            </aside>
+            <div className="mt-8 rounded-lg border border-border bg-card p-5">
+              <p className="font-bold">{t("lessons.testCallout")}</p>
+            </div>
+            {sections.map((section) => (
+            <section key={section.key} id={section.key} className="mt-12 scroll-mt-[calc(var(--header-height)+4rem)]">
+              <h2 className="text-2xl font-black">{t(`lessons.groups.${section.key}.title`)}</h2>
+              <p className="mt-2 max-w-2xl text-ink-muted">{t(`lessons.groups.${section.key}.intro`)}</p>
+          <div className="mt-6 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {section.products.map((product) => (
               <ProductCard
                 key={product.id}
                 locale={params.locale}
@@ -124,6 +150,9 @@ export default async function KorlektionerPage(
               />
             ))}
           </div>
+            </section>
+            ))}
+          </>
         ) : (
           <div className="mt-10">
             <EmptyState

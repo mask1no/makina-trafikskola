@@ -9,6 +9,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { isLocale } from "@/i18n/routing";
 import { resolveContent } from "@/lib/content/fallback";
 import { db } from "@/lib/db";
+import { formatStockholm } from "@/lib/format/datetime";
 import { formatPrice } from "@/lib/pricing/format";
 import { pageCanonical, withSocial } from "@/lib/seo/metadata";
 
@@ -78,11 +79,11 @@ export default async function KurserPage(
     }),
     auth(),
   ]);
-  const formatter = new Intl.DateTimeFormat(params.locale, {
-    dateStyle: "long",
-    timeStyle: "short",
-    timeZone: "Europe/Stockholm",
-  });
+  const formatOccasion = (date: Date) =>
+    formatStockholm(date, params.locale, {
+      dateStyle: "long",
+      timeStyle: "short",
+    });
 
   return (
     <div className="section-shell">
@@ -124,10 +125,10 @@ export default async function KurserPage(
                     </strong>
                   </div>
                   <dl className="mt-5 grid gap-3 sm:grid-cols-2">
-                    <div><dt className="font-bold">{t("when")}</dt><dd>{formatter.format(occasion.startsAt)}</dd></div>
+                    <div><dt className="font-bold">{t("when")}</dt><dd>{formatOccasion(occasion.startsAt)}</dd></div>
                     <div><dt className="font-bold">{t("language")}</dt><dd>{occasion.language}</dd></div>
                     <div><dt className="font-bold">{t("venue")}</dt><dd>{occasion.venueName}</dd></div>
-                    <div><dt className="font-bold">{t("seats")}</dt><dd>{t("seatsLeft", { count: seatsLeft })}</dd></div>
+                    <div><dt className="font-bold">{t("seats")}</dt><dd>{t("seatsLeft", { count: seatsLeft, n: String(seatsLeft) })}</dd></div>
                   </dl>
                   {!occasion.course.product.active ? (
                     <p className="mt-5 rounded-sm border border-border bg-page p-3 text-sm text-ink-muted">

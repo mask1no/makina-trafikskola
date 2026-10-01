@@ -14,6 +14,7 @@ import {
   showPerLessonPrice,
   showValidity,
 } from "@/lib/pricing/format";
+import { displayPhone, telHref } from "@/lib/format/phone";
 import { pageCanonical, withSocial } from "@/lib/seo/metadata";
 import { isLocale } from "@/i18n/routing";
 
@@ -100,8 +101,20 @@ export default async function ProductDetailPage(
     },
   };
 
+  const perLesson = showPerLessonPrice(product)
+    ? formatPrice(perLessonOre(product.priceOre, product.lessonCredits), params.locale)
+    : null;
+  const validityLine = [
+    showValidity(product.kind)
+      ? t("product.validityMonths", { count: Math.round(product.creditValidDays / 30) })
+      : null,
+    t("product.priceIncludesVat"),
+  ].filter(Boolean).join(" · ");
+  const phone = t("company.phone");
+  const callLabel = t("shell.callName", { phone: displayPhone(phone) });
+
   return (
-    <div className="section-shell">
+    <div className="section-shell pb-28 md:pb-[clamp(3.5rem,8vw,7rem)]">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -118,7 +131,6 @@ export default async function ProductDetailPage(
               src="/hero.jpg"
               alt=""
               fill
-              priority
               sizes="(min-width: 1024px) 60vw, 100vw"
               className="rtl-no-mirror object-cover object-[60%_center] opacity-80"
             />
@@ -142,7 +154,14 @@ export default async function ProductDetailPage(
             ) : null}
             {!product.active && salesOpen ? <Badge tone="danger">{t("product.notForSale")}</Badge> : null}
           </div>
-          <h1 className="display-title mt-6 text-balance">{product.translation.name}</h1>
+          <h1 className="section-title mt-6 text-balance">{product.translation.name}</h1>
+          <div className="mt-4 lg:hidden">
+            <p className="numbers-ltr text-3xl font-black">{formatPrice(product.priceOre, params.locale)}</p>
+            {perLesson ? (
+              <p className="mt-1 text-sm font-semibold"><bdi className="numbers-ltr">{perLesson}</bdi> {t("product.perLesson")}</p>
+            ) : null}
+            <p className="mt-1 text-sm text-ink-muted">{validityLine}</p>
+          </div>
           {product.translation.shortDesc ? (
             <p className="mt-4 text-lg leading-8 text-ink-muted">
               {product.translation.shortDesc}
@@ -150,8 +169,9 @@ export default async function ProductDetailPage(
           ) : null}
           </div>
         </div>
-        <aside className="h-fit rounded-lg border border-border bg-card p-6 shadow-card lg:sticky lg:top-24 sm:p-8">
-          <p className="text-4xl font-black [direction:ltr]">
+        <aside id="kop" className="h-fit rounded-lg border border-border bg-card p-6 shadow-card sm:p-8 lg:sticky lg:top-[calc(var(--header-height-lg)+1.5rem)]">
+          <div className="hidden md:block">
+          <p className="numbers-ltr text-4xl font-black">
             {formatPrice(product.priceOre, params.locale)}
           </p>
           {separateValue ? (
@@ -166,30 +186,20 @@ export default async function ProductDetailPage(
               </p>
             </>
           ) : null}
-          {showPerLessonPrice(product) ? (
+          {perLesson ? (
             <p className="mt-4 font-semibold">
-              <bdi>
-                {formatPrice(
-                  perLessonOre(product.priceOre, product.lessonCredits),
-                  params.locale,
-                )}
-              </bdi>{" "}
+              <bdi className="numbers-ltr">{perLesson}</bdi>{" "}
               {t("product.perLesson")}
             </p>
           ) : null}
-          {showValidity(product.kind) ? (
-            <p className="mt-2 text-sm text-ink-muted">
-              {t("product.validityMonths", {
-                count: Math.round(product.creditValidDays / 30),
-              })}
-            </p>
-          ) : null}
-          <p className="mt-1 text-sm text-ink-muted">
-            {t("product.priceIncludesVat")}
-          </p>
+          <p className="mt-2 text-sm text-ink-muted">{validityLine}</p>
+          </div>
           <PurchaseControl
             productId={product.id}
             active={product.active}
+            salesOpen={salesOpen}
+            phone={phone}
+            callLabel={callLabel}
             authenticated={session?.user.role === "STUDENT"}
             signInHref={`/${params.locale}/logga-in?next=${encodeURIComponent(`/${params.locale}/paket/${product.slug}`)}`}
             inactiveLabel={t("product.notForSale")}
@@ -203,13 +213,26 @@ export default async function ProductDetailPage(
               error: t("product.checkout.error"),
             }}
           />
-          <Notice className="mt-5">
-            {product.active
-              ? t("product.availableDescription")
-              : t("product.inactiveDescription")}
-          </Notice>
+          {salesOpen ? (
+            <Notice className="mt-5">
+              {product.active ? t("product.availableDescription") : t("product.inactiveDescription")}
+            </Notice>
+          ) : null}
+          <p className="mt-4 text-sm text-ink-muted">{t("product.cancelNote")}</p>
         </aside>
       </article>
+      <div className="fixed inset-x-0 z-30 border-t border-border bg-card px-4 py-3 md:hidden" style={{ bottom: "calc(var(--tab-bar-height) + var(--safe-bottom))" }}>
+        <div className="flex items-center justify-between gap-3">
+          <p className="numbers-ltr text-lg font-black">{formatPrice(product.priceOre, params.locale)}</p>
+          {salesOpen && product.active ? (
+            <a href="#kop" className="inline-flex min-h-11 items-center rounded-sm bg-surface px-4 font-bold text-ink-inverse">{t("product.checkout.submit")}</a>
+          ) : salesOpen ? (
+            <span className="inline-flex min-h-11 items-center text-sm font-bold text-ink-muted">{t("product.notForSale")}</span>
+          ) : (
+            <a href={telHref(phone)} className="inline-flex min-h-11 items-center rounded-sm bg-accent px-4 font-bold text-accent-ink">{callLabel}</a>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

@@ -9,7 +9,10 @@ import {
 } from "@/lib/auth/guards";
 import { allowRateLimitedAction } from "@/lib/auth/otp-store";
 import { loadAvailability } from "@/lib/bookings/availability";
-import { isSerializationOrTxTimeout } from "@/lib/bookings/errors";
+import {
+  isBookingExclusionViolation,
+  isSerializationOrTxTimeout,
+} from "@/lib/bookings/errors";
 import {
   lockBookingKeys,
   studentLockKey,
@@ -67,27 +70,6 @@ function errorResponse(code: string, status: number, extra?: object) {
   return Response.json(
     { error: { code, message: code }, ...(extra ?? {}) },
     { status },
-  );
-}
-
-function isExclusionViolation(error: unknown) {
-  if (error instanceof Prisma.PrismaClientKnownRequestError) {
-    const meta = error.meta as {
-      code?: string;
-      database_error?: string;
-    } | null;
-    if (
-      meta?.code === "23P01" ||
-      meta?.database_error?.includes("23P01") === true
-    ) {
-      return true;
-    }
-  }
-
-  return (
-    error instanceof Error &&
-    (error.message.includes('code: "23P01"') ||
-      error.message.includes("booking_no_overlap"))
   );
 }
 
@@ -317,7 +299,7 @@ export async function POST(request: Request) {
       }
     }
 
-    if (isExclusionViolation(error) || isSerializationOrTxTimeout(error)) {
+    if (isBookingExclusionViolation(error) || isSerializationOrTxTimeout(error)) {
       const refreshedSlots = await loadAvailability({
         teacherId: parsed.data.teacherId,
         from,

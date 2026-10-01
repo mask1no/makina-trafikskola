@@ -7,7 +7,7 @@ import {
   parseISO,
 } from "date-fns";
 
-const TIME_ZONE = "Europe/Stockholm";
+import { stockholmParts } from "@/lib/format/datetime";
 
 export type SlotInput = {
   now: Date;
@@ -37,33 +37,8 @@ export type Slot = { startsAt: Date; endsAt: Date };
 type MinuteInterval = { start: number; end: number };
 type DateInterval = { start: Date; end: Date };
 
-const localPartsFormatter = new Intl.DateTimeFormat("en-CA", {
-  timeZone: TIME_ZONE,
-  year: "numeric",
-  month: "2-digit",
-  day: "2-digit",
-  hour: "2-digit",
-  minute: "2-digit",
-  second: "2-digit",
-  hourCycle: "h23",
-});
-
 function localParts(date: Date) {
-  const parts = Object.fromEntries(
-    localPartsFormatter
-      .formatToParts(date)
-      .filter((part) => part.type !== "literal")
-      .map((part) => [part.type, Number(part.value)]),
-  );
-
-  return {
-    year: parts.year,
-    month: parts.month,
-    day: parts.day,
-    hour: parts.hour,
-    minute: parts.minute,
-    second: parts.second,
-  };
+  return stockholmParts(date);
 }
 
 function localDateKey(date: Date) {

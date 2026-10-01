@@ -9,6 +9,7 @@ import { isLocale } from "@/i18n/routing";
 import { resolveContent } from "@/lib/content/fallback";
 import { db } from "@/lib/db";
 import { pageCanonical, withSocial } from "@/lib/seo/metadata";
+import { freeTheoryQuestionCount } from "@/lib/theory/questions";
 
 export const dynamic = "force-dynamic";
 
@@ -37,8 +38,9 @@ export default async function TeoriPage(
   const params = await props.params;
   if (!isLocale(params.locale)) notFound();
   setRequestLocale(params.locale);
-  const [t, categories] = await Promise.all([
+  const [t, homeTheory, categories, freeQuestionCount] = await Promise.all([
     getTranslations("theory"),
+    getTranslations("home.theory"),
     db.theoryCategory.findMany({
       orderBy: { order: "asc" },
       include: {
@@ -50,12 +52,9 @@ export default async function TeoriPage(
         },
       },
     }),
+    freeTheoryQuestionCount(),
   ]);
   const available = categories.filter((category) => category._count.questions > 0);
-  const freeQuestionCount = available.reduce(
-    (total, category) => total + category._count.questions,
-    0,
-  );
 
   return (
     <div className="section-shell">
@@ -72,12 +71,13 @@ export default async function TeoriPage(
               </p>
               <h1 className="section-title text-balance mt-3">{t("title")}</h1>
               <p className="mt-4 max-w-2xl text-base leading-7 text-ink-inverse-muted sm:text-lg">
-                {t("description")}
+                {freeQuestionCount > 0 ? t("description") : homeTheory("comingSoon")}
               </p>
               <p className="mt-4 max-w-2xl text-sm leading-6 text-ink-inverse-muted">
                 {t("licensingPending")}
               </p>
             </div>
+            {freeQuestionCount > 0 ? (
             <div className="rounded-md border border-ink-inverse/15 bg-surface-raised p-5">
               <p className="numbers-ltr text-4xl font-black text-accent">
                 {freeQuestionCount}
@@ -86,6 +86,7 @@ export default async function TeoriPage(
                 {t("questionsAvailable")}
               </p>
             </div>
+            ) : null}
           </div>
         </div>
 
@@ -121,7 +122,7 @@ export default async function TeoriPage(
                     <div>
                       <h3 className="text-xl font-black">{content.translation.name}</h3>
                       <p className="mt-2 text-sm text-ink-muted">
-                        {t("freeCount", { count: category._count.questions })}
+                        {t("freeCount", { count: category._count.questions, n: String(category._count.questions) })}
                       </p>
                       <p className="mt-4 font-bold underline underline-offset-4">
                         {t("startPractice")}

@@ -12,6 +12,8 @@ import { EmptyState } from "@/components/EmptyState";
 import { Input } from "@/components/Input";
 import { PageHeader } from "@/components/PageHeader";
 import { Textarea } from "@/components/Textarea";
+import { formatLessonDateTime, formatLessonTime } from "@/lib/format/datetime";
+import { displayPhone, telHref } from "@/lib/format/phone";
 import { db } from "@/lib/db";
 
 import {
@@ -120,22 +122,10 @@ export default async function TeacherPortal(
       },
     },
   });
-  const timeFormatter = new Intl.DateTimeFormat(params.locale, {
-    timeZone: TIME_ZONE,
-    hour: "2-digit",
-    minute: "2-digit",
-    numberingSystem: "latn",
-    ...(view === "week" ? { weekday: "short" as const, day: "numeric" as const, month: "short" as const } : {}),
-  });
-  const pupilDate = new Intl.DateTimeFormat(params.locale, {
-    timeZone: TIME_ZONE,
-    weekday: "short",
-    day: "numeric",
-    month: "short",
-    hour: "2-digit",
-    minute: "2-digit",
-    numberingSystem: "latn",
-  });
+  const formatSlot = (date: Date) =>
+    view === "week"
+      ? formatLessonDateTime(date, params.locale)
+      : formatLessonTime(date, params.locale);
   const tomorrow = formatInTimeZone(addDays(now, 1), TIME_ZONE, "yyyy-MM-dd");
 
   return (
@@ -150,7 +140,7 @@ export default async function TeacherPortal(
         <PageHeader
           eyebrow={t("eyebrow")}
           title={view === "week" ? t("weekTitle") : t("title")}
-          description={t(view === "week" ? "weekCount" : "lessonCount", { count: lessons.length })}
+          description={t(view === "week" ? "weekCount" : "lessonCount", { count: lessons.length, n: String(lessons.length) })}
         />
         <div className="mt-6 grid grid-cols-2 gap-2">
           {(["today", "week"] as const).map((value) => (
@@ -175,7 +165,7 @@ export default async function TeacherPortal(
             return (
               <article key={lesson.id} className="relative min-w-0 rounded-md border border-border bg-card p-5 shadow-soft sm:ms-28 sm:p-6">
                 <p className="text-sm font-black numbers-ltr sm:absolute sm:end-[calc(100%+1.25rem)] sm:top-4 sm:rounded-sm sm:border sm:border-border sm:bg-card sm:px-2 sm:py-1" dir="ltr">
-                    <bdi>{timeFormatter.format(lesson.startsAt)}</bdi>
+                    <bdi>{formatSlot(lesson.startsAt)}</bdi>
                 </p>
                 <span aria-hidden="true" className="absolute top-7 hidden size-3 rounded-full border-2 border-card bg-accent sm:block sm:-start-[5.2rem]" />
                 <div className="min-w-0">
@@ -187,8 +177,8 @@ export default async function TeacherPortal(
                     ) : null}
                     <div className="mt-2 grid text-sm">
                       {lesson.student.phone ? (
-                        <a className="inline-flex min-h-11 items-center font-bold underline" href={`tel:${lesson.student.phone}`} dir="ltr">
-                          <bdi>{lesson.student.phone}</bdi>
+                        <a className="inline-flex min-h-11 items-center font-bold underline" href={telHref(lesson.student.phone)} dir="ltr">
+                          <bdi>{displayPhone(lesson.student.phone)}</bdi>
                         </a>
                       ) : null}
                       {mapsHref ? (
@@ -241,7 +231,7 @@ export default async function TeacherPortal(
             );
           })}
           {!lessons.length ? (
-            <div className="relative z-10 bg-page"><EmptyState title={view === "week" ? t("weekEmpty") : t("empty")} description={t(view === "week" ? "weekCount" : "lessonCount", { count: 0 })} /></div>
+            <div className="relative z-10 bg-page"><EmptyState title={view === "week" ? t("weekEmpty") : t("empty")} description={t(view === "week" ? "weekCount" : "lessonCount", { count: 0, n: "0" })} /></div>
           ) : null}
         </div>
       </section>
@@ -260,12 +250,12 @@ export default async function TeacherPortal(
                   {pupil.firstName} {pupil.lastName}
                 </h3>
                 <p className="mt-1 text-sm text-ink-muted">
-                  {t("students.lessonsDone", { count: done })}
+                  {t("students.lessonsDone", { count: done, n: String(done) })}
                 </p>
                 <p className="mt-1 break-words text-sm text-ink">
                   {nextLesson
                     ? t.rich("students.nextLesson", {
-                        when: pupilDate.format(nextLesson.startsAt),
+                        when: formatLessonDateTime(nextLesson.startsAt, params.locale),
                         time: (chunks) => <bdi>{chunks}</bdi>,
                       })
                     : t("students.noNext")}

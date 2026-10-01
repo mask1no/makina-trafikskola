@@ -4,6 +4,11 @@ import { useEffect, useMemo, useReducer } from "react";
 import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/Button";
+import {
+  formatDate,
+  formatDeadline,
+  formatLessonTime,
+} from "@/lib/format/datetime";
 import { Card } from "@/components/Card";
 import { CheckboxField } from "@/components/CheckboxField";
 import { Notice } from "@/components/Notice";
@@ -110,18 +115,15 @@ export function BookingFlow({
   }, [dispatch, state.authenticated, state.kind]);
 
   const dates = useMemo(() => {
-    const formatter = new Intl.DateTimeFormat(locale, {
-      timeZone: "Europe/Stockholm",
-      weekday: "short",
-      day: "numeric",
-      month: "short",
-      numberingSystem: "latn",
-    });
     return Array.from({ length: 14 }, (_, index) => {
       const date = addCalendarDays(new Date(), index);
       return {
         key: localDateKey(date.toISOString()),
-        label: formatter.format(date),
+        label: formatDate(date, locale, {
+          weekday: "short",
+          day: "numeric",
+          month: "short",
+        }),
       };
     });
   }, [locale]);
@@ -171,20 +173,12 @@ export function BookingFlow({
   const selectedTeacher = teachers.find((teacher) => teacher.id === state.teacherId);
   const selectedLocation = locations.find((location) => location.id === state.locationId);
   const selectedDateLabel = state.selectedSlot
-    ? new Intl.DateTimeFormat(locale, {
-        timeZone: "Europe/Stockholm",
+    ? formatDate(new Date(state.selectedSlot), locale, {
         weekday: "long",
         day: "numeric",
         month: "long",
-        numberingSystem: "latn",
-      }).format(new Date(state.selectedSlot))
+      })
     : "";
-  const timeFormatter = new Intl.DateTimeFormat(locale, {
-    timeZone: "Europe/Stockholm",
-    hour: "2-digit",
-    minute: "2-digit",
-    numberingSystem: "latn",
-  });
 
   function next() {
     patch({ error: "" });
@@ -305,15 +299,7 @@ export function BookingFlow({
       new Date(state.booking.startsAt).getTime() -
         cancellationWindowHours * 60 * 60 * 1000,
     );
-    const deadlineLabel = new Intl.DateTimeFormat(locale, {
-      timeZone: "Europe/Stockholm",
-      weekday: "long",
-      day: "numeric",
-      month: "short",
-      hour: "2-digit",
-      minute: "2-digit",
-      numberingSystem: "latn",
-    }).format(deadline);
+    const deadlineLabel = formatDeadline(deadline, locale);
     return (
       <section className="mx-auto max-w-3xl overflow-hidden rounded-lg border border-border bg-card shadow-card">
         <div className="bg-surface px-6 py-8 text-ink-inverse sm:px-10 sm:py-10">
@@ -341,7 +327,7 @@ export function BookingFlow({
             <Notice className="mt-5">
               {t.rich("confirmation.hold", {
                 expires: state.booking.holdExpiresAt
-                  ? timeFormatter.format(new Date(state.booking.holdExpiresAt))
+                  ? formatLessonTime(new Date(state.booking.holdExpiresAt), locale)
                   : "",
                 time: (chunks) => <bdi>{chunks}</bdi>,
               })}
@@ -459,7 +445,7 @@ export function BookingFlow({
           selectedSlot={state.selectedSlot}
           loadingSlots={state.loadingSlots}
           dateSlots={dateSlots}
-          timeFormatter={timeFormatter}
+          locale={locale}
           onFirstAvailable={(slot) =>
             patch({
               selectedDate: localDateKey(slot.startsAt),
@@ -511,7 +497,7 @@ export function BookingFlow({
             <div className="border-b border-border pb-4"><dt className="text-ink-muted">{t("summary.lesson")}</dt><dd className="mt-1 font-bold">{t(`step.what.${state.kind}`)}</dd></div>
             <div className="border-b border-border pb-4"><dt className="text-ink-muted">{t("summary.place")}</dt><dd className="mt-1 font-bold">{state.placeMode === "school" ? selectedLocation?.name ?? t("summary.notSelected") : state.pickupAddress || t("summary.notSelected")}</dd></div>
             <div className="border-b border-border pb-4"><dt className="text-ink-muted">{t("summary.teacher")}</dt><dd className="mt-1 font-bold">{selectedTeacher?.name ?? t("summary.notSelected")}</dd></div>
-            <div><dt className="text-ink-muted">{t("summary.time")}</dt><dd className="mt-1 font-bold">{state.selectedSlot ? <><bdi>{selectedDateLabel}</bdi><bdi dir="ltr" className="block">{timeFormatter.format(new Date(state.selectedSlot))}</bdi></> : t("summary.notSelected")}</dd></div>
+            <div><dt className="text-ink-muted">{t("summary.time")}</dt><dd className="mt-1 font-bold">{state.selectedSlot ? <><bdi>{selectedDateLabel}</bdi><bdi dir="ltr" className="block">{formatLessonTime(new Date(state.selectedSlot), locale)}</bdi></> : t("summary.notSelected")}</dd></div>
           </dl>
           <p className="mt-5 text-sm leading-6 text-ink-muted">{t("summary.reassurance")}</p>
       </aside>

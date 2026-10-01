@@ -683,7 +683,13 @@ These files are the current copies. Do not paste them into this spec.
 
 Theory questions are imported with `npm run theory:import`, not stored in this file.
 
-Launch flags: `BOOKING_ENABLED=0` hides public booking. `INSTRUCTORS_ENABLED=0` hides public instructor pages. Login is email and password, Swedish SMS, and Google. The app does not send email.
+Launch flags: `BOOKING_ENABLED=0` hides public booking. `INSTRUCTORS_ENABLED=0` hides public instructor pages. Login is email and password, Swedish SMS, and Google. The app does not send email. Stripe sends receipts. Payments are card, Swish and Klarna. Lesson credits and packages are valid for 12 months. Digital theory has no time limit. Cancellation is free only more than 24 hours before the start. Lessons are 50 minutes. Pickup is by arrangement.
+
+Teaching languages are Swedish, English, Tigrinya and Arabic. Somali is coming soon. The website itself is in five languages. Do not promise free theory questions until `freeTheoryQuestionCount()` is greater than zero.
+
+A location address that starts with `TODO` is unconfirmed and is hidden by `publicAddress()`. A boolean column would be cleaner later.
+
+Content-Security-Policy is sent as `Content-Security-Policy-Report-Only`. Switch the header name to `Content-Security-Policy` after the report stream is clean.
 
 ---
 

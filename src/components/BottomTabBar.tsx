@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-export type BottomTabIcon = "home" | "packages" | "bookings" | "messages" | "profile";
+export type BottomTabIcon = "home" | "packages" | "bookings" | "messages" | "profile" | "call";
 
 type Tab = { href: string; label: string; icon: BottomTabIcon };
 
@@ -40,6 +40,9 @@ function TabIcon({
         <path d="M4.5 20c.7-4.2 3.2-6.3 7.5-6.3s6.8 2.1 7.5 6.3" />
       </>
     ),
+    call: (
+      <path d="M7 4.5h3l1.5 3.5-2 1.2a12 12 0 0 0 5.3 5.3l1.2-2 3.5 1.5v3A2 2 0 0 1 17.5 19 14.5 14.5 0 0 1 5 6.5 2 2 0 0 1 7 4.5Z" />
+    ),
   };
 
   return (
@@ -74,49 +77,45 @@ function TabLink({
   pathname: string;
   prominent?: boolean;
 }) {
+  const className = `relative flex min-h-11 min-w-11 flex-col items-center justify-center gap-0.5 px-1 text-center text-xs font-bold leading-none text-ink-muted aria-[current=page]:text-ink ${
+    prominent ? "mb-2 size-14 rounded-full bg-accent text-accent-ink" : ""
+  }`;
+  if (tab.href.startsWith("tel:")) {
+    return (
+      <a href={tab.href} className={className}>
+        <TabIcon icon={tab.icon} prominent={prominent} />
+        <span className="w-full truncate">{tab.label}</span>
+      </a>
+    );
+  }
+
   return (
     <Link
       href={tab.href}
       aria-current={isCurrent(pathname, tab.href) ? "page" : undefined}
-      className="relative flex min-h-16 flex-col items-center justify-center gap-1 px-1 text-center text-[10px] font-bold leading-tight text-ink-muted transition duration-500 ease-premium after:absolute after:top-0 after:h-0.5 after:w-8 after:rounded-full after:bg-transparent aria-[current=page]:bg-card-muted aria-[current=page]:text-ink aria-[current=page]:after:bg-accent sm:text-[11px]"
+      className={className}
     >
       <TabIcon icon={tab.icon} prominent={prominent} />
-      <span className="line-clamp-2 w-full">{tab.label}</span>
+      <span className="w-full truncate">{tab.label}</span>
     </Link>
   );
 }
 
-export function BottomTabBar({ tabs }: { tabs: Tab[] }) {
+export function BottomTabBar({
+  tabs,
+  center,
+}: {
+  tabs: Tab[];
+  center?: Tab;
+}) {
   const pathname = usePathname();
-  const home = tabs.find((tab) => tab.icon === "home");
-  const rest = tabs.filter((tab) => tab.icon !== "home");
-
-  if (!home) {
-    return (
-      <nav className="fixed bottom-0 start-0 end-0 z-40 border-t border-border bg-card pb-[env(safe-area-inset-bottom)] shadow-float md:hidden">
-        <ul
-          className="grid"
-          style={{
-            gridTemplateColumns: `repeat(${tabs.length}, minmax(0, 1fr))`,
-          }}
-        >
-          {tabs.map((tab) => (
-            <li key={tab.href} className="min-w-0">
-              <TabLink tab={tab} pathname={pathname} />
-            </li>
-          ))}
-        </ul>
-      </nav>
-    );
-  }
-
-  const leftCount = Math.ceil(rest.length / 2);
-  const left = rest.slice(0, leftCount);
-  const right = rest.slice(leftCount);
+  const leftCount = Math.ceil(tabs.length / 2);
+  const left = tabs.slice(0, leftCount);
+  const right = tabs.slice(leftCount);
 
   return (
-    <nav className="fixed bottom-0 start-0 end-0 z-40 border-t border-border bg-card pb-[env(safe-area-inset-bottom)] shadow-float md:hidden">
-      <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-stretch">
+    <nav className="fixed bottom-0 start-0 end-0 z-40 border-t border-border bg-card pb-[var(--safe-bottom)] shadow-float md:hidden">
+      <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-end">
         <ul
           className="grid"
           style={{
@@ -130,9 +129,11 @@ export function BottomTabBar({ tabs }: { tabs: Tab[] }) {
           ))}
         </ul>
         <ul className="min-w-[4.75rem]">
-          <li className="min-w-0">
-            <TabLink tab={home} pathname={pathname} prominent />
-          </li>
+          {center ? (
+            <li className="min-w-0">
+              <TabLink tab={center} pathname={pathname} prominent />
+            </li>
+          ) : null}
         </ul>
         <ul
           className="grid"

@@ -8,6 +8,7 @@ import {
   requireRole,
 } from "@/lib/auth/guards";
 import { buildCalendar } from "@/lib/calendar/ics";
+import { formatStockholm } from "@/lib/format/datetime";
 import { db } from "@/lib/db";
 
 export const runtime = "nodejs";
@@ -66,11 +67,11 @@ export async function GET(
       ? cancellationHours
       : 24,
   );
-  const deadlineLabel = new Intl.DateTimeFormat(booking.student.localePref, {
-    timeZone: "Europe/Stockholm",
-    dateStyle: "full",
-    timeStyle: "short",
-  }).format(cancellationDeadline);
+  const deadlineLabel = formatStockholm(
+    cancellationDeadline,
+    booking.student.localePref,
+    { dateStyle: "full", timeStyle: "short" },
+  );
   const location =
     booking.pickupAddress ??
     [booking.location?.name, booking.location?.address]
