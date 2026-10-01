@@ -46,13 +46,11 @@ export function BenefitMarquee({
   pauseLabel,
   playLabel,
   items,
-  rows = 1,
 }: {
   label: string;
   pauseLabel: string;
   playLabel: string;
   items: BenefitCard[];
-  rows?: 1 | 2;
 }) {
   if (!items.length) return null;
 
@@ -67,14 +65,6 @@ export function BenefitMarquee({
           <Cards items={items} hidden />
         </div>
       </div>
-      {rows === 2 ? (
-        <div className="benefit-viewport mt-3 hidden md:block">
-          <div className="benefit-track benefit-track-reverse">
-            <Cards items={[...items].reverse()} />
-            <Cards items={[...items].reverse()} hidden />
-          </div>
-        </div>
-      ) : null}
     </section>
   );
 }

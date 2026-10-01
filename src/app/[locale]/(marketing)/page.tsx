@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -9,7 +10,7 @@ import { ProductCard } from "@/components/ProductCard";
 import { StaticMapArtwork } from "@/components/StaticMapArtwork";
 import { TeacherCard } from "@/components/TeacherCard";
 import { LazyTeacherMap } from "@/components/LazyTeacherMap";
-import { isLocale } from "@/i18n/routing";
+import { isLocale, type Locale } from "@/i18n/routing";
 import {
   bookingEnabled,
   instructorsEnabled,
@@ -26,13 +27,121 @@ export const dynamic = "force-dynamic";
 
 const LANGUAGE_FILTERS = ["sv", "en", "ti", "ar", "so"] as const;
 
+async function LowestSinglePrice({ locale }: { locale: Locale }) {
+  const [t, products] = await Promise.all([
+    getTranslations(),
+    getProducts(locale),
+  ]);
+  const cheapest = products
+    .filter((product) => product.kind === "SINGLE_LESSON")
+    .sort((a, b) => a.priceOre - b.priceOre)[0];
+  if (!cheapest) return null;
+  return (
+    <p className="text-sm font-bold text-ink-inverse-muted">
+      {t("shell.fromPrice", { price: formatPrice(cheapest.priceOre, locale) })}
+    </p>
+  );
+}
+
+async function HomeHero({ locale }: { locale: Locale }) {
+  setRequestLocale(locale);
+  const t = await getTranslations();
+  const canBook = bookingEnabled();
+  const now = new Date();
+  const openNow = isOpenNow(now);
+  const hoursToday = todayHours(now);
+  const phone = t("company.phone");
+
+  return (
+    <section className="relative isolate flex min-h-[60svh] flex-col justify-end overflow-x-clip bg-surface text-ink-inverse lg:min-h-[64svh] lg:max-h-[720px]">
+      {/* TODO: replace /hero.jpg with a real school photo at least 2400px wide. */}
+      <Image
+        src="/hero.jpg"
+        alt=""
+        priority
+        fetchPriority="high"
+        quality={60}
+        fill
+        sizes="100vw"
+        className="rtl-no-mirror hero-pan object-cover object-[center_30%] lg:object-[68%_center]"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-[linear-gradient(180deg,color-mix(in_srgb,var(--surface)_55%,transparent)_0%,color-mix(in_srgb,var(--surface)_78%,transparent)_48%,var(--surface)_100%)]"
+      />
+      <div className="site-container relative z-10 grid items-end gap-8 pb-10 pt-24 lg:grid-cols-2 lg:pb-16">
+        <div>
+          <p className="brand-mark text-accent">{t("home.hero.brand")}</p>
+          <h1 className="display-title mt-4 max-w-3xl text-balance lg:text-[clamp(2.75rem,4vw,4.5rem)]">
+            {t("home.hero.title")}
+          </h1>
+          <p className="mt-4 max-w-xl text-base leading-7 text-ink-inverse-muted sm:text-lg">
+            {t("home.hero.description")}
+          </p>
+          <div className="mt-6 flex flex-col gap-3 md:flex-row">
+            {canBook ? (
+              <LinkButton href={`/${locale}/boka`} className="w-full md:w-auto">
+                {t("common.bookNow")}
+              </LinkButton>
+            ) : (
+              <a
+                href={telHref(phone)}
+                className="inline-flex min-h-11 w-full items-center justify-center rounded-sm border border-accent bg-accent px-5 text-sm font-bold text-accent-ink md:w-auto"
+              >
+                {t("shell.callName", { phone: displayPhone(phone) })}
+              </a>
+            )}
+            <LinkButton
+              variant="secondary"
+              className="w-full border-ink-inverse/30 text-ink-inverse hover:bg-ink-inverse/10 md:w-auto"
+              href={`/${locale}/korlektioner`}
+            >
+              {t("shell.seePrices")}
+            </LinkButton>
+          </div>
+        </div>
+        <aside className="hidden rounded-lg border border-ink-inverse/15 bg-surface-raised p-6 text-ink-inverse lg:block">
+          <Suspense fallback={null}>
+            <LowestSinglePrice locale={locale} />
+          </Suspense>
+          <a className="mt-3 inline-flex min-h-11 items-center text-2xl font-black numbers-ltr" href={telHref(phone)}>
+            {displayPhone(phone)}
+          </a>
+          <p className="mt-4 text-sm">
+            <span className="font-black">{openNow ? t("shell.openNow") : t("shell.closed")}</span>
+            {hoursToday ? <span className="numbers-ltr"> · {hoursToday.open}–{hoursToday.close}</span> : null}
+          </p>
+          <p className="mt-2 text-sm text-ink-inverse-muted">{t("company.visitingAddress")}</p>
+        </aside>
+      </div>
+    </section>
+  );
+}
+
 export default async function MarketingHome(
   props: {
     params: Promise<{ locale: string }>;
   }
 ) {
   const params = await props.params;
-  if (!isLocale(params.locale)) return null;
+  const locale = params.locale;
+  if (!isLocale(locale)) return null;
+  setRequestLocale(locale);
+  return (
+    <>
+      <HomeHero locale={locale} />
+      <Suspense fallback={null}>
+        <HomeBelow params={{ locale }} />
+      </Suspense>
+    </>
+  );
+}
+
+async function HomeBelow({
+  params,
+}: {
+  params: { locale: Locale };
+}) {
   setRequestLocale(params.locale);
   const t = await getTranslations();
   const [products, teachers, freeQuestions] = await Promise.all([
@@ -42,9 +151,6 @@ export default async function MarketingHome(
   ]);
   const canBook = bookingEnabled();
   const showInstructors = instructorsEnabled() && teachers.length > 0;
-  const now = new Date();
-  const openNow = isOpenNow(now);
-  const hoursToday = todayHours(now);
   const singleLessons = products
     .filter((product) => product.kind === "SINGLE_LESSON")
     .sort((a, b) => a.priceOre - b.priceOre);
@@ -150,76 +256,12 @@ export default async function MarketingHome(
         }}
       />
 
-      <section className="relative isolate flex min-h-[60svh] flex-col justify-end overflow-x-clip bg-surface text-ink-inverse lg:min-h-[64svh] lg:max-h-[720px]">
-        {/* TODO: replace /hero.jpg with a real school photo at least 2400px wide. */}
-        <Image
-          src="/hero.jpg"
-          alt=""
-          priority
-          fill
-          sizes="100vw"
-          className="rtl-no-mirror hero-pan object-cover object-[center_30%] lg:object-[68%_center]"
-        />
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 bg-[linear-gradient(180deg,color-mix(in_srgb,var(--surface)_55%,transparent)_0%,color-mix(in_srgb,var(--surface)_78%,transparent)_48%,var(--surface)_100%)]"
-        />
-        <div className="site-container relative z-10 grid items-end gap-8 pb-10 pt-24 lg:grid-cols-2 lg:pb-16">
-          <div>
-            <p className="brand-mark reveal text-accent">{t("home.hero.brand")}</p>
-            <h1 className="display-title reveal reveal-delay-1 mt-4 max-w-3xl text-balance lg:text-[clamp(2.75rem,4vw,4.5rem)]">
-              {t("home.hero.title")}
-            </h1>
-            <p className="reveal reveal-delay-2 mt-4 max-w-xl text-base leading-7 text-ink-inverse-muted sm:text-lg">
-              {t("home.hero.description")}
-            </p>
-            <div className="reveal reveal-delay-3 mt-6 flex flex-col gap-3 md:flex-row">
-              {canBook ? (
-                <LinkButton href={`/${params.locale}/boka`} className="w-full md:w-auto">
-                  {t("common.bookNow")}
-                </LinkButton>
-              ) : (
-                <a
-                  href={telHref(t("company.phone"))}
-                  className="inline-flex min-h-11 w-full items-center justify-center rounded-sm border border-accent bg-accent px-5 text-sm font-bold text-accent-ink md:w-auto"
-                >
-                  {t("shell.callName", { phone: displayPhone(t("company.phone")) })}
-                </a>
-              )}
-              <LinkButton
-                variant="secondary"
-                className="w-full border-ink-inverse/30 text-ink-inverse hover:bg-ink-inverse/10 md:w-auto"
-                href={`/${params.locale}/korlektioner`}
-              >
-                {t("shell.seePrices")}
-              </LinkButton>
-            </div>
-          </div>
-          <aside className="hidden rounded-lg border border-ink-inverse/15 bg-surface-raised p-6 text-ink-inverse lg:block">
-            {singleLessons[0] ? (
-              <p className="text-sm font-bold text-ink-inverse-muted">
-                {t("shell.fromPrice", { price: formatPrice(singleLessons[0].priceOre, params.locale) })}
-              </p>
-            ) : null}
-            <a className="mt-3 inline-flex min-h-11 items-center text-2xl font-black numbers-ltr" href={telHref(t("company.phone"))}>
-              {displayPhone(t("company.phone"))}
-            </a>
-            <p className="mt-4 text-sm">
-              <span className="font-black">{openNow ? t("shell.openNow") : t("shell.closed")}</span>
-              {hoursToday ? <span className="numbers-ltr"> · {hoursToday.open}–{hoursToday.close}</span> : null}
-            </p>
-            <p className="mt-2 text-sm text-ink-inverse-muted">{t("company.visitingAddress")}</p>
-          </aside>
-        </div>
-      </section>
-
       <div className="relative z-20 bg-page pb-8 lg:-mt-8">
         <BenefitMarquee
           label={t("home.benefits.label")}
           pauseLabel={t("shell.pause")}
           playLabel={t("shell.play")}
           items={benefitCards}
-          rows={2}
         />
       </div>
 

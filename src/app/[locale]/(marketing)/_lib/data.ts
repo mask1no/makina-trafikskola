@@ -1,10 +1,12 @@
+import { cache } from "react";
+
 import { db } from "@/lib/db";
 import type { Locale } from "@/i18n/routing";
 import type { Transmission } from "@prisma/client";
 import { resolveContent } from "@/lib/content/fallback";
 import { orderedTeacherIds } from "@/lib/teachers/query";
 
-export async function getProducts(locale: Locale) {
+export const getProducts = cache(async function getProducts(locale: Locale) {
   const products = await db.product.findMany({
     orderBy: { sortOrder: "asc" },
     include: { translations: true },
@@ -15,7 +17,7 @@ export async function getProducts(locale: Locale) {
     if (!resolved.translation) return [];
     return [{ ...product, ...resolved }];
   });
-}
+});
 
 export async function getProduct(locale: Locale, slug: string) {
   const product = await db.product.findUnique({

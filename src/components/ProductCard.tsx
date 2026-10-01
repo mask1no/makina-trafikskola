@@ -66,7 +66,8 @@ export function ProductCard(props: ProductCardProps) {
             src={props.imageSrc}
             alt={props.imageAlt ?? ""}
             fill
-            sizes="(min-width: 1280px) 28vw, (min-width: 768px) 45vw, 85vw"
+            quality={60}
+            sizes="(max-width: 767px) 85vw, (max-width: 1279px) 45vw, 28vw"
             className="rtl-no-mirror object-cover"
           />
         </div>
