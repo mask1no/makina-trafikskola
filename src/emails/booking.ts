@@ -122,14 +122,14 @@ function bookingText(
   if (template === "booking_confirmed") {
     const deadline = parts.deadline
       ? locale === "en"
-        ? ` Cancel until ${parts.deadline}.`
+        ? ` Cancel at the latest 24 hours before the lesson, until ${parts.deadline}. A later cancellation is charged in full.`
         : locale === "ar"
-          ? ` يمكن الإلغاء حتى ${parts.deadline}.`
+          ? ` يمكن الإلغاء في موعد أقصاه 24 ساعة قبل الدرس، حتى ${parts.deadline}. الإلغاء اللاحق يُحسب بالسعر الكامل.`
           : locale === "so"
-            ? ` Waad baajin kartaa ilaa ${parts.deadline}.`
+            ? ` Jooji ugu dambayn 24 saacadood ka hor casharka, ilaa ${parts.deadline}. Joojinta dambe waa lacag buuxda.`
             : locale === "ti"
-              ? ` ክሳብ ${parts.deadline} ክትስርዝ ትኽእል።`
-              : ` Kan avbokas fram till ${parts.deadline}.`
+              ? ` ዝዝሓለ ምስራዝ 24 ሰዓት ቅድሚ ትምህርቲ እዩ፣ ክሳብ ${parts.deadline}። ድሕሪኡ ምሉእ ዋጋ ይኽፈል።`
+              : ` Avboka senast 24 timmar före lektionen, fram till ${parts.deadline}. Senare avbokning debiteras fullt pris.`
       : "";
     if (locale === "en") return `Your lesson is booked ${time}${teacher}${place}.${deadline}`;
     if (locale === "ar") return `درس القيادة محجوز ${time}${teacher}${place}.${deadline}`;

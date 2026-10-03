@@ -79,9 +79,11 @@ export default async function TeacherDetailPage(
             <h1 className="mt-2 text-4xl font-black">
               <bdi>{name}</bdi>
             </h1>
-            <p className="mt-3 text-ink-muted">
-              {t("teacher.yearsExperience", { count: teacher.yearsExperience, n: String(teacher.yearsExperience) })}
-            </p>
+            {teacher.yearsExperience > 0 ? (
+              <p className="mt-3 text-ink-muted">
+                {t("teacher.yearsExperience", { count: teacher.yearsExperience, n: String(teacher.yearsExperience) })}
+              </p>
+            ) : null}
             {teacher.swedishOnly ? (
               <span className="mt-4 inline-block rounded-full bg-page px-3 py-1 text-xs text-ink-muted">
                 {t("common.swedishOnly")}
@@ -100,14 +102,16 @@ export default async function TeacherDetailPage(
                 <dt className="text-sm font-bold text-ink-muted">{t("teacher.languages")}</dt>
                 <dd className="mt-2">{teacher.languages.map((item) => t(`language.${item}`)).join(" · ")}</dd>
               </div>
-              <div>
-                <dt className="text-sm font-bold text-ink-muted">{t("teacher.transmissions")}</dt>
-                <dd className="mt-2">
-                  {teacher.transmissions
-                    .map((item) => t(`teacher.transmission.${item.toLowerCase()}`))
-                    .join(" · ")}
-                </dd>
-              </div>
+              {teacher.transmissions.length ? (
+                <div>
+                  <dt className="text-sm font-bold text-ink-muted">{t("teacher.transmissions")}</dt>
+                  <dd className="mt-2">
+                    {teacher.transmissions
+                      .map((item) => t(`teacher.transmission.${item.toLowerCase()}`))
+                      .join(" · ")}
+                  </dd>
+                </div>
+              ) : null}
               <div className="sm:col-span-2">
                 <dt className="text-sm font-bold text-ink-muted">{t("teacher.locations")}</dt>
                 <dd className="mt-2">

@@ -12,6 +12,12 @@ import {
   openingHoursSpecification,
   todayHours,
 } from "@/lib/company/opening-hours";
+import {
+  COMING_SOON_TEACHING_LANGUAGES,
+  formatLanguageList,
+  offeredTeachingLanguages,
+  publicStaff,
+} from "@/lib/company/staff";
 import { displayPhone, telHref } from "@/lib/format/phone";
 import { publicAddress } from "@/lib/locations/address";
 import { db } from "@/lib/db";
@@ -19,15 +25,6 @@ import { bookingEnabled } from "@/lib/launch";
 import { pageCanonical, withSocial } from "@/lib/seo/metadata";
 
 export const dynamic = "force-dynamic";
-
-const publicStaff = [
-  { name: "Aron Kessete", role: "trafikskolechef" },
-  { name: "Goitom Mikael", role: "utbildningsledare" },
-  { name: "Kidane Askelawi", role: "trafiklarare" },
-  { name: "Azizullah Hasanzada", role: "trafiklarare" },
-  { name: "Habtom Negassi Araya", role: "trafiklarare" },
-  { name: "Daniel Araya", role: "trafiklarare" },
-] as const;
 
 export async function generateMetadata(
   props: {
@@ -62,10 +59,11 @@ export default async function ContactPage(
   if (!isLocale(params.locale)) notFound();
   setRequestLocale(params.locale);
 
-  const [t, shell, company, locations] = await Promise.all([
+  const [t, shell, company, languageNames, locations] = await Promise.all([
     getTranslations("contact"),
     getTranslations("shell"),
     getTranslations("company"),
+    getTranslations("language"),
     db.location.findMany({
       where: { active: true },
       orderBy: { name: "asc" },
@@ -82,6 +80,17 @@ export default async function ContactPage(
   const now = new Date();
   const open = isOpenNow(now);
   const hours = todayHours(now);
+  const offeredLanguages = offeredTeachingLanguages();
+  const offeredLanguageNames = formatLanguageList(
+    offeredLanguages,
+    params.locale,
+    (code) => languageNames(code),
+  );
+  const comingSoonLanguageNames = formatLanguageList(
+    COMING_SOON_TEACHING_LANGUAGES,
+    params.locale,
+    (code) => languageNames(code),
+  );
   const directions = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${visiting}, Sweden`)}`;
 
   const structuredData = {
@@ -97,7 +106,7 @@ export default async function ContactPage(
       addressCountry: "SE",
     },
     areaServed: { "@type": "City", name: "Stockholm" },
-    availableLanguage: ["sv", "en", "ti", "ar"],
+    availableLanguage: offeredLanguages,
     openingHoursSpecification: openingHoursSpecification(),
     ...(siteUrl ? { url: `${siteUrl}/${params.locale}/kontakt` } : {}),
     department: locations.map((location) => ({
@@ -176,11 +185,20 @@ export default async function ContactPage(
           <p className="mt-3 max-w-2xl text-ink-muted">{t("staffDescription")}</p>
           <ul className="mt-6 grid gap-3 lg:grid-cols-3">
             {publicStaff.map((staffMember) => (
-              <li key={staffMember.name} className="flex items-center gap-3 rounded-md border border-border bg-card p-3">
+              <li key={staffMember.name} className="flex items-start gap-3 rounded-md border border-border bg-card p-3">
                 <Avatar name={staffMember.name} size="sm" />
                 <div className="min-w-0">
                   <p className="truncate font-extrabold">{staffMember.name}</p>
                   <p className="text-sm text-ink-muted">{t(`staffRoles.${staffMember.role}`)}</p>
+                  <p className="mt-1 text-sm leading-6 text-ink-muted">
+                    {t("speaks", {
+                      languages: formatLanguageList(
+                        staffMember.languages,
+                        params.locale,
+                        (code) => languageNames(code),
+                      ),
+                    })}
+                  </p>
                 </div>
               </li>
             ))}
@@ -238,7 +256,12 @@ export default async function ContactPage(
 
         <section className="rounded-lg border border-border bg-card p-6 shadow-soft">
           <h2 className="text-xl font-black">{t("languagesTitle")}</h2>
-          <p className="mt-3 max-w-[70ch] leading-7 text-ink-muted">{t("languagesBody")}</p>
+          <p className="mt-3 max-w-[70ch] leading-7 text-ink-muted">
+            {t("languagesBody", {
+              languages: offeredLanguageNames,
+              comingSoonLanguages: comingSoonLanguageNames,
+            })}
+          </p>
           <p className="mt-3 text-sm text-ink-muted">{postal}</p>
         </section>
         </div>

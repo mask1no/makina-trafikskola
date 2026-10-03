@@ -74,6 +74,59 @@ test.describe("marketing layout", () => {
     expect(duration === "none" || duration === "").toBeTruthy();
   });
 
+  test("shows confirmed teaching languages and does not claim Arabic or Somali lessons", async ({ page }) => {
+    await page.goto("/sv/kontakt");
+    await expect(page.getByText(/^Undervisar på /)).toHaveCount(6);
+    const contact = await page.locator("body").innerText();
+    expect(contact).toContain("Undervisning på Svenska, English, ትግርኛ och Kurdiska.");
+    expect(contact).toContain("Soomaali kommer snart.");
+    expect(contact).not.toMatch(/arabiska/i);
+    expect(contact).not.toMatch(/undervisning på somaliska/i);
+
+    await page.goto("/sv");
+    const home = await page.locator("body").innerText();
+    expect(home).toContain("Kontakta oss på Svenska, English, ትግርኛ och Kurdiska.");
+    expect(home).not.toMatch(/arabiska/i);
+    expect(home).toContain("Soomaali kommer snart.");
+    expect(home).not.toMatch(/undervisning på somaliska/i);
+
+    const prefixes = {
+      sv: "Undervisning på ",
+      en: "Lessons in ",
+      ti: "ትምህርቲ ብ",
+      ar: "التدريس بـ",
+      so: "Waxbarasho ",
+    } as const;
+    for (const locale of locales) {
+      await page.goto(`/${locale}/kontakt`);
+      const lines = (await page.locator("body").innerText()).split("\n");
+      const claims = lines.filter((line) => line.startsWith(prefixes[locale]));
+      expect(claims.length).toBeGreaterThan(0);
+      for (const claim of claims) {
+        const offeredSentence = claim.split(/[.።]/, 1)[0];
+        expect(offeredSentence).not.toContain("العربية");
+        expect(offeredSentence).not.toContain("Soomaali");
+      }
+    }
+  });
+
+  test("shows the short terms in every locale", async ({ page }) => {
+    const summaries = {
+      sv: "Kortfattade villkor",
+      en: "Short terms",
+      ti: "ሓጺር ውዕላት",
+      ar: "شروط مختصرة",
+      so: "Shuruudo kooban",
+    } as const;
+    for (const [locale, title] of Object.entries(summaries)) {
+      await page.goto(`/${locale}/villkor`);
+      await expect(page.getByRole("heading", { name: title })).toBeVisible();
+    }
+    await expect(
+      page.getByText("Dhammaan xirmooyinku waxay shaqeeyaan 12 bilood laga bilaabo taariikhda iibsiga."),
+    ).toBeVisible();
+  });
+
   test("does not promise free theory when none is published", async ({ page }) => {
     await page.goto("/sv");
     const comingSoon = page.getByText("Teorin på fem språk släpps snart.");

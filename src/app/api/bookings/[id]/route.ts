@@ -10,7 +10,7 @@ import {
 import { loadAvailability } from "@/lib/bookings/availability";
 import {
   getCancellationCreditReason,
-  getCancellationDeadline,
+  isLateStudentCancellation,
 } from "@/lib/bookings/cancellation";
 import {
   isBookingExclusionViolation,
@@ -145,7 +145,12 @@ export async function PATCH(
     );
     if (
       session.user.role === "STUDENT" &&
-      now >= getCancellationDeadline(booking.startsAt, cancellationWindowHours)
+      isLateStudentCancellation({
+        actorRole: "STUDENT",
+        startsAt: booking.startsAt,
+        now,
+        cancellationWindowHours,
+      })
     ) {
       return errorResponse("OUTSIDE_CANCELLATION_WINDOW", 409);
     }

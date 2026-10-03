@@ -16,6 +16,10 @@ import { ScrollToTop } from "@/components/ScrollToTop";
 import { ServiceWorkerRegistration } from "@/components/ServiceWorkerRegistration";
 import { isLocale, locales } from "@/i18n/routing";
 import { openingHoursSpecification } from "@/lib/company/opening-hours";
+import {
+  formatLanguageList,
+  offeredTeachingLanguages,
+} from "@/lib/company/staff";
 import { displayPhone, telHref } from "@/lib/format/phone";
 import { db } from "@/lib/db";
 import {
@@ -141,13 +145,20 @@ export default async function LocaleLayout(
 
   if (!isLocale(params.locale)) notFound();
   setRequestLocale(params.locale);
-  const [t, adminT, teacherT, company, session] = await Promise.all([
+  const [t, adminT, teacherT, company, languageNames, session] = await Promise.all([
     getTranslations("shell"),
     getTranslations("admin.nav"),
     getTranslations("teacherPortal"),
     getTranslations("company"),
+    getTranslations("language"),
     auth(),
   ]);
+  const offeredLanguages = offeredTeachingLanguages();
+  const offeredLanguageNames = formatLanguageList(
+    offeredLanguages,
+    params.locale,
+    (code) => languageNames(code),
+  );
   const pathname = (await headers()).get("x-makina-pathname") ?? "";
   if (session?.user.id && !pathname.includes("/verifiera-mobil")) {
     const account = await db.user.findUnique({
@@ -202,7 +213,7 @@ export default async function LocaleLayout(
       addressCountry: "SE",
     },
     areaServed: { "@type": "City", name: "Stockholm" },
-    availableLanguage: ["sv", "en", "ti", "ar"],
+    availableLanguage: offeredLanguages,
     openingHoursSpecification: openingHoursSpecification(),
     ...(siteUrl ? { url: `${siteUrl}/${params.locale}` } : {}),
   };
@@ -422,7 +433,9 @@ export default async function LocaleLayout(
             </div>
             <div>
               <p className="text-sm font-extrabold">{t("languageHelp")}</p>
-              <p className="mt-4 max-w-[70ch] text-sm leading-6 text-ink-inverse-muted">{t("languageHelpDescription")}</p>
+              <p className="mt-4 max-w-[70ch] text-sm leading-6 text-ink-inverse-muted">
+                {t("languageHelpDescription", { languages: offeredLanguageNames })}
+              </p>
             </div>
           </div>
           <div className="site-container mt-10 border-t border-surface-soft pt-6 text-xs font-semibold text-ink-inverse-muted">

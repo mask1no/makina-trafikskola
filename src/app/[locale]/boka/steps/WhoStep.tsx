@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/Button";
+import { TEACHING_LANGUAGES } from "@/lib/teachers/languages";
 import { EmptyState } from "@/components/EmptyState";
 import { TeacherMap } from "@/components/TeacherMap";
 import type { TeacherMarker } from "@/components/GoogleMapClient";
@@ -36,13 +37,16 @@ export function WhoStep({
 }) {
   const t = useTranslations("booking");
   const languageNames = useTranslations("language");
+  const teachingLanguages = TEACHING_LANGUAGES.filter((item) =>
+    languages.includes(item),
+  );
   return (
     <section>
       <h2 className="text-3xl font-black">{t("step.who.title")}</h2>
       <fieldset className="mt-5">
         <legend className="font-bold">{t("step.who.languageFirst")}</legend>
         <div className="mt-3 flex flex-wrap gap-2">
-          {languages.map((item) => (
+          {teachingLanguages.map((item) => (
             <button
               type="button"
               key={item}

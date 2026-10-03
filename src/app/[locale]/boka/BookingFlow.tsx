@@ -4,6 +4,7 @@ import { useEffect, useMemo, useReducer } from "react";
 import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/Button";
+import { getCancellationDeadline } from "@/lib/bookings/cancellation";
 import {
   formatDate,
   formatDeadline,
@@ -295,9 +296,9 @@ export function BookingFlow({
   }
 
   if (state.booking) {
-    const deadline = new Date(
-      new Date(state.booking.startsAt).getTime() -
-        cancellationWindowHours * 60 * 60 * 1000,
+    const deadline = getCancellationDeadline(
+      new Date(state.booking.startsAt),
+      cancellationWindowHours,
     );
     const deadlineLabel = formatDeadline(deadline, locale);
     return (

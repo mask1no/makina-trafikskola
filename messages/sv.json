@@ -20,6 +20,7 @@
     "sv": "Svenska",
     "en": "English",
     "ti": "ትግርኛ",
+    "ku": "Kurdiska",
     "ar": "العربية",
     "so": "Soomaali"
   },
@@ -56,7 +57,7 @@
     "privacy": "Integritet",
     "cookies": "Cookies",
     "languageHelp": "Stöd på ditt språk",
-    "languageHelpDescription": "Kontakta oss på svenska, engelska, tigrinja eller arabiska. Somaliska kommer snart.",
+    "languageHelpDescription": "Kontakta oss på {languages}.",
     "call": "Ring",
     "callUs": "Ring oss",
     "callName": "Ring {phone}",
@@ -91,7 +92,7 @@
       "cardDescription": "Välj språk, växellåda och lärare efter dina behov.",
       "reviews": "omdömen",
       "pickupProof": "Upphämtning efter överenskommelse",
-      "languageProof": "Svenska, engelska, tigrinja och arabiska"
+      "languageProof": "{languages}"
     },
     "journey": {
       "eyebrow": "Så fungerar det",
@@ -135,7 +136,7 @@
       },
       "languages": {
         "question": "Kan jag få undervisning på mitt språk?",
-        "answer": "Undervisning på svenska, engelska, tigrinja och arabiska. Somaliska kommer snart."
+        "answer": "Undervisning på {languages}. {comingSoonLanguages} kommer snart."
       },
       "pickup": {
         "question": "Hämtar ni mig?",
@@ -143,8 +144,8 @@
       },
       "cancel": {
         "question": "Hur avbokar jag en lektion?",
-        "answer": "Du avbokar själv under Mina bokningar. Avbokar du mer än 24 timmar före lektionen kostar det ingenting och lektionen går tillbaka till ditt saldo. Avbokar du senare dras lektionen från saldot.",
-        "answerPhone": "Ring {phone} för att avboka eller flytta en lektion. Mer än 24 timmar före start kostar det ingenting och lektionen går tillbaka till ditt saldo. Senare avbokning dras från saldot."
+        "answer": "Du avbokar själv under Mina bokningar. Avbokar du senast 24 timmar före lektionen kostar det ingenting och lektionen går tillbaka till ditt saldo. Avbokar du senare debiteras fullt pris och lektionen dras från saldot.",
+        "answerPhone": "Ring {phone} för att avboka eller flytta en lektion. Senast 24 timmar före lektionen kostar det ingenting och lektionen går tillbaka till ditt saldo. En senare avbokning debiteras fullt pris och dras från saldot."
       },
       "risk": {
         "question": "Vad är skillnaden mellan Risk 1 och Risk 2?",
@@ -153,6 +154,10 @@
       "validity": {
         "question": "Hur länge gäller mitt paket?",
         "answer": "Körlektioner och paket gäller i 12 månader från köpet. Saldot och sista giltighetsdag visas under Mina sidor. Digital teori har ingen tidsgräns."
+      },
+      "late": {
+        "question": "Vad händer om jag kommer sent?",
+        "answer": "Lektionen avslutas på ordinarie sluttid."
       }
     },
     "theory": {
@@ -162,7 +167,7 @@
       "label": "Det här får du hos Makina",
       "language": {
         "title": "Ditt språk",
-        "body": "Undervisning på svenska, engelska, tigrinja och arabiska. Somaliska kommer snart."
+        "body": "Undervisning på {languages}. {comingSoonLanguages} kommer snart."
       },
       "pickup": {
         "title": "Upphämtning",
@@ -198,7 +203,7 @@
       },
       "cancel": {
         "title": "Avbokning",
-        "body": "Avboka mer än 24 timmar före start utan kostnad."
+        "body": "Avboka senast 24 timmar före lektionen utan kostnad. En senare avbokning debiteras fullt pris."
       },
       "reminder": {
         "title": "Påminnelse",
@@ -274,7 +279,7 @@
       "redirecting": "Öppnar betalning…",
       "error": "Betalningen kunde inte startas. Logga in och försök igen."
     },
-    "cancelNote": "Avboka mer än 24 timmar före utan kostnad."
+    "cancelNote": "Avboka senast 24 timmar före lektionen utan kostnad. En senare avbokning debiteras fullt pris."
   },
   "checkout": {
     "eyebrow": "Säker betalning",
@@ -392,7 +397,7 @@
       "features": {
         "categories": "Tydliga kategorier",
         "practice": "Gratis övningsfrågor",
-        "languages": "Svenska, engelska, tigrinja och arabiska. Somaliska kommer snart."
+        "languages": "Undervisning på {languages}. {comingSoonLanguages} kommer snart."
       }
     },
     "licensingPending": "Hela frågebanken öppnas när du köper teoriåtkomst.",
@@ -535,7 +540,7 @@
     "confirmation": {
       "eyebrow": "Bokningen är registrerad",
       "title": "Din tid är bokad",
-      "deadline": "Kan avbokas fram till <time>{deadline}</time>.",
+      "deadline": "Kan avbokas senast 24 timmar före lektionen, fram till <time>{deadline}</time>. En senare avbokning debiteras fullt pris.",
       "calendar": "Lägg till i kalender",
       "creditUsed": "En lektion har dragits från ditt saldo.",
       "hold": "Tiden hålls åt dig till <time>{expires}</time> medan betalningen slutförs.",
@@ -646,7 +651,7 @@
       "pickup": "Hämtningsplats",
       "cancel": "Avboka",
       "keepBooking": "Behåll bokningen",
-      "cancelLateWarning": "Avbokningsfristen har passerat. Krediten återbetalas inte. Vill du ändå avboka?",
+      "cancelLateWarning": "Avbokningsfristen har passerat. Lektionen debiteras fullt pris och dras från saldot. Vill du ändå avboka?",
       "cancelRefundWarning": "Avbokar du nu återförs krediten. Fristen är <time>{deadline}</time>. Vill du fortsätta?",
       "deadline": "Kan avbokas fram till <time>{deadline}</time>.",
       "status": "Status: {status}",
@@ -864,7 +869,7 @@
     "locationsDescription": "Du hittar oss på Centralvägen 5 i Upplands Väsby. Öppna vägbeskrivning i Google Maps.",
     "directions": "Vägbeskrivning",
     "languagesTitle": "Vilket språk behöver du?",
-    "languagesBody": "Undervisning på svenska, engelska, tigrinja och arabiska. Somaliska kommer snart.",
+    "languagesBody": "Undervisning på {languages}. {comingSoonLanguages} kommer snart.",
     "staffTitle": "Vår personal",
     "staffDescription": "Möt teamet på Makina Trafikskola. Kontakta skolan om du vill boka en viss trafiklärare.",
     "contactViaSchool": "Kontakt via skolan",
@@ -883,7 +888,8 @@
       "4": "Torsdag",
       "5": "Fredag",
       "6": "Lördag"
-    }
+    },
+    "speaks": "Undervisar på {languages}"
   },
   "legal": {
     "terms": {
@@ -896,6 +902,13 @@
         "delivery",
         "validity",
         "cancellation",
+        "packages",
+        "lateArrival",
+        "riskArrival",
+        "digitalTheory",
+        "responsibility",
+        "dataProtection",
+        "refunds",
         "withdrawal",
         "complaints",
         "law"
@@ -918,7 +931,7 @@
       },
       "cancellation": {
         "title": "Ombokning och avbokning",
-        "body": "Du kan avboka en körlektion under Mina bokningar. Avbokar du mer än 24 timmar före lektionens start återförs krediten till ditt saldo. Avbokar du 24 timmar eller mindre före start, eller uteblir från lektionen, förbrukas krediten.\nOm skolan ställer in en körlektion återförs krediten alltid. Skolan försöker erbjuda en ny tid men ersätter inte andra kostnader som uppstår till följd av den inställda lektionen.\nVillkor för avbokning av en kursplats visas vid bokningen. Om skolan ställer in ett kurstillfälle erbjuds ombokning eller återbetalning."
+        "body": "Du kan avboka en körlektion under Mina bokningar. Avbokar du senast 24 timmar före lektionen återförs krediten till ditt saldo. Avbokar du senare debiteras fullt pris: lektionen dras från saldot och en enstaka lektion återbetalas inte. Uteblir du från lektionen förbrukas krediten.\nOm skolan ställer in en körlektion återförs krediten alltid. Skolan försöker erbjuda en ny tid men ersätter inte andra kostnader som uppstår till följd av den inställda lektionen.\nVillkor för avbokning av en kursplats visas vid bokningen. Om skolan ställer in ett kurstillfälle erbjuds ombokning eller återbetalning."
       },
       "withdrawal": {
         "title": "Ångerrätt",
@@ -931,6 +944,73 @@
       "law": {
         "title": "Tillämplig lag",
         "body": "Svensk lag gäller för avtalet. Tvingande konsumenträtt gäller alltid framför villkor som är mindre förmånliga för dig.\nEn tvist som inte kan lösas i samförstånd eller genom ARN prövas av svensk allmän domstol."
+      },
+      "summaryTitle": "Kortfattade villkor",
+      "summaryItems": [
+        {
+          "label": "Giltighet",
+          "text": "Alla paket gäller i 12 månader från inköpsdatum."
+        },
+        {
+          "label": "Avbokning",
+          "text": "Senast 24 timmar före lektionen, annars debiteras fullt pris."
+        },
+        {
+          "label": "Sen ankomst",
+          "text": "Lektionen avslutas på ordinarie sluttid."
+        },
+        {
+          "label": "Paket",
+          "text": "Personliga och får inte överlåtas."
+        },
+        {
+          "label": "Riskutbildning",
+          "text": "Kom i god tid. Sen ankomst kan innebära ny bokning."
+        },
+        {
+          "label": "Digital teori",
+          "text": "Personligt material får inte delas eller kopieras."
+        },
+        {
+          "label": "Ansvar",
+          "text": "Eleven ska följa trafikregler och lärarens instruktioner."
+        },
+        {
+          "label": "Integritet",
+          "text": "Personuppgifter hanteras enligt GDPR."
+        },
+        {
+          "label": "Återbetalning",
+          "text": "Hanteras enligt gällande svenska regler."
+        }
+      ],
+      "packages": {
+        "title": "Paket",
+        "body": "Paket är personliga och får inte överlåtas."
+      },
+      "lateArrival": {
+        "title": "Sen ankomst",
+        "body": "Om du kommer sent avslutas lektionen på ordinarie sluttid."
+      },
+      "riskArrival": {
+        "title": "Riskutbildning",
+        "body": "Kom i god tid till riskutbildningen. Sen ankomst kan innebära ny bokning."
+      },
+      "digitalTheory": {
+        "title": "Digital teori",
+        "body": "Digital teori är personligt material och får inte delas eller kopieras."
+      },
+      "responsibility": {
+        "title": "Elevens ansvar",
+        "body": "Eleven ska följa trafikregler och lärarens instruktioner."
+      },
+      "dataProtection": {
+        "title": "Integritet",
+        "body": "Personuppgifter hanteras enligt GDPR."
+      },
+      "refunds": {
+        "title": "Återbetalning",
+        "body": "Återbetalning hanteras enligt gällande svenska regler."
       }
     },
     "privacy": {

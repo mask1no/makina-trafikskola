@@ -76,6 +76,17 @@ describe("booking SMS", () => {
     }
   });
 
+  it("states the 24-hour cancellation rule in the confirmation SMS", () => {
+    const message = renderBookingMessage({
+      template: "booking_confirmed",
+      locale: "sv",
+      startsAt,
+      cancellationDeadline: new Date("2026-10-05T08:00:00.000Z"),
+    });
+    expect(message.text).toContain("senast 24 timmar före lektionen");
+    expect(message.text).toContain("debiteras fullt pris");
+  });
+
   it("uses Latin digits for Arabic times", () => {
     const message = renderBookingMessage({
       template: "booking_confirmed",

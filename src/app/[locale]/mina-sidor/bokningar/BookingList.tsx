@@ -5,6 +5,10 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/Button";
+import {
+  getCancellationDeadline,
+  isLateStudentCancellation,
+} from "@/lib/bookings/cancellation";
 import { formatStockholm } from "@/lib/format/datetime";
 import { Badge } from "@/components/Badge";
 import { BottomSheet } from "@/components/BottomSheet";
@@ -44,14 +48,20 @@ export function BookingList({
       minute: "2-digit",
     });
 
+  function deadlineFor(startsAt: string) {
+    return getCancellationDeadline(new Date(startsAt), cancellationWindowHours);
+  }
+
   function openCancellation(booking: BookingItem) {
-    const deadline = new Date(
-      new Date(booking.startsAt).getTime() -
-        cancellationWindowHours * 60 * 60 * 1000,
-    );
     // The cancellation decision must use click time, not render time.
-    // eslint-disable-next-line react-hooks/purity
-    setLateCancellation(Date.now() >= deadline.getTime());
+    setLateCancellation(
+      isLateStudentCancellation({
+        actorRole: "STUDENT",
+        startsAt: new Date(booking.startsAt),
+        now: new Date(),
+        cancellationWindowHours,
+      }),
+    );
     setPendingCancellation(booking);
   }
 
@@ -87,10 +97,7 @@ export function BookingList({
   return (
     <div className="mt-6 grid gap-4">
       {bookings.map((booking) => {
-        const deadline = new Date(
-          new Date(booking.startsAt).getTime() -
-            cancellationWindowHours * 60 * 60 * 1000,
-        );
+        const deadline = deadlineFor(booking.startsAt);
         return (
           <article key={booking.id} className="relative overflow-hidden rounded-md border border-border bg-card p-5 shadow-soft sm:p-6">
             <span aria-hidden="true" className="absolute bottom-0 start-0 top-0 w-1 bg-border" />
@@ -147,12 +154,7 @@ export function BookingList({
               {lateCancellation
                 ? t("cancelLateWarning")
                 : t.rich("cancelRefundWarning", {
-                    deadline: formatWhen(
-                      new Date(
-                        new Date(pendingCancellation.startsAt).getTime() -
-                          cancellationWindowHours * 60 * 60 * 1000,
-                      ),
-                    ),
+                    deadline: formatWhen(deadlineFor(pendingCancellation.startsAt)),
                     time: (chunks) => <bdi>{chunks}</bdi>,
                   })}
             </p>

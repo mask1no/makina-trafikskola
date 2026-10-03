@@ -36,7 +36,9 @@ export function TeacherCard(props: TeacherCardProps) {
           <h3 className="text-xl font-extrabold tracking-tight">
             <bdi>{props.name}</bdi>
           </h3>
-          <p className="mt-1 text-sm text-ink-muted">{props.experienceLabel}</p>
+          {props.experienceLabel ? (
+            <p className="mt-1 text-sm text-ink-muted">{props.experienceLabel}</p>
+          ) : null}
           {props.swedishOnly ? (
             <p className="mt-2 text-xs font-bold uppercase tracking-wider text-ink-subtle">
               {props.swedishOnlyLabel}

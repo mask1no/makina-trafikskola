@@ -21,11 +21,24 @@ import bcrypt from "bcryptjs";
 import { addDays } from "date-fns";
 import { formatInTimeZone, fromZonedTime } from "date-fns-tz";
 
+import { publicStaff } from "../src/lib/company/staff";
 import { seedTheory } from "./seed-theory";
 
 const db = new PrismaClient();
 
 const LOCALES = ["sv", "en", "ti", "ar", "so"] as const;
+const RETIRED_INSTRUCTOR_SLUGS = [
+  "sara-johansson",
+  "amina-hassan",
+  "dawit-tesfay",
+  "nora-bergstrom",
+];
+const RETIRED_INSTRUCTOR_EMAILS = [
+  "larare@makina.local",
+  "amina.hassan@makina.local",
+  "dawit.tesfay@makina.local",
+  "nora.bergstrom@makina.local",
+];
 const TIME_ZONE = "Europe/Stockholm";
 const PRODUCTION_PRODUCT_SLUGS = new Set([
   "testlektion",
@@ -44,16 +57,6 @@ const PRODUCTION_PRODUCT_SLUGS = new Set([
 
 type Locale = (typeof LOCALES)[number];
 type Translation = { name: string; shortDesc: string; features: string[] };
-
-function loc(
-  sv: string,
-  en: string,
-  ti: string,
-  ar: string,
-  so: string,
-): Record<Locale, string> {
-  return { sv, en, ti, ar, so };
-}
 
 function stockholmAt(now: Date, daysAhead: number, time: string) {
   const localDate = formatInTimeZone(
@@ -77,109 +80,23 @@ export const CLIENT_DATA = {
       lng: 17.9088,
     },
   ],
-  instructors: [
-    {
-      email: "larare@makina.local",
-      firstName: "Sara",
-      lastName: "Johansson",
-      slug: "sara-johansson",
-      languages: ["sv", "en", "ti"],
-      transmissions: [Transmission.MANUAL, Transmission.AUTOMATIC],
-      yearsExperience: 8,
-      locationSlug: "upplands-vasby",
-      days: [1, 2, 3, 4, 5],
-      startTime: "09:00",
-      endTime: "17:00",
-      vehicle: {
-        model: "Volvo V60",
-        registration: "YKM12A",
-        transmission: Transmission.MANUAL,
-      },
-      bio: loc(
-        "Sara tar det lugnt i början och förklarar varje val i trafiken med enkla ord. Hon gillar att öva samma situation flera gånger tills du känner dig trygg. Många elever som är nervösa bakom ratten kommer vidare hos henne.",
-        "Sara starts slowly and explains every choice in traffic in plain words. She likes to practise the same situation until you feel safe. Many nervous learners find their footing with her.",
-        "ሳራ ኣብ መጀመርታ ብዝኸኣለ ቀስ ኢላ ትጅምር እሞ ነፍሲ ወከፍ ምርጫ ኣብ ትራፊክ ብቐሊል ቃላት ትገልጽ። ሓንቲ ኩነታት ክሳብ ትዕመን ብተደጋጋሚ ትለማመድ። ብዙሓት ዝሰምብዱ ተማሃሮ ኣብኣ ይረኽቡ መሰረት።",
-        "تبدأ سارة بهدوء وتشرح كل قرار في السير بكلمات بسيطة. تحب أن تعيد الموقف نفسه حتى تشعر بالأمان. كثير من المتعلمين القلقين يجدون ثقتهم معها.",
-        "Sara waxay ku bilaabtaa si tartiib ah oo waxay ku sharaxdaa doorashad kasta ee taraafikada ereyo fudud. Waxay jeceshahay inay ku celceliso xaalad isku mid ah ilaa aad nabadgelyo dareento. Arday badan oo walwalsan ayaa iyada la helaya kalsoonida.",
-      ),
-    },
-    {
-      email: "amina.hassan@makina.local",
-      firstName: "Amina",
-      lastName: "Hassan",
-      slug: "amina-hassan",
-      languages: ["ar", "so", "sv"],
-      transmissions: [Transmission.AUTOMATIC],
-      yearsExperience: 6,
-      locationSlug: "upplands-vasby",
-      days: [1, 2, 3, 4, 5],
-      startTime: "07:00",
-      endTime: "15:00",
-      vehicle: {
-        model: "Toyota Corolla",
-        registration: "TBL34C",
-        transmission: Transmission.AUTOMATIC,
-      },
-      bio: loc(
-        "Amina undervisar bara automat och lägger tid på blick, tempo och hur du läser andra trafikanter. Hon möter dig tidigt på morgonen om det passar jobbet eller skolan. Du får tydlig återkoppling efter varje lektion.",
-        "Amina teaches automatic only and spends time on observation, pace and how you read other road users. She can meet you early in the morning around work or school. You get clear feedback after every lesson.",
-        "ኣሚና ኣውቶማቲክ ጥራይ ትምህርቲ ትህብ እሞ ኣብ ምርኣይ፣ ፍጥነትን ከመይ ጌርካ ካልኦት ተሳተፍቲ መንገዲ ከተንብብን ግዜ ትውዕል። ንስራሕ ወይ ቤት ትምህርቲ እንተሰማሚዑ ንግሆ ኣቐዲማ ትራኽበካ። ድሕሪ ነፍሲ ወከፍ ትምህርቲ ንጹር ግብረ መልሲ ትህብ።",
-        "تعلّم أمينة الأوتوماتيك فقط وتركّز على النظر والسرعة وكيف تقرأ مستخدمي الطريق. يمكن أن تلتقيك باكراً حول العمل أو المدرسة. تحصل على ملاحظات واضحة بعد كل درس.",
-        "Amina waxay bariisaa otomaatig keliya waxayna wakhti ku bixisaa fiirsashada, xawaaraha iyo sida aad u akhrido dadka kale ee waddada. Waxay kula kulmi kartaa subaxdii hore haddii shaqada ama dugsigu u baahan yahay. Cashar kasta kadib waxaad helaysaa jawaab cad.",
-      ),
-    },
-    {
-      email: "dawit.tesfay@makina.local",
-      firstName: "Dawit",
-      lastName: "Tesfay",
-      slug: "dawit-tesfay",
-      languages: ["ti", "sv", "en"],
-      transmissions: [Transmission.MANUAL, Transmission.AUTOMATIC],
-      yearsExperience: 15,
-      locationSlug: "upplands-vasby",
-      days: [2, 3, 4, 5, 6],
-      startTime: "09:00",
-      endTime: "17:00",
-      vehicle: {
-        model: "Volkswagen Golf",
-        registration: "HNS56D",
-        transmission: Transmission.MANUAL,
-      },
-      bio: loc(
-        "Dawit har kört med nybörjare i femton år och vet när det är dags att höja tempot. Han förklarar växling och motorbroms så att det sitter i kroppen. På helgen tar han gärna längre pass inför uppkörningen.",
-        "Dawit has taught beginners for fifteen years and knows when it is time to raise the pace. He explains gear changes and engine braking so the skill stays in the body. At weekends he likes longer sessions before the driving test.",
-        "ዳዊት ንዓሰርተው ሓሙሽተ ዓመት ምስ ጀመርቲ ሰሪሑ እሞ መኣዝ ፍጥነት ክትውስኽ ከምዘለካ ይፈልጥ። ምቕያር ማርሻን ምዕጻው ሞተርን ኣብ ኣካል ክሰፍር ጌሩ ይገልጽ። ኣብ ሰንበት ቅድሚ ፈተነ ምዝዋር ነዊሕ ክፍሊታት ብሃንቀውታ ይወስድ።",
-        "درّب داويت المبتدئين خمس عشرة سنة ويعرف متى يحين رفع الإيقاع. يشرح تغيير السرعات والفرملة بالمحرك حتى تثبت المهارة في الجسم. في عطلة الأسبوع يفضّل حصصاً أطول قبل اختبار القيادة.",
-        "Dawit wuxuu baraayay bilowga muddo shan iyo toban sano ah wuxuuna ogyahay goorta la kordhinayo xawaaraha. Wuxuu u sharaxaa beddelka gears-ka iyo biriikada matoorka si xirfaddu ugu sii jirto jidhka. Toddobaadka dhammaadkiisa wuxuu jecel yahay casharro dhaadheer ka hor imtixaanka wadista.",
-      ),
-    },
-    {
-      email: "nora.bergstrom@makina.local",
-      firstName: "Nora",
-      lastName: "Bergström",
-      slug: "nora-bergstrom",
-      languages: ["sv", "en"],
-      transmissions: [Transmission.MANUAL, Transmission.AUTOMATIC],
-      yearsExperience: 3,
-      locationSlug: "upplands-vasby",
-      days: [1, 2, 3, 4, 5],
-      startTime: "12:00",
-      endTime: "20:00",
-      vehicle: {
-        model: "Kia Ceed",
-        registration: "RFP78E",
-        transmission: Transmission.AUTOMATIC,
-      },
-      bio: loc(
-        "Nora tar eftermiddags- och kvällslektioner, bra om du pluggar eller jobbar dagtid. Hon är nyfiken, tydlig och gillar landsvägskörning norrut mot Arlanda. Du får en kort plan för vad ni övar nästa gång innan du går av.",
-        "Nora teaches afternoon and evening lessons, useful if you study or work during the day. She is curious, clear and enjoys rural driving north towards Arlanda. You leave with a short plan for what you will practise next time.",
-        "ኖራ ድሕሪ ቀትሪን ምሸትን ትምህርቲ ትህብ፣ መዓልቲ እንተትምህር ወይ እንተትሰርሕ ጽቡቕ እዩ። ንጹር እያ እሞ ንሰሜን ናብ ኣርላንዳ ናይ ገጠር ምዝዋር ትፈቱ። ቅድሚ ምውጻእካ ነቲ ዝቕጽል እትለማመዶ ሓጺር መደብ ትህበካ።",
-        "تدرّس نورا بعد الظهر وفي المساء، وهذا يناسب الدراسة أو العمل نهاراً. هي واضحة وتحب القيادة على الطرق الريفية شمالاً نحو أرلاندا. تغادر بخطة قصيرة لما ستتمرّنان عليه في المرة التالية.",
-        "Nora waxay bariisaa galabtii iyo fiidkii, taasoo ku habboon haddii aad dhigato ama shaqeyso maalintii. Way cad dahay waxayna jeceshahay wadista waddooyinka miyiga ee woqooyi xagga Arlanda. Waxaad ka baxaysaa qorshe gaaban oo ku saabsan waxa aad ku celcelin doontanaan marka xigta.",
-      ),
-    },
-  ],
 } as const;
+
+// Confirmed names, roles and teaching languages only. Years, gearbox, hours,
+// vehicles and portraits are unknown, so they are left empty for admin entry.
+const confirmedInstructors = publicStaff.map((member) => ({
+  email: `${member.slug}@makina.local`,
+  firstName: member.firstName,
+  lastName: member.lastName,
+  slug: member.slug,
+  languages: [...member.languages],
+  transmissions: [] as Transmission[],
+  yearsExperience: 0,
+  locationSlug: "upplands-vasby",
+  days: [] as number[],
+  startTime: "08:00",
+  endTime: "21:00",
+}));
 // ──────────────────────────────────────────────────────────────────
 
 type Seed = {
@@ -628,6 +545,11 @@ const MOMENTS: {
   },
 ];
 
+function keptPhoto(current: string | null) {
+  if (!current || current.startsWith("/instructors/")) return null;
+  return current;
+}
+
 async function main() {
   const now = new Date();
   const isProduction =
@@ -639,7 +561,7 @@ async function main() {
   const locationsToSeed = isProduction
     ? CLIENT_DATA.locations.slice(0, 1)
     : CLIENT_DATA.locations;
-  const instructorsToSeed = isProduction ? [] : CLIENT_DATA.instructors;
+  const instructorsToSeed = isProduction ? [] : confirmedInstructors;
   const productsToSeed = isProduction
     ? PRODUCTS.filter((product) => PRODUCTION_PRODUCT_SLUGS.has(product.slug))
     : PRODUCTS;
@@ -723,7 +645,6 @@ async function main() {
     }
   }
 
-  const teacherIdsBySlug = new Map<string, string>();
   for (const instructor of instructorsToSeed) {
     const locationId = locationsBySlug.get(instructor.locationSlug);
     if (!locationId) throw new Error(`Missing location ${instructor.locationSlug}`);
@@ -744,7 +665,7 @@ async function main() {
         teacherProfile: {
           create: {
             slug: instructor.slug,
-            photoUrl: `/instructors/${instructor.slug}.jpg`,
+            photoUrl: null,
             languages: [...instructor.languages],
             transmissions: [...instructor.transmissions],
             yearsExperience: instructor.yearsExperience,
@@ -761,7 +682,7 @@ async function main() {
         data: {
           userId: user.id,
           slug: instructor.slug,
-          photoUrl: `/instructors/${instructor.slug}.jpg`,
+          photoUrl: null,
           languages: [...instructor.languages],
           transmissions: [...instructor.transmissions],
           yearsExperience: instructor.yearsExperience,
@@ -774,62 +695,51 @@ async function main() {
         data: {
           active: true,
           slug: instructor.slug,
-          photoUrl: `/instructors/${instructor.slug}.jpg`,
+          photoUrl: keptPhoto(profile.photoUrl),
           languages: [...instructor.languages],
-          transmissions: [...instructor.transmissions],
-          yearsExperience: instructor.yearsExperience,
+          transmissions: instructor.transmissions.length
+            ? instructor.transmissions
+            : profile.transmissions,
+          yearsExperience:
+            instructor.yearsExperience > 0
+              ? instructor.yearsExperience
+              : profile.yearsExperience,
         },
       });
     }
-    teacherIdsBySlug.set(instructor.slug, profile.id);
-
-    for (const locale of LOCALES) {
-      await db.teacherTranslation.upsert({
-        where: { teacherId_locale: { teacherId: profile.id, locale } },
-        update: { bio: instructor.bio[locale] },
-        create: {
-          teacherId: profile.id,
-          locale,
-          bio: instructor.bio[locale],
-        },
-      });
-    }
-
     await db.teacherLocation.deleteMany({ where: { teacherId: profile.id } });
     await db.teacherLocation.create({
       data: { teacherId: profile.id, locationId },
     });
 
-    await db.teacherAvailability.deleteMany({ where: { teacherId: profile.id } });
-    for (const dayOfWeek of instructor.days) {
-      await db.teacherAvailability.create({
-        data: {
-          teacherId: profile.id,
-          dayOfWeek,
-          startTime: instructor.startTime,
-          endTime: instructor.endTime,
-          locationId,
-        },
-      });
+    if (instructor.days.length) {
+      await db.teacherAvailability.deleteMany({ where: { teacherId: profile.id } });
+      for (const dayOfWeek of instructor.days) {
+        await db.teacherAvailability.create({
+          data: {
+            teacherId: profile.id,
+            dayOfWeek,
+            startTime: instructor.startTime,
+            endTime: instructor.endTime,
+            locationId,
+          },
+        });
+      }
     }
-
-    await db.vehicle.upsert({
-      where: { registration: instructor.vehicle.registration },
-      update: {
-        model: instructor.vehicle.model,
-        transmission: instructor.vehicle.transmission,
-        active: true,
-        teacherId: profile.id,
-      },
-      create: {
-        model: instructor.vehicle.model,
-        registration: instructor.vehicle.registration,
-        transmission: instructor.vehicle.transmission,
-        active: true,
-        teacherId: profile.id,
-      },
-    });
   }
+
+  await db.teacherProfile.updateMany({
+    where: { slug: { in: RETIRED_INSTRUCTOR_SLUGS } },
+    data: { active: false },
+  });
+  await db.vehicle.updateMany({
+    where: { teacher: { slug: { in: RETIRED_INSTRUCTOR_SLUGS } } },
+    data: { active: false },
+  });
+  await db.user.updateMany({
+    where: { email: { in: RETIRED_INSTRUCTOR_EMAILS } },
+    data: { deletedAt: new Date() },
+  });
 
   for (const course of [
     { id: "seed-course-riskettan", kind: CourseKind.RISK1, slug: "riskettan" },
@@ -849,9 +759,6 @@ async function main() {
     });
   }
 
-  const saraId = teacherIdsBySlug.get("sara-johansson");
-  const dawitId = teacherIdsBySlug.get("dawit-tesfay");
-  const aminaId = teacherIdsBySlug.get("amina-hassan");
   const occasions = isProduction ? [] : [
     {
       id: "seed-occasion-riskettan-1",
@@ -862,7 +769,7 @@ async function main() {
       capacity: 16,
       venueName: "Messingen, Upplands Väsby",
       venueAddress: "Utbildningsvägen 2, 194 30 Upplands Väsby",
-      teacherId: saraId,
+      teacherId: null,
     },
     {
       id: "seed-occasion-riskettan-2",
@@ -873,7 +780,7 @@ async function main() {
       capacity: 18,
       venueName: "Messingen, Upplands Väsby",
       venueAddress: "Utbildningsvägen 2, 194 30 Upplands Väsby",
-      teacherId: saraId,
+      teacherId: null,
     },
     {
       id: "seed-occasion-risktvaan-1",
@@ -884,7 +791,7 @@ async function main() {
       capacity: 12,
       venueName: "Halkbanan Arlandastad",
       venueAddress: "Driftvägen 1, 190 60 Stockholm-Arlanda",
-      teacherId: dawitId,
+      teacherId: null,
     },
     {
       id: "seed-occasion-handledar-1",
@@ -895,7 +802,7 @@ async function main() {
       capacity: 24,
       venueName: "Folkets Hus Sollentuna",
       venueAddress: "Kärrdalsskolan, 191 40 Sollentuna",
-      teacherId: aminaId,
+      teacherId: null,
     },
   ];
 
@@ -981,10 +888,12 @@ async function main() {
       },
     });
 
-    await db.user.update({
-      where: { email: "larare@makina.local" },
-      data: { passwordHash: hash, deletedAt: null, role: Role.TEACHER },
-    });
+    for (const instructor of confirmedInstructors) {
+      await db.user.update({
+        where: { email: instructor.email },
+        data: { passwordHash: hash, deletedAt: null, role: Role.TEACHER },
+      });
+    }
 
     const studentUser = await db.user.upsert({
       where: { email: "elev@makina.local" },

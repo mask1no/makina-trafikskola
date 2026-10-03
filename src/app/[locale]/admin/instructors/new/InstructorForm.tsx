@@ -5,11 +5,11 @@ import { useState } from "react";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Notice } from "@/components/Notice";
+import { TEACHING_LANGUAGES } from "@/lib/teachers/languages";
 
 type Location = { id: string; name: string };
 type Hours = { enabled: boolean; startTime: string; endTime: string };
 
-const languageValues = ["sv", "en", "ti", "ar", "so"] as const;
 const transmissionValues = ["MANUAL", "AUTOMATIC"] as const;
 
 export function InstructorForm({ locations }: { locations: Location[] }) {
@@ -169,7 +169,7 @@ export function InstructorForm({ locations }: { locations: Location[] }) {
       <fieldset>
         <legend className="text-lg font-bold">{t("languages")}</legend>
         <div className="mt-3 flex flex-wrap gap-3">
-          {languageValues.map((language) => (
+          {TEACHING_LANGUAGES.map((language) => (
             <label
               key={language}
               className="flex min-h-11 items-center gap-2 rounded-sm border border-border px-3"

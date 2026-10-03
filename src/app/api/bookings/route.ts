@@ -1,4 +1,4 @@
-import { addDays, addMinutes, subHours } from "date-fns";
+import { addDays, addMinutes } from "date-fns";
 import { Prisma } from "@prisma/client";
 import { z } from "zod";
 
@@ -9,6 +9,7 @@ import {
 } from "@/lib/auth/guards";
 import { allowRateLimitedAction } from "@/lib/auth/otp-store";
 import { loadAvailability } from "@/lib/bookings/availability";
+import { getCancellationDeadline } from "@/lib/bookings/cancellation";
 import {
   isBookingExclusionViolation,
   isSerializationOrTxTimeout,
@@ -225,7 +226,7 @@ export async function POST(request: Request) {
           });
         }
 
-        const cancellationDeadline = subHours(
+        const cancellationDeadline = getCancellationDeadline(
           created.startsAt,
           configuredNumber("CANCELLATION_WINDOW_HOURS", 24),
         );

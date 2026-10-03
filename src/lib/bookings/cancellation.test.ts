@@ -5,6 +5,7 @@ import {
   canDeactivateInstructor,
   getCancellationCreditReason,
   getCancellationDeadline,
+  isLateStudentCancellation,
 } from "./cancellation";
 
 const startsAt = new Date("2026-09-06T12:00:00.000Z");
@@ -22,13 +23,43 @@ describe("cancellation rules R14-R18", () => {
     ).toBe("CANCELLATION_REFUND");
   });
 
-  it("R15 keeps the credit at and within the cancellation deadline", () => {
+  it("refunds a student cancellation exactly at the deadline", () => {
+    const now = new Date("2026-09-05T12:00:00.000Z");
+    expect(
+      isLateStudentCancellation({
+        actorRole: "STUDENT",
+        startsAt,
+        now,
+        cancellationWindowHours: 24,
+      }),
+    ).toBe(false);
     expect(
       getCancellationCreditReason({
         actorRole: "STUDENT",
         creditCharged: true,
         startsAt,
-        now: new Date("2026-09-05T12:00:00.000Z"),
+        now,
+        cancellationWindowHours: 24,
+      }),
+    ).toBe("CANCELLATION_REFUND");
+  });
+
+  it("keeps the credit one second after the deadline", () => {
+    const now = new Date("2026-09-05T12:00:01.000Z");
+    expect(
+      isLateStudentCancellation({
+        actorRole: "STUDENT",
+        startsAt,
+        now,
+        cancellationWindowHours: 24,
+      }),
+    ).toBe(true);
+    expect(
+      getCancellationCreditReason({
+        actorRole: "STUDENT",
+        creditCharged: true,
+        startsAt,
+        now,
         cancellationWindowHours: 24,
       }),
     ).toBe("LATE_CANCELLATION_CHARGE");

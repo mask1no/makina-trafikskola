@@ -45,13 +45,13 @@ test.describe("public localized experience", () => {
   });
 
   test("preserves an instructor deep link in booking", async ({ page }) => {
-    await page.goto("/en/larare/sara-johansson");
-    await page.getByRole("link", { name: /Sara/ }).last().click();
+    await page.goto("/en/larare/aron-kessete");
+    await page.getByRole("link", { name: /Aron/ }).last().click();
     await expect(page).toHaveURL(/\/en\/boka\?teacher=/);
 
     await page.getByRole("button", { name: "Continue" }).click();
     await page.getByRole("button", { name: "Continue" }).click();
-    await expect(page.getByRole("button", { name: /Sara Johansson/ })).toHaveAttribute(
+    await expect(page.getByRole("button", { name: /Aron Kessete/ })).toHaveAttribute(
       "aria-pressed",
       "true",
     );

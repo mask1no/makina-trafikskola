@@ -1,5 +1,16 @@
 import { describe, expect, it } from "vitest";
 
+import ar from "../../../messages/ar.json";
+import en from "../../../messages/en.json";
+import so from "../../../messages/so.json";
+import sv from "../../../messages/sv.json";
+import ti from "../../../messages/ti.json";
+
+import {
+  COMING_SOON_TEACHING_LANGUAGES,
+  formatLanguageList,
+  offeredTeachingLanguages,
+} from "@/lib/company/staff";
 import { benefitItems } from "./benefits";
 
 const lesson = {
@@ -43,5 +54,40 @@ describe("benefitItems", () => {
       "reminder",
       "selfBook",
     ]);
+  });
+
+  it("derives teaching claims from translated language names", () => {
+    const catalogues = { sv, en, ti, ar, so } as const;
+    for (const locale of Object.keys(catalogues) as (keyof typeof catalogues)[]) {
+      const messages = catalogues[locale];
+      const languageName = (code: keyof typeof messages.language) =>
+        messages.language[code];
+      const offered = formatLanguageList(
+        offeredTeachingLanguages(),
+        locale,
+        languageName,
+      );
+      const comingSoon = formatLanguageList(
+        COMING_SOON_TEACHING_LANGUAGES,
+        locale,
+        languageName,
+      );
+      expect(offered).not.toContain(languageName("ar"));
+      expect(offered).not.toContain(languageName("so"));
+      expect(comingSoon).toBe(languageName("so"));
+      expect(messages.home.benefits.language.body).toContain("{languages}");
+      expect(messages.home.benefits.language.body).toContain("{comingSoonLanguages}");
+      expect(messages.home.faq.languages.answer).toContain("{languages}");
+      expect(messages.theory.teaser.features.languages).toContain("{languages}");
+      expect(messages.contact.languagesBody).toContain("{languages}");
+      expect(messages.shell.languageHelpDescription).toContain("{languages}");
+    }
+  });
+
+  it("states the 24-hour cancellation rule", () => {
+    expect(sv.home.benefits.cancel.body).toContain("senast 24 timmar före lektionen");
+    expect(sv.home.benefits.cancel.body).toContain("fullt pris");
+    expect(sv.home.faq.late.question).toBe("Vad händer om jag kommer sent?");
+    expect(sv.home.faq.late.answer).toBe("Lektionen avslutas på ordinarie sluttid.");
   });
 });

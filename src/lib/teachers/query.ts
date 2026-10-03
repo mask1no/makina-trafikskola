@@ -1,6 +1,23 @@
 import { Prisma, type Transmission } from "@prisma/client";
 
 import { db } from "@/lib/db";
+import {
+  isTeachingLanguage,
+  TEACHING_LANGUAGES,
+  type TeachingLanguage,
+} from "@/lib/teachers/languages";
+
+export async function activeTeacherLanguages(): Promise<TeachingLanguage[]> {
+  const rows = await db.$queryRaw<Array<{ language: string }>>(Prisma.sql`
+    SELECT DISTINCT unnest(t."languages") AS "language"
+    FROM "TeacherProfile" t
+    WHERE t."active" = true
+  `);
+  const active = new Set(
+    rows.map(({ language }) => language).filter(isTeachingLanguage),
+  );
+  return TEACHING_LANGUAGES.filter((language) => active.has(language));
+}
 
 export async function orderedTeacherIds({
   languages,

@@ -16,16 +16,20 @@ import {
   instructorsEnabled,
 } from "@/lib/launch";
 import { isOpenNow, todayHours } from "@/lib/company/opening-hours";
+import {
+  COMING_SOON_TEACHING_LANGUAGES,
+  formatLanguageList,
+  offeredTeachingLanguages,
+} from "@/lib/company/staff";
 import { displayPhone, telHref } from "@/lib/format/phone";
 import { benefitItems } from "@/lib/home/benefits";
+import { activeTeacherLanguages } from "@/lib/teachers/query";
 import { formatPrice } from "@/lib/pricing/format";
 import { freeTheoryQuestionCount } from "@/lib/theory/questions";
 
 import { getProducts, getTeachers } from "./_lib/data";
 
 export const dynamic = "force-dynamic";
-
-const LANGUAGE_FILTERS = ["sv", "en", "ti", "ar", "so"] as const;
 
 async function LowestSinglePrice({ locale }: { locale: Locale }) {
   const [t, products] = await Promise.all([
@@ -144,11 +148,23 @@ async function HomeBelow({
 }) {
   setRequestLocale(params.locale);
   const t = await getTranslations();
-  const [products, teachers, freeQuestions] = await Promise.all([
+  const [products, teachers, freeQuestions, activeLanguages] = await Promise.all([
     getProducts(params.locale),
     getTeachers(params.locale),
     freeTheoryQuestionCount(),
+    activeTeacherLanguages(),
   ]);
+  const offeredLanguages = offeredTeachingLanguages();
+  const offeredLanguageNames = formatLanguageList(
+    offeredLanguages,
+    params.locale,
+    (code) => t(`language.${code}`),
+  );
+  const comingSoonLanguageNames = formatLanguageList(
+    COMING_SOON_TEACHING_LANGUAGES,
+    params.locale,
+    (code) => t(`language.${code}`),
+  );
   const canBook = bookingEnabled();
   const showInstructors = instructorsEnabled() && teachers.length > 0;
   const singleLessons = products
@@ -196,7 +212,12 @@ async function HomeBelow({
           ? t("home.benefits.local.body", {
               address: t("company.visitingAddress"),
             })
-          : t(`home.benefits.${item.id}.body`),
+          : item.id === "language"
+            ? t("home.benefits.language.body", {
+                languages: offeredLanguageNames,
+                comingSoonLanguages: comingSoonLanguageNames,
+              })
+            : t(`home.benefits.${item.id}.body`),
   }));
   const theoryProduct = products.find((product) => product.slug === "korkortsteori");
   const singleLesson = products.find((product) => product.slug === "en-korlektion");
@@ -230,12 +251,17 @@ async function HomeBelow({
         packagePrice: formatPrice(entryPackage?.priceOre ?? 0, params.locale),
       }),
     },
-    ...(["languages", "pickup", "cancel", "risk", "validity"] as const).map((key) => ({
+    ...(["languages", "pickup", "cancel", "late", "risk", "validity"] as const).map((key) => ({
       question: t(`home.faq.${key}.question`),
       answer:
         key === "cancel" && !canBook
           ? t("home.faq.cancel.answerPhone", { phone: t("company.phone") })
-          : t(`home.faq.${key}.answer`),
+          : key === "languages"
+            ? t("home.faq.languages.answer", {
+                languages: offeredLanguageNames,
+                comingSoonLanguages: comingSoonLanguageNames,
+              })
+            : t(`home.faq.${key}.answer`),
     })),
   ];
 
@@ -279,7 +305,7 @@ async function HomeBelow({
             <p className="mt-4 leading-7 text-ink-muted">{t("home.teachers.description")}</p>
           </div>
           <nav className="mt-8 flex flex-wrap gap-2" aria-label={t("home.teachers.languageLabel")}>
-            {LANGUAGE_FILTERS.map((language) => (
+            {activeLanguages.map((language) => (
               <Link
                 key={language}
                 href={`/${params.locale}/larare?language=${language}`}
@@ -304,10 +330,14 @@ async function HomeBelow({
                     t(`teacher.transmission.${transmission.toLowerCase()}`),
                   )}
                   locationNames={teacher.locations.map(({ location }) => location.name)}
-                  experienceLabel={t("teacher.yearsExperience", {
-                    count: teacher.yearsExperience,
-                    n: String(teacher.yearsExperience),
-                  })}
+                  experienceLabel={
+                    teacher.yearsExperience > 0
+                      ? t("teacher.yearsExperience", {
+                          count: teacher.yearsExperience,
+                          n: String(teacher.yearsExperience),
+                        })
+                      : ""
+                  }
                   detailsLabel={t("teacher.viewProfile")}
                   swedishOnly={teacher.swedishOnly}
                   swedishOnlyLabel={t("common.swedishOnly")}
@@ -503,7 +533,12 @@ async function HomeBelow({
                             <path d="m3.5 8.5 3 3 6-7" />
                           </svg>
                         </span>
-                        {t(`theory.teaser.features.${item}`)}
+                        {item === "languages"
+                          ? t("theory.teaser.features.languages", {
+                              languages: offeredLanguageNames,
+                              comingSoonLanguages: comingSoonLanguageNames,
+                            })
+                          : t(`theory.teaser.features.${item}`)}
                       </li>
                     ),
                   )}

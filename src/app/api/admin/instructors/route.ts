@@ -6,6 +6,8 @@ import { normalizeSwedishPhone } from "@/lib/auth/phone";
 import { auth } from "@/auth";
 import { AuthorizationError, requireRole } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
+import { isLocale } from "@/i18n/routing";
+import { TEACHING_LANGUAGES } from "@/lib/teachers/languages";
 
 export const runtime = "nodejs";
 
@@ -24,9 +26,9 @@ const requestSchema = z
       .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)
       .max(100),
     languages: z
-      .array(z.enum(["sv", "en", "ti", "ar", "so"]))
+      .array(z.enum(TEACHING_LANGUAGES))
       .min(1)
-      .max(5),
+      .max(TEACHING_LANGUAGES.length),
     transmissions: z.array(z.enum(["MANUAL", "AUTOMATIC"])).min(1).max(2),
     locationIds: z.array(z.string().cuid()).min(1).max(20),
     hours: z
@@ -120,7 +122,9 @@ export async function POST(request: Request) {
             phone,
             passwordHash,
             role: "TEACHER",
-            localePref: parsed.data.languages[0],
+            localePref:
+              parsed.data.languages.find((language) => isLocale(language)) ??
+              "sv",
             teacherProfile: {
               create: {
                 slug: parsed.data.slug,

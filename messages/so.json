@@ -20,6 +20,7 @@
     "sv": "Svenska",
     "en": "English",
     "ti": "ትግርኛ",
+    "ku": "Kurdi",
     "ar": "العربية",
     "so": "Soomaali"
   },
@@ -55,7 +56,7 @@
     "privacy": "Asturnaanta",
     "cookies": "Kukiyada",
     "languageHelp": "Taageero luqaddaada ah",
-    "languageHelpDescription": "Nagala soo xiriir Iswiidhish, Ingiriis, Tigrinya ama Carabi. Soomaaligu wuu soo socdaa.",
+    "languageHelpDescription": "Nagala soo xiriir {languages}.",
     "orgnrLabel": "Lambarka ururka",
     "call": "Wac",
     "callUs": "Nagu soo wac",
@@ -91,7 +92,7 @@
       "cardDescription": "Dooro luqadda, nooca gear-ka iyo macallinka baahidaada ku salaysan.",
       "reviews": "faallooyin",
       "pickupProof": "Soo qaadis heshiis kadib",
-      "languageProof": "Iswiidhish, Ingiriis, Tigrinya iyo Carabi"
+      "languageProof": "{languages}"
     },
     "journey": {
       "eyebrow": "Sida ay u shaqayso",
@@ -135,7 +136,7 @@
       },
       "languages": {
         "question": "Ma ku qaadan karaa casharrada afkayga?",
-        "answer": "Waxbarasho Iswiidhish, Ingiriis, Tigrinya iyo Carabi. Soomaaligu wuu soo socdaa."
+        "answer": "Waxbarasho {languages}. {comingSoonLanguages} waa soo socdaa."
       },
       "pickup": {
         "question": "Ma i soo qaadi kartaan?",
@@ -143,8 +144,8 @@
       },
       "cancel": {
         "question": "Sideen u joojiyaa cashar?",
-        "answer": "Waxaad ka joojin kartaa qaybta Ballamahayga. Haddii aad joojiso in ka badan 24 saacadood ka hor casharka, deyntu waxay ku soo noqonaysaa hadhaagaaga. Joojinta dambe waxay isticmaashaa deynta casharka.",
-        "answerPhone": "Wac {phone} si aad u joojiso ama u beddesho cashar. In ka badan 24 saacadood ka hor bilowga waa bilaash, casharkuna wuxuu ku soo noqdaa hadhaagaaga. Joojinta dambe waxay ka baxdaa hadhaaga."
+        "answer": "Waxaad ka joojin kartaa qaybta Ballamahayga. Haddii aad joojiso ugu dambayn 24 saacadood ka hor casharka, waxba kuma kacayso casharkuna wuxuu ku soo noqdaa hadhaagaaga. Joojinta dambe waa lacag buuxda casharkana waa laga jarayaa hadhaaga.",
+        "answerPhone": "Wac {phone} si aad u joojiso ama u beddesho cashar. Ugu dambayn 24 saacadood ka hor casharka waa bilaash, casharkuna wuxuu ku soo noqdaa hadhaagaaga. Joojinta dambe waa lacag buuxda waxaana laga jarayaa hadhaaga."
       },
       "risk": {
         "question": "Waa maxay farqiga u dhexeeya Risk 1 iyo Risk 2?",
@@ -153,6 +154,10 @@
       "validity": {
         "question": "Muddo intee le'eg ayay xirmadaydu shaqaynaysaa?",
         "answer": "Casharrada wadista iyo xirmooyinku waxay shaqeeyaan 12 bilood laga bilaabo iibka. Hadhaaga iyo taariikhda ugu dambeysa waxaa laga arkaa Boggeyga. Teoriga dhijitaalka ah wakhti kuma xirna."
+      },
+      "late": {
+        "question": "Maxaa dhacaya haddii aan daaho?",
+        "answer": "Casharku wuxuu dhammaadaa wakhtiga caadiga ah ee dhamaadka."
       }
     },
     "theory": {
@@ -162,7 +167,7 @@
       "label": "Waxa aad ka hesho Makina",
       "language": {
         "title": "Luqaddaada",
-        "body": "Waxbarasho Iswiidhish, Ingiriis, Tigrinya iyo Carabi. Soomaaligu wuu soo socdaa."
+        "body": "Waxbarasho {languages}. {comingSoonLanguages} waa soo socdaa."
       },
       "pickup": {
         "title": "Soo qaadis",
@@ -198,7 +203,7 @@
       },
       "cancel": {
         "title": "Joojin",
-        "body": "Ka jooji wax ka badan 24 saacadood ka hor bilowga bilaash."
+        "body": "Jooji ugu dambayn 24 saacadood ka hor casharka bilaash. Joojinta dambe waa lacag buuxda."
       },
       "reminder": {
         "title": "Xusuusin",
@@ -274,7 +279,7 @@
       "redirecting": "Lacag-bixinta waa la furayaa…",
       "error": "Lacag-bixinta lama bilaabi karin. Gal oo mar kale isku day."
     },
-    "cancelNote": "Ka jooji wax ka badan 24 saacadood ka hor bilowga bilaash."
+    "cancelNote": "Jooji ugu dambayn 24 saacadood ka hor casharka bilaash. Joojinta dambe waa lacag buuxda."
   },
   "checkout": {
     "eyebrow": "Lacag-bixin ammaan ah",
@@ -392,7 +397,7 @@
       "features": {
         "categories": "Qaybo cad",
         "practice": "Su'aalo tababar oo bilaash ah",
-        "languages": "Iswiidhish, Ingiriis, Tigrinya iyo Carabi. Soomaaligu wuu soo socdaa."
+        "languages": "Waxbarasho {languages}. {comingSoonLanguages} waa soo socdaa."
       }
     },
     "licensingPending": "Kaydka su'aalaha oo dhan wuu furmaa marka aad iibsato gelitaanka teori.",
@@ -535,7 +540,7 @@
     "confirmation": {
       "eyebrow": "Ballanta waa la diiwaangeliyey",
       "title": "Waqtigaaga waa la qabtay",
-      "deadline": "Waad baajin kartaa ilaa <time>{deadline}</time>.",
+      "deadline": "Waxaad joojin kartaa ugu dambayn 24 saacadood ka hor casharka, ilaa <time>{deadline}</time>. Joojinta dambe waa lacag buuxda.",
       "calendar": "Ku dar jadwalka",
       "creditUsed": "Hal cashar ayaa laga jaray hadhaagaaga.",
       "hold": "Waqtiga waa laguu hayaa ilaa <time>{expires}</time> inta lacag-bixintu dhammaystirmayso.",
@@ -646,7 +651,7 @@
       "pickup": "Goobta laga soo qaadayo",
       "cancel": "Baaji",
       "keepBooking": "Hay ballanta",
-      "cancelLateWarning": "Wakhtigii baajintu wuu dhaafay, dhibcahana lama soo celinayo. Ma baajisaa?",
+      "cancelLateWarning": "Wakhtigii baajintu wuu dhaafay. Casharka waa lacag buuxda waxaana laga jarayaa hadhaaga. Ma baajisaa?",
       "cancelRefundWarning": "Hadda haddii aad baajiso dhibcaha waa laguu celinayaa. Wakhtigu waa <time>{deadline}</time>. Ma sii waddaa?",
       "deadline": "Waad baajin kartaa ilaa <time>{deadline}</time>.",
       "status": "Xaalad: {status}",
@@ -859,6 +864,13 @@
         "delivery",
         "validity",
         "cancellation",
+        "packages",
+        "lateArrival",
+        "riskArrival",
+        "digitalTheory",
+        "responsibility",
+        "dataProtection",
+        "refunds",
         "withdrawal",
         "complaints",
         "law"
@@ -881,7 +893,7 @@
       },
       "cancellation": {
         "title": "Dib-u-dejinta iyo baajinta",
-        "body": "Adiga ayaad baajin kartaa Ballamahayga.\nHaddii aad baajiso in ka badan 24 saacadood ka hor bilowga, dhibcaha waa laguu soo celiyaa.\nHaddii aad goor dambe baajiso, lama soo celiyo.\nHaddii dugsigu baajiyo, had iyo jeer waa laguu soo celiyaa."
+        "body": "Adiga ayaad baajin kartaa Ballamahayga.\nHaddii aad baajiso ugu dambayn 24 saacadood ka hor casharka, dhibcaha waa laguu soo celiyaa.\nJoojinta dambe waa lacag buuxda: casharka waxaa laga jarayaa hadhaaga, casharka keliya lama soo celinayo.\nHaddii dugsigu baajiyo, had iyo jeer waa laguu soo celiyaa."
       },
       "withdrawal": {
         "title": "Xaqqa ka-noqoshada",
@@ -894,6 +906,73 @@
       "law": {
         "title": "Sharciga khuseeya",
         "body": "Sharciga Iswiidhan ayaa khuseeya heshiiska.\nMuranka waxaa daawada maxkamad Iswiidhish ah, haddii xeerarka macaamiisha aanay wax kale sheegin."
+      },
+      "summaryTitle": "Shuruudo kooban",
+      "summaryItems": [
+        {
+          "label": "Muddada",
+          "text": "Dhammaan xirmooyinku waxay shaqeeyaan 12 bilood laga bilaabo taariikhda iibsiga."
+        },
+        {
+          "label": "Joojin",
+          "text": "Ugu dambayn 24 saacadood ka hor casharka, haddii kale lacagta buuxda ayaa la qaadaa."
+        },
+        {
+          "label": "Daahid",
+          "text": "Casharku wuxuu dhammaadaa wakhtiga caadiga ah ee dhamaadka."
+        },
+        {
+          "label": "Xirmooyin",
+          "text": "Waa shakhsi waxaana mamnuuc ah in la wareejiyo."
+        },
+        {
+          "label": "Tababarka khatarta",
+          "text": "Soo gaar waqti fiican. Daahidu waxay keeni kartaa ballan cusub."
+        },
+        {
+          "label": "Teori dijital ah",
+          "text": "Qalabka shakhsiga ah lama wadaagi karo lama nuqlin karo."
+        },
+        {
+          "label": "Masuuliyad",
+          "text": "Ardaygu waa inuu raacaa xeerarka taraafikada iyo tilmaamaha macallinka."
+        },
+        {
+          "label": "Asturnaanta",
+          "text": "Xogta shakhsiga ah waxaa loo maareeyaa sida GDPR."
+        },
+        {
+          "label": "Lacag celin",
+          "text": "Waxaa loo maareeyaa sida xeerarka Iswiidhan ee khuseeya."
+        }
+      ],
+      "packages": {
+        "title": "Xirmooyin",
+        "body": "Xirmooyinku waa shakhsi lama wareejin karo."
+      },
+      "lateArrival": {
+        "title": "Daahid",
+        "body": "Haddii aad daahdo, casharku wuxuu dhammaadaa wakhtiga caadiga ah ee dhamaadka."
+      },
+      "riskArrival": {
+        "title": "Tababarka khatarta",
+        "body": "Soo gaar tababarka khatarta waqti fiican. Daahidu waxay keeni kartaa ballan cusub."
+      },
+      "digitalTheory": {
+        "title": "Teori dijital ah",
+        "body": "Teoriga dijitaalka ah waa qalab shakhsi ah lama wadaagi karo lama nuqlin karo."
+      },
+      "responsibility": {
+        "title": "Masuuliyadda ardayga",
+        "body": "Ardaygu waa inuu raacaa xeerarka taraafikada iyo tilmaamaha macallinka."
+      },
+      "dataProtection": {
+        "title": "Asturnaanta",
+        "body": "Xogta shakhsiga ah waxaa loo maareeyaa sida GDPR."
+      },
+      "refunds": {
+        "title": "Lacag celin",
+        "body": "Lacag celinta waxaa loo maareeyaa sida xeerarka Iswiidhan ee khuseeya."
       }
     },
     "privacy": {
@@ -1221,7 +1300,7 @@
     "locationsDescription": "Waxaad naga heli kartaa Centralvägen 5 ee Upplands Väsby. Ka fur tilmaamaha Google Maps.",
     "directions": "Jihada",
     "languagesTitle": "Luqad intee le'eg ayaad u baahan tahay?",
-    "languagesBody": "Waxbarasho Iswiidhish, Ingiriis, Tigrinya iyo Carabi. Soomaaligu wuu soo socdaa.",
+    "languagesBody": "Waxbarasho {languages}. {comingSoonLanguages} waa soo socdaa.",
     "staffTitle": "Shaqaalaheenna",
     "staffDescription": "Baro kooxda Makina Trafikskola. La xiriir dugsiga haddii aad rabto inaad qabsato macallin gaar ah.",
     "contactViaSchool": "Kala xiriir dugsiga",
@@ -1240,6 +1319,7 @@
       "4": "Khamiis",
       "5": "Jimce",
       "6": "Sabti"
-    }
+    },
+    "speaks": "Waxa uu wax ku dhigaa {languages}"
   }
 }

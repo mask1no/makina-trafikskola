@@ -7,7 +7,13 @@ import { PageHeader } from "@/components/PageHeader";
 import { Select } from "@/components/Select";
 import { TeacherCard } from "@/components/TeacherCard";
 import { SelectableTeacherMap } from "@/components/SelectableTeacherMap";
-import { isLocale, locales } from "@/i18n/routing";
+import { isLocale } from "@/i18n/routing";
+import {
+  isTeachingLanguage,
+  TEACHING_LANGUAGES,
+  type TeachingLanguage,
+} from "@/lib/teachers/languages";
+import { activeTeacherLanguages } from "@/lib/teachers/query";
 import { bookingEnabled, instructorsEnabled } from "@/lib/launch";
 
 import { getLocations, getTeachers } from "../_lib/data";
@@ -62,8 +68,11 @@ export default async function LararePage(
   const canBook = bookingEnabled();
   setRequestLocale(params.locale);
   const t = await getTranslations();
-  const locations = await getLocations();
-  const language = locales.includes(searchParams.language as (typeof locales)[number])
+  const [locations, activeLanguages] = await Promise.all([
+    getLocations(),
+    activeTeacherLanguages(),
+  ]);
+  const language = isTeachingLanguage(searchParams.language ?? "")
     ? searchParams.language
     : undefined;
   const location = locations.some((item) => item.id === searchParams.location)
@@ -81,11 +90,11 @@ export default async function LararePage(
     transmission,
   );
   const languageCounts = Object.fromEntries(
-    locales.map((option) => [
+    TEACHING_LANGUAGES.map((option) => [
       option,
       allTeachers.filter((teacher) => teacher.languages.includes(option)).length,
     ]),
-  ) as Record<(typeof locales)[number], number>;
+  ) as Record<TeachingLanguage, number>;
   const teachers = language
     ? allTeachers.filter((teacher) => teacher.languages.includes(language))
     : allTeachers;
@@ -116,20 +125,9 @@ export default async function LararePage(
                 >
                   {t("teachers.anyLanguage")}
                 </FilterChoice>
-                {locales.map((option) => {
+                {activeLanguages.map((option) => {
                   const count = languageCounts[option];
                   const name = `${t(`language.${option}`)} (${count})`;
-                  if (count === 0) {
-                    return (
-                      <span
-                        key={option}
-                        title={t("teachers.noneAvailable")}
-                        className="inline-flex min-h-11 items-center rounded-full border border-border px-3 text-sm font-bold text-ink-subtle"
-                      >
-                        {name}
-                      </span>
-                    );
-                  }
                   return (
                     <FilterChoice
                       key={option}
@@ -251,10 +249,14 @@ export default async function LararePage(
                     locationNames={teacher.locations.map(
                       ({ location: item }) => item.name,
                     )}
-                    experienceLabel={t("teacher.yearsExperience", {
-                      count: teacher.yearsExperience,
-                      n: String(teacher.yearsExperience),
-                    })}
+                    experienceLabel={
+                      teacher.yearsExperience > 0
+                        ? t("teacher.yearsExperience", {
+                            count: teacher.yearsExperience,
+                            n: String(teacher.yearsExperience),
+                          })
+                        : ""
+                    }
                     detailsLabel={t("teacher.viewProfile")}
                     swedishOnly={teacher.swedishOnly}
                     swedishOnlyLabel={t("common.swedishOnly")}

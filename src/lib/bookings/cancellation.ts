@@ -17,7 +17,7 @@ export function isLateStudentCancellation(input: {
 }) {
   return (
     input.actorRole === "STUDENT" &&
-    input.now >=
+    input.now >
       getCancellationDeadline(
         input.startsAt,
         input.cancellationWindowHours,

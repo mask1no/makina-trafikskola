@@ -6,13 +6,16 @@ import { resolveContent } from "@/lib/content/fallback";
 import { db } from "@/lib/db";
 import { locales } from "@/i18n/routing";
 import { orderedTeacherIds } from "@/lib/teachers/query";
+import { TEACHING_LANGUAGES } from "@/lib/teachers/languages";
 
 const querySchema = z
   .object({
     languages: z
       .string()
       .transform((value) => [...new Set(value.split(",").map((item) => item.trim()).filter(Boolean))])
-      .pipe(z.array(z.string().min(2).max(10)).max(5))
+      .pipe(
+        z.array(z.enum(TEACHING_LANGUAGES)).max(TEACHING_LANGUAGES.length),
+      )
       .optional(),
     locationId: z.string().cuid().optional(),
     transmission: z.nativeEnum(Transmission).optional(),

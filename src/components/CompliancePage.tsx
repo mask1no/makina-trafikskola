@@ -9,10 +9,27 @@ export async function CompliancePage({
 }) {
   const t = await getTranslations(`legal.${namespace}`);
   const sectionOrder = t.raw("sectionOrder") as string[];
+  const summaryItems =
+    namespace === "terms"
+      ? (t.raw("summaryItems") as { label: string; text: string }[])
+      : null;
 
   return (
     <article className="site-container max-w-4xl py-14 sm:py-20">
       <PageHeader eyebrow={t("eyebrow")} title={t("title")} />
+      {summaryItems ? (
+        <aside className="mt-10 rounded-lg border border-accent bg-card p-6 shadow-soft sm:p-8">
+          <h2 className="text-xl font-black">{t("summaryTitle")}</h2>
+          <dl className="mt-5 grid gap-4">
+            {summaryItems.map((item) => (
+              <div key={item.label}>
+                <dt className="font-extrabold">{item.label}</dt>
+                <dd className="mt-1 leading-7 text-ink-muted">{item.text}</dd>
+              </div>
+            ))}
+          </dl>
+        </aside>
+      ) : null}
       <div className="mt-10 overflow-hidden rounded-lg border border-border bg-card shadow-soft">
         {sectionOrder.map((section) => (
           <section className="border-b border-border p-6 last:border-b-0 sm:p-8" key={section}>

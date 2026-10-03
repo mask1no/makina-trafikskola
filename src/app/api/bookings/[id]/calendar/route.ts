@@ -1,4 +1,3 @@
-import { subHours } from "date-fns";
 import { getTranslations } from "next-intl/server";
 import { z } from "zod";
 
@@ -7,6 +6,7 @@ import {
   AuthorizationError,
   requireRole,
 } from "@/lib/auth/guards";
+import { getCancellationDeadline } from "@/lib/bookings/cancellation";
 import { buildCalendar } from "@/lib/calendar/ics";
 import { formatStockholm } from "@/lib/format/datetime";
 import { db } from "@/lib/db";
@@ -61,7 +61,7 @@ export async function GET(
   const cancellationHours = Number(
     process.env.CANCELLATION_WINDOW_HOURS ?? "24",
   );
-  const cancellationDeadline = subHours(
+  const cancellationDeadline = getCancellationDeadline(
     booking.startsAt,
     Number.isFinite(cancellationHours) && cancellationHours >= 0
       ? cancellationHours

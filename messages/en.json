@@ -20,6 +20,7 @@
     "sv": "Svenska",
     "en": "English",
     "ti": "ትግርኛ",
+    "ku": "Kurdish",
     "ar": "العربية",
     "so": "Soomaali"
   },
@@ -55,7 +56,7 @@
     "privacy": "Privacy",
     "cookies": "Cookies",
     "languageHelp": "Support in your language",
-    "languageHelpDescription": "Contact us in Swedish, English, Tigrinya or Arabic. Somali is coming soon.",
+    "languageHelpDescription": "Contact us in {languages}.",
     "orgnrLabel": "Org. no.",
     "call": "Call",
     "callUs": "Call us",
@@ -91,7 +92,7 @@
       "cardDescription": "Choose language, transmission and instructor based on your needs.",
       "reviews": "reviews",
       "pickupProof": "Pickup by arrangement",
-      "languageProof": "Swedish, English, Tigrinya and Arabic"
+      "languageProof": "{languages}"
     },
     "journey": {
       "eyebrow": "How it works",
@@ -135,7 +136,7 @@
       },
       "languages": {
         "question": "Can I take lessons in my language?",
-        "answer": "Lessons in Swedish, English, Tigrinya and Arabic. Somali is coming soon."
+        "answer": "Lessons in {languages}. {comingSoonLanguages} is coming soon."
       },
       "pickup": {
         "question": "Can you pick me up?",
@@ -143,8 +144,8 @@
       },
       "cancel": {
         "question": "How do I cancel a lesson?",
-        "answer": "You can cancel under My bookings. If you cancel more than 24 hours before the lesson, the credit is returned to your balance. Later cancellations use the lesson credit.",
-        "answerPhone": "Call {phone} to cancel or move a lesson. More than 24 hours before the start it costs nothing and the lesson returns to your balance. A later cancellation uses the lesson credit."
+        "answer": "You can cancel under My bookings. If you cancel at the latest 24 hours before the lesson, it costs nothing and the lesson returns to your balance. A later cancellation is charged in full and the lesson is deducted from the balance.",
+        "answerPhone": "Call {phone} to cancel or move a lesson. At the latest 24 hours before the lesson it costs nothing and the lesson returns to your balance. A later cancellation is charged in full and is deducted from the balance."
       },
       "risk": {
         "question": "What is the difference between Risk 1 and Risk 2?",
@@ -153,6 +154,10 @@
       "validity": {
         "question": "How long is my package valid?",
         "answer": "Driving lessons and packages are valid for 12 months from purchase. Your balance and the last valid date are shown under My pages. Digital theory has no time limit."
+      },
+      "late": {
+        "question": "What happens if I arrive late?",
+        "answer": "The lesson ends at the ordinary end time."
       }
     },
     "theory": {
@@ -162,7 +167,7 @@
       "label": "What you get at Makina",
       "language": {
         "title": "Your language",
-        "body": "Lessons in Swedish, English, Tigrinya and Arabic. Somali is coming soon."
+        "body": "Lessons in {languages}. {comingSoonLanguages} is coming soon."
       },
       "pickup": {
         "title": "Pickup",
@@ -198,7 +203,7 @@
       },
       "cancel": {
         "title": "Cancellation",
-        "body": "Cancel more than 24 hours before the start at no cost."
+        "body": "Cancel at the latest 24 hours before the lesson at no cost. A later cancellation is charged in full."
       },
       "reminder": {
         "title": "Reminder",
@@ -274,7 +279,7 @@
       "redirecting": "Opening payment…",
       "error": "Payment could not be started. Sign in and try again."
     },
-    "cancelNote": "Cancel more than 24 hours before the start at no cost."
+    "cancelNote": "Cancel at the latest 24 hours before the lesson at no cost. A later cancellation is charged in full."
   },
   "checkout": {
     "eyebrow": "Secure payment",
@@ -392,7 +397,7 @@
       "features": {
         "categories": "Clear categories",
         "practice": "Free practice questions",
-        "languages": "Swedish, English, Tigrinya and Arabic. Somali is coming soon."
+        "languages": "Lessons in {languages}. {comingSoonLanguages} is coming soon."
       }
     },
     "licensingPending": "The full question bank opens when you buy theory access.",
@@ -535,7 +540,7 @@
     "confirmation": {
       "eyebrow": "Booking registered",
       "title": "Your time is booked",
-      "deadline": "You can cancel until <time>{deadline}</time>.",
+      "deadline": "You can cancel at the latest 24 hours before the lesson, until <time>{deadline}</time>. A later cancellation is charged in full.",
       "calendar": "Add to calendar",
       "creditUsed": "One lesson has been deducted from your balance.",
       "hold": "This time is held for you until <time>{expires}</time> while payment is completed.",
@@ -646,7 +651,7 @@
       "pickup": "Pickup location",
       "cancel": "Cancel",
       "keepBooking": "Keep booking",
-      "cancelLateWarning": "The cancellation deadline has passed. Your credit will not be refunded. Cancel anyway?",
+      "cancelLateWarning": "The cancellation deadline has passed. The lesson is charged in full and deducted from your balance. Cancel anyway?",
       "cancelRefundWarning": "Cancelling now returns your credit. The deadline is <time>{deadline}</time>. Continue?",
       "deadline": "You can cancel until <time>{deadline}</time>.",
       "status": "Status: {status}",
@@ -859,6 +864,13 @@
         "delivery",
         "validity",
         "cancellation",
+        "packages",
+        "lateArrival",
+        "riskArrival",
+        "digitalTheory",
+        "responsibility",
+        "dataProtection",
+        "refunds",
         "withdrawal",
         "complaints",
         "law"
@@ -881,7 +893,7 @@
       },
       "cancellation": {
         "title": "Rescheduling and cancellation",
-        "body": "You can cancel yourself under My bookings.\nIf you cancel more than 24 hours before the start, you get the credit back.\nIf you cancel later, you do not get the credit back.\nIf the school cancels, you always get the credit back."
+        "body": "You can cancel a driving lesson under My bookings. If you cancel at the latest 24 hours before the lesson, the credit returns to your balance. A later cancellation is charged in full: the lesson is deducted from the balance and a single lesson is not refunded.\nIf the school cancels, you always get the credit back."
       },
       "withdrawal": {
         "title": "Right of withdrawal",
@@ -894,6 +906,73 @@
       "law": {
         "title": "Governing law",
         "body": "Swedish law applies to the contract.\nA dispute is heard by a Swedish general court, unless mandatory consumer rules say otherwise."
+      },
+      "summaryTitle": "Short terms",
+      "summaryItems": [
+        {
+          "label": "Validity",
+          "text": "All packages are valid for 12 months from the purchase date."
+        },
+        {
+          "label": "Cancellation",
+          "text": "At the latest 24 hours before the lesson, otherwise the full price is charged."
+        },
+        {
+          "label": "Late arrival",
+          "text": "The lesson ends at the ordinary end time."
+        },
+        {
+          "label": "Packages",
+          "text": "Personal and may not be transferred."
+        },
+        {
+          "label": "Risk training",
+          "text": "Arrive in good time. Late arrival may mean a new booking."
+        },
+        {
+          "label": "Digital theory",
+          "text": "Personal material may not be shared or copied."
+        },
+        {
+          "label": "Responsibility",
+          "text": "The student must follow traffic rules and the instructor's instructions."
+        },
+        {
+          "label": "Privacy",
+          "text": "Personal data is handled according to GDPR."
+        },
+        {
+          "label": "Refunds",
+          "text": "Handled according to applicable Swedish rules."
+        }
+      ],
+      "packages": {
+        "title": "Packages",
+        "body": "Packages are personal and may not be transferred."
+      },
+      "lateArrival": {
+        "title": "Late arrival",
+        "body": "If you arrive late, the lesson ends at the ordinary end time."
+      },
+      "riskArrival": {
+        "title": "Risk training",
+        "body": "Arrive in good time for risk training. Late arrival may mean a new booking."
+      },
+      "digitalTheory": {
+        "title": "Digital theory",
+        "body": "Digital theory is personal material and may not be shared or copied."
+      },
+      "responsibility": {
+        "title": "Student responsibility",
+        "body": "The student must follow traffic rules and the instructor's instructions."
+      },
+      "dataProtection": {
+        "title": "Privacy",
+        "body": "Personal data is handled according to GDPR."
+      },
+      "refunds": {
+        "title": "Refunds",
+        "body": "Refunds are handled according to applicable Swedish rules."
       }
     },
     "privacy": {
@@ -1221,7 +1300,7 @@
     "locationsDescription": "You can find us at Centralvägen 5 in Upplands Väsby. Open directions in Google Maps.",
     "directions": "Directions",
     "languagesTitle": "Which language do you need?",
-    "languagesBody": "Lessons in Swedish, English, Tigrinya and Arabic. Somali is coming soon.",
+    "languagesBody": "Lessons in {languages}. {comingSoonLanguages} is coming soon.",
     "staffTitle": "Our team",
     "staffDescription": "Meet the team at Makina Trafikskola. Contact the school if you would like to book a particular instructor.",
     "contactViaSchool": "Contact through the school",
@@ -1240,6 +1319,7 @@
       "4": "Thursday",
       "5": "Friday",
       "6": "Saturday"
-    }
+    },
+    "speaks": "Teaches in {languages}"
   }
 }
