@@ -68,6 +68,24 @@ test("stores cookie consent", async ({ page }) => {
   await expect(banner).toBeHidden();
 });
 
+test("keeps shallow health public and protects deep diagnostics", async ({ request }) => {
+  const shallow = await request.get("/api/health");
+  expect(shallow.status()).toBe(200);
+  await expect(shallow.json()).resolves.toEqual({ status: "ok" });
+
+  const unauthenticated = await request.get("/api/health?deep=1");
+  expect(unauthenticated.status()).toBe(401);
+  const secret = process.env.CRON_SECRET ?? "e2e-cron-secret";
+  const deep = await request.get("/api/health?deep=1", {
+    headers: { authorization: `Bearer ${secret}` },
+  });
+  expect([200, 503]).toContain(deep.status());
+  const body = await deep.json();
+  expect(body.checks.database.ok).toBe(true);
+  expect(body.checks.migrations).toBeTruthy();
+  expect(body.checks.backup).toBeTruthy();
+});
+
 test.describe("authorization boundaries", () => {
   test("redirects anonymous users to localized login", async ({ page }) => {
     await page.goto("/en/mina-sidor");

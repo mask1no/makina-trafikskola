@@ -6,11 +6,13 @@ const required = {
   NODE_ENV: "production",
   DATABASE_URL: "postgresql://localhost/makina",
   AUTH_SECRET: "test-secret",
+  AUTH_URL: "https://example.com",
   STRIPE_SECRET_KEY: "sk_test_value",
   STRIPE_WEBHOOK_SECRET: "whsec_value",
   NEXT_PUBLIC_SITE_URL: "https://example.com",
   ELKS_API_USERNAME: "elks-user",
   ELKS_API_PASSWORD: "elks-pass",
+  CRON_SECRET: "cron-secret",
 };
 
 describe("production environment validation", () => {

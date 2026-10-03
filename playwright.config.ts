@@ -35,6 +35,7 @@ export default defineConfig({
       AUTH_URL: "http://localhost:3100",
       BOOKING_ENABLED: "1",
       INSTRUCTORS_ENABLED: "1",
+      CRON_SECRET: process.env.CRON_SECRET ?? "e2e-cron-secret",
     },
     reuseExistingServer: false,
     timeout: 120_000,

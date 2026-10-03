@@ -14,6 +14,8 @@
     "e2e:prepare": "tsx e2e/prepare.ts",
     "test:e2e": "npm run e2e:prepare && npm run build && playwright test",
     "check:translations": "tsx scripts/check-translations.ts",
+    "i18n:export": "tsx scripts/i18n-export.ts",
+    "launch:check": "tsx scripts/launch-check.ts",
     "theory:import": "tsx scripts/import-theory.ts",
     "test:booking-concurrency": "tsx scripts/booking-concurrency.ts",
     "test:concurrency": "vitest run concurrency.integration.test.ts --maxWorkers=1",

@@ -1,6 +1,5 @@
 import {
   GetObjectCommand,
-  ListObjectsV2Command,
 } from "@aws-sdk/client-s3";
 import { createWriteStream } from "node:fs";
 import { rm } from "node:fs/promises";
@@ -12,6 +11,7 @@ import { spawn } from "node:child_process";
 import { randomUUID } from "node:crypto";
 
 import { postgresEnvironment, r2Configuration } from "./lib/backup";
+import { newestBackupObject } from "../src/lib/ops/readiness";
 
 function run(command: string, args: string[], env: NodeJS.ProcessEnv) {
   return new Promise<void>((resolve, reject) => {
@@ -25,20 +25,6 @@ function run(command: string, args: string[], env: NodeJS.ProcessEnv) {
   });
 }
 
-async function newestBackupKey(
-  client: ReturnType<typeof r2Configuration>["client"],
-  bucket: string,
-) {
-  const prefix = (process.env.BACKUP_PREFIX || "postgres").replace(/^\/+|\/+$/g, "");
-  const response = await client.send(
-    new ListObjectsV2Command({ Bucket: bucket, Prefix: `${prefix}/` }),
-  );
-  const newest = response.Contents?.filter((item) => item.Key && item.LastModified)
-    .sort((a, b) => b.LastModified!.getTime() - a.LastModified!.getTime())[0];
-  if (!newest?.Key) throw new Error("No R2 backup object was found");
-  return newest.Key;
-}
-
 async function main() {
   const postgres = postgresEnvironment("RESTORE_DATABASE_URL");
   if (!/(?:restore|test)/i.test(postgres.database)) {
@@ -50,7 +36,7 @@ async function main() {
   const r2 = r2Configuration();
   const key =
     process.env.BACKUP_OBJECT_KEY ||
-    (await newestBackupKey(r2.client, r2.bucket));
+    (await newestBackupObject(r2.client, r2.bucket)).key;
   const temporaryFile = join(tmpdir(), `makina-restore-${randomUUID()}.dump`);
 
   try {

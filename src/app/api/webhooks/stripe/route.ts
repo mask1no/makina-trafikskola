@@ -31,6 +31,8 @@ import {
 } from "@/lib/payments/stripe-events";
 import { getStripe } from "@/lib/stripe";
 
+export { HANDLED_EVENT_TYPES } from "@/lib/payments/stripe-events";
+
 export const runtime = "nodejs";
 
 function configurationError() {

@@ -74,6 +74,8 @@ Also used:
 | `npm run test:concurrency` | Booking lock integration test. Needs `RUN_DB_INTEGRATION=1` |
 | `npm run test:webhook-replay` | Stripe webhook replay. Needs `RUN_DB_INTEGRATION=1` |
 | `npm run test:e2e` | Seed, build, Playwright |
+| `npm run launch:check` | Read-only production dependency and configuration checks |
+| `npm run i18n:export` | Export all locale strings to an Excel-compatible review CSV |
 | `npm run theory:import` | Import the question bank |
 | `npm run backup:db` / `npm run verify:restore` | Backup to R2 and test a restore |
 
@@ -86,6 +88,9 @@ Also used:
 Railway builds the app, then the start command runs `prisma migrate deploy` and `next start`. Set the production variables above. Point a scheduler at `POST /api/cron/core` every 15 minutes with `Authorization: Bearer <CRON_SECRET>`.
 
 Stripe webhook: `POST /api/webhooks/stripe`. Payment methods are automatic (card, Swish, Klarna). The handler must receive the raw body.
+
+Run the launch proof against Railway's production environment without printing
+secrets: `railway run npm run launch:check`.
 
 46elks: set the API user and password. SMS goes only to Swedish `+46` numbers.
 

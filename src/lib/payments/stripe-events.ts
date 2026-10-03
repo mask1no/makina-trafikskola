@@ -1,6 +1,14 @@
 import type { OrderStatus, PaymentStatus } from "@prisma/client";
 import type Stripe from "stripe";
 
+export const HANDLED_EVENT_TYPES = [
+  "checkout.session.completed",
+  "checkout.session.async_payment_succeeded",
+  "payment_intent.succeeded",
+  "payment_intent.payment_failed",
+  "charge.refunded",
+] as const satisfies readonly Stripe.Event.Type[];
+
 export type NormalizedStripeEvent =
   | {
       kind: "payment_succeeded";
