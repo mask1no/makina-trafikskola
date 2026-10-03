@@ -142,14 +142,10 @@ export function BookingList({
         </p>
       ) : null}
       {pendingCancellation ? (
-        <>
-          <button
-            type="button"
-            aria-label={t("cancel")}
-            onClick={() => setPendingCancellation(null)}
-            className="fixed inset-0 z-40 bg-surface/60"
-          />
-          <BottomSheet title={t("cancel")}>
+          <BottomSheet
+            title={t("cancel")}
+            onClose={() => setPendingCancellation(null)}
+          >
             <p className="leading-7 text-ink-muted">
               {lateCancellation
                 ? t("cancelLateWarning")
@@ -173,7 +169,6 @@ export function BookingList({
               </Button>
             </div>
           </BottomSheet>
-        </>
       ) : null}
     </div>
   );

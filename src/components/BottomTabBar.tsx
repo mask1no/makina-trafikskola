@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import type { ReactNode } from "react";
 
 export type BottomTabIcon = "home" | "packages" | "bookings" | "messages" | "profile" | "call";
 
-type Tab = { href: string; label: string; icon: BottomTabIcon };
+type Tab = { href: string; label: ReactNode; icon: BottomTabIcon };
 
 function TabIcon({
   icon,

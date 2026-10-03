@@ -25,6 +25,7 @@
     "so": "Soomaali"
   },
   "shell": {
+    "skipToContent": "Hoppa till innehåll",
     "navigation": "Huvudnavigering",
     "home": "Hem",
     "packages": "Paket",
@@ -60,7 +61,7 @@
     "languageHelpDescription": "Kontakta oss på {languages}.",
     "call": "Ring",
     "callUs": "Ring oss",
-    "callName": "Ring {phone}",
+    "callName": "Ring <phone></phone>",
     "seePrices": "Se priser",
     "openNow": "Öppet nu",
     "closed": "Stängt",
@@ -145,7 +146,7 @@
       "cancel": {
         "question": "Hur avbokar jag en lektion?",
         "answer": "Du avbokar själv under Mina bokningar. Avbokar du senast 24 timmar före lektionen kostar det ingenting och lektionen går tillbaka till ditt saldo. Avbokar du senare debiteras fullt pris och lektionen dras från saldot.",
-        "answerPhone": "Ring {phone} för att avboka eller flytta en lektion. Senast 24 timmar före lektionen kostar det ingenting och lektionen går tillbaka till ditt saldo. En senare avbokning debiteras fullt pris och dras från saldot."
+        "answerPhone": "Ring <phone></phone> för att avboka eller flytta en lektion. Senast 24 timmar före lektionen kostar det ingenting och lektionen går tillbaka till ditt saldo. En senare avbokning debiteras fullt pris och dras från saldot."
       },
       "risk": {
         "question": "Vad är skillnaden mellan Risk 1 och Risk 2?",

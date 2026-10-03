@@ -217,10 +217,17 @@ export default async function LocaleLayout(
     openingHoursSpecification: openingHoursSpecification(),
     ...(siteUrl ? { url: `${siteUrl}/${params.locale}` } : {}),
   };
+  const callLabel = t.rich("callName", {
+    phone: () => (
+      <bdi dir="ltr" className="numbers-ltr">
+        {displayPhone(company("phone"))}
+      </bdi>
+    ),
+  });
 
   const centerTab = {
     href: canBook ? `${base}/boka` : telHref(company("phone")),
-    label: canBook ? t("book") : t("call"),
+    label: canBook ? t("book") : callLabel,
     icon: canBook ? "bookings" : "call",
   } as const;
   const tabs = (
@@ -253,6 +260,12 @@ export default async function LocaleLayout(
   return (
     <NextIntlClientProvider>
       <div className="min-h-screen bg-page pb-[calc(var(--tab-bar-height)+var(--safe-bottom))] md:pb-0">
+        <a
+          href="#main"
+          className="fixed start-4 top-0 z-[100] -translate-y-full rounded-b-sm bg-accent px-4 py-3 font-bold text-accent-ink transition-transform focus:translate-y-0"
+        >
+          {t("skipToContent")}
+        </a>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -382,13 +395,12 @@ export default async function LocaleLayout(
                 href={telHref(company("phone"))}
                 className="hidden min-h-11 shrink-0 items-center whitespace-nowrap rounded-sm border border-accent bg-accent px-4 text-sm font-extrabold text-accent-ink shadow-soft md:inline-flex"
               >
-                {t("callUs")}
-                <span className="ms-2 hidden numbers-ltr lg:inline">{displayPhone(company("phone"))}</span>
+                {callLabel}
               </a>
             )}
           </div>
         </header>
-        <main>{children}</main>
+        <main id="main" tabIndex={-1}>{children}</main>
         <footer className="border-t border-surface-soft bg-surface py-12 text-ink-inverse sm:py-16">
           <div className="site-container grid gap-10 lg:grid-cols-4">
             <div>
@@ -401,8 +413,8 @@ export default async function LocaleLayout(
                 <p className="numbers-ltr">{t("orgnrLabel")}: {company("orgnr")}</p>
                 <p>{company("visitingAddress")}</p>
                 <p>
-                  <a className="inline-flex min-h-11 items-center hover:text-ink-inverse numbers-ltr" href={telHref(company("phone"))}>
-                    {displayPhone(company("phone"))}
+                  <a className="inline-flex min-h-11 items-center hover:text-ink-inverse" href={telHref(company("phone"))}>
+                    {callLabel}
                   </a>
                 </p>
                 <p>

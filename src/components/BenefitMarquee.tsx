@@ -7,6 +7,8 @@ export type BenefitCard = {
   body: string;
 };
 
+const mobilePriority = ["language", "testLesson", "prices", "pickup", "local"];
+
 function BenefitIcon() {
   return (
     <span className="grid size-10 shrink-0 place-items-center rounded-md bg-accent-soft text-ink">
@@ -53,16 +55,28 @@ export function BenefitMarquee({
   items: BenefitCard[];
 }) {
   if (!items.length) return null;
+  const prioritized = mobilePriority
+    .map((id) => items.find((item) => item.id === id))
+    .filter((item): item is BenefitCard => Boolean(item));
+  const mobileItems = [
+    ...prioritized,
+    ...items.filter((item) => !prioritized.includes(item)),
+  ].slice(0, 5);
 
   return (
     <section aria-label={label} aria-roledescription="carousel" className="benefit-marquee-region relative" data-marquee="">
-      <div className="site-container mb-3 flex justify-end">
-        <MarqueePause pauseLabel={pauseLabel} playLabel={playLabel} />
+      <div className="benefit-mobile overflow-x-auto snap-x snap-mandatory px-4 md:hidden">
+        <Cards items={mobileItems} />
       </div>
-      <div className="benefit-viewport">
-        <div className="benefit-track">
-          <Cards items={items} />
-          <Cards items={items} hidden />
+      <div className="hidden md:block">
+        <div className="site-container mb-3 flex justify-end">
+          <MarqueePause pauseLabel={pauseLabel} playLabel={playLabel} />
+        </div>
+        <div className="benefit-viewport">
+          <div className="benefit-track">
+            <Cards items={items} />
+            <Cards items={items} hidden />
+          </div>
         </div>
       </div>
     </section>

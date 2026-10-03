@@ -92,7 +92,13 @@ async function HomeHero({ locale }: { locale: Locale }) {
                 href={telHref(phone)}
                 className="inline-flex min-h-11 w-full items-center justify-center rounded-sm border border-accent bg-accent px-5 text-sm font-bold text-accent-ink md:w-auto"
               >
-                {t("shell.callName", { phone: displayPhone(phone) })}
+                {t.rich("shell.callName", {
+                  phone: () => (
+                    <bdi dir="ltr" className="numbers-ltr">
+                      {displayPhone(phone)}
+                    </bdi>
+                  ),
+                })}
               </a>
             )}
             <LinkButton
@@ -108,8 +114,8 @@ async function HomeHero({ locale }: { locale: Locale }) {
           <Suspense fallback={null}>
             <LowestSinglePrice locale={locale} />
           </Suspense>
-          <a className="mt-3 inline-flex min-h-11 items-center text-2xl font-black numbers-ltr" href={telHref(phone)}>
-            {displayPhone(phone)}
+          <a className="mt-3 inline-flex min-h-11 items-center text-2xl font-black" href={telHref(phone)}>
+            <bdi dir="ltr" className="numbers-ltr">{displayPhone(phone)}</bdi>
           </a>
           <p className="mt-4 text-sm">
             <span className="font-black">{openNow ? t("shell.openNow") : t("shell.closed")}</span>
@@ -251,18 +257,34 @@ async function HomeBelow({
         packagePrice: formatPrice(entryPackage?.priceOre ?? 0, params.locale),
       }),
     },
-    ...(["languages", "pickup", "cancel", "late", "risk", "validity"] as const).map((key) => ({
-      question: t(`home.faq.${key}.question`),
-      answer:
+    ...(["languages", "pickup", "cancel", "late", "risk", "validity"] as const).map((key) => {
+      const answer =
         key === "cancel" && !canBook
-          ? t("home.faq.cancel.answerPhone", { phone: t("company.phone") })
+          ? (t.raw("home.faq.cancel.answerPhone") as string).replace(
+              "<phone></phone>",
+              displayPhone(t("company.phone")),
+            )
           : key === "languages"
             ? t("home.faq.languages.answer", {
                 languages: offeredLanguageNames,
                 comingSoonLanguages: comingSoonLanguageNames,
               })
-            : t(`home.faq.${key}.answer`),
-    })),
+            : t(`home.faq.${key}.answer`);
+      return {
+        question: t(`home.faq.${key}.question`),
+        answer,
+        content:
+          key === "cancel" && !canBook
+            ? t.rich("home.faq.cancel.answerPhone", {
+                phone: () => (
+                  <bdi dir="ltr" className="numbers-ltr">
+                    {displayPhone(t("company.phone"))}
+                  </bdi>
+                ),
+              })
+            : answer,
+      };
+    }),
   ];
 
   return (
@@ -598,7 +620,9 @@ async function HomeBelow({
                   <span>{item.question}</span>
                   <span aria-hidden="true" className="text-xl transition group-open:rotate-45">+</span>
                 </summary>
-                <p className="max-w-3xl pb-6 leading-7 text-ink-muted">{item.answer}</p>
+                <p className="max-w-3xl pb-6 leading-7 text-ink-muted">
+                  {"content" in item ? item.content : item.answer}
+                </p>
               </details>
             ))}
           </div>

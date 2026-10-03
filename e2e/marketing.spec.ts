@@ -40,7 +40,7 @@ test.describe("marketing layout", () => {
   test("booking-off call actions and a single contact link", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("/sv");
-    const heroCall = page.getByRole("link", { name: /^Ring / });
+    const heroCall = page.locator("main section").first().getByRole("link", { name: /^Ring / });
     test.skip((await heroCall.count()) === 0, "This server has booking enabled.");
 
     await expect(heroCall).toBeVisible();
@@ -72,6 +72,20 @@ test.describe("marketing layout", () => {
       getComputedStyle(node).animationName,
     );
     expect(duration === "none" || duration === "").toBeTruthy();
+    await expect.poll(() =>
+      page.locator(".hero-pan").evaluate((node) => getComputedStyle(node).animationName),
+    ).toBe("none");
+  });
+
+  test("mobile benefits are a static five-card snap row", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/sv");
+    await expect(page.locator(".benefit-mobile li")).toHaveCount(5);
+    await expect(page.locator(".benefit-mobile")).toHaveCSS(
+      "scroll-snap-type",
+      /x/,
+    );
+    await expect(page.locator(".benefit-track")).toBeHidden();
   });
 
   test("shows confirmed teaching languages and does not claim Arabic or Somali lessons", async ({ page }) => {

@@ -25,6 +25,7 @@
     "so": "Soomaali"
   },
   "shell": {
+    "skipToContent": "U gudub nuxurka",
     "navigation": "Hagidda ugu weyn",
     "home": "Bogga hore",
     "packages": "Xirmooyinka",
@@ -60,7 +61,7 @@
     "orgnrLabel": "Lambarka ururka",
     "call": "Wac",
     "callUs": "Nagu soo wac",
-    "callName": "Wac {phone}",
+    "callName": "Wac <phone></phone>",
     "seePrices": "Eeg qiimaha",
     "openNow": "Hadda furan",
     "closed": "Xiran",
@@ -145,7 +146,7 @@
       "cancel": {
         "question": "Sideen u joojiyaa cashar?",
         "answer": "Waxaad ka joojin kartaa qaybta Ballamahayga. Haddii aad joojiso ugu dambayn 24 saacadood ka hor casharka, waxba kuma kacayso casharkuna wuxuu ku soo noqdaa hadhaagaaga. Joojinta dambe waa lacag buuxda casharkana waa laga jarayaa hadhaaga.",
-        "answerPhone": "Wac {phone} si aad u joojiso ama u beddesho cashar. Ugu dambayn 24 saacadood ka hor casharka waa bilaash, casharkuna wuxuu ku soo noqdaa hadhaagaaga. Joojinta dambe waa lacag buuxda waxaana laga jarayaa hadhaaga."
+        "answerPhone": "Wac <phone></phone> si aad u joojiso ama u beddesho cashar. Ugu dambayn 24 saacadood ka hor casharka waa bilaash, casharkuna wuxuu ku soo noqdaa hadhaagaaga. Joojinta dambe waa lacag buuxda waxaana laga jarayaa hadhaaga."
       },
       "risk": {
         "question": "Waa maxay farqiga u dhexeeya Risk 1 iyo Risk 2?",

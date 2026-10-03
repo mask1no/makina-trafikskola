@@ -235,11 +235,16 @@ textarea {
   .benefit-track {
     display: flex;
     width: max-content;
-    animation: benefit-marquee 45s linear infinite;
   }
 
-  [dir="rtl"] .benefit-track {
-    animation-direction: reverse;
+  @media (min-width: 768px) {
+    .benefit-track {
+      animation: benefit-marquee 45s linear infinite;
+    }
+
+    [dir="rtl"] .benefit-track {
+      animation-name: benefit-marquee-rtl;
+    }
   }
 
   .benefit-marquee-region:hover .benefit-track,
@@ -254,6 +259,15 @@ textarea {
     }
     to {
       transform: translateX(-50%);
+    }
+  }
+
+  @keyframes benefit-marquee-rtl {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(50%);
     }
   }
 

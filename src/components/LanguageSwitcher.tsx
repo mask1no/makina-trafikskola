@@ -18,6 +18,7 @@ export function LanguageSwitcher() {
   const router = useRouter();
   const t = useTranslations("language");
   const [open, setOpen] = useState(false);
+  const [mobile, setMobile] = useState(false);
   const [activeIndex, setActiveIndex] = useState(
     Math.max(0, locales.indexOf(currentLocale)),
   );
@@ -34,6 +35,7 @@ export function LanguageSwitcher() {
 
   function openMenu() {
     setActiveIndex(Math.max(0, locales.indexOf(currentLocale)));
+    setMobile(window.matchMedia("(max-width: 767px)").matches);
     setOpen(true);
   }
 
@@ -61,6 +63,7 @@ export function LanguageSwitcher() {
   useEffect(() => {
     function handlePointerDown(event: PointerEvent) {
       if (
+        !mobile &&
         rootRef.current &&
         !rootRef.current.contains(event.target as Node)
       ) {
@@ -79,7 +82,7 @@ export function LanguageSwitcher() {
       document.removeEventListener("pointerdown", handlePointerDown);
       document.removeEventListener("keydown", handleEscape);
     };
-  }, [open]);
+  }, [mobile, open]);
 
   useEffect(() => {
     if (previousPathRef.current === pathname) return;
@@ -187,19 +190,18 @@ export function LanguageSwitcher() {
 
       {open ? (
         <>
-          <div className="absolute end-0 top-[calc(100%+0.5rem)] z-50 hidden min-w-52 rounded-md border border-border bg-card p-2 text-ink shadow-float md:block">
-            {options(desktopItemsRef)}
-          </div>
-          <div
-            aria-hidden="true"
-            className="fixed inset-0 z-40 bg-surface/60 md:hidden"
-            onClick={() => closeMenu()}
-          />
-          <div className="md:hidden">
-            <BottomSheet title={t("label")}>
+          {mobile ? (
+            <BottomSheet
+              title={t("label")}
+              onClose={() => closeMenu({ restoreFocus: true })}
+            >
               {options(mobileItemsRef)}
             </BottomSheet>
-          </div>
+          ) : (
+            <div className="absolute end-0 top-[calc(100%+0.5rem)] z-50 min-w-52 rounded-md border border-border bg-card p-2 text-ink shadow-float">
+              {options(desktopItemsRef)}
+            </div>
+          )}
         </>
       ) : null}
     </div>

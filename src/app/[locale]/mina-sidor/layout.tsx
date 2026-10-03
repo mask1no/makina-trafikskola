@@ -60,7 +60,7 @@ export default async function StudentLayout(
             label,
           }))}
         />
-        <main className="mt-8">{children}</main>
+        <div className="mt-8">{children}</div>
       </div>
     </div>
   );

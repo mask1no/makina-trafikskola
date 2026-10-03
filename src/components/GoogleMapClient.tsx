@@ -388,7 +388,11 @@ export default function GoogleMapClient({
         ) : null}
       </div>
       {openMarker && mobile ? (
-        <BottomSheet title={openMarker.title} open>
+        <BottomSheet
+          title={openMarker.title}
+          open
+          onClose={() => setOpenId(null)}
+        >
           <MarkerDetails
             bookingAvailable={bookingAvailable}
             marker={openMarker}

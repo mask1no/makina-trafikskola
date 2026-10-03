@@ -111,7 +111,13 @@ export default async function ProductDetailPage(
     t("product.priceIncludesVat"),
   ].filter(Boolean).join(" · ");
   const phone = t("company.phone");
-  const callLabel = t("shell.callName", { phone: displayPhone(phone) });
+  const callLabel = t.rich("shell.callName", {
+    phone: () => (
+      <bdi dir="ltr" className="numbers-ltr">
+        {displayPhone(phone)}
+      </bdi>
+    ),
+  });
 
   return (
     <div className="section-shell pb-28 md:pb-[clamp(3.5rem,8vw,7rem)]">

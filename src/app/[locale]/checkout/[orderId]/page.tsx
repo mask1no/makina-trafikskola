@@ -123,7 +123,7 @@ export default async function CheckoutPage({
     (!configured || !order.payment.stripePaymentIntentId);
 
   return (
-    <main className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+    <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
       <div className="mb-8 max-w-2xl">
         <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-ink-muted">{t("eyebrow")}</p>
         <h1 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">{t("title")}</h1>
@@ -193,6 +193,6 @@ export default async function CheckoutPage({
       >
         {t("viewStatus")}
       </Link>
-    </main>
+    </div>
   );
 }

@@ -10,6 +10,7 @@ export async function CookieConsent({ locale }: { locale: string }) {
 
   return (
     <aside
+      role="region"
       aria-label={t("title")}
       className="fixed inset-x-4 bottom-20 z-50 ms-auto me-auto max-w-3xl rounded-lg border border-surface-soft bg-surface p-5 text-ink-inverse shadow-float sm:p-6 md:bottom-4"
     >

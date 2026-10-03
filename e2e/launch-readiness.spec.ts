@@ -60,7 +60,7 @@ test.describe("public localized experience", () => {
 
 test("stores cookie consent", async ({ page }) => {
   await page.goto("/en");
-  const banner = page.getByRole("complementary", { name: "Cookie settings" });
+  const banner = page.getByRole("region", { name: "Cookie settings" });
   await expect(banner).toBeVisible();
   await banner.getByRole("button", { name: "OK" }).click();
   await expect(banner).toBeHidden();

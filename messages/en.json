@@ -25,6 +25,7 @@
     "so": "Soomaali"
   },
   "shell": {
+    "skipToContent": "Skip to content",
     "navigation": "Main navigation",
     "home": "Home",
     "packages": "Packages",
@@ -60,7 +61,7 @@
     "orgnrLabel": "Org. no.",
     "call": "Call",
     "callUs": "Call us",
-    "callName": "Call {phone}",
+    "callName": "Call <phone></phone>",
     "seePrices": "See prices",
     "openNow": "Open now",
     "closed": "Closed",
@@ -145,7 +146,7 @@
       "cancel": {
         "question": "How do I cancel a lesson?",
         "answer": "You can cancel under My bookings. If you cancel at the latest 24 hours before the lesson, it costs nothing and the lesson returns to your balance. A later cancellation is charged in full and the lesson is deducted from the balance.",
-        "answerPhone": "Call {phone} to cancel or move a lesson. At the latest 24 hours before the lesson it costs nothing and the lesson returns to your balance. A later cancellation is charged in full and is deducted from the balance."
+        "answerPhone": "Call <phone></phone> to cancel or move a lesson. At the latest 24 hours before the lesson it costs nothing and the lesson returns to your balance. A later cancellation is charged in full and is deducted from the balance."
       },
       "risk": {
         "question": "What is the difference between Risk 1 and Risk 2?",

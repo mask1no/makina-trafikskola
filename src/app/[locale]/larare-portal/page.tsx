@@ -177,8 +177,8 @@ export default async function TeacherPortal(
                     ) : null}
                     <div className="mt-2 grid text-sm">
                       {lesson.student.phone ? (
-                        <a className="inline-flex min-h-11 items-center font-bold underline" href={telHref(lesson.student.phone)} dir="ltr">
-                          <bdi>{displayPhone(lesson.student.phone)}</bdi>
+                        <a className="inline-flex min-h-11 items-center font-bold underline" href={telHref(lesson.student.phone)}>
+                          <bdi dir="ltr" className="numbers-ltr">{displayPhone(lesson.student.phone)}</bdi>
                         </a>
                       ) : null}
                       {mapsHref ? (

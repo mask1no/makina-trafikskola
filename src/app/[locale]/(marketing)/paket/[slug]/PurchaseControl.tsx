@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 
 import { Button } from "@/components/Button";
 import { CheckboxField } from "@/components/CheckboxField";
@@ -33,7 +33,7 @@ export function PurchaseControl({
   active: boolean;
   salesOpen: boolean;
   phone: string;
-  callLabel: string;
+  callLabel: ReactNode;
   authenticated: boolean;
   signInHref: string;
   inactiveLabel: string;

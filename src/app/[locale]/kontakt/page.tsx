@@ -144,7 +144,13 @@ export default async function ContactPage(
           <h1 className="section-title mt-3">{t("title")}</h1>
           <p className="mt-4 max-w-[70ch] leading-7 text-ink-muted">{t("description")}</p>
           <a className="mt-6 inline-flex min-h-16 w-full items-center justify-center rounded-sm bg-accent px-5 text-2xl font-black text-accent-ink" href={telHref(phone)}>
-            <span className="numbers-ltr">{displayPhone(phone)}</span>
+            {shell.rich("callName", {
+              phone: () => (
+                <bdi dir="ltr" className="numbers-ltr">
+                  {displayPhone(phone)}
+                </bdi>
+              ),
+            })}
           </a>
           <div className="mt-5 flex flex-wrap items-center gap-3">
             <Badge tone={open ? "success" : "neutral"}>{open ? shell("openNow") : shell("closed")}</Badge>
