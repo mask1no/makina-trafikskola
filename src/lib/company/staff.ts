@@ -1,4 +1,7 @@
-import type { TeachingLanguage } from "@/lib/teachers/languages";
+import {
+  TEACHING_LANGUAGES,
+  type TeachingLanguage,
+} from "@/lib/teachers/languages";
 
 export type StaffRole =
   | "trafikskolechef"
@@ -69,7 +72,8 @@ export const publicStaff: readonly PublicStaffMember[] = [
 export const COMING_SOON_TEACHING_LANGUAGES = ["so"] as const satisfies readonly TeachingLanguage[];
 
 export function offeredTeachingLanguages(): TeachingLanguage[] {
-  return [...new Set(publicStaff.flatMap((member) => member.languages))];
+  const offered = new Set(publicStaff.flatMap((member) => member.languages));
+  return TEACHING_LANGUAGES.filter((language) => offered.has(language));
 }
 
 export function formatLanguageList(
