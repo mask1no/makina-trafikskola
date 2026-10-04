@@ -13,6 +13,7 @@ export type PublicStaffMember = {
   lastName: string;
   name: string;
   slug: string;
+  teacherSlug: string | null;
   role: StaffRole;
   languages: readonly TeachingLanguage[];
 };
@@ -23,6 +24,7 @@ export const publicStaff: readonly PublicStaffMember[] = [
     lastName: "Kessete",
     name: "Aron Kessete",
     slug: "aron-kessete",
+    teacherSlug: "aron-kessete",
     role: "trafikskolechef",
     languages: ["sv", "en", "ti"],
   },
@@ -32,6 +34,7 @@ export const publicStaff: readonly PublicStaffMember[] = [
     lastName: "Mikael",
     name: "Goitom Mikael",
     slug: "goitom-mikael",
+    teacherSlug: "goitom-mikael",
     role: "utbildningsledare",
     languages: ["sv", "en", "ti"],
   },
@@ -40,6 +43,7 @@ export const publicStaff: readonly PublicStaffMember[] = [
     lastName: "Askelawi",
     name: "Kidane Askelawi",
     slug: "kidane-askelawi",
+    teacherSlug: "kidane-askelawi",
     role: "trafiklarare",
     languages: ["sv", "ti"],
   },
@@ -48,6 +52,7 @@ export const publicStaff: readonly PublicStaffMember[] = [
     lastName: "Hasanzada",
     name: "Azizullah Hasanzada",
     slug: "azizullah-hasanzada",
+    teacherSlug: "azizullah-hasanzada",
     role: "trafiklarare",
     languages: ["sv", "en", "ku"],
   },
@@ -56,6 +61,7 @@ export const publicStaff: readonly PublicStaffMember[] = [
     lastName: "Negassi Araya",
     name: "Habtom Negassi Araya",
     slug: "habtom-negassi-araya",
+    teacherSlug: "habtom-negassi-araya",
     role: "trafiklarare",
     languages: ["sv", "en", "ti"],
   },
@@ -64,6 +70,7 @@ export const publicStaff: readonly PublicStaffMember[] = [
     lastName: "Araya",
     name: "Daniel Araya",
     slug: "daniel-araya",
+    teacherSlug: "daniel-araya",
     role: "trafiklarare",
     languages: ["sv", "ti"],
   },

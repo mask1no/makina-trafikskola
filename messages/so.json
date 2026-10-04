@@ -123,6 +123,11 @@
       "description": "Hel macallin ku hadla luqaddaada oo wax ka dhiga goobta aad rabto.",
       "languageLabel": "Shaandhee macallimiinta luqadda"
     },
+    "reviews": {
+      "eyebrow": "Faallooyinka ardayda",
+      "title": "Faallooyin la ansixiyey",
+      "summary": "{count} faallooyin la daabacay · celcelis {average}/5"
+    },
     "location": {
       "eyebrow": "Agtaada",
       "title": "Macallimiinta ka hel khariidadda",
@@ -1311,6 +1316,8 @@
     "directions": "Jihada",
     "languagesTitle": "Luqad intee le'eg ayaad u baahan tahay?",
     "languagesBody": "Waxbarasho {languages}. {comingSoonLanguages} waa soo socdaa.",
+    "reviewsTitle": "Faallooyinka ardayda",
+    "reviewsSummary": "{count} faallooyin la daabacay · celcelis {average}/5",
     "staffTitle": "Shaqaalaheenna",
     "staffDescription": "Baro kooxda Makina Trafikskola. La xiriir dugsiga haddii aad rabto inaad qabsato macallin gaar ah.",
     "contactViaSchool": "Kala xiriir dugsiga",

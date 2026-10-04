@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 
 type AvatarProps = {
@@ -15,6 +16,13 @@ const sizes = {
   lg: "size-20 text-xl sm:size-24",
   hero: "size-40 text-5xl sm:size-48",
 };
+
+const imageSizes = {
+  sm: "40px",
+  md: "48px",
+  lg: "(max-width: 640px) 80px, 96px",
+  hero: "(max-width: 640px) 160px, 192px",
+} as const;
 
 export function Avatar({
   name,
@@ -36,14 +44,15 @@ export function Avatar({
     <span
       aria-label={name}
       role={showImage ? "img" : undefined}
-      className={`rtl-no-mirror relative inline-grid shrink-0 place-items-center overflow-hidden rounded-full border border-border bg-surface-raised font-extrabold text-ink-inverse shadow-soft ${sizes[size]} ${className}`}
+      className={`rtl-no-mirror relative inline-grid shrink-0 place-items-center overflow-hidden rounded-full border border-border bg-accent-soft font-extrabold text-ink shadow-soft ${sizes[size]} ${className}`}
     >
       {showImage ? (
         <>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={imageUrl ?? undefined}
+          <Image
+            src={imageUrl!}
             alt=""
+            fill
+            sizes={imageSizes[size]}
             onError={() => setFailed(true)}
             className="absolute inset-0 size-full object-cover"
           />

@@ -27,6 +27,10 @@ import { googleMapsBrowserConfig } from "@/lib/maps/config";
 import { activeTeacherLanguages } from "@/lib/teachers/query";
 import { formatPrice } from "@/lib/pricing/format";
 import { toProductCardModel } from "@/lib/products/card";
+import {
+  getPublishedReviewSummary,
+  shouldShowPublicReviews,
+} from "@/lib/reviews/public";
 import { freeTheoryQuestionCount } from "@/lib/theory/questions";
 
 import { getProducts, getTeachers } from "./_lib/data";
@@ -156,11 +160,12 @@ async function HomeBelow({
 }) {
   setRequestLocale(params.locale);
   const t = await getTranslations();
-  const [products, teachers, freeQuestions, activeLanguages] = await Promise.all([
+  const [products, teachers, freeQuestions, activeLanguages, reviewSummary] = await Promise.all([
     getProducts(params.locale),
     getTeachers(params.locale),
     freeTheoryQuestionCount(),
     activeTeacherLanguages(),
+    getPublishedReviewSummary(),
   ]);
   const offeredLanguages = offeredTeachingLanguages();
   const offeredLanguageNames = formatLanguageList(
@@ -558,6 +563,39 @@ async function HomeBelow({
           </div>
         </div>
       </section>
+
+      {shouldShowPublicReviews(reviewSummary.count) ? (
+        <section className="section-shell border-t border-border bg-card">
+          <div className="site-container">
+            <SectionHeader
+              eyebrow={t("home.reviews.eyebrow")}
+              title={t("home.reviews.title")}
+              intro={t("home.reviews.summary", {
+                count: reviewSummary.count,
+                average: reviewSummary.average.toFixed(1),
+              })}
+            />
+            <div className="mt-8 grid gap-4 md:grid-cols-3">
+              {reviewSummary.latest.map((review) => (
+                <article key={review.id} className="rounded-md border border-border bg-page p-5">
+                  <div className="flex items-center justify-between gap-3">
+                    <p className="font-bold">{review.studentName}</p>
+                    <p className="numbers-ltr text-small font-bold text-ink-muted">
+                      {review.rating}/5
+                    </p>
+                  </div>
+                  {review.comment ? (
+                    <p className="mt-3 max-w-[70ch] text-body leading-7 text-ink-muted">{review.comment}</p>
+                  ) : null}
+                  <p className="mt-3 text-small text-ink-subtle">
+                    {new Intl.DateTimeFormat(params.locale, { dateStyle: "medium" }).format(review.createdAt)}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       <section className="section-shell border-t border-border">
         <div className="site-container grid gap-8 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:items-start">

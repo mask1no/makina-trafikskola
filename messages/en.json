@@ -123,6 +123,11 @@
       "description": "Find an instructor who speaks your language and teaches where you want to drive.",
       "languageLabel": "Filter instructors by language"
     },
+    "reviews": {
+      "eyebrow": "Student reviews",
+      "title": "Approved reviews",
+      "summary": "{count} published reviews · average {average}/5"
+    },
     "location": {
       "eyebrow": "Near you",
       "title": "Find instructors on the map",
@@ -1311,6 +1316,8 @@
     "directions": "Directions",
     "languagesTitle": "Which language do you need?",
     "languagesBody": "Lessons in {languages}. {comingSoonLanguages} is coming soon.",
+    "reviewsTitle": "Student reviews",
+    "reviewsSummary": "{count} published reviews · average {average}/5",
     "staffTitle": "Our team",
     "staffDescription": "Meet the team at Makina Trafikskola. Contact the school if you would like to book a particular instructor.",
     "contactViaSchool": "Contact through the school",

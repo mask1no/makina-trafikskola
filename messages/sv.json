@@ -123,6 +123,11 @@
       "description": "Hitta en lärare som talar ditt språk och undervisar där du vill köra.",
       "languageLabel": "Filtrera lärare efter språk"
     },
+    "reviews": {
+      "eyebrow": "Elevernas omdömen",
+      "title": "Godkända recensioner",
+      "summary": "{count} publicerade omdömen · snitt {average}/5"
+    },
     "location": {
       "eyebrow": "Nära dig",
       "title": "Hitta lärare på kartan",
@@ -879,6 +884,8 @@
     "directions": "Vägbeskrivning",
     "languagesTitle": "Vilket språk behöver du?",
     "languagesBody": "Undervisning på {languages}. {comingSoonLanguages} kommer snart.",
+    "reviewsTitle": "Elevomdömen",
+    "reviewsSummary": "{count} publicerade omdömen · snitt {average}/5",
     "staffTitle": "Vår personal",
     "staffDescription": "Möt teamet på Makina Trafikskola. Kontakta skolan om du vill boka en viss trafiklärare.",
     "contactViaSchool": "Kontakt via skolan",

@@ -26,6 +26,10 @@ import {
   bookingEnabled,
   instructorsEnabled,
 } from "@/lib/launch";
+import {
+  getPublishedReviewSummary,
+  shouldShowPublicReviews,
+} from "@/lib/reviews/public";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -145,13 +149,14 @@ export default async function LocaleLayout(
 
   if (!isLocale(params.locale)) notFound();
   setRequestLocale(params.locale);
-  const [t, adminT, teacherT, company, languageNames, session] = await Promise.all([
+  const [t, adminT, teacherT, company, languageNames, session, reviewSummary] = await Promise.all([
     getTranslations("shell"),
     getTranslations("admin.nav"),
     getTranslations("teacherPortal"),
     getTranslations("company"),
     getTranslations("language"),
     auth(),
+    getPublishedReviewSummary(),
   ]);
   const offeredLanguages = offeredTeachingLanguages();
   const offeredLanguageNames = formatLanguageList(
@@ -215,6 +220,17 @@ export default async function LocaleLayout(
     areaServed: { "@type": "City", name: "Stockholm" },
     availableLanguage: offeredLanguages,
     openingHoursSpecification: openingHoursSpecification(),
+    ...(shouldShowPublicReviews(reviewSummary.count)
+      ? {
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: reviewSummary.average.toFixed(1),
+            reviewCount: reviewSummary.count,
+            bestRating: "5",
+            worstRating: "1",
+          },
+        }
+      : {}),
     ...(siteUrl ? { url: `${siteUrl}/${params.locale}` } : {}),
   };
   const callLabel = t.rich("callName", {

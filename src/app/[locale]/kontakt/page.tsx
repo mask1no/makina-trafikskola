@@ -21,6 +21,10 @@ import {
 import { displayPhone, telHref } from "@/lib/format/phone";
 import { publicAddress } from "@/lib/locations/address";
 import { db } from "@/lib/db";
+import {
+  getPublishedReviewSummary,
+  shouldShowPublicReviews,
+} from "@/lib/reviews/public";
 import { pageCanonical, withSocial } from "@/lib/seo/metadata";
 
 export const dynamic = "force-dynamic";
@@ -58,7 +62,7 @@ export default async function ContactPage(
   if (!isLocale(params.locale)) notFound();
   setRequestLocale(params.locale);
 
-  const [t, shell, company, languageNames, locations] = await Promise.all([
+  const [t, shell, company, languageNames, locations, staffPhotos, reviewSummary] = await Promise.all([
     getTranslations("contact"),
     getTranslations("shell"),
     getTranslations("company"),
@@ -67,7 +71,22 @@ export default async function ContactPage(
       where: { active: true },
       orderBy: { name: "asc" },
     }),
+    db.teacherProfile.findMany({
+      where: {
+        slug: {
+          in: publicStaff
+            .map((staffMember) => staffMember.teacherSlug)
+            .filter((slug): slug is string => Boolean(slug)),
+        },
+      },
+      select: {
+        slug: true,
+        photoUrl: true,
+      },
+    }),
+    getPublishedReviewSummary(),
   ]);
+  const photoBySlug = new Map(staffPhotos.map((teacher) => [teacher.slug, teacher.photoUrl]));
 
   const legalName = company("legalName");
   const orgnr = company("orgnr");
@@ -107,6 +126,17 @@ export default async function ContactPage(
     areaServed: { "@type": "City", name: "Stockholm" },
     availableLanguage: offeredLanguages,
     openingHoursSpecification: openingHoursSpecification(),
+    ...(shouldShowPublicReviews(reviewSummary.count)
+      ? {
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: reviewSummary.average.toFixed(1),
+            reviewCount: reviewSummary.count,
+            bestRating: "5",
+            worstRating: "1",
+          },
+        }
+      : {}),
     ...(siteUrl ? { url: `${siteUrl}/${params.locale}/kontakt` } : {}),
     department: locations.map((location) => ({
       "@type": "Place",
@@ -207,7 +237,15 @@ export default async function ContactPage(
           <ul className="mt-6 grid gap-3 lg:grid-cols-2">
             {publicStaff.map((staffMember) => (
               <li key={staffMember.name} className="flex items-start gap-3 rounded-md border border-border bg-card p-3">
-                <Avatar name={staffMember.name} size="sm" />
+                <Avatar
+                  name={staffMember.name}
+                  imageUrl={
+                    staffMember.teacherSlug
+                      ? (photoBySlug.get(staffMember.teacherSlug) ?? null)
+                      : null
+                  }
+                  size="sm"
+                />
                 <div className="min-w-0">
                   <p className="font-extrabold">{staffMember.name}</p>
                   <p className="text-sm text-ink-muted">{t(`staffRoles.${staffMember.role}`)}</p>
@@ -271,6 +309,34 @@ export default async function ContactPage(
           </p>
           <p className="mt-3 text-sm text-ink-muted">{postal}</p>
         </section>
+        {shouldShowPublicReviews(reviewSummary.count) ? (
+          <section className="rounded-lg border border-border bg-card p-6 shadow-soft">
+            <h2 className="text-xl font-black">{t("reviewsTitle")}</h2>
+            <p className="mt-2 text-small text-ink-muted">
+              {t("reviewsSummary", {
+                count: reviewSummary.count,
+                average: reviewSummary.average.toFixed(1),
+              })}
+            </p>
+            <ul className="mt-5 grid gap-4">
+              {reviewSummary.latest.map((review) => (
+                <li key={review.id} className="rounded-sm border border-border bg-page p-4">
+                  <div className="flex items-center justify-between gap-3">
+                    <p className="font-bold">{review.studentName}</p>
+                    <p className="numbers-ltr text-small font-bold text-ink-muted">
+                      {review.rating}/5
+                    </p>
+                  </div>
+                  {review.comment ? (
+                    <p className="mt-2 max-w-[70ch] text-body leading-7 text-ink-muted">
+                      {review.comment}
+                    </p>
+                  ) : null}
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
         </div>
         </div>
       </div>

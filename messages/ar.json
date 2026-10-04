@@ -123,6 +123,11 @@
       "description": "اعثر على مدرب يتحدث لغتك ويدرّس في المكان الذي تريده.",
       "languageLabel": "صفِّ المدربين حسب اللغة"
     },
+    "reviews": {
+      "eyebrow": "آراء الطلاب",
+      "title": "مراجعات معتمدة",
+      "summary": "{count} مراجعات منشورة · المتوسط {average}/5"
+    },
     "location": {
       "eyebrow": "بالقرب منك",
       "title": "اعثر على المدربين على الخريطة",
@@ -1311,6 +1316,8 @@
     "directions": "الاتجاهات",
     "languagesTitle": "أي لغة تحتاج؟",
     "languagesBody": "التدريس بـ{languages}. {comingSoonLanguages} قريبًا.",
+    "reviewsTitle": "آراء الطلاب",
+    "reviewsSummary": "{count} مراجعات منشورة · المتوسط {average}/5",
     "staffTitle": "فريقنا",
     "staffDescription": "تعرّف إلى فريق Makina Trafikskola. تواصل مع المدرسة إذا أردت الحجز مع معلّم قيادة محدد.",
     "contactViaSchool": "التواصل عبر المدرسة",

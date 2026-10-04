@@ -123,6 +123,11 @@
       "description": "ቋንቋኻ ዝዛረብን ኣብ እትደልዮ ቦታ ዝምህርን መምህር ድለ።",
       "languageLabel": "መማህራን ብቋንቋ ፈልጥ"
     },
+    "reviews": {
+      "eyebrow": "ግምገማ ተማሃሮ",
+      "title": "ዝተፈቐዱ ግምገማታት",
+      "summary": "{count} ዝተሓተመ ግምገማ · ማእከላይ {average}/5"
+    },
     "location": {
       "eyebrow": "ኣብ ጥቓኻ",
       "title": "ኣብ ካርታ መምህራን ድለ",
@@ -1311,6 +1316,8 @@
     "directions": "መግለጺ መንገዲ",
     "languagesTitle": "የናይ ቋንቋ የድልየካ?",
     "languagesBody": "ትምህርቲ ብ{languages}። {comingSoonLanguages} ኣብ ቀረባ።",
+    "reviewsTitle": "ግምገማ ተማሃሮ",
+    "reviewsSummary": "{count} ዝተሓተመ ግምገማ · ማእከላይ {average}/5",
     "staffTitle": "ሰራሕተኛታትና",
     "staffDescription": "ንጉጅለ Makina Trafikskola ፍለጥ። ፍሉይ መምህር ምዝዋር ክትሕዝ እንተደሊኻ ንቤት ትምህርቲ ርኸብ።",
     "contactViaSchool": "ብቤት ትምህርቲ ርክብ",
