@@ -23,6 +23,7 @@ import {
 } from "@/lib/company/staff";
 import { displayPhone, telHref } from "@/lib/format/phone";
 import { benefitItems } from "@/lib/home/benefits";
+import { googleMapsBrowserConfig } from "@/lib/maps/config";
 import { activeTeacherLanguages } from "@/lib/teachers/query";
 import { formatPrice } from "@/lib/pricing/format";
 import { freeTheoryQuestionCount } from "@/lib/theory/questions";
@@ -248,7 +249,7 @@ async function HomeBelow({
     lat: 59.3293,
     lng: 18.0686,
   };
-  const mapsKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY;
+  const mapsConfig = googleMapsBrowserConfig();
   const faqItems = [
     {
       question: t("home.faq.cost.question"),
@@ -373,9 +374,10 @@ async function HomeBelow({
                   {t("map.homeTeaserDescription")}
                 </p>
               </div>
-              {mapsKey && homeMapMarkers.length ? (
+              {mapsConfig.apiKey && mapsConfig.mapId && homeMapMarkers.length ? (
                 <LazyTeacherMap
-                  apiKey={mapsKey}
+                  apiKey={mapsConfig.apiKey}
+                  mapId={mapsConfig.mapId}
                   bookingAvailable={canBook}
                   center={homeMapCenter}
                   label={t("map.interactiveLabel")}

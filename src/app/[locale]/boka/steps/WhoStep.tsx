@@ -19,6 +19,7 @@ export function WhoStep({
   teacherId,
   markers,
   mapApiKey,
+  mapId,
   onLanguage,
   onView,
   onTeacher,
@@ -31,6 +32,7 @@ export function WhoStep({
   teacherId: string;
   markers: TeacherMarker[];
   mapApiKey?: string;
+  mapId?: string;
   onLanguage: (language: string) => void;
   onView: (view: "list" | "map") => void;
   onTeacher: (teacherId: string) => void;
@@ -75,6 +77,7 @@ export function WhoStep({
         <div className="mt-5">
           <TeacherMap
             apiKey={mapApiKey}
+            mapId={mapId}
             center={{ lat: locations[0].lat, lng: locations[0].lng }}
             label={t("step.who.mapLabel")}
             missingKeyTitle={t("step.who.mapUnavailable")}

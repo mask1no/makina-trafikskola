@@ -36,6 +36,9 @@ export default defineConfig({
       BOOKING_ENABLED: process.env.TEST_BOOKING_ENABLED ?? "1",
       INSTRUCTORS_ENABLED: process.env.TEST_INSTRUCTORS_ENABLED ?? "1",
       CRON_SECRET: process.env.CRON_SECRET ?? "e2e-cron-secret",
+      AUTH_GOOGLE_ID: process.env.AUTH_GOOGLE_ID ?? "e2e-google-client-id",
+      AUTH_GOOGLE_SECRET:
+        process.env.AUTH_GOOGLE_SECRET ?? "e2e-google-client-secret",
     },
     reuseExistingServer: false,
     timeout: 120_000,

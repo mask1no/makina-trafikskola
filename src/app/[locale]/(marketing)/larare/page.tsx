@@ -15,6 +15,7 @@ import {
 } from "@/lib/teachers/languages";
 import { activeTeacherLanguages } from "@/lib/teachers/query";
 import { bookingEnabled, instructorsEnabled } from "@/lib/launch";
+import { googleMapsBrowserConfig } from "@/lib/maps/config";
 
 import { getLocations, getTeachers } from "../_lib/data";
 import type { Transmission } from "@prisma/client";
@@ -66,6 +67,7 @@ export default async function LararePage(
   if (!isLocale(params.locale)) return null;
   if (!instructorsEnabled()) notFound();
   const canBook = bookingEnabled();
+  const mapsConfig = googleMapsBrowserConfig();
   setRequestLocale(params.locale);
   const t = await getTranslations();
   const [locations, activeLanguages] = await Promise.all([
@@ -281,7 +283,8 @@ export default async function LararePage(
               </p>
             </div>
             <SelectableTeacherMap
-              apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY}
+              apiKey={mapsConfig.apiKey}
+              mapId={mapsConfig.mapId}
               bookingAvailable={canBook}
               center={center}
               markers={teachers.flatMap((teacher) =>

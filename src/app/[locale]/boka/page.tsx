@@ -3,6 +3,7 @@ import { connection } from "next/server";
 
 import { auth } from "@/auth";
 import { googleSignInEnabled } from "@/lib/auth/google";
+import { googleMapsBrowserConfig } from "@/lib/maps/config";
 import { isLocale } from "@/i18n/routing";
 import { db } from "@/lib/db";
 import { bookingEnabled } from "@/lib/launch";
@@ -30,6 +31,7 @@ export default async function BookingPage(
   await connection();
   const searchParams = await props.searchParams;
   const params = await props.params;
+  const mapsConfig = googleMapsBrowserConfig();
   if (!isLocale(params.locale)) notFound();
   if (!bookingEnabled()) notFound();
 
@@ -125,7 +127,8 @@ export default async function BookingPage(
           session?.user?.role === "STUDENT" && Boolean(session.user.id)
         }
         cancellationWindowHours={configuredCancellationHours()}
-        mapApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY}
+        mapApiKey={mapsConfig.apiKey}
+        mapId={mapsConfig.mapId}
       />
     </div>
   );

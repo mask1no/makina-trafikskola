@@ -40,6 +40,7 @@ type Props = {
   initiallyAuthenticated: boolean;
   cancellationWindowHours: number;
   mapApiKey?: string;
+  mapId?: string;
   googleEnabled?: boolean;
 };
 
@@ -52,10 +53,12 @@ export function BookingFlow({
   initiallyAuthenticated,
   cancellationWindowHours,
   mapApiKey,
+  mapId,
   googleEnabled = false,
 }: Props) {
   const t = useTranslations("booking");
   const errors = useTranslations("errors");
+  const languageNames = useTranslations("language");
   const [state, dispatch] = useReducer(
     bookingReducer,
     { locale, locations, teachers, initialTeacherId, initiallyAuthenticated },
@@ -91,6 +94,9 @@ export function BookingFlow({
       teacherId: teacher.id,
       title: teacher.name,
       position,
+      languages: teacher.languages.map((language) =>
+        languageNames.has(language) ? languageNames(language) : language,
+      ),
     })),
   );
 
@@ -433,6 +439,7 @@ export function BookingFlow({
           teacherId={state.teacherId}
           markers={teacherMarkers}
           mapApiKey={mapApiKey}
+          mapId={mapId}
           onLanguage={(language) => patch({ language })}
           onView={(view) => patch({ view })}
           onTeacher={(teacherId) => patch({ teacherId })}

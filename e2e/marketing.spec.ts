@@ -54,6 +54,19 @@ test.describe("marketing layout", () => {
     await expect(page.locator("header").getByRole("link", { name: "Kontakt" })).toHaveCount(1);
   });
 
+  test("contact map makes no Google request before explicit load", async ({ page }) => {
+    const googleRequests: string[] = [];
+    page.on("request", (request) => {
+      if (new URL(request.url()).hostname === "www.google.com") {
+        googleRequests.push(request.url());
+      }
+    });
+    await page.goto("/sv/kontakt");
+    expect(googleRequests).toEqual([]);
+    await page.getByRole("button", { name: "Visa karta" }).click();
+    await expect.poll(() => googleRequests.length).toBeGreaterThan(0);
+  });
+
   test("marquee copy is hidden and pause toggles", async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 800 });
     await page.goto("/sv");

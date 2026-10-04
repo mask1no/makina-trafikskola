@@ -29,6 +29,12 @@
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --danger: #dc2626;
   --danger-soft: #fef0f0;
+  --google-border: #747775;
+  --google-ink: #1f1f1f;
+  --google-blue: #4285f4;
+  --google-green: #34a853;
+  --google-yellow: #fbbc05;
+  --google-red: #ea4335;
   --radius-sm: 12px;
   --radius-md: 16px;
   --radius-lg: 20px;
