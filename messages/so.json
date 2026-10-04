@@ -483,7 +483,8 @@
         "school": "Anigaa idiin imanaya",
         "pickup": "I soo qaada",
         "location": "Dooro dugsiga wadista",
-        "address": "Cinwaanka lagaaga qaadayo"
+        "address": "Cinwaanka lagaaga qaadayo",
+        "selectFromList": "Ka dooro cinwaan liiska."
       },
       "who": {
         "short": "Yaa",
@@ -1258,6 +1259,7 @@
     "SMS_DELIVERY_FAILED": "Farriinta lama diri karin. Hubi lambarka oo isku day mar kale.",
     "RATE_LIMITED": "Isku dayo badan. Sug oo mar kale isku day.",
     "SELECT_LOCATION_OR_PICKUP": "Dooro goob ama geli cinwaanka lagaaga qaadayo.",
+    "PICKUP_ADDRESS_CONFIRMATION_REQUIRED": "Si aad u sii waddo, ka dooro cinwaan liiska.",
     "TEACHER_REQUIRED": "Dooro macallin si aad u sii waddo.",
     "SLOT_REQUIRED": "Dooro waqti bannaan.",
     "SLOT_TAKEN": "Waqtigan hadda ayaa la qabsaday. Mid kale dooro.",

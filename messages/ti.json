@@ -483,7 +483,8 @@
         "school": "ኣነ ናባኹም ክመጽእ",
         "pickup": "ክትወስዱኒ",
         "location": "ቤት ትምህርቲ ምረጽ",
-        "address": "ናይ ምውሳድ ኣድራሻ"
+        "address": "ናይ ምውሳድ ኣድራሻ",
+        "selectFromList": "ካብ ዝርዝር ኣድራሻ ምረጽ።"
       },
       "who": {
         "short": "መን",
@@ -1255,6 +1256,7 @@
     "SMS_DELIVERY_FAILED": "SMS ክሰደድ ኣይከኣለን። ቁጽሪ ኣረጋግጽ እሞ ደጊምካ ፈትን።",
     "RATE_LIMITED": "ብዙሕ ፈተነ። ጽናሕ እሞ ደጊምካ ፈትን።",
     "SELECT_LOCATION_OR_PICKUP": "ቦታ ምረጽ ወይ ኣድራሻ ጽሓፍ።",
+    "PICKUP_ADDRESS_CONFIRMATION_REQUIRED": "ንምቕጻል ካብ ዝርዝር ኣድራሻ ምረጽ።",
     "TEACHER_REQUIRED": "ንምቕጻል መምህር ምረጽ።",
     "SLOT_REQUIRED": "ክፉት ግዜ ምረጽ።",
     "SLOT_TAKEN": "እዚ ግዜ ተታሒዙ። ካልእ ምረጽ።",

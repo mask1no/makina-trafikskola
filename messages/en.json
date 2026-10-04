@@ -483,7 +483,8 @@
         "school": "I will come to you",
         "pickup": "Pick me up",
         "location": "Choose driving school",
-        "address": "Pickup address"
+        "address": "Pickup address",
+        "selectFromList": "Choose an address from the list."
       },
       "who": {
         "short": "Who",
@@ -1254,6 +1255,7 @@
     "SMS_DELIVERY_FAILED": "The text message could not be sent. Check the number and try again.",
     "RATE_LIMITED": "Too many attempts. Wait and try again.",
     "SELECT_LOCATION_OR_PICKUP": "Choose a location or enter a pickup address.",
+    "PICKUP_ADDRESS_CONFIRMATION_REQUIRED": "Choose an address from the list to continue.",
     "TEACHER_REQUIRED": "Choose an instructor to continue.",
     "SLOT_REQUIRED": "Choose an available time.",
     "SLOT_TAKEN": "This time was just booked. Choose another available time.",

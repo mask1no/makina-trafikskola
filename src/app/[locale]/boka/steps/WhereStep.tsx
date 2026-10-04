@@ -18,21 +18,29 @@ export function WhereStep({
   placeMode,
   locationId,
   pickupAddress,
+  pickupCoordinates,
   mapApiKey,
   onPlaceMode,
   onLocationId,
-  onPickup,
+  onPickupTyped,
+  onPickupSelected,
 }: {
   locations: Location[];
   placeMode: PlaceMode;
   locationId: string;
   pickupAddress: string;
+  pickupCoordinates: { lat: number; lng: number } | null;
   mapApiKey?: string;
   onPlaceMode: (mode: PlaceMode) => void;
   onLocationId: (id: string) => void;
-  onPickup: (address: string, coordinates: { lat: number; lng: number } | null) => void;
+  onPickupTyped: (address: string) => void;
+  onPickupSelected: (address: string, coordinates: { lat: number; lng: number }) => void;
 }) {
   const t = useTranslations("booking");
+  const showPickupHint =
+    placeMode === "pickup" &&
+    pickupAddress.trim().length > 0 &&
+    !pickupCoordinates;
   return (
     <section>
       <h2 className="text-3xl font-black">{t("step.where.title")}</h2>
@@ -76,7 +84,11 @@ export function WhereStep({
               label={t("step.where.address")}
               value={pickupAddress}
               onChange={(value, coordinates) => {
-                onPickup(value, coordinates ?? null);
+                if (coordinates) {
+                  onPickupSelected(value, coordinates);
+                  return;
+                }
+                onPickupTyped(value);
               }}
             />
           ) : (
@@ -84,11 +96,16 @@ export function WhereStep({
               label={t("step.where.address")}
               value={pickupAddress}
               onChange={(event) => {
-                onPickup(event.target.value, null);
+                onPickupTyped(event.target.value);
               }}
               autoComplete="street-address"
             />
           )}
+          {showPickupHint ? (
+            <p className="mt-2 text-sm leading-6 text-ink-muted">
+              {t("step.where.selectFromList")}
+            </p>
+          ) : null}
         </div>
       )}
     </section>

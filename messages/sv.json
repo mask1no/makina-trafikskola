@@ -483,7 +483,8 @@
         "school": "Jag kommer till er",
         "pickup": "Hämta mig",
         "location": "Välj trafikskola",
-        "address": "Hämtningsadress"
+        "address": "Hämtningsadress",
+        "selectFromList": "Välj en adress i listan."
       },
       "who": {
         "short": "Vem",
@@ -1292,6 +1293,7 @@
     "SMS_DELIVERY_FAILED": "Sms kunde inte skickas. Kontrollera numret och försök igen.",
     "RATE_LIMITED": "För många försök. Vänta och försök igen.",
     "SELECT_LOCATION_OR_PICKUP": "Välj en plats eller skriv en hämtningsadress.",
+    "PICKUP_ADDRESS_CONFIRMATION_REQUIRED": "Välj en adress i listan för att fortsätta.",
     "TEACHER_REQUIRED": "Välj en lärare för att fortsätta.",
     "SLOT_REQUIRED": "Välj en ledig tid.",
     "SLOT_TAKEN": "Tiden hann bokas. Välj en annan ledig tid.",

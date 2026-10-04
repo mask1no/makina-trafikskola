@@ -105,7 +105,7 @@ test.describe("marketing layout", () => {
     await page.goto("/sv/kontakt");
     await expect(page.getByText(/^Undervisar på /)).toHaveCount(6);
     const contact = await page.locator("body").innerText();
-    expect(contact).toContain("Undervisning på Svenska, English, ትግርኛ och Kurdiska.");
+    expect(contact).toContain("Kontakta oss på Svenska, English, ትግርኛ och Kurdiska.");
     expect(contact).toContain("Soomaali kommer snart.");
     expect(contact).not.toMatch(/arabiska/i);
     expect(contact).not.toMatch(/undervisning på somaliska/i);

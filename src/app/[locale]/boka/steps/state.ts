@@ -61,9 +61,25 @@ export type BookingState = {
 
 export type BookingAction =
   | { type: "patch"; patch: Partial<BookingState> }
-  | { type: "step"; update: (current: number) => number };
+  | { type: "step"; update: (current: number) => number }
+  | { type: "pickupTyped"; value: string }
+  | { type: "pickupSelected"; value: string; coordinates: { lat: number; lng: number } };
 
 export function bookingReducer(state: BookingState, action: BookingAction): BookingState {
+  if (action.type === "pickupTyped") {
+    return {
+      ...state,
+      pickupAddress: action.value,
+      pickupCoordinates: null,
+    };
+  }
+  if (action.type === "pickupSelected") {
+    return {
+      ...state,
+      pickupAddress: action.value,
+      pickupCoordinates: action.coordinates,
+    };
+  }
   if (action.type === "step") {
     return { ...state, step: action.update(state.step) };
   }

@@ -189,9 +189,15 @@ export function BookingFlow({
 
   function next() {
     patch({ error: "" });
-    if (state.step === 1 && state.placeMode === "pickup" && state.pickupAddress.trim().length < 3) {
-      patch({ error: "SELECT_LOCATION_OR_PICKUP" });
-      return;
+    if (state.step === 1 && state.placeMode === "pickup") {
+      if (state.pickupAddress.trim().length < 3) {
+        patch({ error: "SELECT_LOCATION_OR_PICKUP" });
+        return;
+      }
+      if (!state.pickupCoordinates) {
+        patch({ error: "PICKUP_ADDRESS_CONFIRMATION_REQUIRED" });
+        return;
+      }
     }
     if (state.step === 2 && !state.teacherId) {
       patch({ error: "TEACHER_REQUIRED" });
@@ -421,11 +427,19 @@ export function BookingFlow({
           placeMode={state.placeMode}
           locationId={state.locationId}
           pickupAddress={state.pickupAddress}
+          pickupCoordinates={state.pickupCoordinates}
           mapApiKey={mapApiKey}
           onPlaceMode={(placeMode) => patch({ placeMode })}
           onLocationId={(locationId) => patch({ locationId })}
-          onPickup={(pickupAddress, pickupCoordinates) =>
-            patch({ pickupAddress, pickupCoordinates })
+          onPickupTyped={(pickupAddress) =>
+            dispatch({ type: "pickupTyped", value: pickupAddress })
+          }
+          onPickupSelected={(pickupAddress, pickupCoordinates) =>
+            dispatch({
+              type: "pickupSelected",
+              value: pickupAddress,
+              coordinates: pickupCoordinates,
+            })
           }
         />
       ) : null}

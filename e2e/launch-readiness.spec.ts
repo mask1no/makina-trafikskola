@@ -83,6 +83,24 @@ test.describe("public localized experience", () => {
       "true",
     );
   });
+
+  test("falls back to plain pickup input and requires selecting an address suggestion", async ({
+    page,
+  }) => {
+    await page.route("**://maps.googleapis.com/**", (route) => route.abort());
+    await page.route("**://maps.gstatic.com/**", (route) => route.abort());
+    await page.goto("/sv/boka");
+    const nextButton = page.getByRole("button", { name: "Nästa" });
+    test.skip(
+      (await nextButton.count()) === 0,
+      "This server has booking disabled.",
+    );
+    await nextButton.click();
+    await page.getByRole("button", { name: "Hämta mig" }).click();
+    await page.getByLabel("Hämtningsadress").fill("Centralvägen 5");
+    await nextButton.click();
+    await expect(page.getByText("Välj en adress i listan.")).toBeVisible();
+  });
 });
 
 test("stores cookie consent", async ({ page }) => {
