@@ -66,15 +66,10 @@ jobs:
       - name: Unit tests
         run: npm run test:run
 
-      - name: Booking concurrency integration tests
+      - name: Integration tests
         env:
           RUN_DB_INTEGRATION: "1"
-        run: npm run test:concurrency
-
-      - name: Stripe webhook replay integration test
-        env:
-          RUN_DB_INTEGRATION: "1"
-        run: npm run test:webhook-replay
+        run: npm run test:integration
 
       - name: Translation parity
         run: npm run check:translations

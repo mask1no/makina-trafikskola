@@ -11,7 +11,23 @@ import { getStripe, stripeIsConfigured } from "@/lib/stripe";
 
 type ReminderPayload = { bookingId?: unknown };
 
-export async function runCoreCron(now: Date) {
+type CoreCronScope = {
+  onlyStudentIds?: readonly string[];
+  onlyBookingIds?: readonly string[];
+};
+
+function hasScope(scope?: CoreCronScope) {
+  return Boolean(scope?.onlyStudentIds?.length || scope?.onlyBookingIds?.length);
+}
+
+export async function runCoreCron(now: Date, scope?: CoreCronScope) {
+  const scopedStudents = scope?.onlyStudentIds?.length
+    ? [...new Set(scope.onlyStudentIds)]
+    : [];
+  const scopedBookings = scope?.onlyBookingIds?.length
+    ? [...new Set(scope.onlyBookingIds)]
+    : [];
+  const scoped = hasScope(scope);
   const holdMinutes = Math.max(
     1,
     Number.parseInt(process.env.BOOKING_HOLD_MINUTES ?? "15", 10) || 15,
@@ -21,11 +37,15 @@ export async function runCoreCron(now: Date) {
   );
   const result = await db.$transaction(
     async (tx) => {
-      const [lock] = await tx.$queryRaw<Array<{ locked: boolean }>>`
-        SELECT pg_try_advisory_xact_lock(hashtext('makina-core-cron')) AS locked
-      `;
+      let locked = true;
+      if (!scoped) {
+        const [lock] = await tx.$queryRaw<Array<{ locked: boolean }>>`
+          SELECT pg_try_advisory_xact_lock(hashtext('makina-core-cron')) AS locked
+        `;
+        locked = Boolean(lock?.locked);
+      }
 
-      if (!lock?.locked) {
+      if (!locked) {
         return {
           skipped: true,
           reminderIds: [],
@@ -46,6 +66,12 @@ export async function runCoreCron(now: Date) {
           status: "CONFIRMED",
           creditCharged: false,
           holdExpiresAt: { lte: now },
+          ...(scopedStudents.length
+            ? { studentId: { in: scopedStudents } }
+            : {}),
+          ...(scopedBookings.length
+            ? { id: { in: scopedBookings } }
+            : {}),
         },
         select: { id: true, studentId: true, createdAt: true },
       });
@@ -65,6 +91,13 @@ export async function runCoreCron(now: Date) {
         where: {
           status: "PENDING_PAYMENT",
           createdAt: { lte: courseHoldCutoff },
+          ...(scopedStudents.length
+            ? {
+                sourceOrderItem: {
+                  order: { studentId: { in: scopedStudents } },
+                },
+              }
+            : {}),
         },
         select: {
           id: true,
@@ -92,6 +125,12 @@ export async function runCoreCron(now: Date) {
         where: {
           status: "COMPLETED",
           endsAt: { lte: subDays(now, 90) },
+          ...(scopedStudents.length
+            ? { studentId: { in: scopedStudents } }
+            : {}),
+          ...(scopedBookings.length
+            ? { id: { in: scopedBookings } }
+            : {}),
           OR: [
             { pickupAddress: { not: null } },
             { pickupLat: { not: null } },
@@ -106,7 +145,13 @@ export async function runCoreCron(now: Date) {
       });
 
       const students = await tx.creditTransaction.findMany({
-        where: { reason: "PURCHASE", expiresAt: { lte: now } },
+        where: {
+          reason: "PURCHASE",
+          expiresAt: { lte: now },
+          ...(scopedStudents.length
+            ? { studentId: { in: scopedStudents } }
+            : {}),
+        },
         distinct: ["studentId"],
         select: { studentId: true },
       });
@@ -148,6 +193,12 @@ export async function runCoreCron(now: Date) {
           status: "CONFIRMED",
           creditCharged: true,
           startsAt: { gt: now, lte: addHours(now, 24) },
+          ...(scopedStudents.length
+            ? { studentId: { in: scopedStudents } }
+            : {}),
+          ...(scopedBookings.length
+            ? { id: { in: scopedBookings } }
+            : {}),
         },
         select: {
           id: true,
@@ -208,23 +259,25 @@ export async function runCoreCron(now: Date) {
         });
       }
 
-      await tx.teacherProfile.updateMany({
-        data: { ratingAvg: 0, ratingCount: 0 },
-      });
-      const ratings = await tx.review.groupBy({
-        by: ["teacherId"],
-        where: { published: true },
-        _avg: { rating: true },
-        _count: { rating: true },
-      });
-      for (const rating of ratings) {
-        await tx.teacherProfile.update({
-          where: { id: rating.teacherId },
-          data: {
-            ratingAvg: rating._avg.rating ?? 0,
-            ratingCount: rating._count.rating,
-          },
+      if (!scoped) {
+        await tx.teacherProfile.updateMany({
+          data: { ratingAvg: 0, ratingCount: 0 },
         });
+        const ratings = await tx.review.groupBy({
+          by: ["teacherId"],
+          where: { published: true },
+          _avg: { rating: true },
+          _count: { rating: true },
+        });
+        for (const rating of ratings) {
+          await tx.teacherProfile.update({
+            where: { id: rating.teacherId },
+            data: {
+              ratingAvg: rating._avg.rating ?? 0,
+              ratingCount: rating._count.rating,
+            },
+          });
+        }
       }
 
       const lessonHoldPayments = lessonHoldsToExpire.length

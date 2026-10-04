@@ -1,5 +1,3 @@
-import { randomUUID } from "node:crypto";
-
 import { addDays } from "date-fns";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 
@@ -28,21 +26,80 @@ import { db } from "@/lib/db";
 import { getStripe } from "@/lib/stripe";
 
 const runIntegration = process.env.RUN_DB_INTEGRATION === "1";
-const fixture = `webhook-replay-${randomUUID()}`;
+const runId = process.env.INTEGRATION_RUN_ID?.trim() || "it-webhook-replay";
+const fixture = runId;
 const webhookSecret = "whsec_webhook_replay_integration";
-const eventId = `evt_${randomUUID().replaceAll("-", "")}`;
+const eventId = `evt_${runId.replaceAll("-", "")}_main`;
 let studentId = "";
 let productId = "";
 let orderId = "";
 
+async function cleanupRunArtifacts() {
+  const runUsers = await db.user.findMany({
+    where: { email: { startsWith: runId } },
+    select: { id: true },
+  });
+  const runUserIds = runUsers.map((user) => user.id);
+  const runProducts = await db.product.findMany({
+    where: { slug: { startsWith: runId } },
+    select: { id: true },
+  });
+  const runProductIds = runProducts.map((product) => product.id);
+  await db.notification.deleteMany({
+    where: { userId: { in: runUserIds } },
+  });
+  await db.creditTransaction.deleteMany({
+    where: { studentId: { in: runUserIds } },
+  });
+  await db.booking.deleteMany({
+    where: { studentId: { in: runUserIds } },
+  });
+  await db.stripeEvent.deleteMany({
+    where: { id: { startsWith: `evt_${runId.replaceAll("-", "")}` } },
+  });
+  await db.payment.deleteMany({
+    where: { order: { studentId: { in: runUserIds } } },
+  });
+  await db.order.deleteMany({
+    where: { studentId: { in: runUserIds } },
+  });
+  await db.productTranslation.deleteMany({
+    where: { productId: { in: runProductIds } },
+  });
+  await db.product.deleteMany({
+    where: { id: { in: runProductIds } },
+  });
+  const runTeacherProfiles = await db.teacherProfile.findMany({
+    where: { slug: { startsWith: `${runId}-` } },
+    select: { id: true },
+  });
+  const runTeacherIds = runTeacherProfiles.map((profile) => profile.id);
+  await db.teacherAvailability.deleteMany({
+    where: { teacherId: { in: runTeacherIds } },
+  });
+  await db.teacherLocation.deleteMany({
+    where: { teacherId: { in: runTeacherIds } },
+  });
+  await db.teacherProfile.deleteMany({
+    where: { id: { in: runTeacherIds } },
+  });
+  await db.location.deleteMany({
+    where: { slug: { startsWith: `${runId}-` } },
+  });
+  await db.user.deleteMany({
+    where: { id: { in: runUserIds } },
+  });
+}
+
 describe.skipIf(!runIntegration)("Stripe webhook replay", () => {
   beforeAll(async () => {
+    await cleanupRunArtifacts();
     process.env.STRIPE_SECRET_KEY = "sk_test_webhook_replay_integration";
     process.env.STRIPE_WEBHOOK_SECRET = webhookSecret;
 
     const student = await db.user.create({
       data: {
-        email: `${fixture}@example.invalid`,
+        email: `${runId}-student@example.invalid`,
         firstName: "Webhook",
         lastName: "Replay",
         role: "STUDENT",
@@ -96,16 +153,7 @@ describe.skipIf(!runIntegration)("Stripe webhook replay", () => {
   });
 
   afterAll(async () => {
-    await db.notification.deleteMany({ where: { userId: studentId } });
-    await db.creditTransaction.deleteMany({ where: { studentId } });
-    await db.stripeEvent.deleteMany({ where: { id: eventId } });
-    await db.payment.deleteMany({ where: { orderId } });
-    if (orderId) await db.order.delete({ where: { id: orderId } });
-    if (productId) {
-      await db.productTranslation.deleteMany({ where: { productId } });
-      await db.product.delete({ where: { id: productId } });
-    }
-    if (studentId) await db.user.delete({ where: { id: studentId } });
+    await cleanupRunArtifacts();
   });
 
   it("fulfills one order and one credit lot when the event is posted twice", async () => {
@@ -286,7 +334,7 @@ describe.skipIf(!runIntegration)("Stripe webhook replay", () => {
             },
           });
 
-          const eventId = `evt_${randomUUID().replaceAll("-", "")}`;
+          const eventId = `evt_${runId.replaceAll("-", "")}_${index}`;
           eventIds.push(eventId);
           const payload = JSON.stringify({
             id: eventId,
@@ -337,7 +385,7 @@ describe.skipIf(!runIntegration)("Stripe webhook replay", () => {
                 method: "POST",
                 headers: {
                   "content-type": "application/json",
-                  "idempotency-key": `${fixture}:race:${index}`,
+                  "idempotency-key": `${runId}:race:${index}`,
                 },
                 body: JSON.stringify({
                   teacherId: raceTeacherId,

@@ -35,20 +35,69 @@ import { db } from "@/lib/db";
 import { dispatchNotifications } from "@/lib/notifications/dispatch";
 
 const runIntegration = process.env.RUN_DB_INTEGRATION === "1";
-const fixture = `notify-${randomUUID()}`;
-const userIds: string[] = [];
+const runId = process.env.INTEGRATION_RUN_ID?.trim() || "it-booking-notify";
 let teacherUserId = "";
 let teacherId = "";
 let otherTeacherId = "";
 let otherTeacherUserId = "";
 let locationId = "";
 let adminId = "";
+let localCounter = 0;
+
+function nextTag() {
+  localCounter += 1;
+  return `${runId}-${localCounter}`;
+}
+
+async function cleanupRunArtifacts() {
+  const runUsers = await db.user.findMany({
+    where: { email: { startsWith: `${runId}-` } },
+    select: { id: true },
+  });
+  const runUserIds = runUsers.map((user) => user.id);
+  const runTeacherProfiles = await db.teacherProfile.findMany({
+    where: { slug: { startsWith: `${runId}-` } },
+    select: { id: true },
+  });
+  const runTeacherIds = runTeacherProfiles.map((profile) => profile.id);
+  await db.notification.deleteMany({
+    where: { userId: { in: runUserIds } },
+  });
+  await db.creditTransaction.deleteMany({
+    where: { studentId: { in: runUserIds } },
+  });
+  await db.booking.deleteMany({
+    where: {
+      OR: [
+        { studentId: { in: runUserIds } },
+        { teacherId: { in: runTeacherIds } },
+        { idempotencyKey: { startsWith: `${runId}-` } },
+      ],
+    },
+  });
+  await db.teacherAvailability.deleteMany({
+    where: { teacherId: { in: runTeacherIds } },
+  });
+  await db.teacherLocation.deleteMany({
+    where: { teacherId: { in: runTeacherIds } },
+  });
+  await db.teacherProfile.deleteMany({
+    where: { id: { in: runTeacherIds } },
+  });
+  await db.location.deleteMany({
+    where: { slug: { startsWith: `${runId}-` } },
+  });
+  await db.user.deleteMany({
+    where: { id: { in: runUserIds } },
+  });
+}
 
 describe.skipIf(!runIntegration)("booking notification coverage", () => {
   beforeAll(async () => {
+    await cleanupRunArtifacts();
     const location = await db.location.create({
       data: {
-        slug: fixture,
+        slug: `${runId}-location`,
         name: "Notify fixture",
         address: "Testvägen 3",
         city: "Stockholm",
@@ -60,14 +109,14 @@ describe.skipIf(!runIntegration)("booking notification coverage", () => {
     locationId = location.id;
     const teacher = await db.user.create({
       data: {
-        email: `${fixture}-teacher@example.invalid`,
+        email: `${runId}-teacher@example.invalid`,
         phone: "+46700000001",
         firstName: "Sara",
         lastName: "Teacher",
         role: "TEACHER",
         teacherProfile: {
           create: {
-            slug: fixture,
+            slug: `${runId}-teacher`,
             languages: ["sv"],
             transmissions: ["MANUAL"],
             locations: { create: { locationId } },
@@ -86,17 +135,16 @@ describe.skipIf(!runIntegration)("booking notification coverage", () => {
     });
     teacherUserId = teacher.id;
     teacherId = teacher.teacherProfile!.id;
-    userIds.push(teacherUserId);
     const other = await db.user.create({
       data: {
-        email: `${fixture}-other@example.invalid`,
+        email: `${runId}-other@example.invalid`,
         phone: "+46700000002",
         firstName: "Amir",
         lastName: "Other",
         role: "TEACHER",
         teacherProfile: {
           create: {
-            slug: `${fixture}-other`,
+            slug: `${runId}-other`,
             languages: ["sv"],
             transmissions: ["MANUAL"],
             locations: { create: { locationId } },
@@ -115,53 +163,28 @@ describe.skipIf(!runIntegration)("booking notification coverage", () => {
     });
     otherTeacherUserId = other.id;
     otherTeacherId = other.teacherProfile!.id;
-    userIds.push(otherTeacherUserId);
     const admin = await db.user.create({
       data: {
-        email: `${fixture}-admin@example.invalid`,
+        email: `${runId}-admin@example.invalid`,
         firstName: "Ada",
         lastName: "Admin",
         role: "ADMIN",
       },
     });
     adminId = admin.id;
-    userIds.push(adminId);
   });
 
   afterAll(async () => {
-    await db.notification.deleteMany({ where: { userId: { in: userIds } } });
-    await db.creditTransaction.deleteMany({
-      where: { studentId: { in: userIds } },
-    });
-    await db.booking.deleteMany({
-      where: {
-        OR: [
-          { studentId: { in: userIds } },
-          { teacherId: { in: [teacherId, otherTeacherId].filter(Boolean) } },
-        ],
-      },
-    });
-    if (teacherId || otherTeacherId) {
-      const ids = [teacherId, otherTeacherId].filter(Boolean);
-      await db.teacherAvailability.deleteMany({
-        where: { teacherId: { in: ids } },
-      });
-      await db.teacherLocation.deleteMany({
-        where: { teacherId: { in: ids } },
-      });
-      await db.teacherProfile.deleteMany({ where: { id: { in: ids } } });
-    }
-    if (locationId) await db.location.delete({ where: { id: locationId } });
-    await db.user.deleteMany({ where: { id: { in: userIds } } });
+    await cleanupRunArtifacts();
   });
 
   async function student(credits: number) {
+    const number = String(localCounter + 1).padStart(4, "0");
+    const tag = nextTag();
     const created = await db.user.create({
       data: {
-        email: `${fixture}-${randomUUID()}@example.invalid`,
-        phone: `+4670${Math.floor(Math.random() * 1_000_0000)
-          .toString()
-          .padStart(7, "0")}`,
+        email: `${tag}@example.invalid`,
+        phone: `+467900${number}`,
         firstName: "Nora",
         lastName: "Student",
         role: "STUDENT",
@@ -178,7 +201,6 @@ describe.skipIf(!runIntegration)("booking notification coverage", () => {
           : {}),
       },
     });
-    userIds.push(created.id);
     return created.id;
   }
 
@@ -209,7 +231,7 @@ describe.skipIf(!runIntegration)("booking notification coverage", () => {
         method: "POST",
         headers: {
           "content-type": "application/json",
-          "idempotency-key": `${fixture}-charged`,
+          "idempotency-key": `${runId}-charged`,
         },
         body: JSON.stringify({
           teacherId,
@@ -233,7 +255,7 @@ describe.skipIf(!runIntegration)("booking notification coverage", () => {
         method: "POST",
         headers: {
           "content-type": "application/json",
-          "idempotency-key": `${fixture}-hold`,
+          "idempotency-key": `${runId}-hold`,
         },
         body: JSON.stringify({
           teacherId,
@@ -301,7 +323,7 @@ describe.skipIf(!runIntegration)("booking notification coverage", () => {
         method: "POST",
         headers: {
           "content-type": "application/json",
-          "idempotency-key": `${fixture}-reassign`,
+          "idempotency-key": `${runId}-reassign`,
         },
         body: JSON.stringify({
           teacherId,
@@ -368,7 +390,8 @@ describe.skipIf(!runIntegration)("booking notification coverage", () => {
 
   it("sends one reminder for a lesson booked well ahead, and another after a move", async () => {
     const studentId = await student(0);
-    const startsAt = addHours(new Date(), 13);
+    const now = new Date("2026-10-01T08:00:00.000Z");
+    const startsAt = addHours(now, 13);
     await db.booking.create({
       data: {
         studentId,
@@ -380,14 +403,14 @@ describe.skipIf(!runIntegration)("booking notification coverage", () => {
         status: "CONFIRMED",
       },
     });
-    await runCoreCron(new Date());
+    await runCoreCron(now, { onlyStudentIds: [studentId] });
     expect(
       await db.notification.count({
         where: { userId: studentId, template: "booking_reminder_24h" },
       }),
     ).toBe(0);
 
-    const ahead = addDays(new Date(), 3);
+    const ahead = addDays(now, 3);
     const early = await db.booking.create({
       data: {
         studentId,
@@ -401,8 +424,14 @@ describe.skipIf(!runIntegration)("booking notification coverage", () => {
       },
     });
     const insideWindow = addHours(ahead, -20);
-    await runCoreCron(insideWindow);
-    await runCoreCron(insideWindow);
+    await runCoreCron(insideWindow, {
+      onlyStudentIds: [studentId],
+      onlyBookingIds: [early.id],
+    });
+    await runCoreCron(insideWindow, {
+      onlyStudentIds: [studentId],
+      onlyBookingIds: [early.id],
+    });
     expect(
       await db.notification.count({
         where: { userId: studentId, template: "booking_reminder_24h" },
@@ -412,7 +441,10 @@ describe.skipIf(!runIntegration)("booking notification coverage", () => {
       where: { id: early.id },
       data: { startsAt: addHours(ahead, 2), endsAt: addMinutes(addHours(ahead, 2), 50) },
     });
-    await runCoreCron(addHours(ahead, 2 - 20));
+    await runCoreCron(addHours(ahead, 2 - 20), {
+      onlyStudentIds: [studentId],
+      onlyBookingIds: [early.id],
+    });
     expect(
       await db.notification.count({
         where: { userId: studentId, template: "booking_reminder_24h" },
@@ -458,7 +490,7 @@ describe.skipIf(!runIntegration)("booking notification coverage", () => {
     });
     expect(stale.error).toBe("STALE");
 
-    const token = randomUUID().replaceAll("-", "").padEnd(43, "a").slice(0, 43);
+    const token = `${runId}${randomUUID().replaceAll("-", "")}`.slice(0, 43);
     await db.teacherProfile.update({
       where: { id: teacherId },
       data: { calendarToken: token },

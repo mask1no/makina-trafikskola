@@ -1,5 +1,3 @@
-import { randomUUID } from "node:crypto";
-
 import { addDays, addHours } from "date-fns";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 
@@ -23,18 +21,66 @@ import { POST } from "@/app/api/courses/bookings/route";
 import { db } from "@/lib/db";
 
 const runIntegration = process.env.RUN_DB_INTEGRATION === "1";
-const fixture = `api-course-race-${randomUUID()}`;
+const runId = process.env.INTEGRATION_RUN_ID?.trim() || "it-courses-concurrency";
 const studentIds: string[] = [];
-const orderIds: string[] = [];
 let productId = "";
 let courseId = "";
 let occasionId = "";
 
+async function cleanupRunArtifacts() {
+  const runUsers = await db.user.findMany({
+    where: { email: { startsWith: `${runId}-` } },
+    select: { id: true },
+  });
+  const runUserIds = runUsers.map((user) => user.id);
+  const runProducts = await db.product.findMany({
+    where: { slug: { startsWith: `${runId}-` } },
+    select: { id: true },
+  });
+  const runProductIds = runProducts.map((product) => product.id);
+  const runCourses = await db.course.findMany({
+    where: { productId: { in: runProductIds } },
+    select: { id: true },
+  });
+  const runCourseIds = runCourses.map((course) => course.id);
+  await db.courseBooking.deleteMany({
+    where: {
+      OR: [
+        { studentId: { in: runUserIds } },
+        { sourceOrderItem: { order: { studentId: { in: runUserIds } } } },
+        { occasion: { courseId: { in: runCourseIds } } },
+      ],
+    },
+  });
+  await db.courseOccasion.deleteMany({
+    where: { courseId: { in: runCourseIds } },
+  });
+  await db.payment.deleteMany({
+    where: { order: { studentId: { in: runUserIds } } },
+  });
+  await db.order.deleteMany({
+    where: { studentId: { in: runUserIds } },
+  });
+  await db.user.deleteMany({
+    where: { id: { in: runUserIds } },
+  });
+  await db.course.deleteMany({
+    where: { id: { in: runCourseIds } },
+  });
+  await db.productTranslation.deleteMany({
+    where: { productId: { in: runProductIds } },
+  });
+  await db.product.deleteMany({
+    where: { id: { in: runProductIds } },
+  });
+}
+
 describe.skipIf(!runIntegration)("course booking API concurrency", () => {
   beforeAll(async () => {
+    await cleanupRunArtifacts();
     const product = await db.product.create({
       data: {
-        slug: fixture,
+        slug: `${runId}-product`,
         kind: "COURSE_SEAT",
         active: false,
         priceOre: 10000,
@@ -71,7 +117,7 @@ describe.skipIf(!runIntegration)("course booking API concurrency", () => {
     for (let index = 0; index < 20; index += 1) {
       const student = await db.user.create({
         data: {
-          email: `${fixture}-student-${index}@example.invalid`,
+          email: `${runId}-student-${index}@example.invalid`,
           firstName: "Concurrency",
           lastName: `Student ${index}`,
           role: "STUDENT",
@@ -79,7 +125,7 @@ describe.skipIf(!runIntegration)("course booking API concurrency", () => {
       });
       studentIds.push(student.id);
 
-      const order = await db.order.create({
+      await db.order.create({
         data: {
           studentId: student.id,
           status: "PAID",
@@ -103,23 +149,11 @@ describe.skipIf(!runIntegration)("course booking API concurrency", () => {
           },
         },
       });
-      orderIds.push(order.id);
     }
   });
 
   afterAll(async () => {
-    if (occasionId) {
-      await db.courseBooking.deleteMany({ where: { occasionId } });
-      await db.courseOccasion.delete({ where: { id: occasionId } });
-    }
-    await db.payment.deleteMany({ where: { orderId: { in: orderIds } } });
-    await db.order.deleteMany({ where: { id: { in: orderIds } } });
-    await db.user.deleteMany({ where: { id: { in: studentIds } } });
-    if (courseId) await db.course.delete({ where: { id: courseId } });
-    if (productId) {
-      await db.productTranslation.deleteMany({ where: { productId } });
-      await db.product.delete({ where: { id: productId } });
-    }
+    await cleanupRunArtifacts();
   });
 
   it(

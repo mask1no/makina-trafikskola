@@ -1,5 +1,3 @@
-import { randomUUID } from "node:crypto";
-
 import { addDays } from "date-fns";
 import { toZonedTime } from "date-fns-tz";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
@@ -30,16 +28,71 @@ import { loadAvailability } from "@/lib/bookings/availability";
 import { db } from "@/lib/db";
 
 const runIntegration = process.env.RUN_DB_INTEGRATION === "1";
-const fixture = `api-booking-race-${randomUUID()}`;
-const studentIds: string[] = [];
+const runId = process.env.INTEGRATION_RUN_ID?.trim() || "it-booking-concurrency";
 const seededStudentIds: string[] = [];
-let teacherUserId = "";
 let teacherId = "";
 let locationId = "";
 let startsAt: Date;
+let localCounter = 0;
+
+function nextTag() {
+  localCounter += 1;
+  return `${runId}-${localCounter}`;
+}
+
+async function cleanupRunArtifacts() {
+  const runUsers = await db.user.findMany({
+    where: { email: { startsWith: `${runId}-` } },
+    select: { id: true },
+  });
+  const runUserIds = runUsers.map((user) => user.id);
+  const runTeacherProfiles = await db.teacherProfile.findMany({
+    where: { slug: { startsWith: `${runId}-` } },
+    select: { id: true },
+  });
+  const runTeacherIds = runTeacherProfiles.map((profile) => profile.id);
+  await db.notification.deleteMany({
+    where: {
+      userId: { in: runUserIds },
+    },
+  });
+  await db.creditTransaction.deleteMany({
+    where: {
+      OR: [
+        { studentId: { in: runUserIds } },
+        { note: { startsWith: `${runId}:` } },
+      ],
+    },
+  });
+  await db.booking.deleteMany({
+    where: {
+      OR: [
+        { studentId: { in: runUserIds } },
+        { teacherId: { in: runTeacherIds } },
+        { idempotencyKey: { startsWith: `${runId}:` } },
+      ],
+    },
+  });
+  await db.teacherAvailability.deleteMany({
+    where: { teacherId: { in: runTeacherIds } },
+  });
+  await db.teacherLocation.deleteMany({
+    where: { teacherId: { in: runTeacherIds } },
+  });
+  await db.teacherProfile.deleteMany({
+    where: { id: { in: runTeacherIds } },
+  });
+  await db.location.deleteMany({
+    where: { slug: { startsWith: `${runId}-` } },
+  });
+  await db.user.deleteMany({
+    where: { id: { in: runUserIds } },
+  });
+}
 
 describe.skipIf(!runIntegration)("booking API concurrency", () => {
   beforeAll(async () => {
+    await cleanupRunArtifacts();
     const future = addDays(new Date(), 14);
     future.setUTCMinutes(0, 0, 0);
     startsAt = future;
@@ -50,7 +103,7 @@ describe.skipIf(!runIntegration)("booking API concurrency", () => {
 
     const location = await db.location.create({
       data: {
-        slug: fixture,
+        slug: `${runId}-location`,
         name: "Concurrency fixture",
         address: "Testvägen 1",
         city: "Stockholm",
@@ -63,13 +116,13 @@ describe.skipIf(!runIntegration)("booking API concurrency", () => {
 
     const teacher = await db.user.create({
       data: {
-        email: `${fixture}-teacher@example.invalid`,
+        email: `${runId}-teacher@example.invalid`,
         firstName: "Concurrency",
         lastName: "Teacher",
         role: "TEACHER",
         teacherProfile: {
           create: {
-            slug: fixture,
+            slug: `${runId}-teacher`,
             languages: ["sv"],
             transmissions: ["MANUAL"],
             locations: { create: { locationId } },
@@ -86,7 +139,6 @@ describe.skipIf(!runIntegration)("booking API concurrency", () => {
       },
       include: { teacherProfile: true },
     });
-    teacherUserId = teacher.id;
     teacherId = teacher.teacherProfile!.id;
     const slots = await loadAvailability({
       teacherId,
@@ -102,7 +154,7 @@ describe.skipIf(!runIntegration)("booking API concurrency", () => {
     for (let index = 0; index < 20; index += 1) {
       const student = await db.user.create({
         data: {
-          email: `${fixture}-student-${index}@example.invalid`,
+          email: `${runId}-student-${index}@example.invalid`,
           firstName: "Concurrency",
           lastName: `Student ${index}`,
           role: "STUDENT",
@@ -115,32 +167,12 @@ describe.skipIf(!runIntegration)("booking API concurrency", () => {
           },
         },
       });
-      studentIds.push(student.id);
       seededStudentIds.push(student.id);
     }
   });
 
   afterAll(async () => {
-    await db.creditTransaction.deleteMany({
-      where: { studentId: { in: studentIds } },
-    });
-    await db.booking.deleteMany({
-      where: { studentId: { in: studentIds } },
-    });
-    await db.notification.deleteMany({
-      where: { userId: { in: [...studentIds, teacherUserId].filter(Boolean) } },
-    });
-    if (teacherId) {
-      await db.teacherAvailability.deleteMany({ where: { teacherId } });
-      await db.teacherLocation.deleteMany({ where: { teacherId } });
-      await db.teacherProfile.delete({ where: { id: teacherId } });
-    }
-    if (locationId) {
-      await db.location.delete({ where: { id: locationId } });
-    }
-    await db.user.deleteMany({
-      where: { id: { in: [...studentIds, teacherUserId] } },
-    });
+    await cleanupRunArtifacts();
   });
 
   it(
@@ -154,7 +186,7 @@ describe.skipIf(!runIntegration)("booking API concurrency", () => {
               method: "POST",
               headers: {
                 "content-type": "application/json",
-                "idempotency-key": `${fixture}:${index}`,
+                "idempotency-key": `${runId}:book:${index}`,
               },
               body: JSON.stringify({
                 teacherId,
@@ -195,7 +227,7 @@ describe.skipIf(!runIntegration)("booking API concurrency", () => {
   async function createStudent(credits: number) {
     const student = await db.user.create({
       data: {
-        email: `${fixture}-extra-${randomUUID()}@example.invalid`,
+        email: `${nextTag()}-extra@example.invalid`,
         firstName: "Concurrency",
         lastName: "Extra",
         role: "STUDENT",
@@ -212,7 +244,6 @@ describe.skipIf(!runIntegration)("booking API concurrency", () => {
           : {}),
       },
     });
-    studentIds.push(student.id);
     return student.id;
   }
 
@@ -272,7 +303,7 @@ describe.skipIf(!runIntegration)("booking API concurrency", () => {
     authState.studentIds = [studentId, studentId, studentId, studentId];
     const responses = await Promise.all(
       slots.map((slot, index) =>
-        postBooking(studentId, slot.startsAt, `${fixture}:split:${index}`),
+        postBooking(studentId, slot.startsAt, `${runId}:split:${index}`),
       ),
     );
     const bodies = await Promise.all(
@@ -304,7 +335,7 @@ describe.skipIf(!runIntegration)("booking API concurrency", () => {
   it("returns one booking when the same idempotency key is posted in parallel", async () => {
     const studentId = await createStudent(0);
     const [slot] = await openSlots(1);
-    const idempotencyKey = `${fixture}:same-key`;
+    const idempotencyKey = `${runId}:same-key`;
     authState.studentIds = [studentId, studentId, studentId, studentId];
     const responses = await Promise.all(
       [0, 1, 2, 3].map(() =>
@@ -333,7 +364,7 @@ describe.skipIf(!runIntegration)("booking API concurrency", () => {
     const studentA = await createStudent(0);
     const studentB = await createStudent(0);
     const [slot] = await openSlots(1);
-    const idempotencyKey = `${fixture}:other-student`;
+    const idempotencyKey = `${runId}:other-student`;
     authState.studentIds = [studentA];
     const created = await postBooking(studentA, slot.startsAt, idempotencyKey);
     expect(created.status).toBe(201);
@@ -352,7 +383,7 @@ describe.skipIf(!runIntegration)("booking API concurrency", () => {
     const created = await postBooking(
       studentId,
       slot.startsAt,
-      `${fixture}:cancel-once`,
+      `${runId}:cancel-once`,
       true,
     );
     expect(created.status).toBe(201);
