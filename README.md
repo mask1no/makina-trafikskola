@@ -1,6 +1,6 @@
 # Makina Trafikskola
 
-Driving school site for Makina Trafikskola in Upplands Väsby. Students book lessons, buy packages and practise theory. The site is in Swedish, English, Tigrinya, Arabic (RTL) and Somali. Teaching is in Swedish, English, Tigrinya and Arabic. Somali teaching is not offered yet.
+Driving school site for Makina Trafikskola in Upplands Väsby. Students book lessons, buy packages and practise theory. The site is in Swedish, English, Tigrinya, Arabic (RTL) and Somali. Teaching is currently in Swedish, English, Tigrinya and Kurdish. Somali is marked as coming soon.
 
 The app does not send email. Codes, booking messages and the 24-hour reminder are SMS. Stripe sends payment receipts.
 
@@ -69,11 +69,13 @@ Also used:
 | `npm run dev` | Next.js dev server |
 | `npm run build` / `npm start` | Production build. Start runs `prisma migrate deploy` first |
 | `npm run typecheck` / `npm run lint` | TypeScript and ESLint |
-| `npm run test:run` | Unit tests |
+| `npm run test:run` | Unit tests only (parallel) |
+| `npm run test:integration` | Integration tests only (`RUN_DB_INTEGRATION=1`, serial, `*_test` DB only) |
 | `npm run check:translations` | The five message files have the same keys |
 | `npm run test:concurrency` | Booking lock integration test. Needs `RUN_DB_INTEGRATION=1` |
 | `npm run test:webhook-replay` | Stripe webhook replay. Needs `RUN_DB_INTEGRATION=1` |
 | `npm run test:e2e` | Seed, build, Playwright |
+| `npm run screenshots` | Full-page screenshots for launch review (`SCREENSHOTS=1`) |
 | `npm run launch:check` | Read-only production dependency and configuration checks |
 | `npm run i18n:export` | Export all locale strings to an Excel-compatible review CSV |
 | `npm run theory:import` | Import the question bank |
@@ -110,4 +112,22 @@ An address that starts with `TODO` is treated as unconfirmed. `publicAddress()` 
 
 ## Testing
 
-Unit tests run with Vitest. Integration tests stay skipped until `RUN_DB_INTEGRATION=1`. End-to-end tests use Playwright against a seeded database. CI runs the unit, integration and build checks on every push, and Playwright on pull requests and on `cursor/makina-foundation`.
+Unit tests run with Vitest. Integration tests run in a separate Vitest project with file parallelism disabled and a global guard that refuses non-`*_test` databases. End-to-end tests use Playwright against a seeded database. CI runs unit, integration and build checks on every push, and Playwright on pull requests and on `cursor/makina-foundation`.
+
+## Address Search
+
+Pickup address entry keeps form state aligned with visible text. Typing updates the address and clears coordinates; selecting a Places suggestion sets both formatted address and coordinates. Continue is blocked with an inline hint until a suggestion is selected.
+
+## Typography Tokens
+
+Typography tokens are defined in `src/app/globals.css` and exposed via Tailwind size utilities in `tailwind.config.ts`: `display`, `hero`, `h2`, `h3`, `body`, `small`, `micro`, and `nav`. Arabic body text is slightly larger with a 1.75 line-height and Tigrinya keeps 1.7 line-height.
+
+## Reviews And Photos
+
+Public reviews render only when at least `MIN_PUBLIC_REVIEWS` (3) approved reviews exist. Teacher/staff/map avatars use uploaded `TeacherProfile.photoUrl` when available, with initials as fallback.
+
+## Post-Launch Refactors
+
+- Split `src/app/api/webhooks/stripe/route.ts` handlers into typed modules
+- Split `src/app/[locale]/(auth)/auth-ui.tsx` into form components
+- Split `src/app/[locale]/layout.tsx` and homepage into smaller sections

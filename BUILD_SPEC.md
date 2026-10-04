@@ -685,7 +685,7 @@ Theory questions are imported with `npm run theory:import`, not stored in this f
 
 Launch flags: `BOOKING_ENABLED=0` hides public booking. `INSTRUCTORS_ENABLED=0` hides public instructor pages. Login is email and password, Swedish SMS, and Google. The app does not send email. Stripe sends receipts. Payments are card, Swish and Klarna. Lesson credits and packages are valid for 12 months. Digital theory has no time limit. Cancellation is free only more than 24 hours before the start. Lessons are 50 minutes. Pickup is by arrangement.
 
-Teaching languages are Swedish, English, Tigrinya and Arabic. Somali is coming soon. The website itself is in five languages. Do not promise free theory questions until `freeTheoryQuestionCount()` is greater than zero.
+Teaching languages are Swedish, English, Tigrinya and Kurdish. Somali is coming soon. The website itself is in five languages. Do not promise free theory questions until `freeTheoryQuestionCount()` is greater than zero.
 
 A location address that starts with `TODO` is unconfirmed and is hidden by `publicAddress()`. A boolean column would be cleaner later.
 
@@ -740,7 +740,8 @@ side; seeded as 10. Do not sell any of these publicly until §11.1 is answered.
 npx prisma migrate dev --name init
 npx prisma db seed
 npm run theory:import
-npm run test            # vitest
+npm run test:run        # unit project (parallel)
+npm run test:integration # integration project (RUN_DB_INTEGRATION=1, serial, *_test DB only)
 npm run test:e2e        # playwright
 stripe listen --forward-to localhost:3000/api/webhooks/stripe
 ```
