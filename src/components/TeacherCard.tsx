@@ -33,24 +33,24 @@ export function TeacherCard(props: TeacherCardProps) {
           className="transition duration-700 ease-premium group-hover:scale-[1.03]"
         />
         <div className="min-w-0 pt-1">
-          <h3 className="text-xl font-extrabold tracking-tight">
+          <h3 className="text-h3 font-extrabold tracking-tight">
             <bdi>{props.name}</bdi>
           </h3>
           {props.experienceLabel ? (
-            <p className="mt-1 text-sm text-ink-muted">{props.experienceLabel}</p>
+            <p className="mt-1 text-small text-ink-muted">{props.experienceLabel}</p>
           ) : null}
           {props.swedishOnly ? (
-            <p className="mt-2 text-xs font-bold uppercase tracking-wider text-ink-subtle">
+            <p className="mt-2 text-micro font-bold uppercase tracking-wider text-ink-subtle">
               {props.swedishOnlyLabel}
             </p>
           ) : null}
         </div>
       </div>
-      <p className="mt-4 text-sm leading-6 text-ink-muted">
+      <p className="mt-4 max-w-[70ch] text-body leading-7 text-ink-muted">
         {[...props.languages, ...props.transmissions].join(" · ")}
       </p>
       {props.locationNames.length ? (
-        <p className="mt-2 text-sm text-ink-subtle">{props.locationNames.join(" · ")}</p>
+        <p className="mt-2 text-small text-ink-subtle">{props.locationNames.join(" · ")}</p>
       ) : null}
       <Link
         href={`/${props.locale}/larare/${props.slug}`}

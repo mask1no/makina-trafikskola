@@ -38,10 +38,10 @@ export default async function VerifyPhonePage(props: {
     <div className="min-h-[70svh] bg-page">
       <div className="site-container max-w-md py-10 sm:py-16">
         <p className="brand-mark text-ink">{authT("context.eyebrow")}</p>
-        <h1 className="mt-6 text-3xl font-black tracking-tight sm:text-4xl">
+        <h1 className="mt-6 text-h2 font-black tracking-tight">
           {t("title")}
         </h1>
-        <p className="mt-3 leading-7 text-ink-muted">{t("description")}</p>
+        <p className="mt-3 max-w-[70ch] text-body leading-7 text-ink-muted">{t("description")}</p>
         <div className="mx-auto mt-8 w-full max-w-[420px] rounded-lg border border-border bg-card p-5 sm:p-6">
           <VerifyPhoneForm locale={params.locale} />
         </div>

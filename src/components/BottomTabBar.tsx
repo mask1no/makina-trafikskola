@@ -78,7 +78,7 @@ function TabLink({
   pathname: string;
   prominent?: boolean;
 }) {
-  const className = `relative flex min-h-11 min-w-11 flex-col items-center justify-center gap-0.5 px-1 text-center text-xs font-bold leading-none text-ink-muted aria-[current=page]:text-ink ${
+  const className = `relative flex min-h-11 min-w-11 flex-col items-center justify-center gap-0.5 px-1 text-center text-micro font-bold leading-none text-ink-muted aria-[current=page]:text-ink ${
     prominent ? "mb-2 size-14 rounded-full bg-accent text-accent-ink" : ""
   }`;
   if (tab.href.startsWith("tel:")) {

@@ -38,6 +38,14 @@
   --radius-sm: 12px;
   --radius-md: 16px;
   --radius-lg: 20px;
+  --text-display: clamp(2.25rem, 1.6rem + 2.6vw, 3.75rem);
+  --text-hero: clamp(2.25rem, 1.7rem + 2.2vw, 3.5rem);
+  --text-h2: clamp(1.75rem, 1.4rem + 1.4vw, 2.5rem);
+  --text-h3: 1.25rem;
+  --text-body: 1rem;
+  --text-small: 0.875rem;
+  --text-micro: 0.75rem;
+  --text-nav: 0.9375rem;
   --shadow-sm: 0 1px 2px color-mix(in srgb, var(--ink) 6%, transparent);
   --shadow-md:
     0 1px 2px color-mix(in srgb, var(--ink) 5%, transparent),
@@ -101,12 +109,18 @@ body {
   color: var(--ink);
   background: var(--page);
   font-family: var(--font-app), Arial, sans-serif;
+  font-size: var(--text-body);
   font-feature-settings: "kern" 1, "liga" 1;
   line-height: 1.5;
   margin: 0;
   min-width: 320px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+}
+
+html[lang="ar"] body {
+  font-size: 1.0625rem;
+  line-height: 1.75;
 }
 
 * {
@@ -182,7 +196,7 @@ textarea {
   }
 
   .display-title {
-    font-size: clamp(2.5rem, 7vw, 5.75rem);
+    font-size: var(--text-display);
     font-weight: 900;
     letter-spacing: -0.055em;
     line-height: 0.96;
@@ -197,7 +211,7 @@ textarea {
   }
 
   .section-title {
-    font-size: clamp(2rem, 4vw, 3.75rem);
+    font-size: var(--text-h2);
     font-weight: 850;
     letter-spacing: -0.04em;
     line-height: 1.02;

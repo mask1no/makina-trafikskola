@@ -52,6 +52,16 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-app)", "Arial", "sans-serif"],
       },
+      fontSize: {
+        display: "var(--text-display)",
+        hero: "var(--text-hero)",
+        h2: "var(--text-h2)",
+        h3: "var(--text-h3)",
+        body: "var(--text-body)",
+        small: "var(--text-small)",
+        micro: "var(--text-micro)",
+        nav: "var(--text-nav)",
+      },
       letterSpacing: {
         tighter: "-0.04em",
       },

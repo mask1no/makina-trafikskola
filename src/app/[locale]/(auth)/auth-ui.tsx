@@ -40,7 +40,7 @@ function PhoneField({
 }) {
   return (
     <div className="grid gap-2">
-      <label className="grid gap-2 text-sm font-semibold text-ink" htmlFor="phone">
+      <label className="grid gap-2 text-small font-semibold text-ink" htmlFor="phone">
         <span>{label}</span>
         <span className="flex overflow-hidden rounded-sm border border-border bg-card shadow-soft focus-within:border-ink">
           <span className="flex min-h-11 items-center border-e border-border bg-page px-3 text-sm font-bold text-ink" dir="ltr">
@@ -59,12 +59,12 @@ function PhoneField({
             onChange={(event) => onChange(event.target.value)}
             aria-invalid={Boolean(error)}
             aria-describedby={error ? "phone-error" : undefined}
-            className="min-h-11 w-full bg-transparent px-4 text-ink outline-none placeholder:text-ink-subtle"
+            className="min-h-11 w-full bg-transparent px-4 text-body text-ink outline-none placeholder:text-ink-subtle"
           />
         </span>
       </label>
       {error ? (
-        <p id="phone-error" role="alert" className="text-sm font-medium text-danger">
+        <p id="phone-error" role="alert" className="text-small font-medium text-danger">
           {error}
         </p>
       ) : null}
@@ -92,7 +92,7 @@ function PasswordField({
   const [visible, setVisible] = useState(false);
   return (
     <div className="grid gap-2">
-      <label className="grid gap-2 text-sm font-semibold text-ink" htmlFor="password">
+      <label className="grid gap-2 text-small font-semibold text-ink" htmlFor="password">
         <span>{label}</span>
         <span className="relative">
           <input
@@ -106,7 +106,7 @@ function PasswordField({
             onChange={(event) => onChange(event.target.value)}
             aria-invalid={Boolean(error)}
             aria-describedby={error ? "password-error" : undefined}
-            className="min-h-11 w-full rounded-sm border border-border bg-card px-4 pe-14 text-ink shadow-soft outline-none focus:border-ink"
+            className="min-h-11 w-full rounded-sm border border-border bg-card px-4 pe-14 text-body text-ink shadow-soft outline-none focus:border-ink"
           />
           <button
             type="button"
@@ -125,7 +125,7 @@ function PasswordField({
         </span>
       </label>
       {error ? (
-        <p id="password-error" role="alert" className="text-sm font-medium text-danger">
+        <p id="password-error" role="alert" className="text-small font-medium text-danger">
           {error}
         </p>
       ) : null}
@@ -169,7 +169,7 @@ function GoogleButton({
         </svg>
         {busy ? t("working") : label}
       </button>
-      <p className="text-center text-sm text-ink-muted">{t("or")}</p>
+      <p className="text-center text-small text-ink-muted">{t("or")}</p>
     </div>
   );
 }

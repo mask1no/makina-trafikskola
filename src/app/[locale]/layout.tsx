@@ -187,7 +187,7 @@ export default async function LocaleLayout(
     { href: `${base}/kontakt`, label: t("contact") },
   ];
   const inlineNavClass =
-    "inline-flex min-h-11 shrink-0 items-center whitespace-nowrap rounded-sm px-1.5 text-[13px] font-bold transition hover:bg-surface-raised aria-[current=page]:bg-surface-raised xl:px-3 xl:text-sm";
+    "inline-flex min-h-11 shrink-0 items-center whitespace-nowrap rounded-sm px-3 text-nav font-bold transition hover:bg-surface-raised aria-[current=page]:bg-surface-raised";
   const menuLinkClass =
     "flex min-h-11 items-center rounded-sm px-3 font-semibold hover:bg-card-muted";
   const menuPanelClass =
@@ -273,11 +273,11 @@ export default async function LocaleLayout(
           }}
         />
         <header className="sticky top-0 z-40 border-b border-surface-soft bg-surface text-ink-inverse shadow-soft">
-          <div className="site-container flex min-h-[var(--header-height)] min-w-0 flex-nowrap items-center gap-1.5 sm:gap-2 lg:min-h-[var(--header-height-lg)]">
-            <Link href={base} className="inline-flex min-h-11 min-w-0 shrink items-center">
+          <div className="site-container grid min-h-[var(--header-height)] min-w-0 grid-cols-[auto_1fr_auto] items-center gap-1.5 sm:gap-2 lg:min-h-[var(--header-height-lg)] lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
+            <Link href={base} className="inline-flex min-h-11 min-w-0 shrink items-center lg:justify-self-start">
               <Logo compactOnMobile />
             </Link>
-            <nav className="hidden min-w-0 items-center gap-0.5 lg:flex xl:gap-1" aria-label={t("navigation")}>
+            <nav className="hidden min-w-0 items-center justify-center gap-0.5 lg:flex lg:justify-self-center" aria-label={t("navigation")}>
               {navItems.map((item) => (
                 <Link
                   key={item.href}
@@ -289,12 +289,11 @@ export default async function LocaleLayout(
                 </Link>
               ))}
             </nav>
-            <div className="ms-auto shrink-0 lg:ms-2">
+            <div className="ms-auto flex shrink-0 items-center gap-1.5 sm:gap-2 lg:ms-0 lg:justify-self-end lg:gap-2">
               <LanguageSwitcher />
-            </div>
-            {!session?.user ? (
-              <>
-                <details data-header-menu className="relative shrink-0 lg:hidden">
+              {!session?.user ? (
+                <>
+                  <details data-header-menu className="relative shrink-0 lg:hidden">
                   <summary
                     aria-label={t("account")}
                     className="flex size-11 cursor-pointer list-none items-center justify-center rounded-full border border-surface-soft text-ink-inverse outline-none ring-offset-surface focus-visible:ring-2 focus-visible:ring-accent [&::-webkit-details-marker]:hidden"
@@ -317,16 +316,16 @@ export default async function LocaleLayout(
                       {t("signIn")}
                     </Link>
                   </div>
-                </details>
-                <Link
-                  href={`${base}/logga-in`}
-                  className="hidden min-h-11 shrink-0 items-center whitespace-nowrap px-2 text-sm font-bold underline-offset-4 hover:underline lg:inline-flex"
-                >
-                  {t("signIn")}
-                </Link>
-              </>
-            ) : (
-              <details data-header-menu className="group relative shrink-0">
+                  </details>
+                  <Link
+                    href={`${base}/logga-in`}
+                    className="hidden min-h-11 shrink-0 items-center whitespace-nowrap px-2 text-nav font-bold underline-offset-4 hover:underline lg:inline-flex"
+                  >
+                    {t("signIn")}
+                  </Link>
+                </>
+              ) : (
+                <details data-header-menu className="group relative shrink-0">
                 <summary
                   aria-label={t("account")}
                   className="flex min-h-11 cursor-pointer list-none items-center rounded-full outline-none ring-offset-surface focus-visible:ring-2 focus-visible:ring-accent [&::-webkit-details-marker]:hidden"
@@ -381,23 +380,25 @@ export default async function LocaleLayout(
                     </button>
                   </form>
                 </div>
-              </details>
-            )}
-            {canBook ? (
-              <Link
-                href={`${base}/boka`}
-                className="hidden min-h-11 shrink-0 items-center whitespace-nowrap rounded-sm border border-accent bg-accent px-4 text-sm font-extrabold text-accent-ink shadow-soft md:inline-flex"
-              >
-                {t("book")}
-              </Link>
-            ) : (
-              <a
-                href={telHref(company("phone"))}
-                className="hidden min-h-11 shrink-0 items-center whitespace-nowrap rounded-sm border border-accent bg-accent px-4 text-sm font-extrabold text-accent-ink shadow-soft md:inline-flex"
-              >
-                {callLabel}
-              </a>
-            )}
+                </details>
+              )}
+              {canBook ? (
+                <Link
+                  href={`${base}/boka`}
+                  className="hidden min-h-11 shrink-0 items-center whitespace-nowrap rounded-sm border border-accent bg-accent px-4 text-nav font-extrabold text-accent-ink shadow-soft md:inline-flex"
+                >
+                  {t("book")}
+                </Link>
+              ) : (
+                <a
+                  href={telHref(company("phone"))}
+                  className="hidden min-h-11 shrink-0 items-center whitespace-nowrap rounded-sm border border-accent bg-accent px-4 text-nav font-extrabold text-accent-ink shadow-soft md:inline-flex"
+                >
+                  <span className="xl:hidden">{t("callUs")}</span>
+                  <span className="hidden xl:inline">{callLabel}</span>
+                </a>
+              )}
+            </div>
           </div>
         </header>
         <main id="main" tabIndex={-1}>{children}</main>

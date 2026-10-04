@@ -77,10 +77,10 @@ async function HomeHero({ locale }: { locale: Locale }) {
       <div className="site-container relative z-10 grid items-end gap-8 pb-10 pt-24 lg:grid-cols-2 lg:pb-16">
         <div>
           <p className="brand-mark text-accent">{t("home.hero.brand")}</p>
-          <h1 className="display-title mt-4 max-w-3xl text-balance lg:text-[clamp(2.75rem,4vw,4.5rem)]">
+          <h1 className="mt-4 max-w-3xl text-balance text-hero font-black tracking-[-0.055em] leading-[0.96]">
             {t("home.hero.title")}
           </h1>
-          <p className="mt-4 max-w-xl text-base leading-7 text-ink-inverse-muted sm:text-lg">
+          <p className="mt-4 max-w-[70ch] text-body leading-7 text-ink-inverse-muted">
             {t("home.hero.description")}
           </p>
           <div className="mt-6 flex flex-col gap-3 md:flex-row">
