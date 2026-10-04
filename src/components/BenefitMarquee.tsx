@@ -35,7 +35,7 @@ function Cards({ items, hidden = false }: { items: BenefitCard[]; hidden?: boole
           <BenefitIcon />
           <div>
             <p className="font-black">{item.title}</p>
-            <p className="mt-1 line-clamp-2 text-sm leading-5 text-ink-muted">{item.body}</p>
+            <p className="mt-1 line-clamp-2 text-small leading-5 text-ink-muted">{item.body}</p>
           </div>
         </li>
       ))}

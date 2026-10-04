@@ -102,6 +102,21 @@ Teacher phones are stored on the user and shown to the teacher in the portal. Th
 
 Backups upload a `pg_dump` to the R2 backup bucket. `npm run verify:restore` checks that a dump can be restored into `RESTORE_DATABASE_URL`.
 
+## Railway variables
+
+Sync production Railway variables from `.env.production.local` only:
+
+```bash
+npm run env:railway:check
+npm run env:railway:apply
+```
+
+- `env:railway:check` prints a masked diff table (`KEY | status | masked`) and never writes.
+- `env:railway:apply` sets only new/changed keys and refuses to run if safety checks fail.
+- Excluded keys are `DATABASE_URL` (Railway reference-managed), local-only restore/CLI/dev keys, and `NODE_ENV`.
+- Unknown keys fail fast, and unsafe values (localhost, `_test`, weak secrets, placeholder values, host/key mode mismatches) are blocked.
+- `NEXT_PUBLIC_*` values are build-time in Next.js; after changing them you need a new deployment build (the final push provides that).
+
 ## Unconfirmed addresses
 
 An address that starts with `TODO` is treated as unconfirmed. `publicAddress()` hides it on public pages and APIs. A boolean column would be cleaner later.

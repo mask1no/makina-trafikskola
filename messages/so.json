@@ -108,6 +108,10 @@
         "title": "Hel macallin iyo waqti",
         "description": "Ku kala saar luqad, goob iyo nooca gear-ka."
       },
+      "call": {
+        "title": "Nala soo xiriir",
+        "description": "Waxaan kaa caawinaynaa inaad hesho macallin iyo waqti kugu habboon."
+      },
       "learn": {
         "title": "Raac qorshahaaga",
         "description": "Tallaabo tallaabo ugu horumar hagid cad."
@@ -735,7 +739,7 @@
       "inactive": "Gelitaan shaqaynaya ma jiro",
       "progress": "Natiijooyinka",
       "correct": "su'aalo sax loo jawaabay",
-      "provisional": "Alaabta teoriga weli lama hawlgelin, qiimaha iyo kaydka su'aaluhuna xaqiijin bay sugayaan."
+      "provisional": "Iibso teoriga wadista ee dijitaalka ah si aad ugu celceliso kaydka su'aalaha oo dhan oo aad u qaadato imtixaannada tijaabada ah."
     },
     "messages": {
       "title": "Farriimaha",

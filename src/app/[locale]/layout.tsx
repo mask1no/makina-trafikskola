@@ -26,10 +26,6 @@ import {
   bookingEnabled,
   instructorsEnabled,
 } from "@/lib/launch";
-import {
-  getPublishedReviewSummary,
-  shouldShowPublicReviews,
-} from "@/lib/reviews/public";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -149,14 +145,13 @@ export default async function LocaleLayout(
 
   if (!isLocale(params.locale)) notFound();
   setRequestLocale(params.locale);
-  const [t, adminT, teacherT, company, languageNames, session, reviewSummary] = await Promise.all([
+  const [t, adminT, teacherT, company, languageNames, session] = await Promise.all([
     getTranslations("shell"),
     getTranslations("admin.nav"),
     getTranslations("teacherPortal"),
     getTranslations("company"),
     getTranslations("language"),
     auth(),
-    getPublishedReviewSummary(),
   ]);
   const offeredLanguages = offeredTeachingLanguages();
   const offeredLanguageNames = formatLanguageList(
@@ -196,7 +191,7 @@ export default async function LocaleLayout(
   const menuLinkClass =
     "flex min-h-11 items-center rounded-sm px-3 font-semibold hover:bg-card-muted";
   const menuPanelClass =
-    "absolute end-0 top-[calc(100%+0.5rem)] z-50 min-w-56 max-w-[calc(100vw-2rem)] rounded-md border border-border bg-card p-2 text-sm text-ink shadow-float";
+    "absolute end-0 top-[calc(100%+0.5rem)] z-50 min-w-56 max-w-[calc(100vw-2rem)] rounded-md border border-border bg-card p-2 text-small text-ink shadow-float";
   const teacherProfile =
     session?.user.role === "TEACHER"
       ? await db.teacherProfile.findUnique({
@@ -220,17 +215,6 @@ export default async function LocaleLayout(
     areaServed: { "@type": "City", name: "Stockholm" },
     availableLanguage: offeredLanguages,
     openingHoursSpecification: openingHoursSpecification(),
-    ...(shouldShowPublicReviews(reviewSummary.count)
-      ? {
-          aggregateRating: {
-            "@type": "AggregateRating",
-            ratingValue: reviewSummary.average.toFixed(1),
-            reviewCount: reviewSummary.count,
-            bestRating: "5",
-            worstRating: "1",
-          },
-        }
-      : {}),
     ...(siteUrl ? { url: `${siteUrl}/${params.locale}` } : {}),
   };
   const callLabel = t.rich("callName", {
@@ -290,7 +274,12 @@ export default async function LocaleLayout(
         />
         <header className="sticky top-0 z-40 border-b border-surface-soft bg-surface text-ink-inverse shadow-soft">
           <div className="site-container grid min-h-[var(--header-height)] min-w-0 grid-cols-[auto_1fr_auto] items-center gap-1.5 sm:gap-2 lg:min-h-[var(--header-height-lg)] lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
-            <Link href={base} className="inline-flex min-h-11 min-w-0 shrink items-center lg:justify-self-start">
+            <Link
+              href={base}
+              aria-label={company("legalName")}
+              className="inline-flex min-h-11 min-w-0 shrink items-center lg:justify-self-start"
+            >
+              <span className="sr-only">{company("legalName")}</span>
               <Logo compactOnMobile />
             </Link>
             <nav className="hidden min-w-0 items-center justify-center gap-0.5 lg:flex lg:justify-self-center" aria-label={t("navigation")}>
@@ -422,10 +411,10 @@ export default async function LocaleLayout(
           <div className="site-container grid gap-10 lg:grid-cols-4">
             <div>
               <Logo />
-              <p className="mt-5 max-w-sm text-sm leading-6 text-ink-inverse-muted">
+              <p className="mt-5 max-w-[70ch] text-body leading-7 text-ink-inverse-muted">
                 {t("footerDescription")}
               </p>
-              <address className="mt-5 max-w-sm text-sm not-italic leading-6 text-ink-inverse-muted">
+              <address className="mt-5 max-w-[70ch] text-small not-italic leading-6 text-ink-inverse-muted">
                 <p className="font-bold text-ink-inverse">{company("legalName")}</p>
                 <p className="numbers-ltr">{t("orgnrLabel")}: {company("orgnr")}</p>
                 <p>{company("visitingAddress")}</p>
@@ -442,8 +431,8 @@ export default async function LocaleLayout(
               </address>
             </div>
             <div>
-              <p className="text-sm font-extrabold">{t("explore")}</p>
-              <div className="mt-4 grid gap-1 text-sm text-ink-inverse-muted">
+              <p className="text-small font-extrabold">{t("explore")}</p>
+              <div className="mt-4 grid gap-1 text-small text-ink-inverse-muted">
                 <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/korlektioner`}>{t("lessons")}</Link>
                 {showInstructors ? (
                   <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/larare`}>{t("teachers")}</Link>
@@ -453,16 +442,16 @@ export default async function LocaleLayout(
               </div>
             </div>
             <div>
-              <p className="text-sm font-extrabold">{t("legal")}</p>
-              <div className="mt-4 grid gap-1 text-sm text-ink-inverse-muted">
+              <p className="text-small font-extrabold">{t("legal")}</p>
+              <div className="mt-4 grid gap-1 text-small text-ink-inverse-muted">
                 <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/villkor`}>{t("terms")}</Link>
                 <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/integritet`}>{t("privacy")}</Link>
                 <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/cookies`}>{t("cookies")}</Link>
               </div>
             </div>
             <div>
-              <p className="text-sm font-extrabold">{t("languageHelp")}</p>
-              <p className="mt-4 max-w-[70ch] text-sm leading-6 text-ink-inverse-muted">
+              <p className="text-small font-extrabold">{t("languageHelp")}</p>
+              <p className="mt-4 max-w-[70ch] text-body leading-7 text-ink-inverse-muted">
                 {t("languageHelpDescription", { languages: offeredLanguageNames })}
               </p>
             </div>

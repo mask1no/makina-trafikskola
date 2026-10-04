@@ -50,7 +50,7 @@ export function TeacherCard(props: TeacherCardProps) {
         {[...props.languages, ...props.transmissions].join(" · ")}
       </p>
       {props.locationNames.length ? (
-        <p className="mt-2 text-small text-ink-subtle">{props.locationNames.join(" · ")}</p>
+        <p className="mt-2 text-small text-ink-muted">{props.locationNames.join(" · ")}</p>
       ) : null}
       <Link
         href={`/${props.locale}/larare/${props.slug}`}

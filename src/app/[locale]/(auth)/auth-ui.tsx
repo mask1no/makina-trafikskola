@@ -43,7 +43,7 @@ function PhoneField({
       <label className="grid gap-2 text-small font-semibold text-ink" htmlFor="phone">
         <span>{label}</span>
         <span className="flex overflow-hidden rounded-sm border border-border bg-card shadow-soft focus-within:border-ink">
-          <span className="flex min-h-11 items-center border-e border-border bg-page px-3 text-sm font-bold text-ink" dir="ltr">
+          <span className="flex min-h-11 items-center border-e border-border bg-page px-3 text-small font-bold text-ink" dir="ltr">
             +46
           </span>
           <input
@@ -355,9 +355,9 @@ export function SignupForm({
               required={codeSent}
               disabled={!codeSent}
             />
-            <p className="text-sm leading-6 text-ink-muted">{t("codeSentHint")}</p>
+            <p className="text-small leading-6 text-ink-muted">{t("codeSentHint")}</p>
             {devCode ? (
-              <p className="rounded-sm bg-page p-3 text-sm text-ink">
+              <p className="rounded-sm bg-page p-3 text-small text-ink">
                 {t("devCode", { code: devCode })}
               </p>
             ) : null}
@@ -365,7 +365,7 @@ export function SignupForm({
               type="button"
               onClick={requestCode}
               disabled={busy || secondsLeft > 0}
-              className="min-h-11 text-start text-sm font-bold text-ink underline disabled:no-underline disabled:opacity-60"
+              className="min-h-11 text-start text-small font-bold text-ink underline disabled:no-underline disabled:opacity-60"
             >
               {secondsLeft > 0
                 ? t("resendWait", { seconds: secondsLeft })
@@ -375,7 +375,7 @@ export function SignupForm({
         </div>
       </div>
       {formError ? (
-        <p role="alert" className="text-sm text-danger">
+        <p role="alert" className="text-small text-danger">
           {formError}
         </p>
       ) : null}
@@ -406,7 +406,7 @@ export function SignupForm({
         </Button>
       )}
       {onAuthenticated ? null : (
-        <p className="text-center text-sm text-ink-muted">
+        <p className="text-center text-small text-ink-muted">
           {register("hasAccount")}{" "}
           <Link className="font-bold text-ink underline" href={loginHref}>
             {register("login")}
@@ -549,7 +549,7 @@ export function LoginForm({
                 setCodeSent(false);
                 setCode("");
               }}
-              className="min-h-11 rounded-sm px-3 text-sm font-bold text-ink-muted aria-pressed:bg-card aria-pressed:text-ink"
+              className="min-h-11 rounded-sm px-3 text-small font-bold text-ink-muted aria-pressed:bg-card aria-pressed:text-ink"
             >
               {t(`methods.${value}`)}
             </button>
@@ -589,7 +589,7 @@ export function LoginForm({
                   disabled={!codeSent}
                 />
                 {devCode ? (
-                  <p className="rounded-sm bg-page p-3 text-sm text-ink">
+                  <p className="rounded-sm bg-page p-3 text-small text-ink">
                     {t("devCode", { code: devCode })}
                   </p>
                 ) : null}
@@ -597,7 +597,7 @@ export function LoginForm({
                   type="button"
                   onClick={requestCode}
                   disabled={busy || secondsLeft > 0}
-                  className="min-h-11 text-start text-sm font-bold text-ink underline disabled:opacity-60"
+                  className="min-h-11 text-start text-small font-bold text-ink underline disabled:opacity-60"
                 >
                   {secondsLeft > 0
                     ? t("resendWait", { seconds: secondsLeft })
@@ -625,18 +625,18 @@ export function LoginForm({
             showLabel={t("showPassword")}
             hideLabel={t("hidePassword")}
           />
-          <Link href={forgotHref} className="min-h-11 text-sm font-bold text-ink underline">
+          <Link href={forgotHref} className="min-h-11 text-small font-bold text-ink underline">
             {t("forgotLink")}
           </Link>
         </>
       )}
       {formError ? (
-        <p role="alert" className="text-sm text-danger">
+        <p role="alert" className="text-small text-danger">
           {formError}
         </p>
       ) : null}
       {noPhoneAccount ? (
-        <p role="alert" className="text-sm text-danger">
+        <p role="alert" className="text-small text-danger">
           {login("phoneAccountMissing")}{" "}
           <Link className="font-bold underline" href={signupHref}>
             {login("create")}
@@ -652,7 +652,7 @@ export function LoginForm({
           {busy ? t("working") : login("submit")}
         </Button>
       )}
-      <p className="text-center text-sm text-ink-muted">
+      <p className="text-center text-small text-ink-muted">
         {login("noAccount")}{" "}
         <Link className="font-bold text-ink underline" href={signupHref}>
           {login("create")}
@@ -734,7 +734,7 @@ export function ForgotPasswordForm({ locale }: { locale: string }) {
   if (done) {
     return (
       <div className="grid gap-4">
-        <p className="text-sm leading-6 text-ink">{forgot("done")}</p>
+        <p className="text-body leading-7 text-ink">{forgot("done")}</p>
         <Link href={`/${locale}/logga-in`} className="min-h-11 font-bold text-ink underline">
           {t("login.submit")}
         </Link>
@@ -771,7 +771,7 @@ export function ForgotPasswordForm({ locale }: { locale: string }) {
               disabled={!codeSent}
             />
             {devCode ? (
-              <p className="rounded-sm bg-page p-3 text-sm">{t("devCode", { code: devCode })}</p>
+              <p className="rounded-sm bg-page p-3 text-small">{t("devCode", { code: devCode })}</p>
             ) : null}
             <PasswordField
               label={t("newPassword")}
@@ -785,7 +785,7 @@ export function ForgotPasswordForm({ locale }: { locale: string }) {
               type="button"
               onClick={requestCode}
               disabled={busy || secondsLeft > 0}
-              className="min-h-11 text-start text-sm font-bold text-ink underline disabled:opacity-60"
+              className="min-h-11 text-start text-small font-bold text-ink underline disabled:opacity-60"
             >
               {secondsLeft > 0 ? t("resendWait", { seconds: secondsLeft }) : t("resendCode")}
             </button>
@@ -793,7 +793,7 @@ export function ForgotPasswordForm({ locale }: { locale: string }) {
         </div>
       </div>
       {formError ? (
-        <p role="alert" className="text-sm text-danger">
+        <p role="alert" className="text-small text-danger">
           {formError}
         </p>
       ) : null}
@@ -909,13 +909,13 @@ export function VerifyPhoneForm({ locale }: { locale: string }) {
               disabled={!codeSent}
             />
             {devCode ? (
-              <p className="rounded-sm bg-page p-3 text-sm">{t("devCode", { code: devCode })}</p>
+              <p className="rounded-sm bg-page p-3 text-small">{t("devCode", { code: devCode })}</p>
             ) : null}
             <button
               type="button"
               onClick={requestCode}
               disabled={busy || secondsLeft > 0}
-              className="min-h-11 text-start text-sm font-bold text-ink underline disabled:opacity-60"
+              className="min-h-11 text-start text-small font-bold text-ink underline disabled:opacity-60"
             >
               {secondsLeft > 0 ? t("resendWait", { seconds: secondsLeft }) : t("resendCode")}
             </button>
@@ -923,7 +923,7 @@ export function VerifyPhoneForm({ locale }: { locale: string }) {
         </div>
       </div>
       {formError ? (
-        <p role="alert" className="text-sm text-danger">
+        <p role="alert" className="text-small text-danger">
           {formError}
         </p>
       ) : null}

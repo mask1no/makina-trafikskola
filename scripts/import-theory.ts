@@ -28,9 +28,12 @@ const bankQuestionSchema = z.object({
     })
     .optional(),
   correct_index: z.number().int().min(0),
+  difficulty: z.number().int().min(1).max(3).optional(),
   needs_image: z.boolean(),
   status: z.enum(["ok", "review"]),
 });
+
+export type TheoryBankQuestion = z.infer<typeof bankQuestionSchema>;
 
 const bankFileSchema = z.union([
   z.array(bankQuestionSchema),
@@ -38,6 +41,7 @@ const bankFileSchema = z.union([
 ]);
 
 export const theoryBankPath = path.join(process.cwd(), "prisma", "theory-bank.json");
+export { bankFileSchema };
 
 const CATEGORY_NAMES: Record<
   number,
@@ -76,6 +80,13 @@ export async function importTheory(db: PrismaClient) {
   const raw = await readFile(theoryBankPath, "utf8");
   const parsed = bankFileSchema.parse(JSON.parse(raw));
   const questions = Array.isArray(parsed) ? parsed : parsed.questions;
+  return importTheoryQuestions(db, questions);
+}
+
+export async function importTheoryQuestions(
+  db: PrismaClient,
+  questions: TheoryBankQuestion[],
+) {
 
   const categories = new Map<number, { id: string }>();
   for (let parm = 1; parm <= 9; parm += 1) {
@@ -111,7 +122,7 @@ export async function importTheory(db: PrismaClient) {
       update: {
         categoryId: category.id,
         isFree: count < 3,
-        difficulty: 2,
+        difficulty: question.difficulty ?? 2,
         active: question.status === "ok",
         imageUrl: question.needs_image ? `/theory/${question.id}.webp` : null,
       },
@@ -119,7 +130,7 @@ export async function importTheory(db: PrismaClient) {
         sourceRef: question.id,
         categoryId: category.id,
         isFree: count < 3,
-        difficulty: 2,
+        difficulty: question.difficulty ?? 2,
         active: question.status === "ok",
         imageUrl: question.needs_image ? `/theory/${question.id}.webp` : null,
       },

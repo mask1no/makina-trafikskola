@@ -18,7 +18,7 @@ import {
   offeredTeachingLanguages,
   publicStaff,
 } from "@/lib/company/staff";
-import { displayPhone, telHref } from "@/lib/format/phone";
+import { displayPhone, smsHref, telHref } from "@/lib/format/phone";
 import { publicAddress } from "@/lib/locations/address";
 import { db } from "@/lib/db";
 import {
@@ -183,7 +183,7 @@ export default async function ContactPage(
           </a>
           <div className="mt-5 flex flex-wrap items-center gap-3">
             <Badge tone={open ? "success" : "neutral"}>{open ? shell("openNow") : shell("closed")}</Badge>
-            <p className="text-sm text-ink-muted">
+            <p className="text-small text-ink-muted">
               {hours ? <span className="numbers-ltr">{hours.open}–{hours.close}</span> : shell("closed")}
             </p>
           </div>
@@ -200,7 +200,7 @@ export default async function ContactPage(
               </tbody>
             </table>
           </details>
-          <table className="mt-6 hidden w-full text-sm md:table">
+          <table className="mt-6 hidden w-full text-small md:table">
             <tbody>
               {companyOpeningHours.map((day, index) => (
                 <tr key={index} className="border-t border-border">
@@ -210,20 +210,20 @@ export default async function ContactPage(
               ))}
             </tbody>
           </table>
-          <p className="mt-6 text-sm leading-6">{visiting}</p>
+          <p className="mt-6 max-w-[70ch] text-body leading-7">{visiting}</p>
           <a className="mt-2 inline-flex min-h-11 items-center font-bold underline underline-offset-4" href={directions} rel="noreferrer" target="_blank">
             {shell("directions")}
           </a>
-          <a className="mt-1 inline-flex min-h-11 items-center text-small font-bold text-ink-muted underline underline-offset-4" href={`sms:${phone.replace(/\s+/g, "")}`}>
+          <a className="mt-1 inline-flex min-h-11 items-center text-small font-bold text-ink-muted underline underline-offset-4" href={smsHref(phone)}>
             {t("sendSms")}
           </a>
           <dl className="mt-6 grid gap-4 border-t border-border pt-6 sm:grid-cols-2">
             <div>
-              <dt className="text-sm font-bold text-ink-muted">{t("orgnr")}</dt>
+              <dt className="text-small font-bold text-ink-muted">{t("orgnr")}</dt>
               <dd className="mt-1 numbers-ltr">{orgnr}</dd>
             </div>
             <div>
-              <dt className="text-sm font-bold text-ink-muted">{t("email")}</dt>
+              <dt className="text-small font-bold text-ink-muted">{t("email")}</dt>
               <dd className="mt-1 break-all">
                 <a className="inline-flex min-h-11 items-center font-bold underline underline-offset-4" href={`mailto:${email}`}>{email}</a>
               </dd>
@@ -248,8 +248,8 @@ export default async function ContactPage(
                 />
                 <div className="min-w-0">
                   <p className="font-extrabold">{staffMember.name}</p>
-                  <p className="text-sm text-ink-muted">{t(`staffRoles.${staffMember.role}`)}</p>
-                  <p className="mt-1 text-sm leading-6 text-ink-muted">
+                  <p className="text-small text-ink-muted">{t(`staffRoles.${staffMember.role}`)}</p>
+                  <p className="mt-1 max-w-[70ch] text-body leading-7 text-ink-muted">
                     {t("speaks", {
                       languages: formatLanguageList(
                         staffMember.languages,
@@ -281,7 +281,7 @@ export default async function ContactPage(
             {locations.map((location) => (
               <article key={location.id} className="rounded-md border border-border bg-card p-5 shadow-soft">
                 <h3 className="text-lg font-extrabold">{location.name}</h3>
-                <p className="mt-2 text-sm leading-6 text-ink-muted">
+                <p className="mt-2 max-w-[70ch] text-body leading-7 text-ink-muted">
                   {publicAddress(location.address) ?? location.city}
                   <br />
                   <span className="numbers-ltr">{location.postalCode}</span> {location.city}
@@ -307,7 +307,7 @@ export default async function ContactPage(
               comingSoonLanguages: comingSoonLanguageNames,
             })}
           </p>
-          <p className="mt-3 text-sm text-ink-muted">{postal}</p>
+          <p className="mt-3 text-small text-ink-muted">{postal}</p>
         </section>
         {shouldShowPublicReviews(reviewSummary.count) ? (
           <section className="rounded-lg border border-border bg-card p-6 shadow-soft">

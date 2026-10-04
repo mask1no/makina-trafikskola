@@ -1,4 +1,5 @@
 import { Prisma } from "@prisma/client";
+import { revalidateTag } from "next/cache";
 import { z } from "zod";
 
 import { auth } from "@/auth";
@@ -91,6 +92,7 @@ export async function PATCH(
       },
     });
   });
+  revalidateTag("reviews", "max");
 
   return new Response(null, { status: 204 });
 }

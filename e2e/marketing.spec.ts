@@ -46,6 +46,7 @@ test.describe("marketing layout", () => {
     await expect(heroCall).toBeVisible();
     await expect(page.locator("nav.fixed.bottom-0 a")).toHaveCount(5);
     await expect(page.locator("nav.fixed.bottom-0 a[href^='tel:']")).toHaveCount(1);
+    await expect(page.locator("main")).not.toContainText("Filtrera på språk, plats och växellåda.");
   });
 
   test("header shows Kontakt once", async ({ page }) => {

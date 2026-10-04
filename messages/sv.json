@@ -108,6 +108,10 @@
         "title": "Hitta lärare och tid",
         "description": "Filtrera på språk, plats och växellåda."
       },
+      "call": {
+        "title": "Ring oss",
+        "description": "Vi hittar en lärare och en tid som passar dig."
+      },
       "learn": {
         "title": "Följ din plan",
         "description": "Utvecklas steg för steg med tydlig vägledning."
@@ -735,7 +739,7 @@
       "inactive": "Ingen aktiv åtkomst",
       "progress": "Resultat",
       "correct": "rätt besvarade frågor",
-      "provisional": "Teoriprodukten är ännu inte aktiverad eftersom pris och frågebank inväntar bekräftelse."
+      "provisional": "Köp digital körkortsteori för att öva hela frågebanken och göra övningsprov."
     },
     "messages": {
       "title": "Meddelanden",

@@ -50,7 +50,7 @@ export default async function LoginPage(
         </h1>
         <p className="mt-3 max-w-[70ch] text-body leading-7 text-ink-muted">{t("description")}</p>
         {errorKey ? (
-          <p role="alert" className="mt-4 rounded-sm border border-danger bg-danger-soft p-4 text-sm text-danger">
+          <p role="alert" className="mt-4 rounded-sm border border-danger bg-danger-soft p-4 text-small text-danger">
             {authT(`oauthError.${errorKey}`)}
           </p>
         ) : null}

@@ -55,7 +55,7 @@ export default async function KorlektionerPage(
           <>
             <nav className="sticky top-[var(--header-height)] z-30 -mx-4 mt-8 flex gap-2 overflow-x-auto bg-page px-4 py-3 lg:hidden" aria-label={t("lessons.groups.label")}>
               {sections.map((section) => (
-                <a key={section.key} href={`#${section.key}`} className="inline-flex min-h-11 shrink-0 items-center rounded-full border border-border bg-card px-4 text-sm font-bold">
+                <a key={section.key} href={`#${section.key}`} className="inline-flex min-h-11 shrink-0 items-center rounded-full border border-border bg-card px-4 text-small font-bold">
                   {t(`lessons.groups.${section.key}.title`)}
                 </a>
               ))}

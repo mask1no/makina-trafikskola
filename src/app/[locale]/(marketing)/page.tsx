@@ -47,7 +47,7 @@ async function LowestSinglePrice({ locale }: { locale: Locale }) {
     .sort((a, b) => a.priceOre - b.priceOre)[0];
   if (!cheapest) return null;
   return (
-    <p className="text-sm font-bold text-ink-inverse-muted">
+    <p className="text-small font-bold text-ink-inverse-muted">
       {t("shell.fromPrice", { price: formatPrice(cheapest.priceOre, locale) })}
     </p>
   );
@@ -70,7 +70,7 @@ async function HomeHero({ locale }: { locale: Locale }) {
         alt=""
         priority
         fetchPriority="high"
-        quality={60}
+        quality={50}
         fill
         sizes="100vw"
         className="rtl-no-mirror hero-pan object-cover object-[center_30%] lg:object-[68%_center]"
@@ -96,7 +96,7 @@ async function HomeHero({ locale }: { locale: Locale }) {
             ) : (
               <a
                 href={telHref(phone)}
-                className="inline-flex min-h-11 w-full items-center justify-center rounded-sm border border-accent bg-accent px-5 text-sm font-bold text-accent-ink md:w-auto"
+                className="inline-flex min-h-11 w-full items-center justify-center rounded-sm border border-accent bg-accent px-5 text-small font-bold text-accent-ink md:w-auto"
               >
                 {t.rich("shell.callName", {
                   phone: () => (
@@ -123,11 +123,11 @@ async function HomeHero({ locale }: { locale: Locale }) {
           <a className="mt-3 inline-flex min-h-11 items-center text-2xl font-black" href={telHref(phone)}>
             <bdi dir="ltr" className="numbers-ltr">{displayPhone(phone)}</bdi>
           </a>
-          <p className="mt-4 text-sm">
+          <p className="mt-4 text-small">
             <span className="font-black">{openNow ? t("shell.openNow") : t("shell.closed")}</span>
             {hoursToday ? <span className="numbers-ltr"> · {hoursToday.open}–{hoursToday.close}</span> : null}
           </p>
-          <p className="mt-2 text-sm text-ink-inverse-muted">{t("company.visitingAddress")}</p>
+          <p className="mt-2 text-small text-ink-inverse-muted">{t("company.visitingAddress")}</p>
         </aside>
       </div>
     </section>
@@ -146,9 +146,7 @@ export default async function MarketingHome(
   return (
     <>
       <HomeHero locale={locale} />
-      <Suspense fallback={null}>
-        <HomeBelow params={{ locale }} />
-      </Suspense>
+      <HomeBelow params={{ locale }} />
     </>
   );
 }
@@ -322,6 +320,25 @@ async function HomeBelow({
           }).replace(/</g, "\\u003c"),
         }}
       />
+      {shouldShowPublicReviews(reviewSummary.count) ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "DrivingSchool",
+              name: t("company.legalName"),
+              aggregateRating: {
+                "@type": "AggregateRating",
+                ratingValue: reviewSummary.average.toFixed(1),
+                reviewCount: reviewSummary.count,
+                bestRating: "5",
+                worstRating: "1",
+              },
+            }).replace(/</g, "\\u003c"),
+          }}
+        />
+      ) : null}
 
       <div className="relative z-20 bg-page pb-8 lg:-mt-8">
         <BenefitMarquee
@@ -383,7 +400,7 @@ async function HomeBelow({
             <div className="flex flex-col gap-4">
               <div>
                 <h3 className="text-2xl font-black">{t("map.homeTeaserTitle")}</h3>
-                <p className="mt-3 max-w-sm text-sm leading-6 text-ink-muted">
+                <p className="mt-3 max-w-[70ch] text-body leading-7 text-ink-muted">
                   {t("map.homeTeaserDescription")}
                 </p>
               </div>
@@ -457,7 +474,9 @@ async function HomeBelow({
         <div className="site-container">
           <SectionHeader eyebrow={t("home.journey.eyebrow")} title={t("home.journey.title")} />
           <ol className="mt-8 grid gap-6 md:mt-12 md:grid-cols-3 md:gap-8">
-            {(["choose", "book", "learn"] as const).map((step, index) => (
+            {(canBook
+              ? (["choose", "book", "learn"] as const)
+              : (["choose", "call", "learn"] as const)).map((step, index) => (
               <li key={step} className="border-t border-border pt-4 md:pt-6">
                 <span className="numbers-ltr text-small font-black text-accent">{index + 1}</span>
                 <h3 className="mt-4 text-h3 font-black">{t(`home.journey.${step}.title`)}</h3>
@@ -473,7 +492,7 @@ async function HomeBelow({
           <div className="relative overflow-hidden rounded-lg bg-surface text-ink-inverse shadow-float">
             <div className="relative grid lg:grid-cols-[1.1fr_.9fr]">
               <div className="p-7 sm:p-10 lg:p-14">
-                <p className="text-sm font-bold uppercase tracking-wider text-accent">
+                <p className="text-micro font-bold uppercase tracking-wider text-accent">
                 {t("theory.teaser.eyebrow")}
                 </p>
                 <h2 className="mt-3 max-w-xl text-3xl font-black sm:text-5xl">
@@ -491,7 +510,7 @@ async function HomeBelow({
                     (item) => (
                       <li
                         key={item}
-                        className="flex items-center gap-3 text-sm font-bold"
+                        className="flex items-center gap-3 text-small font-bold"
                       >
                         <span
                           aria-hidden="true"
@@ -534,7 +553,7 @@ async function HomeBelow({
                       {t("theory.teaser.buy")}
                     </LinkButton>
                   ) : (
-                    <span className="inline-flex min-h-11 items-center text-sm font-bold text-ink-inverse-muted">
+                    <span className="inline-flex min-h-11 items-center text-small font-bold text-ink-inverse-muted">
                       {t("theory.teaser.pending")}
                     </span>
                   )}
@@ -587,7 +606,7 @@ async function HomeBelow({
                   {review.comment ? (
                     <p className="mt-3 max-w-[70ch] text-body leading-7 text-ink-muted">{review.comment}</p>
                   ) : null}
-                  <p className="mt-3 text-small text-ink-subtle">
+                  <p className="mt-3 text-small text-ink-muted">
                     {new Intl.DateTimeFormat(params.locale, { dateStyle: "medium" }).format(review.createdAt)}
                   </p>
                 </article>

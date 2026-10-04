@@ -53,6 +53,8 @@ const PRODUCTION_PRODUCT_SLUGS = new Set([
   "korkortsgaranti",
   "riskettan",
   "risktvaan",
+  "handledarutbildning",
+  "korkortsteori",
 ]);
 
 type Locale = (typeof LOCALES)[number];
@@ -82,21 +84,87 @@ export const CLIENT_DATA = {
   ],
 } as const;
 
-// Confirmed names, roles and teaching languages only. Years, gearbox, hours,
-// vehicles and portraits are unknown, so they are left empty for admin entry.
+// Names, roles and teaching languages are confirmed. Portraits and exact
+// years are still added later in admin. Weekday hours and both gearboxes
+// make booking usable until the school edits each profile.
 const confirmedInstructors = publicStaff.map((member) => ({
   email: `${member.slug}@makina.local`,
   firstName: member.firstName,
   lastName: member.lastName,
   slug: member.slug,
+  role: member.role,
   languages: [...member.languages],
-  transmissions: [] as Transmission[],
+  transmissions: [Transmission.MANUAL, Transmission.AUTOMATIC],
   yearsExperience: 0,
   locationSlug: "upplands-vasby",
-  days: [] as number[],
+  days: [1, 2, 3, 4, 5],
   startTime: "08:00",
-  endTime: "21:00",
+  endTime: "17:00",
 }));
+
+const ROLE_TITLE: Record<
+  (typeof publicStaff)[number]["role"],
+  Record<Locale, string>
+> = {
+  trafikskolechef: {
+    sv: "trafikskolechef",
+    en: "principal",
+    ti: "ሓላፊ ትራፊክ ትምህርቲ",
+    ar: "مدير المدرسة",
+    so: "maamulaha dugsiga",
+  },
+  utbildningsledare: {
+    sv: "utbildningsledare",
+    en: "head of training",
+    ti: "ሓላፊ ትምህርቲ",
+    ar: "مسؤول التدريب",
+    so: "madaxa tababarka",
+  },
+  trafiklarare: {
+    sv: "trafiklärare",
+    en: "driving instructor",
+    ti: "መምህር ትራፊክ",
+    ar: "معلّم قيادة",
+    so: "macallinka wadista",
+  },
+};
+
+const LANGUAGE_NAME: Record<Locale, Record<string, string>> = {
+  sv: { sv: "svenska", en: "engelska", ti: "tigrinska", ar: "arabiska", so: "somaliska", ku: "kurdiska" },
+  en: { sv: "Swedish", en: "English", ti: "Tigrinya", ar: "Arabic", so: "Somali", ku: "Kurdish" },
+  ti: { sv: "ስዊድን", en: "እንግሊዝ", ti: "ትግርኛ", ar: "ዓረብ", so: "ሶማሊ", ku: "ኩርዲሽ" },
+  ar: { sv: "السويدية", en: "الإنجليزية", ti: "التغرينية", ar: "العربية", so: "الصومالية", ku: "الكردية" },
+  so: { sv: "Iswiidhish", en: "Ingiriis", ti: "Tigrinya", ar: "Carabi", so: "Soomaali", ku: "Kurdish" },
+};
+
+function languageList(languages: readonly string[], locale: Locale) {
+  const names = languages.map((language) => LANGUAGE_NAME[locale][language] ?? language);
+  if (names.length <= 1) return names[0] ?? "";
+  const conjunction = { sv: "och", en: "and", ti: "እና", ar: "و", so: "iyo" }[locale];
+  return `${names.slice(0, -1).join(", ")} ${conjunction} ${names.at(-1)}`;
+}
+
+function instructorBio(
+  instructor: (typeof confirmedInstructors)[number],
+  locale: Locale,
+) {
+  const name = instructor.firstName;
+  const role = ROLE_TITLE[instructor.role][locale];
+  const languages = languageList(instructor.languages, locale);
+  if (locale === "en") {
+    return `${name} is ${role} at Makina Trafikskola in Upplands Väsby and teaches in ${languages}.`;
+  }
+  if (locale === "ti") {
+    return `${name} ኣብ ማኪና ትራፊክስኮላ ኣብ ኡፕላንድስ ቬስቢ ${role} እዩ። ብ${languages} የስልጥን።`;
+  }
+  if (locale === "ar") {
+    return `${name} ${role} في ماكينا ترافيك سكولا في أوبلاندس فيسبي، ويدّرس بـ${languages}.`;
+  }
+  if (locale === "so") {
+    return `${name} waa ${role} ee Makina Trafikskola ee Upplands Väsby, wuxuuna wax ku baraa ${languages}.`;
+  }
+  return `${name} är ${role} på Makina Trafikskola i Upplands Väsby och undervisar på ${languages}.`;
+}
 // ──────────────────────────────────────────────────────────────────
 
 type Seed = {
@@ -561,7 +629,7 @@ async function main() {
   const locationsToSeed = isProduction
     ? CLIENT_DATA.locations.slice(0, 1)
     : CLIENT_DATA.locations;
-  const instructorsToSeed = isProduction ? [] : confirmedInstructors;
+  const instructorsToSeed = confirmedInstructors;
   const productsToSeed = isProduction
     ? PRODUCTS.filter((product) => PRODUCTION_PRODUCT_SLUGS.has(product.slug))
     : PRODUCTS;
@@ -601,9 +669,7 @@ async function main() {
   for (const [i, p] of productsToSeed.entries()) {
     const catalogueData = {
       kind: p.kind,
-      // Production sales stay closed until real instructors and bookable
-      // availability have been loaded by the client.
-      active: isProduction ? false : p.active,
+      active: p.active,
       sortOrder: i * 10,
       priceOre: p.priceOre,
       compareAtOre: p.compareAtOre ?? null,
@@ -697,9 +763,9 @@ async function main() {
           slug: instructor.slug,
           photoUrl: keptPhoto(profile.photoUrl),
           languages: [...instructor.languages],
-          transmissions: instructor.transmissions.length
-            ? instructor.transmissions
-            : profile.transmissions,
+          transmissions: profile.transmissions.length
+            ? profile.transmissions
+            : instructor.transmissions,
           yearsExperience:
             instructor.yearsExperience > 0
               ? instructor.yearsExperience
@@ -712,8 +778,10 @@ async function main() {
       data: { teacherId: profile.id, locationId },
     });
 
-    if (instructor.days.length) {
-      await db.teacherAvailability.deleteMany({ where: { teacherId: profile.id } });
+    const existingHours = await db.teacherAvailability.count({
+      where: { teacherId: profile.id },
+    });
+    if (instructor.days.length && existingHours === 0) {
       for (const dayOfWeek of instructor.days) {
         await db.teacherAvailability.create({
           data: {
@@ -725,6 +793,15 @@ async function main() {
           },
         });
       }
+    }
+
+    for (const locale of LOCALES) {
+      const bio = instructorBio(instructor, locale);
+      await db.teacherTranslation.upsert({
+        where: { teacherId_locale: { teacherId: profile.id, locale } },
+        update: {},
+        create: { teacherId: profile.id, locale, bio },
+      });
     }
   }
 
@@ -859,11 +936,7 @@ async function main() {
     }
   }
 
-  // The client must confirm ownership of the theory source before it is
-  // published. Development keeps representative data for exercising the UI.
-  if (!isProduction) {
-    await seedTheory(db);
-  }
+  await seedTheory(db);
 
   // Dev only. Railway and Vercel are checked as well because deployment seed
   // jobs do not always set NODE_ENV explicitly.

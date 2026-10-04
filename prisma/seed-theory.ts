@@ -1,8 +1,14 @@
-import { access } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 
 import type { PrismaClient } from "@prisma/client";
 
-import { importTheory, theoryBankPath } from "../scripts/import-theory";
+import { practiceBankQuestions } from "./theory/practice-bank";
+import {
+  bankFileSchema,
+  importTheoryQuestions,
+  theoryBankPath,
+  type TheoryBankQuestion,
+} from "../scripts/import-theory";
 
 const PLACEHOLDER_SLUGS = [
   "vagmarken",
@@ -34,13 +40,18 @@ export async function seedTheory(db: PrismaClient) {
     },
   });
 
-  try {
-    await access(theoryBankPath);
-  } catch {
-    console.log("prisma/theory-bank.json is missing. Theory import skipped.");
-    return;
-  }
-
-  const count = await importTheory(db);
+  const count = await importTheoryQuestions(db, await questionsToImport());
   console.log(`Imported ${count} theory questions.`);
+}
+
+async function questionsToImport(): Promise<TheoryBankQuestion[]> {
+  try {
+    const raw = await readFile(theoryBankPath, "utf8");
+    const parsed = bankFileSchema.parse(JSON.parse(raw));
+    const fromFile = Array.isArray(parsed) ? parsed : parsed.questions;
+    if (fromFile.length > practiceBankQuestions.length) return fromFile;
+  } catch {
+    // A missing or unreadable external bank falls back to the committed set.
+  }
+  return practiceBankQuestions;
 }

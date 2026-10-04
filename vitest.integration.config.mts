@@ -1,6 +1,6 @@
 import { fileURLToPath } from "node:url";
 
-export default {
+const integrationConfig = {
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
@@ -17,3 +17,5 @@ export default {
     globalSetup: ["./vitest.integration.global-setup.ts"],
   },
 };
+
+export default integrationConfig;

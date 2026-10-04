@@ -108,6 +108,10 @@
         "title": "Find an instructor and time",
         "description": "Filter by language, location and transmission."
       },
+      "call": {
+        "title": "Call us",
+        "description": "We help you find an instructor and a time that fits you."
+      },
       "learn": {
         "title": "Follow your plan",
         "description": "Develop step by step with clear guidance."
@@ -735,7 +739,7 @@
       "inactive": "No active access",
       "progress": "Results",
       "correct": "correctly answered questions",
-      "provisional": "The theory product is not active yet because the price and question bank await confirmation."
+      "provisional": "Buy digital driving theory to practise the full question bank and take mock exams."
     },
     "messages": {
       "title": "Messages",

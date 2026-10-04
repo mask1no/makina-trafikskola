@@ -9,6 +9,13 @@ export function telHref(phone: string) {
   return `tel:${phone.trim()}`;
 }
 
+export function smsHref(phone: string) {
+  const digits = compactPhone(phone);
+  if (!digits) return "sms:";
+  if (digits.startsWith("+") || digits.startsWith("0")) return `sms:${digits}`;
+  return `sms:${phone.trim()}`;
+}
+
 /** National Swedish grouping when the number is a +46 or 0-prefixed number. */
 export function displayPhone(phone: string) {
   const digits = compactPhone(phone);
