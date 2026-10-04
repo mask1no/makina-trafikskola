@@ -10,7 +10,7 @@ import {
   showValidity,
 } from "@/lib/pricing/format";
 
-type ProductCardProps = {
+export type ProductCardProps = {
   locale: string;
   slug: string;
   kind: string;

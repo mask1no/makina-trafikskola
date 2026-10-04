@@ -157,6 +157,19 @@ export default async function ContactPage(
               {hours ? <span className="numbers-ltr">{hours.open}–{hours.close}</span> : shell("closed")}
             </p>
           </div>
+          <details className="mt-4 rounded-sm border border-border bg-page p-3 text-small md:hidden">
+            <summary className="cursor-pointer font-bold">{t("openingHours")}</summary>
+            <table className="mt-3 w-full text-small">
+              <tbody>
+                {companyOpeningHours.map((day, index) => (
+                  <tr key={index} className="border-t border-border">
+                    <th scope="row" className="py-2 text-start font-bold">{t(`day.${index}`)}</th>
+                    <td className="py-2 text-end numbers-ltr">{day ? `${day.open}–${day.close}` : shell("closed")}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </details>
           <table className="mt-6 hidden w-full text-sm md:table">
             <tbody>
               {companyOpeningHours.map((day, index) => (
@@ -170,6 +183,9 @@ export default async function ContactPage(
           <p className="mt-6 text-sm leading-6">{visiting}</p>
           <a className="mt-2 inline-flex min-h-11 items-center font-bold underline underline-offset-4" href={directions} rel="noreferrer" target="_blank">
             {shell("directions")}
+          </a>
+          <a className="mt-1 inline-flex min-h-11 items-center text-small font-bold text-ink-muted underline underline-offset-4" href={`sms:${phone.replace(/\s+/g, "")}`}>
+            {t("sendSms")}
           </a>
           <dl className="mt-6 grid gap-4 border-t border-border pt-6 sm:grid-cols-2">
             <div>
@@ -188,12 +204,12 @@ export default async function ContactPage(
         <section>
           <h2 className="text-2xl font-black">{t("staffTitle")}</h2>
           <p className="mt-3 max-w-2xl text-ink-muted">{t("staffDescription")}</p>
-          <ul className="mt-6 grid gap-3 lg:grid-cols-3">
+          <ul className="mt-6 grid gap-3 lg:grid-cols-2">
             {publicStaff.map((staffMember) => (
               <li key={staffMember.name} className="flex items-start gap-3 rounded-md border border-border bg-card p-3">
                 <Avatar name={staffMember.name} size="sm" />
                 <div className="min-w-0">
-                  <p className="truncate font-extrabold">{staffMember.name}</p>
+                  <p className="font-extrabold">{staffMember.name}</p>
                   <p className="text-sm text-ink-muted">{t(`staffRoles.${staffMember.role}`)}</p>
                   <p className="mt-1 text-sm leading-6 text-ink-muted">
                     {t("speaks", {

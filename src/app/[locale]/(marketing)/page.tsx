@@ -26,6 +26,7 @@ import { benefitItems } from "@/lib/home/benefits";
 import { googleMapsBrowserConfig } from "@/lib/maps/config";
 import { activeTeacherLanguages } from "@/lib/teachers/query";
 import { formatPrice } from "@/lib/pricing/format";
+import { toProductCardModel } from "@/lib/products/card";
 import { freeTheoryQuestionCount } from "@/lib/theory/questions";
 
 import { getProducts, getTeachers } from "./_lib/data";
@@ -72,7 +73,7 @@ async function HomeHero({ locale }: { locale: Locale }) {
       />
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-[linear-gradient(180deg,color-mix(in_srgb,var(--surface)_55%,transparent)_0%,color-mix(in_srgb,var(--surface)_78%,transparent)_48%,var(--surface)_100%)]"
+        className="absolute inset-0 bg-[linear-gradient(180deg,color-mix(in_srgb,var(--surface)_40%,transparent)_0%,color-mix(in_srgb,var(--surface)_68%,transparent)_42%,var(--surface)_100%)] lg:bg-[linear-gradient(90deg,color-mix(in_srgb,var(--surface)_86%,transparent)_0%,color-mix(in_srgb,var(--surface)_60%,transparent)_44%,color-mix(in_srgb,var(--surface)_18%,transparent)_68%,transparent_100%)]"
       />
       <div className="site-container relative z-10 grid items-end gap-8 pb-10 pt-24 lg:grid-cols-2 lg:pb-16">
         <div>
@@ -192,12 +193,21 @@ async function HomeBelow({
     (product, index, list): product is NonNullable<typeof product> =>
       Boolean(product) && list.findIndex((item) => item?.id === product?.id) === index,
   );
-  const lessonImage = (kind: string) =>
-    kind === "SINGLE_LESSON"
-      ? "/lessons/korlektion.jpg"
-      : kind === "TEST_LESSON"
-        ? "/lessons/testlektion.jpg"
-        : "/lessons/tre-lektioner.jpg";
+  const productCardLabels = {
+    kindLabel: (key: string) => t(`product.kind.${key}`),
+    perLessonLabel: t("product.perLesson"),
+    validityLabel: (count: number) => t("product.validityMonths", { count }),
+    vatLabel: t("product.priceIncludesVat"),
+    valueSeparatelyLabel: (price: string) => t("pricing.valueSeparately", { price }),
+    savingsLabel: (percent: number) => t("product.save", { percent }),
+    popularLabel: t("product.popular"),
+    swedishOnlyLabel: t("common.swedishOnly"),
+    unavailableLabel: t("product.notForSale"),
+    detailsLabel: t("common.readMore"),
+    featuredLabel: t("shell.mostChosen"),
+    imageAlt: (slug: string) =>
+      t.has(`product.images.${slug}`) ? t(`product.images.${slug}`) : undefined,
+  };
   const benefitCards = benefitItems({
     bookingEnabled: canBook,
     products,
@@ -320,13 +330,11 @@ async function HomeBelow({
       {showInstructors ? (
         <section className="section-shell">
         <div className="site-container">
-          <div className="max-w-2xl">
-            <p className="text-sm font-bold uppercase tracking-wider text-ink-muted">
-              {t("home.teachers.eyebrow")}
-            </p>
-            <h2 className="section-title mt-3">{t("home.teachers.title")}</h2>
-            <p className="mt-4 leading-7 text-ink-muted">{t("home.teachers.description")}</p>
-          </div>
+          <SectionHeader
+            eyebrow={t("home.teachers.eyebrow")}
+            title={t("home.teachers.title")}
+            intro={t("home.teachers.description")}
+          />
           <nav className="mt-8 flex flex-wrap gap-2" aria-label={t("home.teachers.languageLabel")}>
             {activeLanguages.map((language) => (
               <Link
@@ -413,10 +421,10 @@ async function HomeBelow({
         <div className="site-container">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <p className="text-sm font-bold uppercase tracking-wider text-ink-muted">
-                {t("home.products.eyebrow")}
-              </p>
-              <h2 className="section-title mt-3">{t("home.products.title")}</h2>
+              <SectionHeader
+                eyebrow={t("home.products.eyebrow")}
+                title={t("home.products.title")}
+              />
             </div>
             <Link className="min-h-11 py-3 font-bold underline underline-offset-4" href={`/${params.locale}/korlektioner`}>
               {t("common.viewAll")}
@@ -426,69 +434,13 @@ async function HomeBelow({
             {featuredProducts.map((product) => (
             <div key={product.id} className="w-[85%] shrink-0 snap-start md:w-auto">
               <ProductCard
-                locale={params.locale}
-                slug={product.slug}
-                kind={product.kind}
-                active={product.active}
-                bookingEnabled={canBook}
-                name={product.translation.name}
-                description={product.translation.shortDesc}
-                priceOre={product.priceOre}
-                compareAtOre={product.compareAtOre}
-                accentHex={product.accentHex}
-                lessonCredits={product.lessonCredits}
-                includesTheory={product.includesTheory}
-                includesRisk1={product.includesRisk1}
-                includesRisk2={product.includesRisk2}
-                creditValidDays={product.creditValidDays}
-                tierLabel={t(
-                  `product.kind.${
-                    product.kind === "PACKAGE" && product.slug.startsWith("intensiv")
-                      ? "INTENSIVE_PACKAGE"
-                      : product.kind
-                  }`,
-                )}
-                perLessonLabel={t("product.perLesson")}
-                validityLabel={t("product.validityMonths", {
-                  count: Math.round(product.creditValidDays / 30),
+                {...toProductCardModel({
+                  locale: params.locale,
+                  bookingEnabled: canBook,
+                  product,
+                  featured: product.id === popular?.id,
+                  labels: productCardLabels,
                 })}
-                vatLabel={t("product.priceIncludesVat")}
-                valueSeparatelyLabel={
-                  product.kind !== "GUARANTEE" &&
-                  product.compareAtOre &&
-                  product.compareAtOre > product.priceOre
-                    ? t("pricing.valueSeparately", {
-                        price: formatPrice(product.compareAtOre, params.locale),
-                      })
-                    : undefined
-                }
-                badge={product.badge}
-                badgeLabel={product.badge ? t("product.popular") : undefined}
-                swedishOnly={product.swedishOnly}
-                swedishOnlyLabel={t("common.swedishOnly")}
-                unavailableLabel={t("product.notForSale")}
-                detailsLabel={t("common.readMore")}
-                featured={product.id === popular?.id}
-                featuredLabel={t("shell.mostChosen")}
-                imageSrc={lessonImage(product.kind)}
-                imageAlt={
-                  product.slug === "en-korlektion" ||
-                  product.slug === "testlektion" ||
-                  product.slug === "korpaket-b3"
-                    ? t(`product.images.${product.slug}`)
-                    : product.translation.name
-                }
-                savingsLabel={
-                  product.kind !== "GUARANTEE" &&
-                  product.compareAtOre &&
-                  product.compareAtOre > product.priceOre
-                    ? t("product.save", {
-                        percent: Math.round(
-                          (1 - product.priceOre / product.compareAtOre) * 100,
-                        ),
-                      })
-                    : undefined
-                }
               />
             </div>
             ))}
@@ -496,16 +448,15 @@ async function HomeBelow({
         </div>
       </section>
 
-      <section className="section-shell bg-surface text-ink-inverse">
+      <section className="section-shell border-y border-border bg-card">
         <div className="site-container">
-          <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-accent">{t("home.journey.eyebrow")}</p>
-          <h2 className="section-title mt-3 max-w-2xl">{t("home.journey.title")}</h2>
+          <SectionHeader eyebrow={t("home.journey.eyebrow")} title={t("home.journey.title")} />
           <ol className="mt-8 grid gap-6 md:mt-12 md:grid-cols-3 md:gap-8">
             {(["choose", "book", "learn"] as const).map((step, index) => (
-              <li key={step} className="border-t border-ink-inverse/20 pt-4 md:pt-6">
-                <span className="numbers-ltr text-sm font-black text-accent">{index + 1}</span>
-                <h3 className="mt-4 text-xl font-black">{t(`home.journey.${step}.title`)}</h3>
-                <p className="mt-3 text-sm leading-6 text-ink-inverse-muted">{t(`home.journey.${step}.description`)}</p>
+              <li key={step} className="border-t border-border pt-4 md:pt-6">
+                <span className="numbers-ltr text-small font-black text-accent">{index + 1}</span>
+                <h3 className="mt-4 text-h3 font-black">{t(`home.journey.${step}.title`)}</h3>
+                <p className="mt-3 max-w-[70ch] text-body leading-7 text-ink-muted">{t(`home.journey.${step}.description`)}</p>
               </li>
             ))}
           </ol>
@@ -515,10 +466,6 @@ async function HomeBelow({
       <section className="section-shell overflow-hidden">
         <div className="site-container">
           <div className="relative overflow-hidden rounded-lg bg-surface text-ink-inverse shadow-float">
-            <div
-              aria-hidden="true"
-              className="absolute -end-24 -top-32 size-80 rounded-full bg-accent opacity-15 blur-3xl"
-            />
             <div className="relative grid lg:grid-cols-[1.1fr_.9fr]">
               <div className="p-7 sm:p-10 lg:p-14">
                 <p className="text-sm font-bold uppercase tracking-wider text-accent">

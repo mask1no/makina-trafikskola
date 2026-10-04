@@ -1315,6 +1315,7 @@
     "staffDescription": "تعرّف إلى فريق Makina Trafikskola. تواصل مع المدرسة إذا أردت الحجز مع معلّم قيادة محدد.",
     "contactViaSchool": "التواصل عبر المدرسة",
     "callSchool": "اتصل بالمدرسة",
+    "sendSms": "أرسل رسالة نصية",
     "emailSchool": "راسل المدرسة",
     "staffRoles": {
       "trafikskolechef": "مدير مدرسة القيادة",

@@ -1315,6 +1315,7 @@
     "staffDescription": "Meet the team at Makina Trafikskola. Contact the school if you would like to book a particular instructor.",
     "contactViaSchool": "Contact through the school",
     "callSchool": "Call the school",
+    "sendSms": "Send text message",
     "emailSchool": "Email the school",
     "staffRoles": {
       "trafikskolechef": "Driving school manager",
