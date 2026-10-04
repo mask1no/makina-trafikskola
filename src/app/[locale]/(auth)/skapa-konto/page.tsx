@@ -1,17 +1,30 @@
 import { connection } from "next/server";
 import { getTranslations } from "next-intl/server";
+import { redirect } from "next/navigation";
 
+import { auth } from "@/auth";
 import { googleSignInEnabled } from "@/lib/auth/google";
+import { safeRedirect } from "@/lib/auth/safe-redirect";
 
 import { SignupForm } from "../auth-ui";
 
 export default async function RegisterPage(
   props: {
     params: Promise<{ locale: string }>;
+    searchParams: Promise<{ next?: string; callbackUrl?: string }>;
   }
 ) {
   await connection();
   const params = await props.params;
+  const searchParams = await props.searchParams;
+  if ((await auth())?.user) {
+    redirect(
+      safeRedirect(
+        searchParams.next ?? searchParams.callbackUrl,
+        params.locale,
+      ),
+    );
+  }
   const [t, authT] = await Promise.all([
     getTranslations("auth.register"),
     getTranslations("auth"),

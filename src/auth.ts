@@ -79,6 +79,7 @@ export const {
 } = NextAuth({
   session: { strategy: "jwt" },
   trustHost: true,
+  pages: { signIn: "/logga-in", error: "/logga-in" },
   providers: [
     Credentials({
       id: "email-password",

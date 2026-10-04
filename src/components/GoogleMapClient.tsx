@@ -8,7 +8,6 @@ import {
   APIProvider,
   InfoWindow,
   Map,
-  Marker,
   useMap,
 } from "@vis.gl/react-google-maps";
 
@@ -16,6 +15,13 @@ import { Avatar } from "@/components/Avatar";
 import { Badge } from "@/components/Badge";
 import { BottomSheet } from "@/components/BottomSheet";
 import { fanOutPositions } from "@/lib/maps/place-teachers";
+import { reportMapFailure } from "@/lib/maps/report-failure";
+
+declare global {
+  interface Window {
+    gm_authFailure?: () => void;
+  }
+}
 
 export type TeacherMarker = {
   id: string;
@@ -30,6 +36,7 @@ export type TeacherMarker = {
 
 type GoogleMapClientProps = {
   apiKey: string;
+  mapId: string;
   bookingAvailable: boolean;
   center: { lat: number; lng: number };
   label: string;
@@ -51,20 +58,6 @@ function initials(name: string) {
 function firstName(name: string) {
   const word = name.trim().split(/\s+/)[0] ?? name;
   return word.length > 12 ? `${word.slice(0, 11)}…` : word;
-}
-
-function escapeXml(value: string) {
-  return value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
-}
-
-function personMarkerIcon(name: string, selected: boolean) {
-  const ring = selected ? "#F5B429" : "#FFFFFF";
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="104" height="86" viewBox="0 0 104 86"><circle cx="52" cy="24" r="20" fill="#0D0D0F" stroke="${ring}" stroke-width="3"/><text x="52" y="29" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" font-weight="700" fill="#FFFFFF">${escapeXml(initials(name))}</text><rect x="6" y="50" width="92" height="28" rx="14" fill="#0D0D0F"/><text x="52" y="69" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="700" fill="#FFFFFF">${escapeXml(firstName(name))}</text></svg>`;
-  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
 }
 
 function PersonPin({
@@ -241,6 +234,7 @@ function MarkerDetails({
 
 export default function GoogleMapClient({
   apiKey,
+  mapId,
   bookingAvailable,
   center,
   label,
@@ -249,9 +243,9 @@ export default function GoogleMapClient({
   onSelectTeacher,
 }: GoogleMapClientProps) {
   const t = useTranslations("map");
-  const mapId = process.env.NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID;
   const [openId, setOpenId] = useState<string | null>(null);
   const [mobile, setMobile] = useState(false);
+  const [loadFailed, setLoadFailed] = useState(false);
   const mapRef = useRef<google.maps.Map | null>(null);
   const placed = useMemo(() => fanOutPositions(markers), [markers]);
   const pinPositions = useMemo(
@@ -274,6 +268,19 @@ export default function GoogleMapClient({
     query.addEventListener("change", update);
     return () => query.removeEventListener("change", update);
   }, []);
+
+  useEffect(() => {
+    const previous = window.gm_authFailure;
+    window.gm_authFailure = () => {
+      reportMapFailure();
+      setLoadFailed(true);
+    };
+    return () => {
+      window.gm_authFailure = previous;
+    };
+  }, []);
+
+  if (loadFailed) throw new Error("GOOGLE_MAPS_LOAD_FAILED");
 
   function select(marker: TeacherMarker) {
     onSelectTeacher?.(marker.teacherId);
@@ -306,7 +313,13 @@ export default function GoogleMapClient({
   }
 
   return (
-    <APIProvider apiKey={apiKey}>
+    <APIProvider
+      apiKey={apiKey}
+      onError={() => {
+        reportMapFailure();
+        setLoadFailed(true);
+      }}
+    >
       <div className="rtl-no-mirror" aria-label={label}>
         <div className="relative h-[28rem] overflow-hidden rounded-lg border border-ink bg-card">
             <Map
@@ -314,7 +327,7 @@ export default function GoogleMapClient({
               defaultZoom={13}
               gestureHandling="cooperative"
               disableDefaultUI
-              mapId={mapId || undefined}
+              mapId={mapId}
               className="size-full"
             >
               <MapHandle mapRef={mapRef} />
@@ -323,33 +336,16 @@ export default function GoogleMapClient({
                 const selected =
                   selectedTeacherId === marker.teacherId ||
                   openMarker?.id === marker.id;
-                if (mapId) {
-                  return (
-                    <AdvancedMarker
-                      key={marker.id}
-                      position={marker.displayPosition}
-                      title={marker.title}
-                      zIndex={selected ? 10 : 1}
-                      onClick={() => select(marker)}
-                    >
-                      <PersonPin name={marker.title} selected={selected} />
-                    </AdvancedMarker>
-                  );
-                }
                 return (
-                  <Marker
+                  <AdvancedMarker
                     key={marker.id}
                     position={marker.displayPosition}
                     title={marker.title}
-                    icon={
-                      marker.languages?.length
-                        ? personMarkerIcon(marker.title, selected)
-                        : undefined
-                    }
                     zIndex={selected ? 10 : 1}
-                    clickable
                     onClick={() => select(marker)}
-                  />
+                  >
+                    <PersonPin name={marker.title} selected={selected} />
+                  </AdvancedMarker>
                 );
               })}
               {openMarker && !mobile ? (

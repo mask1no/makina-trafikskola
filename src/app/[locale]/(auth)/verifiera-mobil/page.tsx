@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 
 import { auth } from "@/auth";
+import { safeRedirect } from "@/lib/auth/safe-redirect";
 import { db } from "@/lib/db";
 
 import { VerifyPhoneForm } from "../auth-ui";
@@ -25,12 +26,7 @@ export default async function VerifyPhonePage(props: {
     redirect(`/${params.locale}/mina-sidor`);
   }
   if (user.phoneVerifiedAt) {
-    const next = searchParams.next;
-    const safe =
-      next?.startsWith("/") && !next.startsWith("//") && !next.includes("\\")
-        ? next
-        : `/${params.locale}/mina-sidor`;
-    redirect(safe);
+    redirect(safeRedirect(searchParams.next, params.locale));
   }
 
   const [t, authT] = await Promise.all([

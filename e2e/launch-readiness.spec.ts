@@ -37,11 +37,38 @@ test.describe("public localized experience", () => {
   });
 
   test("keeps the Google account option visible", async ({ page }) => {
-    test.skip(!process.env.AUTH_GOOGLE_ID, "Google sign-in is not configured.");
     await page.goto("/en/skapa-konto");
-    await expect(
-      page.getByRole("button", { name: "Continue with Google" }),
-    ).toBeVisible();
+    const google = page.getByRole("button", { name: "Continue with Google" });
+    await expect(google).toBeVisible();
+    await expect(page.locator("form button").first()).toHaveAccessibleName(
+      "Continue with Google",
+    );
+  });
+
+  test("submits Google sign-in once on a double click", async ({ page }) => {
+    let posts = 0;
+    page.on("request", (request) => {
+      if (
+        request.method() === "POST" &&
+        request.url().includes("/api/auth/signin/google")
+      ) {
+        posts += 1;
+      }
+    });
+    await page.goto("/en/logga-in");
+    await page
+      .getByRole("button", { name: "Continue with Google" })
+      .dblclick();
+    await expect.poll(() => posts).toBe(1);
+  });
+
+  test("shows a translated notice for Auth.js errors", async ({ page }) => {
+    await page.goto("/en/logga-in?error=AccessDenied");
+    const notice = page.getByText(
+      "Google sign-in was denied. Try again or choose another way to sign in.",
+    );
+    await expect(notice).toBeVisible();
+    await expect(notice).not.toContainText("AccessDenied");
   });
 
   test("preserves an instructor deep link in booking", async ({ page }) => {

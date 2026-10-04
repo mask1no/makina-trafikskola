@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { signIn } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
@@ -9,17 +9,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { normalizeSwedishPhone } from "@/lib/auth/phone";
+import { safeRedirect } from "@/lib/auth/safe-redirect";
 
 function destinationFor(locale: string, searchParams: URLSearchParams) {
-  const requested = searchParams.get("next") ?? searchParams.get("callbackUrl");
-  if (
-    requested?.startsWith("/") &&
-    !requested.startsWith("//") &&
-    !requested.includes("\\")
-  ) {
-    return requested;
-  }
-  return `/${locale}/mina-sidor`;
+  return safeRedirect(
+    searchParams.get("next") ?? searchParams.get("callbackUrl"),
+    locale,
+  );
 }
 
 function useErrorText() {
@@ -147,28 +143,33 @@ function GoogleButton({
   destination: string;
 }) {
   const t = useTranslations("auth");
+  const [busy, setBusy] = useState(false);
+  const busyRef = useRef(false);
   if (!enabled) return null;
   return (
     <div className="grid gap-4">
-      <p className="text-center text-sm text-ink-muted">{t("or")}</p>
-      <Button
+      <button
         type="button"
-        variant="tertiary"
-        className="w-full bg-card"
-        onClick={() => {
+        disabled={busy}
+        className="flex min-h-11 w-full items-center justify-center gap-3 rounded-sm border border-[var(--google-border)] bg-card px-4 text-base font-medium text-[var(--google-ink)] disabled:opacity-60"
+        onClick={async () => {
+          if (busyRef.current) return;
+          busyRef.current = true;
+          setBusy(true);
           const locale = destination.split("/").filter(Boolean)[0] ?? "sv";
           const callbackUrl = `/${locale}/verifiera-mobil?next=${encodeURIComponent(destination)}`;
-          void signIn("google", { callbackUrl });
+          await signIn("google", { callbackUrl });
         }}
       >
-        <span
-          aria-hidden="true"
-          className="grid size-6 place-items-center rounded-full border border-border-strong bg-card text-xs font-black text-ink"
-        >
-          G
-        </span>
-        {label}
-      </Button>
+        <svg aria-hidden="true" viewBox="0 0 18 18" className="size-[18px]">
+          <path fill="var(--google-blue)" d="M17.64 9.205c0-.638-.057-1.252-.164-1.841H9v3.482h4.844a4.14 4.14 0 0 1-1.797 2.716v2.258h2.909c1.703-1.568 2.684-3.878 2.684-6.615Z" />
+          <path fill="var(--google-green)" d="M9 18c2.43 0 4.468-.806 5.956-2.18l-2.909-2.258c-.806.54-1.835.859-3.047.859-2.344 0-4.328-1.585-5.037-3.714H.956v2.332A9 9 0 0 0 9 18Z" />
+          <path fill="var(--google-yellow)" d="M3.963 10.707A5.41 5.41 0 0 1 3.682 9c0-.592.102-1.168.281-1.707V4.961H.956A9 9 0 0 0 0 9c0 1.452.347 2.827.956 4.039l3.007-2.332Z" />
+          <path fill="var(--google-red)" d="M9 3.579c1.321 0 2.507.454 3.441 1.346l2.581-2.581C13.464.892 11.426 0 9 0A9 9 0 0 0 .956 4.961l3.007 2.332C4.672 5.164 6.656 3.579 9 3.579Z" />
+        </svg>
+        {busy ? t("working") : label}
+      </button>
+      <p className="text-center text-sm text-ink-muted">{t("or")}</p>
     </div>
   );
 }
@@ -293,6 +294,14 @@ export function SignupForm({
 
   return (
     <form onSubmit={submit} className="grid gap-4">
+      <GoogleButton
+        enabled={googleEnabled}
+        label={t("continueWithGoogle")}
+        destination={safeRedirect(
+          searchParams.get("next") ?? searchParams.get("callbackUrl"),
+          locale,
+        )}
+      />
       <Input
         name="fullName"
         label={t("fullName")}
@@ -396,11 +405,6 @@ export function SignupForm({
           {busy ? t("working") : t("sendCode")}
         </Button>
       )}
-      <GoogleButton
-        enabled={googleEnabled}
-        label={t("continueWithGoogle")}
-        destination={destinationFor(locale, searchParams)}
-      />
       {onAuthenticated ? null : (
         <p className="text-center text-sm text-ink-muted">
           {register("hasAccount")}{" "}
@@ -522,6 +526,14 @@ export function LoginForm({
 
   return (
     <form onSubmit={submit} className="grid gap-4">
+      <GoogleButton
+        enabled={googleEnabled}
+        label={t("continueWithGoogle")}
+        destination={safeRedirect(
+          searchParams.get("next") ?? searchParams.get("callbackUrl"),
+          locale,
+        )}
+      />
       <fieldset>
         <legend className="sr-only">{t("methodLabel")}</legend>
         <div className="grid grid-cols-2 gap-1 rounded-sm bg-page p-1">
@@ -640,11 +652,6 @@ export function LoginForm({
           {busy ? t("working") : login("submit")}
         </Button>
       )}
-      <GoogleButton
-        enabled={googleEnabled}
-        label={t("continueWithGoogle")}
-        destination={destinationFor(locale, searchParams)}
-      />
       <p className="text-center text-sm text-ink-muted">
         {login("noAccount")}{" "}
         <Link className="font-bold text-ink underline" href={signupHref}>

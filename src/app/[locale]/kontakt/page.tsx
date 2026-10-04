@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 
 import { Avatar } from "@/components/Avatar";
 import { Badge } from "@/components/Badge";
-import { LazyTeacherMap } from "@/components/LazyTeacherMap";
+import { ClickToLoadMapEmbed } from "@/components/ClickToLoadMapEmbed";
 import { isLocale } from "@/i18n/routing";
 import {
   companyOpeningHours,
@@ -21,7 +21,6 @@ import {
 import { displayPhone, telHref } from "@/lib/format/phone";
 import { publicAddress } from "@/lib/locations/address";
 import { db } from "@/lib/db";
-import { bookingEnabled } from "@/lib/launch";
 import { pageCanonical, withSocial } from "@/lib/seo/metadata";
 
 export const dynamic = "force-dynamic";
@@ -216,25 +215,11 @@ export default async function ContactPage(
           <p className="mt-3 max-w-2xl text-ink-muted">{t("locationsDescription")}</p>
           {locations[0] ? (
             <div className="mt-6">
-              <LazyTeacherMap
-                apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY}
-                bookingAvailable={bookingEnabled()}
-                center={{ lat: locations[0].lat, lng: locations[0].lng }}
-                label={t("locationsTitle")}
-                missingKeyTitle={t("locationsTitle")}
-                missingKeyDescription={t("locationsDescription")}
-                fallbackHref={mapsDirections(
-                  locations[0].address,
-                  locations[0].city,
-                  locations[0].postalCode,
-                )}
-                fallbackLabel={t("directions")}
-                markers={locations.map((location) => ({
-                  id: location.id,
-                  teacherId: location.id,
-                  title: location.name,
-                  position: { lat: location.lat, lng: location.lng },
-                }))}
+              <ClickToLoadMapEmbed
+                address={`${visiting}, Sweden`}
+                buttonLabel={shell("showMap")}
+                title={t("locationsTitle")}
+                privacy={shell("mapPrivacy")}
               />
             </div>
           ) : null}

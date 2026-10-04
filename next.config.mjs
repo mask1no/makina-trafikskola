@@ -78,7 +78,7 @@ const nextConfig = {
           `img-src 'self' data: blob: https://maps.gstatic.com https://maps.googleapis.com https://*.stripe.com${r2PublicUrl ? ` ${r2PublicUrl.origin}` : ""}`,
           "font-src 'self' data:",
           "connect-src 'self' https://api.stripe.com https://maps.googleapis.com https://*.googleapis.com https://accounts.google.com https://*.sentry.io https://*.ingest.sentry.io",
-          "frame-src https://js.stripe.com https://hooks.stripe.com https://accounts.google.com",
+          "frame-src https://js.stripe.com https://hooks.stripe.com https://accounts.google.com https://www.google.com",
           "worker-src 'self'",
           "form-action 'self'",
         ].join("; "),
