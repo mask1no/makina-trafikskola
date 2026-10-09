@@ -75,7 +75,13 @@ export default async function TeoriKategoriPage(
               signIn: t("signInToAnswer"),
               error: t("answerError"),
               imageMissing: t("imageMissing"),
+              next: t("next"),
+              score: t.raw("score"),
+              reviewMistakes: t("reviewMistakes"),
+              retry: t("retry"),
+              bookLesson: t("bookLesson"),
             }}
+            bookHref={`/${params.locale}/boka`}
           />
         ) : (
           <div className="mt-8">

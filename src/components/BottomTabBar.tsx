@@ -78,15 +78,19 @@ function TabLink({
   pathname: string;
   prominent?: boolean;
 }) {
-  const className = `relative flex min-h-11 min-w-11 flex-col items-center justify-center gap-0.5 px-1 text-center text-micro font-bold leading-none ${
-    prominent
-      ? "mb-2 size-14 rounded-full bg-accent text-accent-ink"
-      : "text-ink-muted aria-[current=page]:text-ink"
-  }`;
+  const className = prominent
+    ? "relative flex h-16 w-full flex-col items-center justify-end pb-1 text-center text-micro font-bold leading-none text-ink-muted"
+    : "relative flex h-16 min-w-11 flex-col items-center justify-center gap-0.5 px-1 text-center text-micro font-bold leading-none text-ink-muted aria-[current=page]:text-ink";
   if (tab.href.startsWith("tel:")) {
     return (
       <a href={tab.href} className={className}>
-        <TabIcon icon={tab.icon} prominent={prominent} />
+        {prominent ? (
+          <span className="absolute -top-3 grid size-[52px] place-items-center rounded-full bg-accent text-accent-ink shadow-soft">
+            <TabIcon icon={tab.icon} prominent />
+          </span>
+        ) : (
+          <TabIcon icon={tab.icon} />
+        )}
         <span className="w-full truncate">{tab.label}</span>
       </a>
     );
@@ -98,7 +102,13 @@ function TabLink({
       aria-current={isCurrent(pathname, tab.href) ? "page" : undefined}
       className={className}
     >
-      <TabIcon icon={tab.icon} prominent={prominent} />
+      {prominent ? (
+        <span className="absolute -top-3 grid size-[52px] place-items-center rounded-full bg-accent text-accent-ink shadow-soft">
+          <TabIcon icon={tab.icon} prominent />
+        </span>
+      ) : (
+        <TabIcon icon={tab.icon} />
+      )}
       <span className="w-full truncate">{tab.label}</span>
     </Link>
   );
@@ -117,40 +127,24 @@ export function BottomTabBar({
   const right = tabs.slice(leftCount);
 
   return (
-    <nav className="fixed bottom-0 start-0 end-0 z-40 border-t border-border bg-card pb-[var(--safe-bottom)] shadow-float md:hidden">
-      <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-end">
-        <ul
-          className="grid"
-          style={{
-            gridTemplateColumns: `repeat(${Math.max(left.length, 1)}, minmax(0, 1fr))`,
-          }}
-        >
-          {left.map((tab) => (
-            <li key={tab.href} className="min-w-0">
-              <TabLink tab={tab} pathname={pathname} />
-            </li>
-          ))}
-        </ul>
-        <ul className="min-w-[4.75rem]">
-          {center ? (
-            <li className="min-w-0">
-              <TabLink tab={center} pathname={pathname} prominent />
-            </li>
-          ) : null}
-        </ul>
-        <ul
-          className="grid"
-          style={{
-            gridTemplateColumns: `repeat(${Math.max(right.length, 1)}, minmax(0, 1fr))`,
-          }}
-        >
-          {right.map((tab) => (
-            <li key={tab.href} className="min-w-0">
-              <TabLink tab={tab} pathname={pathname} />
-            </li>
-          ))}
-        </ul>
-      </div>
+    <nav className="fixed bottom-0 start-0 end-0 z-40 border-t border-[var(--line)] bg-card pb-[var(--safe-bottom)] shadow-soft md:hidden">
+      <ul className="grid grid-cols-5">
+        {left.map((tab) => (
+          <li key={tab.href} className="min-w-0">
+            <TabLink tab={tab} pathname={pathname} />
+          </li>
+        ))}
+        {center ? (
+          <li className="min-w-0">
+            <TabLink tab={center} pathname={pathname} prominent />
+          </li>
+        ) : null}
+        {right.map((tab) => (
+          <li key={tab.href} className="min-w-0">
+            <TabLink tab={tab} pathname={pathname} />
+          </li>
+        ))}
+      </ul>
     </nav>
   );
 }

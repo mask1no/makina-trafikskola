@@ -9,6 +9,7 @@ import { isLocale } from "@/i18n/routing";
 import { resolveContent } from "@/lib/content/fallback";
 import { db } from "@/lib/db";
 import { pageCanonical, withSocial } from "@/lib/seo/metadata";
+import { theoryMode } from "@/lib/launch";
 import { freeTheoryQuestionCount } from "@/lib/theory/questions";
 
 export const dynamic = "force-dynamic";
@@ -19,13 +20,15 @@ export async function generateMetadata(
   const { locale } = await props.params;
   if (!isLocale(locale)) return {};
   const t = await getTranslations({ locale, namespace: "theory" });
-  const title = t("title");
-  const description = t("description");
+  const comingSoon = theoryMode() === "off";
+  const title = comingSoon ? t("comingSoonTitle") : t("title");
+  const description = comingSoon ? t("comingSoonBody") : t("description");
   const canonical = pageCanonical(locale, "/teori");
   return {
     title,
     description,
     alternates: { canonical },
+    ...(comingSoon ? { robots: { index: false, follow: false } } : {}),
     ...withSocial({ title, description, canonical, locale }),
   };
 }
@@ -38,6 +41,17 @@ export default async function TeoriPage(
   const params = await props.params;
   if (!isLocale(params.locale)) notFound();
   setRequestLocale(params.locale);
+  if (theoryMode() === "off") {
+    const t = await getTranslations("theory");
+    return (
+      <div className="section-shell">
+        <div className="site-container max-w-xl">
+          <h1 className="text-h1 font-black">{t("comingSoonTitle")}</h1>
+          <p className="mt-4 max-w-[70ch] leading-7 text-ink-muted">{t("comingSoonBody")}</p>
+        </div>
+      </div>
+    );
+  }
   const [t, homeTheory, categories, freeQuestionCount] = await Promise.all([
     getTranslations("theory"),
     getTranslations("home.theory"),

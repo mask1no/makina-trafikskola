@@ -1,7 +1,14 @@
 import { differenceInCalendarDays } from "date-fns";
+import * as Sentry from "@sentry/nextjs";
 import { z } from "zod";
 
 import { loadAvailability } from "@/lib/bookings/availability";
+import { db } from "@/lib/db";
+import {
+  calendarSyncEnabled,
+  slotOverlapsBusy,
+  teacherBusyIntervals,
+} from "@/lib/calendar/google";
 
 const querySchema = z
   .object({
@@ -63,5 +70,29 @@ export async function GET(request: Request) {
     );
   }
 
-  return Response.json(slots);
+  if (!calendarSyncEnabled()) return Response.json(slots);
+  const teacher = await db.teacherProfile.findUnique({
+    where: { id: parsed.data.teacherId },
+    select: { googleCalendarEmail: true },
+  });
+  if (!teacher?.googleCalendarEmail) return Response.json(slots);
+  try {
+    const busy = await teacherBusyIntervals(
+      teacher.googleCalendarEmail,
+      parsed.data.from,
+      parsed.data.to,
+    );
+    return Response.json(
+      slots.filter(
+        (slot) =>
+          !slotOverlapsBusy(
+            { startsAt: new Date(slot.startsAt), endsAt: new Date(slot.endsAt) },
+            busy,
+          ),
+      ),
+    );
+  } catch (error) {
+    Sentry.captureException(error);
+    return Response.json(slots);
+  }
 }

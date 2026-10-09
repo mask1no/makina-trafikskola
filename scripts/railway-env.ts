@@ -8,7 +8,7 @@ type CheckStatus = "new" | "changed" | "same" | "remove-candidate";
 type SafetyLevel = "WARN" | "FAIL";
 type SafetyIssue = { level: SafetyLevel; message: string };
 
-const SOURCE_FILE = ".env.production.local";
+const SOURCE_FILE = ".env.railway";
 const CANONICAL_HOST = "https://www.makina.se";
 const EXCLUDED_KEYS = new Set([
   "DATABASE_URL",
@@ -97,8 +97,8 @@ function looksPlaceholder(value: string) {
 
 function stripeMode(value?: string) {
   if (!value) return "unknown";
-  if (value.startsWith("sk_live_") || value.startsWith("pk_live_")) return "live";
-  if (value.startsWith("sk_test_") || value.startsWith("pk_test_")) return "test";
+  if (value.startsWith("sk_live_") || value.startsWith("rk_live_") || value.startsWith("pk_live_")) return "live";
+  if (value.startsWith("sk_test_") || value.startsWith("rk_test_") || value.startsWith("pk_test_")) return "test";
   return "unknown";
 }
 

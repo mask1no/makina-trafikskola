@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { Avatar } from "@/components/Avatar";
+import { Card } from "@/components/Card";
 
 type TeacherCardProps = {
   locale: string;
@@ -20,17 +21,16 @@ type TeacherCardProps = {
 
 export function TeacherCard(props: TeacherCardProps) {
   return (
-    <article
+    <Card
       id={props.cardId}
       data-teacher={props.cardId ? "" : undefined}
-      className="group flex h-full min-w-0 flex-col break-words hyphens-auto border-b border-border pb-6 transition duration-700 ease-premium hover:border-ink data-[selected=true]:border-accent"
+      className="group flex h-full min-w-0 flex-col"
     >
       <div className="flex items-start gap-4">
         <Avatar
           name={props.name}
           imageUrl={props.photoUrl}
           size="lg"
-          className="transition duration-700 ease-premium group-hover:scale-[1.03]"
         />
         <div className="min-w-0 pt-1">
           <h3 className="text-h3 font-extrabold tracking-tight">
@@ -46,18 +46,23 @@ export function TeacherCard(props: TeacherCardProps) {
           ) : null}
         </div>
       </div>
-      <p className="mt-4 max-w-[70ch] text-body leading-7 text-ink-muted">
-        {[...props.languages, ...props.transmissions].join(" · ")}
-      </p>
+      <ul className="mt-4 flex flex-wrap gap-2">
+        {props.languages.map((language) => (
+          <li key={language} className="rounded-full border border-[var(--line)] px-3 py-1 text-small">{language}</li>
+        ))}
+        {props.transmissions.map((transmission) => (
+          <li key={transmission} className="rounded-full border border-[var(--line)] px-3 py-1 text-small">{transmission}</li>
+        ))}
+      </ul>
       {props.locationNames.length ? (
         <p className="mt-2 text-small text-ink-muted">{props.locationNames.join(" · ")}</p>
       ) : null}
       <Link
         href={`/${props.locale}/larare/${props.slug}`}
-        className="mt-5 inline-flex min-h-11 items-center font-bold underline underline-offset-4"
+        className="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-sm bg-accent font-bold text-accent-ink"
       >
         {props.detailsLabel}
       </Link>
-    </article>
+    </Card>
   );
 }

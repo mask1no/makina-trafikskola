@@ -1,6 +1,4 @@
-function Pulse({ className }: { className: string }) {
-  return <div className={`animate-pulse rounded-sm bg-border ${className}`} />;
-}
+import { Pulse } from "@/components/Pulse";
 
 export default function BokaLoading() {
   return (

@@ -1,13 +1,9 @@
-import { MarqueePause } from "@/components/MarqueePause";
-
 export type BenefitCard = {
   id: string;
   size: "sm" | "lg";
   title: string;
   body: string;
 };
-
-const mobilePriority = ["language", "testLesson", "prices", "pickup", "local"];
 
 function BenefitIcon() {
   return (
@@ -28,7 +24,7 @@ function Cards({ items, hidden = false }: { items: BenefitCard[]; hidden?: boole
       {items.map((item) => (
         <li
           key={`${hidden ? "copy-" : ""}${item.id}`}
-          className={`flex h-[9.5rem] shrink-0 snap-start flex-col justify-between rounded-lg border border-border bg-card p-4 shadow-soft ${
+          className={`flex h-[9.5rem] shrink-0 flex-col justify-between rounded-md border border-[var(--line)] bg-card p-4 shadow-soft ${
             item.size === "lg" ? "w-[22rem] max-w-[85vw]" : "w-[16rem] max-w-[85vw]"
           }`}
         >
@@ -45,38 +41,19 @@ function Cards({ items, hidden = false }: { items: BenefitCard[]; hidden?: boole
 
 export function BenefitMarquee({
   label,
-  pauseLabel,
-  playLabel,
   items,
 }: {
   label: string;
-  pauseLabel: string;
-  playLabel: string;
   items: BenefitCard[];
 }) {
   if (!items.length) return null;
-  const prioritized = mobilePriority
-    .map((id) => items.find((item) => item.id === id))
-    .filter((item): item is BenefitCard => Boolean(item));
-  const mobileItems = [
-    ...prioritized,
-    ...items.filter((item) => !prioritized.includes(item)),
-  ].slice(0, 5);
 
   return (
-    <section aria-label={label} aria-roledescription="carousel" className="benefit-marquee-region relative" data-marquee="">
-      <div className="benefit-mobile overflow-x-auto snap-x snap-mandatory px-4 md:hidden">
-        <Cards items={mobileItems} />
-      </div>
-      <div className="hidden md:block">
-        <div className="site-container mb-3 flex justify-end">
-          <MarqueePause pauseLabel={pauseLabel} playLabel={playLabel} />
-        </div>
-        <div className="benefit-viewport">
-          <div className="benefit-track">
-            <Cards items={items} />
-            <Cards items={items} hidden />
-          </div>
+    <section aria-label={label} className="benefit-marquee-region relative">
+      <div className="benefit-viewport">
+        <div className="benefit-track">
+          <Cards items={items} />
+          <Cards items={items} hidden />
         </div>
       </div>
     </section>

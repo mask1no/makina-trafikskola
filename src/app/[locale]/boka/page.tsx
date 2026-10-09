@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { connection } from "next/server";
+import { getTranslations } from "next-intl/server";
+
+import { QuestionsBlock } from "@/components/QuestionsBlock";
 
 import { auth } from "@/auth";
 import { googleSignInEnabled } from "@/lib/auth/google";
@@ -34,6 +37,8 @@ export default async function BookingPage(
   const mapsConfig = googleMapsBrowserConfig();
   if (!isLocale(params.locale)) notFound();
   if (!bookingEnabled()) notFound();
+  const shell = await getTranslations({ locale: params.locale, namespace: "shell" });
+  const company = await getTranslations({ locale: params.locale, namespace: "company" });
 
   const session = await auth();
   const preferredLanguages =
@@ -47,7 +52,7 @@ export default async function BookingPage(
       : undefined;
   const [products, locations, orderedIds] = await Promise.all([
     db.product.findMany({
-      where: { kind: { in: ["SINGLE_LESSON", "TEST_LESSON"] } },
+      where: { kind: "SINGLE_LESSON", active: true },
       orderBy: { sortOrder: "asc" },
       include: { translations: true },
     }),
@@ -129,6 +134,12 @@ export default async function BookingPage(
         cancellationWindowHours={configuredCancellationHours()}
         mapApiKey={mapsConfig.apiKey}
         mapId={mapsConfig.mapId}
+      />
+      <QuestionsBlock
+        title={shell("questions")}
+        callLabel={shell("callUs")}
+        phone={company("phone")}
+        email={company("email")}
       />
     </div>
   );

@@ -30,6 +30,8 @@ DATABASE_URL=postgresql://makina:makina_local_dev@localhost:5433/makina
 
 `npm run theory:import` loads the question bank. The bank file stays out of git.
 
+Launch values, cron, calendar sync and the dashboard clicks are in [LAUNCH_SETUP.md](LAUNCH_SETUP.md).
+
 ## Environment
 
 Required in production (`src/lib/env.ts`):

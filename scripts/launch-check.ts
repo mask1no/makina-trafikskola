@@ -61,11 +61,12 @@ async function checkMigrations() {
 async function checkStripe() {
   const secret = process.env.STRIPE_SECRET_KEY;
   const publishable = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
-  const secretMode = secret?.startsWith("sk_live_")
-    ? "live"
-    : secret?.startsWith("sk_test_")
-      ? "test"
-      : "unknown";
+  const secretMode =
+    secret?.startsWith("sk_live_") || secret?.startsWith("rk_live_")
+      ? "live"
+      : secret?.startsWith("sk_test_") || secret?.startsWith("rk_test_")
+        ? "test"
+        : "unknown";
   const publishableMode = publishable?.startsWith("pk_live_")
     ? "live"
     : publishable?.startsWith("pk_test_")
@@ -92,19 +93,32 @@ async function checkStripe() {
   }
   try {
     const stripe = new Stripe(secret);
-    const expectedUrl = `${new URL(process.env.AUTH_URL).origin}/api/webhooks/stripe`;
+    const expectedUrl = "https://www.makina.se/api/webhooks/stripe";
     const endpoints = await stripe.webhookEndpoints.list({ limit: 100 });
-    const endpoint = endpoints.data.find(
+    const enabled = endpoints.data.filter((candidate) => candidate.status === "enabled");
+    const elsewhere = enabled
+      .map((candidate) => candidate.url.replace(/\/$/, ""))
+      .filter((url) => url !== expectedUrl);
+    if (elsewhere.length) {
+      record(
+        "Stripe webhook targets",
+        "WARN",
+        `enabled endpoints pointing elsewhere: ${elsewhere.join(", ")}`,
+      );
+    }
+    const canonical = enabled.filter(
       (candidate) => candidate.url.replace(/\/$/, "") === expectedUrl,
     );
-    if (!endpoint) {
-      record("Stripe webhook", "FAIL", "canonical endpoint does not exist");
+    if (canonical.length !== 1) {
+      record(
+        "Stripe webhook",
+        "FAIL",
+        `${canonical.length} enabled endpoints at ${expectedUrl}`,
+      );
       return;
     }
-    if (endpoint.status !== "enabled") {
-      record("Stripe webhook", "FAIL", "canonical endpoint is disabled");
-      return;
-    }
+    const endpoint = canonical[0];
+    if (!endpoint) return;
     const subscribed = new Set(endpoint.enabled_events);
     const missing = subscribed.has("*")
       ? []
@@ -176,7 +190,7 @@ async function checkBackups(now: Date) {
   }
 }
 
-function checkConfiguration() {
+async function checkConfiguration() {
   const missing = REQUIRED_PRODUCTION_ENVIRONMENT_VARIABLES.filter(
     (name) => !configured(name),
   );
@@ -184,16 +198,6 @@ function checkConfiguration() {
     "Required environment",
     missing.length ? "FAIL" : "PASS",
     missing.length ? `missing: ${missing.join(", ")}` : "all required variables present",
-  );
-
-  const booking = process.env.BOOKING_ENABLED === "1";
-  const instructors = process.env.INSTRUCTORS_ENABLED === "1";
-  record(
-    "Launch flags",
-    booking || instructors ? "WARN" : "PASS",
-    `BOOKING_ENABLED=${booking ? "on" : "off"}, INSTRUCTORS_ENABLED=${
-      instructors ? "on" : "off"
-    }`,
   );
 
   const urls = canonicalUrlStatus(
@@ -222,10 +226,78 @@ function checkConfiguration() {
     configured("GOOGLE_MAPS_MAP_ID") ||
     configured("NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID");
   record(
-    "Google Maps",
-    mapsKey && mapId ? "PASS" : "WARN",
-    mapsKey && mapId ? "browser key and Map ID configured" : "browser key or Map ID missing",
+    "CRON_SECRET",
+    configured("CRON_SECRET") ? "PASS" : "FAIL",
+    configured("CRON_SECRET") ? "set" : "missing",
   );
+  record(
+    "Launch flags",
+    "PASS",
+    `BOOKING_ENABLED=${process.env.BOOKING_ENABLED ?? "unset"} INSTRUCTORS_ENABLED=${process.env.INSTRUCTORS_ENABLED ?? "unset"} THEORY_MODE=${process.env.THEORY_MODE ?? "free"}`,
+  );
+  await checkMaps(mapsKey, mapId);
+  await checkCalendars();
+}
+
+async function checkMaps(mapsKey: boolean, mapId: boolean) {
+  const key =
+    process.env.GOOGLE_MAPS_BROWSER_KEY?.trim() ||
+    process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY?.trim();
+  if (!mapsKey || !mapId || !key) {
+    record("Google Maps", "WARN", "browser key or Map ID missing");
+    return;
+  }
+  try {
+    const response = await fetch(
+      `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(key)}&callback=Function.prototype`,
+      {
+        headers: { referer: "https://www.makina.se/" },
+        signal: AbortSignal.timeout(10_000),
+      },
+    );
+    const body = (await response.text()).replaceAll(key, "[key]");
+    const error = body.match(/Google Maps JavaScript API error: ([^\n<]+)/)?.[1];
+    record(
+      "Google Maps",
+      response.ok && !error ? "PASS" : "FAIL",
+      error ?? (response.ok ? "Maps JS API answered for www.makina.se" : `HTTP ${response.status}`),
+    );
+  } catch (error) {
+    record(
+      "Google Maps",
+      "FAIL",
+      error instanceof Error ? error.message : "Maps JS request failed",
+    );
+  }
+}
+
+async function checkCalendars() {
+  if (process.env.GOOGLE_CALENDAR_SYNC_ENABLED !== "1") {
+    record("Google Calendar", "WARN", "sync is off");
+    return;
+  }
+  const { probeTeacherCalendar } = await import("../src/lib/calendar/google");
+  const teachers = await db.teacherProfile.findMany({
+    where: { active: true, googleCalendarEmail: { not: null } },
+    select: { slug: true, googleCalendarEmail: true },
+  });
+  if (!teachers.length) {
+    record("Google Calendar", "WARN", "no teacher calendar emails are set");
+    return;
+  }
+  for (const teacher of teachers) {
+    if (!teacher.googleCalendarEmail) continue;
+    try {
+      await probeTeacherCalendar(teacher.googleCalendarEmail);
+      record("Google Calendar", "PASS", `${teacher.slug} reachable`);
+    } catch (error) {
+      record(
+        "Google Calendar",
+        "FAIL",
+        `${teacher.slug}: ${error instanceof Error ? error.message : "unreachable"}`,
+      );
+    }
+  }
 }
 
 function printResults() {
@@ -244,7 +316,7 @@ function printResults() {
 }
 
 async function main() {
-  checkConfiguration();
+  await checkConfiguration();
   await checkDatabase();
   await checkMigrations();
   await checkStripe();

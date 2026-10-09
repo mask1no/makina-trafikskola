@@ -23,6 +23,11 @@ enum Transmission {
   AUTOMATIC
 }
 
+enum AreaStatus {
+  ACTIVE
+  COMING_SOON
+}
+
 enum KktStatus {
   UNKNOWN
   NOT_APPLIED
@@ -91,7 +96,9 @@ model TeacherProfile {
   ratingCount       Int            @default(0)
   travelBufferMin   Int            @default(15)
   maxPickupRadiusKm Int            @default(15)
-  calendarToken     String?        @unique
+  calendarToken        String?        @unique
+  googleCalendarEmail  String?
+  payRateOre           Int?
 
   translations    TeacherTranslation[]
   locations       TeacherLocation[]
@@ -130,6 +137,9 @@ model Location {
   lng                Float
   isPickupZoneCenter Boolean @default(true)
   active             Boolean @default(true)
+  status             AreaStatus @default(ACTIVE)
+  officeAddress      String?
+  boundary           Json?
 
   teachers     TeacherLocation[]
   bookings     Booking[]
@@ -189,6 +199,7 @@ model Product {
   creditValidDays Int         @default(365)
 
   badge           String?                      // "POPULARAST"
+  bestSeller      Boolean     @default(false)
   accentHex       String?                      // tier colour — data, not CSS
 
   translations ProductTranslation[]
@@ -396,8 +407,10 @@ model Booking {
   cancelledBy   User?          @relation("BookingCancelledBy", fields: [cancelledById], references: [id])
   cancelReason  String?
 
-  studentNote    String?
-  idempotencyKey String?       @unique
+  studentNote     String?
+  idempotencyKey  String?       @unique
+  googleEventId   String?
+  googleSyncedAt  DateTime?
   createdAt      DateTime      @default(now())
 
   credits      CreditTransaction[]

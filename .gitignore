@@ -32,6 +32,10 @@ yarn-error.log*
 # local env files
 .env
 .env*.local
+.env.railway
+
+# Client import files stay on disk and out of git.
+/client-data/
 
 # The real theory bank is imported locally and must not be committed.
 /prisma/theory-bank.json

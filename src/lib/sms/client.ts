@@ -1,3 +1,5 @@
+import * as Sentry from "@sentry/nextjs";
+
 type SmsMessage = {
   to: string;
   message: string;
@@ -31,6 +33,11 @@ export async function sendSmsMessage({
   });
 
   if (!response.ok) {
+    const errorText = await response.text().catch(() => "");
+    Sentry.captureMessage("46elks SMS failed", {
+      level: "error",
+      extra: { status: response.status, error: errorText.slice(0, 300) },
+    });
     throw new Error("SMS_DELIVERY_FAILED");
   }
 

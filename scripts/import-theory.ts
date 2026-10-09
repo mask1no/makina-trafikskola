@@ -4,6 +4,8 @@ import path from "node:path";
 import { PrismaClient } from "@prisma/client";
 import { z } from "zod";
 
+import { FREE_PRACTICE_IDS } from "../prisma/theory/practice-bank";
+
 const LOCALES = ["sv", "en", "ti", "ar", "so"] as const;
 const NON_SWEDISH_LOCALES = ["en", "ti", "ar", "so"] as const;
 
@@ -121,7 +123,7 @@ export async function importTheoryQuestions(
       where: { sourceRef: question.id },
       update: {
         categoryId: category.id,
-        isFree: count < 3,
+        isFree: (FREE_PRACTICE_IDS as readonly string[]).includes(question.id),
         difficulty: question.difficulty ?? 2,
         active: question.status === "ok",
         imageUrl: question.needs_image ? `/theory/${question.id}.webp` : null,
@@ -129,7 +131,7 @@ export async function importTheoryQuestions(
       create: {
         sourceRef: question.id,
         categoryId: category.id,
-        isFree: count < 3,
+        isFree: (FREE_PRACTICE_IDS as readonly string[]).includes(question.id),
         difficulty: question.difficulty ?? 2,
         active: question.status === "ok",
         imageUrl: question.needs_image ? `/theory/${question.id}.webp` : null,

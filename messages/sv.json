@@ -49,6 +49,20 @@
     "calendar": "Kalender",
     "students": "Elever",
     "contact": "Kontakt",
+    "courses": "Kurser",
+    "prices": "Priser",
+    "questions": "Har du frågor?",
+    "languagePage": {
+      "sv": "svenska",
+      "en": "engelska",
+      "ti": "tigrinja",
+      "ku": "kurdiska",
+      "so": "somaliska",
+      "ar": "arabiska"
+    },
+    "here": "Här finns vi",
+    "schoolIn": "Trafikskola i {town}",
+    "comingSoonPlace": "{town} – kommer snart",
     "orgnrLabel": "Org.nr",
     "openingHours": "Öppettider: mån–fre 08–21, lör 08–19",
     "copyright": "© {year} Makina Trafikskola",
@@ -95,7 +109,8 @@
       "cardDescription": "Välj språk, växellåda och lärare efter dina behov.",
       "reviews": "omdömen",
       "pickupProof": "Upphämtning efter överenskommelse",
-      "languageProof": "{languages}"
+      "languageProof": "{languages}",
+      "areas": "Farsta · Upplands Väsby"
     },
     "journey": {
       "eyebrow": "Så fungerar det",
@@ -152,7 +167,7 @@
       },
       "pickup": {
         "question": "Hämtar ni mig?",
-        "answer": "Möjligheten till upphämtning beror på lektion och lärare. Kontakta oss med din adress så bekräftar vi vad som är möjligt."
+        "answer": "Upphämtning är gratis inom Farsta och Upplands Väsby."
       },
       "cancel": {
         "question": "Hur avbokar jag en lektion?",
@@ -199,11 +214,11 @@
       },
       "risk": {
         "title": "Riskutbildning",
-        "body": "Riskettan eller risktvåan finns i utbudet."
+        "body": "Båda riskutbildningarna hos oss"
       },
       "guarantee": {
         "title": "Garanti",
-        "body": "Ett garantipaket finns i utbudet."
+        "body": "Kör tills du klarar"
       },
       "payment": {
         "title": "Betalning",
@@ -231,6 +246,9 @@
     "eyebrow": "Priser och paket",
     "title": "Körlektioner för varje steg",
     "description": "Jämför enstaka lektioner och paket. Alla priser visas inklusive moms.",
+    "sortPrice": "Pris",
+    "sortLessons": "Antal lektioner",
+    "bestSeller": "Mest såld",
     "groups": {
       "label": "Produktgrupper",
       "single": {
@@ -433,6 +451,13 @@
     "signInToAnswer": "Logga in som elev för att spara ditt svar.",
     "answerError": "Svaret kunde inte sparas. Försök igen.",
     "imageMissing": "Bild saknas",
+    "next": "Nästa",
+    "score": "{correct} av {total} rätt",
+    "reviewMistakes": "Se dina fel",
+    "retry": "Gör om",
+    "bookLesson": "Boka en körlektion",
+    "comingSoonTitle": "Kommer snart",
+    "comingSoonBody": "Teoriprovet öppnar här när det är redo.",
     "exam": {
       "eyebrow": "Övningsprov",
       "title": "Förbered dig som på kunskapsprovet",
@@ -459,6 +484,7 @@
   },
   "localSchool": {
     "eyebrow": "Trafikskola nära dig",
+    "comingSoon": "Kommer snart",
     "title": "Trafikskola i {city}",
     "description": "Se vår bekräftade plats och tillgängliga lärare i {city}.",
     "addressPending": "Den exakta besöksadressen inväntar bekräftelse.",
@@ -815,6 +841,13 @@
     "weekTitle": "Veckans körlektioner",
     "weekCount": "{count, plural, =0 {Inga lektioner den här veckan} =1 {1 lektion den här veckan} other {{n} lektioner den här veckan}}",
     "weekEmpty": "Du har inga lektioner den här veckan.",
+    "monthTitle": "Min månad",
+    "lessonsDriven": "{count} lektioner",
+    "hoursDriven": "{hours} timmar",
+    "estimatedPay": "Beräknad lön {pay}",
+    "monthEmpty": "Inga slutförda lektioner den här månaden.",
+    "previousMonth": "Föregående månad",
+    "nextMonth": "Nästa månad",
     "views": {
       "today": "Idag",
       "week": "Vecka"
@@ -1038,6 +1071,7 @@
       "metadata": "Integritetspolicy för Makina Trafikskola.",
       "eyebrow": "Juridisk information",
       "title": "Integritetspolicy",
+      "accountAction": "Ladda ner eller radera dina uppgifter",
       "sectionOrder": [
         "controller",
         "collected",
@@ -1128,7 +1162,38 @@
       "calendar": "Veckokalender",
       "students": "Elever",
       "instructors": "Ny lärare",
-      "reviews": "Recensioner"
+      "reviews": "Recensioner",
+      "products": "Produkter",
+      "areas": "Områden"
+    },
+    "editor": {
+      "save": "Spara",
+      "saved": "Sparat",
+      "phone": "Mobilnummer",
+      "languages": "Språk",
+      "gearbox": "Växellåda",
+      "manual": "Manuell",
+      "automatic": "Automat",
+      "areas": "Områden",
+      "years": "År i yrket",
+      "hours": "Arbetstider",
+      "addHour": "Lägg till tid",
+      "daysOff": "Lediga dagar",
+      "photo": "Foto",
+      "calendarEmail": "Google-kalender",
+      "testCalendar": "Testa",
+      "payRate": "Lön per lektion (kr)",
+      "price": "Pris (kr)",
+      "active": "Aktiv",
+      "bestSeller": "Mest såld",
+      "shortDesc": "Kort beskrivning",
+      "status": "Status",
+      "office": "Kontorsadress",
+      "boundary": "GeoJSON",
+      "comingSoon": "Kommer snart",
+      "productsTitle": "Produkter",
+      "areasTitle": "Områden",
+      "editTeacher": "Redigera lärare"
     },
     "dashboard": {
       "eyebrow": "Administration",

@@ -32,7 +32,7 @@ describe("production environment validation", () => {
       expect.stringContaining("Google Maps and pickup autocomplete"),
     );
     expect(warn).toHaveBeenCalledWith(
-      expect.stringContaining("NEXT_PUBLIC_GOOGLE_MAPS_KEY"),
+      expect.stringContaining("GOOGLE_MAPS_BROWSER_KEY"),
     );
   });
 

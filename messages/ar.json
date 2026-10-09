@@ -49,6 +49,20 @@
     "calendar": "التقويم",
     "students": "الطلاب",
     "contact": "اتصل بنا",
+    "courses": "الدورات",
+    "prices": "الأسعار",
+    "questions": "هل لديك أسئلة؟",
+    "languagePage": {
+      "sv": "السويدية",
+      "en": "الإنجليزية",
+      "ti": "التغرينية",
+      "ku": "الكردية",
+      "so": "الصومالية",
+      "ar": "العربية"
+    },
+    "here": "أماكننا",
+    "schoolIn": "مدرسة قيادة في {town}",
+    "comingSoonPlace": "{town} – قريباً",
     "openingHours": "ساعات العمل: الإثنين–الجمعة 08–21، السبت 08–19",
     "copyright": "© {year} Makina Trafikskola",
     "footerDescription": "تعليم قيادة واضح ودعم بلغتك.",
@@ -95,7 +109,8 @@
       "cardDescription": "اختر اللغة وناقل الحركة والمدرب وفق احتياجاتك.",
       "reviews": "تقييمات",
       "pickupProof": "الاستلام بالاتفاق",
-      "languageProof": "{languages}"
+      "languageProof": "{languages}",
+      "areas": "Farsta · Upplands Väsby"
     },
     "journey": {
       "eyebrow": "كيف تعمل الخدمة",
@@ -152,7 +167,7 @@
       },
       "pickup": {
         "question": "هل يمكنكم اصطحابي؟",
-        "answer": "تعتمد إمكانية الاصطحاب على الدرس والمدرب. تواصل معنا وأرسل عنوانك لنؤكد لك الخيارات المتاحة."
+        "answer": "الاصطحاب مجاني داخل منطقتي فارستا وأوبلاندس فيسبي."
       },
       "cancel": {
         "question": "كيف ألغي درسًا؟",
@@ -199,11 +214,11 @@
       },
       "risk": {
         "title": "تدريب المخاطر",
-        "body": "يوجد Riskettan أو Risktvåan ضمن العرض."
+        "body": "كلا تدريبي المخاطر لدينا"
       },
       "guarantee": {
         "title": "ضمان",
-        "body": "توجد باقة ضمان ضمن العرض."
+        "body": "قد حتى تنجح"
       },
       "payment": {
         "title": "الدفع",
@@ -231,6 +246,9 @@
     "eyebrow": "الأسعار والباقات",
     "title": "دروس قيادة لكل مرحلة",
     "description": "قارن بين الدروس المنفردة والباقات. جميع الأسعار تشمل ضريبة القيمة المضافة.",
+    "sortPrice": "السعر",
+    "sortLessons": "عدد الدروس",
+    "bestSeller": "الأكثر مبيعاً",
     "groups": {
       "label": "مجموعات المنتجات",
       "single": {
@@ -433,6 +451,13 @@
     "signInToAnswer": "سجّل الدخول كطالب لحفظ إجابتك.",
     "answerError": "تعذر حفظ الإجابة. حاول مجددًا.",
     "imageMissing": "الصورة غير موجودة",
+    "next": "التالي",
+    "score": "{correct} من {total} صحيحة",
+    "reviewMistakes": "راجع أخطاءك",
+    "retry": "أعد المحاولة",
+    "bookLesson": "احجز درس قيادة",
+    "comingSoonTitle": "قريباً",
+    "comingSoonBody": "يفتح تمرين النظري هنا عندما يصبح جاهزاً.",
     "exam": {
       "eyebrow": "اختبار تجريبي",
       "title": "استعد في ظروف الاختبار",
@@ -459,6 +484,7 @@
   },
   "localSchool": {
     "eyebrow": "مدرسة قيادة قريبة منك",
+    "comingSoon": "قريباً",
     "title": "مدرسة قيادة في {city}",
     "description": "اطّلع على موقعنا المؤكد والمدربين المتاحين في {city}.",
     "addressPending": "العنوان الدقيق بانتظار التأكيد.",
@@ -815,6 +841,13 @@
     "weekTitle": "دروس القيادة هذا الأسبوع",
     "weekCount": "{count, plural, =0 {لا دروس هذا الأسبوع} =1 {درس واحد هذا الأسبوع} other {{n} دروس هذا الأسبوع}}",
     "weekEmpty": "ليس لديك دروس هذا الأسبوع.",
+    "monthTitle": "شهري",
+    "lessonsDriven": "{count} دروس",
+    "hoursDriven": "{hours} ساعات",
+    "estimatedPay": "الأجر التقديري {pay}",
+    "monthEmpty": "لا توجد دروس مكتملة هذا الشهر.",
+    "previousMonth": "الشهر السابق",
+    "nextMonth": "الشهر التالي",
     "views": {
       "today": "اليوم",
       "week": "الأسبوع"
@@ -997,6 +1030,7 @@
       "metadata": "سياسة الخصوصية لمدرسة ماكينا.",
       "eyebrow": "معلومات قانونية",
       "title": "سياسة الخصوصية",
+      "accountAction": "نزّل بياناتك أو احذفها",
       "sectionOrder": [
         "controller",
         "collected",
@@ -1087,7 +1121,38 @@
       "calendar": "تقويم الأسبوع",
       "students": "الطلاب",
       "instructors": "مدرب جديد",
-      "reviews": "التقييمات"
+      "reviews": "التقييمات",
+      "products": "المنتجات",
+      "areas": "المناطق"
+    },
+    "editor": {
+      "save": "حفظ",
+      "saved": "تم الحفظ",
+      "phone": "رقم الجوال",
+      "languages": "اللغات",
+      "gearbox": "ناقل الحركة",
+      "manual": "يدوي",
+      "automatic": "أوتوماتيك",
+      "areas": "المناطق",
+      "years": "سنوات الخبرة",
+      "hours": "ساعات العمل",
+      "addHour": "أضف وقتاً",
+      "daysOff": "أيام الإجازة",
+      "photo": "الصورة",
+      "calendarEmail": "تقويم Google",
+      "testCalendar": "اختبار",
+      "payRate": "الأجر لكل درس (كرونة)",
+      "price": "السعر (كرونة)",
+      "active": "نشط",
+      "bestSeller": "الأكثر مبيعاً",
+      "shortDesc": "وصف قصير",
+      "status": "الحالة",
+      "office": "عنوان المكتب",
+      "boundary": "GeoJSON",
+      "comingSoon": "قريباً",
+      "productsTitle": "المنتجات",
+      "areasTitle": "المناطق",
+      "editTeacher": "تعديل المعلم"
     },
     "dashboard": {
       "eyebrow": "الإدارة",

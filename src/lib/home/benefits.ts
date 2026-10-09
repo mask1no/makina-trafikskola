@@ -3,7 +3,6 @@ export type BenefitId =
   | "pickup"
   | "lesson"
   | "prices"
-  | "testLesson"
   | "risk"
   | "guarantee"
   | "payment"
@@ -30,7 +29,6 @@ type BenefitProduct = {
 const LARGE = new Set<BenefitId>([
   "language",
   "prices",
-  "testLesson",
   "guarantee",
 ]);
 
@@ -47,7 +45,6 @@ export function benefitItems(input: {
   products: readonly BenefitProduct[];
   hasRiskCourse?: boolean;
 }) {
-  const testLesson = input.products.find((product) => product.kind === "TEST_LESSON");
   const hasRisk =
     Boolean(input.hasRiskCourse) ||
     input.products.some((product) => product.includesRisk1 || product.includesRisk2);
@@ -59,7 +56,6 @@ export function benefitItems(input: {
     item("lesson"),
     item("prices"),
   ];
-  if (testLesson) items.push(item("testLesson", testLesson.priceOre));
   if (hasRisk) items.push(item("risk"));
   if (hasGuarantee) items.push(item("guarantee"));
   items.push(item("payment"), item("local"));

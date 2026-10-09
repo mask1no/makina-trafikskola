@@ -20,7 +20,7 @@ export function Card({
 }: CardProps) {
   return (
     <div
-      className={`rounded-md border border-border bg-card ${paddings[padding]} ${
+      className={`rounded-md border border-[var(--line)] bg-card transition duration-150 hover:border-[var(--line-hover)] ${paddings[padding]} ${
         elevated ? "shadow-card" : "shadow-soft"
       } ${className}`}
       {...props}

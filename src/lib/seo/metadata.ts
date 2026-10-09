@@ -38,13 +38,13 @@ export function withSocial(input: {
       url: input.canonical,
       locale,
       alternateLocale: locales.filter((item) => item !== locale),
-      images: [{ url: "/hero.jpg", alt: siteName }],
+      images: [{ url: `/api/og?title=${encodeURIComponent(input.title)}`, alt: input.title }],
     },
     twitter: {
       card: "summary_large_image",
       title: input.title,
       description: input.description,
-      images: ["/hero.jpg"],
+      images: [`/api/og?title=${encodeURIComponent(input.title)}`],
     },
   };
 }

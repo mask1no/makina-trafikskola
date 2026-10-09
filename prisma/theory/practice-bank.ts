@@ -43,6 +43,13 @@ function item(
  * This is not Trafikverket's question bank.
  * The correct option is not always first.
  */
+export const FREE_PRACTICE_IDS = [
+  "mk-01", "mk-02", "mk-03", "mk-04", "mk-05",
+  "mk-06", "mk-07", "mk-08", "mk-09", "mk-10",
+  "mk-11", "mk-12", "mk-13", "mk-14", "mk-15",
+  "mk-16", "mk-17", "mk-18", "mk-19", "mk-20",
+] as const;
+
 export const practiceBankQuestions: TheoryBankQuestion[] = [
   item("mk-01", 1, 1, 1, {
     sv: ["Vilken bashastighet gäller i tättbebyggt område om inget annat är skyltat?", "30 km/h", "50 km/h", "70 km/h", "Bashastigheten i tättbebyggt område är 50 km/h när ingen annan gräns är skyltad."],

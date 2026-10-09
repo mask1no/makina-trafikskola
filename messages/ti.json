@@ -49,6 +49,20 @@
     "calendar": "ዘመን መቑጸሪ",
     "students": "ተማሃሮ",
     "contact": "ርከብ",
+    "courses": "ኮርሳት",
+    "prices": "ዋጋታት",
+    "questions": "ሕቶ ኣለካ?",
+    "languagePage": {
+      "sv": "ስዊድንኛ",
+      "en": "እንግሊዝኛ",
+      "ti": "ትግርኛ",
+      "ku": "ኩርዲሽ",
+      "so": "ሶማሊ",
+      "ar": "ዓረብኛ"
+    },
+    "here": "ኣበይ ኣለና",
+    "schoolIn": "ትራፊክ ትምህርቲ ኣብ {town}",
+    "comingSoonPlace": "{town} – ኣብ ቀረባ እዋን",
     "openingHours": "ሰዓታት ክፈት: ሰኑ–ዓርቢ 08–21፣ ቀዳም 08–19",
     "copyright": "© {year} Makina Trafikskola",
     "footerDescription": "ንጹር መምርሒን ብቋንቋኻ ደገፍን ዘለዎ ትምህርቲ ምዝዋር።",
@@ -95,7 +109,8 @@
       "cardDescription": "ቋንቋ፣ ዓይነት መኪናን መምህርን ብድሌትካ ምረጽ።",
       "reviews": "ግምገማታት",
       "pickupProof": "ምውሳድ ብምስምማዕ",
-      "languageProof": "{languages}"
+      "languageProof": "{languages}",
+      "areas": "Farsta · Upplands Väsby"
     },
     "journey": {
       "eyebrow": "ከመይ ይሰርሕ",
@@ -152,7 +167,7 @@
       },
       "pickup": {
         "question": "ክትወስዱኒ ትኽእሉ ዲኹም?",
-        "answer": "ምውሳድ ኣብ ዓይነት ትምህርትን መምህርን ይምርኮስ። ኣድራሻኹም ሒዝኩም ተወከሱና፣ እንታይ ከም ዝከኣል ከነረጋግጽ ኢና።"
+        "answer": "ምውሳድ ኣብ ውሽጢ ዞባታት ፋርስታን ኡፕላንድስ ቬስቢን ነጻ እዩ።"
       },
       "cancel": {
         "question": "ትምህርቲ ብኸመይ እስርዝ?",
@@ -199,11 +214,11 @@
       },
       "risk": {
         "title": "ትምህርቲ ሓደጋ",
-        "body": "Riskettan ወይ risktvåan ኣብ እቲ ዝርዝር ኣሎ።"
+        "body": "ክልቲኡ ናይ ሓደጋ ስልጠናታት ኣብ ገዛና"
       },
       "guarantee": {
         "title": "ዋህስ",
-        "body": "ጥቕላ ዋህስ ኣብ እቲ ዝርዝር ኣሎ።"
+        "body": "ክሳብ እትሓልፍ ዝውር"
       },
       "payment": {
         "title": "ክፍሊት",
@@ -231,6 +246,9 @@
     "eyebrow": "ዋጋታትን ፓኬጃትን",
     "title": "ንኹሉ ደረጃ ትምህርቲ ምዝዋር",
     "description": "ንጽል ትምህርትን ፓኬጃትን ኣወዳድር። ኩሉ ዋጋታት ቫት የጠቓልል።",
+    "sortPrice": "ዋጋ",
+    "sortLessons": "በዝሒ ትምህርቲ",
+    "bestSeller": "ዝበዝሐ ዝተሸጠ",
     "groups": {
       "label": "ጉጅለ ፍርያት",
       "single": {
@@ -433,6 +451,13 @@
     "signInToAnswer": "መልስኻ ንምዕቃብ ከም ተማሃራይ እቶ።",
     "answerError": "መልሲ ክዕቀብ ኣይከኣለን። ደጊምካ ፈትን።",
     "imageMissing": "ስእሊ የለን",
+    "next": "ዝቕጽል",
+    "score": "{correct} ካብ {total} ቅኑዕ",
+    "reviewMistakes": "ጌጋታትካ ርኣይ",
+    "retry": "ደጊምካ ፈትን",
+    "bookLesson": "ናይ ምዝዋር ትምህርቲ ምዝገባ",
+    "comingSoonTitle": "ኣብ ቀረባ እዋን",
+    "comingSoonBody": "ናይ ቲዎሪ ልምምድ ኣብዚ ይኽፈት ምስ ድሉው ኮነ።",
     "exam": {
       "eyebrow": "ናይ ፈተነ መርመራ",
       "title": "ከም ናይ ሓቂ ፈተና ተዳሎ",
@@ -459,6 +484,7 @@
   },
   "localSchool": {
     "eyebrow": "ኣብ ቀረባኻ ቤት ትምህርቲ ምዝዋር",
+    "comingSoon": "ኣብ ቀረባ እዋን",
     "title": "ቤት ትምህርቲ ምዝዋር ኣብ {city}",
     "description": "ዝተረጋገጸ ቦታናን መምህራንናን ኣብ {city} ርአ።",
     "addressPending": "ልክዕ ኣድራሻ መረጋገጺ ይጽበ ኣሎ።",
@@ -815,6 +841,13 @@
     "weekTitle": "ናይዚ ሰሙን ትምህርቲ",
     "weekCount": "{count, plural, =0 {ኣብዚ ሰሙን ትምህርቲ የለን} =1 {ኣብዚ ሰሙን 1 ትምህርቲ} other {ኣብዚ ሰሙን {n} ትምህርትታት}}",
     "weekEmpty": "ኣብዚ ሰሙን ትምህርቲ የብልካን።",
+    "monthTitle": "ወርሐይ",
+    "lessonsDriven": "{count} ትምህርቲ",
+    "hoursDriven": "{hours} ሰዓታት",
+    "estimatedPay": "ዝተገመተ ክፍሊት {pay}",
+    "monthEmpty": "ኣብዚ ወርሒ ዝተዛዘመ ትምህርቲ የለን።",
+    "previousMonth": "ዝሓለፈ ወርሒ",
+    "nextMonth": "ዝቕጽል ወርሒ",
     "views": {
       "today": "ሎሚ",
       "week": "ሰሙን"
@@ -997,6 +1030,7 @@
       "metadata": "ፖሊሲ ውልቃውነት ናይ ማኪና ትራፊክስኮላ።",
       "eyebrow": "ሕጋዊ ሓበሬታ",
       "title": "ፖሊሲ ውልቃውነት",
+      "accountAction": "ሓበሬታኻ ኣውርድ ወይ ደምስስ",
       "sectionOrder": [
         "controller",
         "collected",
@@ -1087,7 +1121,38 @@
       "calendar": "ናይ ሰሙን ካላንደር",
       "students": "ተማሃሮ",
       "instructors": "ሓድሽ መምህር",
-      "reviews": "ግምገማታት"
+      "reviews": "ግምገማታት",
+      "products": "ፍርያት",
+      "areas": "ዞባታት"
+    },
+    "editor": {
+      "save": "ዓቅብ",
+      "saved": "ተዓቂቡ",
+      "phone": "ቁጽሪ ሞባይል",
+      "languages": "ቋንቋታት",
+      "gearbox": "ማርሻ",
+      "manual": "ማንዋል",
+      "automatic": "ኣውቶማቲክ",
+      "areas": "ዞባታት",
+      "years": "ናይ ስራሕ ዓመታት",
+      "hours": "ናይ ስራሕ ሰዓታት",
+      "addHour": "ሰዓት ወስኽ",
+      "daysOff": "ዕረፍቲ መዓልታት",
+      "photo": "ስእሊ",
+      "calendarEmail": "Google ዘመን መቑጸሪ",
+      "testCalendar": "ፈትን",
+      "payRate": "ክፍሊት ንነፍሲ ወከፍ ትምህርቲ (kr)",
+      "price": "ዋጋ (kr)",
+      "active": "ንጡፍ",
+      "bestSeller": "ዝበዝሐ ዝተሸጠ",
+      "shortDesc": "ሓጺር መግለጺ",
+      "status": "ኩነታት",
+      "office": "ኣድራሻ ቤት ጽሕፈት",
+      "boundary": "GeoJSON",
+      "comingSoon": "ኣብ ቀረባ እዋን",
+      "productsTitle": "ፍርያት",
+      "areasTitle": "ዞባታት",
+      "editTeacher": "መምህር ኣስተኻኽል"
     },
     "dashboard": {
       "eyebrow": "ምምሕዳር",

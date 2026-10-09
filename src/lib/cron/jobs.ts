@@ -345,6 +345,8 @@ export async function runCoreCron(now: Date, scope?: CoreCronScope) {
 
   if (!result.skipped) {
     await dispatchNotifications(result.reminderIds, now);
+    const { repairCalendarSync } = await import("@/lib/calendar/google");
+    await repairCalendarSync(now);
   }
 
   let cancelledPaymentIntents = 0;

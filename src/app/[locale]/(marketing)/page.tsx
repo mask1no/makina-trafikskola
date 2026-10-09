@@ -14,6 +14,8 @@ import { isLocale, type Locale } from "@/i18n/routing";
 import {
   bookingEnabled,
   instructorsEnabled,
+  theoryNavVisible,
+  theorySalesOpen,
 } from "@/lib/launch";
 import { isOpenNow, todayHours } from "@/lib/company/opening-hours";
 import {
@@ -90,7 +92,7 @@ async function HomeHero({ locale }: { locale: Locale }) {
           </p>
           <div className="mt-6 flex flex-col gap-3 md:flex-row">
             {canBook ? (
-              <LinkButton href={`/${locale}/boka`} className="w-full md:w-auto">
+              <LinkButton href={`/${locale}/boka`} size="lg" className="w-full md:w-auto">
                 {t("common.bookNow")}
               </LinkButton>
             ) : (
@@ -108,8 +110,9 @@ async function HomeHero({ locale }: { locale: Locale }) {
               </a>
             )}
             <LinkButton
-              variant="secondary"
-              className="w-full border-ink-inverse/30 text-ink-inverse hover:bg-ink-inverse/10 md:w-auto"
+              variant="secondary-inverse"
+              size="lg"
+              className="w-full md:w-auto"
               href={`/${locale}/korlektioner`}
             >
               {t("shell.seePrices")}
@@ -128,6 +131,7 @@ async function HomeHero({ locale }: { locale: Locale }) {
             {hoursToday ? <span className="numbers-ltr"> · {hoursToday.open}–{hoursToday.close}</span> : null}
           </p>
           <p className="mt-2 text-small text-ink-inverse-muted">{t("company.visitingAddress")}</p>
+          <p className="mt-2 text-small font-bold">{t("home.hero.areas")}</p>
         </aside>
       </div>
     </section>
@@ -224,11 +228,7 @@ async function HomeBelow({
     size: item.size,
     title: t(`home.benefits.${item.id}.title`),
     body:
-      item.id === "testLesson"
-        ? t("home.benefits.testLesson.body", {
-            price: formatPrice(item.priceOre ?? 0, params.locale),
-          })
-        : item.id === "local"
+      item.id === "local"
           ? t("home.benefits.local.body", {
               address: t("company.visitingAddress"),
             })
@@ -343,8 +343,6 @@ async function HomeBelow({
       <div className="relative z-20 bg-page pb-8 lg:-mt-8">
         <BenefitMarquee
           label={t("home.benefits.label")}
-          pauseLabel={t("shell.pause")}
-          playLabel={t("shell.play")}
           items={benefitCards}
         />
       </div>
@@ -487,7 +485,7 @@ async function HomeBelow({
         </div>
       </section>
 
-      <section className="section-shell overflow-hidden">
+      {theoryNavVisible() ? <section className="section-shell overflow-hidden">
         <div className="site-container">
           <div className="relative overflow-hidden rounded-lg bg-surface text-ink-inverse shadow-float">
             <div className="relative grid lg:grid-cols-[1.1fr_.9fr]">
@@ -544,10 +542,9 @@ async function HomeBelow({
                       {t("theory.teaser.tryFree")}
                     </LinkButton>
                   ) : null}
-                  {theoryProduct?.active ? (
+                  {theorySalesOpen() && theoryProduct?.active ? (
                     <LinkButton
-                      variant="secondary"
-                      className="border-ink-inverse/30 text-ink-inverse hover:bg-ink-inverse/10"
+                      variant="secondary-inverse"
                       href={`/${params.locale}/paket/korkortsteori`}
                     >
                       {t("theory.teaser.buy")}
@@ -567,7 +564,7 @@ async function HomeBelow({
                   sizes="(min-width: 1024px) 40vw, 100vw"
                   className="rtl-no-mirror object-contain p-8 sm:p-12"
                 />
-                {theoryProduct ? (
+                {theorySalesOpen() && theoryProduct ? (
                   <div className="absolute bottom-5 end-5 rounded-md bg-card p-4 text-ink shadow-card">
                     <p className="text-xs font-black uppercase tracking-wider text-ink-muted">
                       {t("theory.teaser.oneTime")}
@@ -581,7 +578,7 @@ async function HomeBelow({
             </div>
           </div>
         </div>
-      </section>
+      </section> : null}
 
       {shouldShowPublicReviews(reviewSummary.count) ? (
         <section className="section-shell border-t border-border bg-card">

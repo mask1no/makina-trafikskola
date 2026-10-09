@@ -17,7 +17,7 @@ import { ServiceWorkerRegistration } from "@/components/ServiceWorkerRegistratio
 import { isLocale, locales } from "@/i18n/routing";
 import { openingHoursSpecification } from "@/lib/company/opening-hours";
 import {
-  formatLanguageList,
+  COMING_SOON_TEACHING_LANGUAGES,
   offeredTeachingLanguages,
 } from "@/lib/company/staff";
 import { displayPhone, telHref } from "@/lib/format/phone";
@@ -25,6 +25,7 @@ import { db } from "@/lib/db";
 import {
   bookingEnabled,
   instructorsEnabled,
+  theoryNavVisible,
 } from "@/lib/launch";
 
 export function generateStaticParams() {
@@ -145,27 +146,37 @@ export default async function LocaleLayout(
 
   if (!isLocale(params.locale)) notFound();
   setRequestLocale(params.locale);
-  const [t, adminT, teacherT, company, languageNames, session] = await Promise.all([
+  const [t, adminT, teacherT, company, session] = await Promise.all([
     getTranslations("shell"),
     getTranslations("admin.nav"),
     getTranslations("teacherPortal"),
     getTranslations("company"),
-    getTranslations("language"),
     auth(),
   ]);
+  const places = await db.location.findMany({
+    orderBy: { name: "asc" },
+    select: { slug: true, city: true, status: true },
+  });
   const offeredLanguages = offeredTeachingLanguages();
-  const offeredLanguageNames = formatLanguageList(
-    offeredLanguages,
-    params.locale,
-    (code) => languageNames(code),
-  );
   const pathname = (await headers()).get("x-makina-pathname") ?? "";
   if (session?.user.id && !pathname.includes("/verifiera-mobil")) {
     const account = await db.user.findUnique({
       where: { id: session.user.id },
-      select: { googleSub: true, phoneVerifiedAt: true, deletedAt: true },
+      select: {
+        googleSub: true,
+        phoneVerifiedAt: true,
+        deletedAt: true,
+        role: true,
+        phone: true,
+      },
     });
-    if (account?.googleSub && !account.phoneVerifiedAt && !account.deletedAt) {
+    const teacherHasPhone = account?.role === "TEACHER" && Boolean(account.phone);
+    if (
+      account?.googleSub &&
+      !account.phoneVerifiedAt &&
+      !account.deletedAt &&
+      !teacherHasPhone
+    ) {
       redirect(`/${params.locale}/verifiera-mobil`);
     }
   }
@@ -177,13 +188,12 @@ export default async function LocaleLayout(
       : undefined;
   const canBook = bookingEnabled();
   const showInstructors = instructorsEnabled();
+  const showTheory = theoryNavVisible();
   const navItems = [
-    { href: base, label: t("home") },
     { href: `${base}/korlektioner`, label: t("lessons") },
-    ...(showInstructors
-      ? [{ href: `${base}/larare`, label: t("teachers") }]
-      : []),
-    { href: `${base}/teori`, label: t("theory") },
+    { href: `${base}/kurser`, label: t("courses") },
+    { href: `${base}/korlektioner`, label: t("prices") },
+    ...(showTheory ? [{ href: `${base}/teori`, label: t("theory") }] : []),
     { href: `${base}/kontakt`, label: t("contact") },
   ];
   const inlineNavClass =
@@ -243,12 +253,20 @@ export default async function LocaleLayout(
             { href: `${base}/larare-portal`, label: teacherT("eyebrow"), icon: "bookings" },
             { href: base, label: t("home"), icon: "home" },
             { href: `${base}/korlektioner`, label: t("lessons"), icon: "packages" },
-            { href: `${base}/teori`, label: t("theory"), icon: "messages" },
+            {
+              href: showTheory ? `${base}/teori` : `${base}/kurser`,
+              label: showTheory ? t("theory") : t("courses"),
+              icon: "messages" as const,
+            },
           ]
         : [
             { href: base, label: t("home"), icon: "home" },
-            { href: `${base}/korlektioner`, label: t("packages"), icon: "packages" },
-            { href: `${base}/teori`, label: t("theory"), icon: "messages" },
+            { href: `${base}/korlektioner`, label: t("lessons"), icon: "packages" },
+            {
+              href: showTheory ? `${base}/teori` : `${base}/kurser`,
+              label: showTheory ? t("theory") : t("courses"),
+              icon: "messages" as const,
+            },
             {
               href: session?.user ? `${base}/mina-sidor` : `${base}/logga-in`,
               label: session?.user ? t("myPages") : t("signIn"),
@@ -409,7 +427,7 @@ export default async function LocaleLayout(
         <main id="main" tabIndex={-1}>{children}</main>
         <footer className="border-t border-surface-soft bg-surface py-12 text-ink-inverse sm:py-16">
           <div className="site-container grid gap-10 lg:grid-cols-4">
-            <div>
+            <div className="lg:col-span-1">
               <Logo />
               <p className="mt-5 max-w-[70ch] text-body leading-7 text-ink-inverse-muted">
                 {t("footerDescription")}
@@ -430,14 +448,18 @@ export default async function LocaleLayout(
                 </p>
               </address>
             </div>
+            <div className="grid grid-cols-2 gap-8 lg:col-span-2">
             <div>
               <p className="text-small font-extrabold">{t("explore")}</p>
               <div className="mt-4 grid gap-1 text-small text-ink-inverse-muted">
                 <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/korlektioner`}>{t("lessons")}</Link>
+                <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/kurser`}>{t("courses")}</Link>
                 {showInstructors ? (
                   <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/larare`}>{t("teachers")}</Link>
                 ) : null}
-                <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/teori`}>{t("theory")}</Link>
+                {showTheory ? (
+                  <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/teori`}>{t("theory")}</Link>
+                ) : null}
                 <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/kontakt`}>{t("contact")}</Link>
               </div>
             </div>
@@ -449,14 +471,39 @@ export default async function LocaleLayout(
                 <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/cookies`}>{t("cookies")}</Link>
               </div>
             </div>
+            </div>
             <div>
               <p className="text-small font-extrabold">{t("languageHelp")}</p>
-              <p className="mt-4 max-w-[70ch] text-body leading-7 text-ink-inverse-muted">
-                {t("languageHelpDescription", { languages: offeredLanguageNames })}
-              </p>
+              <ul className="mt-4 grid gap-2 text-small text-ink-inverse-muted">
+                {offeredLanguages.map((code) => (
+                  <li key={code} className="flex min-h-11 items-center gap-2">
+                    <svg aria-hidden="true" viewBox="0 0 24 24" className="size-4 text-success" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M5 12.5 10 17l9-10" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    {t(`languagePage.${code}`)}
+                  </li>
+                ))}
+                {COMING_SOON_TEACHING_LANGUAGES.map((code) => (
+                  <li key={code} className="flex min-h-11 items-center">{t("comingSoonPlace", { town: t(`languagePage.${code}`) })}</li>
+                ))}
+              </ul>
+              <p className="mt-6 text-small font-extrabold text-ink-inverse">{t("here")}</p>
+              <ul className="mt-2 grid text-small text-ink-inverse-muted">
+                {places.map((place) => (
+                  <li key={place.slug}>
+                    {place.status === "ACTIVE" ? (
+                      <Link className="flex min-h-11 items-center hover:text-ink-inverse" href={`${base}/trafikskola/${place.slug}`}>
+                        {t("schoolIn", { town: place.city })}
+                      </Link>
+                    ) : (
+                      <span className="flex min-h-11 items-center">{t("comingSoonPlace", { town: place.city })}</span>
+                    )}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
-          <div className="site-container mt-10 border-t border-surface-soft pt-6 text-xs font-semibold text-ink-inverse-muted">
+          <div className="site-container mt-10 border-t border-surface-soft pt-6 text-center text-xs font-semibold text-ink-inverse-muted">
             <p>{t("copyright", { year: new Date().getFullYear() })}</p>
           </div>
         </footer>

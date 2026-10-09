@@ -19,8 +19,16 @@ import {
   studentLockKey,
   teacherSlotLockKey,
 } from "@/lib/bookings/locks";
+import {
+  calendarSyncEnabled,
+  slotOverlapsBusy,
+  syncConfirmedBooking,
+  teacherBusyIntervals,
+} from "@/lib/calendar/google";
+import { pointInGeoJson } from "@/lib/areas/geo";
 import { getCreditBalance } from "@/lib/credits/ledger";
 import { db } from "@/lib/db";
+import * as Sentry from "@sentry/nextjs";
 import { dispatchNotifications } from "@/lib/notifications/dispatch";
 import { bookingNotificationContext } from "@/lib/notifications/context";
 import {
@@ -159,6 +167,46 @@ export async function POST(request: Request) {
 
   const holdMinutes = configuredNumber("BOOKING_HOLD_MINUTES", 15);
 
+  if (parsed.data.locationId && parsed.data.pickupLat != null && parsed.data.pickupLng != null) {
+    const area = await db.location.findUnique({
+      where: { id: parsed.data.locationId },
+      select: { status: true, boundary: true },
+    });
+    if (!area || area.status === "COMING_SOON") {
+      return errorResponse("AREA_UNAVAILABLE", 409);
+    }
+    if (
+      area.boundary &&
+      !pointInGeoJson(
+        { lng: parsed.data.pickupLng, lat: parsed.data.pickupLat },
+        area.boundary,
+      )
+    ) {
+      return errorResponse("OUTSIDE_PICKUP_AREA", 409);
+    }
+  }
+
+  if (calendarSyncEnabled()) {
+    const teacher = await db.teacherProfile.findUnique({
+      where: { id: parsed.data.teacherId },
+      select: { googleCalendarEmail: true },
+    });
+    if (teacher?.googleCalendarEmail) {
+      try {
+        const busy = await teacherBusyIntervals(
+          teacher.googleCalendarEmail,
+          requestedSlot.startsAt,
+          requestedSlot.endsAt,
+        );
+        if (slotOverlapsBusy(requestedSlot, busy)) {
+          return errorResponse("SLOT_TAKEN", 409);
+        }
+      } catch (error) {
+        Sentry.captureException(error);
+      }
+    }
+  }
+
   try {
     const result = await db.$transaction(
       async (tx) => {
@@ -265,6 +313,9 @@ export async function POST(request: Request) {
     );
 
     await dispatchNotifications(result.notificationIds, now);
+    if (result.booking.creditCharged) {
+      await syncConfirmedBooking(result.booking.id);
+    }
     return Response.json(result.booking, {
       status: result.notificationIds.length > 0 ? 201 : 200,
     });

@@ -148,6 +148,7 @@ function GoogleButton({
   if (!enabled) return null;
   return (
     <div className="grid gap-4">
+      <p className="text-center text-small text-ink-muted">{t("or")}</p>
       <button
         type="button"
         disabled={busy}
@@ -169,7 +170,6 @@ function GoogleButton({
         </svg>
         {busy ? t("working") : label}
       </button>
-      <p className="text-center text-small text-ink-muted">{t("or")}</p>
     </div>
   );
 }
@@ -294,14 +294,6 @@ export function SignupForm({
 
   return (
     <form onSubmit={submit} className="grid gap-4">
-      <GoogleButton
-        enabled={googleEnabled}
-        label={t("continueWithGoogle")}
-        destination={safeRedirect(
-          searchParams.get("next") ?? searchParams.get("callbackUrl"),
-          locale,
-        )}
-      />
       <Input
         name="fullName"
         label={t("fullName")}
@@ -413,6 +405,14 @@ export function SignupForm({
           </Link>
         </p>
       )}
+      <GoogleButton
+        enabled={googleEnabled}
+        label={t("continueWithGoogle")}
+        destination={safeRedirect(
+          searchParams.get("next") ?? searchParams.get("callbackUrl"),
+          locale,
+        )}
+      />
     </form>
   );
 }
@@ -526,14 +526,6 @@ export function LoginForm({
 
   return (
     <form onSubmit={submit} className="grid gap-4">
-      <GoogleButton
-        enabled={googleEnabled}
-        label={t("continueWithGoogle")}
-        destination={safeRedirect(
-          searchParams.get("next") ?? searchParams.get("callbackUrl"),
-          locale,
-        )}
-      />
       <fieldset>
         <legend className="sr-only">{t("methodLabel")}</legend>
         <div className="grid grid-cols-2 gap-1 rounded-sm bg-page p-1">
@@ -658,6 +650,14 @@ export function LoginForm({
           {login("create")}
         </Link>
       </p>
+      <GoogleButton
+        enabled={googleEnabled}
+        label={t("continueWithGoogle")}
+        destination={safeRedirect(
+          searchParams.get("next") ?? searchParams.get("callbackUrl"),
+          locale,
+        )}
+      />
     </form>
   );
 }

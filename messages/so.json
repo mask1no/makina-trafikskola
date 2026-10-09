@@ -49,6 +49,20 @@
     "calendar": "Jadwalka",
     "students": "Ardayda",
     "contact": "Nala soo xiriir",
+    "courses": "Koorsooyinka",
+    "prices": "Qiimaha",
+    "questions": "Su'aalo ma qabtaa?",
+    "languagePage": {
+      "sv": "Iswiidhish",
+      "en": "Ingiriis",
+      "ti": "Tigrinya",
+      "ku": "Kurdi",
+      "so": "Soomaali",
+      "ar": "Carabi"
+    },
+    "here": "Halkan ayaan joognaa",
+    "schoolIn": "Dugsi wadista {town}",
+    "comingSoonPlace": "{town} – dhawaan",
     "openingHours": "Saacadaha furitaanka: Isn–Jim 08–21, Sab 08–19",
     "copyright": "© {year} Makina Trafikskola",
     "footerDescription": "Waxbarashada wadista oo leh hagid cad iyo taageero luqaddaada ah.",
@@ -95,7 +109,8 @@
       "cardDescription": "Dooro luqadda, nooca gear-ka iyo macallinka baahidaada ku salaysan.",
       "reviews": "faallooyin",
       "pickupProof": "Soo qaadis heshiis kadib",
-      "languageProof": "{languages}"
+      "languageProof": "{languages}",
+      "areas": "Farsta · Upplands Väsby"
     },
     "journey": {
       "eyebrow": "Sida ay u shaqayso",
@@ -152,7 +167,7 @@
       },
       "pickup": {
         "question": "Ma i soo qaadi kartaan?",
-        "answer": "Soo qaadistu waxay ku xiran tahay casharka iyo macallinka. Nala soo xiriir oo na sii cinwaankaaga si aan u xaqiijino waxa suurtagalka ah."
+        "answer": "Soo qaadistu waa bilaash gudaha aagagga Farsta iyo Upplands Väsby."
       },
       "cancel": {
         "question": "Sideen u joojiyaa cashar?",
@@ -199,11 +214,11 @@
       },
       "risk": {
         "title": "Tababarka khatarta",
-        "body": "Riskettan ama risktvåan ayaa ku jira liiska."
+        "body": "Labada tababar ee khatarta ayaa naga yaalla"
       },
       "guarantee": {
         "title": "Dammaanad",
-        "body": "Xirmo dammaanad ah ayaa ku jirta liiska."
+        "body": "Wad ilaa aad ka gudubto"
       },
       "payment": {
         "title": "Bixinta",
@@ -231,6 +246,9 @@
     "eyebrow": "Qiimayaasha iyo xirmooyinka",
     "title": "Casharro wadis marxalad kasta",
     "description": "Isbarbar dhig casharrada keli ah iyo xirmooyinka. Dhammaan qiimayaasha waxa ku jira VAT.",
+    "sortPrice": "Qiimaha",
+    "sortLessons": "Tirada casharrada",
+    "bestSeller": "Ugu iibka badan",
     "groups": {
       "label": "Kooxaha alaabta",
       "single": {
@@ -433,6 +451,13 @@
     "signInToAnswer": "Arday ahaan u gal si jawaabta loo kaydiyo.",
     "answerError": "Jawaabta lama kaydin karin. Mar kale isku day.",
     "imageMissing": "Sawirka ma jiro",
+    "next": "Xiga",
+    "score": "{correct} ka mid ah {total} sax",
+    "reviewMistakes": "Eeg khaladaadkaaga",
+    "retry": "Isku day mar kale",
+    "bookLesson": "Ballan qaado cashar wadista",
+    "comingSoonTitle": "Dhawaan",
+    "comingSoonBody": "Layliga aragtida halkan ayaa furmaya marka uu diyaar noqdo.",
     "exam": {
       "eyebrow": "Imtixaan tijaabo",
       "title": "Isu diyaari xaaladda imtixaanka",
@@ -459,6 +484,7 @@
   },
   "localSchool": {
     "eyebrow": "Dugsi wadis oo kuu dhow",
+    "comingSoon": "Dhawaan",
     "title": "Dugsi wadis oo ku yaal {city}",
     "description": "Eeg goobtayada la xaqiijiyay iyo macallimiinta ka shaqeeya {city}.",
     "addressPending": "Cinwaanka booqashada ee saxda ah xaqiijin ayuu sugayaa.",
@@ -815,6 +841,13 @@
     "weekTitle": "Casharrada toddobaadkan",
     "weekCount": "{count, plural, =0 {Toddobaadkan cashar ma jiro} =1 {Toddobaadkan 1 cashar} other {Toddobaadkan {n} cashar}}",
     "weekEmpty": "Toddobaadkan casharro ma lihid.",
+    "monthTitle": "Bishii aan",
+    "lessonsDriven": "{count} casharro",
+    "hoursDriven": "{hours} saacadood",
+    "estimatedPay": "Mushaharka la qiyaasay {pay}",
+    "monthEmpty": "Bishan casharro la dhammeeyey ma jiraan.",
+    "previousMonth": "Bishii hore",
+    "nextMonth": "Bisha xigta",
     "views": {
       "today": "Maanta",
       "week": "Toddobaad"
@@ -997,6 +1030,7 @@
       "metadata": "Siyaasadda sirta Makina Trafikskola.",
       "eyebrow": "Macluumaad sharci",
       "title": "Siyaasadda sirta",
+      "accountAction": "Soo deji ama tirtir xogtaada",
       "sectionOrder": [
         "controller",
         "collected",
@@ -1087,7 +1121,38 @@
       "calendar": "Jadwalka toddobaadka",
       "students": "Ardayda",
       "instructors": "Macallin cusub",
-      "reviews": "Faallooyin"
+      "reviews": "Faallooyin",
+      "products": "Alaabta",
+      "areas": "Aagagga"
+    },
+    "editor": {
+      "save": "Kaydi",
+      "saved": "Waa la kaydiyay",
+      "phone": "Lambarka moobilka",
+      "languages": "Luqadaha",
+      "gearbox": "Gearka",
+      "manual": "Gacan",
+      "automatic": "Otomaatig",
+      "areas": "Aagagga",
+      "years": "Sannadaha khibradda",
+      "hours": "Saacadaha shaqada",
+      "addHour": "Ku dar saacad",
+      "daysOff": "Maalmaha fasaxa",
+      "photo": "Sawir",
+      "calendarEmail": "Kalandarka Google",
+      "testCalendar": "Tijaabi",
+      "payRate": "Mushaharka cashar kasta (kr)",
+      "price": "Qiimaha (kr)",
+      "active": "Firfircoon",
+      "bestSeller": "Ugu iibka badan",
+      "shortDesc": "Sharaxaad gaaban",
+      "status": "Xaalad",
+      "office": "Cinwaanka xafiiska",
+      "boundary": "GeoJSON",
+      "comingSoon": "Dhawaan",
+      "productsTitle": "Alaabta",
+      "areasTitle": "Aagagga",
+      "editTeacher": "Wax ka beddel macallinka"
     },
     "dashboard": {
       "eyebrow": "Maamulka",

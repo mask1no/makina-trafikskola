@@ -21,10 +21,13 @@ export async function generateMetadata(
   const params = await props.params;
   if (!isLocale(params.locale)) return {};
   const location = await db.location.findFirst({
-    where: { slug: params.stad, active: true },
-    select: { city: true },
+    where: { slug: params.stad },
+    select: { city: true, status: true },
   });
   if (!location) return {};
+  if (location.status === "COMING_SOON") {
+    return { robots: { index: false, follow: false }, title: location.city };
+  }
   const t = await getTranslations({
     locale: params.locale,
     namespace: "localSchool",
@@ -59,7 +62,7 @@ export default async function TrafikskolaPage(
   const [t, location] = await Promise.all([
     getTranslations("localSchool"),
     db.location.findFirst({
-      where: { slug: params.stad, active: true },
+      where: { slug: params.stad },
       include: {
         teachers: {
           where: { teacher: { active: true } },
@@ -77,6 +80,16 @@ export default async function TrafikskolaPage(
     }),
   ]);
   if (!location) notFound();
+  if (location.status === "COMING_SOON") {
+    return (
+      <div className="section-shell">
+        <div className="site-container max-w-xl">
+          <h1 className="text-h1 font-black">{location.city}</h1>
+          <p className="mt-4 text-ink-muted">{t("comingSoon")}</p>
+        </div>
+      </div>
+    );
+  }
   const hasConfirmedAddress = isAddressConfirmed(location.address);
   const hasCoordinates =
     Number.isFinite(location.lat) &&

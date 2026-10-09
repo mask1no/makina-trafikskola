@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 
 import { db } from "@/lib/db";
@@ -9,7 +10,10 @@ import { InstructorStatusControl } from "./InstructorStatusControl";
 
 export const dynamic = "force-dynamic";
 
-export default async function NewInstructorPage() {
+export default async function NewInstructorPage(props: {
+  params: Promise<{ locale: string }>;
+}) {
+  const params = await props.params;
   const [t, statusT, locations, instructors] = await Promise.all([
     getTranslations("admin.instructors"),
     getTranslations("admin.instructorStatus"),
@@ -35,6 +39,9 @@ export default async function NewInstructorPage() {
         <ul className="mt-6 grid gap-3 sm:grid-cols-2">
           {instructors.map((instructor) => (
             <li key={instructor.id} className="grid gap-2">
+              <Link className="inline-flex min-h-11 items-center font-bold underline" href={`/${params.locale}/admin/instructors/${instructor.id}`}>
+                {instructor.user.firstName} {instructor.user.lastName}
+              </Link>
               <InstructorStatusControl
                 instructor={{
                   id: instructor.id,

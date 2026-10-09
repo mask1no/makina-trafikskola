@@ -17,6 +17,11 @@ export function normalizePhoneToE164(input: string): string | null {
     raw = `+${raw}`;
   }
 
+  // +46 070… and +4607… are the same Swedish number as +467…
+  if (raw.startsWith("+460")) {
+    raw = `+46${raw.slice(4)}`;
+  }
+
   if (!/^\+[1-9]\d{7,14}$/.test(raw)) {
     return null;
   }

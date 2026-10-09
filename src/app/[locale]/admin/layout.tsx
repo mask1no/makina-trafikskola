@@ -35,6 +35,8 @@ export default async function AdminLayout(
     ["/calendar", t("calendar")],
     ["/students", t("students")],
     ["/instructors/new", t("instructors")],
+    ["/produkter", t("products")],
+    ["/omraden", t("areas")],
     ["/recensioner", t("reviews")],
   ];
 

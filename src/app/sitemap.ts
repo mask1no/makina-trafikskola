@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 import { locales } from "@/i18n/routing";
 import { db } from "@/lib/db";
-import { instructorsEnabled } from "@/lib/launch";
+import { instructorsEnabled, theoryNavVisible, theorySalesOpen } from "@/lib/launch";
 
 const staticPaths = [
   "",
@@ -47,15 +47,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
   const paths = Array.from(
     new Set([
-      ...staticPaths,
-      ...products.map((product) => `/paket/${product.slug}`),
+      ...staticPaths.filter((path) => theoryNavVisible() || path !== "/teori"),
+      ...products
+        .filter((product) => theorySalesOpen() || product.slug !== "korkortsteori")
+        .map((product) => `/paket/${product.slug}`),
       ...(instructorsEnabled()
         ? [
             "/larare",
             ...teachers.map((teacher) => `/larare/${teacher.slug}`),
           ]
         : []),
-      ...categories.map((category) => `/teori/${category.slug}`),
+      ...(theoryNavVisible()
+        ? categories.map((category) => `/teori/${category.slug}`)
+        : []),
       ...locations.map((location) => `/trafikskola/${location.slug}`),
     ]),
   );

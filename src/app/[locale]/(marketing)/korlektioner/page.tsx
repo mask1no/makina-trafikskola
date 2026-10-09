@@ -5,8 +5,9 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { EmptyState } from "@/components/EmptyState";
 import { PageHeader } from "@/components/PageHeader";
 import { ProductCard } from "@/components/ProductCard";
+import { QuestionsBlock } from "@/components/QuestionsBlock";
 import { isLocale } from "@/i18n/routing";
-import { bookingEnabled } from "@/lib/launch";
+import { bookingEnabled, theorySalesOpen } from "@/lib/launch";
 import { groupProducts } from "@/lib/pricing/group";
 import { toProductCardModel } from "@/lib/products/card";
 
@@ -36,21 +37,68 @@ export async function generateMetadata(
 export default async function KorlektionerPage(
   props: {
     params: Promise<{ locale: string }>;
+    searchParams: Promise<{ sort?: string; group?: string }>;
   }
 ) {
   const params = await props.params;
+  const searchParams = await props.searchParams;
   if (!isLocale(params.locale)) return null;
   setRequestLocale(params.locale);
   const t = await getTranslations();
-  const products = await getProducts(params.locale);
+  const sort = searchParams.sort === "lessons" ? "lessons" : "price";
+  const group = searchParams.group;
+  const products = (await getProducts(params.locale))
+    .filter((product) => product.active && product.kind !== "TEST_LESSON")
+    .filter((product) => theorySalesOpen() || product.kind !== "THEORY_ACCESS")
+    .sort((a, b) =>
+      sort === "lessons" ? b.lessonCredits - a.lessonCredits : a.priceOre - b.priceOre,
+    );
+  const best = products.find((product) => product.bestSeller) ?? products.find((product) => product.kind === "PACKAGE");
   const canBook = bookingEnabled();
-  const sections = groupProducts(products);
-  const testLesson = products.find((product) => product.kind === "TEST_LESSON");
+  const allSections = groupProducts(products);
+  const sections = allSections.filter((section) => !group || section.key === group);
+  const cardLabels = {
+    kindLabel: (key: string) => t(`product.kind.${key}`),
+    perLessonLabel: t("product.perLesson"),
+    validityLabel: (count: number) => t("product.validityMonths", { count }),
+    vatLabel: t("product.priceIncludesVat"),
+    valueSeparatelyLabel: (price: string) => t("pricing.valueSeparately", { price }),
+    savingsLabel: (percent: number) => t("product.save", { percent }),
+    popularLabel: t("product.popular"),
+    swedishOnlyLabel: t("common.swedishOnly"),
+    unavailableLabel: t("product.notForSale"),
+    detailsLabel: t("common.readMore"),
+  };
+  const company = await getTranslations("company");
+  const shell = await getTranslations("shell");
 
   return (
     <div className="section-shell">
       <div className="site-container">
         <PageHeader eyebrow={t("lessons.eyebrow")} title={t("lessons.title")} description={t("lessons.description")} />
+        <div className="mt-6 flex flex-wrap gap-2">
+          <Link className="inline-flex min-h-11 items-center rounded-full border border-border bg-card px-4 text-small font-bold" href={`/${params.locale}/korlektioner?sort=price${group ? `&group=${group}` : ""}`}>{t("lessons.sortPrice")}</Link>
+          <Link className="inline-flex min-h-11 items-center rounded-full border border-border bg-card px-4 text-small font-bold" href={`/${params.locale}/korlektioner?sort=lessons${group ? `&group=${group}` : ""}`}>{t("lessons.sortLessons")}</Link>
+          {allSections.map((section) => (
+            <Link key={section.key} className="inline-flex min-h-11 items-center rounded-full border border-border bg-card px-4 text-small font-bold" href={`/${params.locale}/korlektioner?sort=${sort}&group=${section.key}`}>
+              {t(`lessons.groups.${section.key}.title`)}
+            </Link>
+          ))}
+        </div>
+        {best ? (
+          <div className="mt-8 max-w-xl">
+            <p className="mb-3 text-small font-bold">{t("lessons.bestSeller")}</p>
+            <ProductCard
+              {...toProductCardModel({
+                locale: params.locale,
+                bookingEnabled: canBook,
+                product: best,
+                includeImage: false,
+                labels: cardLabels,
+              })}
+            />
+          </div>
+        ) : null}
         {sections.length ? (
           <>
             <nav className="sticky top-[var(--header-height)] z-30 -mx-4 mt-8 flex gap-2 overflow-x-auto bg-page px-4 py-3 lg:hidden" aria-label={t("lessons.groups.label")}>
@@ -76,15 +124,6 @@ export default async function KorlektionerPage(
                 </nav>
               </aside>
               <div className="grid gap-10">
-                {testLesson ? (
-                  <Link
-                    href={`/${params.locale}/paket/${testLesson.slug}`}
-                    className="inline-flex min-h-11 items-center justify-between rounded-lg border border-border bg-card p-5 font-bold hover:border-ink"
-                  >
-                    <span>{t("lessons.testCallout")}</span>
-                    <span aria-hidden="true" className="text-2xl leading-none">→</span>
-                  </Link>
-                ) : null}
                 {sections.map((section) => (
                   <section key={section.key} id={section.key} className="scroll-mt-[calc(var(--header-height)+4rem)]">
                     <h2 className="text-h3 font-black">{t(`lessons.groups.${section.key}.title`)}</h2>
@@ -98,21 +137,7 @@ export default async function KorlektionerPage(
                             bookingEnabled: canBook,
                             product,
                             includeImage: false,
-                            labels: {
-                              kindLabel: (key) => t(`product.kind.${key}`),
-                              perLessonLabel: t("product.perLesson"),
-                              validityLabel: (count) =>
-                                t("product.validityMonths", { count }),
-                              vatLabel: t("product.priceIncludesVat"),
-                              valueSeparatelyLabel: (price) =>
-                                t("pricing.valueSeparately", { price }),
-                              savingsLabel: (percent) =>
-                                t("product.save", { percent }),
-                              popularLabel: t("product.popular"),
-                              swedishOnlyLabel: t("common.swedishOnly"),
-                              unavailableLabel: t("product.notForSale"),
-                              detailsLabel: t("common.readMore"),
-                            },
+                            labels: cardLabels,
                           })}
                         />
                       ))}
@@ -130,6 +155,12 @@ export default async function KorlektionerPage(
             />
           </div>
         )}
+        <QuestionsBlock
+          title={shell("questions")}
+          callLabel={shell("callUs")}
+          phone={company("phone")}
+          email={company("email")}
+        />
       </div>
     </div>
   );

@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { TheoryQuestionImage } from "@/components/TheoryQuestionImage";
+import { LinkButton } from "@/components/LinkButton";
 
 type Question = {
   id: string;
@@ -20,38 +21,49 @@ type Copy = {
   signIn: string;
   error: string;
   imageMissing: string;
+  next: string;
+  score: string;
+  reviewMistakes: string;
+  retry: string;
+  bookLesson: string;
 };
 
 export function StudyQuiz({
   locale,
   questions,
-  authenticated,
   copy,
+  bookHref,
 }: {
   locale: string;
   questions: Question[];
-  authenticated: boolean;
+  authenticated?: boolean;
   copy: Copy;
+  bookHref: string;
 }) {
-  const [selected, setSelected] = useState<Record<string, string>>({});
+  const [index, setIndex] = useState(0);
+  const [picked, setPicked] = useState<string>();
   const [results, setResults] = useState<
-    Record<string, { correct: boolean; explanation: string | null }>
+    Record<string, { correct: boolean; explanation: string | null; answerId: string }>
   >({});
-  const [busyId, setBusyId] = useState<string>();
-  const [error, setError] = useState<Record<string, string>>({});
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+  const [reviewing, setReviewing] = useState(false);
+  const [finished, setFinished] = useState(false);
 
-  async function answer(question: Question) {
-    const answerId = selected[question.id];
-    if (!authenticated) {
-      setError((value) => ({ ...value, [question.id]: copy.signIn }));
-      return;
-    }
+  const visible = reviewing
+    ? questions.filter((question) => results[question.id] && !results[question.id]?.correct)
+    : questions;
+  const question = visible[index];
+  const result = question ? results[question.id] : undefined;
+
+  async function submit(answerId = picked) {
+    if (!question || result) return;
     if (!answerId) {
-      setError((value) => ({ ...value, [question.id]: copy.selectAnswer }));
+      setError(copy.selectAnswer);
       return;
     }
-    setBusyId(question.id);
-    setError((value) => ({ ...value, [question.id]: "" }));
+    setBusy(true);
+    setError("");
     try {
       const response = await fetch("/api/theory/attempts", {
         method: "POST",
@@ -63,80 +75,179 @@ export function StudyQuiz({
       setResults((value) => ({
         ...value,
         [question.id]: {
-          correct: body.correct,
-          explanation: body.explanation,
+          correct: Boolean(body.correct),
+          explanation: body.explanation ?? null,
+          answerId,
         },
       }));
     } catch {
-      setError((value) => ({ ...value, [question.id]: copy.error }));
+      setError(copy.error);
     } finally {
-      setBusyId(undefined);
+      setBusy(false);
     }
   }
 
+  function goNext() {
+    if (!question || !result) return;
+    if (index + 1 >= visible.length) {
+      setFinished(true);
+      setReviewing(false);
+      return;
+    }
+    setIndex(index + 1);
+    setPicked(undefined);
+    setError("");
+  }
+
+  useEffect(() => {
+    function onKey(event: KeyboardEvent) {
+      if (!question || finished) return;
+      const target = event.target as HTMLElement | null;
+      if (target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA")) return;
+      const digit = Number(event.key);
+      if (digit >= 1 && digit <= 4 && question.answers[digit - 1] && !result) {
+        const answer = question.answers[digit - 1];
+        if (!answer) return;
+        setPicked(answer.id);
+        void submit(answer.id);
+      }
+      if (event.key === "Enter" && result) goNext();
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  });
+
+  if (!questions.length) return null;
+
+  if (finished) {
+    const correctCount = questions.filter((item) => results[item.id]?.correct).length;
+    return (
+      <div className="mt-8 grid gap-4">
+        <p className="text-h2 font-black">
+          {copy.score
+            .replace("{correct}", String(correctCount))
+            .replace("{total}", String(questions.length))}
+        </p>
+        <div className="flex flex-wrap gap-3">
+          <button
+            type="button"
+            className="inline-flex min-h-11 items-center rounded-sm border border-border bg-card px-5 text-small font-bold"
+            onClick={() => {
+              const misses = questions.filter((item) => !results[item.id]?.correct);
+              setReviewing(misses.length > 0);
+              setFinished(false);
+              setIndex(0);
+            }}
+          >
+            {copy.reviewMistakes}
+          </button>
+          <button
+            type="button"
+            className="inline-flex min-h-11 items-center rounded-sm border border-border bg-card px-5 text-small font-bold"
+            onClick={() => {
+              setResults({});
+              setFinished(false);
+              setReviewing(false);
+              setIndex(0);
+              setPicked(undefined);
+            }}
+          >
+            {copy.retry}
+          </button>
+          <LinkButton href={bookHref}>{copy.bookLesson}</LinkButton>
+        </div>
+      </div>
+    );
+  }
+
+  if (!question) return null;
+  const numberLabel = copy.questionNumber
+    .replace("{number}", String(index + 1))
+    .replace("{n}", String(index + 1));
+
   return (
-    <div className="mt-10 grid gap-8">
-      {questions.map((question, index) => {
-        const result = results[question.id];
-        return (
-          <article key={question.id} className="overflow-hidden rounded-lg border border-border bg-card shadow-soft">
-            <div className="border-b border-border bg-card-muted px-6 py-4">
-            <h2 className="text-sm font-extrabold uppercase tracking-[0.14em] text-ink-muted">
-              {copy.questionNumber.replace("{number}", String(index + 1))}
-            </h2>
-            </div>
-            <div className="p-6 sm:p-8">
-            <p className="text-xl font-bold leading-8">{question.text}</p>
-            <TheoryQuestionImage
-              src={question.imageUrl}
-              alt={question.text}
-              missingLabel={copy.imageMissing}
+    <div className="mt-8 grid gap-6">
+      <div className="flex gap-1 overflow-x-auto" aria-label={numberLabel}>
+        {questions.map((item, itemIndex) => {
+          const itemResult = results[item.id];
+          return (
+            <button
+              key={item.id}
+              type="button"
+              disabled={!itemResult}
+              aria-current={item.id === question.id ? "true" : undefined}
+              className={`h-3 min-w-6 flex-1 rounded-sm ${
+                itemResult?.correct
+                  ? "bg-success-strong"
+                  : itemResult
+                    ? "bg-danger"
+                    : "bg-border"
+              }`}
+              onClick={() => {
+                if (!itemResult) return;
+                setFinished(false);
+                setReviewing(false);
+                setIndex(itemIndex);
+              }}
             />
-            <fieldset className="mt-5 grid gap-3" disabled={Boolean(result)}>
-              <legend className="sr-only">{question.text}</legend>
-              {question.answers.map((answer) => (
-                <label
-                  key={answer.id}
-                  className="flex min-h-14 cursor-pointer items-center gap-3 rounded-sm border border-border p-4 transition has-[:checked]:border-surface has-[:checked]:bg-card-muted"
-                >
-                  <input
-                    type="radio"
-                    name={`study-${question.id}`}
-                    value={answer.id}
-                    checked={selected[question.id] === answer.id}
-                    onChange={() =>
-                      setSelected((value) => ({ ...value, [question.id]: answer.id }))
-                    }
-                  />
-                  <span>{answer.text}</span>
-                </label>
-              ))}
-            </fieldset>
-            {!result ? (
-              <button
-                type="button"
-                disabled={busyId === question.id}
-                onClick={() => void answer(question)}
-                className="mt-4 min-h-11 rounded-sm bg-accent px-5 font-bold text-accent-ink disabled:opacity-60"
-              >
-                {copy.submit}
-              </button>
-            ) : (
-              <div
-                className={`mt-4 rounded-sm border p-4 ${result.correct ? "border-success" : "border-danger"}`}
-                aria-live="polite"
-              >
-                <p className="font-bold">{result.correct ? copy.correct : copy.incorrect}</p>
-                {result.explanation ? <p className="mt-2 text-sm">{result.explanation}</p> : null}
-              </div>
-            )}
-            {error[question.id] ? (
-              <p className="mt-3 text-sm text-danger" role="alert">{error[question.id]}</p>
-            ) : null}
-            </div>
-          </article>
-        );
-      })}
+          );
+        })}
+      </div>
+      <p className="text-small font-bold text-ink-muted">{numberLabel}</p>
+      <h2 className="text-h3 font-black">{question.text}</h2>
+      {question.imageUrl ? (
+        <TheoryQuestionImage src={question.imageUrl} alt="" missingLabel={copy.imageMissing} />
+      ) : null}
+      <div className="grid gap-3">
+        {question.answers.map((answer) => {
+          const selected = (result?.answerId ?? picked) === answer.id;
+          return (
+            <button
+              key={answer.id}
+              type="button"
+              disabled={Boolean(result) || busy}
+              onClick={() => {
+                setPicked(answer.id);
+                void submit(answer.id);
+              }}
+              className={`choice-card relative min-h-[52px] overflow-hidden rounded-md border border-[var(--line)] bg-card px-4 py-3 text-start font-bold shadow-soft ${
+                selected ? "text-accent-ink" : ""
+              }`}
+              data-selected={selected ? "true" : undefined}
+            >
+              <span className="relative">{answer.text}</span>
+            </button>
+          );
+        })}
+      </div>
+      {result ? (
+        <div className="grid gap-3">
+          <p className={result.correct ? "font-bold text-success" : "font-bold text-danger"}>
+            {result.correct ? copy.correct : copy.incorrect}
+          </p>
+          {result.explanation ? <p className="max-w-[70ch] leading-7">{result.explanation}</p> : null}
+          <button
+            type="button"
+            className="inline-flex min-h-11 w-fit items-center rounded-sm bg-accent px-5 text-small font-bold text-accent-ink"
+            onClick={goNext}
+          >
+            {copy.next}
+          </button>
+        </div>
+      ) : null}
+      {error ? <p className="text-small font-bold text-danger">{error}</p> : null}
+      <style>{`
+        .choice-card[data-selected="true"] {
+          background-image: linear-gradient(to right, var(--accent), var(--accent));
+          background-size: 0 100%;
+          background-repeat: no-repeat;
+          animation: choice-fill 300ms ease forwards;
+        }
+        @keyframes choice-fill { to { background-size: 100% 100%; } }
+        @media (prefers-reduced-motion: reduce) {
+          .choice-card[data-selected="true"] { animation: none; background-size: 100% 100%; }
+        }
+      `}</style>
     </div>
   );
 }

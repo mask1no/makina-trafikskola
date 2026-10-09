@@ -10,6 +10,7 @@ import {
 import { requireRole } from "@/lib/auth/guards";
 import { resolveContent } from "@/lib/content/fallback";
 import { db } from "@/lib/db";
+import { theoryMode } from "@/lib/launch";
 import { hasTheoryAccess } from "@/lib/theory/access";
 import { locales } from "@/i18n/routing";
 
@@ -28,11 +29,36 @@ export async function POST(request: Request) {
   );
   if (!parsed.success) return invalidInput(parsed.error.flatten().fieldErrors);
 
-  let studentId: string;
+  if (theoryMode() === "off") return apiError("THEORY_UNAVAILABLE", 404);
+
+  let studentId: string | null = null;
   try {
     studentId = requireRole(await auth(), ["STUDENT"]).user.id;
   } catch (error) {
-    return authorizationError(error);
+    if (parsed.data.sessionId) return authorizationError(error);
+  }
+
+  if (!studentId) {
+    const freeQuestion = await db.theoryQuestion.findFirst({
+      where: { id: parsed.data.questionId, active: true, isFree: true },
+      include: {
+        translations: true,
+        answers: {
+          where: { id: parsed.data.answerId },
+          select: { id: true, isCorrect: true },
+        },
+      },
+    });
+    const selected = freeQuestion?.answers[0];
+    if (!freeQuestion || !selected) return apiError("THEORY_QUESTION_NOT_FOUND", 404);
+    const content = resolveContent(
+      freeQuestion.translations,
+      parsed.data.locale ?? "sv",
+    );
+    return Response.json({
+      correct: selected.isCorrect,
+      explanation: content.translation?.explanation ?? null,
+    });
   }
 
   const now = new Date();
@@ -94,6 +120,9 @@ export async function POST(request: Request) {
     ) {
       return apiError("THEORY_EXAM_COMPLETE", 409);
     }
+  }
+  if (theoryMode() === "free" && !question.isFree) {
+    return apiError("THEORY_ACCESS_REQUIRED", 403);
   }
   if (
     !question.isFree &&

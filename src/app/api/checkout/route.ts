@@ -60,7 +60,11 @@ export async function POST(request: Request) {
     where: { id: parsed.data.productId },
     include: { translations: true },
   });
-  if (!product?.active) {
+  if (
+    !product?.active ||
+    product.kind === "TEST_LESSON" ||
+    (product.kind === "THEORY_ACCESS" && process.env.THEORY_MODE !== "full")
+  ) {
     return errorResponse("PRODUCT_INACTIVE", 409);
   }
   if (parsed.data.bookingId && product.lessonCredits < 1) {

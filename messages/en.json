@@ -49,6 +49,20 @@
     "calendar": "Calendar",
     "students": "Students",
     "contact": "Contact",
+    "courses": "Courses",
+    "prices": "Prices",
+    "questions": "Questions?",
+    "languagePage": {
+      "sv": "Swedish",
+      "en": "English",
+      "ti": "Tigrinya",
+      "ku": "Kurdish",
+      "so": "Somali",
+      "ar": "Arabic"
+    },
+    "here": "Where we are",
+    "schoolIn": "Driving school in {town}",
+    "comingSoonPlace": "{town} – coming soon",
     "openingHours": "Opening hours: Mon–Fri 08–21, Sat 08–19",
     "copyright": "© {year} Makina Trafikskola",
     "footerDescription": "Driving education with clear guidance and support in your language.",
@@ -95,7 +109,8 @@
       "cardDescription": "Choose language, transmission and instructor based on your needs.",
       "reviews": "reviews",
       "pickupProof": "Pickup by arrangement",
-      "languageProof": "{languages}"
+      "languageProof": "{languages}",
+      "areas": "Farsta · Upplands Väsby"
     },
     "journey": {
       "eyebrow": "How it works",
@@ -152,7 +167,7 @@
       },
       "pickup": {
         "question": "Can you pick me up?",
-        "answer": "Pickup arrangements depend on the lesson and instructor. Contact us with your address, and we will confirm what is possible."
+        "answer": "Pickup is free inside the Farsta and Upplands Väsby areas."
       },
       "cancel": {
         "question": "How do I cancel a lesson?",
@@ -199,11 +214,11 @@
       },
       "risk": {
         "title": "Risk training",
-        "body": "Riskettan or risktvåan is in the range."
+        "body": "Both risk courses with us"
       },
       "guarantee": {
         "title": "Guarantee",
-        "body": "A guarantee package is in the range."
+        "body": "Drive until you pass"
       },
       "payment": {
         "title": "Payment",
@@ -231,6 +246,9 @@
     "eyebrow": "Prices and packages",
     "title": "Driving lessons for every step",
     "description": "Compare single lessons and packages. All prices include VAT.",
+    "sortPrice": "Price",
+    "sortLessons": "Number of lessons",
+    "bestSeller": "Best seller",
     "groups": {
       "label": "Product groups",
       "single": {
@@ -433,6 +451,13 @@
     "signInToAnswer": "Sign in as a student to save your answer.",
     "answerError": "The answer could not be saved. Try again.",
     "imageMissing": "Image missing",
+    "next": "Next",
+    "score": "{correct} of {total} correct",
+    "reviewMistakes": "See your mistakes",
+    "retry": "Try again",
+    "bookLesson": "Book a lesson",
+    "comingSoonTitle": "Coming soon",
+    "comingSoonBody": "Theory practice opens here when it is ready.",
     "exam": {
       "eyebrow": "Mock exam",
       "title": "Prepare under real exam conditions",
@@ -459,6 +484,7 @@
   },
   "localSchool": {
     "eyebrow": "Driving school near you",
+    "comingSoon": "Coming soon",
     "title": "Driving school in {city}",
     "description": "View our confirmed location and available instructors in {city}.",
     "addressPending": "The exact visiting address is awaiting confirmation.",
@@ -815,6 +841,13 @@
     "weekTitle": "This week's driving lessons",
     "weekCount": "{count, plural, =0 {No lessons this week} =1 {1 lesson this week} other {{n} lessons this week}}",
     "weekEmpty": "You have no lessons this week.",
+    "monthTitle": "My month",
+    "lessonsDriven": "{count} lessons",
+    "hoursDriven": "{hours} hours",
+    "estimatedPay": "Estimated pay {pay}",
+    "monthEmpty": "No completed lessons this month.",
+    "previousMonth": "Previous month",
+    "nextMonth": "Next month",
     "views": {
       "today": "Today",
       "week": "Week"
@@ -997,6 +1030,7 @@
       "metadata": "Privacy policy for Makina Trafikskola.",
       "eyebrow": "Legal information",
       "title": "Privacy policy",
+      "accountAction": "Download or delete your data",
       "sectionOrder": [
         "controller",
         "collected",
@@ -1087,7 +1121,38 @@
       "calendar": "Week calendar",
       "students": "Students",
       "instructors": "New instructor",
-      "reviews": "Reviews"
+      "reviews": "Reviews",
+      "products": "Products",
+      "areas": "Areas"
+    },
+    "editor": {
+      "save": "Save",
+      "saved": "Saved",
+      "phone": "Mobile number",
+      "languages": "Languages",
+      "gearbox": "Gearbox",
+      "manual": "Manual",
+      "automatic": "Automatic",
+      "areas": "Areas",
+      "years": "Years of experience",
+      "hours": "Working hours",
+      "addHour": "Add hours",
+      "daysOff": "Days off",
+      "photo": "Photo",
+      "calendarEmail": "Google calendar",
+      "testCalendar": "Test",
+      "payRate": "Pay per lesson (kr)",
+      "price": "Price (kr)",
+      "active": "Active",
+      "bestSeller": "Best seller",
+      "shortDesc": "Short description",
+      "status": "Status",
+      "office": "Office address",
+      "boundary": "GeoJSON",
+      "comingSoon": "Coming soon",
+      "productsTitle": "Products",
+      "areasTitle": "Areas",
+      "editTeacher": "Edit teacher"
     },
     "dashboard": {
       "eyebrow": "Administration",

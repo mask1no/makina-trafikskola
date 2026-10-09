@@ -23,11 +23,8 @@ export function WhatStep({
       <h2 className="text-3xl font-black">{t("step.what.title")}</h2>
       <p className="mt-2 text-ink-muted">{t("step.what.description")}</p>
       <div className="mt-6 grid gap-2">
-        {(["single", "credits", "test"] as const).map((option) => {
-          const product =
-            option === "test"
-              ? products.find((item) => item.kind === "TEST_LESSON")
-              : products.find((item) => item.kind === "SINGLE_LESSON");
+        {(["single", "credits"] as const).map((option) => {
+          const product = products.find((item) => item.kind === "SINGLE_LESSON");
           return (
             <button
               type="button"

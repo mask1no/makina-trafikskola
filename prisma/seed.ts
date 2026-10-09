@@ -70,23 +70,66 @@ function stockholmAt(now: Date, daysAhead: number, time: string) {
 }
 
 // ─── CLIENT DATA — replace before launch ───────────────────────────
+function box(lng: number, lat: number, delta = 0.08) {
+  return {
+    type: "Feature",
+    properties: { review: "TODO" },
+    geometry: {
+      type: "Polygon",
+      coordinates: [[
+        [lng - delta, lat - delta],
+        [lng + delta, lat - delta],
+        [lng + delta, lat + delta],
+        [lng - delta, lat + delta],
+        [lng - delta, lat - delta],
+      ]],
+    },
+  };
+}
+
 export const CLIENT_DATA = {
   locations: [
     {
+      slug: "farsta",
+      name: "Farsta",
+      address: "Farsta",
+      city: "Farsta",
+      postalCode: "123 47",
+      lat: 59.243,
+      lng: 18.093,
+      status: "ACTIVE" as const,
+      officeAddress: null as string | null,
+      boundary: box(18.093, 59.243),
+    },
+    {
       slug: "upplands-vasby",
-      name: "Upplands Väsby – Huvudkontor",
+      name: "Upplands Väsby",
       address: "Centralvägen 5",
       city: "Upplands Väsby",
       postalCode: "194 77",
       lat: 59.5194,
       lng: 17.9088,
+      status: "ACTIVE" as const,
+      officeAddress: "Centralvägen 5, 194 77 Upplands Väsby",
+      boundary: box(17.9088, 59.5194),
+    },
+    {
+      slug: "uppsala",
+      name: "Uppsala",
+      address: "Uppsala",
+      city: "Uppsala",
+      postalCode: "753 10",
+      lat: 59.858,
+      lng: 17.638,
+      status: "COMING_SOON" as const,
+      officeAddress: null as string | null,
+      boundary: box(17.638, 59.858),
     },
   ],
 } as const;
 
-// Names, roles and teaching languages are confirmed. Portraits and exact
-// years are still added later in admin. Weekday hours and both gearboxes
-// make booking usable until the school edits each profile.
+// Names, roles and teaching languages are confirmed. Mock hours and gearboxes
+// are applied only in development, inside main().
 const confirmedInstructors = publicStaff.map((member) => ({
   email: `${member.slug}@makina.local`,
   firstName: member.firstName,
@@ -94,10 +137,10 @@ const confirmedInstructors = publicStaff.map((member) => ({
   slug: member.slug,
   role: member.role,
   languages: [...member.languages],
-  transmissions: [Transmission.MANUAL, Transmission.AUTOMATIC],
+  transmissions: [] as Transmission[],
   yearsExperience: 0,
   locationSlug: "upplands-vasby",
-  days: [1, 2, 3, 4, 5],
+  days: [] as number[],
   startTime: "08:00",
   endTime: "17:00",
 }));
@@ -201,7 +244,7 @@ const PRODUCTS: Seed[] = [
   {
     slug: "testlektion",
     kind: ProductKind.TEST_LESSON,
-    active: true,
+    active: false,
     priceOre: 49900,
     lessonCredits: 1,
     translations: {
@@ -626,9 +669,7 @@ async function main() {
     process.env.RAILWAY_ENVIRONMENT === "production" ||
     process.env.RAILWAY_ENVIRONMENT_NAME === "production" ||
     process.env.VERCEL_ENV === "production";
-  const locationsToSeed = isProduction
-    ? CLIENT_DATA.locations.slice(0, 1)
-    : CLIENT_DATA.locations;
+  const locationsToSeed = CLIENT_DATA.locations;
   const instructorsToSeed = confirmedInstructors;
   const productsToSeed = isProduction
     ? PRODUCTS.filter((product) => PRODUCTION_PRODUCT_SLUGS.has(product.slug))
@@ -645,7 +686,10 @@ async function main() {
         postalCode: location.postalCode,
         lat: location.lat,
         lng: location.lng,
-        active: true,
+        active: location.status === "ACTIVE",
+        status: location.status,
+        officeAddress: location.officeAddress,
+        boundary: location.boundary,
       },
       create: {
         slug: location.slug,
@@ -655,7 +699,10 @@ async function main() {
         postalCode: location.postalCode,
         lat: location.lat,
         lng: location.lng,
-        active: true,
+        active: location.status === "ACTIVE",
+        status: location.status,
+        officeAddress: location.officeAddress,
+        boundary: location.boundary,
       },
     });
     locationsBySlug.set(location.slug, row.id);
@@ -711,7 +758,16 @@ async function main() {
     }
   }
 
+  const mockSchedule = isProduction
+    ? null
+    : {
+        transmissions: [Transmission.MANUAL, Transmission.AUTOMATIC],
+        days: [1, 2, 3, 4, 5],
+      };
+
   for (const instructor of instructorsToSeed) {
+    const transmissions = mockSchedule?.transmissions ?? instructor.transmissions;
+    const days = mockSchedule?.days ?? instructor.days;
     const locationId = locationsBySlug.get(instructor.locationSlug);
     if (!locationId) throw new Error(`Missing location ${instructor.locationSlug}`);
 
@@ -733,7 +789,7 @@ async function main() {
             slug: instructor.slug,
             photoUrl: null,
             languages: [...instructor.languages],
-            transmissions: [...instructor.transmissions],
+            transmissions: [...transmissions],
             yearsExperience: instructor.yearsExperience,
             active: true,
           },
@@ -750,7 +806,7 @@ async function main() {
           slug: instructor.slug,
           photoUrl: null,
           languages: [...instructor.languages],
-          transmissions: [...instructor.transmissions],
+          transmissions: [...transmissions],
           yearsExperience: instructor.yearsExperience,
           active: true,
         },
@@ -765,7 +821,7 @@ async function main() {
           languages: [...instructor.languages],
           transmissions: profile.transmissions.length
             ? profile.transmissions
-            : instructor.transmissions,
+            : transmissions,
           yearsExperience:
             instructor.yearsExperience > 0
               ? instructor.yearsExperience
@@ -781,8 +837,8 @@ async function main() {
     const existingHours = await db.teacherAvailability.count({
       where: { teacherId: profile.id },
     });
-    if (instructor.days.length && existingHours === 0) {
-      for (const dayOfWeek of instructor.days) {
+    if (days.length && existingHours === 0) {
+      for (const dayOfWeek of days) {
         await db.teacherAvailability.create({
           data: {
             teacherId: profile.id,

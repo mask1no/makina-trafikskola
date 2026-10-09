@@ -1,4 +1,5 @@
-import { getTranslations } from "next-intl/server";
+import Link from "next/link";
+import { getLocale, getTranslations } from "next-intl/server";
 
 import { PageHeader } from "@/components/PageHeader";
 
@@ -7,7 +8,10 @@ export async function CompliancePage({
 }: {
   namespace: "terms" | "privacy" | "cookies";
 }) {
-  const t = await getTranslations(`legal.${namespace}`);
+  const [t, locale] = await Promise.all([
+    getTranslations(`legal.${namespace}`),
+    getLocale(),
+  ]);
   const sectionOrder = t.raw("sectionOrder") as string[];
   const summaryItems =
     namespace === "terms"
@@ -65,6 +69,13 @@ export async function CompliancePage({
           </section>
         ) : null}
       </div>
+      {namespace === "privacy" ? (
+        <p className="mt-8">
+          <Link className="inline-flex min-h-11 items-center font-bold underline" href={`/${locale}/mina-sidor/profil`}>
+            {t("accountAction")}
+          </Link>
+        </p>
+      ) : null}
     </article>
   );
 }

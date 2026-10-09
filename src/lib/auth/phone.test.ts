@@ -13,6 +13,12 @@ describe("normalizePhoneToE164", () => {
     expect(normalizePhoneToE164("(070) 123-45-67")).toBe("+46701234567");
   });
 
+  it("accepts +46 with or without a leading trunk zero", () => {
+    expect(normalizePhoneToE164("+460701234567")).toBe("+46701234567");
+    expect(normalizePhoneToE164("+46 070 123 45 67")).toBe("+46701234567");
+    expect(normalizeSwedishPhone("+460701234567")).toBe("+46701234567");
+  });
+
   it("accepts 00 and bare country-code forms", () => {
     expect(normalizePhoneToE164("0046701234567")).toBe("+46701234567");
     expect(normalizePhoneToE164("46701234567")).toBe("+46701234567");

@@ -1,4 +1,4 @@
-import { addDays } from "date-fns";
+import { addDays, addMonths } from "date-fns";
 import { formatInTimeZone, fromZonedTime } from "date-fns-tz";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
@@ -12,7 +12,9 @@ import { EmptyState } from "@/components/EmptyState";
 import { Input } from "@/components/Input";
 import { PageHeader } from "@/components/PageHeader";
 import { Textarea } from "@/components/Textarea";
+import { Card } from "@/components/Card";
 import { formatLessonDateTime, formatLessonTime } from "@/lib/format/datetime";
+import { formatPrice } from "@/lib/pricing/format";
 import { displayPhone, telHref } from "@/lib/format/phone";
 import { db } from "@/lib/db";
 
@@ -31,7 +33,7 @@ const TIME_ZONE = "Europe/Stockholm";
 export default async function TeacherPortal(
   props: {
     params: Promise<{ locale: string }>;
-    searchParams: Promise<{ view?: string; error?: string }>;
+    searchParams: Promise<{ view?: string; error?: string; month?: string }>;
   }
 ) {
   const params = await props.params;
@@ -54,6 +56,7 @@ export default async function TeacherPortal(
       select: {
         id: true,
         calendarToken: true,
+        payRateOre: true,
         user: { select: { phone: true } },
       },
     }),
@@ -127,6 +130,28 @@ export default async function TeacherPortal(
       ? formatLessonDateTime(date, params.locale)
       : formatLessonTime(date, params.locale);
   const tomorrow = formatInTimeZone(addDays(now, 1), TIME_ZONE, "yyyy-MM-dd");
+  const monthKey = /^\d{4}-\d{2}$/.test(searchParams.month ?? "")
+    ? searchParams.month!
+    : formatInTimeZone(now, TIME_ZONE, "yyyy-MM");
+  const [monthYear, monthNumber] = monthKey.split("-").map(Number);
+  const monthCursor = new Date(Date.UTC(monthYear ?? 2026, (monthNumber ?? 1) - 1, 1));
+  const monthStart = fromZonedTime(`${monthKey}-01T00:00:00`, TIME_ZONE);
+  const nextMonthKey = formatInTimeZone(addMonths(monthCursor, 1), "UTC", "yyyy-MM");
+  const previousMonthKey = formatInTimeZone(addMonths(monthCursor, -1), "UTC", "yyyy-MM");
+  const monthEnd = fromZonedTime(`${nextMonthKey}-01T00:00:00`, TIME_ZONE);
+  const completed = await db.booking.findMany({
+    where: {
+      teacherId: teacher.id,
+      status: "COMPLETED",
+      startsAt: { gte: monthStart, lt: monthEnd },
+    },
+    orderBy: { startsAt: "asc" },
+    select: { id: true, startsAt: true, endsAt: true, student: { select: { firstName: true } } },
+  });
+  const drivenHours = completed.reduce(
+    (sum, lesson) => sum + (lesson.endsAt.getTime() - lesson.startsAt.getTime()) / 3_600_000,
+    0,
+  );
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
@@ -142,6 +167,31 @@ export default async function TeacherPortal(
           title={view === "week" ? t("weekTitle") : t("title")}
           description={t(view === "week" ? "weekCount" : "lessonCount", { count: lessons.length, n: String(lessons.length) })}
         />
+        <Card className="mt-6">
+          <div className="flex items-center justify-between gap-3">
+            <h2 className="text-h3 font-black">{t("monthTitle")}</h2>
+            <div className="flex gap-2">
+              <Link className="inline-flex min-h-11 items-center rounded-sm border border-border px-3 text-small font-bold" href={`/${params.locale}/larare-portal?month=${previousMonthKey}`}>{t("previousMonth")}</Link>
+              <Link className="inline-flex min-h-11 items-center rounded-sm border border-border px-3 text-small font-bold" href={`/${params.locale}/larare-portal?month=${nextMonthKey}`}>{t("nextMonth")}</Link>
+            </div>
+          </div>
+          <p className="mt-4 font-bold">{t("lessonsDriven", { count: completed.length })}</p>
+          <p className="mt-1 text-ink-muted">{t("hoursDriven", { hours: drivenHours.toFixed(1) })}</p>
+          {teacher.payRateOre != null ? (
+            <p className="mt-1 font-bold">{t("estimatedPay", { pay: formatPrice(completed.length * teacher.payRateOre, params.locale) })}</p>
+          ) : null}
+          {completed.length ? (
+            <ul className="mt-4 grid gap-2">
+              {completed.map((lesson) => (
+                <li key={lesson.id} className="text-small">
+                  {formatLessonDateTime(lesson.startsAt, params.locale)} · {lesson.student.firstName}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="mt-4 text-ink-muted">{t("monthEmpty")}</p>
+          )}
+        </Card>
         <div className="mt-6 grid grid-cols-2 gap-2">
           {(["today", "week"] as const).map((value) => (
             <Link

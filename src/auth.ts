@@ -218,12 +218,20 @@ export const {
         const matchingEmail = email
           ? await db.user.findUnique({ where: { email } })
           : null;
-        const linkableEmail =
+        const staffAccount =
           emailVerified &&
-          matchingEmail?.emailVerifiedAt &&
+          email?.endsWith("@makina.se") &&
+          matchingEmail &&
           !matchingEmail.deletedAt
             ? matchingEmail
             : null;
+        const linkableEmail =
+          staffAccount ??
+          (emailVerified &&
+          matchingEmail?.emailVerifiedAt &&
+          !matchingEmail.deletedAt
+            ? matchingEmail
+            : null);
         if (linkableEmail?.googleSub && linkableEmail.googleSub !== sub) {
           return false;
         }

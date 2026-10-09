@@ -15,7 +15,9 @@
   --ink-inverse: #ffffff;
   --ink-inverse-muted: #a7a7af;
   --ink-muted: #6b6b73;
-  --ink-subtle: #73737c;
+  --ink-subtle: #6b6b73;
+  --line: color-mix(in srgb, var(--ink) 14%, transparent);
+  --line-hover: color-mix(in srgb, var(--ink) 24%, transparent);
   --accent: #f5b429;
   --accent-hover: #e0a21c;
   --accent-soft: #fff6dc;
@@ -25,7 +27,7 @@
   --success-soft: #eaf8f2;
   --header-height: 4rem;
   --header-height-lg: 4.5rem;
-  --tab-bar-height: 4.5rem;
+  --tab-bar-height: 5rem;
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --danger: #dc2626;
   --danger-soft: #fef0f0;
@@ -48,8 +50,8 @@
   --text-nav: 0.9375rem;
   --shadow-sm: 0 1px 2px color-mix(in srgb, var(--ink) 6%, transparent);
   --shadow-md:
-    0 1px 2px color-mix(in srgb, var(--ink) 5%, transparent),
-    0 12px 32px color-mix(in srgb, var(--ink) 8%, transparent);
+    0 1px 2px color-mix(in srgb, var(--ink) 6%, transparent),
+    0 6px 16px color-mix(in srgb, var(--ink) 5%, transparent);
   --shadow-lg:
     0 2px 4px color-mix(in srgb, var(--ink) 6%, transparent),
     0 24px 64px color-mix(in srgb, var(--ink) 12%, transparent);
@@ -257,19 +259,17 @@ textarea {
     width: max-content;
   }
 
-  @media (min-width: 768px) {
-    .benefit-track {
-      animation: benefit-marquee 45s linear infinite;
-    }
+  .benefit-track {
+    animation: benefit-marquee 45s linear infinite;
+  }
 
-    [dir="rtl"] .benefit-track {
-      animation-name: benefit-marquee-rtl;
-    }
+  [dir="rtl"] .benefit-track {
+    animation-name: benefit-marquee-rtl;
   }
 
   .benefit-marquee-region:hover .benefit-track,
   .benefit-marquee-region:focus-within .benefit-track,
-  [data-paused] .benefit-track {
+  .benefit-marquee-region:active .benefit-track {
     animation-play-state: paused;
   }
 

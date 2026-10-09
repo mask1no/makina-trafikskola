@@ -32,7 +32,7 @@ describe("benefitItems", () => {
     ]);
   });
 
-  it("adds a priced test lesson, risk and guarantee only from real products", () => {
+  it("adds risk and guarantee only from real products and never a test lesson", () => {
     const items = benefitItems({
       bookingEnabled: true,
       hasRiskCourse: false,
@@ -43,10 +43,7 @@ describe("benefitItems", () => {
         { kind: "GUARANTEE", priceOre: 2, includesRisk1: false, includesRisk2: false },
       ],
     });
-    expect(items.find((item) => item.id === "testLesson")).toMatchObject({
-      size: "lg",
-      priceOre: 50000,
-    });
+    expect(items.map((item) => item.id).join(" ")).not.toContain("testLesson");
     expect(items.map((item) => item.id)).toContain("risk");
     expect(items.map((item) => item.id)).toContain("guarantee");
     expect(items.slice(-3).map((item) => item.id)).toEqual([
