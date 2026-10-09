@@ -6,6 +6,9 @@ import { Notice } from "@/components/Notice";
 import { PageHeader } from "@/components/PageHeader";
 import { StatCard } from "@/components/StatCard";
 
+import { theoryNavVisible } from "@/lib/launch";
+import { redirect } from "next/navigation";
+
 import { requireStudent } from "../_lib";
 
 export const dynamic = "force-dynamic";
@@ -16,6 +19,7 @@ export default async function TheoryPage(
   }
 ) {
   const params = await props.params;
+  if (!theoryNavVisible()) redirect(`/${params.locale}/mina-sidor`);
   const studentId = await requireStudent(params.locale);
   const now = new Date();
   const [t, access, attempts, correct] = await Promise.all([

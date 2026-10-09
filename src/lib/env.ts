@@ -27,7 +27,7 @@ const requiredProductionEnvironment = z.object({
 const optionalFeatureGroups = [
   {
     feature: "Google Maps and pickup autocomplete",
-    variables: ["GOOGLE_MAPS_BROWSER_KEY"],
+    variables: ["GOOGLE_MAPS_BROWSER_KEY", "GOOGLE_MAPS_MAP_ID"],
   },
   {
     feature: "Google Calendar sync",

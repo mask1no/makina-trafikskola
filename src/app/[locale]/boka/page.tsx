@@ -9,6 +9,7 @@ import { googleSignInEnabled } from "@/lib/auth/google";
 import { googleMapsBrowserConfig } from "@/lib/maps/config";
 import { isLocale } from "@/i18n/routing";
 import { db } from "@/lib/db";
+import { formatPrice } from "@/lib/pricing/format";
 import { bookingEnabled } from "@/lib/launch";
 import { notFound } from "next/navigation";
 import { orderedTeacherIds } from "@/lib/teachers/query";
@@ -52,19 +53,21 @@ export default async function BookingPage(
       : undefined;
   const [products, locations, orderedIds] = await Promise.all([
     db.product.findMany({
-      where: { kind: "SINGLE_LESSON", active: true },
+      where: { active: true, kind: { in: ["SINGLE_LESSON", "PACKAGE"] } },
       orderBy: { sortOrder: "asc" },
       include: { translations: true },
     }),
     db.location.findMany({
-      where: { active: true },
       orderBy: { name: "asc" },
       select: {
         id: true,
         name: true,
-        address: true,
+        city: true,
+        status: true,
+        officeAddress: true,
         lat: true,
         lng: true,
+        boundary: true,
       },
     }),
     orderedTeacherIds({ languages: preferredLanguages }),
@@ -75,6 +78,7 @@ export default async function BookingPage(
       select: {
         id: true,
         languages: true,
+        transmissions: true,
         user: { select: { firstName: true, lastName: true } },
         locations: { select: { locationId: true } },
       },
@@ -86,22 +90,31 @@ export default async function BookingPage(
     return teacher ? [teacher] : [];
   });
 
-  const localizedProducts = products.flatMap((product) => {
+  const localized = products.flatMap((product) => {
     const translation =
       product.translations.find((item) => item.locale === params.locale) ??
       product.translations.find((item) => item.locale === "sv") ??
       product.translations[0];
     if (!translation) return [];
-    return [
-      {
-        id: product.id,
-        kind: product.kind as "SINGLE_LESSON" | "TEST_LESSON",
-        active: product.active,
-        lessonMinutes: product.lessonMinutes,
-        name: translation.name,
-      },
-    ];
+    return [{ product, name: translation.name }];
   });
+  const localizedProducts = localized
+    .filter((item) => item.product.kind === "SINGLE_LESSON")
+    .map((item) => ({
+      id: item.product.id,
+      kind: "SINGLE_LESSON" as const,
+      active: item.product.active,
+      lessonMinutes: item.product.lessonMinutes,
+      name: item.name,
+      priceLabel: formatPrice(item.product.priceOre, params.locale),
+    }));
+  const packages = localized
+    .filter((item) => item.product.kind === "PACKAGE")
+    .map((item) => ({
+      name: item.name,
+      priceLabel: formatPrice(item.product.priceOre, params.locale),
+      href: `/${params.locale}/paket/${item.product.slug}`,
+    }));
   const initialTeacherId = teachers.some(
     (teacher) => teacher.id === searchParams.teacher,
   )
@@ -113,11 +126,17 @@ export default async function BookingPage(
       <BookingFlow
         locale={params.locale}
         products={localizedProducts}
-        locations={locations}
+        packages={packages}
+        locations={locations.map((location) => ({
+          ...location,
+          status: location.status,
+          boundary: location.boundary,
+        }))}
         teachers={teachers.map((teacher) => ({
           id: teacher.id,
           name: `${teacher.user.firstName} ${teacher.user.lastName}`,
           languages: teacher.languages,
+          transmissions: teacher.transmissions,
           locationIds: teacher.locations.map((item) => item.locationId),
           markers: teacher.locations.map(({ locationId }) => {
             const location = locations.find((item) => item.id === locationId);
@@ -133,7 +152,6 @@ export default async function BookingPage(
         }
         cancellationWindowHours={configuredCancellationHours()}
         mapApiKey={mapsConfig.apiKey}
-        mapId={mapsConfig.mapId}
       />
       <QuestionsBlock
         title={shell("questions")}

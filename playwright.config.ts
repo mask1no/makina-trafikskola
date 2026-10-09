@@ -33,12 +33,24 @@ export default defineConfig({
     env: {
       ...process.env,
       AUTH_URL: "http://localhost:3100",
+      AUTH_SECRET:
+        process.env.AUTH_SECRET?.trim() ||
+        "e2e-only-auth-secret-e2e-only-auth-secret",
+      NEXT_PUBLIC_SITE_URL:
+        process.env.NEXT_PUBLIC_SITE_URL?.trim() || "http://localhost:3100",
+      STRIPE_SECRET_KEY:
+        process.env.STRIPE_SECRET_KEY?.trim() || "sk_test_e2e_placeholder",
+      STRIPE_WEBHOOK_SECRET:
+        process.env.STRIPE_WEBHOOK_SECRET?.trim() || "whsec_e2e_placeholder",
+      ELKS_API_USERNAME: process.env.ELKS_API_USERNAME?.trim() || "e2e",
+      ELKS_API_PASSWORD:
+        process.env.ELKS_API_PASSWORD?.trim() || "e2e-password",
       BOOKING_ENABLED: process.env.TEST_BOOKING_ENABLED ?? "1",
       INSTRUCTORS_ENABLED: process.env.TEST_INSTRUCTORS_ENABLED ?? "1",
-      CRON_SECRET: process.env.CRON_SECRET ?? "e2e-cron-secret",
-      AUTH_GOOGLE_ID: process.env.AUTH_GOOGLE_ID ?? "e2e-google-client-id",
+      CRON_SECRET: process.env.CRON_SECRET?.trim() || "e2e-cron-secret",
+      AUTH_GOOGLE_ID: process.env.AUTH_GOOGLE_ID?.trim() || "e2e-google-client-id",
       AUTH_GOOGLE_SECRET:
-        process.env.AUTH_GOOGLE_SECRET ?? "e2e-google-client-secret",
+        process.env.AUTH_GOOGLE_SECRET?.trim() || "e2e-google-client-secret",
     },
     reuseExistingServer: false,
     timeout: 120_000,

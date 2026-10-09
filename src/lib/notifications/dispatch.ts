@@ -3,7 +3,7 @@ import { z } from "zod";
 import {
   renderBookingMessage,
   type BookingTemplate,
-} from "@/emails/booking";
+} from "@/lib/notifications/templates/booking";
 import {
   courseRebookingPayloadSchema,
   lessonRebookingPayloadSchema,
@@ -13,7 +13,7 @@ import {
   renderLessonRebooking,
   renderOrderReceipt,
   renderPaymentFailed,
-} from "@/emails/payment";
+} from "@/lib/notifications/templates/payment";
 import { db } from "@/lib/db";
 import { sendSms } from "@/lib/notifications/senders";
 

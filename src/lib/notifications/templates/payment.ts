@@ -1,6 +1,8 @@
 import { z } from "zod";
 
-import { formatPrice } from "../lib/pricing/format";
+import { isLocale } from "@/i18n/routing";
+
+import { formatPrice } from "@/lib/pricing/format";
 
 const receiptItemSchema = z
   .object({
@@ -189,20 +191,7 @@ const copy: Record<SupportedLocale, PaymentCopy> = {
 };
 
 function supportedLocale(locale: string): SupportedLocale {
-  return locale in copy ? (locale as SupportedLocale) : "sv";
-}
-
-function escapeHtml(value: string) {
-  return value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-}
-
-function wrapHtml(locale: SupportedLocale, body: string) {
-  return `<div dir="${locale === "ar" ? "rtl" : "ltr"}">${body}</div>`;
+  return isLocale(locale) ? locale : "sv";
 }
 
 export function renderOrderReceipt(input: {
@@ -228,21 +217,8 @@ export function renderOrderReceipt(input: {
       ? ["", `${message.viewOrder}: ${payload.statusUrl}`]
       : []),
   ].join("\n");
-  const itemsHtml = payload.items
-    .map(
-      (item) =>
-        `<li><strong>${escapeHtml(item.productName)}</strong><br>${escapeHtml(message.quantity(item.quantity))}</li>`,
-    )
-    .join("");
 
-  return {
-    subject: message.receiptSubject,
-    text,
-    html: wrapHtml(
-      locale,
-      `<h1>${escapeHtml(message.receiptTitle)}</h1><ul>${itemsHtml}</ul><p><strong>${escapeHtml(message.total)}:</strong> ${escapeHtml(total)}</p><p><strong>${escapeHtml(message.vat)}:</strong> ${escapeHtml(vat)}</p>${payload.statusUrl ? `<p><a href="${escapeHtml(payload.statusUrl)}">${escapeHtml(message.viewOrder)}</a></p>` : ""}`,
-    ),
-  };
+  return { text };
 }
 
 export function renderPaymentFailed(input: {
@@ -260,14 +236,7 @@ export function renderPaymentFailed(input: {
     `${message.resume}: ${payload.resumeUrl}`,
   ].join("\n");
 
-  return {
-    subject: message.failedSubject,
-    text,
-    html: wrapHtml(
-      locale,
-      `<h1>${escapeHtml(message.failedTitle)}</h1><p>${escapeHtml(message.failedBody)}</p><p><a href="${escapeHtml(payload.resumeUrl)}">${escapeHtml(message.resume)}</a></p>`,
-    ),
-  };
+  return { text };
 }
 
 export function renderCourseRebooking(input: {
@@ -278,7 +247,6 @@ export function renderCourseRebooking(input: {
   const payload = courseRebookingPayloadSchema.parse(input.payload);
   const message = copy[locale];
   return {
-    subject: message.courseRebookingSubject,
     text: [
       message.courseRebookingTitle,
       "",
@@ -286,10 +254,6 @@ export function renderCourseRebooking(input: {
       "",
       `${message.chooseCourse}: ${payload.coursesUrl}`,
     ].join("\n"),
-    html: wrapHtml(
-      locale,
-      `<h1>${escapeHtml(message.courseRebookingTitle)}</h1><p>${escapeHtml(message.courseRebookingBody)}</p><p><a href="${escapeHtml(payload.coursesUrl)}">${escapeHtml(message.chooseCourse)}</a></p>`,
-    ),
   };
 }
 
@@ -301,7 +265,6 @@ export function renderLessonRebooking(input: {
   const payload = lessonRebookingPayloadSchema.parse(input.payload);
   const message = copy[locale];
   return {
-    subject: message.lessonRebookingSubject,
     text: [
       message.lessonRebookingTitle,
       "",
@@ -309,9 +272,5 @@ export function renderLessonRebooking(input: {
       "",
       `${message.chooseLesson}: ${payload.bookingUrl}`,
     ].join("\n"),
-    html: wrapHtml(
-      locale,
-      `<h1>${escapeHtml(message.lessonRebookingTitle)}</h1><p>${escapeHtml(message.lessonRebookingBody)}</p><p><a href="${escapeHtml(payload.bookingUrl)}">${escapeHtml(message.chooseLesson)}</a></p>`,
-    ),
   };
 }

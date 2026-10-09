@@ -68,14 +68,16 @@ test.describe("marketing layout", () => {
     await expect.poll(() => googleRequests.length).toBeGreaterThan(0);
   });
 
-  test("marquee copy is hidden and pause toggles", async ({ page }) => {
+  test("marquee copy is hidden and has no pause control", async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 800 });
     await page.goto("/sv");
     const copy = page.locator(".benefit-copy");
     await expect(copy.first()).toHaveAttribute("aria-hidden", "true");
-    const pause = page.getByRole("button", { name: "Pausa" });
-    await pause.click();
-    await expect(page.getByRole("button", { name: "Spela" })).toHaveAttribute("aria-pressed", "true");
+    await expect(page.getByRole("button", { name: "Pausa" })).toHaveCount(0);
+    const animation = await page.locator(".benefit-track").first().evaluate((node) =>
+      getComputedStyle(node).animationName,
+    );
+    expect(animation).toContain("benefit-marquee");
   });
 
   test("reduced motion does not animate the marquee", async ({ page }) => {
@@ -91,31 +93,29 @@ test.describe("marketing layout", () => {
     ).toBe("none");
   });
 
-  test("mobile benefits are a static five-card snap row", async ({ page }) => {
+  test("mobile benefits keep running", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("/sv");
-    await expect(page.locator(".benefit-mobile li")).toHaveCount(5);
-    await expect(page.locator(".benefit-mobile")).toHaveCSS(
-      "scroll-snap-type",
-      /x/,
+    const animation = await page.locator(".benefit-track").first().evaluate((node) =>
+      getComputedStyle(node).animationName,
     );
-    await expect(page.locator(".benefit-track")).toBeHidden();
+    expect(animation).toContain("benefit-marquee");
+    await expect(page.locator(".benefit-copy").first()).toHaveAttribute("aria-hidden", "true");
   });
 
   test("shows confirmed teaching languages and does not claim Arabic or Somali lessons", async ({ page }) => {
     await page.goto("/sv/kontakt");
     await expect(page.getByText(/^Undervisar på /)).toHaveCount(6);
     const contact = await page.locator("body").innerText();
-    expect(contact).toContain("Kontakta oss på Svenska, English, ትግርኛ och Kurdiska.");
-    expect(contact).toContain("Soomaali kommer snart.");
+    expect(contact).toContain("Kontakta oss på svenska, engelska, tigrinja och kurdiska.");
+    expect(contact).toContain("somaliska kommer snart.");
     expect(contact).not.toMatch(/arabiska/i);
     expect(contact).not.toMatch(/undervisning på somaliska/i);
 
     await page.goto("/sv");
     const home = await page.locator("body").innerText();
-    expect(home).toContain("Kontakta oss på Svenska, English, ትግርኛ och Kurdiska.");
-    expect(home).not.toMatch(/arabiska/i);
-    expect(home).toContain("Soomaali kommer snart.");
+    expect(home).toContain("Kontakta oss på svenska, engelska, tigrinja och kurdiska.");
+    expect(home).toContain("somaliska kommer snart.");
     expect(home).not.toMatch(/undervisning på somaliska/i);
 
     const prefixes = {

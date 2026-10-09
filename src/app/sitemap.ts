@@ -7,6 +7,7 @@ import { instructorsEnabled, theoryNavVisible, theorySalesOpen } from "@/lib/lau
 const staticPaths = [
   "",
   "/korlektioner",
+  "/priser",
   "/kurser",
   "/teori",
   "/kontakt",

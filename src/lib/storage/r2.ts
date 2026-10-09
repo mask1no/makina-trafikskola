@@ -82,3 +82,26 @@ export async function uploadInstructorImage(file: File) {
     url: `${config.publicUrl.replace(/\/$/, "")}/${key}`,
   };
 }
+
+export async function uploadInstructorBytes(image: Buffer) {
+  const config = configuration();
+  const key = `instructors/${randomUUID()}.webp`;
+  const client = new S3Client({
+    region: "auto",
+    endpoint: `https://${config.accountId}.r2.cloudflarestorage.com`,
+    credentials: {
+      accessKeyId: config.accessKeyId,
+      secretAccessKey: config.secretAccessKey,
+    },
+  });
+  await client.send(
+    new PutObjectCommand({
+      Bucket: config.bucket,
+      Key: key,
+      Body: image,
+      ContentType: "image/webp",
+      CacheControl: "public, max-age=31536000, immutable",
+    }),
+  );
+  return `${config.publicUrl.replace(/\/$/, "")}/${key}`;
+}

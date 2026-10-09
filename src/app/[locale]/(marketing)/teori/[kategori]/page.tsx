@@ -1,11 +1,12 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 import { auth } from "@/auth";
 import { EmptyState } from "@/components/EmptyState";
 import { PageHeader } from "@/components/PageHeader";
 import { isLocale } from "@/i18n/routing";
 import { db } from "@/lib/db";
+import { theoryMode } from "@/lib/launch";
 import { hasTheoryAccess, presentQuestion } from "@/lib/theory/access";
 
 import { StudyQuiz } from "./StudyQuiz";
@@ -19,6 +20,7 @@ export default async function TeoriKategoriPage(
 ) {
   const params = await props.params;
   if (!isLocale(params.locale)) notFound();
+  if (theoryMode() === "off") redirect(`/${params.locale}/teori`);
   setRequestLocale(params.locale);
   const session = await auth();
   const now = new Date();

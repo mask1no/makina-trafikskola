@@ -86,7 +86,12 @@
     "pause": "ጠጠው",
     "play": "ኣጫውት",
     "fromPrice": "ካብ {price}",
-    "legal": "ሕጋዊ"
+    "legal": "ሕጋዊ",
+    "appStore": "App Store",
+    "googlePlay": "Google Play",
+    "instagram": "Instagram",
+    "facebook": "Facebook",
+    "tiktok": "TikTok"
   },
   "common": {
     "bookNow": "ሕጂ ሓዝ",
@@ -198,7 +203,7 @@
       },
       "pickup": {
         "title": "ምልዓል",
-        "body": "ምልዓል ብስምምዕ።"
+        "body": "ምውሳድ ኣብ ውሽጢ ፋርስታን ኡፕላንድስ ቬስቢን ነጻ እዩ።"
       },
       "lesson": {
         "title": "50 ደቒቕ",
@@ -253,7 +258,7 @@
       "label": "ጉጅለ ፍርያት",
       "single": {
         "title": "ንጽል ትምህርቲ",
-        "intro": "ሓደ ትምህርቲ ምዝዋር ወይ ናይ ፈተና ትምህርቲ."
+        "intro": "ሓደ ትምህርቲ ምዝዋር."
       },
       "packages": {
         "title": "ጥቕላታት",
@@ -272,7 +277,7 @@
         "intro": "ዲጂታል ቴዎሪ ብዘይ ግዜ ገደብ."
       }
     },
-    "testCallout": "እንታይ ከም እትደሊ ዘይርጉጽ? ብናይ ፈተና ትምህርቲ ጀምር."
+    "testCallout": "እንታይ ከም እትደሊ ዘይርጉጽ? ደውሉና ክንሕግዘኩም።"
   },
   "product": {
     "popular": "ዝያዳ ዝምረጽ",
@@ -364,7 +369,8 @@
     "languages": "ቋንቋታት",
     "transmissions": "ዓይነት መኪና",
     "locations": "ቦታታት",
-    "bookWith": "ምስ {name} ሓዝ"
+    "bookWith": "ምስ {name} ሓዝ",
+    "nextFree": "ዝቕጽል ናጻ ሰዓት"
   },
   "map": {
     "title": "ካርታ መምህራን",
@@ -480,7 +486,8 @@
       "failed": "ኣይሓለፈን",
       "error": "ፈተና ክሕደስ ኣይከኣለን። ደጊምካ ፈትን።",
       "imageMissing": "እቲ ስእሊ ክረአ ኣይከኣለን።"
-    }
+    },
+    "practiceAll": "ኩሉ {count} ሕቶታት ለመን"
   },
   "localSchool": {
     "eyebrow": "ኣብ ቀረባኻ ቤት ትምህርቲ ምዝዋር",
@@ -540,6 +547,41 @@
         "loading": "ክፉት ግዜታት ይጽዓኑ ኣለዉ…",
         "emptyTitle": "ኣብዚ መዓልቲ ግዜ የለን",
         "empty": "ተወሳኺ ክፉት ግዜ ንምርኣይ ካልእ መዓልቲ ምረጽ።"
+      },
+      "area": {
+        "short": "ከተማ",
+        "title": "ኣበይ ክትዝውር ትደሊ?",
+        "comingSoon": "ኣብ ቀረባ"
+      },
+      "pickup": {
+        "short": "ምውሳድ",
+        "title": "ኣበይ ክንወስደካ?",
+        "free": "ምውሳድ ኣብ ውሽጢ እቲ ዞባ ነጻ እዩ።",
+        "office": "ኣብ ቤት ጽሕፈት ተራኸቡና",
+        "address": "ኣድራሻ ምውሳድ",
+        "outside": "እቲ ኣድራሻ ካብ ዞባ ወጻኢ እዩ። ኣብ ውሽጢ ዞባ ዝርከብ ኣድራሻ ምረጽ።",
+        "outline": "ዞባ ምውሳድ"
+      },
+      "gearbox": {
+        "short": "ማርሽ",
+        "title": "ማንዋል ወይ ኣውቶማቲክ?",
+        "manual": "ማንዋል",
+        "automatic": "ኣውቶማቲክ"
+      },
+      "schedule": {
+        "short": "ሰዓት",
+        "title": "መምህራንን ሰዓታትን",
+        "next": "ዝቕጽል ናጻ ሰዓት",
+        "week": "ሰሙን",
+        "empty": "ኣብዚ ሰሙን ናጻ ሰዓት የለን። ካልእ መምህር ወይ ማርሽ ምረጽ።",
+        "loading": "ናጻ ሰዓታት ይጽዕን ኣሎ…"
+      },
+      "pay": {
+        "short": "ክፈል",
+        "title": "ትምህርቲ ክፈል",
+        "single": "ሓደ ትምህርቲ ምዝዋር",
+        "packageTitle": "ብጥቕላ ዓቅብ",
+        "packageBody": "ጥቕላ ብሓደ ትምህርቲ ዝሓተ ዋጋ እዩ። ኣብ ዝኾነ እዋን ክትገዝኦ ትኽእል።"
       }
     },
     "account": {
@@ -663,7 +705,11 @@
       "title": "ቁጽሪ ሞባይል ኣረጋግጽ",
       "description": "ንኮድን መዘኻኸሪን ስዊድናዊ ቁጽሪ ሞባይል የድሊ። እቲ ቁጽሪ ናይ ካልእ ሕሳብ እንተኾይኑ Google ናብቲ ሕሳብ ይተሓሓዝ።",
       "submit": "ቁጽሪ ኣረጋግጽ"
-    }
+    },
+    "phoneInvalid": "ናይ ስዊድን ሞባይል ቁጽሪ ጽሓፍ፣ ቅድሚ-ዜሮ ምስ ዘለዎ ወይ ዘይብሉ።",
+    "phoneValid": "ቁጽሪ ቅኑዕ ይመስል።",
+    "emailInvalid": "ኢመይል ጽሓፍ፣ ንኣብነት name@example.com።",
+    "emailValid": "ኢመይል ቅኑዕ ይመስል።"
   },
   "student": {
     "nav": {
@@ -1312,7 +1358,7 @@
   "errors": {
     "pageTitle": "ቴክኒካዊ ጸገም ኣጋጢሙ",
     "retry": "ደጊምካ ፈትን",
-    "NO_CREDITS": "ናይ ፓኬጅ ክሬዲት የብልካን። ዝኽፈል ሓደ ወይ ናይ ፈተነ ትምህርቲ ምረጽ።",
+    "NO_CREDITS": "ናይ ፓኬጅ ክሬዲት የብልካን። ዝኽፈል ሓደ ትምህርቲ ምረጽ።",
     "CHECKOUT_CONSENT_REQUIRED": "ቅድሚ ምቕጻል ውዕል ዕድጊን መሰል ምስራዝን ተሰማማዕ።",
     "INVALID_PICKUP_COORDINATES": "ኣብ ሽወደን ቅኑዕ ናይ ምውሳድ ኣድራሻ ምረጽ።",
     "TEACHER_HAS_FUTURE_BOOKINGS": "ቅድሚ መምህር ምብዛን ዝመጹ ቦታ ምሓዝ ቀይር ወይ ሰርዝ።",
@@ -1366,7 +1412,9 @@
     "notFoundDescription": "ኣድራሻ ቅኑዕ ኣይኮነን። ናብ ቀዳማይ ገጽ፣ ትምህርቲ ምዝዋር፣ መምህራን ወይ ቦታ ምሓዝ ኪድ።",
     "forbiddenTitle": "ፍቓድ የብልካን",
     "forbiddenDescription": "እዚ ገጽ ንኻልእ ሓላፍነት እዩ። ናብ ቀዳማይ ገጽ ወይ ናብ ገጻትካ ኪድ።",
-    "forbiddenDashboard": "ናብ ገጻተይ"
+    "forbiddenDashboard": "ናብ ገጻተይ",
+    "OUTSIDE_PICKUP_AREA": "እቲ ኣድራሻ ካብ ዞባ ምውሳድ ወጻኢ እዩ። ኣብ ውሽጢ ዞባ ዝርከብ ኣድራሻ ምረጽ።",
+    "AREA_UNAVAILABLE": "እቲ ዞባ ንቦታ ምሓዝ ኣይተኸፍተን። ፋርስታ ወይ ኡፕላንድስ ቬስቢ ምረጽ።"
   },
   "contact": {
     "metadata": "ናይ ማኪና ትራፊክስኮላ ኣድራሻን ርክብን ኣብ ስቶኮልም።",
@@ -1407,6 +1455,8 @@
       "5": "ዓርቢ",
       "6": "ቀዳም"
     },
-    "speaks": "ብ{languages} የምህር"
+    "speaks": "ብ{languages} የምህር",
+    "emailUs": "ኢመይል ግበሩልና",
+    "replyLine": "ኣብ ሓደ መዓልቲ ስራሕ ንምልስ።"
   }
 }

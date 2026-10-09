@@ -1,12 +1,5 @@
-import { Pulse } from "@/components/Pulse";
+import { PageSkeleton } from "@/components/PageSkeleton";
 
-export default function CheckoutLoading() {
-  return (
-    <div className="section-shell" aria-hidden="true">
-      <div className="site-container max-w-xl">
-        <Pulse className="h-8 w-48" />
-        <Pulse className="mt-6 h-64 w-full" />
-      </div>
-    </div>
-  );
+export default function Loading() {
+  return <PageSkeleton />;
 }

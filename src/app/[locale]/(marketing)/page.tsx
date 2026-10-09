@@ -113,13 +113,13 @@ async function HomeHero({ locale }: { locale: Locale }) {
               variant="secondary-inverse"
               size="lg"
               className="w-full md:w-auto"
-              href={`/${locale}/korlektioner`}
+              href={`/${locale}/priser`}
             >
               {t("shell.seePrices")}
             </LinkButton>
           </div>
         </div>
-        <aside className="hidden rounded-lg border border-ink-inverse/15 bg-surface-raised p-6 text-ink-inverse lg:block">
+        <aside className="rounded-lg border border-ink-inverse/15 bg-surface-raised p-6 text-ink-inverse">
           <Suspense fallback={null}>
             <LowestSinglePrice locale={locale} />
           </Suspense>
@@ -173,19 +173,18 @@ async function HomeBelow({
   const offeredLanguageNames = formatLanguageList(
     offeredLanguages,
     params.locale,
-    (code) => t(`language.${code}`),
+    (code) => t(`shell.languagePage.${code}`),
   );
   const comingSoonLanguageNames = formatLanguageList(
     COMING_SOON_TEACHING_LANGUAGES,
     params.locale,
-    (code) => t(`language.${code}`),
+    (code) => t(`shell.languagePage.${code}`),
   );
   const canBook = bookingEnabled();
   const showInstructors = instructorsEnabled() && teachers.length > 0;
   const singleLessons = products
     .filter((product) => product.kind === "SINGLE_LESSON")
     .sort((a, b) => a.priceOre - b.priceOre);
-  const testLesson = products.find((product) => product.kind === "TEST_LESSON");
   const popular =
     products.find((product) => Boolean(product.badge)) ??
     products
@@ -196,7 +195,7 @@ async function HomeBelow({
             (product.includesTheory || product.includesRisk1 || product.includesRisk2)),
       )
       .sort((a, b) => a.priceOre - b.priceOre)[0];
-  const featuredProducts = [singleLessons[0], testLesson, popular].filter(
+  const featuredProducts = [singleLessons[0], popular].filter(
     (product, index, list): product is NonNullable<typeof product> =>
       Boolean(product) && list.findIndex((item) => item?.id === product?.id) === index,
   );
@@ -251,7 +250,7 @@ async function HomeBelow({
       title: `${teacher.user.firstName} ${teacher.user.lastName}`,
       position: { lat: location.lat, lng: location.lng },
       photoUrl: teacher.photoUrl,
-      languages: teacher.languages.map((language) => t(`language.${language}`)),
+      languages: teacher.languages.map((language) => t(`shell.languagePage.${language}`)),
       transmission: teacher.transmissions
         .map((item) => t(`teacher.transmission.${item.toLowerCase()}`))
         .join(", "),
@@ -340,7 +339,7 @@ async function HomeBelow({
         />
       ) : null}
 
-      <div className="relative z-20 bg-page pb-8 lg:-mt-8">
+      <div className="relative z-20 mt-6 bg-page lg:mt-8">
         <BenefitMarquee
           label={t("home.benefits.label")}
           items={benefitCards}
@@ -363,7 +362,7 @@ async function HomeBelow({
                 lang={language}
                 className="inline-flex min-h-11 items-center border-b-2 border-transparent px-1 text-base font-bold transition hover:border-ink"
               >
-                {t(`language.${language}`)}
+                {t(`shell.languagePage.${language}`)}
               </Link>
             ))}
           </nav>
@@ -376,7 +375,7 @@ async function HomeBelow({
                   slug={teacher.slug}
                   name={`${teacher.user.firstName} ${teacher.user.lastName}`}
                   photoUrl={teacher.photoUrl}
-                  languages={teacher.languages.map((language) => t(`language.${language}`))}
+                  languages={teacher.languages.map((language) => t(`shell.languagePage.${language}`))}
                   transmissions={teacher.transmissions.map((transmission) =>
                     t(`teacher.transmission.${transmission.toLowerCase()}`),
                   )}
@@ -421,7 +420,7 @@ async function HomeBelow({
                   className="group relative min-h-[22rem] overflow-hidden bg-surface text-ink-inverse"
                   aria-label={t("map.homeTeaserCta")}
                 >
-                  <StaticMapArtwork className="absolute inset-0 size-full transition duration-700 ease-premium group-hover:scale-105" />
+                  <StaticMapArtwork className="absolute inset-0 size-full" />
                   <div className="absolute inset-0 bg-[linear-gradient(180deg,color-mix(in_srgb,var(--surface)_5%,transparent)_0%,var(--surface)_92%)]" />
                 </Link>
               )}

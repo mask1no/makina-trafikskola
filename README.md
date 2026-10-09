@@ -10,7 +10,7 @@ Next.js App Router, React server components, and a client leaf only where the sc
 
 Business rules live in `src/lib` and take `now: Date` when time matters. Prices are integer öre. Times are stored in UTC and shown in Europe/Stockholm with Latin digits.
 
-Notifications are queued, rendered from `src/emails`, and sent by 46elks. `/api/cron/core` runs the queue, reminders and credit expiry. The Stripe webhook reads the raw body, checks the signature, and inserts `StripeEvent` before it fulfils an order.
+Notifications are queued, rendered from `src/lib/notifications/templates`, and sent by 46elks. `/api/cron/core` runs the queue, reminders and credit expiry. The Stripe webhook reads the raw body, checks the signature, and inserts `StripeEvent` before it fulfils an order.
 
 ## Local setup
 
@@ -79,6 +79,8 @@ Also used:
 | `npm run test:e2e` | Seed, build, Playwright |
 | `npm run screenshots` | Full-page screenshots for launch review (`SCREENSHOTS=1`) |
 | `npm run launch:check` | Read-only production dependency and configuration checks |
+| `npm run admin:grant -- --email name@makina.se` | Create or upgrade an admin. Password is typed, not printed |
+| `npm run client:check` / `npm run client:apply` | Validate and import `client-data/` |
 | `npm run i18n:export` | Export all locale strings to an Excel-compatible review CSV |
 | `npm run theory:import` | Import the question bank |
 | `npm run backup:db` / `npm run verify:restore` | Backup to R2 and test a restore |
@@ -106,7 +108,7 @@ Backups upload a `pg_dump` to the R2 backup bucket. `npm run verify:restore` che
 
 ## Railway variables
 
-Sync production Railway variables from `.env.production.local` only:
+Sync production Railway variables from `.env.railway` only:
 
 ```bash
 npm run env:railway:check

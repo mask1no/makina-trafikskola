@@ -86,7 +86,12 @@
     "pause": "Pause",
     "play": "Play",
     "fromPrice": "From {price}",
-    "legal": "Legal"
+    "legal": "Legal",
+    "appStore": "App Store",
+    "googlePlay": "Google Play",
+    "instagram": "Instagram",
+    "facebook": "Facebook",
+    "tiktok": "TikTok"
   },
   "common": {
     "bookNow": "Book now",
@@ -198,7 +203,7 @@
       },
       "pickup": {
         "title": "Pickup",
-        "body": "Pickup by arrangement."
+        "body": "Pickup is free inside the Farsta and Upplands Väsby areas."
       },
       "lesson": {
         "title": "50 minutes",
@@ -253,7 +258,7 @@
       "label": "Product groups",
       "single": {
         "title": "Single lessons",
-        "intro": "One driving lesson or a test lesson."
+        "intro": "One driving lesson."
       },
       "packages": {
         "title": "Packages",
@@ -272,7 +277,7 @@
         "intro": "Digital theory with no time limit."
       }
     },
-    "testCallout": "Not sure what you need? Start with a test lesson."
+    "testCallout": "Not sure what you need? Call us and we will help you choose."
   },
   "product": {
     "popular": "Most popular",
@@ -364,7 +369,8 @@
     "languages": "Languages",
     "transmissions": "Transmission",
     "locations": "Locations",
-    "bookWith": "Book with {name}"
+    "bookWith": "Book with {name}",
+    "nextFree": "Next free time"
   },
   "map": {
     "title": "Instructor map",
@@ -480,7 +486,8 @@
       "failed": "Not passed",
       "error": "The exam could not be updated. Try again.",
       "imageMissing": "The image could not be displayed."
-    }
+    },
+    "practiceAll": "Practise all {count} questions"
   },
   "localSchool": {
     "eyebrow": "Driving school near you",
@@ -540,6 +547,41 @@
         "loading": "Loading available times…",
         "emptyTitle": "No times on this day",
         "empty": "Choose another day to see more available times."
+      },
+      "area": {
+        "short": "Town",
+        "title": "Where do you want to drive?",
+        "comingSoon": "Coming soon"
+      },
+      "pickup": {
+        "short": "Pickup",
+        "title": "Where should we pick you up?",
+        "free": "Pickup is free inside the area.",
+        "office": "Meet us at the office",
+        "address": "Pickup address",
+        "outside": "That address is outside the area. Choose an address inside the area.",
+        "outline": "Pickup area"
+      },
+      "gearbox": {
+        "short": "Gearbox",
+        "title": "Manual or automatic?",
+        "manual": "Manual",
+        "automatic": "Automatic"
+      },
+      "schedule": {
+        "short": "Time",
+        "title": "Teachers and times",
+        "next": "Next available",
+        "week": "Week",
+        "empty": "No free times this week. Choose another teacher or gearbox.",
+        "loading": "Loading free times…"
+      },
+      "pay": {
+        "short": "Pay",
+        "title": "Pay for the lesson",
+        "single": "One driving lesson",
+        "packageTitle": "Save with a package",
+        "packageBody": "A package costs less per lesson. You can buy one at any time."
       }
     },
     "account": {
@@ -663,7 +705,11 @@
       "title": "Confirm your mobile number",
       "description": "We need a Swedish mobile number for codes and reminders. If the number already belongs to an account, Google is linked to that account.",
       "submit": "Confirm number"
-    }
+    },
+    "phoneInvalid": "Enter a Swedish mobile number, with or without the leading zero.",
+    "phoneValid": "The number looks right.",
+    "emailInvalid": "Enter an email address, for example name@example.com.",
+    "emailValid": "The email address looks right."
   },
   "student": {
     "nav": {
@@ -1312,7 +1358,7 @@
   "errors": {
     "pageTitle": "We ran into a technical problem",
     "retry": "Try again",
-    "NO_CREDITS": "You have no package credits. Choose a paid single or trial lesson instead.",
+    "NO_CREDITS": "You have no package credits. Choose a paid single lesson instead.",
     "CHECKOUT_CONSENT_REQUIRED": "Accept the terms of purchase and the withdrawal information to continue.",
     "INVALID_PICKUP_COORDINATES": "Choose a valid pickup address in Sweden.",
     "INVALID_INPUT": "Check the details and try again.",
@@ -1366,7 +1412,9 @@
     "notFoundDescription": "The address is not right. Go to the home page, driving lessons, instructors or book a time.",
     "forbiddenTitle": "You do not have access",
     "forbiddenDescription": "This page is for a different role. Go to the home page or to your own pages.",
-    "forbiddenDashboard": "To my pages"
+    "forbiddenDashboard": "To my pages",
+    "OUTSIDE_PICKUP_AREA": "That address is outside the pickup area. Choose an address inside the area.",
+    "AREA_UNAVAILABLE": "That area is not open for booking yet. Choose Farsta or Upplands Väsby."
   },
   "contact": {
     "metadata": "Contact details for Makina Trafikskola in Stockholm.",
@@ -1407,6 +1455,8 @@
       "5": "Friday",
       "6": "Saturday"
     },
-    "speaks": "Teaches in {languages}"
+    "speaks": "Teaches in {languages}",
+    "emailUs": "Email us",
+    "replyLine": "We reply within one weekday."
   }
 }

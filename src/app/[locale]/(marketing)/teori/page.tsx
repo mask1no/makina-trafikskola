@@ -9,7 +9,7 @@ import { isLocale } from "@/i18n/routing";
 import { resolveContent } from "@/lib/content/fallback";
 import { db } from "@/lib/db";
 import { pageCanonical, withSocial } from "@/lib/seo/metadata";
-import { theoryMode } from "@/lib/launch";
+import { theoryMode, theorySalesOpen } from "@/lib/launch";
 import { freeTheoryQuestionCount } from "@/lib/theory/questions";
 
 export const dynamic = "force-dynamic";
@@ -120,7 +120,7 @@ export default async function TeoriPage(
                 <Link
                   key={category.id}
                   href={`/${params.locale}/teori/${category.slug}`}
-                    className="group flex min-h-52 flex-col justify-between rounded-lg border border-border bg-card p-6 shadow-card transition duration-700 ease-premium hover:-translate-y-1 hover:border-border-strong hover:shadow-float"
+                    className="group flex min-h-52 flex-col justify-between rounded-lg border border-[var(--line)] bg-card p-6 shadow-card transition duration-300 ease-premium hover:border-[var(--line-hover)]"
                 >
                     <div className="flex items-start justify-between gap-4">
                       <span className="grid size-12 place-items-center rounded-full bg-accent text-lg font-black text-accent-ink">
@@ -128,7 +128,7 @@ export default async function TeoriPage(
                       </span>
                       <span
                         aria-hidden="true"
-                        className="rtl-directional text-2xl transition duration-700 ease-premium group-hover:scale-110"
+                        className="rtl-directional text-2xl"
                       >
                         →
                       </span>
@@ -155,12 +155,16 @@ export default async function TeoriPage(
             <EmptyState title={t("emptyTitle")} description={t("emptyDescription")} />
           </div>
         )}
-        <LinkButton
-          href={`/${params.locale}/teori/prov`}
-          className="mt-8"
-        >
-          {t("examLink")}
-        </LinkButton>
+        {freeQuestionCount > 0 ? (
+          <LinkButton href={`/${params.locale}/teori/ovning`} className="mt-8">
+            {t("practiceAll", { count: freeQuestionCount })}
+          </LinkButton>
+        ) : null}
+        {theorySalesOpen() ? (
+          <LinkButton href={`/${params.locale}/teori/prov`} className="mt-4" variant="secondary">
+            {t("examLink")}
+          </LinkButton>
+        ) : null}
       </div>
     </div>
   );

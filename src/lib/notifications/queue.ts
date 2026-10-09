@@ -1,10 +1,10 @@
 import type { Prisma } from "@prisma/client";
 
-import type { BookingTemplate } from "@/emails/booking";
+import type { BookingTemplate } from "@/lib/notifications/templates/booking";
 import type {
   OrderReceiptPayload,
   PaymentFailedPayload,
-} from "@/emails/payment";
+} from "@/lib/notifications/templates/payment";
 
 type BookingPayload = {
   bookingId: string;

@@ -291,10 +291,28 @@ textarea {
     }
   }
 
+  .choice-card[data-selected="true"] {
+    background-image: linear-gradient(to right, var(--accent), var(--accent));
+    background-size: 0 100%;
+    background-repeat: no-repeat;
+    animation: choice-fill 300ms ease forwards;
+  }
+
+  @keyframes choice-fill {
+    to {
+      background-size: 100% 100%;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .hero-pan,
     .benefit-track {
       animation: none;
+    }
+
+    .choice-card[data-selected="true"] {
+      animation: none;
+      background-size: 100% 100%;
     }
 
     .benefit-copy {

@@ -86,7 +86,12 @@
     "pause": "Pausa",
     "play": "Spela",
     "fromPrice": "Från {price}",
-    "legal": "Juridiskt"
+    "legal": "Juridiskt",
+    "appStore": "App Store",
+    "googlePlay": "Google Play",
+    "instagram": "Instagram",
+    "facebook": "Facebook",
+    "tiktok": "TikTok"
   },
   "common": {
     "bookNow": "Boka nu",
@@ -198,7 +203,7 @@
       },
       "pickup": {
         "title": "Upphämtning",
-        "body": "Upphämtning efter överenskommelse."
+        "body": "Upphämtning är gratis inom Farsta och Upplands Väsby."
       },
       "lesson": {
         "title": "50 minuter",
@@ -253,7 +258,7 @@
       "label": "Produktgrupper",
       "single": {
         "title": "Enstaka lektioner",
-        "intro": "En körlektion eller en testlektion."
+        "intro": "En körlektion."
       },
       "packages": {
         "title": "Paket",
@@ -272,7 +277,7 @@
         "intro": "Digital teori utan tidsgräns."
       }
     },
-    "testCallout": "Osäker på vad du behöver? Börja med en testlektion."
+    "testCallout": "Osäker på vad du behöver? Ring oss så hjälper vi dig att välja."
   },
   "product": {
     "popular": "Populärast",
@@ -364,7 +369,8 @@
     "languages": "Språk",
     "transmissions": "Växellåda",
     "locations": "Platser",
-    "bookWith": "Boka med {name}"
+    "bookWith": "Boka med {name}",
+    "nextFree": "Nästa lediga tid"
   },
   "map": {
     "title": "Lärarkarta",
@@ -480,7 +486,8 @@
       "failed": "Inte godkänt",
       "error": "Provet kunde inte uppdateras. Försök igen.",
       "imageMissing": "Bilden kunde inte visas."
-    }
+    },
+    "practiceAll": "Öva alla {count} frågor"
   },
   "localSchool": {
     "eyebrow": "Trafikskola nära dig",
@@ -540,6 +547,41 @@
         "loading": "Hämtar lediga tider…",
         "emptyTitle": "Inga tider den här dagen",
         "empty": "Välj en annan dag för att se fler lediga tider."
+      },
+      "area": {
+        "short": "Ort",
+        "title": "Var vill du köra?",
+        "comingSoon": "Kommer snart"
+      },
+      "pickup": {
+        "short": "Hämtning",
+        "title": "Var hämtar vi dig?",
+        "free": "Upphämtning är gratis i området.",
+        "office": "Möt oss på kontoret",
+        "address": "Hämtningsadress",
+        "outside": "Adressen ligger utanför området. Välj en adress i området.",
+        "outline": "Upphämtningsområde"
+      },
+      "gearbox": {
+        "short": "Växel",
+        "title": "Manuell eller automat?",
+        "manual": "Manuell",
+        "automatic": "Automat"
+      },
+      "schedule": {
+        "short": "Tid",
+        "title": "Lärare och tider",
+        "next": "Nästa lediga",
+        "week": "Vecka",
+        "empty": "Inga lediga tider den här veckan. Välj en annan lärare eller växel.",
+        "loading": "Hämtar lediga tider…"
+      },
+      "pay": {
+        "short": "Betala",
+        "title": "Betala lektionen",
+        "single": "En körlektion",
+        "packageTitle": "Spara med paket",
+        "packageBody": "Ett paket kostar mindre per lektion. Du kan köpa det när som helst."
       }
     },
     "account": {
@@ -663,7 +705,11 @@
       "title": "Bekräfta mobilnummer",
       "description": "Vi behöver ett svenskt mobilnummer för koder och påminnelser. Om numret redan tillhör ett konto kopplas Google dit.",
       "submit": "Bekräfta nummer"
-    }
+    },
+    "phoneInvalid": "Skriv ett svenskt mobilnummer, med eller utan inledande nolla.",
+    "phoneValid": "Numret ser rätt ut.",
+    "emailInvalid": "Skriv en e-postadress, till exempel namn@exempel.se.",
+    "emailValid": "E-postadressen ser rätt ut."
   },
   "student": {
     "nav": {
@@ -943,7 +989,9 @@
       "5": "Fredag",
       "6": "Lördag"
     },
-    "speaks": "Undervisar på {languages}"
+    "speaks": "Undervisar på {languages}",
+    "emailUs": "Mejla oss",
+    "replyLine": "Vi svarar inom en vardag."
   },
   "legal": {
     "terms": {
@@ -1353,7 +1401,7 @@
   "errors": {
     "pageTitle": "Vi fick ett tekniskt problem",
     "retry": "Försök igen",
-    "NO_CREDITS": "Du har inga paketkrediter. Välj en betald enstaka lektion eller testlektion i stället.",
+    "NO_CREDITS": "Du har inga paketkrediter. Välj en betald enstaka lektion i stället.",
     "CHECKOUT_CONSENT_REQUIRED": "Godkänn köpvillkoren och ångerrätten för att fortsätta.",
     "INVALID_PICKUP_COORDINATES": "Välj en giltig hämtningsadress i Sverige.",
     "INVALID_INPUT": "Kontrollera uppgifterna och försök igen.",
@@ -1407,6 +1455,8 @@
     "notFoundDescription": "Adressen stämmer inte. Gå till startsidan, körlektioner, lärare eller boka en tid.",
     "forbiddenTitle": "Du har inte behörighet",
     "forbiddenDescription": "Den här sidan är till för en annan roll. Gå till startsidan eller till dina egna sidor.",
-    "forbiddenDashboard": "Till mina sidor"
+    "forbiddenDashboard": "Till mina sidor",
+    "OUTSIDE_PICKUP_AREA": "Adressen ligger utanför upphämtningsområdet. Välj en adress i området.",
+    "AREA_UNAVAILABLE": "Det området är inte öppet för bokning ännu. Välj Farsta eller Upplands Väsby."
   }
 }

@@ -86,7 +86,12 @@
     "pause": "Hakad",
     "play": "Ciyaar",
     "fromPrice": "Laga bilaabo {price}",
-    "legal": "Sharciga"
+    "legal": "Sharciga",
+    "appStore": "App Store",
+    "googlePlay": "Google Play",
+    "instagram": "Instagram",
+    "facebook": "Facebook",
+    "tiktok": "TikTok"
   },
   "common": {
     "bookNow": "Hadda qabso",
@@ -198,7 +203,7 @@
       },
       "pickup": {
         "title": "Soo qaadis",
-        "body": "Soo qaadis heshiis ayaa lagu sameeyaa."
+        "body": "Soo qaadistu waa bilaash gudaha aagagga Farsta iyo Upplands Väsby."
       },
       "lesson": {
         "title": "50 daqiiqo",
@@ -253,7 +258,7 @@
       "label": "Kooxaha alaabta",
       "single": {
         "title": "Casharro keli ah",
-        "intro": "Hal cashar wadista ah ama cashar tijaabo."
+        "intro": "Hal cashar oo wadista ah."
       },
       "packages": {
         "title": "Xirmooyin",
@@ -272,7 +277,7 @@
         "intro": "Teori dhijitaal ah oo aan wakhti lahayn."
       }
     },
-    "testCallout": "Ma hubo waxa aad u baahan tahay? Ku bilow cashar tijaabo."
+    "testCallout": "Ma hubo waxa aad u baahan tahay? Nala soo wac si aan kuu caawino."
   },
   "product": {
     "popular": "Ugu caansan",
@@ -364,7 +369,8 @@
     "languages": "Luqadaha",
     "transmissions": "Nooca gear-ka",
     "locations": "Goobaha",
-    "bookWith": "La qabso {name}"
+    "bookWith": "La qabso {name}",
+    "nextFree": "Waqtiga xiga ee bannaan"
   },
   "map": {
     "title": "Khariidadda macallimiinta",
@@ -480,7 +486,8 @@
       "failed": "Ma gudbin",
       "error": "Imtixaanka lama cusboonaysiin karin. Mar kale isku day.",
       "imageMissing": "Sawirka lama soo bandhigi karin."
-    }
+    },
+    "practiceAll": "Layli dhammaan {count} su'aalood"
   },
   "localSchool": {
     "eyebrow": "Dugsi wadis oo kuu dhow",
@@ -540,6 +547,41 @@
         "loading": "Waqtiyada bannaan waa la soo qaadayaa…",
         "emptyTitle": "Waqti ma jiro maalintan",
         "empty": "Dooro maalin kale si aad u aragto waqtiyo badan."
+      },
+      "area": {
+        "short": "Magaalo",
+        "title": "Xaggee ayaad rabtaa inaad ku wadato?",
+        "comingSoon": "Dhawaan"
+      },
+      "pickup": {
+        "short": "Soo qaadis",
+        "title": "Xaggee ayaan kaa soo qaadnaa?",
+        "free": "Soo qaadistu waa bilaash gudaha aagga.",
+        "office": "Nagu soo kulma xafiiska",
+        "address": "Cinwaanka soo qaadista",
+        "outside": "Cinwaanku wuu ka baxsan yahay aagga. Dooro cinwaan gudaha aagga ah.",
+        "outline": "Aagga soo qaadista"
+      },
+      "gearbox": {
+        "short": "Gearbox",
+        "title": "Gacan mise otomaatik?",
+        "manual": "Gacan",
+        "automatic": "Otomaatik"
+      },
+      "schedule": {
+        "short": "Waqti",
+        "title": "Macallimiin iyo waqtiyo",
+        "next": "Waqtiga xiga ee bannaan",
+        "week": "Toddobaad",
+        "empty": "Toddobaadkan waqti bannaan ma jiro. Dooro macallin ama gearbox kale.",
+        "loading": "Waqtiyo bannaan ayaa la soo rarayaa…"
+      },
+      "pay": {
+        "short": "Bixi",
+        "title": "Bixi casharka",
+        "single": "Hal cashar oo wadista ah",
+        "packageTitle": "Ku kaydi xirmo",
+        "packageBody": "Xirmadu way ka jaban tahay cashar kasta. Waqti kasta waad iibsan kartaa."
       }
     },
     "account": {
@@ -663,7 +705,11 @@
       "title": "Xaqiiji lambarka moobilka",
       "description": "Waxaan u baahanahay lambar moobil Iswiidhan ah oo loogu talagalay koodhadhka iyo xusuusinta. Haddii lambarku hore akoon u lahaa, Google waxaa lagu xiraa akoonkaas.",
       "submit": "Xaqiiji lambarka"
-    }
+    },
+    "phoneInvalid": "Geli lambar moobil oo Iswiidhish ah, eberka hore la'aan ama la.",
+    "phoneValid": "Lambarku waa sax.",
+    "emailInvalid": "Geli iimayl, tusaale name@example.com.",
+    "emailValid": "Iimaylku waa sax."
   },
   "student": {
     "nav": {
@@ -1312,7 +1358,7 @@
   "errors": {
     "pageTitle": "Cillad farsamo ayaa dhacday",
     "retry": "Mar kale isku day",
-    "NO_CREDITS": "Xirmadaada cashar kuma hadhin. Dooro cashar keli ah ama tijaabo oo lacag leh.",
+    "NO_CREDITS": "Xirmadaada cashar kuma hadhin. Dooro cashar keli ah oo lacag leh.",
     "CHECKOUT_CONSENT_REQUIRED": "Aqbal shuruudaha iibsiga iyo xaqa ka-noqoshada ka hor intaadan sii wadin.",
     "INVALID_PICKUP_COORDINATES": "Dooro cinwaan sax ah oo lagaaga qaado gudaha Iswiidhan.",
     "TEACHER_HAS_FUTURE_BOOKINGS": "Rar ama baaji ballamaha mustaqbalka ee macallinka ka hor intaadan joojin.",
@@ -1366,7 +1412,9 @@
     "notFoundDescription": "Cinwaanku sax maaha. Tag bogga hore, casharrada wadista, macallimiinta ama ballan qabso.",
     "forbiddenTitle": "Oggolaansho uma lihid",
     "forbiddenDescription": "Boggan waa door kale. Tag bogga hore ama bogaggaaga.",
-    "forbiddenDashboard": "Bogaggayga"
+    "forbiddenDashboard": "Bogaggayga",
+    "OUTSIDE_PICKUP_AREA": "Cinwaanku wuu ka baxsan yahay aagga soo qaadista. Dooro cinwaan gudaha aagga ah.",
+    "AREA_UNAVAILABLE": "Aaggan weli lama ballansan karo. Dooro Farsta ama Upplands Väsby."
   },
   "contact": {
     "metadata": "Faahfaahinta xiriirka Makina Trafikskola ee Stockholm.",
@@ -1407,6 +1455,8 @@
       "5": "Jimce",
       "6": "Sabti"
     },
-    "speaks": "Waxa uu wax ku dhigaa {languages}"
+    "speaks": "Waxa uu wax ku dhigaa {languages}",
+    "emailUs": "Noo soo dir iimayl",
+    "replyLine": "Waxaan ku jawaabnaa hal maalin shaqo gudaheed."
   }
 }

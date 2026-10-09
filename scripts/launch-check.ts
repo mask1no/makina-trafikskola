@@ -1,6 +1,7 @@
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 
+import { ListObjectsV2Command, S3Client } from "@aws-sdk/client-s3";
 import Stripe from "stripe";
 
 import { db } from "../src/lib/db";
@@ -175,6 +176,28 @@ async function checkElks() {
   }
 }
 
+async function checkUploadBucket() {
+  const accountId = process.env.R2_ACCOUNT_ID?.trim();
+  const accessKeyId = process.env.R2_ACCESS_KEY_ID?.trim();
+  const secretAccessKey = process.env.R2_SECRET_ACCESS_KEY?.trim();
+  const bucket = process.env.R2_BUCKET?.trim();
+  if (!accountId || !accessKeyId || !secretAccessKey || !bucket) {
+    record("R2 uploads", "WARN", "upload bucket credentials are missing");
+    return;
+  }
+  try {
+    const client = new S3Client({
+      region: "auto",
+      endpoint: `https://${accountId}.r2.cloudflarestorage.com`,
+      credentials: { accessKeyId, secretAccessKey },
+    });
+    await client.send(new ListObjectsV2Command({ Bucket: bucket, MaxKeys: 1 }));
+    record("R2 uploads", "PASS", "upload bucket is reachable");
+  } catch {
+    record("R2 uploads", "FAIL", "upload bucket is not reachable");
+  }
+}
+
 async function checkBackups(now: Date) {
   try {
     const config = backupConfiguration();
@@ -321,6 +344,7 @@ async function main() {
   await checkMigrations();
   await checkStripe();
   await checkElks();
+  await checkUploadBucket();
   await checkBackups(new Date());
   printResults();
   if (results.some((result) => result.status === "FAIL")) process.exitCode = 1;

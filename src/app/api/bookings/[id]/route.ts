@@ -16,6 +16,7 @@ import {
   isBookingExclusionViolation,
   isSerializationOrTxTimeout,
 } from "@/lib/bookings/errors";
+import { syncConfirmedBooking } from "@/lib/calendar/google";
 import { db } from "@/lib/db";
 import { dispatchNotifications } from "@/lib/notifications/dispatch";
 import { bookingNotificationContext } from "@/lib/notifications/context";
@@ -200,6 +201,7 @@ export async function PATCH(
         return { moved, notificationIds };
       });
       await dispatchNotifications(updated.notificationIds, now);
+      await syncConfirmedBooking(booking.id);
       return Response.json(updated.moved);
     } catch (error) {
       if (
@@ -321,5 +323,6 @@ export async function PATCH(
   }
 
   await dispatchNotifications(result.notificationIds, now);
+  await syncConfirmedBooking(booking.id);
   return Response.json(result.cancelled);
 }

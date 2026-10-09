@@ -38,11 +38,24 @@ function PhoneField({
   error?: string;
   disabled?: boolean;
 }) {
+  const t = useTranslations("auth");
+  const [touched, setTouched] = useState(false);
+  const normalized = value.trim() ? normalizeSwedishPhone(value) : null;
+  const invalid = touched && value.trim().length > 0 && !normalized;
+  const valid = touched && Boolean(normalized);
+  const hint = error || (invalid ? t("phoneInvalid") : valid ? t("phoneValid") : "");
   return (
     <div className="grid gap-2">
       <label className="grid gap-2 text-small font-semibold text-ink" htmlFor="phone">
-        <span>{label}</span>
-        <span className="flex overflow-hidden rounded-sm border border-border bg-card shadow-soft focus-within:border-ink">
+        <span>
+          {label}
+          {" *"}
+        </span>
+        <span
+          className={`flex overflow-hidden rounded-sm border bg-card shadow-soft focus-within:border-ink ${
+            error || invalid ? "border-danger" : valid ? "border-success" : "border-border"
+          }`}
+        >
           <span className="flex min-h-11 items-center border-e border-border bg-page px-3 text-small font-bold text-ink" dir="ltr">
             +46
           </span>
@@ -53,19 +66,21 @@ function PhoneField({
             type="tel"
             inputMode="tel"
             autoComplete="tel"
+            required
             placeholder={placeholder}
             value={value}
             disabled={disabled}
+            onBlur={() => setTouched(true)}
             onChange={(event) => onChange(event.target.value)}
-            aria-invalid={Boolean(error)}
-            aria-describedby={error ? "phone-error" : undefined}
+            aria-invalid={Boolean(error || invalid)}
+            aria-describedby={hint ? "phone-error" : undefined}
             className="min-h-11 w-full bg-transparent px-4 text-body text-ink outline-none placeholder:text-ink-subtle"
           />
         </span>
       </label>
-      {error ? (
-        <p id="phone-error" role="alert" className="text-small font-medium text-danger">
-          {error}
+      {hint ? (
+        <p id="phone-error" role={error || invalid ? "alert" : undefined} className={`text-small font-medium ${error || invalid ? "text-danger" : "text-success"}`}>
+          {hint}
         </p>
       ) : null}
     </div>
@@ -190,6 +205,9 @@ export function SignupForm({
   const searchParams = useSearchParams();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
+  const [emailTouched, setEmailTouched] = useState(false);
+  const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+  const emailHint = emailTouched ? (emailValid ? t("emailValid") : t("emailInvalid")) : "";
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [code, setCode] = useState("");
@@ -293,6 +311,7 @@ export function SignupForm({
     : `/${locale}/logga-in`;
 
   return (
+    <>
     <form onSubmit={submit} className="grid gap-4">
       <Input
         name="fullName"
@@ -306,10 +325,14 @@ export function SignupForm({
         name="email"
         label={t("email")}
         value={email}
+        required
+        hint={emailValid ? emailHint : undefined}
+        valid={emailTouched && emailValid}
+        error={emailTouched && !emailValid ? emailHint : undefined}
+        onBlur={() => setEmailTouched(true)}
         onChange={(event) => setEmail(event.target.value)}
         type="email"
         autoComplete="email"
-        required
       />
       <PhoneField
         label={t("phone")}
@@ -405,15 +428,16 @@ export function SignupForm({
           </Link>
         </p>
       )}
-      <GoogleButton
-        enabled={googleEnabled}
-        label={t("continueWithGoogle")}
-        destination={safeRedirect(
-          searchParams.get("next") ?? searchParams.get("callbackUrl"),
-          locale,
-        )}
-      />
     </form>
+    <GoogleButton
+      enabled={googleEnabled}
+      label={t("continueWithGoogle")}
+      destination={safeRedirect(
+        searchParams.get("next") ?? searchParams.get("callbackUrl"),
+        locale,
+      )}
+    />
+    </>
   );
 }
 
@@ -525,6 +549,7 @@ export function LoginForm({
   const forgotHref = `/${locale}/glomt-losenord`;
 
   return (
+    <>
     <form onSubmit={submit} className="grid gap-4">
       <fieldset>
         <legend className="sr-only">{t("methodLabel")}</legend>
@@ -650,15 +675,16 @@ export function LoginForm({
           {login("create")}
         </Link>
       </p>
-      <GoogleButton
-        enabled={googleEnabled}
-        label={t("continueWithGoogle")}
-        destination={safeRedirect(
-          searchParams.get("next") ?? searchParams.get("callbackUrl"),
-          locale,
-        )}
-      />
     </form>
+    <GoogleButton
+      enabled={googleEnabled}
+      label={t("continueWithGoogle")}
+      destination={safeRedirect(
+        searchParams.get("next") ?? searchParams.get("callbackUrl"),
+        locale,
+      )}
+    />
+    </>
   );
 }
 

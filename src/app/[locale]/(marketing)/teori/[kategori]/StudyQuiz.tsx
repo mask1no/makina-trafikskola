@@ -176,7 +176,7 @@ export function StudyQuiz({
               type="button"
               disabled={!itemResult}
               aria-current={item.id === question.id ? "true" : undefined}
-              className={`h-3 min-w-6 flex-1 rounded-sm ${
+              className={`min-h-11 min-w-6 flex-1 rounded-sm ${
                 itemResult?.correct
                   ? "bg-success-strong"
                   : itemResult
@@ -215,7 +215,10 @@ export function StudyQuiz({
               }`}
               data-selected={selected ? "true" : undefined}
             >
-              <span className="relative">{answer.text}</span>
+              <span className="relative flex items-center justify-between gap-3">
+                <span>{answer.text}</span>
+                {selected ? <span aria-hidden="true">✓</span> : null}
+              </span>
             </button>
           );
         })}
@@ -236,18 +239,6 @@ export function StudyQuiz({
         </div>
       ) : null}
       {error ? <p className="text-small font-bold text-danger">{error}</p> : null}
-      <style>{`
-        .choice-card[data-selected="true"] {
-          background-image: linear-gradient(to right, var(--accent), var(--accent));
-          background-size: 0 100%;
-          background-repeat: no-repeat;
-          animation: choice-fill 300ms ease forwards;
-        }
-        @keyframes choice-fill { to { background-size: 100% 100%; } }
-        @media (prefers-reduced-motion: reduce) {
-          .choice-card[data-selected="true"] { animation: none; background-size: 100% 100%; }
-        }
-      `}</style>
     </div>
   );
 }

@@ -18,6 +18,7 @@ import { isLocale, locales } from "@/i18n/routing";
 import { openingHoursSpecification } from "@/lib/company/opening-hours";
 import {
   COMING_SOON_TEACHING_LANGUAGES,
+  formatLanguageList,
   offeredTeachingLanguages,
 } from "@/lib/company/staff";
 import { displayPhone, telHref } from "@/lib/format/phone";
@@ -192,7 +193,7 @@ export default async function LocaleLayout(
   const navItems = [
     { href: `${base}/korlektioner`, label: t("lessons") },
     { href: `${base}/kurser`, label: t("courses") },
-    { href: `${base}/korlektioner`, label: t("prices") },
+    { href: `${base}/priser`, label: t("prices") },
     ...(showTheory ? [{ href: `${base}/teori`, label: t("theory") }] : []),
     { href: `${base}/kontakt`, label: t("contact") },
   ];
@@ -227,6 +228,18 @@ export default async function LocaleLayout(
     openingHoursSpecification: openingHoursSpecification(),
     ...(siteUrl ? { url: `${siteUrl}/${params.locale}` } : {}),
   };
+  const storeLinks = (
+    [
+      ["APP_STORE_URL", t("appStore")],
+      ["GOOGLE_PLAY_URL", t("googlePlay")],
+      ["INSTAGRAM_URL", t("instagram")],
+      ["FACEBOOK_URL", t("facebook")],
+      ["TIKTOK_URL", t("tiktok")],
+    ] as const
+  ).flatMap(([key, label]) => {
+    const url = process.env[key]?.trim();
+    return url?.startsWith("https://") ? [{ url, label }] : [];
+  });
   const callLabel = t.rich("callName", {
     phone: () => (
       <bdi dir="ltr" className="numbers-ltr">
@@ -474,6 +487,15 @@ export default async function LocaleLayout(
             </div>
             <div>
               <p className="text-small font-extrabold">{t("languageHelp")}</p>
+              <p className="mt-4 max-w-[70ch] text-small leading-6 text-ink-inverse-muted">
+                {t("languageHelpDescription", {
+                  languages: formatLanguageList(
+                    offeredLanguages,
+                    params.locale,
+                    (code) => t(`languagePage.${code}`),
+                  ),
+                })}
+              </p>
               <ul className="mt-4 grid gap-2 text-small text-ink-inverse-muted">
                 {offeredLanguages.map((code) => (
                   <li key={code} className="flex min-h-11 items-center gap-2">
@@ -503,6 +525,21 @@ export default async function LocaleLayout(
               </ul>
             </div>
           </div>
+          {storeLinks.length ? (
+            <div className="site-container mt-8 flex flex-wrap justify-center gap-3">
+              {storeLinks.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.url}
+                  className="inline-flex min-h-11 items-center rounded-full border border-ink-inverse/20 px-4 text-small font-bold text-ink-inverse"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          ) : null}
           <div className="site-container mt-10 border-t border-surface-soft pt-6 text-center text-xs font-semibold text-ink-inverse-muted">
             <p>{t("copyright", { year: new Date().getFullYear() })}</p>
           </div>

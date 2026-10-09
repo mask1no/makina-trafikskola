@@ -77,3 +77,20 @@ export async function loadAvailability({
     bookings: teacher.bookings,
   });
 }
+
+export async function firstAvailableSlot(input: {
+  teacherId: string;
+  now: Date;
+  lessonMinutes?: 50 | 100;
+  minNoticeHours?: number;
+}) {
+  const slots = await loadAvailability({
+    teacherId: input.teacherId,
+    from: input.now,
+    to: addDays(input.now, 14),
+    lessonMinutes: input.lessonMinutes ?? 50,
+    now: input.now,
+    minNoticeHours: input.minNoticeHours ?? 12,
+  });
+  return slots?.[0]?.startsAt ?? null;
+}

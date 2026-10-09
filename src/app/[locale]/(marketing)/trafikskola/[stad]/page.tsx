@@ -59,7 +59,7 @@ export default async function TrafikskolaPage(
   const params = await props.params;
   if (!isLocale(params.locale)) notFound();
   setRequestLocale(params.locale);
-  const [t, location] = await Promise.all([
+  const [t, location, areas] = await Promise.all([
     getTranslations("localSchool"),
     db.location.findFirst({
       where: { slug: params.stad },
@@ -78,6 +78,17 @@ export default async function TrafikskolaPage(
         },
       },
     }),
+    db.location.findMany({
+      where: { status: "ACTIVE" },
+      select: {
+        name: true,
+        address: true,
+        city: true,
+        postalCode: true,
+        lat: true,
+        lng: true,
+      },
+    }),
   ]);
   if (!location) notFound();
   if (location.status === "COMING_SOON") {
@@ -91,42 +102,40 @@ export default async function TrafikskolaPage(
     );
   }
   const hasConfirmedAddress = isAddressConfirmed(location.address);
-  const hasCoordinates =
-    Number.isFinite(location.lat) &&
-    Number.isFinite(location.lng) &&
-    Math.abs(location.lat) <= 90 &&
-    Math.abs(location.lng) <= 180;
-  const localStructuredData =
-    hasConfirmedAddress && hasCoordinates
-      ? {
-          "@context": "https://schema.org",
-          "@type": "DrivingSchool",
-          name: location.name,
-          address: {
-            "@type": "PostalAddress",
-            streetAddress: location.address,
-            postalCode: location.postalCode,
-            addressLocality: location.city,
-            addressCountry: "SE",
-          },
-          geo: {
-            "@type": "GeoCoordinates",
-            latitude: location.lat,
-            longitude: location.lng,
-          },
-        }
-      : null;
+  const localStructuredData = {
+    "@context": "https://schema.org",
+    "@graph": areas
+      .filter((area) => isAddressConfirmed(area.address))
+      .map((area) => ({
+        "@type": "DrivingSchool",
+        name: area.name,
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: area.address,
+          postalCode: area.postalCode,
+          addressLocality: area.city,
+          addressCountry: "SE",
+        },
+        ...(Number.isFinite(area.lat) && Number.isFinite(area.lng)
+          ? {
+              geo: {
+                "@type": "GeoCoordinates",
+                latitude: area.lat,
+                longitude: area.lng,
+              },
+            }
+          : {}),
+      })),
+  };
 
   return (
     <div className="section-shell">
-      {localStructuredData ? (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(localStructuredData).replace(/</g, "\\u003c"),
-          }}
-        />
-      ) : null}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(localStructuredData).replace(/</g, "\\u003c"),
+        }}
+      />
       <div className="site-container max-w-6xl">
         <PageHeader eyebrow={t("eyebrow")} title={t("title", { city: location.city })} description={t("description", { city: location.city })} />
         <section className="mt-10 grid overflow-hidden rounded-lg border border-border bg-card shadow-card md:grid-cols-[.75fr_1.25fr]">

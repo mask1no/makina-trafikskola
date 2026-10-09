@@ -100,7 +100,7 @@ export default async function TeacherDetailPage(
             <dl className="mt-8 grid gap-5 sm:grid-cols-2">
               <div>
                 <dt className="text-sm font-bold text-ink-muted">{t("teacher.languages")}</dt>
-                <dd className="mt-2">{teacher.languages.map((item) => t(`language.${item}`)).join(" · ")}</dd>
+                <dd className="mt-2">{teacher.languages.map((item) => t(`shell.languagePage.${item}`)).join(" · ")}</dd>
               </div>
               {teacher.transmissions.length ? (
                 <div>

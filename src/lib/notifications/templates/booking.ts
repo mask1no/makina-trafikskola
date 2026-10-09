@@ -1,4 +1,5 @@
-import { formatLessonDateTime } from "@/lib/format/datetime";
+import { formatLessonTime as formatLessonStamp } from "@/lib/format/datetime";
+import { isLocale } from "@/i18n/routing";
 
 export type BookingTemplate =
   | "booking_confirmed"
@@ -23,59 +24,6 @@ type BookingParts = {
   creditRefunded?: boolean;
 };
 
-const subjects: Record<SupportedLocale, Record<BookingTemplate, string>> = {
-  sv: {
-    booking_confirmed: "Din körlektion är bokad",
-    booking_cancelled_by_student: "Din körlektion är avbokad",
-    booking_cancelled_by_teacher: "Trafikskolan har avbokat din körlektion",
-    booking_reminder_24h: "Påminnelse om din körlektion",
-    booking_moved: "Din körlektion är flyttad",
-    teacher_booking_new: "Ny lektion",
-    teacher_booking_cancelled: "Avbokad lektion",
-    teacher_booking_moved: "Ändrad lektion",
-  },
-  en: {
-    booking_confirmed: "Your driving lesson is booked",
-    booking_cancelled_by_student: "Your driving lesson is cancelled",
-    booking_cancelled_by_teacher: "The driving school cancelled your lesson",
-    booking_reminder_24h: "Driving lesson reminder",
-    booking_moved: "Your driving lesson was moved",
-    teacher_booking_new: "New lesson",
-    teacher_booking_cancelled: "Cancelled lesson",
-    teacher_booking_moved: "Changed lesson",
-  },
-  ti: {
-    booking_confirmed: "ትምህርትኻ ተመዝጊቡ",
-    booking_cancelled_by_student: "ትምህርትኻ ተሰሪዙ",
-    booking_cancelled_by_teacher: "ቤት ትምህርቲ ሰሪዝዎ",
-    booking_reminder_24h: "መዘኻኸሪ ትምህርቲ",
-    booking_moved: "ትምህርትኻ ተቐይሩ",
-    teacher_booking_new: "ሓድሽ ትምህርቲ",
-    teacher_booking_cancelled: "ዝተሰረዘ ትምህርቲ",
-    teacher_booking_moved: "ዝተቐየረ ትምህርቲ",
-  },
-  ar: {
-    booking_confirmed: "تم حجز درس القيادة",
-    booking_cancelled_by_student: "تم إلغاء درس القيادة",
-    booking_cancelled_by_teacher: "ألغت المدرسة الدرس",
-    booking_reminder_24h: "تذكير بدرس القيادة",
-    booking_moved: "تم نقل درس القيادة",
-    teacher_booking_new: "درس جديد",
-    teacher_booking_cancelled: "درس ملغى",
-    teacher_booking_moved: "درس معدّل",
-  },
-  so: {
-    booking_confirmed: "Casharka waa la qabtay",
-    booking_cancelled_by_student: "Casharka waa la baajiyay",
-    booking_cancelled_by_teacher: "Dugsigu wuu baajiyay casharka",
-    booking_reminder_24h: "Xusuusin cashar",
-    booking_moved: "Casharka waa la raray",
-    teacher_booking_new: "Cashar cusub",
-    teacher_booking_cancelled: "Cashar la baajiyay",
-    teacher_booking_moved: "Cashar la beddelay",
-  },
-};
-
 const localeTags: Record<SupportedLocale, string> = {
   sv: "sv-SE",
   en: "en-SE",
@@ -85,7 +33,7 @@ const localeTags: Record<SupportedLocale, string> = {
 };
 
 function supportedLocale(locale: string): SupportedLocale {
-  return locale in subjects ? (locale as SupportedLocale) : "sv";
+  return isLocale(locale) ? locale : "sv";
 }
 
 function clean(value: string | undefined) {
@@ -94,7 +42,7 @@ function clean(value: string | undefined) {
 }
 
 function formatLessonTime(date: Date, locale: SupportedLocale) {
-  return formatLessonDateTime(date, localeTags[locale]);
+  return formatLessonStamp(date, localeTags[locale]);
 }
 
 function teacherSuffix(locale: SupportedLocale, teacher?: string) {
@@ -219,15 +167,6 @@ function bookingText(
   return `Ändrad lektion: ${student}, nu ${time}${previous}${place}.`;
 }
 
-function escapeHtml(value: string) {
-  return value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-}
-
 export function renderBookingMessage(input: {
   template: BookingTemplate;
   locale: string;
@@ -256,9 +195,5 @@ export function renderBookingMessage(input: {
     creditRefunded: input.creditRefunded,
   }).replace(/\s+/g, " ").replace(" .", ".").trim();
 
-  return {
-    subject: subjects[locale][input.template],
-    text,
-    html: `<p dir="${locale === "ar" ? "rtl" : "ltr"}">${escapeHtml(text)}</p>`,
-  };
+  return { text };
 }

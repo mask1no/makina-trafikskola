@@ -25,6 +25,7 @@ import {
   syncConfirmedBooking,
   teacherBusyIntervals,
 } from "@/lib/calendar/google";
+import { errorResponse } from "@/lib/api/http";
 import { pointInGeoJson } from "@/lib/areas/geo";
 import { getCreditBalance } from "@/lib/credits/ledger";
 import { db } from "@/lib/db";
@@ -44,7 +45,8 @@ const bookingSchema = z
     teacherId: z.string().cuid(),
     startsAt: z.coerce.date(),
     lessonMinutes: z.union([z.literal(50), z.literal(100)]),
-    locationId: z.string().cuid().optional(),
+    locationId: z.string().cuid(),
+    transmission: z.enum(["MANUAL", "AUTOMATIC"]).optional(),
     pickupAddress: z.string().trim().min(3).max(200).optional(),
     pickupLat: z.number().finite().min(55).max(69.1).optional(),
     pickupLng: z.number().finite().min(10.5).max(24.2).optional(),
@@ -54,10 +56,11 @@ const bookingSchema = z
   .strict()
   .refine(
     (value) =>
-      Boolean(value.locationId) !== Boolean(value.pickupAddress),
+      !value.pickupAddress ||
+      (value.pickupLat != null && value.pickupLng != null),
     {
-      message: "SELECT_LOCATION_OR_PICKUP",
-      path: ["locationId"],
+      message: "INVALID_PICKUP_COORDINATES",
+      path: ["pickupAddress"],
     },
   )
   .refine(
@@ -73,13 +76,6 @@ const bookingSchema = z
 function configuredNumber(name: string, fallback: number) {
   const value = Number(process.env[name] ?? String(fallback));
   return Number.isFinite(value) && value >= 0 ? value : fallback;
-}
-
-function errorResponse(code: string, status: number, extra?: object) {
-  return Response.json(
-    { error: { code, message: code }, ...(extra ?? {}) },
-    { status },
-  );
 }
 
 export async function POST(request: Request) {
@@ -135,8 +131,9 @@ export async function POST(request: Request) {
     where: {
       id: parsed.data.teacherId,
       active: true,
-      ...(parsed.data.locationId
-        ? { locations: { some: { locationId: parsed.data.locationId } } }
+      locations: { some: { locationId: parsed.data.locationId } },
+      ...(parsed.data.transmission
+        ? { transmissions: { has: parsed.data.transmission } }
         : {}),
     },
     select: { id: true },
@@ -167,16 +164,16 @@ export async function POST(request: Request) {
 
   const holdMinutes = configuredNumber("BOOKING_HOLD_MINUTES", 15);
 
-  if (parsed.data.locationId && parsed.data.pickupLat != null && parsed.data.pickupLng != null) {
-    const area = await db.location.findUnique({
-      where: { id: parsed.data.locationId },
-      select: { status: true, boundary: true },
-    });
-    if (!area || area.status === "COMING_SOON") {
-      return errorResponse("AREA_UNAVAILABLE", 409);
-    }
+  const area = await db.location.findUnique({
+    where: { id: parsed.data.locationId },
+    select: { status: true, boundary: true },
+  });
+  if (!area || area.status === "COMING_SOON") {
+    return errorResponse("AREA_UNAVAILABLE", 409);
+  }
+  if (parsed.data.pickupLat != null && parsed.data.pickupLng != null) {
     if (
-      area.boundary &&
+      !area.boundary ||
       !pointInGeoJson(
         { lng: parsed.data.pickupLng, lat: parsed.data.pickupLat },
         area.boundary,

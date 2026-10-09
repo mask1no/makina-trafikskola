@@ -129,7 +129,7 @@ export default async function LararePage(
                 </FilterChoice>
                 {activeLanguages.map((option) => {
                   const count = languageCounts[option];
-                  const name = `${t(`language.${option}`)} (${count})`;
+                  const name = `${t(`shell.languagePage.${option}`)} (${count})`;
                   return (
                     <FilterChoice
                       key={option}
@@ -244,7 +244,7 @@ export default async function LararePage(
                     slug={teacher.slug}
                     name={`${teacher.user.firstName} ${teacher.user.lastName}`}
                     photoUrl={teacher.photoUrl}
-                    languages={teacher.languages.map((item) => t(`language.${item}`))}
+                    languages={teacher.languages.map((item) => t(`shell.languagePage.${item}`))}
                     transmissions={teacher.transmissions.map((item) =>
                       t(`teacher.transmission.${item.toLowerCase()}`),
                     )}
@@ -294,7 +294,7 @@ export default async function LararePage(
                   title: `${teacher.user.firstName} ${teacher.user.lastName}`,
                   position: { lat: location.lat, lng: location.lng },
                   photoUrl: teacher.photoUrl,
-                  languages: teacher.languages.map((item) => t(`language.${item}`)),
+                  languages: teacher.languages.map((item) => t(`shell.languagePage.${item}`)),
                   transmission: teacher.transmissions
                     .map((item) => t(`teacher.transmission.${item.toLowerCase()}`))
                     .join(", "),

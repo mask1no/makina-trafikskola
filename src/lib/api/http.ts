@@ -1,5 +1,16 @@
 import { AuthorizationError } from "@/lib/auth/guards";
 
+export function errorResponse(
+  code: string,
+  status: number,
+  extra?: object,
+) {
+  return Response.json(
+    { error: { code, message: code }, ...(extra ?? {}) },
+    { status },
+  );
+}
+
 export function apiError(
   code: string,
   status: number,

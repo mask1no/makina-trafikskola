@@ -62,11 +62,10 @@ export default async function ContactPage(
   if (!isLocale(params.locale)) notFound();
   setRequestLocale(params.locale);
 
-  const [t, shell, company, languageNames, locations, staffPhotos, reviewSummary] = await Promise.all([
+  const [t, shell, company, locations, staffPhotos, reviewSummary] = await Promise.all([
     getTranslations("contact"),
     getTranslations("shell"),
     getTranslations("company"),
-    getTranslations("language"),
     db.location.findMany({
       where: { active: true },
       orderBy: { name: "asc" },
@@ -102,12 +101,12 @@ export default async function ContactPage(
   const offeredLanguageNames = formatLanguageList(
     offeredLanguages,
     params.locale,
-    (code) => languageNames(code),
+    (code) => shell(`languagePage.${code}`),
   );
   const comingSoonLanguageNames = formatLanguageList(
     COMING_SOON_TEACHING_LANGUAGES,
     params.locale,
-    (code) => languageNames(code),
+    (code) => shell(`languagePage.${code}`),
   );
   const directions = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${visiting}, Sweden`)}`;
 
@@ -254,7 +253,7 @@ export default async function ContactPage(
                       languages: formatLanguageList(
                         staffMember.languages,
                         params.locale,
-                        (code) => languageNames(code),
+                        (code) => shell(`languagePage.${code}`),
                       ),
                     })}
                   </p>

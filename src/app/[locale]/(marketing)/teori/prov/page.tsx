@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 import { auth } from "@/auth";
 import { isLocale } from "@/i18n/routing";
 import { db } from "@/lib/db";
+import { theoryMode } from "@/lib/launch";
 import { hasTheoryAccess } from "@/lib/theory/access";
 
 import { ExamClient } from "./ExamClient";
@@ -21,6 +22,7 @@ export default async function TeoriprovPage(
 ) {
   const params = await props.params;
   if (!isLocale(params.locale)) notFound();
+  if (theoryMode() === "off") redirect(`/${params.locale}/teori`);
   setRequestLocale(params.locale);
   const [t, errors, session] = await Promise.all([
     getTranslations("theory.exam"),

@@ -2,6 +2,10 @@ export type LngLat = { lng: number; lat: number };
 
 type Ring = number[][];
 
+export function boundaryRings(value: unknown): Ring[] {
+  return ringsFromGeoJson(value);
+}
+
 function ringsFromGeoJson(value: unknown): Ring[] {
   if (!value || typeof value !== "object") return [];
   const record = value as { type?: string; geometry?: unknown; coordinates?: unknown; features?: unknown };
@@ -42,6 +46,6 @@ function pointInRing(point: LngLat, ring: Ring) {
 }
 
 export function pointInGeoJson(point: LngLat, boundary: unknown) {
-  const rings = ringsFromGeoJson(boundary);
+  const rings = boundaryRings(boundary);
   return rings.some((ring) => pointInRing(point, ring));
 }

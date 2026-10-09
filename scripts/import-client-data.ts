@@ -1,6 +1,7 @@
 import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 
+import type { Transmission } from "@prisma/client";
 import { z } from "zod";
 
 const OFFERED_TEACHING_LANGUAGES = ["sv", "en", "ti", "ku"] as const;
@@ -106,6 +107,32 @@ async function main() {
     }
   }
 
+  const knownAreas = new Set([
+    "farsta",
+    "upplands-vasby",
+    "uppsala",
+    ...areaFiles.map((file) => file.replace(/\.geojson$/, "")),
+  ]);
+  for (const teacher of teachers) {
+    for (const area of teacher.areas) {
+      if (!knownAreas.has(area)) problems.push(`${teacher.slug}: unknown area ${area}`);
+    }
+    for (const hour of teacher.hours) {
+      if (!teacher.areas.includes(hour.area)) {
+        problems.push(`${teacher.slug}: hour area ${hour.area} is not linked to the teacher`);
+      }
+    }
+    for (let left = 0; left < teacher.hours.length; left += 1) {
+      for (let right = left + 1; right < teacher.hours.length; right += 1) {
+        const a = teacher.hours[left];
+        const b = teacher.hours[right];
+        if (a && b && a.day === b.day && a.from < b.to && b.from < a.to) {
+          problems.push(`${teacher.slug}: hours overlap on day ${a.day}`);
+        }
+      }
+    }
+  }
+
   if (problems.length) {
     console.log("client-data problems:");
     for (const problem of problems) console.log(`- ${problem}`);
@@ -118,33 +145,88 @@ async function main() {
   }
   console.log("client:apply writes teachers, photos and area boundaries. No secrets printed.");
   const { db } = await import("../src/lib/db");
+  const sharp = (await import("sharp")).default;
+  const { R2ConfigurationError, uploadInstructorBytes } = await import("../src/lib/storage/r2");
   for (const teacher of teachers) {
-    console.log(`upsert ${teacher.slug} (${teacher.email.replace(/(.{2}).+(@.*)/, "$1…$2")})`);
-    await db.user.upsert({
+    const masked = teacher.email.replace(/(.{2}).+(@.*)/, "$1…$2");
+    console.log(`upsert ${teacher.slug} (${masked})`);
+    const transmissions: Transmission[] =
+      teacher.gearbox === "BOTH" ? ["MANUAL", "AUTOMATIC"] : [teacher.gearbox];
+    const profileData = {
+      languages: teacher.languages,
+      transmissions,
+      yearsExperience: teacher.yearsExperience ?? 0,
+      googleCalendarEmail: teacher.googleCalendarEmail,
+      payRateOre: teacher.payRateKr != null ? Math.round(teacher.payRateKr * 100) : null,
+      active: true,
+    };
+    const user = await db.user.upsert({
       where: { email: teacher.email },
-      update: { role: "TEACHER", phone: teacher.phone, deletedAt: null },
+      update: {
+        role: "TEACHER",
+        phone: teacher.phone,
+        firstName: teacher.name.split(" ")[0] ?? teacher.name,
+        lastName: teacher.name.split(" ").slice(1).join(" ") || teacher.slug,
+        deletedAt: null,
+      },
       create: {
         email: teacher.email,
         phone: teacher.phone,
         role: "TEACHER",
         firstName: teacher.name.split(" ")[0] ?? teacher.name,
         lastName: teacher.name.split(" ").slice(1).join(" ") || teacher.slug,
-        teacherProfile: {
-          create: {
-            slug: teacher.slug,
-            languages: teacher.languages,
-            transmissions:
-              teacher.gearbox === "BOTH"
-                ? ["MANUAL", "AUTOMATIC"]
-                : [teacher.gearbox],
-            yearsExperience: teacher.yearsExperience ?? 0,
-            googleCalendarEmail: teacher.googleCalendarEmail,
-            payRateOre: teacher.payRateKr != null ? teacher.payRateKr * 100 : null,
-            active: true,
-          },
-        },
       },
     });
+    const profile = await db.teacherProfile.upsert({
+      where: { userId: user.id },
+      update: profileData,
+      create: { userId: user.id, slug: teacher.slug, ...profileData },
+    });
+    const locations = await db.location.findMany({
+      where: { slug: { in: teacher.areas } },
+      select: { id: true, slug: true },
+    });
+    await db.teacherLocation.deleteMany({ where: { teacherId: profile.id } });
+    await db.teacherLocation.createMany({
+      data: locations.map((location) => ({
+        teacherId: profile.id,
+        locationId: location.id,
+      })),
+    });
+    await db.teacherAvailability.deleteMany({ where: { teacherId: profile.id } });
+    await db.teacherAvailability.createMany({
+      data: teacher.hours.flatMap((hour) => {
+        const location = locations.find((item) => item.slug === hour.area);
+        if (!location) return [];
+        return [{
+          teacherId: profile.id,
+          dayOfWeek: hour.day,
+          startTime: hour.from,
+          endTime: hour.to,
+          locationId: location.id,
+        }];
+      }),
+    });
+    try {
+      const bytes = await readFile(path.join(root, "photos", teacher.photo));
+      const image = await sharp(bytes)
+        .rotate()
+        .resize(1200, 1200, { fit: "cover" })
+        .webp({ quality: 82 })
+        .toBuffer();
+      const photoUrl = await uploadInstructorBytes(image);
+      await db.teacherProfile.update({
+        where: { id: profile.id },
+        data: { photoUrl },
+      });
+      console.log(`photo ${teacher.slug}: uploaded`);
+    } catch (error) {
+      if (error instanceof R2ConfigurationError) {
+        console.log(`photo ${teacher.slug}: R2 is missing, file left local`);
+      } else {
+        console.log(`photo ${teacher.slug}: upload failed`);
+      }
+    }
   }
   for (const file of areaFiles) {
     const slug = file.replace(/\.geojson$/, "");
@@ -155,7 +237,6 @@ async function main() {
     });
     console.log(`area ${slug}: ${updated.count === 1 ? "updated" : "not found"}`);
   }
-  console.log("Photos stay local until R2 and sharp are available in this environment.");
   await db.$disconnect();
 }
 

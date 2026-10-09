@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
 
 import { auth } from "@/auth";
+import { theoryNavVisible } from "@/lib/launch";
 import { LinkButton } from "@/components/LinkButton";
 import { NavPills } from "@/components/NavPills";
 
@@ -33,7 +34,7 @@ export default async function StudentLayout(
     ["", t("overview")],
     ["/bokningar", t("bookings")],
     ["/lektioner", t("saldo")],
-    ["/teori", t("theory")],
+    ...(theoryNavVisible() ? [["/teori", t("theory")] as const] : []),
     ["/meddelanden", t("messages")],
     ["/profil", t("profile")],
   ];
