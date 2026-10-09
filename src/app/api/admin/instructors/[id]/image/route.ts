@@ -1,3 +1,4 @@
+import { apiError } from "@/lib/api/http";
 import { z } from "zod";
 
 import { auth } from "@/auth";
@@ -23,9 +24,7 @@ const inputSchema = z.object({
     ),
 });
 
-function apiError(code: string, status: number) {
-  return Response.json({ error: { code, message: code } }, { status });
-}
+
 
 export async function POST(
   request: Request,

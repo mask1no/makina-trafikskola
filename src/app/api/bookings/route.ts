@@ -25,7 +25,7 @@ import {
   syncConfirmedBooking,
   teacherBusyIntervals,
 } from "@/lib/calendar/google";
-import { errorResponse } from "@/lib/api/http";
+import { errorResponse, invalidInput } from "@/lib/api/http";
 import { pointInGeoJson } from "@/lib/areas/geo";
 import { getCreditBalance } from "@/lib/credits/ledger";
 import { db } from "@/lib/db";
@@ -86,16 +86,7 @@ export async function POST(request: Request) {
     idempotencyKey: request.headers.get("idempotency-key"),
   });
   if (!parsed.success) {
-    return Response.json(
-      {
-        error: {
-          code: "INVALID_INPUT",
-          message: "INVALID_INPUT",
-          fields: parsed.error.flatten().fieldErrors,
-        },
-      },
-      { status: 400 },
-    );
+    return invalidInput(parsed.error.flatten().fieldErrors);
   }
 
   let session;

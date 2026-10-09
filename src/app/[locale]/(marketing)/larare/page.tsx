@@ -14,6 +14,8 @@ import {
   type TeachingLanguage,
 } from "@/lib/teachers/languages";
 import { activeTeacherLanguages } from "@/lib/teachers/query";
+import { nextFreeSlots } from "@/lib/bookings/availability";
+import { formatLessonDateTime } from "@/lib/format/datetime";
 import { bookingEnabled, instructorsEnabled } from "@/lib/launch";
 import { googleMapsBrowserConfig } from "@/lib/maps/config";
 
@@ -101,6 +103,12 @@ export default async function LararePage(
     ? allTeachers.filter((teacher) => teacher.languages.includes(language))
     : allTeachers;
   const hasActiveFilter = Boolean(language || location || transmission);
+  const now = new Date();
+  const nextFree = await nextFreeSlots(
+    teachers.map((teacher) => teacher.id),
+    now,
+    location,
+  );
   const center = locations[0]
     ? { lat: locations[0].lat, lng: locations[0].lng }
     : { lat: 59.3293, lng: 18.0686 };
@@ -260,6 +268,12 @@ export default async function LararePage(
                         : ""
                     }
                     detailsLabel={t("teacher.viewProfile")}
+                    nextFreeLabel={t("teacher.nextFree")}
+                    nextFreeTime={
+                      nextFree.get(teacher.id)
+                        ? formatLessonDateTime(nextFree.get(teacher.id)!, params.locale)
+                        : undefined
+                    }
                     swedishOnly={teacher.swedishOnly}
                     swedishOnlyLabel={t("common.swedishOnly")}
                   />

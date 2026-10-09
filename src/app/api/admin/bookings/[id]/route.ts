@@ -1,3 +1,4 @@
+import { errorResponse, invalidInput } from "@/lib/api/http";
 import { Prisma } from "@prisma/client";
 import { addDays } from "date-fns";
 import { z } from "zod";
@@ -45,9 +46,7 @@ const requestSchema = z
     }
   });
 
-function errorResponse(code: string, status: number) {
-  return Response.json({ error: { code, message: code } }, { status });
-}
+
 
 export async function PATCH(
   request: Request,
@@ -59,16 +58,7 @@ export async function PATCH(
     id: (await context.params).id,
   });
   if (!parsed.success) {
-    return Response.json(
-      {
-        error: {
-          code: "INVALID_INPUT",
-          message: "INVALID_INPUT",
-          fields: parsed.error.flatten().fieldErrors,
-        },
-      },
-      { status: 400 },
-    );
+    return invalidInput(parsed.error.flatten().fieldErrors);
   }
 
   let actorId: string;

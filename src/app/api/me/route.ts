@@ -1,3 +1,4 @@
+import { invalidInput, apiError, errorResponse } from "@/lib/api/http";
 import { Prisma } from "@prisma/client";
 import { z } from "zod";
 
@@ -13,16 +14,7 @@ export async function DELETE(request: Request) {
   const body = await request.json().catch(() => null);
   const parsed = deleteSchema.safeParse(body);
   if (!parsed.success) {
-    return Response.json(
-      {
-        error: {
-          code: "INVALID_INPUT",
-          message: "INVALID_INPUT",
-          fields: parsed.error.flatten().fieldErrors,
-        },
-      },
-      { status: 400 },
-    );
+    return invalidInput(parsed.error.flatten().fieldErrors);
   }
 
   let studentId: string;
@@ -30,10 +22,7 @@ export async function DELETE(request: Request) {
     studentId = requireRole(await auth(), ["STUDENT"]).user.id;
   } catch (error) {
     if (error instanceof AuthorizationError) {
-      return Response.json(
-        { error: { code: error.code, message: error.code } },
-        { status: error.status },
-      );
+      return apiError(error.code, error.status);
     }
     throw error;
   }
@@ -53,21 +42,10 @@ export async function DELETE(request: Request) {
     },
   });
   if (!user) {
-    return Response.json(
-      { error: { code: "ACCOUNT_NOT_FOUND", message: "ACCOUNT_NOT_FOUND" } },
-      { status: 404 },
-    );
+    return errorResponse("ACCOUNT_NOT_FOUND", 404);
   }
   if (user._count.bookings > 0) {
-    return Response.json(
-      {
-        error: {
-          code: "ACCOUNT_HAS_ACTIVE_BOOKINGS",
-          message: "ACCOUNT_HAS_ACTIVE_BOOKINGS",
-        },
-      },
-      { status: 409 },
-    );
+    return errorResponse("ACCOUNT_HAS_ACTIVE_BOOKINGS", 409);
   }
 
   await db.$transaction(

@@ -1,3 +1,4 @@
+import { invalidInput, apiError, errorResponse } from "@/lib/api/http";
 import { z } from "zod";
 
 import { auth } from "@/auth";
@@ -15,26 +16,14 @@ export async function GET(
 ) {
   const parsed = paramsSchema.safeParse((await context.params));
   if (!parsed.success) {
-    return Response.json(
-      {
-        error: {
-          code: "INVALID_INPUT",
-          message: "INVALID_INPUT",
-          fields: parsed.error.flatten().fieldErrors,
-        },
-      },
-      { status: 400 },
-    );
+    return invalidInput(parsed.error.flatten().fieldErrors);
   }
 
   try {
     requireRole(await auth(), ["ADMIN"]);
   } catch (error) {
     if (error instanceof AuthorizationError) {
-      return Response.json(
-        { error: { code: error.code, message: error.code } },
-        { status: error.status },
-      );
+      return apiError(error.code, error.status);
     }
     throw error;
   }
@@ -81,10 +70,7 @@ export async function GET(
     },
   });
   if (!student) {
-    return Response.json(
-      { error: { code: "STUDENT_NOT_FOUND", message: "STUDENT_NOT_FOUND" } },
-      { status: 404 },
-    );
+    return errorResponse("STUDENT_NOT_FOUND", 404);
   }
 
   const now = new Date();

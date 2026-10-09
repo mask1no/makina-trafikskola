@@ -1,3 +1,4 @@
+import { apiError, errorResponse, invalidInput } from "@/lib/api/http";
 import { AuthError } from "next-auth";
 import { z } from "zod";
 
@@ -29,30 +30,12 @@ export async function POST(request: Request) {
   const body = await request.json().catch(() => null);
   const parsed = verifySchema.safeParse(body);
   if (!parsed.success) {
-    return Response.json(
-      {
-        error: {
-          code: "INVALID_INPUT",
-          message: "INVALID_INPUT",
-          fields: parsed.error.flatten().fieldErrors,
-        },
-      },
-      { status: 400 },
-    );
+    return invalidInput(parsed.error.flatten().fieldErrors);
   }
 
   const phone = normalizePhoneToE164(parsed.data.phone);
   if (!phone) {
-    return Response.json(
-      {
-        error: {
-          code: "INVALID_PHONE",
-          message: "INVALID_PHONE",
-          fields: { phone: ["INVALID_PHONE"] },
-        },
-      },
-      { status: 400 },
-    );
+    return apiError("INVALID_PHONE", 400, { phone: ["INVALID_PHONE"] });
   }
 
   try {
@@ -70,15 +53,7 @@ export async function POST(request: Request) {
       return new Response(null, { status: 204 });
     }
     if (error instanceof AuthError) {
-      return Response.json(
-        {
-          error: {
-            code: "INVALID_OTP",
-            message: "INVALID_OTP",
-          },
-        },
-        { status: 401 },
-      );
+      return errorResponse("INVALID_OTP", 401);
     }
     throw error;
   }

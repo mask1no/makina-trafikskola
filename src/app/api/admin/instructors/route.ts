@@ -1,3 +1,4 @@
+import { errorResponse, invalidInput } from "@/lib/api/http";
 import bcrypt from "bcryptjs";
 import { Prisma } from "@prisma/client";
 import { z } from "zod";
@@ -52,24 +53,11 @@ const requestSchema = z
   })
   .strict();
 
-function errorResponse(code: string, status: number) {
-  return Response.json({ error: { code, message: code } }, { status });
-}
-
 export async function POST(request: Request) {
   const body = await request.json().catch(() => null);
   const parsed = requestSchema.safeParse(body);
   if (!parsed.success) {
-    return Response.json(
-      {
-        error: {
-          code: "INVALID_INPUT",
-          message: "INVALID_INPUT",
-          fields: parsed.error.flatten().fieldErrors,
-        },
-      },
-      { status: 400 },
-    );
+    return invalidInput(parsed.error.flatten().fieldErrors);
   }
 
   let actorId: string;

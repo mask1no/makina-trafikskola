@@ -1,3 +1,4 @@
+import { apiError, invalidInput } from "@/lib/api/http";
 import { Prisma } from "@prisma/client";
 import { z } from "zod";
 
@@ -55,9 +56,7 @@ function hoursOverlap(
   return false;
 }
 
-function apiError(code: string, status: number) {
-  return Response.json({ error: { code, message: code } }, { status });
-}
+
 
 export async function PATCH(
   request: Request,
@@ -65,16 +64,7 @@ export async function PATCH(
 ) {
   const parsed = profileSchema.safeParse(await request.json().catch(() => null));
   if (!parsed.success) {
-    return Response.json(
-      {
-        error: {
-          code: "INVALID_INPUT",
-          message: "INVALID_INPUT",
-          fields: parsed.error.flatten().fieldErrors,
-        },
-      },
-      { status: 400 },
-    );
+    return invalidInput(parsed.error.flatten().fieldErrors);
   }
   if (hoursOverlap(parsed.data.hours)) return apiError("HOURS_OVERLAP", 400);
 

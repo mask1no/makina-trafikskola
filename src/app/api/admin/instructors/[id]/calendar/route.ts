@@ -1,3 +1,4 @@
+import { apiError } from "@/lib/api/http";
 import { auth } from "@/auth";
 import { AuthorizationError, requireRole } from "@/lib/auth/guards";
 import { probeTeacherCalendar } from "@/lib/calendar/google";
@@ -5,9 +6,7 @@ import { db } from "@/lib/db";
 
 export const runtime = "nodejs";
 
-function apiError(code: string, status: number) {
-  return Response.json({ error: { code, message: code } }, { status });
-}
+
 
 export async function POST(
   _request: Request,

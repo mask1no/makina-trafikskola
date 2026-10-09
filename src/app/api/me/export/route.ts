@@ -1,3 +1,4 @@
+import { apiError, errorResponse } from "@/lib/api/http";
 import { z } from "zod";
 
 import { auth } from "@/auth";
@@ -13,10 +14,7 @@ export async function GET(request: Request) {
     Object.fromEntries(new URL(request.url).searchParams),
   );
   if (!parsed.success) {
-    return Response.json(
-      { error: { code: "INVALID_INPUT", message: "INVALID_INPUT" } },
-      { status: 400 },
-    );
+    return errorResponse("INVALID_INPUT", 400);
   }
 
   let studentId: string;
@@ -24,10 +22,7 @@ export async function GET(request: Request) {
     studentId = requireRole(await auth(), ["STUDENT"]).user.id;
   } catch (error) {
     if (error instanceof AuthorizationError) {
-      return Response.json(
-        { error: { code: error.code, message: error.code } },
-        { status: error.status },
-      );
+      return apiError(error.code, error.status);
     }
     throw error;
   }
@@ -147,10 +142,7 @@ export async function GET(request: Request) {
     },
   });
   if (!user) {
-    return Response.json(
-      { error: { code: "ACCOUNT_NOT_FOUND", message: "ACCOUNT_NOT_FOUND" } },
-      { status: 404 },
-    );
+    return errorResponse("ACCOUNT_NOT_FOUND", 404);
   }
 
   return Response.json(

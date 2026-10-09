@@ -1,3 +1,4 @@
+import { apiError, invalidInput } from "@/lib/api/http";
 import { z } from "zod";
 
 import { auth } from "@/auth";
@@ -23,9 +24,7 @@ const schema = z
   })
   .strict();
 
-function apiError(code: string, status: number) {
-  return Response.json({ error: { code, message: code } }, { status });
-}
+
 
 export async function PATCH(
   request: Request,
@@ -33,16 +32,7 @@ export async function PATCH(
 ) {
   const parsed = schema.safeParse(await request.json().catch(() => null));
   if (!parsed.success) {
-    return Response.json(
-      {
-        error: {
-          code: "INVALID_INPUT",
-          message: "INVALID_INPUT",
-          fields: parsed.error.flatten().fieldErrors,
-        },
-      },
-      { status: 400 },
-    );
+    return invalidInput(parsed.error.flatten().fieldErrors);
   }
   let actorId: string;
   try {

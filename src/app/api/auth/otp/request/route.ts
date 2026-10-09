@@ -2,6 +2,7 @@ import { randomInt } from "node:crypto";
 
 import { z } from "zod";
 
+import { apiError, errorResponse } from "@/lib/api/http";
 import { storeOtp } from "@/lib/auth/otp-store";
 import { normalizeSwedishPhone } from "@/lib/auth/phone";
 import { sendOtpSms } from "@/lib/auth/sms";
@@ -16,22 +17,11 @@ const requestSchema = z
   })
   .strict();
 
-function errorResponse(
-  code: string,
-  status: number,
-  fields?: Record<string, string[]>,
-) {
-  return Response.json(
-    { error: { code, message: code, ...(fields ? { fields } : {}) } },
-    { status },
-  );
-}
-
 export async function POST(request: Request) {
   const body = await request.json().catch(() => null);
   const parsed = requestSchema.safeParse(body);
   if (!parsed.success) {
-    return errorResponse(
+    return apiError(
       "INVALID_INPUT",
       400,
       parsed.error.flatten().fieldErrors,
@@ -40,7 +30,7 @@ export async function POST(request: Request) {
 
   const phone = normalizeSwedishPhone(parsed.data.phone);
   if (!phone) {
-    return errorResponse("INVALID_PHONE", 400, {
+    return apiError("INVALID_PHONE", 400, {
       phone: ["INVALID_PHONE"],
     });
   }
@@ -51,7 +41,7 @@ export async function POST(request: Request) {
       select: { id: true },
     });
     if (!account) {
-      return errorResponse("NO_ACCOUNT", 404);
+      return apiError("NO_ACCOUNT", 404);
     }
   }
 
@@ -63,13 +53,9 @@ export async function POST(request: Request) {
   const result = await storeOtp(phone, code, now);
 
   if (!result.allowed) {
-    return Response.json(
-      { error: { code: "RATE_LIMITED", message: "RATE_LIMITED" } },
-      {
-        status: 429,
-        headers: { "retry-after": String(result.retryAfterSeconds) },
-      },
-    );
+    const limited = errorResponse("RATE_LIMITED", 429);
+    limited.headers.set("retry-after", String(result.retryAfterSeconds));
+    return limited;
   }
 
   let delivered = false;
@@ -82,7 +68,7 @@ export async function POST(request: Request) {
       codeName === "SMS_PROVIDER_NOT_CONFIGURED" ||
       codeName === "SMS_DELIVERY_FAILED"
     ) {
-      return errorResponse(codeName, codeName === "SMS_PROVIDER_NOT_CONFIGURED" ? 503 : 502);
+      return apiError(codeName, codeName === "SMS_PROVIDER_NOT_CONFIGURED" ? 503 : 502);
     }
     throw reason;
   }

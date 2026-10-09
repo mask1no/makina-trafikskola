@@ -1,3 +1,4 @@
+import { errorResponse, invalidInput } from "@/lib/api/http";
 import { differenceInCalendarDays } from "date-fns";
 import * as Sentry from "@sentry/nextjs";
 import { z } from "zod";
@@ -41,16 +42,7 @@ export async function GET(request: Request) {
     Object.fromEntries(url.searchParams.entries()),
   );
   if (!parsed.success) {
-    return Response.json(
-      {
-        error: {
-          code: "INVALID_INPUT",
-          message: "INVALID_INPUT",
-          fields: parsed.error.flatten().fieldErrors,
-        },
-      },
-      { status: 400 },
-    );
+    return invalidInput(parsed.error.flatten().fieldErrors);
   }
 
   const slots = await loadAvailability({
@@ -59,15 +51,7 @@ export async function GET(request: Request) {
     minNoticeHours: minNoticeHours(),
   });
   if (!slots) {
-    return Response.json(
-      {
-        error: {
-          code: "TEACHER_NOT_FOUND",
-          message: "TEACHER_NOT_FOUND",
-        },
-      },
-      { status: 404 },
-    );
+    return errorResponse("TEACHER_NOT_FOUND", 404);
   }
 
   if (!calendarSyncEnabled()) return Response.json(slots);

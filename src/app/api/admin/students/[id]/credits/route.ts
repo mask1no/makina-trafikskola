@@ -1,3 +1,4 @@
+import { invalidInput, apiError, errorResponse } from "@/lib/api/http";
 import { Prisma } from "@prisma/client";
 import { z } from "zod";
 
@@ -25,16 +26,7 @@ export async function POST(
     id: (await context.params).id,
   });
   if (!parsed.success) {
-    return Response.json(
-      {
-        error: {
-          code: "INVALID_INPUT",
-          message: "INVALID_INPUT",
-          fields: parsed.error.flatten().fieldErrors,
-        },
-      },
-      { status: 400 },
-    );
+    return invalidInput(parsed.error.flatten().fieldErrors);
   }
 
   let actorId: string;
@@ -42,10 +34,7 @@ export async function POST(
     actorId = requireRole(await auth(), ["ADMIN"]).user.id;
   } catch (error) {
     if (error instanceof AuthorizationError) {
-      return Response.json(
-        { error: { code: error.code, message: error.code } },
-        { status: error.status },
-      );
+      return apiError(error.code, error.status);
     }
     throw error;
   }
@@ -55,10 +44,7 @@ export async function POST(
     select: { id: true },
   });
   if (!student) {
-    return Response.json(
-      { error: { code: "STUDENT_NOT_FOUND", message: "STUDENT_NOT_FOUND" } },
-      { status: 404 },
-    );
+    return errorResponse("STUDENT_NOT_FOUND", 404);
   }
 
   const result = await db.$transaction(

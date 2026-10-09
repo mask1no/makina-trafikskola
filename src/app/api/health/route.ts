@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { apiError as sharedApiError } from "@/lib/api/http";
 import { bearerToken, matchesSecret } from "@/lib/auth/bearer-secret";
 import { db } from "@/lib/db";
 import {
@@ -18,10 +19,9 @@ const querySchema = z.object({ deep: z.literal("1").optional() }).strict();
 const noStore = { "cache-control": "no-store" };
 
 function apiError(code: string, status: number) {
-  return Response.json(
-    { error: { code, message: code } },
-    { status, headers: noStore },
-  );
+  const response = sharedApiError(code, status);
+  response.headers.set("cache-control", "no-store");
+  return response;
 }
 
 export async function GET(request: Request) {

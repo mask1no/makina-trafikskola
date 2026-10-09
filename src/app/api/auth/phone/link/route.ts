@@ -1,3 +1,4 @@
+import { invalidInput, apiError, errorResponse } from "@/lib/api/http";
 import { Prisma } from "@prisma/client";
 import { z } from "zod";
 
@@ -31,38 +32,17 @@ export async function POST(request: Request) {
   const body = await request.json().catch(() => null);
   const parsed = linkSchema.safeParse(body);
   if (!parsed.success) {
-    return Response.json(
-      {
-        error: {
-          code: "INVALID_INPUT",
-          message: "INVALID_INPUT",
-          fields: parsed.error.flatten().fieldErrors,
-        },
-      },
-      { status: 400 },
-    );
+    return invalidInput(parsed.error.flatten().fieldErrors);
   }
 
   const session = await auth();
   if (!session?.user.id) {
-    return Response.json(
-      { error: { code: "UNAUTHENTICATED", message: "UNAUTHENTICATED" } },
-      { status: 401 },
-    );
+    return errorResponse("UNAUTHENTICATED", 401);
   }
 
   const phone = normalizeSwedishPhone(parsed.data.phone);
   if (!phone) {
-    return Response.json(
-      {
-        error: {
-          code: "INVALID_PHONE",
-          message: "INVALID_PHONE",
-          fields: { phone: ["INVALID_PHONE"] },
-        },
-      },
-      { status: 400 },
-    );
+    return apiError("INVALID_PHONE", 400, { phone: ["INVALID_PHONE"] });
   }
 
   const now = new Date();
@@ -76,17 +56,11 @@ export async function POST(request: Request) {
     request.headers.get("x-real-ip") ??
     "unknown";
   if (!(await allowLoginAttempt(`phone-link:${phone}`, ip, now))) {
-    return Response.json(
-      { error: { code: "RATE_LIMITED", message: "RATE_LIMITED" } },
-      { status: 429 },
-    );
+    return errorResponse("RATE_LIMITED", 429);
   }
 
   if (!(await consumeOtp(phone, parsed.data.code, now))) {
-    return Response.json(
-      { error: { code: "INVALID_OTP", message: "INVALID_OTP" } },
-      { status: 401 },
-    );
+    return errorResponse("INVALID_OTP", 401);
   }
 
   try {
@@ -148,10 +122,7 @@ export async function POST(request: Request) {
     return new Response(null, { status: 204 });
   } catch (error) {
     if (error instanceof PhoneLinkError) {
-      return Response.json(
-        { error: { code: error.code, message: error.code } },
-        { status: error.status },
-      );
+      return apiError(error.code, error.status);
     }
     throw error;
   }

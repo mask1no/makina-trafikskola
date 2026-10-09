@@ -1,3 +1,4 @@
+import { apiError } from "@/lib/api/http";
 import { getTranslations } from "next-intl/server";
 import { z } from "zod";
 
@@ -16,9 +17,7 @@ export const dynamic = "force-dynamic";
 
 const paramsSchema = z.object({ id: z.string().cuid() }).strict();
 
-function apiError(code: string, status: number) {
-  return Response.json({ error: { code, message: code } }, { status });
-}
+
 
 export async function GET(
   _request: Request,

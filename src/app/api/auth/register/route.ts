@@ -1,3 +1,4 @@
+import { invalidInput, apiError, errorResponse } from "@/lib/api/http";
 import { Prisma } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
@@ -31,44 +32,17 @@ export async function POST(request: Request) {
   const body = await request.json().catch(() => null);
   const parsed = registrationSchema.safeParse(body);
   if (!parsed.success) {
-    return Response.json(
-      {
-        error: {
-          code: "INVALID_INPUT",
-          message: "INVALID_INPUT",
-          fields: parsed.error.flatten().fieldErrors,
-        },
-      },
-      { status: 400 },
-    );
+    return invalidInput(parsed.error.flatten().fieldErrors);
   }
 
   const phone = normalizeSwedishPhone(parsed.data.phone);
   if (!phone) {
-    return Response.json(
-      {
-        error: {
-          code: "INVALID_PHONE",
-          message: "INVALID_PHONE",
-          fields: { phone: ["INVALID_PHONE"] },
-        },
-      },
-      { status: 400 },
-    );
+    return apiError("INVALID_PHONE", 400, { phone: ["INVALID_PHONE"] });
   }
 
   const { firstName, lastName } = splitFullName(parsed.data.fullName);
   if (!firstName) {
-    return Response.json(
-      {
-        error: {
-          code: "INVALID_INPUT",
-          message: "INVALID_INPUT",
-          fields: { fullName: ["INVALID_INPUT"] },
-        },
-      },
-      { status: 400 },
-    );
+    return apiError("INVALID_INPUT", 400, { fullName: ["INVALID_INPUT"] });
   }
 
   const now = new Date();
@@ -98,10 +72,7 @@ export async function POST(request: Request) {
     ),
   ]);
   if (!phoneAllowed || !emailAllowed) {
-    return Response.json(
-      { error: { code: "RATE_LIMITED", message: "RATE_LIMITED" } },
-      { status: 429 },
-    );
+    return errorResponse("RATE_LIMITED", 429);
   }
 
   const existing = await db.user.findFirst({
@@ -112,17 +83,11 @@ export async function POST(request: Request) {
     select: { id: true },
   });
   if (existing) {
-    return Response.json(
-      { error: { code: "ACCOUNT_EXISTS", message: "ACCOUNT_EXISTS" } },
-      { status: 409 },
-    );
+    return errorResponse("ACCOUNT_EXISTS", 409);
   }
 
   if (!(await consumeOtp(phone, parsed.data.code, now))) {
-    return Response.json(
-      { error: { code: "INVALID_OTP", message: "INVALID_OTP" } },
-      { status: 401 },
-    );
+    return errorResponse("INVALID_OTP", 401);
   }
 
   const passwordHash = await bcrypt.hash(parsed.data.password, 12);
@@ -148,10 +113,7 @@ export async function POST(request: Request) {
       error instanceof Prisma.PrismaClientKnownRequestError &&
       error.code === "P2002"
     ) {
-      return Response.json(
-        { error: { code: "ACCOUNT_EXISTS", message: "ACCOUNT_EXISTS" } },
-        { status: 409 },
-      );
+      return errorResponse("ACCOUNT_EXISTS", 409);
     }
     throw error;
   }

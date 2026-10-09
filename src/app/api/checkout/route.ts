@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { auth } from "@/auth";
-import { authorizationError } from "@/lib/api/http";
+import { authorizationError, errorResponse, invalidInput } from "@/lib/api/http";
 import { requireRole } from "@/lib/auth/guards";
 import { checkoutHoldError } from "@/lib/bookings/hold";
 import { db } from "@/lib/db";
@@ -18,27 +18,11 @@ const checkoutSchema = z.object({
   withdrawalAcknowledged: z.literal(true),
 }).strict();
 
-function errorResponse(code: string, status: number) {
-  return Response.json(
-    { error: { code, message: code } },
-    { status },
-  );
-}
-
 export async function POST(request: Request) {
   const body = await request.json().catch(() => null);
   const parsed = checkoutSchema.safeParse(body);
   if (!parsed.success) {
-    return Response.json(
-      {
-        error: {
-          code: "INVALID_INPUT",
-          message: "INVALID_INPUT",
-          fields: parsed.error.flatten().fieldErrors,
-        },
-      },
-      { status: 400 },
-    );
+    return invalidInput(parsed.error.flatten().fieldErrors);
   }
 
   let session;

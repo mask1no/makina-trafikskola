@@ -14,6 +14,7 @@ type AvailabilityQuery = {
   now: Date;
   minNoticeHours: number;
   excludeBookingId?: string;
+  locationId?: string;
 };
 
 export async function loadAvailability({
@@ -24,6 +25,7 @@ export async function loadAvailability({
   now,
   minNoticeHours,
   excludeBookingId,
+  locationId,
 }: AvailabilityQuery): Promise<Slot[] | null> {
   const teacher = await db.teacherProfile.findFirst({
     where: { id: teacherId, active: true },
@@ -61,7 +63,14 @@ export async function loadAvailability({
     lessonMinutes,
     travelBufferMin: teacher.travelBufferMin,
     minNoticeHours,
-    rules: teacher.availability.map((rule) => ({
+    rules: teacher.availability
+      .filter(
+        (rule) =>
+          !locationId ||
+          rule.locationId == null ||
+          rule.locationId === locationId,
+      )
+      .map((rule) => ({
       dayOfWeek: rule.dayOfWeek,
       startTime: rule.startTime,
       endTime: rule.endTime,
@@ -83,6 +92,7 @@ export async function firstAvailableSlot(input: {
   now: Date;
   lessonMinutes?: 50 | 100;
   minNoticeHours?: number;
+  locationId?: string;
 }) {
   const slots = await loadAvailability({
     teacherId: input.teacherId,
@@ -91,6 +101,29 @@ export async function firstAvailableSlot(input: {
     lessonMinutes: input.lessonMinutes ?? 50,
     now: input.now,
     minNoticeHours: input.minNoticeHours ?? 12,
+    locationId: input.locationId,
   });
   return slots?.[0]?.startsAt ?? null;
+}
+
+export async function nextFreeSlots(
+  teacherIds: string[],
+  now: Date,
+  locationId?: string,
+) {
+  const configured = Number(process.env.MIN_BOOKING_NOTICE_HOURS ?? "12");
+  const minNoticeHours =
+    Number.isFinite(configured) && configured >= 0 ? configured : 12;
+  const entries = await Promise.all(
+    teacherIds.map(async (teacherId) => {
+      const startsAt = await firstAvailableSlot({
+        teacherId,
+        now,
+        minNoticeHours,
+        locationId,
+      });
+      return [teacherId, startsAt] as const;
+    }),
+  );
+  return new Map(entries);
 }

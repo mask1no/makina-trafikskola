@@ -27,6 +27,8 @@ import { displayPhone, telHref } from "@/lib/format/phone";
 import { benefitItems } from "@/lib/home/benefits";
 import { googleMapsBrowserConfig } from "@/lib/maps/config";
 import { activeTeacherLanguages } from "@/lib/teachers/query";
+import { nextFreeSlots } from "@/lib/bookings/availability";
+import { formatLessonDateTime } from "@/lib/format/datetime";
 import { formatPrice } from "@/lib/pricing/format";
 import { toProductCardModel } from "@/lib/products/card";
 import {
@@ -169,6 +171,10 @@ async function HomeBelow({
     activeTeacherLanguages(),
     getPublishedReviewSummary(),
   ]);
+  const nextFree = await nextFreeSlots(
+    teachers.slice(0, 4).map((teacher) => teacher.id),
+    new Date(),
+  );
   const offeredLanguages = offeredTeachingLanguages();
   const offeredLanguageNames = formatLanguageList(
     offeredLanguages,
@@ -389,6 +395,12 @@ async function HomeBelow({
                       : ""
                   }
                   detailsLabel={t("teacher.viewProfile")}
+                  nextFreeLabel={t("teacher.nextFree")}
+                  nextFreeTime={
+                    nextFree.get(teacher.id)
+                      ? formatLessonDateTime(nextFree.get(teacher.id)!, params.locale)
+                      : undefined
+                  }
                   swedishOnly={teacher.swedishOnly}
                   swedishOnlyLabel={t("common.swedishOnly")}
                 />

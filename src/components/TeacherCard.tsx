@@ -13,6 +13,8 @@ type TeacherCardProps = {
   locationNames: string[];
   experienceLabel: string;
   detailsLabel: string;
+  nextFreeLabel?: string;
+  nextFreeTime?: string;
   cardId?: string;
   demoLabel?: string;
   swedishOnly?: boolean;
@@ -56,6 +58,14 @@ export function TeacherCard(props: TeacherCardProps) {
       </ul>
       {props.locationNames.length ? (
         <p className="mt-2 text-small text-ink-muted">{props.locationNames.join(" · ")}</p>
+      ) : null}
+      {props.nextFreeTime ? (
+        <p className="mt-3 text-small text-ink-muted">
+          {props.nextFreeLabel}{" "}
+          <bdi dir="ltr" className="numbers-ltr font-bold text-ink">
+            {props.nextFreeTime}
+          </bdi>
+        </p>
       ) : null}
       <Link
         href={`/${props.locale}/larare/${props.slug}`}

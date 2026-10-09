@@ -4,10 +4,10 @@ import { notFound } from "next/navigation";
 
 import { Avatar } from "@/components/Avatar";
 import { Badge } from "@/components/Badge";
+import { Card } from "@/components/Card";
 import { ClickToLoadMapEmbed } from "@/components/ClickToLoadMapEmbed";
 import { isLocale } from "@/i18n/routing";
 import {
-  companyOpeningHours,
   isOpenNow,
   openingHoursSpecification,
   todayHours,
@@ -18,7 +18,7 @@ import {
   offeredTeachingLanguages,
   publicStaff,
 } from "@/lib/company/staff";
-import { displayPhone, smsHref, telHref } from "@/lib/format/phone";
+import { displayPhone, telHref } from "@/lib/format/phone";
 import { publicAddress } from "@/lib/locations/address";
 import { db } from "@/lib/db";
 import {
@@ -108,8 +108,6 @@ export default async function ContactPage(
     params.locale,
     (code) => shell(`languagePage.${code}`),
   );
-  const directions = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${visiting}, Sweden`)}`;
-
   const structuredData = {
     "@context": "https://schema.org",
     "@type": ["LocalBusiness", "DrivingSchool"],
@@ -166,71 +164,74 @@ export default async function ContactPage(
         }}
       />
       <div className="site-container">
-        <div className="grid items-start gap-8 lg:grid-cols-2">
-        <section className="rounded-lg border border-border bg-card p-6 shadow-card sm:p-8">
-          <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-ink-muted">{t("eyebrow")}</p>
-          <h1 className="section-title mt-3">{t("title")}</h1>
-          <p className="mt-4 max-w-[70ch] leading-7 text-ink-muted">{t("description")}</p>
-          <a className="mt-6 inline-flex min-h-16 w-full items-center justify-center rounded-sm bg-accent px-5 text-2xl font-black text-accent-ink" href={telHref(phone)}>
-            {shell.rich("callName", {
-              phone: () => (
-                <bdi dir="ltr" className="numbers-ltr">
-                  {displayPhone(phone)}
-                </bdi>
-              ),
-            })}
-          </a>
-          <div className="mt-5 flex flex-wrap items-center gap-3">
-            <Badge tone={open ? "success" : "neutral"}>{open ? shell("openNow") : shell("closed")}</Badge>
-            <p className="text-small text-ink-muted">
-              {hours ? <span className="numbers-ltr">{hours.open}–{hours.close}</span> : shell("closed")}
+        <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-ink-muted">{t("eyebrow")}</p>
+        <h1 className="section-title mt-3">{t("title")}</h1>
+        <p className="mt-4 max-w-[70ch] leading-7 text-ink-muted">{t("description")}</p>
+        <div className="mt-8 grid items-stretch gap-4 md:grid-cols-2">
+          <Card className="flex h-full flex-col" padding="lg">
+            <h2 className="text-h3 font-black">{shell("callUs")}</h2>
+            <a className="mt-4 inline-flex min-h-[52px] w-full items-center justify-center rounded-sm bg-accent px-5 text-2xl font-black text-accent-ink" href={telHref(phone)}>
+              {shell.rich("callName", {
+                phone: () => (
+                  <bdi dir="ltr" className="numbers-ltr">
+                    {displayPhone(phone)}
+                  </bdi>
+                ),
+              })}
+            </a>
+            <div className="mt-5 flex flex-wrap items-center gap-3">
+              <Badge tone={open ? "success" : "neutral"}>{open ? shell("openNow") : shell("closed")}</Badge>
+              <p className="text-small text-ink-muted">
+                {hours ? <span className="numbers-ltr">{hours.open}–{hours.close}</span> : shell("closed")}
+              </p>
+            </div>
+            <p className="mt-auto pt-6 text-small text-ink-muted">{visiting}</p>
+          </Card>
+          <Card className="flex h-full flex-col" padding="lg">
+            <h2 className="text-h3 font-black">{t("emailUs")}</h2>
+            <a className="mt-4 inline-flex min-h-[52px] w-full items-center justify-center rounded-sm border border-border bg-card px-5 text-body font-bold text-ink" href={`mailto:${email}`}>
+              {email}
+            </a>
+            <p className="mt-4 max-w-[70ch] leading-7 text-ink-muted">{t("replyLine")}</p>
+            <p className="mt-auto pt-6 text-small text-ink-muted">
+              <span className="font-bold">{t("orgnr")}</span>{" "}
+              <span className="numbers-ltr">{orgnr}</span>
             </p>
+          </Card>
+        </div>
+        <section className="mt-10">
+          <h2 className="text-2xl font-black">{t("locationsTitle")}</h2>
+          <p className="mt-3 max-w-2xl text-ink-muted">{t("locationsDescription")}</p>
+          <div className="mt-6">
+            <ClickToLoadMapEmbed
+              address={`${visiting}, Sweden`}
+              buttonLabel={shell("showMap")}
+              title={t("locationsTitle")}
+              privacy={shell("mapPrivacy")}
+            />
           </div>
-          <details className="mt-4 rounded-sm border border-border bg-page p-3 text-small md:hidden">
-            <summary className="cursor-pointer font-bold">{t("openingHours")}</summary>
-            <table className="mt-3 w-full text-small">
-              <tbody>
-                {companyOpeningHours.map((day, index) => (
-                  <tr key={index} className="border-t border-border">
-                    <th scope="row" className="py-2 text-start font-bold">{t(`day.${index}`)}</th>
-                    <td className="py-2 text-end numbers-ltr">{day ? `${day.open}–${day.close}` : shell("closed")}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </details>
-          <table className="mt-6 hidden w-full text-small md:table">
-            <tbody>
-              {companyOpeningHours.map((day, index) => (
-                <tr key={index} className="border-t border-border">
-                  <th scope="row" className="py-2 text-start font-bold">{t(`day.${index}`)}</th>
-                  <td className="py-2 text-end numbers-ltr">{day ? `${day.open}–${day.close}` : shell("closed")}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <p className="mt-6 max-w-[70ch] text-body leading-7">{visiting}</p>
-          <a className="mt-2 inline-flex min-h-11 items-center font-bold underline underline-offset-4" href={directions} rel="noreferrer" target="_blank">
-            {shell("directions")}
-          </a>
-          <a className="mt-1 inline-flex min-h-11 items-center text-small font-bold text-ink-muted underline underline-offset-4" href={smsHref(phone)}>
-            {t("sendSms")}
-          </a>
-          <dl className="mt-6 grid gap-4 border-t border-border pt-6 sm:grid-cols-2">
-            <div>
-              <dt className="text-small font-bold text-ink-muted">{t("orgnr")}</dt>
-              <dd className="mt-1 numbers-ltr">{orgnr}</dd>
-            </div>
-            <div>
-              <dt className="text-small font-bold text-ink-muted">{t("email")}</dt>
-              <dd className="mt-1 break-all">
-                <a className="inline-flex min-h-11 items-center font-bold underline underline-offset-4" href={`mailto:${email}`}>{email}</a>
-              </dd>
-            </div>
-          </dl>
+          <div className="mt-6 grid gap-4 sm:grid-cols-2">
+            {locations.map((location) => (
+              <Card key={location.id} padding="lg">
+                <h3 className="text-lg font-extrabold">{location.name}</h3>
+                <p className="mt-2 max-w-[70ch] text-body leading-7 text-ink-muted">
+                  {publicAddress(location.address) ?? location.city}
+                  <br />
+                  <span className="numbers-ltr">{location.postalCode}</span> {location.city}
+                </p>
+                <a
+                  className="mt-3 inline-flex min-h-11 items-center font-bold underline underline-offset-4"
+                  href={mapsDirections(publicAddress(location.address) ?? location.city, location.city, location.postalCode)}
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  {t("directions")}
+                </a>
+              </Card>
+            ))}
+          </div>
         </section>
-        <div className="grid gap-8">
-        <section>
+        <section className="mt-10">
           <h2 className="text-2xl font-black">{t("staffTitle")}</h2>
           <p className="mt-3 max-w-2xl text-ink-muted">{t("staffDescription")}</p>
           <ul className="mt-6 grid gap-3 lg:grid-cols-2">
@@ -263,42 +264,7 @@ export default async function ContactPage(
           </ul>
         </section>
 
-        <section className="mt-10">
-          <h2 className="text-2xl font-black">{t("locationsTitle")}</h2>
-          <p className="mt-3 max-w-2xl text-ink-muted">{t("locationsDescription")}</p>
-          {locations[0] ? (
-            <div className="mt-6">
-              <ClickToLoadMapEmbed
-                address={`${visiting}, Sweden`}
-                buttonLabel={shell("showMap")}
-                title={t("locationsTitle")}
-                privacy={shell("mapPrivacy")}
-              />
-            </div>
-          ) : null}
-          <div className="mt-6 grid gap-4 sm:grid-cols-2">
-            {locations.map((location) => (
-              <article key={location.id} className="rounded-md border border-border bg-card p-5 shadow-soft">
-                <h3 className="text-lg font-extrabold">{location.name}</h3>
-                <p className="mt-2 max-w-[70ch] text-body leading-7 text-ink-muted">
-                  {publicAddress(location.address) ?? location.city}
-                  <br />
-                  <span className="numbers-ltr">{location.postalCode}</span> {location.city}
-                </p>
-                <a
-                  className="mt-3 inline-flex min-h-11 items-center font-bold underline underline-offset-4"
-                  href={mapsDirections(publicAddress(location.address) ?? location.city, location.city, location.postalCode)}
-                  rel="noreferrer"
-                  target="_blank"
-                >
-                  {t("directions")}
-                </a>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="rounded-lg border border-border bg-card p-6 shadow-soft">
+        <section className="mt-10 rounded-lg border border-border bg-card p-6 shadow-soft">
           <h2 className="text-xl font-black">{t("languagesTitle")}</h2>
           <p className="mt-3 max-w-[70ch] leading-7 text-ink-muted">
             {t("languagesBody", {
@@ -336,8 +302,6 @@ export default async function ContactPage(
             </ul>
           </section>
         ) : null}
-        </div>
-        </div>
       </div>
     </div>
   );

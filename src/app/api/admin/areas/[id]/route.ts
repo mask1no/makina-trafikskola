@@ -1,3 +1,4 @@
+import { apiError } from "@/lib/api/http";
 import { Prisma } from "@prisma/client";
 import { z } from "zod";
 
@@ -25,9 +26,7 @@ function isPolygon(value: unknown): boolean {
   return record.type === "Polygon" || record.type === "MultiPolygon";
 }
 
-function apiError(code: string, status: number) {
-  return Response.json({ error: { code, message: code } }, { status });
-}
+
 
 export async function PATCH(
   request: Request,

@@ -1,3 +1,4 @@
+import { errorResponse } from "@/lib/api/http";
 import { addDays, subDays } from "date-fns";
 import { z } from "zod";
 
@@ -22,10 +23,7 @@ const paramsSchema = z
   .strict();
 
 function notFound() {
-  return Response.json(
-    { error: { code: "NOT_FOUND", message: "NOT_FOUND" } },
-    { status: 404 },
-  );
+  return errorResponse("NOT_FOUND", 404);
 }
 
 export async function GET(
@@ -44,10 +42,7 @@ export async function GET(
     now,
   );
   if (!allowed) {
-    return Response.json(
-      { error: { code: "RATE_LIMITED", message: "RATE_LIMITED" } },
-      { status: 429 },
-    );
+    return errorResponse("RATE_LIMITED", 429);
   }
 
   const teacher = await db.teacherProfile.findFirst({

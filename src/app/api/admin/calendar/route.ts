@@ -1,3 +1,4 @@
+import { invalidInput, apiError } from "@/lib/api/http";
 import { z } from "zod";
 
 import { auth } from "@/auth";
@@ -25,26 +26,14 @@ export async function GET(request: Request) {
     to: url.searchParams.get("to"),
   });
   if (!parsed.success) {
-    return Response.json(
-      {
-        error: {
-          code: "INVALID_INPUT",
-          message: "INVALID_INPUT",
-          fields: parsed.error.flatten().fieldErrors,
-        },
-      },
-      { status: 400 },
-    );
+    return invalidInput(parsed.error.flatten().fieldErrors);
   }
 
   try {
     requireRole(await auth(), ["ADMIN"]);
   } catch (error) {
     if (error instanceof AuthorizationError) {
-      return Response.json(
-        { error: { code: error.code, message: error.code } },
-        { status: error.status },
-      );
+      return apiError(error.code, error.status);
     }
     throw error;
   }

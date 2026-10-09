@@ -1,3 +1,4 @@
+import { errorResponse, invalidInput } from "@/lib/api/http";
 import { addDays } from "date-fns";
 import { Prisma } from "@prisma/client";
 import { z } from "zod";
@@ -48,12 +49,7 @@ function configuredNumber(name: string, fallback: number) {
   return Number.isFinite(value) && value >= 0 ? value : fallback;
 }
 
-function errorResponse(code: string, status: number, extra?: object) {
-  return Response.json(
-    { error: { code, message: code }, ...(extra ?? {}) },
-    { status },
-  );
-}
+
 
 export async function PATCH(
   request: Request,
@@ -65,16 +61,7 @@ export async function PATCH(
     id: (await context.params).id,
   });
   if (!parsed.success) {
-    return Response.json(
-      {
-        error: {
-          code: "INVALID_INPUT",
-          message: "INVALID_INPUT",
-          fields: parsed.error.flatten().fieldErrors,
-        },
-      },
-      { status: 400 },
-    );
+    return invalidInput(parsed.error.flatten().fieldErrors);
   }
 
   let session;

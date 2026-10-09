@@ -1,3 +1,4 @@
+import { apiError } from "@/lib/api/http";
 import * as Sentry from "@sentry/nextjs";
 
 import { bearerToken, matchesSecret } from "@/lib/auth/bearer-secret";
@@ -5,10 +6,6 @@ import { runCoreCron } from "@/lib/cron/jobs";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-
-function apiError(code: string, status: number) {
-  return Response.json({ error: { code, message: code } }, { status });
-}
 
 async function runMonitoredCoreCron(now: Date) {
   const startedAt = performance.now();
