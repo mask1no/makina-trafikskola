@@ -14,10 +14,12 @@ import { theoryMode } from "@/lib/launch";
 import { hasTheoryAccess } from "@/lib/theory/access";
 import { locales } from "@/i18n/routing";
 
+const recordId = z.string().trim().min(1).max(80).regex(/^[A-Za-z0-9_-]+$/);
+
 const attemptSchema = z
   .object({
     questionId: z.string().cuid(),
-    answerId: z.string().cuid(),
+    answerId: recordId,
     sessionId: z.string().cuid().optional(),
     locale: z.enum(locales).optional(),
   })

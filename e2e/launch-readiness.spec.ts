@@ -34,6 +34,9 @@ test.describe("public localized experience", () => {
       page.getByRole("heading", { name: "قواعد المرور", level: 1 }),
     ).toBeVisible();
     await expect(page.locator(".choice-card")).toHaveCount(3);
+    await page.locator(".choice-card").first().click();
+    await expect(page.getByRole("button", { name: "التالي" })).toBeVisible();
+    await expect(page.getByText("تعذر حفظ الإجابة")).toHaveCount(0);
   });
 
   test("keeps the Google account option visible", async ({ page }) => {

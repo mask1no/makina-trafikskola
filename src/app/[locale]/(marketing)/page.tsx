@@ -487,7 +487,7 @@ async function HomeBelow({
               ? (["choose", "book", "learn"] as const)
               : (["choose", "call", "learn"] as const)).map((step, index) => (
               <li key={step} className="border-t border-border pt-4 md:pt-6">
-                <span className="numbers-ltr text-small font-black text-accent">{index + 1}</span>
+                <span className="numbers-ltr text-small font-black text-ink">{index + 1}</span>
                 <h3 className="mt-4 text-h3 font-black">{t(`home.journey.${step}.title`)}</h3>
                 <p className="mt-3 max-w-[70ch] text-body leading-7 text-ink-muted">{t(`home.journey.${step}.description`)}</p>
               </li>
