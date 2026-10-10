@@ -12,22 +12,24 @@ export async function CookieConsent({ locale }: { locale: string }) {
     <aside
       role="region"
       aria-label={t("title")}
-      className="fixed inset-x-4 bottom-20 z-50 ms-auto me-auto max-w-3xl rounded-lg border border-surface-soft bg-surface p-5 text-ink-inverse shadow-float sm:p-6 md:bottom-4"
+      className="fixed inset-x-3 bottom-[calc(var(--tab-bar-height)+var(--safe-bottom)+0.75rem)] z-50 mx-auto grid max-w-3xl gap-3 rounded-lg border border-[var(--line)] bg-card p-3 text-ink shadow-float sm:inset-x-4 md:bottom-4 md:grid-cols-[minmax(0,1.4fr)_minmax(12rem,0.8fr)] md:p-4"
     >
-      <h2 className="text-lg font-extrabold tracking-tight">{t("title")}</h2>
-      <p className="mt-2 text-sm leading-6 text-ink-inverse-muted">
-        {t("description")}{" "}
-        <Link className="font-bold text-ink-inverse underline underline-offset-4" href={`/${locale}/cookies`}>
-          {t("readMore")}
-        </Link>
-      </p>
-      <form action={saveCookieConsent} className="mt-5 flex flex-wrap gap-3">
+      <div className="rounded-md bg-page p-4 sm:p-5">
+        <h2 className="text-lg font-extrabold tracking-tight">{t("title")}</h2>
+        <p className="mt-2 text-sm leading-6 text-ink-muted">
+          {t("description")}{" "}
+          <Link className="font-bold text-ink underline underline-offset-4" href={`/${locale}/cookies`}>
+            {t("readMore")}
+          </Link>
+        </p>
+      </div>
+      <form action={saveCookieConsent} className="flex items-stretch rounded-md bg-accent p-4 sm:p-5">
         <input type="hidden" name="locale" value={locale} />
         <button
           type="submit"
           name="consent"
           value="necessary"
-          className="min-h-11 rounded-sm border border-accent bg-accent px-4 text-sm font-bold text-accent-ink shadow-soft transition hover:border-accent-hover hover:bg-accent-hover"
+          className="inline-flex min-h-11 w-full items-center justify-center rounded-sm bg-surface px-4 text-sm font-bold text-ink-inverse shadow-soft"
         >
           {t("ok")}
         </button>

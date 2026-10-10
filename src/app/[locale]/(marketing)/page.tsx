@@ -81,7 +81,7 @@ async function HomeHero({ locale }: { locale: Locale }) {
       />
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-[linear-gradient(180deg,color-mix(in_srgb,var(--surface)_40%,transparent)_0%,color-mix(in_srgb,var(--surface)_68%,transparent)_42%,var(--surface)_100%)] lg:bg-[linear-gradient(90deg,color-mix(in_srgb,var(--surface)_86%,transparent)_0%,color-mix(in_srgb,var(--surface)_60%,transparent)_44%,color-mix(in_srgb,var(--surface)_18%,transparent)_68%,transparent_100%)]"
+        className="absolute inset-0 bg-[linear-gradient(180deg,color-mix(in_srgb,var(--surface)_42%,transparent)_0%,color-mix(in_srgb,var(--surface)_62%,transparent)_46%,color-mix(in_srgb,var(--surface)_28%,transparent)_100%)] lg:bg-[linear-gradient(90deg,color-mix(in_srgb,var(--surface)_86%,transparent)_0%,color-mix(in_srgb,var(--surface)_55%,transparent)_42%,color-mix(in_srgb,var(--surface)_12%,transparent)_70%,transparent_100%)]"
       />
       <div className="site-container relative z-10 grid items-end gap-8 pb-10 pt-24 lg:grid-cols-2 lg:pb-16">
         <div>
@@ -102,26 +102,18 @@ async function HomeHero({ locale }: { locale: Locale }) {
                 href={telHref(phone)}
                 className="inline-flex min-h-11 w-full items-center justify-center rounded-sm border border-accent bg-accent px-5 text-small font-bold text-accent-ink md:w-auto"
               >
-                {t.rich("shell.callName", {
-                  phone: () => (
-                    <bdi dir="ltr" className="numbers-ltr">
-                      {displayPhone(phone)}
-                    </bdi>
-                  ),
-                })}
+                {t("shell.callUs")}
               </a>
             )}
-            <LinkButton
-              variant="secondary-inverse"
-              size="lg"
-              className="w-full md:w-auto"
+            <Link
               href={`/${locale}/priser`}
+              className="inline-flex min-h-[52px] w-full items-center justify-center rounded-sm border border-[color-mix(in_srgb,var(--ink-inverse)_28%,transparent)] bg-[color-mix(in_srgb,var(--surface)_68%,transparent)] px-6 text-small font-bold text-ink-inverse shadow-soft backdrop-blur-xl md:w-auto"
             >
               {t("shell.seePrices")}
-            </LinkButton>
+            </Link>
           </div>
         </div>
-        <aside className="rounded-lg border border-ink-inverse/15 bg-surface-raised p-6 text-ink-inverse">
+        <aside className="rounded-lg border border-[color-mix(in_srgb,var(--ink-inverse)_34%,transparent)] bg-[color-mix(in_srgb,var(--ink-inverse)_14%,transparent)] p-6 text-ink-inverse shadow-soft backdrop-blur-2xl">
           <Suspense fallback={null}>
             <LowestSinglePrice locale={locale} />
           </Suspense>
@@ -345,7 +337,7 @@ async function HomeBelow({
         />
       ) : null}
 
-      <div className="relative z-20 mt-6 bg-page lg:mt-8">
+      <div className="relative z-20 mt-6 border-b border-[var(--line)] bg-page pb-6 lg:mt-8 lg:pb-8">
         <BenefitMarquee
           label={t("home.benefits.label")}
           items={benefitCards}
@@ -361,19 +353,18 @@ async function HomeBelow({
             intro={t("home.teachers.description")}
           />
           <nav className="mt-8 flex flex-wrap gap-2" aria-label={t("home.teachers.languageLabel")}>
-            {activeLanguages.map((language) => (
+            {offeredLanguages.map((language) => (
               <Link
                 key={language}
                 href={`/${params.locale}/larare?language=${language}`}
                 lang={language}
-                className="inline-flex min-h-11 items-center border-b-2 border-transparent px-1 text-base font-bold transition hover:border-ink"
+                className="inline-flex min-h-11 items-center rounded-full border border-[var(--line)] bg-card px-4 text-small font-bold shadow-soft transition duration-150 hover:border-[var(--line-hover)]"
               >
                 {t(`shell.languagePage.${language}`)}
               </Link>
             ))}
           </nav>
-          <div className="mt-10 grid gap-8 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
-            <div className="grid gap-5 sm:grid-cols-2">
+          <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
               {teachers.slice(0, 4).map((teacher) => (
                 <TeacherCard
                   key={teacher.id}
@@ -405,44 +396,43 @@ async function HomeBelow({
                   swedishOnlyLabel={t("common.swedishOnly")}
                 />
               ))}
-            </div>
-            <div className="flex flex-col gap-4">
-              <div>
-                <h3 className="text-2xl font-black">{t("map.homeTeaserTitle")}</h3>
-                <p className="mt-3 max-w-[70ch] text-body leading-7 text-ink-muted">
-                  {t("map.homeTeaserDescription")}
-                </p>
-              </div>
-              {mapsConfig.apiKey && mapsConfig.mapId && homeMapMarkers.length ? (
-                <LazyTeacherMap
-                  apiKey={mapsConfig.apiKey}
-                  mapId={mapsConfig.mapId}
-                  bookingAvailable={canBook}
-                  center={homeMapCenter}
-                  label={t("map.interactiveLabel")}
-                  missingKeyTitle={t("map.unavailableTitle")}
-                  missingKeyDescription={t("map.unavailableDescription")}
-                  fallbackHref={`/${params.locale}/larare`}
-                  fallbackLabel={t("map.homeTeaserCta")}
-                  markers={homeMapMarkers}
-                />
-              ) : (
-                <Link
-                  href={`/${params.locale}/larare`}
-                  className="group relative min-h-[22rem] overflow-hidden bg-surface text-ink-inverse"
-                  aria-label={t("map.homeTeaserCta")}
-                >
-                  <StaticMapArtwork className="absolute inset-0 size-full" />
-                  <div className="absolute inset-0 bg-[linear-gradient(180deg,color-mix(in_srgb,var(--surface)_5%,transparent)_0%,var(--surface)_92%)]" />
-                </Link>
-              )}
+          </div>
+          <div className="mt-10 grid gap-6 lg:grid-cols-[18rem_minmax(0,1fr)] lg:items-center">
+            <div>
+              <h3 className="text-2xl font-black">{t("map.homeTeaserTitle")}</h3>
+              <p className="mt-3 max-w-[70ch] text-body leading-7 text-ink-muted">
+                {t("map.homeTeaserDescription")}
+              </p>
               <Link
                 href={`/${params.locale}/larare`}
-                className="inline-flex min-h-11 items-center font-bold underline underline-offset-4"
+                className="mt-4 inline-flex min-h-11 items-center font-bold underline underline-offset-4"
               >
                 {t("map.homeTeaserCta")}
               </Link>
             </div>
+            {mapsConfig.apiKey && mapsConfig.mapId && homeMapMarkers.length ? (
+              <LazyTeacherMap
+                apiKey={mapsConfig.apiKey}
+                mapId={mapsConfig.mapId}
+                bookingAvailable={canBook}
+                center={homeMapCenter}
+                label={t("map.interactiveLabel")}
+                missingKeyTitle={t("map.unavailableTitle")}
+                missingKeyDescription={t("map.unavailableDescription")}
+                fallbackHref={`/${params.locale}/larare`}
+                fallbackLabel={t("map.homeTeaserCta")}
+                markers={homeMapMarkers}
+              />
+            ) : (
+              <Link
+                href={`/${params.locale}/larare`}
+                className="group relative min-h-[22rem] overflow-hidden rounded-md bg-surface text-ink-inverse"
+                aria-label={t("map.homeTeaserCta")}
+              >
+                <StaticMapArtwork className="absolute inset-0 size-full" />
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,color-mix(in_srgb,var(--surface)_5%,transparent)_0%,var(--surface)_92%)]" />
+              </Link>
+            )}
           </div>
         </div>
         </section>
@@ -457,7 +447,7 @@ async function HomeBelow({
                 title={t("home.products.title")}
               />
             </div>
-            <Link className="min-h-11 py-3 font-bold underline underline-offset-4" href={`/${params.locale}/korlektioner`}>
+            <Link className="min-h-11 py-3 font-bold underline underline-offset-4" href={`/${params.locale}/priser`}>
               {t("common.viewAll")}
             </Link>
           </div>
@@ -479,7 +469,7 @@ async function HomeBelow({
         </div>
       </section>
 
-      <section className="section-shell border-y border-border bg-card">
+      <section className="section-shell pb-12 md:pb-20">
         <div className="site-container">
           <SectionHeader eyebrow={t("home.journey.eyebrow")} title={t("home.journey.title")} />
           <ol className="mt-8 grid gap-6 md:mt-12 md:grid-cols-3 md:gap-8">
@@ -496,7 +486,7 @@ async function HomeBelow({
         </div>
       </section>
 
-      {theoryNavVisible() ? <section className="section-shell overflow-hidden">
+      {theoryNavVisible() ? <section className="section-shell overflow-hidden pt-12 md:pt-20">
         <div className="site-container">
           <div className="relative overflow-hidden rounded-lg bg-surface text-ink-inverse shadow-float">
             <div className="relative grid lg:grid-cols-[1.1fr_.9fr]">

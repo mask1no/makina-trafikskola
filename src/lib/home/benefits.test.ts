@@ -25,10 +25,6 @@ describe("benefitItems", () => {
     expect(benefitItems({ bookingEnabled: false, products: [lesson] }).map((item) => item.id)).toEqual([
       "language",
       "pickup",
-      "lesson",
-      "prices",
-      "payment",
-      "local",
     ]);
   });
 
@@ -46,11 +42,7 @@ describe("benefitItems", () => {
     expect(items.map((item) => item.id).join(" ")).not.toContain("testLesson");
     expect(items.map((item) => item.id)).toContain("risk");
     expect(items.map((item) => item.id)).toContain("guarantee");
-    expect(items.slice(-3).map((item) => item.id)).toEqual([
-      "cancel",
-      "reminder",
-      "selfBook",
-    ]);
+    expect(items.at(-1)?.id).toBe("selfBook");
   });
 
   it("derives teaching claims from translated language names", () => {

@@ -1,7 +1,6 @@
-import { addDays, addMonths } from "date-fns";
+import { addDays } from "date-fns";
 import { formatInTimeZone, fromZonedTime } from "date-fns-tz";
 import { getTranslations } from "next-intl/server";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { auth } from "@/auth";
@@ -29,6 +28,12 @@ import { CalendarLink } from "./CalendarLink";
 export const dynamic = "force-dynamic";
 
 const TIME_ZONE = "Europe/Stockholm";
+
+function shiftMonth(key: string, delta: number) {
+  const [year, month] = key.split("-").map(Number);
+  const shifted = new Date(Date.UTC(year ?? 2026, (month ?? 1) - 1 + delta, 1));
+  return `${shifted.getUTCFullYear()}-${String(shifted.getUTCMonth() + 1).padStart(2, "0")}`;
+}
 
 export default async function TeacherPortal(
   props: {
@@ -136,9 +141,19 @@ export default async function TeacherPortal(
   const [monthYear, monthNumber] = monthKey.split("-").map(Number);
   const monthCursor = new Date(Date.UTC(monthYear ?? 2026, (monthNumber ?? 1) - 1, 1));
   const monthStart = fromZonedTime(`${monthKey}-01T00:00:00`, TIME_ZONE);
-  const nextMonthKey = formatInTimeZone(addMonths(monthCursor, 1), "UTC", "yyyy-MM");
-  const previousMonthKey = formatInTimeZone(addMonths(monthCursor, -1), "UTC", "yyyy-MM");
+  const nextMonthKey = shiftMonth(monthKey, 1);
+  const previousMonthKey = shiftMonth(monthKey, -1);
   const monthEnd = fromZonedTime(`${nextMonthKey}-01T00:00:00`, TIME_ZONE);
+  const monthLabel = new Intl.DateTimeFormat(params.locale, {
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(monthCursor);
+  const monthHref = (key: string) => {
+    const query = new URLSearchParams({ month: key });
+    if (view === "week") query.set("view", "week");
+    return `/${params.locale}/larare-portal?${query.toString()}`;
+  };
   const completed = await db.booking.findMany({
     where: {
       teacherId: teacher.id,
@@ -154,7 +169,7 @@ export default async function TeacherPortal(
   );
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
+    <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 sm:py-10">
       <section>
         {searchParams.error === "LESSON_NOT_STARTED" ? (
           <Notice tone="danger" className="mt-4">{t("lessonNotStarted")}</Notice>
@@ -167,19 +182,30 @@ export default async function TeacherPortal(
           title={view === "week" ? t("weekTitle") : t("title")}
           description={t(view === "week" ? "weekCount" : "lessonCount", { count: lessons.length, n: String(lessons.length) })}
         />
-        <Card className="mt-6">
-          <div className="flex items-center justify-between gap-3">
-            <h2 className="text-h3 font-black">{t("monthTitle")}</h2>
-            <div className="flex gap-2">
-              <Link className="inline-flex min-h-11 items-center rounded-sm border border-border px-3 text-small font-bold" href={`/${params.locale}/larare-portal?month=${previousMonthKey}`}>{t("previousMonth")}</Link>
-              <Link className="inline-flex min-h-11 items-center rounded-sm border border-border px-3 text-small font-bold" href={`/${params.locale}/larare-portal?month=${nextMonthKey}`}>{t("nextMonth")}</Link>
+        <Card className="mt-6" padding="lg" key={monthKey}>
+          <div className="flex flex-wrap items-start justify-between gap-4">
+            <div>
+              <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-ink-muted">{t("monthTitle")}</p>
+              <h2 className="mt-2 text-h2 font-black capitalize">{monthLabel}</h2>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <a className="inline-flex min-h-11 items-center rounded-sm border border-border bg-page px-3 text-small font-bold" href={monthHref(previousMonthKey)}>{t("previousMonth")}</a>
+              <a className="inline-flex min-h-11 items-center rounded-sm border border-border bg-page px-3 text-small font-bold" href={monthHref(nextMonthKey)}>{t("nextMonth")}</a>
             </div>
           </div>
-          <p className="mt-4 font-bold">{t("lessonsDriven", { count: completed.length })}</p>
-          <p className="mt-1 text-ink-muted">{t("hoursDriven", { hours: drivenHours.toFixed(1) })}</p>
-          {teacher.payRateOre != null ? (
-            <p className="mt-1 font-bold">{t("estimatedPay", { pay: formatPrice(completed.length * teacher.payRateOre, params.locale) })}</p>
-          ) : null}
+          <div className="mt-5 grid gap-3 sm:grid-cols-3">
+            <div className="rounded-md bg-page p-4">
+              <p className="text-lg font-black">{t("lessonsDriven", { count: completed.length })}</p>
+            </div>
+            <div className="rounded-md bg-page p-4">
+              <p className="text-lg font-black">{t("hoursDriven", { hours: drivenHours.toFixed(1) })}</p>
+            </div>
+            {teacher.payRateOre != null ? (
+              <div className="rounded-md bg-accent p-4 text-accent-ink sm:col-span-1">
+                <p className="text-lg font-black">{t("estimatedPay", { pay: formatPrice(completed.length * teacher.payRateOre, params.locale) })}</p>
+              </div>
+            ) : null}
+          </div>
           {completed.length ? (
             <ul className="mt-4 grid gap-2">
               {completed.map((lesson) => (
@@ -194,14 +220,17 @@ export default async function TeacherPortal(
         </Card>
         <div className="mt-6 grid grid-cols-2 gap-2">
           {(["today", "week"] as const).map((value) => (
-            <Link
+            <a
               key={value}
-              href={`/${params.locale}/larare-portal${value === "week" ? "?view=week" : ""}`}
+              href={`/${params.locale}/larare-portal?${new URLSearchParams({
+                month: monthKey,
+                ...(value === "week" ? { view: "week" } : {}),
+              }).toString()}`}
               aria-current={view === value ? "page" : undefined}
               className="inline-flex min-h-11 items-center justify-center rounded-sm border border-border bg-card px-3 text-sm font-bold aria-[current=page]:border-ink aria-[current=page]:bg-surface aria-[current=page]:text-ink-inverse"
             >
               {t(`views.${value}`)}
-            </Link>
+            </a>
           ))}
         </div>
         <div className="relative mt-8 grid gap-4 sm:before:absolute sm:before:bottom-6 sm:before:start-[3.45rem] sm:before:top-6 sm:before:w-px sm:before:bg-border">
@@ -288,7 +317,7 @@ export default async function TeacherPortal(
 
       <section className="mt-10">
         <h2 className="text-xl font-black">{t("students.title")}</h2>
-        <div className="mt-4 grid gap-3">
+        <div className="mt-4 grid gap-3 md:grid-cols-2">
           {pupils.map((pupil) => {
             const done = pupil.bookings.filter((booking) => booking.status === "COMPLETED").length;
             const nextLesson = pupil.bookings.find(

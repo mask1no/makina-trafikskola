@@ -143,7 +143,8 @@ export default async function AdminStudentsPage(
                   ...(q ? { q } : {}),
                   student: student.id,
                 })}`}
-                className="min-h-11 rounded-sm px-3 py-2 hover:bg-page"
+                aria-current={selected?.id === student.id ? "page" : undefined}
+                className="min-h-11 rounded-sm px-3 py-2 hover:bg-page aria-[current=page]:bg-page"
               >
                 <span className="block font-bold">
                   {student.firstName} {student.lastName}

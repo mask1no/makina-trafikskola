@@ -1,5 +1,7 @@
 import type { TheoryBankQuestion } from "../../scripts/import-theory";
 
+import { extraPracticeQuestions } from "./practice-bank-extra";
+
 type LocaleCode = "sv" | "en" | "ti" | "ar" | "so";
 type Row = [question: string, a: string, b: string, c: string, why: string];
 
@@ -42,13 +44,8 @@ function item(
  * Original practice questions based on public Swedish traffic rules.
  * This is not Trafikverket's question bank.
  * The correct option is not always first.
+ * Each category keeps 20 questions. The importer marks those 20 as free.
  */
-export const FREE_PRACTICE_IDS = [
-  "mk-01", "mk-02", "mk-03", "mk-04", "mk-05",
-  "mk-06", "mk-07", "mk-08", "mk-09", "mk-10",
-  "mk-11", "mk-12", "mk-13", "mk-14", "mk-15",
-  "mk-16", "mk-17", "mk-18", "mk-19", "mk-20",
-] as const;
 
 export const practiceBankQuestions: TheoryBankQuestion[] = [
   item("mk-01", 1, 1, 1, {
@@ -555,4 +552,5 @@ export const practiceBankQuestions: TheoryBankQuestion[] = [
     ar: ["هل تتدرّب على القيادة وحدك في موقف فارغ بلا رخصة أو مشرف؟", "نعم إذا كانت المنطقة مغلقة", "لا", "نعم إذا قدت أبطأ من 30 كم/س", "التدريب يتطلب استيفاء الشروط، ومنها تصريح التعلّم ومشرف معتمد. المكان الفارغ لا يغيّر ذلك."],
     so: ["Ma ku tababari kartaa keligaa baarkin madhan adoon lahayn shati ama kormeere?", "Haa, haddii goobtu xidhan tahay", "Maya", "Haa, haddii aad ka gaabisid 30 km/h", "Tababarku wuxuu u baahan yahay in shuruudaha la buuxiyo, oo ay ku jiraan ogolaansho barasho iyo kormeere la ansixiyay. Meel madhan arrintaas ma beddesho."],
   }),
+  ...extraPracticeQuestions,
 ];

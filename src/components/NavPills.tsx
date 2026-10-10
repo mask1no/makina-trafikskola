@@ -7,6 +7,7 @@ type NavPill = {
   href: string;
   label: string;
   active?: boolean;
+  matches?: string[];
 };
 
 export function NavPills({
@@ -19,14 +20,17 @@ export function NavPills({
   const pathname = usePathname();
 
   return (
-    <nav aria-label={label} className="max-w-full overflow-x-auto">
-      <ul className="flex min-w-max gap-1 rounded-md border border-border bg-card-muted p-1">
+    <nav aria-label={label} className="max-w-full">
+      <ul className="flex flex-wrap gap-1 rounded-md border border-border bg-card-muted p-1">
         {items.map((item) => {
+          const prefixes = item.matches ?? [item.href];
           const current =
             item.active ??
-            (pathname === item.href ||
-              (item.href.split("/").length > 3 &&
-                pathname.startsWith(`${item.href}/`)));
+            prefixes.some(
+              (href) =>
+                pathname === href ||
+                (href.split("/").length > 3 && pathname.startsWith(`${href}/`)),
+            );
           return (
           <li key={item.href}>
             <Link

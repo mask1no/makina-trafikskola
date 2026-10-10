@@ -7,6 +7,13 @@ describe("practice theory bank", () => {
     expect(practiceBankQuestions.length).toBeGreaterThanOrEqual(65);
   });
 
+  it("keeps 20 questions in every section", () => {
+    for (let parm = 1; parm <= 9; parm += 1) {
+      const count = practiceBankQuestions.filter((question) => question.parm === parm).length;
+      expect(count).toBeGreaterThanOrEqual(20);
+    }
+  });
+
   it("keeps a valid correct option in every language", () => {
     const ids = new Set<string>();
     for (const question of practiceBankQuestions) {

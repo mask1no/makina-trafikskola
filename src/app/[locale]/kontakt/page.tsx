@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { Avatar } from "@/components/Avatar";
 import { Badge } from "@/components/Badge";
 import { Card } from "@/components/Card";
-import { ClickToLoadMapEmbed } from "@/components/ClickToLoadMapEmbed";
+import { MapEmbed } from "@/components/MapEmbed";
 import { isLocale } from "@/i18n/routing";
 import {
   isOpenNow,
@@ -87,6 +87,9 @@ export default async function ContactPage(
     }),
     getPublishedReviewSummary(),
   ]);
+  const offices = locations.filter(
+    (location) => !/webhook|fixture/i.test(`${location.slug} ${location.name}`),
+  );
   const profileBySlug = new Map(staffPhotos.map((teacher) => [teacher.slug, teacher]));
   const staff = publicStaff.map((staffMember) => ({
     ...staffMember,
@@ -148,7 +151,7 @@ export default async function ContactPage(
         }
       : {}),
     ...(siteUrl ? { url: `${siteUrl}/${params.locale}/kontakt` } : {}),
-    department: locations.map((location) => ({
+    department: offices.map((location) => ({
       "@type": "Place",
       name: location.name,
       address: {
@@ -183,14 +186,10 @@ export default async function ContactPage(
         <div className="mt-8 grid items-stretch gap-4 md:grid-cols-2">
           <Card className="flex h-full flex-col" padding="lg">
             <h2 className="text-h3 font-black">{shell("callUs")}</h2>
-            <a className="mt-4 inline-flex min-h-[52px] w-full items-center justify-center rounded-sm bg-accent px-5 text-2xl font-black text-accent-ink" href={telHref(phone)}>
-              {shell.rich("callName", {
-                phone: () => (
-                  <bdi dir="ltr" className="numbers-ltr">
-                    {displayPhone(phone)}
-                  </bdi>
-                ),
-              })}
+            <a className="mt-4 inline-flex min-h-[52px] w-full items-center justify-center rounded-sm bg-accent px-5 text-center text-2xl font-black leading-tight text-accent-ink" href={telHref(phone)}>
+              <bdi dir="ltr" className="numbers-ltr">
+                {displayPhone(phone)}
+              </bdi>
             </a>
             <div className="mt-5 flex flex-wrap items-center gap-3">
               <Badge tone={open ? "success" : "neutral"}>{open ? shell("openNow") : shell("closed")}</Badge>
@@ -200,31 +199,30 @@ export default async function ContactPage(
             </div>
             <p className="mt-auto pt-6 text-small text-ink-muted">{visiting}</p>
           </Card>
-          <Card className="flex h-full flex-col" padding="lg">
+          <article className="flex h-full flex-col rounded-md border border-accent bg-accent p-6 text-accent-ink shadow-soft sm:p-8">
             <h2 className="text-h3 font-black">{t("emailUs")}</h2>
-            <a className="mt-4 inline-flex min-h-[52px] w-full items-center justify-center rounded-sm border border-border bg-card px-5 text-body font-bold text-ink" href={`mailto:${email}`}>
+            <a className="mt-4 inline-flex min-h-[52px] w-full items-center justify-center break-all rounded-sm bg-surface px-5 text-center text-2xl font-black leading-tight text-ink-inverse" href={`mailto:${email}`}>
               {email}
             </a>
-            <p className="mt-4 max-w-[70ch] leading-7 text-ink-muted">{t("replyLine")}</p>
-            <p className="mt-auto pt-6 text-small text-ink-muted">
+            <p className="mt-4 max-w-[70ch] leading-7">{t("replyLine")}</p>
+            <p className="mt-auto pt-6 text-small">
               <span className="font-bold">{t("orgnr")}</span>{" "}
               <span className="numbers-ltr">{orgnr}</span>
             </p>
-          </Card>
+          </article>
         </div>
         <section className="mt-10">
           <h2 className="text-2xl font-black">{t("locationsTitle")}</h2>
           <p className="mt-3 max-w-2xl text-ink-muted">{t("locationsDescription")}</p>
           <div className="mt-6">
-            <ClickToLoadMapEmbed
+            <MapEmbed
               address={`${visiting}, Sweden`}
-              buttonLabel={shell("showMap")}
               title={t("locationsTitle")}
               privacy={shell("mapPrivacy")}
             />
           </div>
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
-            {locations.map((location) => (
+            {offices.map((location) => (
               <Card key={location.id} padding="lg">
                 <h3 className="text-lg font-extrabold">{location.name}</h3>
                 <p className="mt-2 max-w-[70ch] text-body leading-7 text-ink-muted">

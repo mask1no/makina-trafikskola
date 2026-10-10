@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import type { Metadata } from "next";
-import { headers } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -12,6 +12,7 @@ import { BottomTabBar, type BottomTabIcon } from "@/components/BottomTabBar";
 import { CloseDetailsOnNavigate } from "@/components/CloseDetailsOnNavigate";
 import { CookieConsent } from "@/components/CookieConsent";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { ServiceWorkerRegistration } from "@/components/ServiceWorkerRegistration";
 import { isLocale, locales } from "@/i18n/routing";
@@ -162,8 +163,11 @@ export default async function LocaleLayout(
     }),
     activeTeacherLanguages(),
   ]);
+  const publicPlaces = places.filter((place) => !/webhook|fixture/i.test(place.slug));
   const offeredLanguages = offeredTeachingLanguagesFrom(activeLanguages);
-  const pathname = (await headers()).get("x-makina-pathname") ?? "";
+  const [headerStore, cookieStore] = await Promise.all([headers(), cookies()]);
+  const pathname = headerStore.get("x-makina-pathname") ?? "";
+  const theme = cookieStore.get("makina-theme")?.value === "dark" ? "dark" : "light";
   if (session?.user.id && !pathname.includes("/verifiera-mobil")) {
     const account = await db.user.findUnique({
       where: { id: session.user.id },
@@ -438,13 +442,18 @@ export default async function LocaleLayout(
                   <span className="hidden xl:inline">{callLabel}</span>
                 </a>
               )}
+              <ThemeToggle
+                initialTheme={theme}
+                toDarkLabel={t("themeToDark")}
+                toLightLabel={t("themeToLight")}
+              />
             </div>
           </div>
         </header>
         <main id="main" tabIndex={-1}>{children}</main>
-        <footer className="border-t border-surface-soft bg-surface py-12 text-ink-inverse sm:py-16">
-          <div className="site-container grid gap-10 lg:grid-cols-4">
-            <div className="lg:col-span-1">
+        <footer className="border-t border-surface-soft bg-surface py-10 text-ink-inverse sm:py-14">
+          <div className="site-container grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-12 lg:gap-8">
+            <div className="col-span-2 lg:col-span-4">
               <Logo />
               <p className="mt-5 max-w-[70ch] text-body leading-7 text-ink-inverse-muted">
                 {t("footerDescription")}
@@ -459,37 +468,35 @@ export default async function LocaleLayout(
                   </a>
                 </p>
                 <p>
-                  <a className="inline-flex min-h-11 items-center hover:text-ink-inverse" href={`mailto:${company("email")}`}>
+                  <a className="inline-flex min-h-11 items-center break-all hover:text-ink-inverse" href={`mailto:${company("email")}`}>
                     {company("email")}
                   </a>
                 </p>
               </address>
             </div>
-            <div className="grid grid-cols-2 gap-8 lg:col-span-2">
-            <div>
+            <div className="min-w-0 lg:col-span-2">
               <p className="text-small font-extrabold">{t("explore")}</p>
-              <div className="mt-4 grid gap-1 text-small text-ink-inverse-muted">
-                <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/korlektioner`}>{t("lessons")}</Link>
-                <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/kurser`}>{t("courses")}</Link>
+              <div className="mt-4 grid text-small text-ink-inverse-muted">
+                <Link className="flex min-h-11 items-center py-2 leading-5 transition hover:text-ink-inverse" href={`${base}/korlektioner`}>{t("lessons")}</Link>
+                <Link className="flex min-h-11 items-center py-2 leading-5 transition hover:text-ink-inverse" href={`${base}/kurser`}>{t("courses")}</Link>
                 {showInstructors ? (
-                  <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/larare`}>{t("teachers")}</Link>
+                  <Link className="flex min-h-11 items-center py-2 leading-5 transition hover:text-ink-inverse" href={`${base}/larare`}>{t("teachers")}</Link>
                 ) : null}
                 {showTheory ? (
-                  <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/teori`}>{t("theory")}</Link>
+                  <Link className="flex min-h-11 items-center py-2 leading-5 transition hover:text-ink-inverse" href={`${base}/teori`}>{t("theory")}</Link>
                 ) : null}
-                <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/kontakt`}>{t("contact")}</Link>
+                <Link className="flex min-h-11 items-center py-2 leading-5 transition hover:text-ink-inverse" href={`${base}/kontakt`}>{t("contact")}</Link>
               </div>
             </div>
-            <div>
+            <div className="min-w-0 lg:col-span-2">
               <p className="text-small font-extrabold">{t("legal")}</p>
-              <div className="mt-4 grid gap-1 text-small text-ink-inverse-muted">
-                <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/villkor`}>{t("terms")}</Link>
-                <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/integritet`}>{t("privacy")}</Link>
-                <Link className="flex min-h-11 items-center transition hover:text-ink-inverse" href={`${base}/cookies`}>{t("cookies")}</Link>
+              <div className="mt-4 grid text-small text-ink-inverse-muted">
+                <Link className="flex min-h-11 items-center py-2 leading-5 transition hover:text-ink-inverse" href={`${base}/villkor`}>{t("terms")}</Link>
+                <Link className="flex min-h-11 items-center py-2 leading-5 transition hover:text-ink-inverse" href={`${base}/integritet`}>{t("privacy")}</Link>
+                <Link className="flex min-h-11 items-center py-2 leading-5 transition hover:text-ink-inverse" href={`${base}/cookies`}>{t("cookies")}</Link>
               </div>
             </div>
-            </div>
-            <div>
+            <div className="min-w-0 lg:col-span-2">
               <p className="text-small font-extrabold">{t("languageHelp")}</p>
               <p className="mt-4 max-w-[70ch] text-small leading-6 text-ink-inverse-muted">
                 {t("languageHelpDescription", {
@@ -500,29 +507,31 @@ export default async function LocaleLayout(
                   ),
                 })}
               </p>
-              <ul className="mt-4 grid gap-2 text-small text-ink-inverse-muted">
+              <ul className="mt-4 grid text-small text-ink-inverse-muted">
                 {offeredLanguages.map((code) => (
-                  <li key={code} className="flex min-h-11 items-center gap-2">
-                    <svg aria-hidden="true" viewBox="0 0 24 24" className="size-4 text-success" fill="none" stroke="currentColor" strokeWidth="2">
+                  <li key={code} className="flex min-h-11 items-center gap-2 py-2 leading-5">
+                    <svg aria-hidden="true" viewBox="0 0 24 24" className="size-4 shrink-0 text-success" fill="none" stroke="currentColor" strokeWidth="2">
                       <path d="M5 12.5 10 17l9-10" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                     {t(`languagePage.${code}`)}
                   </li>
                 ))}
                 {COMING_SOON_TEACHING_LANGUAGES.map((code) => (
-                  <li key={code} className="flex min-h-11 items-center">{t("comingSoonPlace", { town: t(`languagePage.${code}`) })}</li>
+                  <li key={code} className="flex min-h-11 items-center py-2 leading-5">{t("comingSoonPlace", { town: t(`languagePage.${code}`) })}</li>
                 ))}
               </ul>
-              <p className="mt-6 text-small font-extrabold text-ink-inverse">{t("here")}</p>
-              <ul className="mt-2 grid text-small text-ink-inverse-muted">
-                {places.map((place) => (
+            </div>
+            <div className="min-w-0 lg:col-span-2">
+              <p className="text-small font-extrabold">{t("here")}</p>
+              <ul className="mt-4 grid text-small text-ink-inverse-muted">
+                {publicPlaces.map((place) => (
                   <li key={place.slug}>
                     {place.status === "ACTIVE" ? (
-                      <Link className="flex min-h-11 items-center hover:text-ink-inverse" href={`${base}/trafikskola/${place.slug}`}>
+                      <Link className="flex min-h-11 items-center py-2 leading-5 hover:text-ink-inverse" href={`${base}/trafikskola/${place.slug}`}>
                         {t("schoolIn", { town: place.city })}
                       </Link>
                     ) : (
-                      <span className="flex min-h-11 items-center">{t("comingSoonPlace", { town: place.city })}</span>
+                      <span className="flex min-h-11 items-center py-2 leading-5">{t("comingSoonPlace", { town: place.city })}</span>
                     )}
                   </li>
                 ))}

@@ -36,6 +36,7 @@ export default async function TeoriKategoriPage(
         questions: {
           where: { active: true, ...(!paid ? { isFree: true } : {}) },
           orderBy: [{ difficulty: "asc" }, { createdAt: "asc" }],
+          take: 20,
           include: {
             translations: true,
             category: { include: { translations: true } },

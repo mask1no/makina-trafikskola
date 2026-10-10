@@ -167,21 +167,25 @@ export function StudyQuiz({
 
   return (
     <div className="mt-8 grid gap-6">
-      <div className="flex gap-1 overflow-x-auto" aria-label={numberLabel}>
+      <div className="grid grid-cols-5 gap-2 sm:grid-cols-10" aria-label={numberLabel}>
         {questions.map((item, itemIndex) => {
           const itemResult = results[item.id];
+          const current = item.id === question.id;
           return (
             <button
               key={item.id}
               type="button"
               disabled={!itemResult}
-              aria-current={item.id === question.id ? "true" : undefined}
-              className={`min-h-11 min-w-6 flex-1 rounded-sm ${
+              aria-current={current ? "true" : undefined}
+              aria-label={String(itemIndex + 1)}
+              className={`grid min-h-11 place-items-center rounded-md border text-small font-black numbers-ltr disabled:opacity-100 ${
                 itemResult?.correct
-                  ? "bg-success-strong"
+                  ? "border-transparent bg-[var(--quiz-correct)] text-ink-inverse"
                   : itemResult
-                    ? "bg-danger"
-                    : "bg-border"
+                    ? "border-transparent bg-[var(--quiz-wrong)] text-ink-inverse"
+                    : current
+                      ? "border-accent bg-accent text-accent-ink"
+                      : "border-border bg-card text-ink"
               }`}
               onClick={() => {
                 if (!itemResult) return;
@@ -189,7 +193,9 @@ export function StudyQuiz({
                 setReviewing(false);
                 setIndex(itemIndex);
               }}
-            />
+            >
+              {itemIndex + 1}
+            </button>
           );
         })}
       </div>

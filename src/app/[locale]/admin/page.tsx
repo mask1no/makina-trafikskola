@@ -1,10 +1,11 @@
 import { formatInTimeZone, fromZonedTime } from "date-fns-tz";
 import { getTranslations } from "next-intl/server";
 
+import { LocationCards } from "@/app/[locale]/admin/LocationCards";
 import { Card } from "@/components/Card";
 import { PageHeader } from "@/components/PageHeader";
 import { StatCard } from "@/components/StatCard";
-import { calculateAvailableCreditBalance } from "@/lib/credits/ledger";
+import { locationSummaries } from "@/lib/admin/place-query";
 import { db } from "@/lib/db";
 import { formatLessonTime, stockholmParts } from "@/lib/format/datetime";
 import { formatPrice } from "@/lib/pricing/format";
@@ -15,9 +16,7 @@ const TIME_ZONE = "Europe/Stockholm";
 
 function stockholmMonthStart(now: Date, monthOffset: number) {
   const parts = stockholmParts(now);
-  const year = parts.year;
-  const month = parts.month;
-  const shifted = new Date(Date.UTC(year, month - 1 + monthOffset, 1));
+  const shifted = new Date(Date.UTC(parts.year, parts.month - 1 + monthOffset, 1));
   const key = `${shifted.getUTCFullYear()}-${String(shifted.getUTCMonth() + 1).padStart(2, "0")}-01T00:00:00`;
   return fromZonedTime(key, TIME_ZONE);
 }
@@ -29,41 +28,29 @@ export default async function AdminPage(props: {
   const now = new Date();
   const thisMonth = stockholmMonthStart(now, 0);
   const nextMonth = stockholmMonthStart(now, 1);
-  const lastMonth = stockholmMonthStart(now, -1);
   const localDay = formatInTimeZone(now, TIME_ZONE, "yyyy-MM-dd");
   const dayStart = fromZonedTime(`${localDay}T00:00:00`, TIME_ZONE);
   const dayEnd = fromZonedTime(`${localDay}T23:59:59.999`, TIME_ZONE);
-  const weekEnd = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+  const counted = { in: ["CONFIRMED", "COMPLETED"] as ["CONFIRMED", "COMPLETED"] };
 
   const [
     t,
-    thisPayments,
-    lastPayments,
+    places,
     lessonsToday,
-    bookingsWeek,
-    newStudents,
-    creditRows,
-    reviewsWaiting,
+    bookingsToday,
+    bookingsMonth,
+    revenueToday,
+    revenueTotal,
+    teachers,
+    accounts,
+    rating,
   ] = await Promise.all([
     getTranslations("admin.dashboard"),
-    db.payment.findMany({
-      where: {
-        status: "SUCCEEDED",
-        order: { paidAt: { gte: thisMonth, lt: nextMonth } },
-      },
-      select: { amountOre: true, refundedOre: true },
-    }),
-    db.payment.findMany({
-      where: {
-        status: "SUCCEEDED",
-        order: { paidAt: { gte: lastMonth, lt: thisMonth } },
-      },
-      select: { amountOre: true, refundedOre: true },
-    }),
+    locationSummaries(),
     db.booking.findMany({
       where: {
         startsAt: { gte: dayStart, lte: dayEnd },
-        status: { in: ["CONFIRMED", "COMPLETED"] },
+        status: counted,
       },
       orderBy: { startsAt: "asc" },
       select: {
@@ -76,50 +63,35 @@ export default async function AdminPage(props: {
       },
     }),
     db.booking.count({
-      where: {
-        status: "CONFIRMED",
-        startsAt: { gt: now, lte: weekEnd },
-      },
+      where: { startsAt: { gte: dayStart, lte: dayEnd }, status: counted },
     }),
-    db.user.count({
-      where: {
-        role: "STUDENT",
-        deletedAt: null,
-        createdAt: { gte: thisMonth, lt: nextMonth },
-      },
+    db.booking.count({
+      where: { startsAt: { gte: thisMonth, lt: nextMonth }, status: counted },
     }),
-    db.creditTransaction.findMany({
-      select: {
-        studentId: true,
-        id: true,
-        delta: true,
-        reason: true,
-        orderItemId: true,
-        expiresAt: true,
-        createdAt: true,
-      },
+    db.payment.aggregate({
+      where: { status: "SUCCEEDED", order: { paidAt: { gte: dayStart, lte: dayEnd } } },
+      _sum: { amountOre: true, refundedOre: true },
     }),
-    db.review.count({ where: { published: false } }),
+    db.payment.aggregate({
+      where: { status: "SUCCEEDED" },
+      _sum: { amountOre: true, refundedOre: true },
+    }),
+    db.teacherProfile.count({ where: { active: true } }),
+    db.user.count({ where: { role: "STUDENT", deletedAt: null } }),
+    db.review.aggregate({
+      where: { published: true },
+      _avg: { rating: true },
+      _count: { _all: true },
+    }),
   ]);
 
-  const net = (rows: { amountOre: number; refundedOre: number }[]) =>
-    rows.reduce((sum, row) => sum + row.amountOre - row.refundedOre, 0);
-  const revenue = net(thisPayments);
-  const previousRevenue = net(lastPayments);
-  const revenueChange =
-    previousRevenue === 0
-      ? null
-      : Math.round(((revenue - previousRevenue) / previousRevenue) * 100);
-  const byStudent = new Map<string, typeof creditRows>();
-  for (const row of creditRows) {
-    const list = byStudent.get(row.studentId) ?? [];
-    list.push(row);
-    byStudent.set(row.studentId, list);
-  }
-  let creditsOutstanding = 0;
-  for (const entries of byStudent.values()) {
-    creditsOutstanding += calculateAvailableCreditBalance(entries, now).balance;
-  }
+  const placeT = await getTranslations("admin.places");
+  const revenue = (row: { _sum: { amountOre: number | null; refundedOre: number | null } }) =>
+    (row._sum.amountOre ?? 0) - (row._sum.refundedOre ?? 0);
+  const ratingCount = rating._count._all;
+  const ratingValue =
+    ratingCount > 0 && rating._avg.rating != null ? rating._avg.rating.toFixed(1) : "–";
+
   return (
     <section>
       <PageHeader
@@ -127,24 +99,36 @@ export default async function AdminPage(props: {
         title={t("title")}
         description={t("description")}
       />
-      <div className="mt-8 grid gap-4 lg:grid-cols-3">
+      <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4">
+        <StatCard size="sm" label={t("bookingsToday")} value={bookingsToday} />
+        <StatCard size="sm" label={t("bookingsMonth")} value={bookingsMonth} />
+        <StatCard size="sm" label={t("revenueToday")} value={formatPrice(revenue(revenueToday), params.locale)} />
+        <StatCard size="sm" label={t("revenueTotal")} value={formatPrice(revenue(revenueTotal), params.locale)} />
+        <StatCard size="sm" label={t("teachers")} value={teachers} />
+        <StatCard size="sm" label={t("accounts")} value={accounts} />
         <StatCard
-          label={t("revenue")}
-          value={formatPrice(revenue, params.locale)}
-          detail={
-            revenueChange === null
-              ? t("revenueNoCompare")
-              : t("revenueCompare", {
-                  percent: `${revenueChange > 0 ? "+" : ""}${revenueChange}%`,
-                })
-          }
+          size="sm"
+          label={t("rating")}
+          value={ratingValue}
+          detail={ratingCount > 0 ? t("ratingDetail", { count: ratingCount }) : t("ratingEmpty")}
         />
-        <StatCard label={t("bookingsWeek")} value={bookingsWeek} />
-        <StatCard label={t("newStudents")} value={newStudents} />
-        <StatCard label={t("creditsOutstanding")} value={creditsOutstanding} />
-        <StatCard label={t("reviewsWaiting")} value={reviewsWaiting} />
       </div>
-      <Card className="mt-4">
+
+      <div className="mt-8">
+        <h2 className="text-xl font-black">{t("placesTitle")}</h2>
+        <p className="mt-2 max-w-[70ch] text-sm leading-6 text-ink-muted">{t("placesDescription")}</p>
+        <div className="mt-4">
+          <LocationCards
+            locale={params.locale}
+            locations={places}
+            teachersLabel={(count) => placeT("teachers", { count })}
+            bookingsLabel={(count) => placeT("bookings", { count })}
+            detailsLabel={placeT("viewDetails")}
+          />
+        </div>
+      </div>
+
+      <Card className="mt-8">
         <h2 className="text-lg font-black">{t("lessonsToday")}</h2>
         {lessonsToday.length ? (
           <ul className="mt-4 grid gap-3">

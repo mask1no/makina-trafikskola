@@ -31,6 +31,8 @@
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --danger: #dc2626;
   --danger-soft: #fef0f0;
+  --quiz-correct: #15803d;
+  --quiz-wrong: #dc2626;
   --google-border: #747775;
   --google-ink: #1f1f1f;
   --google-blue: #4285f4;
@@ -55,6 +57,29 @@
   --shadow-lg:
     0 2px 4px color-mix(in srgb, var(--ink) 6%, transparent),
     0 24px 64px color-mix(in srgb, var(--ink) 12%, transparent);
+  color-scheme: light;
+}
+
+html[data-theme="dark"] {
+  --page: #0d0d0f;
+  --card: #17171a;
+  --card-muted: #1c1c20;
+  --border: #2c2c32;
+  --border-strong: #3a3a42;
+  --ink: #f5f5f7;
+  --ink-muted: #a7a7af;
+  --ink-subtle: #a7a7af;
+  --line: color-mix(in srgb, var(--ink) 16%, transparent);
+  --line-hover: color-mix(in srgb, var(--ink) 28%, transparent);
+  --accent-soft: #3a2f14;
+  --success: #86efac;
+  --success-strong: #166534;
+  --success-soft: #052e1a;
+  --danger: #fca5a5;
+  --danger-soft: #3f1212;
+  --quiz-correct: #166534;
+  --quiz-wrong: #b91c1c;
+  color-scheme: dark;
 }
 
 html {
@@ -194,7 +219,7 @@ textarea {
   }
 
   .section-shell {
-    padding-block: clamp(3.5rem, 8vw, 7rem);
+    padding-block: clamp(3.15rem, 7.2vw, 6.3rem);
   }
 
   .display-title {

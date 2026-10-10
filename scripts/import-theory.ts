@@ -4,8 +4,6 @@ import path from "node:path";
 import { PrismaClient } from "@prisma/client";
 import { z } from "zod";
 
-import { FREE_PRACTICE_IDS } from "../prisma/theory/practice-bank";
-
 const LOCALES = ["sv", "en", "ti", "ar", "so"] as const;
 const NON_SWEDISH_LOCALES = ["en", "ti", "ar", "so"] as const;
 
@@ -114,16 +112,17 @@ export async function importTheoryQuestions(
     if (question.correct_index >= question.options_sv.length) {
       throw new Error(`THEORY_BANK_CORRECT_INDEX ${question.id}`);
     }
-    const count = seenInCategory.get(question.parm) ?? 0;
-    seenInCategory.set(question.parm, count + 1);
+    const indexInCategory = seenInCategory.get(question.parm) ?? 0;
+    seenInCategory.set(question.parm, indexInCategory + 1);
     const category = categories.get(question.parm);
     if (!category) throw new Error(`THEORY_BANK_PARM ${question.id}`);
+    const isFree = indexInCategory < 20;
 
     const row = await db.theoryQuestion.upsert({
       where: { sourceRef: question.id },
       update: {
         categoryId: category.id,
-        isFree: (FREE_PRACTICE_IDS as readonly string[]).includes(question.id),
+        isFree,
         difficulty: question.difficulty ?? 2,
         active: question.status === "ok",
         imageUrl: question.needs_image ? `/theory/${question.id}.webp` : null,
@@ -131,7 +130,7 @@ export async function importTheoryQuestions(
       create: {
         sourceRef: question.id,
         categoryId: category.id,
-        isFree: (FREE_PRACTICE_IDS as readonly string[]).includes(question.id),
+        isFree,
         difficulty: question.difficulty ?? 2,
         active: question.status === "ok",
         imageUrl: question.needs_image ? `/theory/${question.id}.webp` : null,

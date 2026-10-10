@@ -7,7 +7,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { ProductCard } from "@/components/ProductCard";
 import { QuestionsBlock } from "@/components/QuestionsBlock";
 import { isLocale } from "@/i18n/routing";
-import { bookingEnabled, theorySalesOpen } from "@/lib/launch";
+import { bookingEnabled } from "@/lib/launch";
 import { groupProducts } from "@/lib/pricing/group";
 import { toProductCardModel } from "@/lib/products/card";
 
@@ -48,8 +48,7 @@ export default async function KorlektionerPage(
   const sort = searchParams.sort === "lessons" ? "lessons" : "price";
   const group = searchParams.group;
   const products = (await getProducts(params.locale))
-    .filter((product) => product.active && product.kind !== "TEST_LESSON")
-    .filter((product) => theorySalesOpen() || product.kind !== "THEORY_ACCESS")
+    .filter((product) => product.active && (product.kind === "SINGLE_LESSON" || product.kind === "PACKAGE"))
     .sort((a, b) =>
       sort === "lessons" ? b.lessonCredits - a.lessonCredits : a.priceOre - b.priceOre,
     );
@@ -76,6 +75,22 @@ export default async function KorlektionerPage(
     <div className="section-shell">
       <div className="site-container">
         <PageHeader eyebrow={t("lessons.eyebrow")} title={t("lessons.title")} description={t("lessons.description")} />
+        <ol className="mt-8 grid gap-6 md:grid-cols-3 md:gap-8">
+          {(canBook
+            ? (["choose", "book", "learn"] as const)
+            : (["choose", "call", "learn"] as const)).map((step, index) => (
+            <li key={step} className="border-t border-border pt-4">
+              <span className="numbers-ltr text-small font-black text-ink">{index + 1}</span>
+              <h2 className="mt-3 text-h3 font-black">{t(`home.journey.${step}.title`)}</h2>
+              <p className="mt-2 max-w-[70ch] text-body leading-7 text-ink-muted">{t(`home.journey.${step}.description`)}</p>
+            </li>
+          ))}
+        </ol>
+        <p className="mt-8">
+          <Link className="inline-flex min-h-11 items-center font-bold underline underline-offset-4" href={`/${params.locale}/priser`}>
+            {t("shell.seePrices")}
+          </Link>
+        </p>
         {best ? (
           <div className="mt-8 max-w-xl">
             <p className="mb-3 text-small font-bold">{t("lessons.bestSeller")}</p>

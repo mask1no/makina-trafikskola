@@ -30,14 +30,20 @@ export default async function AdminLayout(
   if (session.user.role !== "ADMIN") redirect(`/${params.locale}`);
 
   const t = await getTranslations("admin.nav");
+  const base = `/${params.locale}/admin`;
   const links = [
-    ["", t("label")],
-    ["/calendar", t("calendar")],
-    ["/students", t("students")],
-    ["/instructors/new", t("instructors")],
-    ["/produkter", t("products")],
-    ["/omraden", t("areas")],
-    ["/recensioner", t("reviews")],
+    { href: base, label: t("overview") },
+    { href: `${base}/platser`, label: t("places") },
+    { href: `${base}/students`, label: t("students") },
+    {
+      href: `${base}/larare`,
+      label: t("teachers"),
+      matches: [`${base}/larare`, `${base}/instructors`],
+    },
+    { href: `${base}/calendar`, label: t("calendar") },
+    { href: `${base}/recensioner`, label: t("reviews") },
+    { href: `${base}/produkter`, label: t("products") },
+    { href: `${base}/omraden`, label: t("areas") },
   ];
 
   return (
@@ -51,10 +57,7 @@ export default async function AdminLayout(
       <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8">
         <NavPills
           label={t("label")}
-          items={links.map(([path, label]) => ({
-            href: `/${params.locale}/admin${path}`,
-            label,
-          }))}
+          items={links}
         />
         <div className="mt-8">{children}</div>
       </div>
