@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { isLocale } from "@/i18n/routing";
+import { supportedLocale } from "@/i18n/routing";
 
 import { formatPrice } from "@/lib/pricing/format";
 
@@ -189,10 +189,6 @@ const copy: Record<SupportedLocale, PaymentCopy> = {
     chooseCourse: "Dooro waqti koorso kale",
   },
 };
-
-function supportedLocale(locale: string): SupportedLocale {
-  return isLocale(locale) ? locale : "sv";
-}
 
 export function renderOrderReceipt(input: {
   locale: string;

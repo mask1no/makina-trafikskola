@@ -134,7 +134,7 @@ export function TeacherEditor({
       <div className="grid gap-3">
         <p className="text-small font-semibold">{t("hours")}</p>
         {form.hours.map((hour, index) => (
-          <div key={index} className="grid gap-2 sm:grid-cols-4">
+          <div key={index} className="grid gap-2 sm:grid-cols-[1fr_1fr_1fr_1fr_auto]">
             <select className="min-h-11 rounded-sm border border-border px-3" value={hour.dayOfWeek} onChange={(event) => {
               const hours = [...form.hours];
               hours[index] = { ...hour, dayOfWeek: Number(event.target.value) };
@@ -159,6 +159,14 @@ export function TeacherEditor({
             }}>
               {locations.map((location) => <option key={location.id} value={location.id}>{location.name}</option>)}
             </select>
+            <Button
+              type="button"
+              variant="ghost"
+              className="min-h-11"
+              onClick={() => setForm({ ...form, hours: form.hours.filter((_, hourIndex) => hourIndex !== index) })}
+            >
+              {t("remove")}
+            </Button>
           </div>
         ))}
         <Button type="button" variant="secondary" onClick={() => setForm({
@@ -172,11 +180,23 @@ export function TeacherEditor({
           if (event.key !== "Enter") return;
           event.preventDefault();
           const value = event.currentTarget.value;
-          if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return;
+          if (!/^\d{4}-\d{2}-\d{2}$/.test(value) || form.daysOff.includes(value)) return;
           setForm({ ...form, daysOff: [...form.daysOff, value] });
           event.currentTarget.value = "";
         }} />
-        <span className="font-normal text-ink-muted">{form.daysOff.join(", ")}</span>
+        <span className="flex flex-wrap gap-2 font-normal">
+          {form.daysOff.map((day) => (
+            <button
+              key={day}
+              type="button"
+              className="inline-flex min-h-11 items-center gap-2 rounded-full border border-border px-3"
+              onClick={() => setForm({ ...form, daysOff: form.daysOff.filter((value) => value !== day) })}
+            >
+              <span dir="ltr">{day}</span>
+              <span className="text-small font-bold">{t("remove")}</span>
+            </button>
+          ))}
+        </span>
       </label>
       <label className="grid gap-2 text-small font-semibold">
         {t("photo")}

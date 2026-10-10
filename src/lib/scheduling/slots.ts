@@ -7,7 +7,7 @@ import {
   parseISO,
 } from "date-fns";
 
-import { stockholmParts } from "@/lib/format/datetime";
+import { stockholmDateKey, stockholmParts } from "@/lib/format/datetime";
 
 export type SlotInput = {
   now: Date;
@@ -39,13 +39,6 @@ type DateInterval = { start: Date; end: Date };
 
 function localParts(date: Date) {
   return stockholmParts(date);
-}
-
-function localDateKey(date: Date) {
-  const parts = localParts(date);
-  return `${parts.year.toString().padStart(4, "0")}-${parts.month
-    .toString()
-    .padStart(2, "0")}-${parts.day.toString().padStart(2, "0")}`;
 }
 
 function utcDateKey(date: Date) {
@@ -86,8 +79,8 @@ function localDateTimeToUtc(dateKey: string, minutes: number) {
 }
 
 function enumerateLocalDates(from: Date, to: Date) {
-  const first = localDateKey(from);
-  const last = localDateKey(to);
+  const first = stockholmDateKey(from);
+  const last = stockholmDateKey(to);
   const dates: string[] = [];
   let cursor = parseISO(`${first}T12:00:00Z`);
 
@@ -173,8 +166,8 @@ function ruleIsValidOn(
   dateKey: string,
   rule: SlotInput["rules"][number],
 ) {
-  const fromKey = rule.validFrom ? localDateKey(rule.validFrom) : null;
-  const untilKey = rule.validUntil ? localDateKey(rule.validUntil) : null;
+  const fromKey = rule.validFrom ? stockholmDateKey(rule.validFrom) : null;
+  const untilKey = rule.validUntil ? stockholmDateKey(rule.validUntil) : null;
   return (!fromKey || dateKey >= fromKey) && (!untilKey || dateKey <= untilKey);
 }
 

@@ -15,7 +15,7 @@
   --ink-inverse: #ffffff;
   --ink-inverse-muted: #a7a7af;
   --ink-muted: #6b6b73;
-  --ink-subtle: #6b6b73;
+  --ink-subtle: var(--ink-muted);
   --line: color-mix(in srgb, var(--ink) 14%, transparent);
   --line-hover: color-mix(in srgb, var(--ink) 24%, transparent);
   --accent: #f5b429;

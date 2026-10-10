@@ -18,6 +18,7 @@ import {
   isSerializationOrTxTimeout,
 } from "@/lib/bookings/errors";
 import { syncConfirmedBooking } from "@/lib/calendar/google";
+import { configuredNumber } from "@/lib/config/number";
 import { db } from "@/lib/db";
 import { dispatchNotifications } from "@/lib/notifications/dispatch";
 import { bookingNotificationContext } from "@/lib/notifications/context";
@@ -44,10 +45,6 @@ const requestSchema = z
     },
   );
 
-function configuredNumber(name: string, fallback: number) {
-  const value = Number(process.env[name] ?? String(fallback));
-  return Number.isFinite(value) && value >= 0 ? value : fallback;
-}
 
 
 

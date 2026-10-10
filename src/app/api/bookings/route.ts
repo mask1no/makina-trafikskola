@@ -28,6 +28,7 @@ import {
 import { errorResponse, invalidInput } from "@/lib/api/http";
 import { pointInGeoJson } from "@/lib/areas/geo";
 import { getCreditBalance } from "@/lib/credits/ledger";
+import { configuredNumber } from "@/lib/config/number";
 import { db } from "@/lib/db";
 import * as Sentry from "@sentry/nextjs";
 import { dispatchNotifications } from "@/lib/notifications/dispatch";
@@ -72,11 +73,6 @@ const bookingSchema = z
       path: ["pickupLat"],
     },
   );
-
-function configuredNumber(name: string, fallback: number) {
-  const value = Number(process.env[name] ?? String(fallback));
-  return Number.isFinite(value) && value >= 0 ? value : fallback;
-}
 
 export async function POST(request: Request) {
   const now = new Date();

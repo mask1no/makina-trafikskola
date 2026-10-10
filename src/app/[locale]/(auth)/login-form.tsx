@@ -19,6 +19,13 @@ import {
 } from "./auth-shared";
 import { OtpResend } from "./otp-resend";
 
+function identifierLooksValid(value: string) {
+  const trimmed = value.trim();
+  if (!trimmed) return false;
+  if (trimmed.includes("@")) return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed);
+  return Boolean(normalizeSwedishPhone(trimmed));
+}
+
 export function LoginForm({
   locale,
   googleEnabled = false,
@@ -34,6 +41,7 @@ export function LoginForm({
   const [method, setMethod] = useState<"phone" | "password">("phone");
   const [phone, setPhone] = useState("");
   const [identifier, setIdentifier] = useState("");
+  const [identifierTouched, setIdentifierTouched] = useState(false);
   const [password, setPassword] = useState("");
   const [code, setCode] = useState("");
   const [codeSent, setCodeSent] = useState(false);
@@ -181,8 +189,24 @@ export function LoginForm({
             label={t("identifier")}
             value={identifier}
             onChange={(event) => setIdentifier(event.target.value)}
+            onBlur={() => setIdentifierTouched(true)}
             autoComplete="username"
             required
+            valid={identifierTouched && identifierLooksValid(identifier)}
+            error={
+              identifierTouched && identifier.trim().length > 0 && !identifierLooksValid(identifier)
+                ? identifier.includes("@")
+                  ? t("emailInvalid")
+                  : t("phoneInvalid")
+                : undefined
+            }
+            hint={
+              identifierTouched && identifierLooksValid(identifier)
+                ? identifier.includes("@")
+                  ? t("emailValid")
+                  : t("phoneValid")
+                : undefined
+            }
           />
           <PasswordField
             label={t("password")}

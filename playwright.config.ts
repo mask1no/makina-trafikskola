@@ -1,4 +1,23 @@
+import { readFileSync } from "node:fs";
+
 import { defineConfig, devices } from "@playwright/test";
+
+function localDatabaseUrl() {
+  const current = process.env.DATABASE_URL?.trim();
+  if (current) return current;
+  try {
+    const text = readFileSync(".env", "utf8");
+    for (const line of text.split(/\r?\n/)) {
+      const trimmed = line.trim();
+      if (!trimmed.startsWith("DATABASE_URL=")) continue;
+      const value = trimmed.slice("DATABASE_URL=".length).trim().replace(/^["']|["']$/g, "");
+      if (value) return value;
+    }
+  } catch {
+    // CI sets DATABASE_URL. A missing .env is fine there.
+  }
+  return "postgresql://makina:makina_local_dev@localhost:5433/makina";
+}
 
 export default defineConfig({
   testDir: "./e2e",
@@ -33,6 +52,7 @@ export default defineConfig({
     env: {
       ...process.env,
       AUTH_URL: "http://localhost:3100",
+      DATABASE_URL: localDatabaseUrl(),
       AUTH_SECRET:
         process.env.AUTH_SECRET?.trim() ||
         "e2e-only-auth-secret-e2e-only-auth-secret",

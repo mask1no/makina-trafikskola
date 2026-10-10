@@ -1,5 +1,5 @@
-import { formatLessonTime as formatLessonStamp } from "@/lib/format/datetime";
-import { isLocale } from "@/i18n/routing";
+import { supportedLocale } from "@/i18n/routing";
+import { formatLessonTime } from "@/lib/format/datetime";
 
 export type BookingTemplate =
   | "booking_confirmed"
@@ -32,17 +32,9 @@ const localeTags: Record<SupportedLocale, string> = {
   so: "so-SO",
 };
 
-function supportedLocale(locale: string): SupportedLocale {
-  return isLocale(locale) ? locale : "sv";
-}
-
 function clean(value: string | undefined) {
   const trimmed = value?.trim();
   return trimmed ? trimmed : undefined;
-}
-
-function formatLessonTime(date: Date, locale: SupportedLocale) {
-  return formatLessonStamp(date, localeTags[locale]);
 }
 
 function teacherSuffix(locale: SupportedLocale, teacher?: string) {
@@ -181,12 +173,12 @@ export function renderBookingMessage(input: {
 }) {
   const locale = supportedLocale(input.locale);
   const text = bookingText(locale, input.template, {
-    time: formatLessonTime(input.startsAt, locale),
+    time: formatLessonTime(input.startsAt, localeTags[locale]),
     deadline: input.cancellationDeadline
-      ? formatLessonTime(input.cancellationDeadline, locale)
+      ? formatLessonTime(input.cancellationDeadline, localeTags[locale])
       : undefined,
     previousTime: input.previousStartsAt
-      ? formatLessonTime(input.previousStartsAt, locale)
+      ? formatLessonTime(input.previousStartsAt, localeTags[locale])
       : undefined,
     student: clean(input.studentFirstName),
     teacher: clean(input.teacherFirstName),

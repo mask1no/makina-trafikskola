@@ -13,3 +13,7 @@ export const routing = defineRouting({
 export function isLocale(value: string): value is Locale {
   return locales.includes(value as Locale);
 }
+
+export function supportedLocale(value: string): Locale {
+  return isLocale(value) ? value : "sv";
+}
