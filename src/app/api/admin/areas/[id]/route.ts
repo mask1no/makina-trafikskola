@@ -4,6 +4,7 @@ import { z } from "zod";
 
 import { auth } from "@/auth";
 import { AuthorizationError, requireRole } from "@/lib/auth/guards";
+import { revalidateLocations } from "@/lib/admin/revalidate-public";
 import { db } from "@/lib/db";
 
 export const runtime = "nodejs";
@@ -72,5 +73,6 @@ export async function PATCH(
       },
     });
   });
+  revalidateLocations();
   return Response.json({ id: area.id });
 }

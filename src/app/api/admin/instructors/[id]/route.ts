@@ -9,6 +9,7 @@ import {
 } from "@/lib/auth/guards";
 import { normalizeSwedishPhone } from "@/lib/auth/phone";
 import { canDeactivateInstructor } from "@/lib/bookings/cancellation";
+import { revalidateTeacherLanguages } from "@/lib/admin/revalidate-public";
 import { db } from "@/lib/db";
 
 export const runtime = "nodejs";
@@ -134,6 +135,7 @@ export async function PATCH(
       },
       { isolationLevel: Prisma.TransactionIsolationLevel.Serializable },
     );
+    revalidateTeacherLanguages();
     return Response.json(updated);
   } catch (error) {
     if (

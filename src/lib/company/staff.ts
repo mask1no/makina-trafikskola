@@ -99,6 +99,12 @@ export function offeredTeachingLanguagesFrom(codes: readonly string[]): Teaching
   return fromProfiles.length ? fromProfiles : offeredTeachingLanguages();
 }
 
+export function sentenceCase(value: string, locale: string) {
+  const trimmed = value.trim();
+  if (!trimmed) return trimmed;
+  return trimmed.charAt(0).toLocaleUpperCase(locale) + trimmed.slice(1);
+}
+
 export function formatLanguageList(
   codes: readonly TeachingLanguage[],
   locale: string,

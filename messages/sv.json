@@ -81,6 +81,17 @@
     "seePrices": "Se priser",
     "openNow": "Öppet nu",
     "closed": "Stängt",
+    "opensAt": "öppnar {time}",
+    "opensOn": "öppnar {day} {time}",
+    "weekdayShort": {
+      "0": "sön",
+      "1": "mån",
+      "2": "tis",
+      "3": "ons",
+      "4": "tor",
+      "5": "fre",
+      "6": "lör"
+    },
     "directions": "Vägbeskrivning",
     "showMap": "Visa karta",
     "mapPrivacy": "Kartan visas från Google. Då gäller Googles cookies och integritetspolicy.",
@@ -127,7 +138,7 @@
         "description": "Jämför en lektion eller ett paket i lugn och ro."
       },
       "book": {
-        "title": "Hitta lärare och tid",
+        "title": "Välj ort, upphämtning och lärare",
         "description": "Filtrera på språk, plats och växellåda."
       },
       "call": {
@@ -245,7 +256,7 @@
       },
       "selfBook": {
         "title": "Boka själv",
-        "body": "Välj tid när bokningen är öppen."
+        "body": "Välj tid och lärare direkt online."
       }
     }
   },
@@ -424,10 +435,12 @@
     "eyebrow": "Körkortsteori",
     "title": "Öva med verifierade frågor",
     "description": "Gratisfrågor visas utan köp. Betalt innehåll kräver en aktiv teoriåtkomst.",
+    "freeDescription": "Gratisfrågor att öva, utan köp.",
     "teaser": {
       "eyebrow": "Körkortsteori",
       "title": "Plugga teorin på ditt språk",
       "description": "Öva kategori för kategori och gör övningsprov i samma form som kunskapsprovet. Ett urval är gratis. Resten öppnas när du köper teori.",
+      "freeDescription": "Öva gratisfrågorna, kategori för kategori.",
       "tryFree": "Öva gratis",
       "buy": "Köp teoriåtkomst",
       "pending": "Släpps så snart frågebanken är klar",

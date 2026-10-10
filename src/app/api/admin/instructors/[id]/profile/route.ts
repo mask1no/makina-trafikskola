@@ -5,6 +5,7 @@ import { z } from "zod";
 import { auth } from "@/auth";
 import { AuthorizationError, requireRole } from "@/lib/auth/guards";
 import { normalizeSwedishPhone } from "@/lib/auth/phone";
+import { revalidateTeacherLanguages } from "@/lib/admin/revalidate-public";
 import { db } from "@/lib/db";
 
 export const runtime = "nodejs";
@@ -160,5 +161,6 @@ export async function PATCH(
     }
     throw error;
   }
+  revalidateTeacherLanguages();
   return Response.json({ id: teacher.id });
 }

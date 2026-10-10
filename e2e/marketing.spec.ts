@@ -55,17 +55,12 @@ test.describe("marketing layout", () => {
     await expect(page.locator("header").getByRole("link", { name: "Kontakt" })).toHaveCount(1);
   });
 
-  test("contact map makes no Google request before explicit load", async ({ page }) => {
-    const googleRequests: string[] = [];
-    page.on("request", (request) => {
-      if (new URL(request.url()).hostname === "www.google.com") {
-        googleRequests.push(request.url());
-      }
-    });
+  test("contact map is visible without a load button", async ({ page }) => {
     await page.goto("/sv/kontakt");
-    expect(googleRequests).toEqual([]);
-    await page.getByRole("button", { name: "Visa karta" }).click();
-    await expect.poll(() => googleRequests.length).toBeGreaterThan(0);
+    await expect(page.getByRole("button", { name: "Visa karta" })).toHaveCount(0);
+    const map = page.getByTitle("Hitta oss");
+    await expect(map).toBeVisible();
+    await expect(map).toHaveAttribute("src", /google\.com\/maps/);
   });
 
   test("marquee copy is hidden and has no pause control", async ({ page }) => {
@@ -108,14 +103,14 @@ test.describe("marketing layout", () => {
     await expect(page.getByText(/^Undervisar på /)).toHaveCount(6);
     const contact = await page.locator("body").innerText();
     expect(contact).toContain("Kontakta oss på svenska, engelska, tigrinja och kurdiska.");
-    expect(contact).toContain("somaliska kommer snart.");
+    expect(contact).toContain("Somaliska kommer snart.");
     expect(contact).not.toMatch(/arabiska/i);
     expect(contact).not.toMatch(/undervisning på somaliska/i);
 
     await page.goto("/sv");
     const home = await page.locator("body").innerText();
     expect(home).toContain("Kontakta oss på svenska, engelska, tigrinja och kurdiska.");
-    expect(home).toContain("somaliska kommer snart.");
+    expect(home).toContain("Somaliska kommer snart.");
     expect(home).not.toMatch(/undervisning på somaliska/i);
 
     const prefixes = {
@@ -153,6 +148,12 @@ test.describe("marketing layout", () => {
     await expect(
       page.getByText("Dhammaan xirmooyinku waxay shaqeeyaan 12 bilood laga bilaabo taariikhda iibsiga."),
     ).toBeVisible();
+  });
+
+  test("shows the Farsta town page", async ({ page }) => {
+    const response = await page.goto("/sv/trafikskola/farsta");
+    expect(response?.status()).toBeLessThan(400);
+    await expect(page.getByRole("heading", { name: "Trafikskola i Farsta" })).toBeVisible();
   });
 
   test("does not promise free theory when none is published", async ({ page }) => {

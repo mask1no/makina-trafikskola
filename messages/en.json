@@ -81,6 +81,17 @@
     "seePrices": "See prices",
     "openNow": "Open now",
     "closed": "Closed",
+    "opensAt": "opens {time}",
+    "opensOn": "opens {day} {time}",
+    "weekdayShort": {
+      "0": "Sun",
+      "1": "Mon",
+      "2": "Tue",
+      "3": "Wed",
+      "4": "Thu",
+      "5": "Fri",
+      "6": "Sat"
+    },
     "directions": "Directions",
     "showMap": "Show map",
     "mapPrivacy": "The map is shown from Google. Google's cookies and privacy policy apply.",
@@ -127,7 +138,7 @@
         "description": "Compare one lesson or a package at your own pace."
       },
       "book": {
-        "title": "Find an instructor and time",
+        "title": "Choose town, pickup and instructor",
         "description": "Filter by language, location and transmission."
       },
       "call": {
@@ -245,7 +256,7 @@
       },
       "selfBook": {
         "title": "Book yourself",
-        "body": "Choose a time when booking is open."
+        "body": "Choose a time and an instructor directly online."
       }
     }
   },
@@ -424,10 +435,12 @@
     "eyebrow": "Driving theory",
     "title": "Practise with verified questions",
     "description": "Free questions are available without purchase. Paid content requires active theory access.",
+    "freeDescription": "Free questions to practise, with no purchase.",
     "teaser": {
       "eyebrow": "Driving theory",
       "title": "Study theory in your language",
       "description": "Practise by category and take a mock test in the same form as the knowledge test. A sample is free. The rest opens when you buy theory.",
+      "freeDescription": "Practise the free questions, category by category.",
       "tryFree": "Practise for free",
       "buy": "Buy theory access",
       "pending": "Releases when the question bank is ready",

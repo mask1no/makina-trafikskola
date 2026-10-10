@@ -6,6 +6,7 @@ import { z } from "zod";
 import { normalizeSwedishPhone } from "@/lib/auth/phone";
 import { auth } from "@/auth";
 import { AuthorizationError, requireRole } from "@/lib/auth/guards";
+import { revalidateTeacherLanguages } from "@/lib/admin/revalidate-public";
 import { db } from "@/lib/db";
 import { isLocale } from "@/i18n/routing";
 import { TEACHING_LANGUAGES } from "@/lib/teachers/languages";
@@ -159,6 +160,7 @@ export async function POST(request: Request) {
       },
       { isolationLevel: Prisma.TransactionIsolationLevel.Serializable },
     );
+    revalidateTeacherLanguages();
     return Response.json(teacher, { status: 201 });
   } catch (error) {
     if (

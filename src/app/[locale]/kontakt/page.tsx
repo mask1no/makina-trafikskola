@@ -9,6 +9,7 @@ import { MapEmbed } from "@/components/MapEmbed";
 import { isLocale } from "@/i18n/routing";
 import {
   isOpenNow,
+  nextOpening,
   openingHoursSpecification,
   todayHours,
 } from "@/lib/company/opening-hours";
@@ -17,6 +18,7 @@ import {
   formatLanguageList,
   offeredTeachingLanguagesFrom,
   publicStaff,
+  sentenceCase,
   staffMemberLanguages,
 } from "@/lib/company/staff";
 import { displayPhone, telHref } from "@/lib/format/phone";
@@ -111,6 +113,7 @@ export default async function ContactPage(
   const now = new Date();
   const open = isOpenNow(now);
   const hours = todayHours(now);
+  const opens = nextOpening(now);
   const offeredLanguages = offeredTeachingLanguagesFrom(
     staff.flatMap((member) => member.languages),
   );
@@ -119,10 +122,13 @@ export default async function ContactPage(
     params.locale,
     (code) => shell(`languagePage.${code}`),
   );
-  const comingSoonLanguageNames = formatLanguageList(
-    COMING_SOON_TEACHING_LANGUAGES,
+  const comingSoonLanguageNames = sentenceCase(
+    formatLanguageList(
+      COMING_SOON_TEACHING_LANGUAGES,
+      params.locale,
+      (code) => shell(`languagePage.${code}`),
+    ),
     params.locale,
-    (code) => shell(`languagePage.${code}`),
   );
   const structuredData = {
     "@context": "https://schema.org",
@@ -194,7 +200,18 @@ export default async function ContactPage(
             <div className="mt-5 flex flex-wrap items-center gap-3">
               <Badge tone={open ? "success" : "neutral"}>{open ? shell("openNow") : shell("closed")}</Badge>
               <p className="text-small text-ink-muted">
-                {hours ? <span className="numbers-ltr">{hours.open}–{hours.close}</span> : shell("closed")}
+                {open && hours ? (
+                  <span className="numbers-ltr">{hours.open}–{hours.close}</span>
+                ) : opens ? (
+                  opens.sameDay
+                    ? shell("opensAt", { time: opens.time })
+                    : shell("opensOn", {
+                        day: shell(`weekdayShort.${opens.weekday}`),
+                        time: opens.time,
+                      })
+                ) : (
+                  shell("closed")
+                )}
               </p>
             </div>
             <p className="mt-auto pt-6 text-small text-ink-muted">{visiting}</p>

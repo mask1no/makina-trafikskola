@@ -20,9 +20,14 @@ export async function generateMetadata(
   const { locale } = await props.params;
   if (!isLocale(locale)) return {};
   const t = await getTranslations({ locale, namespace: "theory" });
-  const comingSoon = theoryMode() === "off";
+  const mode = theoryMode();
+  const comingSoon = mode === "off";
   const title = comingSoon ? t("comingSoonTitle") : t("title");
-  const description = comingSoon ? t("comingSoonBody") : t("description");
+  const description = comingSoon
+    ? t("comingSoonBody")
+    : mode === "free"
+      ? t("freeDescription")
+      : t("description");
   const canonical = pageCanonical(locale, "/teori");
   return {
     title,
@@ -85,11 +90,17 @@ export default async function TeoriPage(
               </p>
               <h1 className="section-title text-balance mt-3">{t("title")}</h1>
               <p className="mt-4 max-w-2xl text-base leading-7 text-ink-inverse-muted sm:text-lg">
-                {freeQuestionCount > 0 ? t("description") : homeTheory("comingSoon")}
+                {theoryMode() === "free"
+                  ? t("freeDescription")
+                  : freeQuestionCount > 0
+                    ? t("description")
+                    : homeTheory("comingSoon")}
               </p>
+              {theoryMode() === "free" ? null : (
               <p className="mt-4 max-w-2xl text-sm leading-6 text-ink-inverse-muted">
                 {t("licensingPending")}
               </p>
+              )}
             </div>
             {freeQuestionCount > 0 ? (
             <div className="rounded-md border border-ink-inverse/15 bg-surface-raised p-5">

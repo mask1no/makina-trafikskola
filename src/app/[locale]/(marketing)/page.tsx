@@ -14,14 +14,16 @@ import { isLocale, type Locale } from "@/i18n/routing";
 import {
   bookingEnabled,
   instructorsEnabled,
+  theoryMode,
   theoryNavVisible,
   theorySalesOpen,
 } from "@/lib/launch";
-import { isOpenNow, todayHours } from "@/lib/company/opening-hours";
+import { isOpenNow, nextOpening, todayHours } from "@/lib/company/opening-hours";
 import {
   COMING_SOON_TEACHING_LANGUAGES,
   formatLanguageList,
   offeredTeachingLanguagesFrom,
+  sentenceCase,
 } from "@/lib/company/staff";
 import { displayPhone, telHref } from "@/lib/format/phone";
 import { benefitItems } from "@/lib/home/benefits";
@@ -64,6 +66,7 @@ async function HomeHero({ locale }: { locale: Locale }) {
   const now = new Date();
   const openNow = isOpenNow(now);
   const hoursToday = todayHours(now);
+  const opens = nextOpening(now);
   const phone = t("company.phone");
 
   return (
@@ -122,7 +125,20 @@ async function HomeHero({ locale }: { locale: Locale }) {
           </a>
           <p className="mt-4 text-small">
             <span className="font-black">{openNow ? t("shell.openNow") : t("shell.closed")}</span>
-            {hoursToday ? <span className="numbers-ltr"> · {hoursToday.open}–{hoursToday.close}</span> : null}
+            {openNow && hoursToday ? (
+              <span className="numbers-ltr"> · {hoursToday.open}–{hoursToday.close}</span>
+            ) : null}
+            {!openNow && opens ? (
+              <span>
+                {" · "}
+                {opens.sameDay
+                  ? t("shell.opensAt", { time: opens.time })
+                  : t("shell.opensOn", {
+                      day: t(`shell.weekdayShort.${opens.weekday}`),
+                      time: opens.time,
+                    })}
+              </span>
+            ) : null}
           </p>
           <p className="mt-2 text-small text-ink-inverse-muted">{t("company.visitingAddress")}</p>
           <p className="mt-2 text-small font-bold">{t("home.hero.areas")}</p>
@@ -173,10 +189,13 @@ async function HomeBelow({
     params.locale,
     (code) => t(`shell.languagePage.${code}`),
   );
-  const comingSoonLanguageNames = formatLanguageList(
-    COMING_SOON_TEACHING_LANGUAGES,
+  const comingSoonLanguageNames = sentenceCase(
+    formatLanguageList(
+      COMING_SOON_TEACHING_LANGUAGES,
+      params.locale,
+      (code) => t(`shell.languagePage.${code}`),
+    ),
     params.locale,
-    (code) => t(`shell.languagePage.${code}`),
   );
   const canBook = bookingEnabled();
   const showInstructors = instructorsEnabled() && teachers.length > 0;
@@ -498,9 +517,11 @@ async function HomeBelow({
                   {t("theory.teaser.title")}
                 </h2>
                 <p className="mt-5 max-w-xl leading-7 text-ink-inverse-muted">
-                  {freeQuestions > 0
-                    ? t("theory.teaser.description")
-                    : t("home.theory.comingSoon")}
+                  {theoryMode() === "free"
+                    ? t("theory.teaser.freeDescription")
+                    : freeQuestions > 0
+                      ? t("theory.teaser.description")
+                      : t("home.theory.comingSoon")}
                 </p>
                 <ul className="mt-6 grid gap-3">
                   {(["categories", "practice", "languages"] as const)
@@ -550,7 +571,7 @@ async function HomeBelow({
                     >
                       {t("theory.teaser.buy")}
                     </LinkButton>
-                  ) : (
+                  ) : theoryMode() === "free" ? null : (
                     <span className="inline-flex min-h-11 items-center text-small font-bold text-ink-inverse-muted">
                       {t("theory.teaser.pending")}
                     </span>

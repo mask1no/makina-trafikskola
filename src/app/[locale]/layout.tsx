@@ -24,7 +24,7 @@ import {
 } from "@/lib/company/staff";
 import { displayPhone, telHref } from "@/lib/format/phone";
 import { db } from "@/lib/db";
-import { activeTeacherLanguages } from "@/lib/teachers/query";
+import { loadPublicNavData } from "@/lib/layout/public-nav";
 import {
   bookingEnabled,
   instructorsEnabled,
@@ -123,13 +123,13 @@ export async function generateMetadata(
       url: canonical,
       locale: params.locale,
       alternateLocale: locales.filter((locale) => locale !== params.locale),
-      images: [{ url: "/hero.jpg", alt: t("brand") }],
+      images: [{ url: `/api/og?title=${encodeURIComponent(t("title"))}`, alt: t("brand") }],
     },
     twitter: {
       card: "summary_large_image",
       title: t("title"),
       description: t("description"),
-      images: ["/hero.jpg"],
+      images: [`/api/og?title=${encodeURIComponent(t("title"))}`],
     },
     manifest: "/manifest.webmanifest",
   };
@@ -156,14 +156,7 @@ export default async function LocaleLayout(
     getTranslations("company"),
     auth(),
   ]);
-  const [places, activeLanguages] = await Promise.all([
-    db.location.findMany({
-      orderBy: { name: "asc" },
-      select: { slug: true, city: true, status: true },
-    }),
-    activeTeacherLanguages(),
-  ]);
-  const publicPlaces = places.filter((place) => !/webhook|fixture/i.test(place.slug));
+  const { places: publicPlaces, languages: activeLanguages } = await loadPublicNavData();
   const offeredLanguages = offeredTeachingLanguagesFrom(activeLanguages);
   const [headerStore, cookieStore] = await Promise.all([headers(), cookies()]);
   const pathname = headerStore.get("x-makina-pathname") ?? "";

@@ -81,6 +81,17 @@
     "seePrices": "Eeg qiimaha",
     "openNow": "Hadda furan",
     "closed": "Xiran",
+    "opensAt": "wuu furmaa {time}",
+    "opensOn": "wuu furmaa {day} {time}",
+    "weekdayShort": {
+      "0": "Axd",
+      "1": "Isn",
+      "2": "Tal",
+      "3": "Arb",
+      "4": "Kha",
+      "5": "Jim",
+      "6": "Sab"
+    },
     "directions": "Jihada",
     "showMap": "Muuji khariidadda",
     "mapPrivacy": "Khariidaddu waxay ka timid Google. Kukiyada iyo siyaasadda asturnaanta Google ayaa khuseeya.",
@@ -127,7 +138,7 @@
         "description": "Si deggan u barbardhig cashar keli ah ama xirmo."
       },
       "book": {
-        "title": "Hel macallin iyo waqti",
+        "title": "Dooro magaalada, qaadista iyo macallinka",
         "description": "Ku kala saar luqad, goob iyo nooca gear-ka."
       },
       "call": {
@@ -245,7 +256,7 @@
       },
       "selfBook": {
         "title": "Is ballansho",
-        "body": "Dooro waqti marka ballanta ay furan tahay."
+        "body": "Dooro waqti iyo macallin si toos ah oo khadka ah."
       }
     }
   },
@@ -424,10 +435,12 @@
     "eyebrow": "Aragtida wadista",
     "title": "Ku tababar su'aalo la xaqiijiyay",
     "description": "Su'aalaha bilaashka ah iib uma baahna. Nuxurka lacagta leh wuxuu u baahan yahay oggolaansho firfircoon.",
+    "freeDescription": "Su'aalo bilaash ah oo la tababaro, iib la'aan.",
     "teaser": {
       "eyebrow": "Aragtida shahaadada",
       "title": "Baro aragtida luqaddaada",
       "description": "Ku tababar qayb qayb oo samee imtixaan tijaabo ah oo la mid ah imtixaanka aqoonta. Tusaale ayaa bilaash ah. Inta kale way furantaa markaad iibsato teoriga.",
+      "freeDescription": "Ku tababar su'aalaha bilaashka ah, qaybo qaybo.",
       "tryFree": "Ku tababar bilaash",
       "buy": "Iibso gelitaanka aragtida",
       "pending": "Waxaa la sii daayaa marka kaydka su'aalaha diyaar yahay",

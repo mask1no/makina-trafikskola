@@ -71,3 +71,29 @@ export function isOpenNow(now: Date, hours: readonly DayHours[] = companyOpening
   const current = parts.hour * 60 + parts.minute;
   return current >= minutes(today.open) && current < minutes(today.close);
 }
+
+export type NextOpening = {
+  time: string;
+  weekday: number;
+  sameDay: boolean;
+};
+
+/** Next time the school opens. Same day before opening, otherwise the next open weekday. */
+export function nextOpening(
+  now: Date,
+  hours: readonly DayHours[] = companyOpeningHours,
+): NextOpening | null {
+  const index = weekdayIndex(now);
+  const today = hours[index] ?? null;
+  const parts = stockholmParts(now);
+  const current = parts.hour * 60 + parts.minute;
+  if (today && current < minutes(today.open)) {
+    return { time: today.open, weekday: index, sameDay: true };
+  }
+  for (let offset = 1; offset <= 7; offset += 1) {
+    const weekday = (index + offset) % 7;
+    const slot = hours[weekday];
+    if (slot) return { time: slot.open, weekday, sameDay: false };
+  }
+  return null;
+}
