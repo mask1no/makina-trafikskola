@@ -152,6 +152,7 @@ export default async function BookingPage(
         }
         cancellationWindowHours={configuredCancellationHours()}
         mapApiKey={mapsConfig.apiKey}
+        mapId={mapsConfig.mapId}
       />
       <QuestionsBlock
         title={shell("questions")}

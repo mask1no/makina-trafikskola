@@ -7,7 +7,7 @@ import type { Metadata } from "next";
 import { auth } from "@/auth";
 import { Badge } from "@/components/Badge";
 import { Notice } from "@/components/Notice";
-import { bookingEnabled } from "@/lib/launch";
+import { bookingEnabled, theorySalesOpen } from "@/lib/launch";
 import {
   formatPrice,
   perLessonOre,
@@ -37,6 +37,9 @@ export async function generateMetadata(
   if (!isLocale(params.locale)) return {};
   const product = await getProduct(params.locale, params.slug);
   if (!product) return {};
+  if (product.kind === "THEORY_ACCESS" && !theorySalesOpen()) {
+    return { robots: { index: false, follow: false } };
+  }
   const title = product.translation.name;
   const description = product.translation.shortDesc ?? "";
   const canonical = pageCanonical(params.locale, `/paket/${params.slug}`);
@@ -68,6 +71,7 @@ export default async function ProductDetailPage(
     auth(),
   ]);
   if (!product) notFound();
+  if (product.kind === "THEORY_ACCESS" && !theorySalesOpen()) notFound();
   const salesOpen = bookingEnabled();
   const separateValue =
     product.kind !== "GUARANTEE" &&

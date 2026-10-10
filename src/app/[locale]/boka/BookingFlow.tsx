@@ -42,6 +42,7 @@ type Props = {
   initiallyAuthenticated: boolean;
   cancellationWindowHours: number;
   mapApiKey?: string;
+  mapId?: string;
   googleEnabled?: boolean;
 };
 
@@ -55,6 +56,7 @@ export function BookingFlow({
   initiallyAuthenticated,
   cancellationWindowHours,
   mapApiKey,
+  mapId,
   googleEnabled = false,
 }: Props) {
   const t = useTranslations("booking");
@@ -380,6 +382,7 @@ export function BookingFlow({
               pickupAddress={state.pickupAddress}
               pickupCoordinates={state.pickupCoordinates}
               mapApiKey={mapApiKey}
+              mapId={mapId}
               onMeet={(meet: MeetMode) => patch({ meet })}
               onPickupTyped={(value) => dispatch({ type: "pickupTyped", value })}
               onPickupSelected={(value, coordinates) =>

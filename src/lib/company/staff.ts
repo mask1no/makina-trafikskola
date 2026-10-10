@@ -1,7 +1,4 @@
-import {
-  TEACHING_LANGUAGES,
-  type TeachingLanguage,
-} from "@/lib/teachers/languages";
+import { type TeachingLanguage } from "@/lib/teachers/languages";
 
 export type StaffRole =
   | "trafikskolechef"
@@ -78,9 +75,28 @@ export const publicStaff: readonly PublicStaffMember[] = [
 
 export const COMING_SOON_TEACHING_LANGUAGES = ["so"] as const satisfies readonly TeachingLanguage[];
 
+const PUBLIC_TEACHING_LANGUAGES = ["sv", "en", "ti", "ku"] as const;
+
+export function publicTeachingLanguages(codes: readonly string[]): TeachingLanguage[] {
+  const present = new Set(codes);
+  return PUBLIC_TEACHING_LANGUAGES.filter((code) => present.has(code));
+}
+
+export function staffMemberLanguages(
+  fallback: readonly TeachingLanguage[],
+  fromDatabase: readonly string[] | undefined,
+): TeachingLanguage[] {
+  const fromProfile = fromDatabase?.length ? publicTeachingLanguages(fromDatabase) : [];
+  return fromProfile.length ? fromProfile : publicTeachingLanguages(fallback);
+}
+
 export function offeredTeachingLanguages(): TeachingLanguage[] {
-  const offered = new Set(publicStaff.flatMap((member) => member.languages));
-  return TEACHING_LANGUAGES.filter((language) => offered.has(language));
+  return publicTeachingLanguages(publicStaff.flatMap((member) => member.languages));
+}
+
+export function offeredTeachingLanguagesFrom(codes: readonly string[]): TeachingLanguage[] {
+  const fromProfiles = publicTeachingLanguages(codes);
+  return fromProfiles.length ? fromProfiles : offeredTeachingLanguages();
 }
 
 export function formatLanguageList(

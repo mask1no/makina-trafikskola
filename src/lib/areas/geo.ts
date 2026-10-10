@@ -6,6 +6,19 @@ export function boundaryRings(value: unknown): Ring[] {
   return ringsFromGeoJson(value);
 }
 
+export function boundaryLatLngs(value: unknown) {
+  return boundaryRings(value)
+    .map((ring) =>
+      ring.flatMap((point) => {
+        const lng = point[0];
+        const lat = point[1];
+        if (lng === undefined || lat === undefined) return [];
+        return [{ lat, lng }];
+      }),
+    )
+    .filter((ring) => ring.length >= 3);
+}
+
 function ringsFromGeoJson(value: unknown): Ring[] {
   if (!value || typeof value !== "object") return [];
   const record = value as { type?: string; geometry?: unknown; coordinates?: unknown; features?: unknown };

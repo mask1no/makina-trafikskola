@@ -15,6 +15,7 @@ import {
   productGrantsCourseKind,
   resolvePaidCourseHold,
 } from "@/lib/courses/entitlements";
+import { syncConfirmedBooking } from "@/lib/calendar/google";
 import { db } from "@/lib/db";
 import { bookingNotificationContext } from "@/lib/notifications/context";
 import { dispatchNotifications } from "@/lib/notifications/dispatch";
@@ -755,5 +756,8 @@ export async function processVerifiedStripeEvent(
   }
 
   await dispatchNotifications(notificationIds, eventTime);
+  if (normalized?.kind === "payment_succeeded" && normalized.bookingId) {
+    await syncConfirmedBooking(normalized.bookingId);
+  }
   return new Response(null, { status: 200 });
 }

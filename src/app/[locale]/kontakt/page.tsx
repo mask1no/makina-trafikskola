@@ -15,8 +15,9 @@ import {
 import {
   COMING_SOON_TEACHING_LANGUAGES,
   formatLanguageList,
-  offeredTeachingLanguages,
+  offeredTeachingLanguagesFrom,
   publicStaff,
+  staffMemberLanguages,
 } from "@/lib/company/staff";
 import { displayPhone, telHref } from "@/lib/format/phone";
 import { publicAddress } from "@/lib/locations/address";
@@ -81,11 +82,21 @@ export default async function ContactPage(
       select: {
         slug: true,
         photoUrl: true,
+        languages: true,
       },
     }),
     getPublishedReviewSummary(),
   ]);
-  const photoBySlug = new Map(staffPhotos.map((teacher) => [teacher.slug, teacher.photoUrl]));
+  const profileBySlug = new Map(staffPhotos.map((teacher) => [teacher.slug, teacher]));
+  const staff = publicStaff.map((staffMember) => ({
+    ...staffMember,
+    languages: staffMemberLanguages(
+      staffMember.languages,
+      staffMember.teacherSlug
+        ? profileBySlug.get(staffMember.teacherSlug)?.languages
+        : undefined,
+    ),
+  }));
 
   const legalName = company("legalName");
   const orgnr = company("orgnr");
@@ -97,7 +108,9 @@ export default async function ContactPage(
   const now = new Date();
   const open = isOpenNow(now);
   const hours = todayHours(now);
-  const offeredLanguages = offeredTeachingLanguages();
+  const offeredLanguages = offeredTeachingLanguagesFrom(
+    staff.flatMap((member) => member.languages),
+  );
   const offeredLanguageNames = formatLanguageList(
     offeredLanguages,
     params.locale,
@@ -235,30 +248,39 @@ export default async function ContactPage(
           <h2 className="text-2xl font-black">{t("staffTitle")}</h2>
           <p className="mt-3 max-w-2xl text-ink-muted">{t("staffDescription")}</p>
           <ul className="mt-6 grid gap-3 lg:grid-cols-2">
-            {publicStaff.map((staffMember) => (
-              <li key={staffMember.name} className="flex items-start gap-3 rounded-md border border-border bg-card p-3">
-                <Avatar
-                  name={staffMember.name}
-                  imageUrl={
-                    staffMember.teacherSlug
-                      ? (photoBySlug.get(staffMember.teacherSlug) ?? null)
-                      : null
-                  }
-                  size="sm"
-                />
-                <div className="min-w-0">
-                  <p className="font-extrabold">{staffMember.name}</p>
-                  <p className="text-small text-ink-muted">{t(`staffRoles.${staffMember.role}`)}</p>
-                  <p className="mt-1 max-w-[70ch] text-body leading-7 text-ink-muted">
-                    {t("speaks", {
-                      languages: formatLanguageList(
-                        staffMember.languages,
-                        params.locale,
-                        (code) => shell(`languagePage.${code}`),
-                      ),
-                    })}
-                  </p>
-                </div>
+            {staff.map((staffMember) => (
+              <li key={staffMember.name} className="h-full">
+                <Card className="flex h-full items-start gap-3" padding="sm">
+                  <Avatar
+                    name={staffMember.name}
+                    imageUrl={
+                      staffMember.teacherSlug
+                        ? (profileBySlug.get(staffMember.teacherSlug)?.photoUrl ?? null)
+                        : null
+                    }
+                    size="sm"
+                  />
+                  <div className="min-w-0">
+                    <p className="font-extrabold">{staffMember.name}</p>
+                    <p className="text-small text-ink-muted">{t(`staffRoles.${staffMember.role}`)}</p>
+                    <ul className="mt-2 flex flex-wrap gap-2">
+                      {staffMember.languages.map((code) => (
+                        <li key={code} className="rounded-full border border-[var(--line)] px-3 py-1 text-small">
+                          {shell(`languagePage.${code}`)}
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="mt-2 max-w-[70ch] text-body leading-7 text-ink-muted">
+                      {t("speaks", {
+                        languages: formatLanguageList(
+                          staffMember.languages,
+                          params.locale,
+                          (code) => shell(`languagePage.${code}`),
+                        ),
+                      })}
+                    </p>
+                  </div>
+                </Card>
               </li>
             ))}
           </ul>

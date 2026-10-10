@@ -19,10 +19,11 @@ import { openingHoursSpecification } from "@/lib/company/opening-hours";
 import {
   COMING_SOON_TEACHING_LANGUAGES,
   formatLanguageList,
-  offeredTeachingLanguages,
+  offeredTeachingLanguagesFrom,
 } from "@/lib/company/staff";
 import { displayPhone, telHref } from "@/lib/format/phone";
 import { db } from "@/lib/db";
+import { activeTeacherLanguages } from "@/lib/teachers/query";
 import {
   bookingEnabled,
   instructorsEnabled,
@@ -154,11 +155,14 @@ export default async function LocaleLayout(
     getTranslations("company"),
     auth(),
   ]);
-  const places = await db.location.findMany({
-    orderBy: { name: "asc" },
-    select: { slug: true, city: true, status: true },
-  });
-  const offeredLanguages = offeredTeachingLanguages();
+  const [places, activeLanguages] = await Promise.all([
+    db.location.findMany({
+      orderBy: { name: "asc" },
+      select: { slug: true, city: true, status: true },
+    }),
+    activeTeacherLanguages(),
+  ]);
+  const offeredLanguages = offeredTeachingLanguagesFrom(activeLanguages);
   const pathname = (await headers()).get("x-makina-pathname") ?? "";
   if (session?.user.id && !pathname.includes("/verifiera-mobil")) {
     const account = await db.user.findUnique({

@@ -1,6 +1,7 @@
 import { errorResponse, invalidInput } from "@/lib/api/http";
 import { addDays } from "date-fns";
 import { Prisma } from "@prisma/client";
+import * as Sentry from "@sentry/nextjs";
 import { z } from "zod";
 
 import { auth } from "@/auth";
@@ -17,7 +18,12 @@ import {
   isBookingExclusionViolation,
   isSerializationOrTxTimeout,
 } from "@/lib/bookings/errors";
-import { syncConfirmedBooking } from "@/lib/calendar/google";
+import {
+  calendarSyncEnabled,
+  slotOverlapsBusy,
+  syncConfirmedBooking,
+  teacherBusyIntervals,
+} from "@/lib/calendar/google";
 import { configuredNumber } from "@/lib/config/number";
 import { db } from "@/lib/db";
 import { dispatchNotifications } from "@/lib/notifications/dispatch";
@@ -74,7 +80,7 @@ export async function PATCH(
     where: { id: parsed.data.id },
     include: {
       student: { select: { localePref: true } },
-      teacher: { select: { userId: true } },
+      teacher: { select: { userId: true, googleCalendarEmail: true } },
     },
   });
   if (!booking) {
@@ -122,6 +128,21 @@ export async function PATCH(
     );
     if (!slot) {
       return errorResponse("SLOT_TAKEN", 409, { slots: slots ?? [] });
+    }
+
+    if (calendarSyncEnabled() && booking.teacher.googleCalendarEmail) {
+      try {
+        const busy = await teacherBusyIntervals(
+          booking.teacher.googleCalendarEmail,
+          slot.startsAt,
+          slot.endsAt,
+        );
+        if (slotOverlapsBusy(slot, busy)) {
+          return errorResponse("SLOT_TAKEN", 409, { slots: slots ?? [] });
+        }
+      } catch (error) {
+        Sentry.captureException(error);
+      }
     }
 
     const cancellationWindowHours = configuredNumber(

@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 
 import { ChoiceCard } from "@/components/ChoiceCard";
@@ -14,6 +14,10 @@ const PickupAddressAutocomplete = dynamic(
   () => import("@/components/PickupAddressAutocomplete"),
   { ssr: false },
 );
+
+const AreaOutlineMap = dynamic(() => import("@/components/AreaOutlineMap"), {
+  ssr: false,
+});
 
 function Outline({ boundary, label }: { boundary: unknown; label: string }) {
   const rings = useMemo(() => boundaryRings(boundary), [boundary]);
@@ -55,6 +59,7 @@ export function PickupStep({
   pickupAddress,
   pickupCoordinates,
   mapApiKey,
+  mapId,
   onMeet,
   onPickupTyped,
   onPickupSelected,
@@ -64,18 +69,34 @@ export function PickupStep({
   pickupAddress: string;
   pickupCoordinates: { lat: number; lng: number } | null;
   mapApiKey?: string;
+  mapId?: string;
   onMeet: (mode: MeetMode) => void;
   onPickupTyped: (address: string) => void;
   onPickupSelected: (address: string, coordinates: { lat: number; lng: number }) => void;
 }) {
   const t = useTranslations("booking");
   const showHint = meet === "pickup" && pickupAddress.trim().length > 0 && !pickupCoordinates;
+  const [mapFailed, setMapFailed] = useState(false);
+  const failMap = useCallback(() => setMapFailed(true), []);
+  const hasBoundary = useMemo(() => boundaryRings(area?.boundary).length > 0, [area?.boundary]);
+  const showMap = Boolean(mapApiKey && mapId) && !mapFailed && hasBoundary;
   return (
     <section>
       <h2 className="text-h2 font-black">{t("step.pickup.title")}</h2>
       <p className="mt-2 text-ink-muted">{t("step.pickup.free")}</p>
       <div className="mt-5 overflow-hidden rounded-md border border-[var(--line)] bg-card shadow-soft">
-        <Outline boundary={area?.boundary} label={t("step.pickup.outline")} />
+        {showMap ? (
+          <AreaOutlineMap
+            apiKey={mapApiKey ?? ""}
+            mapId={mapId ?? ""}
+            boundary={area?.boundary}
+            label={t("step.pickup.outline")}
+            marker={pickupCoordinates}
+            onFailure={failMap}
+          />
+        ) : (
+          <Outline boundary={area?.boundary} label={t("step.pickup.outline")} />
+        )}
       </div>
       {area?.officeAddress ? (
         <div className="mt-4">

@@ -21,7 +21,7 @@ import { isOpenNow, todayHours } from "@/lib/company/opening-hours";
 import {
   COMING_SOON_TEACHING_LANGUAGES,
   formatLanguageList,
-  offeredTeachingLanguages,
+  offeredTeachingLanguagesFrom,
 } from "@/lib/company/staff";
 import { displayPhone, telHref } from "@/lib/format/phone";
 import { benefitItems } from "@/lib/home/benefits";
@@ -175,7 +175,7 @@ async function HomeBelow({
     teachers.slice(0, 4).map((teacher) => teacher.id),
     new Date(),
   );
-  const offeredLanguages = offeredTeachingLanguages();
+  const offeredLanguages = offeredTeachingLanguagesFrom(activeLanguages);
   const offeredLanguageNames = formatLanguageList(
     offeredLanguages,
     params.locale,

@@ -5,7 +5,9 @@ import { TEACHING_LANGUAGES } from "@/lib/teachers/languages";
 import {
   formatLanguageList,
   offeredTeachingLanguages,
+  offeredTeachingLanguagesFrom,
   publicStaff,
+  staffMemberLanguages,
 } from "./staff";
 
 describe("public staff languages", () => {
@@ -53,5 +55,12 @@ describe("public staff languages", () => {
     expect(offeredTeachingLanguages()).toEqual(["sv", "en", "ti", "ku"]);
     expect(offeredTeachingLanguages()).not.toContain("ar");
     expect(offeredTeachingLanguages()).not.toContain("so");
+  });
+
+  it("uses a saved teacher profile and ignores languages the school does not offer", () => {
+    expect(staffMemberLanguages(["sv"], ["en", "ar", "so"])).toEqual(["en"]);
+    expect(staffMemberLanguages(["sv", "ti"], [])).toEqual(["sv", "ti"]);
+    expect(offeredTeachingLanguagesFrom(["ar", "so"])).toEqual(offeredTeachingLanguages());
+    expect(offeredTeachingLanguagesFrom(["ku", "sv"])).toEqual(["sv", "ku"]);
   });
 });

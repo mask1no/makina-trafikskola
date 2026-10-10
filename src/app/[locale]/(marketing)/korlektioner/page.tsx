@@ -76,15 +76,6 @@ export default async function KorlektionerPage(
     <div className="section-shell">
       <div className="site-container">
         <PageHeader eyebrow={t("lessons.eyebrow")} title={t("lessons.title")} description={t("lessons.description")} />
-        <div className="mt-6 flex flex-wrap gap-2">
-          <Link className="inline-flex min-h-11 items-center rounded-full border border-border bg-card px-4 text-small font-bold" href={`/${params.locale}/korlektioner?sort=price${group ? `&group=${group}` : ""}`}>{t("lessons.sortPrice")}</Link>
-          <Link className="inline-flex min-h-11 items-center rounded-full border border-border bg-card px-4 text-small font-bold" href={`/${params.locale}/korlektioner?sort=lessons${group ? `&group=${group}` : ""}`}>{t("lessons.sortLessons")}</Link>
-          {allSections.map((section) => (
-            <Link key={section.key} className="inline-flex min-h-11 items-center rounded-full border border-border bg-card px-4 text-small font-bold" href={`/${params.locale}/korlektioner?sort=${sort}&group=${section.key}`}>
-              {t(`lessons.groups.${section.key}.title`)}
-            </Link>
-          ))}
-        </div>
         {best ? (
           <div className="mt-8 max-w-xl">
             <p className="mb-3 text-small font-bold">{t("lessons.bestSeller")}</p>
@@ -99,6 +90,15 @@ export default async function KorlektionerPage(
             />
           </div>
         ) : null}
+        <div className="mt-6 flex flex-wrap gap-2">
+          <Link className="inline-flex min-h-11 items-center rounded-full border border-border bg-card px-4 text-small font-bold" href={`/${params.locale}/korlektioner?sort=price${group ? `&group=${group}` : ""}`}>{t("lessons.sortPrice")}</Link>
+          <Link className="inline-flex min-h-11 items-center rounded-full border border-border bg-card px-4 text-small font-bold" href={`/${params.locale}/korlektioner?sort=lessons${group ? `&group=${group}` : ""}`}>{t("lessons.sortLessons")}</Link>
+          {allSections.map((section) => (
+            <Link key={section.key} className="inline-flex min-h-11 items-center rounded-full border border-border bg-card px-4 text-small font-bold" href={`/${params.locale}/korlektioner?sort=${sort}&group=${section.key}`}>
+              {t(`lessons.groups.${section.key}.title`)}
+            </Link>
+          ))}
+        </div>
         {sections.length ? (
           <>
             <nav className="sticky top-[var(--header-height)] z-30 -mx-4 mt-8 flex gap-2 overflow-x-auto bg-page px-4 py-3 lg:hidden" aria-label={t("lessons.groups.label")}>
