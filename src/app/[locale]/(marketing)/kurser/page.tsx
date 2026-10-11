@@ -11,6 +11,7 @@ import { resolveContent } from "@/lib/content/fallback";
 import { db } from "@/lib/db";
 import { formatStockholm } from "@/lib/format/datetime";
 import { formatPrice } from "@/lib/pricing/format";
+import { risk2Confirmed } from "@/lib/launch";
 import { pageCanonical, withSocial } from "@/lib/seo/metadata";
 
 import { CourseBookingControl } from "./CourseBookingControl";
@@ -47,6 +48,9 @@ export default async function KurserPage(
     Number.parseInt(process.env.BOOKING_HOLD_MINUTES ?? "15", 10) || 15,
   );
   const now = new Date();
+  const courseKinds = risk2Confirmed()
+    ? (["RISK1", "RISK2"] as const)
+    : (["RISK1"] as const);
   const holdCutoff = new Date(now.getTime() - holdMinutes * 60_000);
   const [session, t, authT, company, occasions, courses] = await Promise.all([
     auth(),
@@ -57,7 +61,7 @@ export default async function KurserPage(
       where: {
         cancelled: false,
         startsAt: { gt: now },
-        course: { kind: { in: ["RISK1", "RISK2"] } },
+        course: { kind: { in: [...courseKinds] } },
       },
       orderBy: { startsAt: "asc" },
       include: {
@@ -84,7 +88,7 @@ export default async function KurserPage(
       },
     }),
     db.course.findMany({
-      where: { kind: { in: ["RISK1", "RISK2"] } },
+      where: { kind: { in: [...courseKinds] } },
       include: { product: { include: { translations: true } } },
     }),
   ]);
@@ -102,7 +106,7 @@ export default async function KurserPage(
           <PageHeader eyebrow={t("eyebrow")} title={t("title")} description={t("description")} />
         </div>
         <div className="mt-10 grid gap-4 md:grid-cols-2">
-          {(["RISK1", "RISK2"] as const).map((kind) => {
+          {courseKinds.map((kind) => {
             const course = courses.find((item) => item.kind === kind);
             const upcoming = occasions.find((item) => item.course.kind === kind);
             return (

@@ -61,6 +61,6 @@ Do not put a cron schedule on the web service. Add two Railway cron services:
 6. Run `npm run backup:db`, restore the newest object into an isolated `restore`/`test` database with `npm run verify:restore`, record the successful date, verify scrubbed Sentry events, schedule cron, and monitor `/api/health`.
 7. Confirm products, package inclusions, VAT, validity, cancellation/refund wording, legal details and contact channels. Export the old WordPress sitemap and add permanent redirects for every indexed URL.
 8. Run mobile, keyboard, touch-target and RTL QA in `sv`, `en`, `ti` and `ar`; complete booking, payment, cancellation, refund, export and deletion; run all automated checks and require green CI on the exact launch commit.
-9. Activate approved products, set `INSTRUCTORS_ENABLED=1`, verify production instructor data, then set `BOOKING_ENABLED=1`. Make one final phone booking before DNS cutover and watch errors, payments, SMS and booking conflicts for 48 hours.
+9. Activate approved products, set `RISK2_CONFIRMED=1` and `GUARANTEE_CONFIRMED=1` only for client-approved offerings, set `INSTRUCTORS_ENABLED=1`, verify production instructor data, then set `BOOKING_ENABLED=1`. Make one final phone booking before DNS cutover and watch errors, payments, SMS and booking conflicts for 48 hours.
 
 Booking must remain disabled until real availability, production payment acceptance, SMS delivery, backups, monitoring and the final four-locale QA pass are complete.

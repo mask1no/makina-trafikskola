@@ -33,6 +33,7 @@ describe("benefitItems", () => {
       bookingEnabled: true,
       hasPickupArea: true,
       hasRiskCourse: true,
+      guaranteeConfirmed: true,
       products: [
         lesson,
         { active: false, kind: "TEST_LESSON", priceOre: 50000, includesRisk1: false, includesRisk2: false },

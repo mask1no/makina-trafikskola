@@ -3,6 +3,7 @@ import { z } from "zod";
 
 import { invalidInput } from "@/lib/api/http";
 import { db } from "@/lib/db";
+import { risk2Confirmed } from "@/lib/launch";
 
 const querySchema = z
   .object({
@@ -16,6 +17,10 @@ export async function GET(request: Request) {
     Object.fromEntries(new URL(request.url).searchParams),
   );
   if (!parsed.success) return invalidInput(parsed.error.flatten().fieldErrors);
+  const risk2IsConfirmed = risk2Confirmed();
+  if (parsed.data.kind === "RISK2" && !risk2IsConfirmed) {
+    return Response.json([]);
+  }
 
   const holdMinutes = Math.max(
     1,
@@ -27,7 +32,11 @@ export async function GET(request: Request) {
       cancelled: false,
       startsAt: { gt: new Date() },
       ...(parsed.data.language ? { language: parsed.data.language } : {}),
-      ...(parsed.data.kind ? { course: { kind: parsed.data.kind } } : {}),
+      ...(parsed.data.kind
+        ? { course: { kind: parsed.data.kind } }
+        : risk2IsConfirmed
+          ? {}
+          : { course: { kind: { not: "RISK2" as const } } }),
     },
     orderBy: { startsAt: "asc" },
     include: {

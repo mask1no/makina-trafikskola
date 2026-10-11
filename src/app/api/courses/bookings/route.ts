@@ -10,6 +10,7 @@ import {
 import { requireRole } from "@/lib/auth/guards";
 import { remainingCourseEntitlements } from "@/lib/courses/entitlements";
 import { db } from "@/lib/db";
+import { productLaunchApproved } from "@/lib/launch";
 import { createPaymentIntentForOrder } from "@/lib/payments/payment-intents";
 import { stripeIsConfigured } from "@/lib/stripe";
 
@@ -238,7 +239,11 @@ export async function POST(request: Request) {
         }
 
         const product = occasion.course.product;
-        if (!product.active || product.kind !== "COURSE_SEAT") {
+        if (
+          !product.active ||
+          product.kind !== "COURSE_SEAT" ||
+          !productLaunchApproved(product)
+        ) {
           throw new CourseBookingError("PRODUCT_INACTIVE");
         }
         const translation =

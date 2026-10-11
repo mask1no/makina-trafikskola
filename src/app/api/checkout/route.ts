@@ -5,6 +5,7 @@ import { authorizationError, errorResponse, invalidInput } from "@/lib/api/http"
 import { requireRole } from "@/lib/auth/guards";
 import { checkoutHoldError } from "@/lib/bookings/hold";
 import { db } from "@/lib/db";
+import { productLaunchApproved } from "@/lib/launch";
 import { createPaymentIntentForOrder } from "@/lib/payments/payment-intents";
 import { getStripe, stripeIsConfigured } from "@/lib/stripe";
 
@@ -47,6 +48,7 @@ export async function POST(request: Request) {
   if (
     !product?.active ||
     product.kind === "TEST_LESSON" ||
+    !productLaunchApproved(product) ||
     (product.kind === "THEORY_ACCESS" && process.env.THEORY_MODE !== "full")
   ) {
     return errorResponse("PRODUCT_INACTIVE", 409);

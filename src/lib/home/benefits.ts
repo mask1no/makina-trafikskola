@@ -42,11 +42,12 @@ export function benefitItems(input: {
   products: readonly BenefitProduct[];
   hasRiskCourse?: boolean;
   hasPickupArea?: boolean;
+  guaranteeConfirmed?: boolean;
 }) {
   const activeProducts = input.products.filter((product) => product.active);
   const hasGuarantee = activeProducts.some(
     (product) => product.kind === "GUARANTEE",
-  );
+  ) && input.guaranteeConfirmed;
   const canPayOnline = activeProducts.length > 0;
 
   return [

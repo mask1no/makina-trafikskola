@@ -257,7 +257,7 @@ async function checkConfiguration() {
   record(
     "Launch flags",
     "PASS",
-    `BOOKING_ENABLED=${process.env.BOOKING_ENABLED ?? "unset"} INSTRUCTORS_ENABLED=${process.env.INSTRUCTORS_ENABLED ?? "unset"} THEORY_MODE=${process.env.THEORY_MODE ?? "free"}`,
+    `BOOKING_ENABLED=${process.env.BOOKING_ENABLED ?? "unset"} INSTRUCTORS_ENABLED=${process.env.INSTRUCTORS_ENABLED ?? "unset"} THEORY_MODE=${process.env.THEORY_MODE ?? "free"} RISK2_CONFIRMED=${process.env.RISK2_CONFIRMED ?? "0"} GUARANTEE_CONFIRMED=${process.env.GUARANTEE_CONFIRMED ?? "0"}`,
   );
   await checkMaps(mapsKey, mapId);
   await checkCalendars();

@@ -8,7 +8,11 @@ import { auth } from "@/auth";
 import { Badge } from "@/components/Badge";
 import { CallButton } from "@/components/ContactButtons";
 import { Notice } from "@/components/Notice";
-import { bookingEnabled, theorySalesOpen } from "@/lib/launch";
+import {
+  bookingEnabled,
+  productLaunchApproved,
+  theorySalesOpen,
+} from "@/lib/launch";
 import {
   formatPrice,
   perLessonOre,
@@ -37,6 +41,9 @@ export async function generateMetadata(
   if (!isLocale(params.locale)) return {};
   const product = await getProduct(params.locale, params.slug);
   if (!product) return {};
+  if (!productLaunchApproved(product)) {
+    return { robots: { index: false, follow: false } };
+  }
   if (product.kind === "THEORY_ACCESS" && !theorySalesOpen()) {
     return { robots: { index: false, follow: false } };
   }
@@ -71,6 +78,7 @@ export default async function ProductDetailPage(
     auth(),
   ]);
   if (!product) notFound();
+  if (!productLaunchApproved(product)) notFound();
   if (product.kind === "THEORY_ACCESS" && !theorySalesOpen()) notFound();
   const salesOpen = bookingEnabled();
   const separateValue =

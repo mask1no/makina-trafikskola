@@ -7,7 +7,11 @@ import { PageHeader } from "@/components/PageHeader";
 import { ProductCard } from "@/components/ProductCard";
 import { QuestionsBlock } from "@/components/QuestionsBlock";
 import { isLocale } from "@/i18n/routing";
-import { bookingEnabled, theorySalesOpen } from "@/lib/launch";
+import {
+  bookingEnabled,
+  productLaunchApproved,
+  theorySalesOpen,
+} from "@/lib/launch";
 import { groupProducts } from "@/lib/pricing/group";
 import { toProductCardModel } from "@/lib/products/card";
 
@@ -49,6 +53,7 @@ export default async function KorlektionerPage(
   const group = searchParams.group;
   const products = (await getProducts(params.locale))
     .filter((product) => product.active && product.kind !== "TEST_LESSON")
+    .filter((product) => productLaunchApproved(product))
     .filter((product) => theorySalesOpen() || product.kind !== "THEORY_ACCESS")
     .sort((a, b) =>
       sort === "lessons" ? b.lessonCredits - a.lessonCredits : a.priceOre - b.priceOre,
