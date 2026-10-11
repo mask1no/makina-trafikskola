@@ -58,7 +58,6 @@ export default async function KorlektionerPage(
     .sort((a, b) =>
       sort === "lessons" ? b.lessonCredits - a.lessonCredits : a.priceOre - b.priceOre,
     );
-  const best = products.find((product) => product.bestSeller) ?? products.find((product) => product.kind === "PACKAGE");
   const canBook = bookingEnabled();
   const allSections = groupProducts(products);
   const sections = allSections.filter((section) => !group || section.key === group);
@@ -81,20 +80,6 @@ export default async function KorlektionerPage(
     <div className="section-shell">
       <div className="site-container">
         <PageHeader eyebrow={t("lessons.eyebrow")} title={t("lessons.title")} description={t("lessons.description")} />
-        {best ? (
-          <div className="mt-8 max-w-xl">
-            <p className="mb-3 text-small font-bold">{t("lessons.bestSeller")}</p>
-            <ProductCard
-              {...toProductCardModel({
-                locale: params.locale,
-                bookingEnabled: canBook,
-                product: best,
-                includeImage: false,
-                labels: cardLabels,
-              })}
-            />
-          </div>
-        ) : null}
         <div className="mt-6 flex flex-wrap gap-2">
           <Link className="inline-flex min-h-11 items-center rounded-full border border-border bg-card px-4 text-small font-bold" href={`/${params.locale}/priser?sort=price${group ? `&group=${group}` : ""}`}>{t("lessons.sortPrice")}</Link>
           <Link className="inline-flex min-h-11 items-center rounded-full border border-border bg-card px-4 text-small font-bold" href={`/${params.locale}/priser?sort=lessons${group ? `&group=${group}` : ""}`}>{t("lessons.sortLessons")}</Link>
