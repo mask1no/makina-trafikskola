@@ -13,7 +13,7 @@ import { benefitItems } from "./benefits";
 
 const lesson = {
   kind: "SINGLE_LESSON",
-  priceOre: 79900,
+  priceOre: 49900,
   includesRisk1: false,
   includesRisk2: false,
 };
@@ -60,7 +60,7 @@ describe("benefitItems", () => {
     });
     expect(sv.home.benefits.guarantee).toEqual({
       title: "Körkortsgaranti",
-      body: "Kör tills du klarar",
+      body: "25 lektioner, Risk 1, Risk 2 och teori",
     });
     expect(sv.home.benefits.payment.title).toBe("Kort/Swish/Klarna");
     expect(sv.home.benefits.reminder.title).toBe("Sms-påminnelse dagen före");

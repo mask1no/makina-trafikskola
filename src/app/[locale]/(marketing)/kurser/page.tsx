@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
+import { auth } from "@/auth";
 import { Badge } from "@/components/Badge";
 import { CallButton } from "@/components/ContactButtons";
 import { PageHeader } from "@/components/PageHeader";
@@ -11,6 +12,8 @@ import { db } from "@/lib/db";
 import { formatStockholm } from "@/lib/format/datetime";
 import { formatPrice } from "@/lib/pricing/format";
 import { pageCanonical, withSocial } from "@/lib/seo/metadata";
+
+import { CourseBookingControl } from "./CourseBookingControl";
 
 export const dynamic = "force-dynamic";
 
@@ -45,8 +48,10 @@ export default async function KurserPage(
   );
   const now = new Date();
   const holdCutoff = new Date(now.getTime() - holdMinutes * 60_000);
-  const [t, company, occasions, courses] = await Promise.all([
+  const [session, t, authT, company, occasions, courses] = await Promise.all([
+    auth(),
     getTranslations("courses"),
+    getTranslations("auth"),
     getTranslations("company"),
     db.courseOccasion.findMany({
       where: {
@@ -88,6 +93,7 @@ export default async function KurserPage(
       dateStyle: "long",
       timeStyle: "short",
     });
+  const authenticated = session?.user?.role === "STUDENT";
 
   return (
     <div className="section-shell">
@@ -112,9 +118,11 @@ export default async function KurserPage(
                 <p className="mt-2 text-small font-bold text-ink-muted">
                   {upcoming ? formatOccasion(upcoming.startsAt) : t("soon")}
                 </p>
-                <CallButton phone={company("phone")} className="mt-5">
-                  {t("callToBook")}
-                </CallButton>
+                {!upcoming ? (
+                  <CallButton phone={company("phone")} className="mt-5">
+                    {t("callToBook")}
+                  </CallButton>
+                ) : null}
               </article>
             );
           })}
@@ -163,9 +171,24 @@ export default async function KurserPage(
                       {t("inactive")}
                     </p>
                   ) : null}
-                  <CallButton phone={company("phone")} className="mt-5">
-                    {t("callToBook")}
-                  </CallButton>
+                  {seatsLeft > 0 && occasion.course.product.active ? (
+                    <CourseBookingControl
+                      occasionId={occasion.id}
+                      disabled={false}
+                      authenticated={authenticated}
+                      signInHref={`/${params.locale}/logga-in?next=${encodeURIComponent(`/${params.locale}/kurser`)}`}
+                      accountRequired={authT("purchaseGate")}
+                      signInToBuy={authT("signInToBuy")}
+                    />
+                  ) : seatsLeft === 0 ? (
+                    <p className="mt-5 text-sm font-black text-ink-muted">
+                      {t("seatsLeft", { count: 0, n: "0" })}
+                    </p>
+                  ) : (
+                    <CallButton phone={company("phone")} className="mt-5">
+                      {t("callToBook")}
+                    </CallButton>
+                  )}
                 </article>
               );
             })}

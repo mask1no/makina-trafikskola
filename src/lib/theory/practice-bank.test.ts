@@ -36,4 +36,28 @@ describe("practice theory bank", () => {
       }
     }
   });
+
+  it("does not use joke or absurd distractors", () => {
+    const copy = JSON.stringify(practiceBankQuestions).toLocaleLowerCase();
+    for (const banned of [
+      "blunda och gasa",
+      "close your eyes and accelerate",
+      "pilen är bara ett förslag",
+      "the arrow is only a suggestion",
+      "den som tutar kör först",
+      "whoever honks goes first",
+      "bara tuta",
+      "only honk",
+      "bara gasa",
+      "only accelerate",
+      "ägaren till den nyaste bilen",
+      "the one with the newer car",
+      "för att hälsa på en vän",
+      "to greet a friend",
+      "أغمض عينيك",
+      "السهم مجرد اقتراح",
+    ]) {
+      expect(copy).not.toContain(banned);
+    }
+  });
 });

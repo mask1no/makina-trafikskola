@@ -36,8 +36,10 @@ export async function generateMetadata(props: {
 
 export default async function FreePracticePage(props: {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<{ screen?: string }>;
 }) {
   const params = await props.params;
+  const searchParams = await props.searchParams;
   if (!isLocale(params.locale)) notFound();
   if (theoryMode() === "off") redirect(`/${params.locale}/teori`);
   setRequestLocale(params.locale);
@@ -68,6 +70,10 @@ export default async function FreePracticePage(props: {
             locale={params.locale}
             questions={presented}
             authenticated={session?.user?.role === "STUDENT"}
+            screenshotFinished={
+              process.env.SCREENSHOTS === "1" &&
+              searchParams.screen === "end"
+            }
             bookHref={
               process.env.BOOKING_ENABLED === "1"
                 ? `/${params.locale}/boka`

@@ -27,6 +27,7 @@ export type Location = {
 export type Teacher = {
   id: string;
   name: string;
+  photoUrl: string | null;
   languages: string[];
   locationIds: string[];
   transmissions: string[];

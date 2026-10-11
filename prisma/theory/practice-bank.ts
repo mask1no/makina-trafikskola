@@ -97,10 +97,10 @@ export const practiceBankQuestions: TheoryBankQuestion[] = [
     ar: ["ما الذي يسري عليك كسائق عند معبر دراجات (cykelöverfart)؟", "على الدراجين دائمًا إعطاؤك الأولوية", "يمكنك العبور إن لم ترَ دراجة بعيدة", "تلتزم بإعطاء الأولوية للدراجين الموجودين على المعبر أو الذين يهمّون بدخوله", "عند cykelöverfart يعطي السائق الأولوية للدراجين الموجودين عليه أو الذين يهمّون بدخوله."],
   }),
   item("mk-07", 1, 0, 2, {
-    sv: ["En buss blinkar för att lämna en hållplats i ett tättbebyggt område där högsta tillåtna hastighet är 50 km/h. Vad gör du?", "Du lämnar företräde så att bussen kan köra ut", "Du håller din plats eftersom bussen har väjningsplikt", "Du tutar och kör om bussen", "I tättbebyggt område med högst 50 km/h ska du lämna företräde när en buss blinkar ut från en hållplats."],
-    en: ["A bus signals to leave a stop in a built-up area where the speed limit is 50 km/h. What do you do?", "You give way so the bus can pull out", "You hold your place because the bus must yield", "You honk and pass the bus", "In a built-up area with a limit of 50 km/h or lower, you give way when a bus signals to leave a stop."],
-    ti: ["ኣብ ከተማ 50 km/h ዝኾነሉ ኣውቶቡስ ካብ መዕረፊ ክወጽእ ምልክት ይገብር። እንታይ ትገብር?", "ኣውቶቡስ ክወጽእ ትህቦ", "ቦታኻ ትሕሉ ምኽንያቱ ኣውቶቡስ ክህብ ኣለዎ", "ትጭዋውዕ እሞ ትሓልፎ", "ኣብ ከተማ እቲ ገደብ 50 km/h ወይ ትሕቲ ምስዝከውን ኣውቶቡስ ካብ መዕረፊ ክወጽእ ምልክት ምስገበረ ትህቦ።"],
-    ar: ["حافلة تعطّل للخروج من موقف داخل منطقة مبنية حدّها 50 كم/س. ماذا تفعل؟", "تعطيها الأولوية لتخرج", "تحتفظ بمكانك لأن على الحافلة إعطاء الأولوية", "تستخدم البوق وتتجاوزها", "في منطقة مبنية حدّها 50 كم/س أو أقل تعطي الأولوية للحافلة التي تعطّل لمغادرة الموقف."],
+    sv: ["En buss blinkar för att lämna en hållplats i ett tättbebyggt område där högsta tillåtna hastighet är 50 km/h. Vad gör du?", "Du lämnar företräde så att bussen kan köra ut", "Du håller din plats eftersom bussen har väjningsplikt", "Du kör om innan bussen hinner lämna hållplatsen", "I tättbebyggt område med högst 50 km/h ska du lämna företräde när en buss blinkar ut från en hållplats."],
+    en: ["A bus signals to leave a stop in a built-up area where the speed limit is 50 km/h. What do you do?", "You give way so the bus can pull out", "You hold your place because the bus must yield", "You pass before the bus has time to leave the stop", "In a built-up area with a limit of 50 km/h or lower, you give way when a bus signals to leave a stop."],
+    ti: ["ኣብ ከተማ 50 km/h ዝኾነሉ ኣውቶቡስ ካብ መዕረፊ ክወጽእ ምልክት ይገብር። እንታይ ትገብር?", "ኣውቶቡስ ክወጽእ ትህቦ", "ቦታኻ ትሕሉ ምኽንያቱ ኣውቶቡስ ክህብ ኣለዎ", "ኣውቶቡስ ካብ መዕረፊ ቅድሚ ምውጻኣ ትሓልፋ", "ኣብ ከተማ እቲ ገደብ 50 km/h ወይ ትሕቲ ምስዝከውን ኣውቶቡስ ካብ መዕረፊ ክወጽእ ምልክት ምስገበረ ትህቦ።"],
+    ar: ["حافلة تعطّل للخروج من موقف داخل منطقة مبنية حدّها 50 كم/س. ماذا تفعل؟", "تعطيها الأولوية لتخرج", "تحتفظ بمكانك لأن على الحافلة إعطاء الأولوية", "تتجاوز قبل أن تتمكن الحافلة من مغادرة الموقف", "في منطقة مبنية حدّها 50 كم/س أو أقل تعطي الأولوية للحافلة التي تعطّل لمغادرة الموقف."],
   }),
   item("mk-08", 1, 1, 2, {
     sv: ["Vem har företräde i en cirkulationsplats?", "Den som kör in", "De som redan färdas i cirkulationen", "Den som blinkar vänster", "Du har väjningsplikt mot trafiken som redan är inne i cirkulationsplatsen."],
@@ -181,10 +181,10 @@ export const practiceBankQuestions: TheoryBankQuestion[] = [
     ar: ["تزداد سرعتك. ماذا يحدث لمسافة الكبح؟", "تقصر", "تطول", "تبقى دائمًا كما هي", "كلما زادت السرعة طالت مسافة الكبح. وهي تزيد أسرع من السرعة."],
   }),
   item("mk-21", 3, 0, 1, {
-    sv: ["Du blir arg på en annan förare. Vad är säkrast?", "Släpp det och håll uppmärksamheten på trafiken", "Köra ikapp för att visa vad du tycker", "Tuta länge så att föraren förstår", "Ilska tar uppmärksamhet från körningen. Låt det gå och håll blicken på trafiken."],
-    en: ["You get angry with another driver. What is safest?", "Let it go and keep your attention on the traffic", "Catch up to show what you think", "Honk for a long time so the driver understands", "Anger takes attention away from driving. Let it pass and watch the traffic."],
-    ti: ["ኣብ ካልእ ሹፌር ትቖጣ። እቲ ውሑስ እንታይ እዩ?", "ግደፎ እሞ ትኹረትካ ኣብ ትራፊክ ግበር", "ርእይቶኻ ንምርኣይ ስዓቦ", "ሹፌር ክርድኦ ነዊሕ ጭውዋዕ", "ቝጣ ትኹረት ካብ ምዝዋር ይወስድ። ግደፎ እሞ ንትራፊክ ርአ።"],
-    ar: ["تغضب من سائق آخر. ما الأسلم؟", "تترك الأمر وتُبقي انتباهك على المرور", "تلحق به لتريه رأيك", "تستخدم البوق طويلًا ليفهم", "الغضب يصرف الانتباه عن القيادة. دعه يمر وراقب المرور."],
+    sv: ["Du blir arg på en annan förare. Vad är säkrast?", "Släpp det och håll uppmärksamheten på trafiken", "Köra ikapp för att visa vad du tycker", "Köra närmare för att markera att föraren gjorde fel", "Ilska tar uppmärksamhet från körningen. Låt det gå och håll blicken på trafiken."],
+    en: ["You get angry with another driver. What is safest?", "Let it go and keep your attention on the traffic", "Catch up to show what you think", "Follow more closely to show that the driver was wrong", "Anger takes attention away from driving. Let it pass and watch the traffic."],
+    ti: ["ኣብ ካልእ ሹፌር ትቖጣ። እቲ ውሑስ እንታይ እዩ?", "ግደፎ እሞ ትኹረትካ ኣብ ትራፊክ ግበር", "ርእይቶኻ ንምርኣይ ስዓቦ", "እቲ ሹፌር ከም ዝገገየ ንምርኣይ ቀሪብካ ትስዕቦ", "ቝጣ ትኹረት ካብ ምዝዋር ይወስድ። ግደፎ እሞ ንትራፊክ ርአ።"],
+    ar: ["تغضب من سائق آخر. ما الأسلم؟", "تترك الأمر وتُبقي انتباهك على المرور", "تلحق به لتريه رأيك", "تتبعه عن قرب لتبيّن أنه أخطأ", "الغضب يصرف الانتباه عن القيادة. دعه يمر وراقب المرور."],
   }),
   item("mk-22", 3, 2, 2, {
     sv: ["Ditt körkort säger att du ska använda glasögon eller linser. Vad gäller?", "Det räcker att du har dem med dig", "Du kan välja själv när de behövs", "Du ska använda dem när du kör", "Om villkoret står på körkortet ska du använda synkorrigering när du kör."],
@@ -193,10 +193,10 @@ export const practiceBankQuestions: TheoryBankQuestion[] = [
     ar: ["رخصتك تقول إن عليك استخدام نظارة أو عدسات. ما الذي يسري؟", "يكفي أن تحملها معك", "تقرر أنت متى تلزم", "يجب أن تضعها عندما تقود", "إذا كان الشرط على الرخصة فعليك استخدام التصحيح أثناء القيادة."],
   }),
   item("mk-23", 3, 1, 1, {
-    sv: ["Varför är det farligt att stirra på en sak länge, till exempel en mobil eller en olycka?", "Bilen stannar av sig själv", "Du missar vad som händer runt dig", "Det gör att du ser bättre i mörker", "När blicken fastnar på ett ställe missar du övrig trafik, fotgängare och hinder."],
-    en: ["Why is it dangerous to stare at one thing for a long time, such as a phone or a crash?", "The car stops by itself", "You miss what is happening around you", "It helps you see better in the dark", "When your eyes stay on one place you miss the rest of the traffic, people and obstacles."],
-    ti: ["ንሓደ ነገር ነዊሕ ምጥማት፣ ከም ሞባይል ወይ ሓደጋ፣ ስለምንታይ ሓደገኛ እዩ?", "መኪና ባዕላ ትቆም", "ኣብ ከባቢኻ ዝኸውን ትስዕቦ", "ኣብ ጸልማት ጽቡቕ ክትርኢ ይሕግዝ", "ኣዒንትኻ ኣብ ሓደ ቦታ ምስጸንሑ ካልእ ትራፊክን ሰባትን ዕንቅፋትን ትስዕብ።"],
-    ar: ["لماذا يخطر التحديق طويلًا في شيء واحد، كهاتف أو حادث؟", "السيارة تتوقف وحدها", "تفوّت ما يجري حولك", "يساعدك على الرؤية أفضل في الظلام", "حين تثبت العين على مكان تفوّت بقية المرور والمشاة والعوائق."],
+    sv: ["Varför är det farligt att stirra på en sak länge, till exempel en mobil eller en olycka?", "Du hinner reagera i tid ändå", "Du missar vad som händer runt dig", "Du ser längre fram på vägen", "När blicken fastnar på ett ställe missar du övrig trafik, fotgängare och hinder."],
+    en: ["Why is it dangerous to stare at one thing for a long time, such as a phone or a crash?", "You will still react in time", "You miss what is happening around you", "You can see farther ahead on the road", "When your eyes stay on one place you miss the rest of the traffic, people and obstacles."],
+    ti: ["ንሓደ ነገር ነዊሕ ምጥማት፣ ከም ሞባይል ወይ ሓደጋ፣ ስለምንታይ ሓደገኛ እዩ?", "ኣብ ግዜኡ ክትምልስ ትኽእል", "ኣብ ከባቢኻ ዝኸውን ትስዕቦ", "ኣብ መንገዲ ርሑቕ ትርኢ", "ኣዒንትኻ ኣብ ሓደ ቦታ ምስጸንሑ ካልእ ትራፊክን ሰባትን ዕንቅፋትን ትስዕብ።"],
+    ar: ["لماذا يخطر التحديق طويلًا في شيء واحد، كهاتف أو حادث؟", "ستظل قادرًا على الاستجابة في الوقت", "تفوّت ما يجري حولك", "ترى أبعد على الطريق", "حين تثبت العين على مكان تفوّت بقية المرور والمشاة والعوائق."],
   }),
   item("mk-24", 3, 0, 3, {
     sv: ["Du kör i grupp och de andra vill att du kör fortare än vad du är bekväm med. Vad är säkrast?", "Köra i din egen säkra takt", "Hålla samma fart som gruppen även om det känns för fort", "Köra om gruppen för att inte sinka den", "Grupptryck är inte ett skäl att köra fortare än du klarar. Håll din egen säkra fart."],
@@ -241,10 +241,10 @@ export const practiceBankQuestions: TheoryBankQuestion[] = [
     ar: ["السيارة تتزحلق على الماء. ماذا تفعل أولًا؟", "ترفع قدمك عن الوقود وتُبقي المقود ثابتًا", "تكبح بقوة وتنحرف", "تزيد السرعة لتمسك الإطارات", "عند التزحلق على الماء ترفع القدم عن الوقود وتتجنب تحريك المقود بشدة حتى تلامس الإطارات الطريق."],
   }),
   item("mk-31", 4, 1, 1, {
-    sv: ["Vad ska du kontrollera på belysningen innan du kör?", "Att bara helljuset fungerar", "Att lyktor, blinkers och bromsljus fungerar", "Att innerbelysningen är tänd", "Före körning ska halv- och helljus, blinkers och bromsljus fungera."],
-    en: ["What should you check on the lights before driving?", "That only the high beam works", "That lamps, indicators and brake lights work", "That the interior light is on", "Before driving, dipped and main beam, indicators and brake lights should work."],
-    ti: ["ቅድሚ ምዝዋር ኣብ መብራህቲ እንታይ ክትመርምር ኣለካ?", "ዓቢ መብራህቲ ጥራይ ከምዝሰርሕ", "መብራህቲ፣ ምልክትን ብረክ መብራህትን ከምዝሰርሑ", "ናይ ውሽጢ መብራህቲ ከምዝበርህ", "ቅድሚ ምዝዋር ትሑትን ዓቢን መብራህቲ፣ ምልክትን ብረክ መብራህትን ክሰርሑ ኣለዎም።"],
-    ar: ["ماذا تفحص في الأضواء قبل القيادة؟", "أن الضوء العالي فقط يعمل", "أن المصابيح والإشارات وأضواء الفرامل تعمل", "أن ضوء المقصورة مضاء", "قبل القيادة يجب أن تعمل الأضواء المنخفضة والعالية والإشارات وأضواء الفرامل."],
+    sv: ["Vad ska du kontrollera på belysningen innan du kör?", "Att bara helljuset fungerar", "Att lyktor, blinkers och bromsljus fungerar", "Att bara parkeringsljusen fungerar", "Före körning ska halv- och helljus, blinkers och bromsljus fungera."],
+    en: ["What should you check on the lights before driving?", "That only the high beam works", "That lamps, indicators and brake lights work", "That only the parking lights work", "Before driving, dipped and main beam, indicators and brake lights should work."],
+    ti: ["ቅድሚ ምዝዋር ኣብ መብራህቲ እንታይ ክትመርምር ኣለካ?", "ዓቢ መብራህቲ ጥራይ ከምዝሰርሕ", "መብራህቲ፣ ምልክትን ብረክ መብራህትን ከምዝሰርሑ", "ናይ ፓርኪንግ መብራህቲ ጥራይ ከምዝሰርሕ", "ቅድሚ ምዝዋር ትሑትን ዓቢን መብራህቲ፣ ምልክትን ብረክ መብራህትን ክሰርሑ ኣለዎም።"],
+    ar: ["ماذا تفحص في الأضواء قبل القيادة؟", "أن الضوء العالي فقط يعمل", "أن المصابيح والإشارات وأضواء الفرامل تعمل", "أن أضواء الوقوف فقط تعمل", "قبل القيادة يجب أن تعمل الأضواء المنخفضة والعالية والإشارات وأضواء الفرامل."],
   }),
   item("mk-32", 4, 0, 2, {
     sv: ["Lasten skymmer en baklykta. Får du köra så?", "Nej", "Ja, om färden är kort", "Ja, på dagen", "Lasten får inte skymma belysning, registreringsskylt eller din sikt."],
@@ -301,10 +301,10 @@ export const practiceBankQuestions: TheoryBankQuestion[] = [
     ar: ["التكييف يعمل وأنت لا تحتاجه. ما الصحيح؟", "قد يزيد استهلاك الوقود", "يقلل الاستهلاك دائمًا", "يؤثر فقط في السيارات الكهربائية", "التكييف غير اللازم يحمّل المحرك وقد يزيد الاستهلاك."],
   }),
   item("mk-41", 6, 1, 1, {
-    sv: ["Du ser en varningsskylt för älg eller annat vilt. Vad gör du?", "Håller farten eftersom skylten bara informerar", "Sänker farten och är beredd att stanna", "Tutar så att djuren håller sig borta", "En viltskylt betyder förhöjd risk. Sänk farten och var beredd att bromsa."],
-    en: ["You see a warning sign for moose or other wild animals. What do you do?", "Keep your speed because the sign is only information", "Lower your speed and be ready to stop", "Honk so the animals stay away", "A wildlife sign means a higher risk. Lower your speed and be ready to brake."],
-    ti: ["ናይ ኣጋማን ወይ ካልእ ኣራዊት መጠንቀቕታ ትርኢ። እንታይ ትገብር?", "ምልክት ሓበሬታ ጥራይ ስለዝኾነ ፍጥነት ትሕዝ", "ፍጥነት ትቕንስ እሞ ንምቁራጽ ትዳሎ", "እንስሳ ክርሕቕ ትጭዋውዕ", "ምልክት ኣራዊት ዝለዓለ ሓደጋ እዩ። ፍጥነት ቕንስ እሞ ንምብራክ ተዳለ።"],
-    ar: ["ترى إشارة تحذير من الموظ أو حيوان بري. ماذا تفعل؟", "تبقي السرعة لأن الإشارة معلومات فقط", "تخفّض السرعة وتستعد للتوقف", "تستخدم البوق لتبتعد الحيوانات", "إشارة الحيوان تعني خطرًا أعلى. خفّض السرعة واستعد للكبح."],
+    sv: ["Du ser en varningsskylt för älg eller annat vilt. Vad gör du?", "Håller farten eftersom skylten bara informerar", "Sänker farten och är beredd att stanna", "Sänker farten först om du ser ett djur på vägen", "En viltskylt betyder förhöjd risk. Sänk farten och var beredd att bromsa."],
+    en: ["You see a warning sign for moose or other wild animals. What do you do?", "Keep your speed because the sign is only information", "Lower your speed and be ready to stop", "Slow down only when you see an animal on the road", "A wildlife sign means a higher risk. Lower your speed and be ready to brake."],
+    ti: ["ናይ ኣጋማን ወይ ካልእ ኣራዊት መጠንቀቕታ ትርኢ። እንታይ ትገብር?", "ምልክት ሓበሬታ ጥራይ ስለዝኾነ ፍጥነት ትሕዝ", "ፍጥነት ትቕንስ እሞ ንምቁራጽ ትዳሎ", "እንስሳ ኣብ መንገዲ ምስ ረኣኻ ጥራይ ፍጥነት ትቕንስ", "ምልክት ኣራዊት ዝለዓለ ሓደጋ እዩ። ፍጥነት ቕንስ እሞ ንምብራክ ተዳለ።"],
+    ar: ["ترى إشارة تحذير من الموظ أو حيوان بري. ماذا تفعل؟", "تبقي السرعة لأن الإشارة معلومات فقط", "تخفّض السرعة وتستعد للتوقف", "تخفّض السرعة فقط عندما ترى حيوانًا على الطريق", "إشارة الحيوان تعني خطرًا أعلى. خفّض السرعة واستعد للكبح."],
   }),
   item("mk-42", 6, 0, 2, {
     sv: ["När får du köra om?", "När du ser att sträckan är fri och omkörningen kan göras säkert", "Så fort fordonet framför kör långsammare än bashastigheten", "Alltid när vägen har två körfält i din riktning", "Köra om bara när du har fri sikt och kan genomföra omkörningen utan fara."],
@@ -319,10 +319,10 @@ export const practiceBankQuestions: TheoryBankQuestion[] = [
     ar: ["يوجد خط أوسط متصل في جهتك. هل تعبره للتجاوز؟", "نعم إن عدت في الوقت", "نعم إن استخدمت الإشارة", "لا", "لا يجوز عبور الخط المتصل من أجل التجاوز."],
   }),
   item("mk-44", 6, 0, 3, {
-    sv: ["Två fordon möts där hindret finns på din sida. Vem anpassar sig i första hand?", "Du, som har hindret på din sida", "Alltid den som kommer i motbacke", "Den som har nyast bil", "När mötet försvåras av ett hinder på din sida är det du som i första hand ska lämna plats."],
-    en: ["Two vehicles meet where the obstacle is on your side. Who adapts first?", "You, because the obstacle is on your side", "Always the driver coming uphill", "The one with the newer car", "When meeting is made difficult by an obstacle on your side, you are the one who should give room first."],
-    ti: ["ክልተ ተሽከርከርቲ ይራኸባ እሞ ዕንቅፋት ኣብ ጎንኻ ኣሎ። መን ቀዳማይ ይቕየር?", "ንስኻ፣ ዕንቅፋት ኣብ ጎንኻ ስለዘሎ", "ኩሉ ግዜ እቲ ካብ ታሕቲ ዝደይብ", "እቲ ሓድሽ መኪና ዘለዎ", "ምርኻብ ብዕንቅፋት ኣብ ጎንኻ ምስድንጉይ ንስኻ እዩ ቦታ ቀዳማይ ዝህብ።"],
-    ar: ["تلتقي مركبتان والعائق في جهتك. من يتكيّف أولًا؟", "أنت، لأن العائق في جهتك", "دائمًا الصاعد", "صاحب السيارة الأحدث", "إذا صعّب عائق في جهتك التلاقي فأنت من يفسح أولًا."],
+    sv: ["Två fordon möts där hindret finns på din sida. Vem anpassar sig i första hand?", "Du, som har hindret på din sida", "Alltid den som kommer i motbacke", "Den som kör fortast", "När mötet försvåras av ett hinder på din sida är det du som i första hand ska lämna plats."],
+    en: ["Two vehicles meet where the obstacle is on your side. Who adapts first?", "You, because the obstacle is on your side", "Always the driver coming uphill", "Whoever is driving fastest", "When meeting is made difficult by an obstacle on your side, you are the one who should give room first."],
+    ti: ["ክልተ ተሽከርከርቲ ይራኸባ እሞ ዕንቅፋት ኣብ ጎንኻ ኣሎ። መን ቀዳማይ ይቕየር?", "ንስኻ፣ ዕንቅፋት ኣብ ጎንኻ ስለዘሎ", "ኩሉ ግዜ እቲ ካብ ታሕቲ ዝደይብ", "እቲ ብዝበለጸ ፍጥነት ዝኸይድ", "ምርኻብ ብዕንቅፋት ኣብ ጎንኻ ምስድንጉይ ንስኻ እዩ ቦታ ቀዳማይ ዝህብ።"],
+    ar: ["تلتقي مركبتان والعائق في جهتك. من يتكيّف أولًا؟", "أنت، لأن العائق في جهتك", "دائمًا الصاعد", "من يسير بأسرع سرعة", "إذا صعّب عائق في جهتك التلاقي فأنت من يفسح أولًا."],
   }),
   item("mk-45", 6, 1, 1, {
     sv: ["Rött ljus blinkar vid en järnvägskorsning. Vad gör du?", "Du kör över om du inte ser ett tåg", "Du stannar", "Du sänker farten och passerar om bommen är uppe", "Blinkande rött ljus vid en plankorsning betyder stopp. Kör inte över."],
@@ -331,10 +331,10 @@ export const practiceBankQuestions: TheoryBankQuestion[] = [
     ar: ["يومض ضوء أحمر عند تقاطع سكة حديد. ماذا تفعل؟", "تعبر إن لم ترَ قطارًا", "تتوقف", "تخفف السرعة وتعبر إن كان الحاجز مرفوعًا", "الضوء الأحمر الوامض عند تقاطع سكة يعني التوقف. لا تعبر."],
   }),
   item("mk-46", 6, 0, 1, {
-    sv: ["Bommarna fälls vid järnvägen. Får du köra runt dem om du inte ser ett tåg?", "Nej", "Ja, om du är ensam på vägen", "Ja, om du är gående och leder bilen", "Kör aldrig runt fällda bommar. De är nere för att ett tåg kan komma."],
-    en: ["The barriers are coming down at the railway. May you drive around them if you see no train?", "No", "Yes, if you are alone on the road", "Yes, if you walk and lead the car", "Never drive around lowered barriers. They are down because a train may be coming."],
-    ti: ["ዕንክብ ባቡር ይወርድ። ባቡር እንተዘይረኣኻ ክትዞሮ ትኽእል ዲኻ?", "ኣይፋል", "እወ፣ ኣብ መንገዲ በይንኻ እንተኾንካ", "እወ፣ ብእግሪ መኪና እንተመሪሕካ", "ዝወረደ ዕንክብ ፈጺምካ ኣይትዞሮ። ባቡር ክመጽእ ስለዝኽእል እዩ ዝወረደ።"],
-    ar: ["الحواجز تنخفض عند السكة. هل تدور حولها إن لم ترَ قطارًا؟", "لا", "نعم إن كنت وحدك على الطريق", "نعم إن مشيت وقُدت السيارة", "لا تَدُر أبدًا حول حاجز منخفض. هو منخفض لأن قطارًا قد يأتي."],
+    sv: ["Bommarna fälls vid järnvägen. Får du köra runt dem om du inte ser ett tåg?", "Nej", "Ja, om du är ensam på vägen", "Ja, om du tutar och kör försiktigt", "Kör aldrig runt fällda bommar. De är nere för att ett tåg kan komma."],
+    en: ["The barriers are coming down at the railway. May you drive around them if you see no train?", "No", "Yes, if you are alone on the road", "Yes, if you honk and drive carefully", "Never drive around lowered barriers. They are down because a train may be coming."],
+    ti: ["ዕንክብ ባቡር ይወርድ። ባቡር እንተዘይረኣኻ ክትዞሮ ትኽእል ዲኻ?", "ኣይፋል", "እወ፣ ኣብ መንገዲ በይንኻ እንተኾንካ", "እወ፣ ትጣርዕ እሞ ብጥንቃቐ ትዝውር", "ዝወረደ ዕንክብ ፈጺምካ ኣይትዞሮ። ባቡር ክመጽእ ስለዝኽእል እዩ ዝወረደ።"],
+    ar: ["الحواجز تنخفض عند السكة. هل تدور حولها إن لم ترَ قطارًا؟", "لا", "نعم إن كنت وحدك على الطريق", "نعم إن أطلقت البوق وقدت بحذر", "لا تَدُر أبدًا حول حاجز منخفض. هو منخفض لأن قطارًا قد يأتي."],
   }),
   item("mk-47", 6, 2, 1, {
     sv: ["Du möter ett fordon i mörker och har helljus. Vad gör du?", "Behåller helljuset tills ni möts", "Släcker all belysning", "Bländar av till halvljus", "Blända av till halvljus i god tid så att du inte bländar mötande."],
@@ -355,10 +355,10 @@ export const practiceBankQuestions: TheoryBankQuestion[] = [
     ar: ["تدخل منطقة سرعة المشي. ما الذي يسري؟", "تقود بسرعة المشي وتعطي الأولوية للمشاة", "تقود 30 كم/س ولك الأولوية", "المشاة يسيرون على الرصيف فقط", "في منطقة سرعة المشي تقود بسرعة المشي. للمشاة استخدام المساحة كلها وتعطيهم الأولوية."],
   }),
   item("mk-50", 7, 1, 1, {
-    sv: ["En person är på väg ut på ett obevakat övergångsställe. Vad gör du?", "Du håller farten om personen inte är mitt i gatan", "Du sänker farten och stannar så att personen kan gå över", "Du tutar så att personen väntar", "Vid ett obevakat övergångsställe ska du lämna företräde åt den som är på eller just ska gå ut på det."],
-    en: ["A person is about to step onto an unsignalised pedestrian crossing. What do you do?", "You keep your speed if the person is not in the middle of the road", "You slow down and stop so the person can cross", "You honk so the person waits", "At an unsignalised crossing you give way to a person who is on it or about to step onto it."],
-    ti: ["ሰብ ኣብ ዘይተቖጻጸረ መሻገሪ ክኣቱ ቀሪቡ። እንታይ ትገብር?", "ኣብ ማእከል መንገዲ እንተዘይኮይኑ ፍጥነት ትሕዝ", "ፍጥነት ትቕንስ እሞ ክሓልፍ ትቆም", "ክጽበ ጭውዋዕ ትገብር", "ኣብ ዘይተቖጻጸረ መሻገሪ ንዘሎ ወይ ክኣቱ ዝኸይድ ሰብ ትህቦ።"],
-    ar: ["شخص يهمّ بالدخول إلى ممر مشاة غير محكوم بإشارة. ماذا تفعل؟", "تبقي السرعة إن لم يكن في وسط الطريق", "تخفّض السرعة وتتوقف ليتمكن من العبور", "تستخدم البوق لينتظر", "عند ممر غير محكوم بإشارة تعطي الأولوية لمن هو عليه أو يهمّ بدخوله."],
+    sv: ["En person är på väg ut på ett obevakat övergångsställe. Vad gör du?", "Du håller farten om personen inte är mitt i gatan", "Du sänker farten och stannar så att personen kan gå över", "Du fortsätter om personen ännu står vid kanten", "Vid ett obevakat övergångsställe ska du lämna företräde åt den som är på eller just ska gå ut på det."],
+    en: ["A person is about to step onto an unsignalised pedestrian crossing. What do you do?", "You keep your speed if the person is not in the middle of the road", "You slow down and stop so the person can cross", "You continue if the person is still at the edge", "At an unsignalised crossing you give way to a person who is on it or about to step onto it."],
+    ti: ["ሰብ ኣብ ዘይተቖጻጸረ መሻገሪ ክኣቱ ቀሪቡ። እንታይ ትገብር?", "ኣብ ማእከል መንገዲ እንተዘይኮይኑ ፍጥነት ትሕዝ", "ፍጥነት ትቕንስ እሞ ክሓልፍ ትቆም", "እቲ ሰብ ኣብ ወሰን ገና እንተሃልዩ ትቕጽል", "ኣብ ዘይተቖጻጸረ መሻገሪ ንዘሎ ወይ ክኣቱ ዝኸይድ ሰብ ትህቦ።"],
+    ar: ["شخص يهمّ بالدخول إلى ممر مشاة غير محكوم بإشارة. ماذا تفعل؟", "تبقي السرعة إن لم يكن في وسط الطريق", "تخفّض السرعة وتتوقف ليتمكن من العبور", "تتابع إن كان الشخص لا يزال عند الحافة", "عند ممر غير محكوم بإشارة تعطي الأولوية لمن هو عليه أو يهمّ بدخوله."],
   }),
   item("mk-51", 7, 2, 1, {
     sv: ["En skylt visar 30 km/h utanför en skola. Vad gäller?", "30 km/h bara när barn syns", "50 km/h eftersom det är bashastigheten", "Högst 30 km/h", "Den skyltade gränsen gäller. Utanför en skola är den ofta 30 km/h och den gränsen ska hållas."],
@@ -397,10 +397,10 @@ export const practiceBankQuestions: TheoryBankQuestion[] = [
     ar: ["تنعطف يمينًا في تقاطع. ما الأهم؟", "زيادة السرعة أثناء الانعطاف", "النظر إلى الدراجين والمشاة الذين قد يكونون بجانبك", "البقاء قرب الوسط", "قد يكون دراج أو ماشٍ في الزاوية العمياء. انظر قبل الانعطاف."],
   }),
   item("mk-57", 8, 1, 1, {
-    sv: ["Hur nära före ett övergångsställe får du stanna eller parkera?", "Närmare än 5 meter", "Inte på eller inom 10 meter före övergångsstället", "Precis vid övergångsstället om du blinkar", "Du får inte stanna eller parkera på eller inom 10 meter före ett övergångsställe."],
-    en: ["How close before a pedestrian crossing may you stop or park?", "Closer than 5 metres", "Not on it or within 10 metres before it", "Right at the crossing if you signal", "You may not stop or park on a pedestrian crossing or within 10 metres before it."],
-    ti: ["ቅድሚ መሻገሪ እግረኛ ክንደይ ቀረባ ክትቆም ወይ ክትፓርክ ትኽእል?", "ካብ 5 ሜትሮ ንላዕሊ ቀረባ", "ኣብኡ ወይ ኣብ ውሽጢ 10 ሜትሮ ቅድሚኡ ኣይትቆምን", "ምልክት እንተገበርካ ብቐጥታ ኣብ መሻገሪ", "ኣብ መሻገሪ እግረኛ ወይ ኣብ ውሽጢ 10 ሜትሮ ቅድሚኡ ክትቆም ወይ ክትፓርክ ኣይትኽእልን።"],
-    ar: ["كم تقترب قبل ممر المشاة للتوقف أو الوقوف؟", "أقرب من 5 أمتار", "لا عليه ولا ضمن 10 أمتار قبله", "عنده مباشرة إن استخدمت الإشارة", "لا يجوز التوقف أو الوقوف على ممر المشاة أو ضمن 10 أمتار قبله."],
+    sv: ["Hur nära före ett övergångsställe får du stanna eller parkera?", "Närmare än 5 meter", "Inte på eller inom 10 meter före övergångsstället", "Inom 5 meter före om du blinkar", "Du får inte stanna eller parkera på eller inom 10 meter före ett övergångsställe."],
+    en: ["How close before a pedestrian crossing may you stop or park?", "Closer than 5 metres", "Not on it or within 10 metres before it", "Within 5 metres before it if you signal", "You may not stop or park on a pedestrian crossing or within 10 metres before it."],
+    ti: ["ቅድሚ መሻገሪ እግረኛ ክንደይ ቀረባ ክትቆም ወይ ክትፓርክ ትኽእል?", "ካብ 5 ሜትሮ ንላዕሊ ቀረባ", "ኣብኡ ወይ ኣብ ውሽጢ 10 ሜትሮ ቅድሚኡ ኣይትቆምን", "ቅድሚ 5 ሜትሮ ምልክት እንተገበርካ", "ኣብ መሻገሪ እግረኛ ወይ ኣብ ውሽጢ 10 ሜትሮ ቅድሚኡ ክትቆም ወይ ክትፓርክ ኣይትኽእልን።"],
+    ar: ["كم تقترب قبل ممر المشاة للتوقف أو الوقوف؟", "أقرب من 5 أمتار", "لا عليه ولا ضمن 10 أمتار قبله", "ضمن 5 أمتار قبله إن استخدمت الإشارة", "لا يجوز التوقف أو الوقوف على ممر المشاة أو ضمن 10 أمتار قبله."],
   }),
   item("mk-58", 8, 0, 1, {
     sv: ["Hur nära en korsning får du parkera?", "Inte i korsningen och inte inom 10 meter från den korsande körbanans närmaste ytterkant", "5 meter räcker", "Du får parkera i korsningen om den är liten", "Du får inte parkera i en vägkorsning eller inom 10 meter från den korsande körbanans närmaste ytterkant."],
@@ -427,10 +427,10 @@ export const practiceBankQuestions: TheoryBankQuestion[] = [
     ar: ["هل تقف بحيث يُسد مخرج عقار؟", "نعم إن تركت ورقة", "لا", "نعم ليلًا", "لا يجوز الوقوف بحيث تُعاق حركة الدخول إلى عقار أو الخروج منه بشكل جوهري."],
   }),
   item("mk-62", 8, 2, 2, {
-    sv: ["På vilken sida parkerar du normalt?", "På vänster sida mot färdriktningen", "Mitt i gatan", "På höger sida i färdriktningen", "Du parkerar på höger sida i den riktning du kör, så nära kanten som möjligt."],
-    en: ["On which side do you normally park?", "On the left, facing against the direction of travel", "In the middle of the street", "On the right, in the direction of travel", "You park on the right in the direction you are driving, as close to the edge as possible."],
-    ti: ["ብንቡር ኣብ ኣየናይ ጎኒ ትፓርክ?", "ኣብ የጋች ኣንጻር ኣንፈት", "ኣብ ማእከል ጎደና", "ኣብ የማን ኣብ ኣንፈት ምዝዋር", "ኣብ የማን ኣብ ኣንፈት እትዝውረሉ ትፓርክ፣ ናብ ወሰን ብዝበለጸ ቀረባ።"],
-    ar: ["على أي جانب تقف عادة؟", "على اليسار عكس اتجاه السير", "في وسط الشارع", "على اليمين في اتجاه السير", "تقف على اليمين في اتجاه قيادتك، أقرب ما يمكن إلى الحافة."],
+    sv: ["På vilken sida parkerar du normalt?", "På vänster sida mot färdriktningen", "På vänster sida i färdriktningen", "På höger sida i färdriktningen", "Du parkerar på höger sida i den riktning du kör, så nära kanten som möjligt."],
+    en: ["On which side do you normally park?", "On the left, facing against the direction of travel", "On the left in the direction of travel", "On the right, in the direction of travel", "You park on the right in the direction you are driving, as close to the edge as possible."],
+    ti: ["ብንቡር ኣብ ኣየናይ ጎኒ ትፓርክ?", "ኣብ የጋች ኣንጻር ኣንፈት", "ኣብ የጋች ኣብ ኣንፈት ምዝዋር", "ኣብ የማን ኣብ ኣንፈት ምዝዋር", "ኣብ የማን ኣብ ኣንፈት እትዝውረሉ ትፓርክ፣ ናብ ወሰን ብዝበለጸ ቀረባ።"],
+    ar: ["على أي جانب تقف عادة؟", "على اليسار عكس اتجاه السير", "على اليسار في اتجاه السير", "على اليمين في اتجاه السير", "تقف على اليمين في اتجاه قيادتك، أقرب ما يمكن إلى الحافة."],
   }),
   item("mk-63", 8, 0, 1, {
     sv: ["Får du stanna på ett övergångsställe?", "Nej", "Ja, för att släppa av en passagerare", "Ja, om du har varningsblinkers", "Du får inte stanna eller parkera på ett övergångsställe."],

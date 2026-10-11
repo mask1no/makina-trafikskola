@@ -15,12 +15,20 @@ const viewports = [
 ] as const;
 const publicPages = [
   { route: "/", slug: "home" },
+  { route: "/korlektioner", slug: "korlektioner" },
   { route: "/priser", slug: "priser" },
   { route: "/kurser", slug: "kurser" },
   { route: "/teori", slug: "teori" },
+  { route: "/teori/ovning", slug: "teori-practice" },
+  { route: "/teori/ovning?screen=end", slug: "teori-end" },
+  { route: "/teori/vagmarkesspel", slug: "teori-vagmarkesspel" },
+  { route: "/teori/bok", slug: "teori-bok" },
+  { route: "/teori/faktabank", slug: "teori-faktabank" },
   { route: "/kontakt", slug: "kontakt" },
   { route: "/larare", slug: "larare" },
+  { route: "/trafikskola/farsta", slug: "town-farsta" },
   { route: "/logga-in", slug: "login" },
+  { route: "/skapa-konto", slug: "create-account" },
 ] as const;
 const roleSessions = new Map<
   string,
@@ -32,13 +40,24 @@ async function capture(page: Page, folder: string, slug: string) {
   await expect(page.locator(".animate-pulse")).toHaveCount(0, {
     timeout: 15_000,
   });
-  await expect
-    .poll(() =>
-      page.evaluate(
-        () => document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1,
-      ),
-    )
-    .toBe(true);
+  const overflow = await page.evaluate(() => {
+    const viewport = document.documentElement.clientWidth;
+    if (document.documentElement.scrollWidth <= viewport + 1) return [];
+    return [...document.querySelectorAll<HTMLElement>("body *")]
+      .map((element) => {
+        const rect = element.getBoundingClientRect();
+        return {
+          tag: element.tagName.toLowerCase(),
+          className: element.className.toString().slice(0, 120),
+          text: (element.textContent ?? "").trim().replace(/\s+/g, " ").slice(0, 80),
+          left: Math.round(rect.left),
+          right: Math.round(rect.right),
+        };
+      })
+      .filter((item) => item.left < -1 || item.right > viewport + 1)
+      .slice(0, 10);
+  });
+  expect(overflow, `Horizontal overflow on ${page.url()}`).toEqual([]);
   await page.screenshot({
     path: path.join(folder, `${slug}.png`),
     fullPage: true,
@@ -140,29 +159,36 @@ test.describe("screenshots", () => {
 
         await page.goto(`/${locale}/teori`, { waitUntil: "networkidle" });
         const questionLink = page
-          .locator(
-            `a[href^="/${locale}/teori/"]:not([href$="/prov"]):not([href$="/ovning"])`,
-          )
+          .locator(`#steg-for-steg a[href^="/${locale}/teori/"]`)
           .first();
         await expect(questionLink).toBeVisible();
         await questionLink.click();
-        await page.waitForLoadState("networkidle");
+        await expect(page).toHaveURL(new RegExp(`/${locale}/teori/del-\\d+$`));
+        await expect(page.locator("main .choice-card").first()).toBeVisible();
         await capture(page, folder, "teori-question");
 
         await captureBookingSteps(page, locale, folder);
 
         await login(page, locale, "elev@makina.local", "/mina-sidor");
         await capture(page, folder, "mina-sidor");
+        await page.goto(`/${locale}/mina-sidor/bokningar`, { waitUntil: "networkidle" });
+        await capture(page, folder, "mina-sidor-bokningar");
         await page.context().clearCookies();
 
         await login(page, locale, "aron-kessete@makina.local", "/larare-portal");
         await capture(page, folder, "larare-portal");
         await page.context().clearCookies();
 
-        await login(page, locale, "admin@makina.local", "/admin/kurser");
+        await login(page, locale, "admin@makina.local", "/admin");
+        await capture(page, folder, "admin-overview");
+        await page.goto(`/${locale}/admin/kurser`, { waitUntil: "networkidle" });
         await capture(page, folder, "admin-kurser");
         await page.goto(`/${locale}/admin/larare`, { waitUntil: "networkidle" });
         await capture(page, folder, "admin-larare");
+        await page.goto(`/${locale}/admin/produkter`, { waitUntil: "networkidle" });
+        await capture(page, folder, "admin-produkter");
+        await page.goto(`/${locale}/admin/omraden`, { waitUntil: "networkidle" });
+        await capture(page, folder, "admin-omraden");
       });
     }
   }

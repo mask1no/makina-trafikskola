@@ -3,11 +3,13 @@ import Link from "next/link";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { EmptyState } from "@/components/EmptyState";
+import { LinkButton } from "@/components/LinkButton";
 import { PageHeader } from "@/components/PageHeader";
 import { ProductCard } from "@/components/ProductCard";
 import { QuestionsBlock } from "@/components/QuestionsBlock";
 import { isLocale } from "@/i18n/routing";
 import { bookingEnabled } from "@/lib/launch";
+import { formatPrice } from "@/lib/pricing/format";
 import { groupProducts } from "@/lib/pricing/group";
 import { toProductCardModel } from "@/lib/products/card";
 
@@ -53,6 +55,7 @@ export default async function KorlektionerPage(
       sort === "lessons" ? b.lessonCredits - a.lessonCredits : a.priceOre - b.priceOre,
     );
   const best = products.find((product) => product.bestSeller) ?? products.find((product) => product.kind === "PACKAGE");
+  const singleLesson = products.find((product) => product.kind === "SINGLE_LESSON");
   const canBook = bookingEnabled();
   const allSections = groupProducts(products);
   const sections = allSections.filter((section) => !group || section.key === group);
@@ -75,6 +78,52 @@ export default async function KorlektionerPage(
     <div className="section-shell">
       <div className="site-container">
         <PageHeader eyebrow={t("lessons.eyebrow")} title={t("lessons.title")} description={t("lessons.description")} />
+        {singleLesson ? (
+          <section className="relative mt-8 overflow-hidden rounded-lg bg-surface p-6 text-ink-inverse shadow-float sm:p-8 lg:p-10">
+            <div
+              aria-hidden="true"
+              className="absolute -end-16 -top-20 size-56 rounded-full bg-accent opacity-15 blur-3xl"
+            />
+            <div className="relative grid gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
+              <div className="max-w-2xl">
+                <p className="text-sm font-black uppercase tracking-wider text-accent">
+                  {t("lessons.introOffer.eyebrow")}
+                </p>
+                <h2 className="mt-3 text-3xl font-black sm:text-4xl">
+                  {t("lessons.introOffer.title")}
+                </h2>
+                <p className="mt-3 max-w-[65ch] leading-7 text-ink-inverse-muted">
+                  {t("lessons.introOffer.description")}
+                </p>
+              </div>
+              <div className="min-w-56 rounded-md border border-ink-inverse/15 bg-surface-raised p-5">
+                <p className="text-sm text-ink-inverse-muted">
+                  {t("lessons.introOffer.ordinary")}{" "}
+                  {singleLesson.compareAtOre ? (
+                    <s className="numbers-ltr">
+                      {formatPrice(singleLesson.compareAtOre, params.locale)}
+                    </s>
+                  ) : null}
+                </p>
+                <p className="numbers-ltr mt-1 text-4xl font-black text-accent">
+                  {formatPrice(singleLesson.priceOre, params.locale)}
+                </p>
+                <LinkButton
+                  className="mt-4 w-full"
+                  href={
+                    canBook
+                      ? `/${params.locale}/paket/${singleLesson.slug}`
+                      : `/${params.locale}/kontakt`
+                  }
+                >
+                  {canBook
+                    ? t("lessons.introOffer.book")
+                    : t("lessons.introOffer.callFirst")}
+                </LinkButton>
+              </div>
+            </div>
+          </section>
+        ) : null}
         <ol className="mt-8 grid gap-6 md:grid-cols-3 md:gap-8">
           {(canBook
             ? (["choose", "book", "learn"] as const)

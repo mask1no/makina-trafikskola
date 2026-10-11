@@ -430,7 +430,7 @@ export function BookingFlow({
             </p>
           ) : null}
           {state.step < 5 ? (
-            <div className="sticky bottom-[calc(4.5rem+env(safe-area-inset-bottom))] z-30 -mx-4 mt-6 flex gap-3 border-t border-border bg-card px-4 py-3 md:static md:mx-0 md:border-0 md:bg-transparent md:px-0 md:shadow-none">
+            <div className={`${state.step === 4 ? "static mx-0" : "sticky bottom-[calc(4.5rem+env(safe-area-inset-bottom))] -mx-4"} z-30 mt-6 flex gap-3 border-t border-border bg-card px-4 py-3 md:static md:mx-0 md:border-0 md:bg-transparent md:px-0 md:shadow-none`}>
               {state.step > 0 ? (
                 <Button variant="secondary" onClick={() => dispatch({ type: "step", update: (current) => current - 1 })}>
                   {t("back")}

@@ -1,18 +1,7 @@
-import { Suspense } from "react";
 import { existsSync } from "node:fs";
 import { join } from "node:path";
-import Image from "next/image";
-import Link from "next/link";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
-import { BenefitMarquee } from "@/components/BenefitMarquee";
-import { CallButton } from "@/components/ContactButtons";
-import { SectionHeader } from "@/components/SectionHeader";
-import { LinkButton } from "@/components/LinkButton";
-import { PickupAreaMaps } from "@/components/PickupAreaMaps";
-import { StaticMapArtwork } from "@/components/StaticMapArtwork";
-import { TeacherCard } from "@/components/TeacherCard";
-import { LazyTeacherMap } from "@/components/LazyTeacherMap";
 import { isLocale, type Locale } from "@/i18n/routing";
 import {
   bookingEnabled,
@@ -21,7 +10,6 @@ import {
   theoryNavVisible,
   theorySalesOpen,
 } from "@/lib/launch";
-import { isOpenNow, nextOpening, todayHours } from "@/lib/company/opening-hours";
 import {
   formatLanguageList,
   offeredTeachingLanguagesFrom,
@@ -34,111 +22,16 @@ import { formatLessonDateTime } from "@/lib/format/datetime";
 import { formatPrice } from "@/lib/pricing/format";
 import { freeTheoryQuestionCount } from "@/lib/theory/questions";
 
+import { BenefitsSection } from "./_components/BenefitsSection";
+import { FaqSection, type FaqItem } from "./_components/FaqSection";
+import { HomeHero } from "./_components/HomeHero";
+import { PickupSection } from "./_components/PickupSection";
+import { QuickLinksSection } from "./_components/QuickLinksSection";
+import { TeachersMapSection } from "./_components/TeachersMapSection";
+import { TheoryTeaserSection } from "./_components/TheoryTeaserSection";
 import { getLocations, getProducts, getTeachers } from "./_lib/data";
 
 export const dynamic = "force-dynamic";
-
-async function LowestSinglePrice({ locale }: { locale: Locale }) {
-  const [t, products] = await Promise.all([
-    getTranslations(),
-    getProducts(locale),
-  ]);
-  const cheapest = products
-    .filter((product) => product.kind === "SINGLE_LESSON")
-    .sort((a, b) => a.priceOre - b.priceOre)[0];
-  if (!cheapest) return null;
-  return (
-    <p className="text-small font-bold text-ink-inverse-muted">
-      {t("shell.fromPrice", { price: formatPrice(cheapest.priceOre, locale) })}
-    </p>
-  );
-}
-
-async function HomeHero({ locale }: { locale: Locale }) {
-  setRequestLocale(locale);
-  const t = await getTranslations();
-  const canBook = bookingEnabled();
-  const now = new Date();
-  const openNow = isOpenNow(now);
-  const hoursToday = todayHours(now);
-  const opens = nextOpening(now);
-  const phone = t("company.phone");
-
-  return (
-    <section className="relative isolate flex min-h-[60svh] flex-col justify-end overflow-x-clip bg-surface text-ink-inverse lg:min-h-[64svh] lg:max-h-[720px]">
-      {/* TODO: replace /hero.jpg with a real school photo at least 2400px wide. */}
-      <Image
-        src="/hero.jpg"
-        alt=""
-        priority
-        fetchPriority="high"
-        quality={50}
-        fill
-        sizes="100vw"
-        className="rtl-no-mirror hero-pan object-cover object-[center_30%] lg:object-[68%_center]"
-      />
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 bg-[linear-gradient(180deg,color-mix(in_srgb,var(--surface)_42%,transparent)_0%,color-mix(in_srgb,var(--surface)_62%,transparent)_46%,color-mix(in_srgb,var(--surface)_28%,transparent)_100%)] lg:bg-[linear-gradient(90deg,color-mix(in_srgb,var(--surface)_86%,transparent)_0%,color-mix(in_srgb,var(--surface)_55%,transparent)_42%,color-mix(in_srgb,var(--surface)_12%,transparent)_70%,transparent_100%)]"
-      />
-      <div className="site-container relative z-10 grid items-end gap-8 pb-10 pt-24 lg:grid-cols-2 lg:pb-16">
-        <div>
-          <p className="brand-mark text-accent">{t("home.hero.brand")}</p>
-          <h1 className="mt-4 max-w-3xl text-balance text-hero font-black tracking-[-0.055em] leading-[0.96]">
-            {t("home.hero.title")}
-          </h1>
-          <p className="mt-4 max-w-[70ch] text-body leading-7 text-ink-inverse-muted">
-            {t("home.hero.description")}
-          </p>
-          <div className="mt-6 flex flex-col gap-3 md:flex-row">
-            {canBook ? (
-              <LinkButton href={`/${locale}/boka`} size="lg" className="w-full md:w-auto">
-                {t("common.bookNow")}
-              </LinkButton>
-            ) : (
-              <CallButton phone={phone} size="hero" className="w-full md:w-auto">
-                {t("shell.callUs")}
-              </CallButton>
-            )}
-            <Link
-              href={`/${locale}/priser`}
-              className="inline-flex min-h-[52px] w-full items-center justify-center rounded-sm border border-[color-mix(in_srgb,var(--ink-inverse)_28%,transparent)] bg-[color-mix(in_srgb,var(--surface)_68%,transparent)] px-6 text-small font-bold text-ink-inverse shadow-soft backdrop-blur-xl md:w-auto"
-            >
-              {t("shell.seePrices")}
-            </Link>
-          </div>
-        </div>
-        <aside className="rounded-lg border border-[color-mix(in_srgb,var(--ink-inverse)_34%,transparent)] bg-[color-mix(in_srgb,var(--ink-inverse)_14%,transparent)] p-6 text-ink-inverse shadow-soft backdrop-blur-2xl">
-          <Suspense fallback={null}>
-            <LowestSinglePrice locale={locale} />
-          </Suspense>
-          <CallButton phone={phone} size="small" className="mt-3 text-2xl">
-            {t("shell.callUs")}
-          </CallButton>
-          <p className="mt-4 text-small">
-            <span className="font-black">{openNow ? t("shell.openNow") : t("shell.closed")}</span>
-            {openNow && hoursToday ? (
-              <span className="numbers-ltr"> · {hoursToday.open}–{hoursToday.close}</span>
-            ) : null}
-            {!openNow && opens ? (
-              <span>
-                {" · "}
-                {opens.sameDay
-                  ? t("shell.opensAt", { time: opens.time })
-                  : t("shell.opensOn", {
-                      day: t(`shell.weekdayShort.${opens.weekday}`),
-                      time: opens.time,
-                    })}
-              </span>
-            ) : null}
-          </p>
-          <p className="mt-2 text-small text-ink-inverse-muted">{t("home.hero.areas")}</p>
-          <p className="mt-2 text-small font-bold">{t("home.hero.areas")}</p>
-        </aside>
-      </div>
-    </section>
-  );
-}
 
 export default async function MarketingHome(
   props: {
@@ -152,21 +45,17 @@ export default async function MarketingHome(
   return (
     <>
       <HomeHero locale={locale} />
-      <HomeBelow params={{ locale }} />
+      <HomeBelow locale={locale} />
     </>
   );
 }
 
-async function HomeBelow({
-  params,
-}: {
-  params: { locale: Locale };
-}) {
-  setRequestLocale(params.locale);
+async function HomeBelow({ locale }: { locale: Locale }) {
+  setRequestLocale(locale);
   const t = await getTranslations();
   const [products, teachers, locations, freeQuestions, activeLanguages] = await Promise.all([
-    getProducts(params.locale),
-    getTeachers(params.locale),
+    getProducts(locale),
+    getTeachers(locale),
     getLocations(),
     freeTheoryQuestionCount(),
     activeTeacherLanguages(),
@@ -178,7 +67,7 @@ async function HomeBelow({
   const offeredLanguages = offeredTeachingLanguagesFrom(activeLanguages);
   const offeredLanguageNames = formatLanguageList(
     offeredLanguages,
-    params.locale,
+    locale,
     (code) => t(`shell.languagePage.${code}`),
   );
   const canBook = bookingEnabled();
@@ -236,12 +125,12 @@ async function HomeBelow({
       boundary: location.boundary,
       marker: { lat: location.lat, lng: location.lng },
     }));
-  const faqItems = [
+  const faqItems: FaqItem[] = [
     {
       question: t("home.faq.cost.question"),
       answer: t("home.faq.cost.answer", {
-        singlePrice: formatPrice(singleLesson?.priceOre ?? 0, params.locale),
-        packagePrice: formatPrice(entryPackage?.priceOre ?? 0, params.locale),
+        singlePrice: formatPrice(singleLesson?.priceOre ?? 0, locale),
+        packagePrice: formatPrice(entryPackage?.priceOre ?? 0, locale),
       }),
     },
     ...(["languages", "pickup", "cancel", "late", "risk", "validity"] as const).map((key) => {
@@ -263,6 +152,29 @@ async function HomeBelow({
       };
     }),
   ];
+  const teacherCards = teachers.slice(0, 4).map((teacher) => ({
+    id: teacher.id,
+    name: `${teacher.user.firstName} ${teacher.user.lastName}`,
+    photoUrl: teacher.photoUrl,
+    languages: teacher.languages.map((language) => t(`shell.languagePage.${language}`)),
+    transmissions: teacher.transmissions.map((transmission) =>
+      t(`teacher.transmission.${transmission.toLowerCase()}`),
+    ),
+    locationNames: teacher.locations.map(({ location }) => location.name),
+    experienceLabel:
+      teacher.yearsExperience > 0
+        ? t("teacher.yearsExperience", {
+            count: teacher.yearsExperience,
+            n: String(teacher.yearsExperience),
+          })
+        : "",
+    nextFreeTime: nextFree.get(teacher.id)
+      ? formatLessonDateTime(nextFree.get(teacher.id)!, locale)
+      : undefined,
+    swedishOnly: teacher.swedishOnly,
+  }));
+  const theoryIsFree = theoryMode() === "free";
+  const theorySalesAreOpen = theorySalesOpen();
 
   return (
     <>
@@ -283,272 +195,107 @@ async function HomeBelow({
           }).replace(/</g, "\\u003c"),
         }}
       />
-      <div className="relative z-20 mt-6 border-b border-[var(--line)] bg-page pb-6 lg:mt-8 lg:pb-8">
-        <BenefitMarquee
-          label={t("home.benefits.label")}
-          items={benefitCards}
-        />
-      </div>
-
-      <section className="section-shell">
-        <div className="site-container">
-          <SectionHeader eyebrow={t("home.quick.eyebrow")} title={t("home.quick.title")} />
-          <div className="mt-8 grid grid-cols-2 gap-3 lg:grid-cols-4">
-            {([
-              ["lessons", "korlektioner"],
-              ["courses", "kurser"],
-              ["teachers", "larare"],
-              ["contact", "kontakt"],
-            ] as const).map(([key, href]) => (
-              <Link
-                key={key}
-                href={`/${params.locale}/${href}`}
-                className="flex min-h-28 flex-col justify-between rounded-md border border-border bg-card p-4 font-extrabold shadow-soft transition hover:border-ink"
-              >
-                <span aria-hidden="true" className="size-3 rounded-full bg-accent" />
-                <span>{t(`home.quick.${key}`)}</span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section-shell border-y border-border bg-card">
-        <div className="site-container grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-center">
-          <div>
-            <SectionHeader
-              eyebrow={t("home.pickup.eyebrow")}
-              title={t("home.pickup.title")}
-              intro={t("home.pickup.description")}
-            />
-            <p className="mt-4 text-small font-bold text-ink-muted">{t("home.pickup.areas")}</p>
-          </div>
-          {pickupImageExists ? (
-            <div className="relative min-h-80 overflow-hidden rounded-lg">
-              <Image
-                src="/images/pickup-feature.png"
-                alt={t("home.pickup.imageAlt")}
-                fill
-                sizes="(min-width: 1024px) 58vw, 100vw"
-                className="rtl-no-mirror object-cover"
-              />
-            </div>
-          ) : (
-            <PickupAreaMaps
-              apiKey={mapsConfig.apiKey ?? ""}
-              mapId={mapsConfig.mapId ?? ""}
-              areas={pickupAreas}
-              label={t("home.pickup.mapLabel")}
-            />
-          )}
-        </div>
-      </section>
-
+      <BenefitsSection label={t("home.benefits.label")} items={benefitCards} />
+      <QuickLinksSection
+        locale={locale}
+        eyebrow={t("home.quick.eyebrow")}
+        title={t("home.quick.title")}
+        links={([
+          ["lessons", "korlektioner"],
+          ["courses", "kurser"],
+          ["teachers", "larare"],
+          ["contact", "kontakt"],
+        ] as const).map(([key, href]) => ({
+          key,
+          href,
+          label: t(`home.quick.${key}`),
+        }))}
+      />
+      <PickupSection
+        eyebrow={t("home.pickup.eyebrow")}
+        title={t("home.pickup.title")}
+        description={t("home.pickup.description")}
+        areasLabel={t("home.pickup.areas")}
+        imageAlt={t("home.pickup.imageAlt")}
+        mapLabel={t("home.pickup.mapLabel")}
+        imageExists={pickupImageExists}
+        mapsConfig={mapsConfig}
+        pickupAreas={pickupAreas}
+      />
       {showInstructors ? (
-        <section className="section-shell">
-        <div className="site-container">
-          <SectionHeader
-            eyebrow={t("home.teachers.eyebrow")}
-            title={t("home.teachers.title")}
-            intro={t("home.teachers.description")}
-          />
-          <nav className="mt-8 flex flex-wrap gap-2" aria-label={t("home.teachers.languageLabel")}>
-            {offeredLanguages.map((language) => (
-              <Link
-                key={language}
-                href={`/${params.locale}/larare?language=${language}`}
-                lang={language}
-                className="inline-flex min-h-11 items-center rounded-full border border-[var(--line)] bg-card px-4 text-small font-bold shadow-soft transition duration-150 hover:border-[var(--line-hover)]"
-              >
-                {t(`shell.languagePage.${language}`)}
-              </Link>
-            ))}
-          </nav>
-          <div className="mt-8 grid gap-3 sm:grid-cols-2">
-              {teachers.slice(0, 4).map((teacher) => (
-                <TeacherCard
-                  key={teacher.id}
-                  name={`${teacher.user.firstName} ${teacher.user.lastName}`}
-                  photoUrl={teacher.photoUrl}
-                  languages={teacher.languages.map((language) => t(`shell.languagePage.${language}`))}
-                  transmissions={teacher.transmissions.map((transmission) =>
-                    t(`teacher.transmission.${transmission.toLowerCase()}`),
-                  )}
-                  locationNames={teacher.locations.map(({ location }) => location.name)}
-                  experienceLabel={
-                    teacher.yearsExperience > 0
-                      ? t("teacher.yearsExperience", {
-                          count: teacher.yearsExperience,
-                          n: String(teacher.yearsExperience),
-                        })
-                      : ""
-                  }
-                  nextFreeLabel={t("teacher.nextFree")}
-                  nextFreeTime={
-                    nextFree.get(teacher.id)
-                      ? formatLessonDateTime(nextFree.get(teacher.id)!, params.locale)
-                      : undefined
-                  }
-                  swedishOnly={teacher.swedishOnly}
-                  swedishOnlyLabel={t("common.swedishOnly")}
-                />
-              ))}
-          </div>
-          <div className="mt-10 grid gap-6 lg:grid-cols-[18rem_minmax(0,1fr)] lg:items-center">
-            <div>
-              <h3 className="text-2xl font-black">{t("map.homeTeaserTitle")}</h3>
-              <p className="mt-3 max-w-[70ch] text-body leading-7 text-ink-muted">
-                {t("map.homeTeaserDescription")}
-              </p>
-              <Link
-                href={`/${params.locale}/larare`}
-                className="mt-4 inline-flex min-h-11 items-center font-bold underline underline-offset-4"
-              >
-                {t("map.homeTeaserCta")}
-              </Link>
-            </div>
-            {mapsConfig.apiKey && mapsConfig.mapId && homeMapMarkers.length ? (
-              <LazyTeacherMap
-                apiKey={mapsConfig.apiKey}
-                mapId={mapsConfig.mapId}
-                bookingAvailable={canBook}
-                center={homeMapCenter}
-                label={t("map.interactiveLabel")}
-                missingKeyTitle={t("map.unavailableTitle")}
-                missingKeyDescription={t("map.unavailableDescription")}
-                fallbackHref={`/${params.locale}/larare`}
-                fallbackLabel={t("map.homeTeaserCta")}
-                markers={homeMapMarkers}
-              />
-            ) : (
-              <Link
-                href={`/${params.locale}/larare`}
-                className="group relative min-h-[22rem] overflow-hidden rounded-md bg-surface text-ink-inverse"
-                aria-label={t("map.homeTeaserCta")}
-              >
-                <StaticMapArtwork className="absolute inset-0 size-full" />
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,color-mix(in_srgb,var(--surface)_5%,transparent)_0%,var(--surface)_92%)]" />
-              </Link>
-            )}
-          </div>
-        </div>
-        </section>
+        <TeachersMapSection
+          locale={locale}
+          canBook={canBook}
+          eyebrow={t("home.teachers.eyebrow")}
+          title={t("home.teachers.title")}
+          description={t("home.teachers.description")}
+          languageLabel={t("home.teachers.languageLabel")}
+          offeredLanguages={offeredLanguages}
+          languageNames={Object.fromEntries(
+            offeredLanguages.map((language) => [
+              language,
+              t(`shell.languagePage.${language}`),
+            ]),
+          )}
+          teachers={teacherCards}
+          nextFreeLabel={t("teacher.nextFree")}
+          swedishOnlyLabel={t("common.swedishOnly")}
+          mapTitle={t("map.homeTeaserTitle")}
+          mapDescription={t("map.homeTeaserDescription")}
+          mapCta={t("map.homeTeaserCta")}
+          mapLabel={t("map.interactiveLabel")}
+          unavailableTitle={t("map.unavailableTitle")}
+          unavailableDescription={t("map.unavailableDescription")}
+          mapsConfig={mapsConfig}
+          mapCenter={homeMapCenter}
+          mapMarkers={homeMapMarkers}
+        />
       ) : null}
-
-      {theoryNavVisible() && freeQuestions > 0 ? <section className="section-shell overflow-hidden pt-12 md:pt-20">
-        <div className="site-container">
-          <div className="relative overflow-hidden rounded-lg bg-surface text-ink-inverse shadow-float">
-            <div className="relative grid lg:grid-cols-[1.1fr_.9fr]">
-              <div className="p-7 sm:p-10 lg:p-14">
-                <p className="text-micro font-bold uppercase tracking-wider text-accent">
-                {t("theory.teaser.eyebrow")}
-                </p>
-                <h2 className="mt-3 max-w-xl text-3xl font-black sm:text-5xl">
-                  {t("theory.teaser.title")}
-                </h2>
-                <p className="mt-5 max-w-xl leading-7 text-ink-inverse-muted">
-                  {theoryMode() === "free"
-                    ? t("theory.teaser.freeDescription")
-                    : freeQuestions > 0
-                      ? t("theory.teaser.description")
-                      : t("home.theory.comingSoon")}
-                </p>
-                <ul className="mt-6 grid gap-3">
-                  {(["categories", "practice", "languages"] as const)
-                    .filter((item) => freeQuestions > 0 || item !== "practice")
-                    .map(
-                    (item) => (
-                      <li
-                        key={item}
-                        className="flex items-center gap-3 text-small font-bold"
-                      >
-                        <span
-                          aria-hidden="true"
-                          className="grid size-6 shrink-0 place-items-center rounded-full bg-success text-ink-inverse"
-                        >
-                          <svg
-                            viewBox="0 0 16 16"
-                            className="size-3.5"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2.25"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <path d="m3.5 8.5 3 3 6-7" />
-                          </svg>
-                        </span>
-                        {item === "languages"
-                          ? t("theory.teaser.features.languages", {
-                              languages: offeredLanguageNames,
-                            })
-                          : t(`theory.teaser.features.${item}`)}
-                      </li>
-                    ),
-                  )}
-                </ul>
-                <div className="mt-8 flex flex-wrap gap-3">
-                  {freeQuestions > 0 ? (
-                    <LinkButton href={`/${params.locale}/teori`}>
-                      {t("theory.teaser.tryFree")}
-                    </LinkButton>
-                  ) : null}
-                  {theorySalesOpen() && theoryProduct?.active ? (
-                    <LinkButton
-                      variant="secondary-inverse"
-                      href={`/${params.locale}/paket/korkortsteori`}
-                    >
-                      {t("theory.teaser.buy")}
-                    </LinkButton>
-                  ) : theoryMode() === "free" ? null : (
-                    <span className="inline-flex min-h-11 items-center text-small font-bold text-ink-inverse-muted">
-                      {t("theory.teaser.pending")}
-                    </span>
-                  )}
-                </div>
-              </div>
-              <div className="relative min-h-80 border-t border-ink-inverse/10 bg-surface-raised lg:border-s lg:border-t-0">
-                <Image
-                  src="/illustration-theory.svg"
-                  alt=""
-                  fill
-                  sizes="(min-width: 1024px) 40vw, 100vw"
-                  className="rtl-no-mirror object-contain p-8 sm:p-12"
-                />
-                {theorySalesOpen() && theoryProduct ? (
-                  <div className="absolute bottom-5 end-5 rounded-md bg-card p-4 text-ink shadow-card">
-                    <p className="text-xs font-black uppercase tracking-wider text-ink-muted">
-                      {t("theory.teaser.oneTime")}
-                    </p>
-                    <p className="numbers-ltr mt-1 text-2xl font-black">
-                      {formatPrice(theoryProduct.priceOre, params.locale)}
-                    </p>
-                  </div>
-                ) : null}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section> : null}
-
-      <section className="section-shell border-t border-border">
-        <div className="site-container grid gap-8 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:items-start">
-          <SectionHeader eyebrow={t("home.faq.eyebrow")} title={t("home.faq.title")} />
-          <div className="divide-y divide-border border-y border-border">
-            {faqItems.map((item) => (
-              <details key={item.question} className="group">
-                <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-6 py-4 font-bold marker:hidden [&::-webkit-details-marker]:hidden">
-                  <span>{item.question}</span>
-                  <span aria-hidden="true" className="text-xl transition group-open:rotate-45">+</span>
-                </summary>
-                <p className="max-w-3xl pb-6 leading-7 text-ink-muted">
-                  {"content" in item ? item.content : item.answer}
-                </p>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
+      {theoryNavVisible() && freeQuestions > 0 ? (
+        <TheoryTeaserSection
+          locale={locale}
+          eyebrow={t("theory.teaser.eyebrow")}
+          title={t("theory.teaser.title")}
+          description={
+            theoryIsFree
+              ? t("theory.teaser.freeDescription")
+              : freeQuestions > 0
+                ? t("theory.teaser.description")
+                : t("home.theory.comingSoon")
+          }
+          features={(["categories", "practice", "languages"] as const)
+            .filter((item) => freeQuestions > 0 || item !== "practice")
+            .map((item) => ({
+              id: item,
+              label:
+                item === "languages"
+                  ? t("theory.teaser.features.languages", {
+                      languages: offeredLanguageNames,
+                    })
+                  : t(`theory.teaser.features.${item}`),
+            }))}
+          tryFreeLabel={t("theory.teaser.tryFree")}
+          buyLabel={t("theory.teaser.buy")}
+          pendingLabel={t("theory.teaser.pending")}
+          oneTimeLabel={t("theory.teaser.oneTime")}
+          freeQuestions={freeQuestions}
+          salesOpen={theorySalesAreOpen}
+          freeMode={theoryIsFree}
+          theoryProduct={
+            theoryProduct
+              ? {
+                  active: theoryProduct.active,
+                  formattedPrice: formatPrice(theoryProduct.priceOre, locale),
+                }
+              : undefined
+          }
+        />
+      ) : null}
+      <FaqSection
+        eyebrow={t("home.faq.eyebrow")}
+        title={t("home.faq.title")}
+        items={faqItems}
+      />
     </>
   );
 }

@@ -77,6 +77,7 @@ export default async function BookingPage(
       where: { id: { in: orderedIds.map(({ id }) => id) } },
       select: {
         id: true,
+        photoUrl: true,
         languages: true,
         transmissions: true,
         user: { select: { firstName: true, lastName: true } },
@@ -135,6 +136,7 @@ export default async function BookingPage(
         teachers={teachers.map((teacher) => ({
           id: teacher.id,
           name: `${teacher.user.firstName} ${teacher.user.lastName}`,
+          photoUrl: teacher.photoUrl,
           languages: teacher.languages,
           transmissions: teacher.transmissions,
           locationIds: teacher.locations.map((item) => item.locationId),

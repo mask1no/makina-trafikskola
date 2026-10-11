@@ -33,6 +33,7 @@
     "theory": "Teori",
     "profile": "Profil",
     "lessons": "Körlektioner",
+    "lessonsShort": "Lektioner",
     "teachers": "Lärare",
     "book": "Boka nu",
     "scrollTop": "Till toppen",
@@ -74,7 +75,6 @@
     "call": "Ring",
     "callUs": "Ring oss",
     "mailUs": "Maila oss",
-    "callName": "Ring <phone></phone>",
     "seePrices": "Se priser",
     "openNow": "Öppet nu",
     "closed": "Stängt",
@@ -215,7 +215,7 @@
       },
       "guarantee": {
         "title": "Körkortsgaranti",
-        "body": "Kör tills du klarar"
+        "body": "25 lektioner, Risk 1, Risk 2 och teori"
       },
       "payment": {
         "title": "Kort/Swish/Klarna",
@@ -235,6 +235,14 @@
     "eyebrow": "Priser och paket",
     "title": "Körlektioner för varje steg",
     "description": "Jämför enstaka lektioner och paket. Alla priser visas inklusive moms.",
+    "introOffer": {
+      "eyebrow": "Introduktionserbjudande",
+      "title": "Din första körlektion för 499 kr",
+      "description": "50 minuter med en trafiklärare som lär känna din nivå och hjälper dig planera nästa steg.",
+      "ordinary": "Ordinarie pris",
+      "book": "Boka första lektionen",
+      "callFirst": "Kontakta oss för att börja"
+    },
     "sortPrice": "Pris",
     "sortLessons": "Antal lektioner",
     "bestSeller": "Mest såld",
@@ -377,7 +385,7 @@
     "seats": "Lediga platser",
     "seatsLeft": "{count, plural, =0 {Fullbokad} =1 {1 plats kvar} other {{n} platser kvar}}",
     "inactive": "Kursprodukten är inte aktiverad för köp ännu.",
-    "soon": "Nya kurstillfällen kommer snart.",
+    "soon": "Nästa datum publiceras snart.",
     "callToBook": "Ring oss om kursen",
     "info": {
       "RISK1": "Riskettan är den teoretiska delen av den obligatoriska riskutbildningen.",
@@ -405,6 +413,46 @@
     "title": "Öva gratis på körkortsteori",
     "description": "Gratisfrågor visas utan köp. Betalt innehåll kräver en aktiv teoriåtkomst.",
     "freeDescription": "Gratisfrågor att öva, utan köp.",
+    "hub": {
+      "label": "Välj hur du vill plugga",
+      "free": "Gratis",
+      "comingSoon": "Kommer snart",
+      "steps": {
+        "title": "Steg för steg",
+        "description": "Följ kategorierna i en tydlig ordning.",
+        "scrollHint": "Svep åt sidan för att se alla steg."
+      },
+      "questions": {
+        "title": "Körkortsfrågor",
+        "description": "Öva på frågor och se förklaringen direkt.",
+        "badge": "{count} frågor"
+      },
+      "signs": {
+        "title": "Vägmärkesspel",
+        "description": "Lär dig vägmärken genom korta spelomgångar."
+      },
+      "book": {
+        "title": "Bok",
+        "description": "Makinas digitala körkortsbok förbereds.",
+        "pending": "Boken publiceras här när skolans innehåll är färdigställt och granskat."
+      },
+      "facts": {
+        "title": "Faktabank",
+        "description": "Läs förklaringar med källor från svenska myndigheter.",
+        "entries": "{count, plural, =1 {1 faktapost} other {{n} faktaposter}}",
+        "read": "Öppna faktabanken",
+        "categoryDescription": "Originala förklaringar från frågebanken, med källan angiven för vidare läsning.",
+        "source": "Källa"
+      }
+    },
+    "signGame": {
+      "title": "Vägmärkesspel",
+      "description": "Träna på 300 kostnadsfria omgångar med officiella svenska vägmärken.",
+      "progress": "Omgång {current} av {total}",
+      "finish": "Visa resultatet",
+      "emptyTitle": "Vägmärkesspelet förbereds",
+      "emptyDescription": "De officiella vägmärkena importeras. Försök igen snart."
+    },
     "teaser": {
       "eyebrow": "Körkortsteori",
       "title": "Plugga teorin på ditt språk",

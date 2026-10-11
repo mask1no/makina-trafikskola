@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="352.04pt" height="632.69pt" viewBox="0 0 352.04 632.69">
+<title>C39 Förbud mot att stanna och parkera fordon</title>
+<desc>vägmärke, trafikmärke, trafik, Förbudsmärken, C, C39, c39-1, Förbud mot att stanna och parkera fordon</desc>
+
+<defs>
+<clipPath id="clip-0">
+<path clip-rule="nonzero" d="M 31 567 L 32 567 L 32 631.675781 L 31 631.675781 Z M 31 567 "/>
+</clipPath>
+<clipPath id="clip-1">
+<path clip-rule="nonzero" d="M 11 0.707031 L 351.082031 0.707031 L 351.082031 340 L 11 340 Z M 11 0.707031 "/>
+</clipPath>
+</defs>
+<path fill="none" stroke-width="1.41732" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(42.773438%, 81.080627%, 85.647583%)" stroke-opacity="1" stroke-dasharray="85.0394 17.0079 11.3386 17.0079" stroke-miterlimit="500" d="M 0.705042 319.612454 L 638.494227 319.612454 " transform="matrix(0.099728, 0, 0, -0.099728, 0, 631.675107)"/>
+<g clip-path="url(#clip-0)">
+<path fill="none" stroke-width="1.41732" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(42.773438%, 81.080627%, 85.647583%)" stroke-opacity="1" stroke-dasharray="85.0394 17.0079 11.3386 17.0079" stroke-miterlimit="500" d="M 319.619219 0.698277 L 319.619219 638.487462 " transform="matrix(0.099728, 0, 0, -0.099728, 0, 631.675107)"/>
+</g>
+<g clip-path="url(#clip-1)">
+<path fill-rule="nonzero" fill="rgb(93.489075%, 16.244507%, 23.9151%)" fill-opacity="1" d="M 351.082031 170.324219 C 351.082031 76.648438 275.140625 0.707031 181.464844 0.707031 C 87.789062 0.707031 11.847656 76.648438 11.847656 170.324219 C 11.847656 264 87.789062 339.941406 181.464844 339.941406 C 275.140625 339.941406 351.082031 264 351.082031 170.324219 "/>
+</g>
+<path fill-rule="nonzero" fill="rgb(8.265686%, 31.834412%, 58.67157%)" fill-opacity="1" d="M 263.980469 270.832031 L 181.464844 188.316406 L 98.949219 270.832031 C 146.914062 310.207031 216.015625 310.207031 263.980469 270.832031 "/>
+<path fill-rule="nonzero" fill="rgb(8.265686%, 31.834412%, 58.67157%)" fill-opacity="1" d="M 80.957031 252.839844 L 163.472656 170.324219 L 80.957031 87.808594 C 41.582031 135.773438 41.582031 204.875 80.957031 252.839844 "/>
+<path fill-rule="nonzero" fill="rgb(8.265686%, 31.834412%, 58.67157%)" fill-opacity="1" d="M 281.972656 252.839844 C 321.347656 204.875 321.347656 135.773438 281.972656 87.808594 L 199.457031 170.324219 L 281.972656 252.839844 "/>
+<path fill-rule="nonzero" fill="rgb(8.265686%, 31.834412%, 58.67157%)" fill-opacity="1" d="M 181.464844 152.335938 L 263.980469 69.816406 C 216.015625 30.441406 146.914062 30.441406 98.949219 69.816406 L 181.464844 152.335938 "/>
+</svg>

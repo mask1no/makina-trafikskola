@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 
 import { Badge } from "@/components/Badge";
+import { Avatar } from "@/components/Avatar";
 import { PageHeader } from "@/components/PageHeader";
 import { db } from "@/lib/db";
 
@@ -17,6 +18,7 @@ export default async function AdminTeachersPage(props: {
       orderBy: [{ active: "desc" }, { user: { firstName: "asc" } }],
       select: {
         id: true,
+        photoUrl: true,
         active: true,
         languages: true,
         user: { select: { firstName: true, lastName: true } },
@@ -39,13 +41,20 @@ export default async function AdminTeachersPage(props: {
         </Link>
       </div>
       {teachers.length ? (
-        <ul className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+        <ul className="mt-6 grid min-w-0 gap-3 sm:grid-cols-2 xl:grid-cols-3">
           {teachers.map((teacher) => (
-            <li key={teacher.id} className="flex h-full flex-col rounded-md border border-border bg-card p-4 shadow-soft">
+            <li key={teacher.id} className="flex min-w-0 h-full flex-col rounded-md border border-border bg-card p-4 shadow-soft">
               <div className="flex items-start justify-between gap-3">
-                <h2 className="text-lg font-black">
-                  {teacher.user.firstName} {teacher.user.lastName}
-                </h2>
+                <div className="flex min-w-0 items-center gap-3">
+                  <Avatar
+                    name={`${teacher.user.firstName} ${teacher.user.lastName}`}
+                    imageUrl={teacher.photoUrl}
+                    size="md"
+                  />
+                  <h2 className="truncate text-lg font-black">
+                    {teacher.user.firstName} {teacher.user.lastName}
+                  </h2>
+                </div>
                 <Badge tone={teacher.active ? "success" : "neutral"}>
                   {teacher.active ? t("active") : t("inactive")}
                 </Badge>

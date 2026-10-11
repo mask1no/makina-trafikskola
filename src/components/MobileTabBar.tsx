@@ -4,15 +4,25 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 
-export type BottomTabIcon = "home" | "packages" | "bookings" | "messages" | "profile" | "call";
+export type MobileTabIcon =
+  | "home"
+  | "packages"
+  | "bookings"
+  | "messages"
+  | "profile"
+  | "call";
 
-type Tab = { href: string; label: ReactNode; icon: BottomTabIcon };
+export type MobileTab = {
+  href: string;
+  label: ReactNode;
+  icon: MobileTabIcon;
+};
 
 function TabIcon({
   icon,
   prominent = false,
 }: {
-  icon: BottomTabIcon;
+  icon: MobileTabIcon;
   prominent?: boolean;
 }) {
   const paths = {
@@ -74,7 +84,7 @@ function TabLink({
   pathname,
   prominent = false,
 }: {
-  tab: Tab;
+  tab: MobileTab;
   pathname: string;
   prominent?: boolean;
 }) {
@@ -114,12 +124,12 @@ function TabLink({
   );
 }
 
-export function BottomTabBar({
+export function MobileTabBar({
   tabs,
   center,
 }: {
-  tabs: Tab[];
-  center?: Tab;
+  tabs: MobileTab[];
+  center?: MobileTab;
 }) {
   const pathname = usePathname();
   const leftCount = Math.ceil(tabs.length / 2);

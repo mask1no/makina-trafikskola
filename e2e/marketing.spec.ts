@@ -102,7 +102,11 @@ test.describe("marketing layout", () => {
 
   test("shows the four confirmed teaching languages", async ({ page }) => {
     await page.goto("/sv/kontakt");
-    await expect(page.getByText(/^Undervisar på /)).toHaveCount(6);
+    const staffCards = page
+      .locator("section")
+      .filter({ has: page.getByRole("heading", { name: "Vår personal" }) })
+      .locator(":scope > ul > li");
+    await expect(staffCards).toHaveCount(6);
     const contact = await page.locator("body").innerText();
     expect(contact).toContain("Kontakta oss på svenska, engelska, tigrinja och kurdiska.");
     expect(contact).not.toMatch(/arabiska/i);

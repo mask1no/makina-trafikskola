@@ -3,6 +3,7 @@ import { readFile } from "node:fs/promises";
 import type { PrismaClient } from "@prisma/client";
 
 import { practiceBankQuestions } from "./theory/practice-bank";
+import { roadSignQuestions } from "./theory/road-sign-bank";
 import {
   bankFileSchema,
   importTheoryQuestions,
@@ -23,13 +24,32 @@ const PLACEHOLDER_SLUGS = [
 
 export async function seedTheory(db: PrismaClient) {
   await db.theoryAttempt.deleteMany({
-    where: { question: { id: { startsWith: "seed-q-" } } },
+    where: {
+      question: {
+        OR: [
+          { id: { startsWith: "seed-q-" } },
+          { sourceRef: { startsWith: "original-free-" } },
+        ],
+      },
+    },
   });
   await db.theoryAnswer.deleteMany({
-    where: { questionId: { startsWith: "seed-q-" } },
+    where: {
+      question: {
+        OR: [
+          { id: { startsWith: "seed-q-" } },
+          { sourceRef: { startsWith: "original-free-" } },
+        ],
+      },
+    },
   });
   await db.theoryQuestion.deleteMany({
-    where: { id: { startsWith: "seed-q-" } },
+    where: {
+      OR: [
+        { id: { startsWith: "seed-q-" } },
+        { sourceRef: { startsWith: "original-free-" } },
+      ],
+    },
   });
   await db.theoryCategory.deleteMany({
     where: {
@@ -40,8 +60,9 @@ export async function seedTheory(db: PrismaClient) {
     },
   });
 
-  const count = await importTheoryQuestions(db, await questionsToImport());
-  console.log(`Imported ${count} theory questions.`);
+  const practiceCount = await importTheoryQuestions(db, await questionsToImport());
+  const signCount = await importTheoryQuestions(db, roadSignQuestions);
+  console.log(`Imported ${practiceCount} theory questions and ${signCount} road-sign rounds.`);
 }
 
 async function questionsToImport(): Promise<TheoryBankQuestion[]> {

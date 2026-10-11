@@ -34,7 +34,7 @@ export default async function TeoriprovPage(
     session?.user?.role === "STUDENT" &&
     (await hasTheoryAccess(db, session.user.id, now));
   const count = paid
-    ? await db.theoryQuestion.count({ where: { active: true } })
+    ? await db.theoryQuestion.count({ where: { active: true, imageUrl: null } })
     : 0;
   const available = Boolean(paid && count >= 65);
 

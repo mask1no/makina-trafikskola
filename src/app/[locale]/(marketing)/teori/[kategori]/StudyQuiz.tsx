@@ -31,12 +31,14 @@ type Copy = {
 export function StudyQuiz({
   locale,
   questions,
+  screenshotFinished = false,
   copy,
   bookHref,
 }: {
   locale: string;
   questions: Question[];
   authenticated?: boolean;
+  screenshotFinished?: boolean;
   copy: Copy;
   bookHref: string;
 }) {
@@ -48,7 +50,7 @@ export function StudyQuiz({
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [reviewing, setReviewing] = useState(false);
-  const [finished, setFinished] = useState(false);
+  const [finished, setFinished] = useState(screenshotFinished);
 
   const visible = reviewing
     ? questions.filter((question) => results[question.id] && !results[question.id]?.correct)
@@ -143,7 +145,7 @@ export function StudyQuiz({
           </button>
           <button
             type="button"
-            className="inline-flex min-h-11 items-center rounded-sm border border-border bg-card px-5 text-small font-bold"
+            className="inline-flex min-h-11 items-center rounded-sm border border-accent bg-accent px-5 text-small font-bold text-accent-ink shadow-soft"
             onClick={() => {
               setResults({});
               setFinished(false);
@@ -154,7 +156,7 @@ export function StudyQuiz({
           >
             {copy.retry}
           </button>
-          <LinkButton href={bookHref}>{copy.bookLesson}</LinkButton>
+          <LinkButton href={bookHref} variant="tertiary">{copy.bookLesson}</LinkButton>
         </div>
       </div>
     );

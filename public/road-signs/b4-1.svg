@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="481.06pt" height="481.05pt" viewBox="0 0 481.06 481.05">
+<title>B4 Huvudled</title>
+<desc>vägmärke, trafikmärke, trafik, Väjningspliktsmärken, B, B4, b4-1, Huvudled</desc>
+
+<defs>
+<clipPath id="clip-0">
+<path clip-rule="nonzero" d="M 0.00390625 0 L 480.117188 0 L 480.117188 480.101562 L 0.00390625 480.101562 Z M 0.00390625 0 "/>
+</clipPath>
+</defs>
+<g clip-path="url(#clip-0)">
+<path fill-rule="nonzero" fill="rgb(13.729858%, 12.159729%, 12.548828%)" fill-opacity="1" d="M 0.00390625 240.050781 L 240.058594 -0.00390625 L 480.113281 240.050781 L 240.058594 480.101562 L 0.00390625 240.050781 "/>
+</g>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 20.007812 240.050781 L 240.058594 20 L 460.105469 240.050781 L 240.058594 460.097656 L 20.007812 240.050781 "/>
+<path fill-rule="nonzero" fill="rgb(98.869324%, 81.472778%, 2.258301%)" fill-opacity="1" d="M 60.019531 240.050781 L 240.058594 60.007812 L 420.097656 240.050781 L 240.058594 420.089844 L 60.019531 240.050781 "/>
+</svg>

@@ -33,6 +33,7 @@
     "theory": "Theory",
     "profile": "Profile",
     "lessons": "Driving lessons",
+    "lessonsShort": "Lessons",
     "teachers": "Instructors",
     "book": "Book now",
     "scrollTop": "Back to top",
@@ -74,7 +75,6 @@
     "call": "Call",
     "callUs": "Call us",
     "mailUs": "Email us",
-    "callName": "Call <phone></phone>",
     "seePrices": "See prices",
     "openNow": "Open now",
     "closed": "Closed",
@@ -215,7 +215,7 @@
       },
       "guarantee": {
         "title": "Driving licence guarantee",
-        "body": "Drive until you pass"
+        "body": "25 lessons, Risk 1, Risk 2 and theory"
       },
       "payment": {
         "title": "Card/Swish/Klarna",
@@ -235,6 +235,14 @@
     "eyebrow": "Prices and packages",
     "title": "Driving lessons for every step",
     "description": "Compare single lessons and packages. All prices include VAT.",
+    "introOffer": {
+      "eyebrow": "Introductory offer",
+      "title": "Your first driving lesson for 499 kr",
+      "description": "50 minutes with an instructor who gets to know your level and helps you plan the next step.",
+      "ordinary": "Ordinary price",
+      "book": "Book the first lesson",
+      "callFirst": "Contact us to get started"
+    },
     "sortPrice": "Price",
     "sortLessons": "Number of lessons",
     "bestSeller": "Best seller",
@@ -377,7 +385,7 @@
     "seats": "Available seats",
     "seatsLeft": "{count, plural, =0 {Fully booked} =1 {1 seat left} other {{n} seats left}}",
     "inactive": "This course product is not active for purchase yet.",
-    "soon": "New course dates are coming soon.",
+    "soon": "The next date will be published soon.",
     "callToBook": "Call us about the course",
     "info": {
       "RISK1": "Risk 1 is the theory part of the mandatory risk training.",
@@ -405,6 +413,46 @@
     "title": "Practise driving theory for free",
     "description": "Free questions are available without purchase. Paid content requires active theory access.",
     "freeDescription": "Free questions to practise, with no purchase.",
+    "hub": {
+      "label": "Choose how you want to study",
+      "free": "Free",
+      "comingSoon": "Coming soon",
+      "steps": {
+        "title": "Step by step",
+        "description": "Follow the categories in a clear order.",
+        "scrollHint": "Swipe sideways to see every step."
+      },
+      "questions": {
+        "title": "Driving theory questions",
+        "description": "Practise questions and see each explanation immediately.",
+        "badge": "{count} questions"
+      },
+      "signs": {
+        "title": "Road-sign game",
+        "description": "Learn Swedish road signs in short game rounds."
+      },
+      "book": {
+        "title": "Book",
+        "description": "Makina's digital driving theory book is being prepared.",
+        "pending": "The book will be published here after the school's content is complete and reviewed."
+      },
+      "facts": {
+        "title": "Fact bank",
+        "description": "Read sourced explanations based on Swedish authorities.",
+        "entries": "{count, plural, =1 {1 fact entry} other {{n} fact entries}}",
+        "read": "Open the fact bank",
+        "categoryDescription": "Original explanations from the question bank, with sources for further reading.",
+        "source": "Source"
+      }
+    },
+    "signGame": {
+      "title": "Road-sign game",
+      "description": "Practise 300 free rounds with official Swedish road signs.",
+      "progress": "Round {current} of {total}",
+      "finish": "Show the result",
+      "emptyTitle": "The road-sign game is being prepared",
+      "emptyDescription": "The official road signs are being imported. Please try again soon."
+    },
     "teaser": {
       "eyebrow": "Driving theory",
       "title": "Study theory in your language",

@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
 
 import { auth } from "@/auth";
+import { Avatar } from "@/components/Avatar";
 import { Badge } from "@/components/Badge";
 import { Button } from "@/components/Button";
 import { Notice } from "@/components/Notice";
@@ -60,9 +61,16 @@ export default async function TeacherPortal(
       where: { userId: session.user.id },
       select: {
         id: true,
+        photoUrl: true,
         calendarToken: true,
         payRateOre: true,
-        user: { select: { phone: true } },
+        user: {
+          select: {
+            firstName: true,
+            lastName: true,
+            phone: true,
+          },
+        },
       },
     }),
   ]);
@@ -177,11 +185,18 @@ export default async function TeacherPortal(
         {!teacher.user.phone ? (
           <Notice tone="danger" className="mt-4">{t("noPhone")}</Notice>
         ) : null}
-        <PageHeader
-          eyebrow={t("eyebrow")}
-          title={view === "week" ? t("weekTitle") : t("title")}
-          description={t(view === "week" ? "weekCount" : "lessonCount", { count: lessons.length, n: String(lessons.length) })}
-        />
+        <div className="flex items-start gap-4">
+          <Avatar
+            name={`${teacher.user.firstName} ${teacher.user.lastName}`}
+            imageUrl={teacher.photoUrl}
+            size="lg"
+          />
+          <PageHeader
+            eyebrow={t("eyebrow")}
+            title={view === "week" ? t("weekTitle") : t("title")}
+            description={t(view === "week" ? "weekCount" : "lessonCount", { count: lessons.length, n: String(lessons.length) })}
+          />
+        </div>
         <Card className="mt-6" padding="lg" key={monthKey}>
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>

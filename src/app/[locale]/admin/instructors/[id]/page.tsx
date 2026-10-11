@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 
+import { Avatar } from "@/components/Avatar";
 import { PageHeader } from "@/components/PageHeader";
 import { db } from "@/lib/db";
 
@@ -29,7 +30,14 @@ export default async function EditTeacherPage(props: {
 
   return (
     <div className="grid max-w-3xl gap-6">
-      <PageHeader title={`${teacher.user.firstName} ${teacher.user.lastName}`} description={t("editTeacher")} />
+      <div className="flex items-start gap-4">
+        <Avatar
+          name={`${teacher.user.firstName} ${teacher.user.lastName}`}
+          imageUrl={teacher.photoUrl}
+          size="lg"
+        />
+        <PageHeader title={`${teacher.user.firstName} ${teacher.user.lastName}`} description={t("editTeacher")} />
+      </div>
       <TeacherEditor
         locale={params.locale}
         teacherId={teacher.id}

@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl";
 
+import { Avatar } from "@/components/Avatar";
 import { ChoiceCard } from "@/components/ChoiceCard";
 import { formatLessonTime } from "@/lib/format/datetime";
 
@@ -55,7 +56,14 @@ export function ScheduleStep({
                   selected={teacherId === teacher.id}
                   onClick={() => onTeacher(teacher.id)}
                 >
-                  {teacher.name}
+                  <span className="flex min-w-0 items-center gap-3">
+                    <Avatar
+                      name={teacher.name}
+                      imageUrl={teacher.photoUrl}
+                      size="sm"
+                    />
+                    <span className="truncate">{teacher.name}</span>
+                  </span>
                 </ChoiceCard>
                 <div className="flex flex-wrap gap-2">
                   {next.map((slot) => (

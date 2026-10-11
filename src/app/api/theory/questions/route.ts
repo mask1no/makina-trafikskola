@@ -33,7 +33,7 @@ export async function GET(request: Request) {
       ...(!paid ? { isFree: true } : {}),
       ...(parsed.data.category
         ? { category: { slug: parsed.data.category } }
-        : {}),
+        : { imageUrl: null }),
     },
     orderBy: [
       { category: { order: "asc" } },

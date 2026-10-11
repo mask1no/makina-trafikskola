@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/Button";
 import { Card } from "@/components/Card";
@@ -40,6 +41,7 @@ export function TeacherEditor({
   };
 }) {
   const t = useTranslations("admin.editor");
+  const router = useRouter();
   const [form, setForm] = useState(initial);
   const [message, setMessage] = useState("");
   const [busy, setBusy] = useState(false);
@@ -80,6 +82,7 @@ export function TeacherEditor({
     });
     const body = await response.json().catch(() => null);
     setMessage(response.ok ? t("saved") : body?.error?.code ?? "UNKNOWN");
+    if (response.ok) router.refresh();
   }
 
   async function testCalendar() {

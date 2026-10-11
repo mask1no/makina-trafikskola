@@ -4,6 +4,9 @@ import path from "node:path";
 import { PrismaClient } from "@prisma/client";
 import { z } from "zod";
 
+import { practiceBankQuestions } from "../prisma/theory/practice-bank";
+import { roadSignQuestions } from "../prisma/theory/road-sign-bank";
+
 const LOCALES = ["sv", "en", "ti", "ar"] as const;
 const NON_SWEDISH_LOCALES = ["en", "ti", "ar"] as const;
 
@@ -15,7 +18,7 @@ const localizedQuestionSchema = z.object({
 
 const bankQuestionSchema = z.object({
   id: z.string().trim().min(1),
-  parm: z.number().int().min(1).max(9),
+  parm: z.number().int().min(1).max(10),
   question_sv: z.string().trim().min(1),
   options_sv: z.array(z.string().trim().min(1)).min(3).max(4),
   explanation_sv: z.string().trim().min(1),
@@ -28,6 +31,7 @@ const bankQuestionSchema = z.object({
   correct_index: z.number().int().min(0),
   difficulty: z.number().int().min(1).max(3).optional(),
   needs_image: z.boolean(),
+  image_url: z.string().trim().startsWith("/road-signs/").optional(),
   status: z.enum(["ok", "review"]),
 });
 
@@ -69,13 +73,22 @@ const CATEGORY_NAMES: Record<
   7: { sv: "Stadstrafik", en: "Urban traffic", ti: "ትራፊክ ከተማ", ar: "المرور داخل المدن" },
   8: { sv: "Parkering", en: "Parking", ti: "ምዕራፍ", ar: "الوقوف" },
   9: { sv: "Blandade frågor", en: "Mixed questions", ti: "ዝተፈላለዩ ሕቶታት", ar: "أسئلة متنوعة" },
+  10: { sv: "Vägmärkesspel", en: "Road-sign game", ti: "ጸወታ ምልክታት መንገዲ", ar: "لعبة إشارات المرور" },
 };
 
 export async function importTheory(db: PrismaClient) {
-  const raw = await readFile(theoryBankPath, "utf8");
-  const parsed = bankFileSchema.parse(JSON.parse(raw));
-  const questions = Array.isArray(parsed) ? parsed : parsed.questions;
-  return importTheoryQuestions(db, questions);
+  let questions = practiceBankQuestions;
+  try {
+    const raw = await readFile(theoryBankPath, "utf8");
+    const parsed = bankFileSchema.parse(JSON.parse(raw));
+    const external = Array.isArray(parsed) ? parsed : parsed.questions;
+    if (external.length > questions.length) questions = external;
+  } catch {
+    // A missing external client bank uses the committed 180-question set.
+  }
+  const practiceCount = await importTheoryQuestions(db, questions);
+  const signCount = await importTheoryQuestions(db, roadSignQuestions);
+  return practiceCount + signCount;
 }
 
 export async function importTheoryQuestions(
@@ -93,8 +106,8 @@ export async function importTheoryQuestions(
   }
 
   const categories = new Map<number, { id: string }>();
-  for (let parm = 1; parm <= 9; parm += 1) {
-    const slug = `del-${parm}`;
+  for (let parm = 1; parm <= 10; parm += 1) {
+    const slug = parm === 10 ? "vagmarkesspel" : `del-${parm}`;
     const category = await db.theoryCategory.upsert({
       where: { slug },
       update: { order: parm },
@@ -131,7 +144,7 @@ export async function importTheoryQuestions(
         sourceCitation: question.source_citation,
         difficulty: question.difficulty ?? 2,
         active: true,
-        imageUrl: null,
+        imageUrl: question.image_url ?? null,
       },
       create: {
         sourceRef: question.id,
@@ -141,7 +154,7 @@ export async function importTheoryQuestions(
         sourceCitation: question.source_citation,
         difficulty: question.difficulty ?? 2,
         active: true,
-        imageUrl: null,
+        imageUrl: question.image_url ?? null,
       },
     });
 

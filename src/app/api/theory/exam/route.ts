@@ -49,7 +49,7 @@ export async function POST(request: Request) {
   if (!paid) return apiError("THEORY_ACCESS_REQUIRED", 403);
 
   const questions = await db.theoryQuestion.findMany({
-    where: { active: true },
+    where: { active: true, imageUrl: null },
     select: { id: true, difficulty: true },
   });
   if (questions.length < 65) {

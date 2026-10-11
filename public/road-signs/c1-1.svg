@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="340.16pt" height="564.19pt" viewBox="0 0 340.16 564.19">
+<title>C1 Förbud mot infart med fordon</title>
+<desc>vägmärke, trafikmärke, trafik, Förbudsmärken, C, C1, c1-1, Förbud mot infart med fordon</desc>
+
+<defs>
+<clipPath id="clip-0">
+<path clip-rule="nonzero" d="M 67 446 L 68 446 L 68 563.089844 L 67 563.089844 Z M 67 446 "/>
+</clipPath>
+<clipPath id="clip-1">
+<path clip-rule="nonzero" d="M 0 0.289062 L 339.320312 0.289062 L 339.320312 340 L 0 340 Z M 0 0.289062 "/>
+</clipPath>
+</defs>
+<g clip-path="url(#clip-0)">
+<path fill="none" stroke-width="1.41732" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(42.773438%, 81.080627%, 85.647583%)" stroke-opacity="1" stroke-dasharray="34.0157 11.3386 5.66929 11.3386" stroke-miterlimit="500" d="M 676.079478 0.717464 L 676.079478 1167.772007 " transform="matrix(0.0997537, 0, 0, -0.0997537, 0, 563.091101)"/>
+</g>
+<path fill="none" stroke-width="1.41732" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(42.773438%, 81.080627%, 85.647583%)" stroke-opacity="1" stroke-dasharray="34.0157 11.3386 5.66929 11.3386" stroke-miterlimit="500" d="M 92.571786 584.264315 L 1259.626329 584.264315 " transform="matrix(0.0997537, 0, 0, -0.0997537, 0, 563.091101)"/>
+<g clip-path="url(#clip-1)">
+<path fill-rule="nonzero" fill="rgb(93.489075%, 16.244507%, 23.9151%)" fill-opacity="1" d="M 339.320312 169.949219 C 339.320312 76.25 263.359375 0.289062 169.660156 0.289062 C 75.960938 0.289062 0 76.25 0 169.949219 C 0 263.652344 75.960938 339.609375 169.660156 339.609375 C 263.359375 339.609375 339.320312 263.652344 339.320312 169.949219 "/>
+</g>
+<path fill-rule="nonzero" fill="rgb(98.869324%, 81.472778%, 2.258301%)" fill-opacity="1" d="M 19.375 202.75 C 14.65625 181.140625 14.65625 158.761719 19.375 137.148438 L 319.945312 137.148438 C 324.664062 158.761719 324.664062 181.140625 319.945312 202.75 L 19.375 202.75 "/>
+</svg>
