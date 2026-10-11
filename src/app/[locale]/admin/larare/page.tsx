@@ -52,7 +52,6 @@ export default async function AdminTeachersPage(props: {
               </div>
               <p className="mt-3 text-sm text-ink-muted">
                 {teacher.locations
-                  .filter((item) => !/webhook|fixture/i.test(item.location.slug))
                   .map((item) => item.location.name)
                   .join(", ") || "–"}
               </p>

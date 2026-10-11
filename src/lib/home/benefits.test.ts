@@ -2,12 +2,10 @@ import { describe, expect, it } from "vitest";
 
 import ar from "../../../messages/ar.json";
 import en from "../../../messages/en.json";
-import so from "../../../messages/so.json";
 import sv from "../../../messages/sv.json";
 import ti from "../../../messages/ti.json";
 
 import {
-  COMING_SOON_TEACHING_LANGUAGES,
   formatLanguageList,
   offeredTeachingLanguages,
 } from "@/lib/company/staff";
@@ -21,14 +19,20 @@ const lesson = {
 };
 
 describe("benefitItems", () => {
-  it("always includes the standing facts and omits products that do not exist", () => {
+  it("always returns the eight confirmed public benefits", () => {
     expect(benefitItems({ bookingEnabled: false, products: [lesson] }).map((item) => item.id)).toEqual([
       "language",
       "pickup",
+      "lesson",
+      "prices",
+      "payment",
+      "local",
+      "cancel",
+      "reminder",
     ]);
   });
 
-  it("adds risk and guarantee only from real products and never a test lesson", () => {
+  it("does not turn catalogue products into public claims", () => {
     const items = benefitItems({
       bookingEnabled: true,
       hasRiskCourse: false,
@@ -40,13 +44,13 @@ describe("benefitItems", () => {
       ],
     });
     expect(items.map((item) => item.id).join(" ")).not.toContain("testLesson");
-    expect(items.map((item) => item.id)).toContain("risk");
-    expect(items.map((item) => item.id)).toContain("guarantee");
-    expect(items.at(-1)?.id).toBe("selfBook");
+    expect(items.map((item) => item.id)).not.toContain("risk");
+    expect(items.map((item) => item.id)).not.toContain("guarantee");
+    expect(items).toHaveLength(8);
   });
 
   it("derives teaching claims from translated language names", () => {
-    const catalogues = { sv, en, ti, ar, so } as const;
+    const catalogues = { sv, en, ti, ar } as const;
     for (const locale of Object.keys(catalogues) as (keyof typeof catalogues)[]) {
       const messages = catalogues[locale];
       const languageName = (code: keyof typeof messages.language) =>
@@ -56,16 +60,8 @@ describe("benefitItems", () => {
         locale,
         languageName,
       );
-      const comingSoon = formatLanguageList(
-        COMING_SOON_TEACHING_LANGUAGES,
-        locale,
-        languageName,
-      );
       expect(offered).not.toContain(languageName("ar"));
-      expect(offered).not.toContain(languageName("so"));
-      expect(comingSoon).toBe(languageName("so"));
       expect(messages.home.benefits.language.body).toContain("{languages}");
-      expect(messages.home.benefits.language.body).toContain("{comingSoonLanguages}");
       expect(messages.home.faq.languages.answer).toContain("{languages}");
       expect(messages.theory.teaser.features.languages).toContain("{languages}");
       expect(messages.contact.languagesBody).toContain("{languages}");

@@ -161,6 +161,8 @@ export function StudyQuiz({
   }
 
   if (!question) return null;
+  const blockStart = Math.floor(index / 20) * 20;
+  const progressQuestions = visible.slice(blockStart, blockStart + 20);
   const numberLabel = copy.questionNumber
     .replace("{number}", String(index + 1))
     .replace("{n}", String(index + 1));
@@ -168,7 +170,8 @@ export function StudyQuiz({
   return (
     <div className="mt-8 grid gap-6">
       <div className="grid grid-cols-5 gap-2 sm:grid-cols-10" aria-label={numberLabel}>
-        {questions.map((item, itemIndex) => {
+        {progressQuestions.map((item, blockIndex) => {
+          const itemIndex = blockStart + blockIndex;
           const itemResult = results[item.id];
           const current = item.id === question.id;
           return (

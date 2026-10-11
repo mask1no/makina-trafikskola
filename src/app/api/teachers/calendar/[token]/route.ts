@@ -7,11 +7,10 @@ import { buildCalendar } from "@/lib/calendar/ics";
 import { db } from "@/lib/db";
 import ar from "../../../../../../messages/ar.json";
 import en from "../../../../../../messages/en.json";
-import so from "../../../../../../messages/so.json";
 import sv from "../../../../../../messages/sv.json";
 import ti from "../../../../../../messages/ti.json";
 
-const lessonSummary = { sv, en, ti, ar, so };
+const lessonSummary = { sv, en, ti, ar };
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";

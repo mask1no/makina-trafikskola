@@ -33,8 +33,6 @@ describe("public staff languages", () => {
           en: "Engelska",
           ti: "Tigrinja",
           ku: "Kurdiska",
-          ar: "Arabiska",
-          so: "Somaliska",
         })[code],
       ),
     ).toBe(
@@ -54,13 +52,12 @@ describe("public staff languages", () => {
   it("derives the ordered offered languages without reserved future codes", () => {
     expect(offeredTeachingLanguages()).toEqual(["sv", "en", "ti", "ku"]);
     expect(offeredTeachingLanguages()).not.toContain("ar");
-    expect(offeredTeachingLanguages()).not.toContain("so");
   });
 
   it("uses a saved teacher profile and ignores languages the school does not offer", () => {
-    expect(staffMemberLanguages(["sv"], ["en", "ar", "so"])).toEqual(["en"]);
+    expect(staffMemberLanguages(["sv"], ["en", "ar"])).toEqual(["en"]);
     expect(staffMemberLanguages(["sv", "ti"], [])).toEqual(["sv", "ti"]);
-    expect(offeredTeachingLanguagesFrom(["ar", "so"])).toEqual(offeredTeachingLanguages());
+    expect(offeredTeachingLanguagesFrom(["ar"])).toEqual(offeredTeachingLanguages());
     expect(offeredTeachingLanguagesFrom(["ku", "sv"])).toEqual(["sv", "ku"]);
   });
 });

@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
-const locales = ["sv", "en", "ti", "ar", "so"] as const;
+const locales = ["sv", "en", "ti", "ar"] as const;
 
 function keys(value: unknown, prefix = ""): string[] {
   if (!value || typeof value !== "object" || Array.isArray(value)) return [prefix];

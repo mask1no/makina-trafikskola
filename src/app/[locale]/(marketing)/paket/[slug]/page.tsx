@@ -6,6 +6,7 @@ import type { Metadata } from "next";
 
 import { auth } from "@/auth";
 import { Badge } from "@/components/Badge";
+import { CallButton } from "@/components/ContactButtons";
 import { Notice } from "@/components/Notice";
 import { bookingEnabled, theorySalesOpen } from "@/lib/launch";
 import {
@@ -14,7 +15,6 @@ import {
   showPerLessonPrice,
   showValidity,
 } from "@/lib/pricing/format";
-import { displayPhone, telHref } from "@/lib/format/phone";
 import { pageCanonical, withSocial } from "@/lib/seo/metadata";
 import { isLocale } from "@/i18n/routing";
 
@@ -115,13 +115,7 @@ export default async function ProductDetailPage(
     t("product.priceIncludesVat"),
   ].filter(Boolean).join(" · ");
   const phone = t("company.phone");
-  const callLabel = t.rich("shell.callName", {
-    phone: () => (
-      <bdi dir="ltr" className="numbers-ltr">
-        {displayPhone(phone)}
-      </bdi>
-    ),
-  });
+  const callLabel = t("shell.callUs");
 
   return (
     <div className="section-shell pb-28 md:pb-[clamp(3.5rem,8vw,7rem)]">
@@ -239,7 +233,7 @@ export default async function ProductDetailPage(
           ) : salesOpen ? (
             <span className="inline-flex min-h-11 items-center text-sm font-bold text-ink-muted">{t("product.notForSale")}</span>
           ) : (
-            <a href={telHref(phone)} className="inline-flex min-h-11 items-center rounded-sm bg-accent px-4 font-bold text-accent-ink">{callLabel}</a>
+            <CallButton phone={phone}>{callLabel}</CallButton>
           )}
         </div>
       </div>

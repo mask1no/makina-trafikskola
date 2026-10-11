@@ -14,7 +14,7 @@ import { bookingNotificationContext } from "@/lib/notifications/context";
 import { dispatchNotifications } from "@/lib/notifications/dispatch";
 import { enqueueBookingNotifications } from "@/lib/notifications/queue";
 
-const localeSchema = z.enum(["sv", "en", "ti", "ar", "so"]);
+const localeSchema = z.enum(["sv", "en", "ti", "ar"]);
 
 const reportSchema = z.object({
   bookingId: z.string().cuid(),
@@ -218,7 +218,7 @@ export async function createCalendarToken() {
     where: { id: teacher.id, calendarToken: null },
     data: { calendarToken: token },
   });
-  for (const locale of ["sv", "en", "ti", "ar", "so"]) {
+  for (const locale of ["sv", "en", "ti", "ar"]) {
     revalidatePath(`/${locale}/larare-portal`);
   }
 }
@@ -230,7 +230,7 @@ export async function rotateCalendarToken() {
     where: { id: teacher.id },
     data: { calendarToken: token },
   });
-  for (const locale of ["sv", "en", "ti", "ar", "so"]) {
+  for (const locale of ["sv", "en", "ti", "ar"]) {
     revalidatePath(`/${locale}/larare-portal`);
   }
 }

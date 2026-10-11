@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 const messageLoaders = {
   ar: () => import("../../messages/ar.json"),
   en: () => import("../../messages/en.json"),
-  so: () => import("../../messages/so.json"),
   sv: () => import("../../messages/sv.json"),
   ti: () => import("../../messages/ti.json"),
 };

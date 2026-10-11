@@ -12,6 +12,8 @@ TOKENS
   radii 12 / 16 / 20px, 4px spacing scale.
 - Gold is for surfaces, borders and primary buttons. Never gold text on white.
 - Product tier colours come from Product.accentHex — data, not CSS classes.
+- Keep the branded header, hero and footer dark. Do not add a selectable dark
+  mode, theme toggle or persisted theme preference.
 
 LAYOUT
 - CSS logical properties only: ps-*, pe-*, ms-*, me-*, text-start, border-s.
@@ -27,7 +29,7 @@ REACT
 
 I18N
 - No hardcoded user-facing strings. Use next-intl keys and add every new key to
-  ALL FIVE files in messages/ in the same change: sv, en, ti, ar, so.
+  ALL FOUR files in messages/ in the same change: sv, en, ti, ar.
 - Key naming: feature.section.element — booking.step.when.title,
   errors.SLOT_TAKEN, pricing.perLesson.
 - UI strings live in messages/*.json. CONTENT (product names, instructor bios,

@@ -11,7 +11,7 @@ import {
 const orderId = "clh1234567890abcdefghijk";
 
 describe("payment notification rendering", () => {
-  it.each(["sv", "en", "ti", "ar", "so"])(
+  it.each(["sv", "en", "ti", "ar"])(
     "renders receipt snapshots and separate VAT in %s",
     (locale) => {
       const message = renderOrderReceipt({
@@ -55,7 +55,7 @@ describe("payment notification rendering", () => {
     expect(message.text).toContain(resumeUrl);
   });
 
-  it.each(["sv", "en", "ti", "ar", "so"])(
+  it.each(["sv", "en", "ti", "ar"])(
     "explains late lesson and course value in %s",
     (locale) => {
       const lesson = renderLessonRebooking({

@@ -158,6 +158,7 @@ export default async function KorlektionerPage(
         <QuestionsBlock
           title={shell("questions")}
           callLabel={shell("callUs")}
+          mailLabel={shell("mailUs")}
           phone={company("phone")}
           email={company("email")}
         />

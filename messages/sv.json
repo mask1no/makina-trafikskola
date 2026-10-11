@@ -21,8 +21,7 @@
     "en": "English",
     "ti": "ትግርኛ",
     "ku": "Kurdiska",
-    "ar": "العربية",
-    "so": "Soomaali"
+    "ar": "العربية"
   },
   "shell": {
     "skipToContent": "Hoppa till innehåll",
@@ -57,7 +56,6 @@
       "en": "engelska",
       "ti": "tigrinja",
       "ku": "kurdiska",
-      "so": "somaliska",
       "ar": "arabiska"
     },
     "here": "Här finns vi",
@@ -75,8 +73,7 @@
     "languageHelpDescription": "Kontakta oss på {languages}.",
     "call": "Ring",
     "callUs": "Ring oss",
-    "themeToDark": "Byt till mörkt läge",
-    "themeToLight": "Byt till ljust läge",
+    "mailUs": "Maila oss",
     "callName": "Ring <phone></phone>",
     "seePrices": "Se priser",
     "openNow": "Öppet nu",
@@ -118,21 +115,27 @@
   "home": {
     "hero": {
       "brand": "Makina",
-      "eyebrow": "Din väg till frihet!",
       "title": "Kör tryggt, lär på ditt språk",
       "description": "Körlektioner, teori och erfarna lärare i Stockholm – samlat på ett ställe.",
-      "findTeacher": "Hitta lärare",
-      "cardLabel": "Personlig utbildning",
-      "cardTitle": "En tydlig plan från första lektionen",
-      "cardDescription": "Välj språk, växellåda och lärare efter dina behov.",
-      "reviews": "omdömen",
-      "pickupProof": "Upphämtning efter överenskommelse",
-      "languageProof": "{languages}",
       "areas": "Farsta · Upplands Väsby"
     },
+    "quick": {
+      "eyebrow": "Snabbval",
+      "title": "Vad vill du göra?",
+      "lessons": "Se körlektioner",
+      "courses": "Se Risk 1 och Risk 2",
+      "teachers": "Hitta lärare",
+      "contact": "Kontakta oss"
+    },
+    "pickup": {
+      "eyebrow": "Upphämtning",
+      "title": "Vi möter dig i ditt område",
+      "description": "Upphämtning inom Farsta och Upplands Väsby efter överenskommelse.",
+      "areas": "Farsta · Upplands Väsby",
+      "imageAlt": "Makina Trafikskolas upphämtningsområden",
+      "mapLabel": "Upphämtningsområde"
+    },
     "journey": {
-      "eyebrow": "Så fungerar det",
-      "title": "Från första val till tryggare körning",
       "choose": {
         "title": "Välj ditt upplägg",
         "description": "Jämför en lektion eller ett paket i lugn och ro."
@@ -150,27 +153,11 @@
         "description": "Utvecklas steg för steg med tydlig vägledning."
       }
     },
-    "products": {
-      "eyebrow": "Körutbildning",
-      "title": "Välj vägen som passar dig"
-    },
     "teachers": {
       "eyebrow": "Lär dig på ditt språk",
       "title": "Hitta din lärare",
       "description": "Hitta en lärare som talar ditt språk och undervisar där du vill köra.",
       "languageLabel": "Filtrera lärare efter språk"
-    },
-    "reviews": {
-      "eyebrow": "Elevernas omdömen",
-      "title": "Godkända recensioner",
-      "summary": "{count} publicerade omdömen · snitt {average}/5"
-    },
-    "location": {
-      "eyebrow": "Nära dig",
-      "title": "Hitta lärare på kartan",
-      "description": "Se vilka lärare som finns vid våra platser. Den interaktiva kartan laddas bara när du öppnar lärarsidan.",
-      "openMap": "Öppna lärarkartan",
-      "area": "Stockholmsområdet"
     },
     "faq": {
       "eyebrow": "Vanliga frågor",
@@ -181,16 +168,16 @@
       },
       "languages": {
         "question": "Kan jag få undervisning på mitt språk?",
-        "answer": "Undervisning på {languages}. {comingSoonLanguages} kommer snart."
+        "answer": "Undervisning på {languages}."
       },
       "pickup": {
         "question": "Hämtar ni mig?",
-        "answer": "Upphämtning är gratis inom Farsta och Upplands Väsby."
+        "answer": "Upphämtning inom Farsta och Upplands Väsby sker efter överenskommelse."
       },
       "cancel": {
         "question": "Hur avbokar jag en lektion?",
         "answer": "Du avbokar själv under Mina bokningar. Avbokar du senast 24 timmar före lektionen kostar det ingenting och lektionen går tillbaka till ditt saldo. Avbokar du senare debiteras fullt pris och lektionen dras från saldot.",
-        "answerPhone": "Ring <phone></phone> för att avboka eller flytta en lektion. Senast 24 timmar före lektionen kostar det ingenting och lektionen går tillbaka till ditt saldo. En senare avbokning debiteras fullt pris och dras från saldot."
+        "answerPhone": "Kontakta oss via kontaktsidan för att avboka eller flytta en lektion. Senast 24 timmar före lektionen kostar det ingenting och lektionen går tillbaka till ditt saldo. En senare avbokning debiteras fullt pris och dras från saldot."
       },
       "risk": {
         "question": "Vad är skillnaden mellan Risk 1 och Risk 2?",
@@ -206,17 +193,17 @@
       }
     },
     "theory": {
-      "comingSoon": "Teorin på fem språk släpps snart."
+      "comingSoon": "Teorin förbereds på våra fyra webbplatsspråk."
     },
     "benefits": {
       "label": "Det här får du hos Makina",
       "language": {
         "title": "Ditt språk",
-        "body": "Undervisning på {languages}. {comingSoonLanguages} kommer snart."
+        "body": "Undervisning på {languages}."
       },
       "pickup": {
         "title": "Upphämtning",
-        "body": "Upphämtning är gratis inom Farsta och Upplands Väsby."
+        "body": "I Farsta och Upplands Väsby efter överenskommelse."
       },
       "lesson": {
         "title": "50 minuter",
@@ -225,18 +212,6 @@
       "prices": {
         "title": "Priser",
         "body": "Alla priser visas inklusive moms."
-      },
-      "testLesson": {
-        "title": "Testlektion",
-        "body": "Testlektion för {price}"
-      },
-      "risk": {
-        "title": "Riskutbildning",
-        "body": "Båda riskutbildningarna hos oss"
-      },
-      "guarantee": {
-        "title": "Garanti",
-        "body": "Kör tills du klarar"
       },
       "payment": {
         "title": "Betalning",
@@ -253,10 +228,6 @@
       "reminder": {
         "title": "Påminnelse",
         "body": "SMS dagen före lektionen."
-      },
-      "selfBook": {
-        "title": "Boka själv",
-        "body": "Välj tid och lärare direkt online."
       }
     }
   },
@@ -371,18 +342,10 @@
   },
   "teacher": {
     "yearsExperience": "{count, plural, =0 {Ny lärare} =1 {1 års erfarenhet} other {{n} års erfarenhet}}",
-    "viewProfile": "Visa profil",
     "transmission": {
       "manual": "Manuell",
       "automatic": "Automat"
     },
-    "profileEyebrow": "Trafiklärare",
-    "demoProfile": "Demoprofil – inte en verklig lärare",
-    "bioPending": "Lärarens presentation uppdateras.",
-    "languages": "Språk",
-    "transmissions": "Växellåda",
-    "locations": "Platser",
-    "bookWith": "Boka med {name}",
     "nextFree": "Nästa lediga tid"
   },
   "map": {
@@ -414,6 +377,12 @@
     "seats": "Lediga platser",
     "seatsLeft": "{count, plural, =0 {Fullbokad} =1 {1 plats kvar} other {{n} platser kvar}}",
     "inactive": "Kursprodukten är inte aktiverad för köp ännu.",
+    "soon": "Nya kurstillfällen kommer snart.",
+    "callToBook": "Ring oss om kursen",
+    "info": {
+      "RISK1": "Riskettan är den teoretiska delen av den obligatoriska riskutbildningen.",
+      "RISK2": "Risktvåan är den praktiska delen och genomförs på halkbana."
+    },
     "emptyTitle": "Inga kurstillfällen är schemalagda",
     "emptyDescription": "Nya tillfällen visas här när de har bekräftats.",
     "kind": {
@@ -448,7 +417,7 @@
       "features": {
         "categories": "Tydliga kategorier",
         "practice": "Gratis övningsfrågor",
-        "languages": "Undervisning på {languages}. {comingSoonLanguages} kommer snart."
+        "languages": "Undervisning på {languages}."
       }
     },
     "licensingPending": "Hela frågebanken öppnas när du köper teoriåtkomst.",
@@ -456,6 +425,7 @@
     "freeIntro": "Börja med ett kostnadsfritt smakprov",
     "startPractice": "Starta övningen",
     "freeCount": "{count, plural, =1 {1 gratisfråga} other {{n} gratisfrågor}}",
+    "categoryProgress": "{attempted}/{total} besvarade",
     "swedishOnly": "Endast på svenska",
     "examLink": "Öppna övningsprovet",
     "emptyTitle": "Gratisfrågorna publiceras snart",
@@ -510,6 +480,7 @@
     "title": "Trafikskola i {city}",
     "description": "Se vår bekräftade plats och tillgängliga lärare i {city}.",
     "addressPending": "Den exakta besöksadressen inväntar bekräftelse.",
+    "addressOnContact": "Besöksadress och vägbeskrivning finns på kontaktsidan.",
     "teachersTitle": "Lärare på platsen",
     "emptyTitle": "Inga lärare är kopplade ännu",
     "emptyDescription": "Lärare visas här när deras placering har bekräftats.",
@@ -571,7 +542,7 @@
       "pickup": {
         "short": "Hämtning",
         "title": "Var hämtar vi dig?",
-        "free": "Upphämtning är gratis i området.",
+        "free": "Upphämtning i området sker efter överenskommelse.",
         "office": "Möt oss på kontoret",
         "address": "Hämtningsadress",
         "outside": "Adressen ligger utanför området. Välj en adress i området.",
@@ -687,7 +658,7 @@
     "working": "Vänta…",
     "devCode": "Endast lokal utveckling – kod: {code}",
     "secure": "Säker åtkomst till ditt konto",
-    "support": "Behöver du hjälp att komma åt kontot? Ring 070-097 04 83 eller mejla info@makina.se.",
+    "support": "Behöver du hjälp att komma åt kontot? Kontakta oss via kontaktsidan.",
     "context": {
       "eyebrow": "Makina Trafikskola",
       "title": "Bokningar, saldo och teori på ditt språk",
@@ -981,7 +952,7 @@
     "locationsDescription": "Du hittar oss på Centralvägen 5 i Upplands Väsby. Öppna vägbeskrivning i Google Maps.",
     "directions": "Vägbeskrivning",
     "languagesTitle": "Vilket språk behöver du?",
-    "languagesBody": "Undervisning på {languages}. {comingSoonLanguages} kommer snart.",
+    "languagesBody": "Undervisning på {languages}.",
     "reviewsTitle": "Elevomdömen",
     "reviewsSummary": "{count} publicerade omdömen · snitt {average}/5",
     "staffTitle": "Vår personal",
@@ -1032,7 +1003,7 @@
       ],
       "seller": {
         "title": "Säljare",
-        "body": "Tjänsten säljs av Makina Trafikskola AB.\nOrganisationsnummer: 559531-4146.\nBesöksadress: Centralvägen 5, 194 77 Upplands Väsby.\nPostadress: Centralvägen 5, 194 77 Upplands Väsby.\nE-post: info@makina.se.\nTelefon: 070-097 04 83."
+        "body": "Tjänsten säljs av Makina Trafikskola AB. Fullständiga företags- och kontaktuppgifter finns på kontaktsidan."
       },
       "prices": {
         "title": "Priser och betalning",
@@ -1052,11 +1023,11 @@
       },
       "withdrawal": {
         "title": "Ångerrätt",
-        "body": "När du köper på webbplatsen har du som konsument normalt 14 dagars ångerrätt enligt distansavtalslagen. Ångerfristen räknas från dagen då avtalet ingås.\nOm du uttryckligen begär att en tjänst ska börja under ångerfristen får skolan ta betalt för den del som har utförts innan du ångrar dig. När en tjänst har fullgjorts helt kan ångerrätten upphöra om du i förväg har samtyckt till att tjänsten påbörjas och godkänt att ångerrätten då går förlorad.\nFör digital teori kan ångerrätten upphöra när leveransen börjar, om du uttryckligen har samtyckt till omedelbar leverans och godkänt att ångerrätten då går förlorad.\nMeddela oss tydligt på info@makina.se om du vill använda ångerrätten. Ange namn, kontaktuppgifter och vilket köp det gäller. Godkänd återbetalning görs utan onödigt dröjsmål och senast inom 14 dagar från att vi tog emot ditt meddelande, med samma betalningssätt när det är möjligt."
+        "body": "När du köper på webbplatsen har du som konsument normalt 14 dagars ångerrätt enligt distansavtalslagen. Ångerfristen räknas från dagen då avtalet ingås.\nOm du uttryckligen begär att en tjänst ska börja under ångerfristen får skolan ta betalt för den del som har utförts innan du ångrar dig. När en tjänst har fullgjorts helt kan ångerrätten upphöra om du i förväg har samtyckt till att tjänsten påbörjas och godkänt att ångerrätten då går förlorad.\nFör digital teori kan ångerrätten upphöra när leveransen börjar, om du uttryckligen har samtyckt till omedelbar leverans och godkänt att ångerrätten då går förlorad.\nKontakta oss via kontaktsidan om du vill använda ångerrätten. Ange namn, kontaktuppgifter och vilket köp det gäller. Godkänd återbetalning görs utan onödigt dröjsmål och senast inom 14 dagar från att vi tog emot ditt meddelande, med samma betalningssätt när det är möjligt."
       },
       "complaints": {
         "title": "Reklamation och klagomål",
-        "body": "Om en tjänst är felaktig ska du reklamera inom skälig tid efter att du märkt felet. Beskriv vad som har hänt och vilket köp eller vilken bokning det gäller.\nKontakta oss först på info@makina.se eller 070-097 04 83 så försöker vi lösa ärendet. Om vi inte kommer överens kan du anmäla tvisten till Allmänna reklamationsnämnden (ARN), Box 174, 101 23 Stockholm, arn.se. Vi medverkar i ARN:s prövning och följer deras rekommendationer."
+        "body": "Om en tjänst är felaktig ska du reklamera inom skälig tid efter att du märkt felet. Beskriv vad som har hänt och vilket köp eller vilken bokning det gäller.\nKontakta oss först via kontaktsidan så försöker vi lösa ärendet. Om vi inte kommer överens kan du anmäla tvisten till Allmänna reklamationsnämnden (ARN), Box 174, 101 23 Stockholm, arn.se. Vi medverkar i ARN:s prövning och följer deras rekommendationer."
       },
       "law": {
         "title": "Tillämplig lag",
@@ -1146,7 +1117,7 @@
       ],
       "controller": {
         "title": "Personuppgiftsansvarig",
-        "body": "Makina Trafikskola AB är personuppgiftsansvarig.\nOrganisationsnummer: 559531-4146.\nAdress: Centralvägen 5, 194 77 Upplands Väsby.\nE-post: info@makina.se.\nTelefon: 070-097 04 83."
+        "body": "Makina Trafikskola AB är personuppgiftsansvarig. Fullständiga företags- och kontaktuppgifter finns på kontaktsidan."
       },
       "collected": {
         "title": "Vad vi samlar in",
@@ -1225,11 +1196,34 @@
       "overview": "Översikt",
       "places": "Platser",
       "calendar": "Kalender",
+      "courses": "Kurser",
       "students": "Elever",
       "teachers": "Lärare",
       "reviews": "Recensioner",
       "products": "Produkter",
       "areas": "Områden"
+    },
+    "courses": {
+      "title": "Kurser",
+      "description": "Skapa, redigera och avboka tillfällen för Riskettan och Risktvåan.",
+      "createTitle": "Nytt kurstillfälle",
+      "course": "Kurs och produkt",
+      "language": "Undervisningsspråk",
+      "startsAt": "Start",
+      "endsAt": "Slut",
+      "venueName": "Platsnamn",
+      "venueAddress": "Adress",
+      "capacity": "Antal platser",
+      "create": "Skapa tillfälle",
+      "created": "Kurstillfället skapades",
+      "save": "Spara",
+      "saved": "Sparat",
+      "saving": "Sparar…",
+      "cancel": "Avboka tillfälle",
+      "cancelled": "Avbokat",
+      "occasion": "Kurstillfälle {count}",
+      "booked": "{booked} bokade av {capacity}",
+      "error": "Det gick inte att spara. Försök igen."
     },
     "editor": {
       "save": "Spara",

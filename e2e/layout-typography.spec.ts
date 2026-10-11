@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-const locales = ["sv", "en", "ti", "ar", "so"] as const;
+const locales = ["sv", "en", "ti", "ar"] as const;
 const touchedRoutes = ["", "/korlektioner", "/paket/en-korlektion", "/kontakt", "/villkor", "/teori", "/logga-in"] as const;
 
 test.beforeEach(async ({ context }) => {

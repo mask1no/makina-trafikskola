@@ -248,8 +248,6 @@ export default async function LararePage(
                   <TeacherCard
                     key={teacher.id}
                     cardId={`teacher-${teacher.id}`}
-                    locale={params.locale}
-                    slug={teacher.slug}
                     name={`${teacher.user.firstName} ${teacher.user.lastName}`}
                     photoUrl={teacher.photoUrl}
                     languages={teacher.languages.map((item) => t(`shell.languagePage.${item}`))}
@@ -267,7 +265,6 @@ export default async function LararePage(
                           })
                         : ""
                     }
-                    detailsLabel={t("teacher.viewProfile")}
                     nextFreeLabel={t("teacher.nextFree")}
                     nextFreeTime={
                       nextFree.get(teacher.id)

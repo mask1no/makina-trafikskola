@@ -69,19 +69,3 @@ export async function getTeachers(
       : [];
   });
 }
-
-export async function getTeacher(locale: Locale, slug: string) {
-  const teacher = await db.teacherProfile.findFirst({
-    where: { slug, active: true },
-    include: {
-      user: { select: { firstName: true, lastName: true } },
-      translations: true,
-      locations: { include: { location: true } },
-    },
-  });
-  if (!teacher) return null;
-  return {
-    ...teacher,
-    ...resolveContent(teacher.translations, locale),
-  };
-}

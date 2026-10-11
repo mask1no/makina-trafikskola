@@ -3,14 +3,14 @@ import { describe, expect, it } from "vitest";
 import { practiceBankQuestions } from "../../../prisma/theory/practice-bank";
 
 describe("practice theory bank", () => {
-  it("has enough questions for a 65-question mock exam", () => {
-    expect(practiceBankQuestions.length).toBeGreaterThanOrEqual(65);
+  it("contains the committed 180-question bank", () => {
+    expect(practiceBankQuestions).toHaveLength(180);
   });
 
   it("keeps 20 questions in every section", () => {
     for (let parm = 1; parm <= 9; parm += 1) {
       const count = practiceBankQuestions.filter((question) => question.parm === parm).length;
-      expect(count).toBeGreaterThanOrEqual(20);
+      expect(count).toBe(20);
     }
   });
 
@@ -23,10 +23,16 @@ describe("practice theory bank", () => {
       expect(question.parm).toBeLessThanOrEqual(9);
       expect(question.correct_index).toBeGreaterThanOrEqual(0);
       expect(question.correct_index).toBeLessThan(question.options_sv.length);
-      expect(question.options_sv).toHaveLength(3);
-      for (const locale of ["en", "ti", "ar", "so"] as const) {
-        expect(question.translations?.[locale]?.options).toHaveLength(3);
-        expect(question.translations?.[locale]?.question.length).toBeGreaterThan(0);
+      expect(question.options_sv.length).toBeGreaterThanOrEqual(3);
+      expect(question.options_sv.length).toBeLessThanOrEqual(4);
+      expect(question.explanation_sv.length).toBeGreaterThan(0);
+      expect(question.source_citation).toMatch(/(förordningen|lagen|balken)/i);
+      expect(question.needs_image).toBe(false);
+      expect(question.status).toBe("ok");
+      for (const locale of ["en", "ti", "ar"] as const) {
+        expect(question.translations[locale].options).toHaveLength(question.options_sv.length);
+        expect(question.translations[locale].question.length).toBeGreaterThan(0);
+        expect(question.translations[locale].explanation.length).toBeGreaterThan(0);
       }
     }
   });

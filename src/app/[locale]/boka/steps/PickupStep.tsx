@@ -102,7 +102,7 @@ export function PickupStep({
         <div className="mt-4">
           <ChoiceCard selected={meet === "office"} onClick={() => onMeet("office")}>
             <span className="block">{t("step.pickup.office")}</span>
-            <span className="mt-1 block text-small font-semibold">{area.officeAddress}</span>
+            <span className="mt-1 block text-small font-semibold">{area.name}</span>
           </ChoiceCard>
         </div>
       ) : null}

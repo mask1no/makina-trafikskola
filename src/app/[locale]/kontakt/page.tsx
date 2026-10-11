@@ -14,20 +14,14 @@ import {
   todayHours,
 } from "@/lib/company/opening-hours";
 import {
-  COMING_SOON_TEACHING_LANGUAGES,
   formatLanguageList,
   offeredTeachingLanguagesFrom,
   publicStaff,
-  sentenceCase,
   staffMemberLanguages,
 } from "@/lib/company/staff";
 import { displayPhone, telHref } from "@/lib/format/phone";
 import { publicAddress } from "@/lib/locations/address";
 import { db } from "@/lib/db";
-import {
-  getPublishedReviewSummary,
-  shouldShowPublicReviews,
-} from "@/lib/reviews/public";
 import { pageCanonical, withSocial } from "@/lib/seo/metadata";
 
 export const dynamic = "force-dynamic";
@@ -65,7 +59,7 @@ export default async function ContactPage(
   if (!isLocale(params.locale)) notFound();
   setRequestLocale(params.locale);
 
-  const [t, shell, company, locations, staffPhotos, reviewSummary] = await Promise.all([
+  const [t, shell, company, locations, staffPhotos] = await Promise.all([
     getTranslations("contact"),
     getTranslations("shell"),
     getTranslations("company"),
@@ -87,11 +81,8 @@ export default async function ContactPage(
         languages: true,
       },
     }),
-    getPublishedReviewSummary(),
   ]);
-  const offices = locations.filter(
-    (location) => !/webhook|fixture/i.test(`${location.slug} ${location.name}`),
-  );
+  const offices = locations;
   const profileBySlug = new Map(staffPhotos.map((teacher) => [teacher.slug, teacher]));
   const staff = publicStaff.map((staffMember) => ({
     ...staffMember,
@@ -122,14 +113,6 @@ export default async function ContactPage(
     params.locale,
     (code) => shell(`languagePage.${code}`),
   );
-  const comingSoonLanguageNames = sentenceCase(
-    formatLanguageList(
-      COMING_SOON_TEACHING_LANGUAGES,
-      params.locale,
-      (code) => shell(`languagePage.${code}`),
-    ),
-    params.locale,
-  );
   const structuredData = {
     "@context": "https://schema.org",
     "@type": ["LocalBusiness", "DrivingSchool"],
@@ -145,17 +128,6 @@ export default async function ContactPage(
     areaServed: { "@type": "City", name: "Stockholm" },
     availableLanguage: offeredLanguages,
     openingHoursSpecification: openingHoursSpecification(),
-    ...(shouldShowPublicReviews(reviewSummary.count)
-      ? {
-          aggregateRating: {
-            "@type": "AggregateRating",
-            ratingValue: reviewSummary.average.toFixed(1),
-            reviewCount: reviewSummary.count,
-            bestRating: "5",
-            worstRating: "1",
-          },
-        }
-      : {}),
     ...(siteUrl ? { url: `${siteUrl}/${params.locale}/kontakt` } : {}),
     department: offices.map((location) => ({
       "@type": "Place",
@@ -216,7 +188,7 @@ export default async function ContactPage(
             </div>
             <p className="mt-auto pt-6 text-small text-ink-muted">{visiting}</p>
           </Card>
-          <article className="flex h-full flex-col rounded-md border border-accent bg-accent p-6 text-accent-ink shadow-soft sm:p-8">
+          <article className="flex h-full flex-col rounded-md border border-border bg-card p-6 text-ink shadow-soft sm:p-8">
             <h2 className="text-h3 font-black">{t("emailUs")}</h2>
             <a className="mt-4 inline-flex min-h-[52px] w-full items-center justify-center break-all rounded-sm bg-surface px-5 text-center text-2xl font-black leading-tight text-ink-inverse" href={`mailto:${email}`}>
               {email}
@@ -302,43 +274,14 @@ export default async function ContactPage(
         </section>
 
         <section className="mt-10 rounded-lg border border-border bg-card p-6 shadow-soft">
-          <h2 className="text-xl font-black">{t("languagesTitle")}</h2>
-          <p className="mt-3 max-w-[70ch] leading-7 text-ink-muted">
-            {t("languagesBody", {
-              languages: offeredLanguageNames,
-              comingSoonLanguages: comingSoonLanguageNames,
-            })}
-          </p>
-          <p className="mt-3 text-small text-ink-muted">{postal}</p>
+          <h2 className="text-xl font-black">{legalName}</h2>
+          <address className="mt-3 grid gap-1 text-small not-italic text-ink-muted">
+            <p>{visiting}</p>
+            <p>{postal}</p>
+            <p className="numbers-ltr">{t("orgnr")}: {orgnr}</p>
+            <p>{t("languagesBody", { languages: offeredLanguageNames })}</p>
+          </address>
         </section>
-        {shouldShowPublicReviews(reviewSummary.count) ? (
-          <section className="rounded-lg border border-border bg-card p-6 shadow-soft">
-            <h2 className="text-xl font-black">{t("reviewsTitle")}</h2>
-            <p className="mt-2 text-small text-ink-muted">
-              {t("reviewsSummary", {
-                count: reviewSummary.count,
-                average: reviewSummary.average.toFixed(1),
-              })}
-            </p>
-            <ul className="mt-5 grid gap-4">
-              {reviewSummary.latest.map((review) => (
-                <li key={review.id} className="rounded-sm border border-border bg-page p-4">
-                  <div className="flex items-center justify-between gap-3">
-                    <p className="font-bold">{review.studentName}</p>
-                    <p className="numbers-ltr text-small font-bold text-ink-muted">
-                      {review.rating}/5
-                    </p>
-                  </div>
-                  {review.comment ? (
-                    <p className="mt-2 max-w-[70ch] text-body leading-7 text-ink-muted">
-                      {review.comment}
-                    </p>
-                  ) : null}
-                </li>
-              ))}
-            </ul>
-          </section>
-        ) : null}
       </div>
     </div>
   );

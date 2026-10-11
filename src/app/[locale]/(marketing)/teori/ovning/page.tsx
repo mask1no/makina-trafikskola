@@ -46,8 +46,7 @@ export default async function FreePracticePage(props: {
     auth(),
     db.theoryQuestion.findMany({
       where: { active: true, isFree: true, imageUrl: null },
-      orderBy: { createdAt: "asc" },
-      take: 20,
+      orderBy: [{ category: { order: "asc" } }, { createdAt: "asc" }],
       include: {
         translations: true,
         category: { include: { translations: true } },

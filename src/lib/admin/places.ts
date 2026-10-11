@@ -1,7 +1,3 @@
-export function isSchoolLocation(slug: string) {
-  return !/webhook|fixture/i.test(slug);
-}
-
 export function netOre(rows: { amountOre: number; refundedOre: number }[]) {
   return rows.reduce((sum, row) => sum + row.amountOre - row.refundedOre, 0);
 }

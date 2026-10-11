@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-const locales = ["sv", "en", "ti", "ar", "so"] as const;
+const locales = ["sv", "en", "ti", "ar"] as const;
 
 async function allowCookies(page: import("@playwright/test").Page) {
   await page.context().addCookies([
@@ -37,15 +37,17 @@ test.describe("marketing layout", () => {
     }
   }
 
-  test("booking-off call actions and a single contact link", async ({ page }) => {
+  test("call actions use generic labels without exposed details", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("/sv");
-    const heroCall = page.locator("main section").first().getByRole("link", { name: /^Ring / });
-    test.skip((await heroCall.count()) === 0, "This server has booking enabled.");
-
+    const heroCall = page.locator("main section").first().getByRole("link", { name: "Ring oss" });
     await expect(heroCall).toBeVisible();
     await expect(page.locator("nav.fixed.bottom-0 a")).toHaveCount(5);
-    await expect(page.locator("nav.fixed.bottom-0 a[href^='tel:']")).toHaveCount(1);
+    const bottomCall = page.locator("nav.fixed.bottom-0 a[href^='tel:']");
+    const bottomBooking = page.locator("nav.fixed.bottom-0 a[href$='/boka']");
+    expect((await bottomCall.count()) + (await bottomBooking.count())).toBe(1);
+    await expect(page.locator("main")).not.toContainText("070-097 04 83");
+    await expect(page.locator("main")).not.toContainText("info@makina.se");
     await expect(page.locator("main")).not.toContainText("Filtrera på språk, plats och växellåda.");
   });
 
@@ -98,27 +100,22 @@ test.describe("marketing layout", () => {
     await expect(page.locator(".benefit-copy").first()).toHaveAttribute("aria-hidden", "true");
   });
 
-  test("shows confirmed teaching languages and does not claim Arabic or Somali lessons", async ({ page }) => {
+  test("shows the four confirmed teaching languages", async ({ page }) => {
     await page.goto("/sv/kontakt");
     await expect(page.getByText(/^Undervisar på /)).toHaveCount(6);
     const contact = await page.locator("body").innerText();
     expect(contact).toContain("Kontakta oss på svenska, engelska, tigrinja och kurdiska.");
-    expect(contact).toContain("Somaliska kommer snart.");
     expect(contact).not.toMatch(/arabiska/i);
-    expect(contact).not.toMatch(/undervisning på somaliska/i);
 
     await page.goto("/sv");
     const home = await page.locator("body").innerText();
     expect(home).toContain("Kontakta oss på svenska, engelska, tigrinja och kurdiska.");
-    expect(home).toContain("Somaliska kommer snart.");
-    expect(home).not.toMatch(/undervisning på somaliska/i);
 
     const prefixes = {
       sv: "Undervisning på ",
       en: "Lessons in ",
       ti: "ትምህርቲ ብ",
       ar: "التدريس بـ",
-      so: "Waxbarasho ",
     } as const;
     for (const locale of locales) {
       await page.goto(`/${locale}/kontakt`);
@@ -128,7 +125,6 @@ test.describe("marketing layout", () => {
       for (const claim of claims) {
         const offeredSentence = claim.split(/[.።]/, 1)[0];
         expect(offeredSentence).not.toContain("العربية");
-        expect(offeredSentence).not.toContain("Soomaali");
       }
     }
   });
@@ -139,15 +135,11 @@ test.describe("marketing layout", () => {
       en: "Short terms",
       ti: "ሓጺር ውዕላት",
       ar: "شروط مختصرة",
-      so: "Shuruudo kooban",
     } as const;
     for (const [locale, title] of Object.entries(summaries)) {
       await page.goto(`/${locale}/villkor`);
       await expect(page.getByRole("heading", { name: title })).toBeVisible();
     }
-    await expect(
-      page.getByText("Dhammaan xirmooyinku waxay shaqeeyaan 12 bilood laga bilaabo taariikhda iibsiga."),
-    ).toBeVisible();
   });
 
   test("shows the Farsta town page", async ({ page }) => {

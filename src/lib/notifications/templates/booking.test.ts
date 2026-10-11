@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import { renderBookingMessage, type BookingTemplate } from "./booking";
 
-const locales = ["sv", "en", "ti", "ar", "so"] as const;
+const locales = ["sv", "en", "ti", "ar"] as const;
 const templates: BookingTemplate[] = [
   "booking_confirmed",
   "booking_cancelled_by_student",

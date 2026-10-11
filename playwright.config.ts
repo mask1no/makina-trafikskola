@@ -4,19 +4,29 @@ import { defineConfig, devices } from "@playwright/test";
 
 function localDatabaseUrl() {
   const current = process.env.DATABASE_URL?.trim();
-  if (current) return current;
+  let databaseUrl = current;
   try {
-    const text = readFileSync(".env", "utf8");
-    for (const line of text.split(/\r?\n/)) {
-      const trimmed = line.trim();
-      if (!trimmed.startsWith("DATABASE_URL=")) continue;
-      const value = trimmed.slice("DATABASE_URL=".length).trim().replace(/^["']|["']$/g, "");
-      if (value) return value;
+    if (!databaseUrl) {
+      const text = readFileSync(".env", "utf8");
+      for (const line of text.split(/\r?\n/)) {
+        const trimmed = line.trim();
+        if (!trimmed.startsWith("DATABASE_URL=")) continue;
+        const value = trimmed.slice("DATABASE_URL=".length).trim().replace(/^["']|["']$/g, "");
+        if (value) databaseUrl = value;
+        break;
+      }
     }
   } catch {
     // CI sets DATABASE_URL. A missing .env is fine there.
   }
-  return "postgresql://makina:makina_local_dev@localhost:5433/makina";
+  databaseUrl ??= "postgresql://makina:makina_local_dev@localhost:5433/makina_test";
+  const databaseName = new URL(databaseUrl).pathname.replace(/^\/+/, "").split("/")[0];
+  if (!databaseName.endsWith("_test")) {
+    throw new Error(
+      `Refusing Playwright against "${databaseName}". DATABASE_URL must target a *_test database.`,
+    );
+  }
+  return databaseUrl;
 }
 
 export default defineConfig({
@@ -36,7 +46,7 @@ export default defineConfig({
       use: { ...devices["Desktop Chrome"] },
       testIgnore: /mobile-locales\.spec\.ts/,
     },
-    ...(["sv", "en", "ti", "ar", "so"] as const).map((locale) => ({
+    ...(["sv", "en", "ti", "ar"] as const).map((locale) => ({
       name: `mobile-${locale}`,
       testMatch: /mobile-locales\.spec\.ts/,
       use: {

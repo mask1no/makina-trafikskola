@@ -5,8 +5,8 @@ wins.** If this file is silent on something, ask before inventing.
 
 Stockholm driving school. Students are largely newly arrived Swedes. The site
 sells driving lessons and theory, lets students book a specific instructor
-who speaks their language from a map, and runs in Swedish, English, Tigrinya,
-Arabic and Somali.
+who speaks their language from a map, and runs in Swedish, English, Tigrinya
+and Arabic.
 
 ---
 
@@ -63,7 +63,7 @@ These are violated most often by generated code. Check every diff against them.
 | I4 | **No `new Date()` inside business logic.** Take `now: Date` as a parameter. |
 | I5 | **The Stripe webhook is the only thing that grants credits.** The browser redirect changes no state. |
 | I6 | **Every route handler does four things in order:** Zod-parse input → `requireRole` → verify the caller owns the resource → act. |
-| I7 | **No user-facing string is hardcoded.** Use `next-intl` keys, and add the key to all five files in `messages/` in the same change. |
+| I7 | **No user-facing string is hardcoded.** Use `next-intl` keys, and add the key to all four files in `messages/` in the same change. |
 | I8 | **CSS logical properties only** (`ps-4`, `me-2`, `text-start`, `border-s`). The app renders RTL for Arabic. |
 | I9 | **Never invent a Prisma model or field.** The schema in `prisma/schema.prisma` is complete. If something is missing, stop and say so. |
 | I10 | **No PII in logs or Sentry.** Scrub phone, email, addresses, lesson notes. |
@@ -236,6 +236,12 @@ Numbered so you can say "implement R7". Every rule here has a unit test.
   expire after `creditValidDays` (default 365).
 - **R22** Mock exam mirrors the real kunskapsprov exactly: 65 scored questions,
   50-minute timer, 52 correct to pass. Result shown as `54/65 · Godkänt`.
+- **R22a** Every imported theory question starts with `needsReview = true` and
+  carries a meaningful Swedish-law `sourceCitation`. The committed starter bank
+  contains 180 original, text-only questions (20 in each of nine categories),
+  with Swedish, English, Tigrinya and Arabic text, 3–4 options, one correct
+  answer and an explanation. All 180 starter questions are active and free.
+  Admin review is tracked separately from publication.
 
 ### Language
 - **R23** Instructor search filters on language **before** location. Array
@@ -335,7 +341,7 @@ Checkout line items are built from `Product` rows by id (I2).
 ### 6.4 i18n
 
 Two separate systems, never mixed:
-- **UI strings** → `messages/{sv,en,ti,ar,so}.json`, keyed by feature:
+- **UI strings** → `messages/{sv,en,ti,ar}.json`, keyed by feature:
   `booking.step.when.title`, `errors.SLOT_TAKEN`, `pricing.perLesson`.
 - **Content** → `*Translation` tables, edited by the client.
 
@@ -373,7 +379,6 @@ POST   /api/auth/otp/verify       { phone, code }                 → session
 GET    /api/locations                                             → Location[]
 GET    /api/teachers              ?languages=sv,ti&locationId=&transmission=
                                                                   → TeacherCard[]
-GET    /api/teachers/[slug]                                       → TeacherDetail
 GET    /api/availability          ?teacherId&from&to&lessonMinutes → Slot[]
 POST   /api/bookings              { teacherId, startsAt, lessonMinutes,
                                     locationId? , pickupAddress?, studentNote? }
@@ -402,7 +407,7 @@ Routes (Swedish slugs for the `sv` locale):
 /[locale]/korlektioner            Lessons + pricing
 /[locale]/paket/[slug]            Package detail
 /[locale]/larare                  Map + list
-/[locale]/larare/[slug]           Instructor profile (indexable)
+/[locale]/larare/[slug]           Permanent redirect to /[locale]/larare
 /[locale]/boka                    Booking flow, 4 steps
 /[locale]/kurser                  Riskettan / Risktvåan occasions
 /[locale]/teori                   Theory landing + free questions
@@ -411,7 +416,7 @@ Routes (Swedish slugs for the `sv` locale):
 /[locale]/trafikskola/[stad]      Local SEO landing page
 /[locale]/logga-in · /skapa-konto
 /[locale]/mina-sidor              Student dashboard
-/[locale]/mina-sidor/{bokningar,saldo,teori,profil}
+/[locale]/mina-sidor/{bokningar,saldo,teori}
 /[locale]/larare-portal           Instructor dashboard
 /[locale]/admin/*                 Admin
 /[locale]/{villkor,integritet,cookies}
@@ -484,14 +489,16 @@ which the slot grid will violate unless you watch it. Every input has a real
 
 `Button` (primary gold / secondary ghost-on-dark / tertiary) · `Input` with
 label + error · `Select` · `PillFilter` (used for the language chips) ·
-`Card` · `ProductCard` · `TeacherCard` · `SlotChip` · `BottomSheet` ·
+`Card` · `ProductCard` · `TeacherCard` · `BottomSheet` ·
 `Stepper` · `BottomTabBar` · `LanguageSwitcher` · `EmptyState`.
 
 ### 8.3 Shell
 
-Under `md`: bottom tab bar — Hem, Paket, Mina bokningar, Meddelanden, Profil —
+Under `md`: bottom tab bar — Hem, Paket, Mina bokningar and Meddelanden —
 plus a sticky dark header with a call button and gold "Boka nu".
 Above `md`: top navigation. Same routes, same components.
+The public UI has no selectable dark mode; the header, hero and footer retain
+their dark brand surfaces.
 
 Add manifest, icons, offline fallback and a service worker so it installs as a
 PWA. That is what makes a later native wrapper a wrapper rather than a rewrite.
@@ -500,7 +507,7 @@ PWA. That is what makes a later native wrapper a wrapper rather than a rewrite.
 
 One step per screen on mobile, progress bar on top, never a long-scroll form.
 
-1. **Vad** — enstaka lektion / använd mitt paket / testlektion
+1. **Vad** — enstaka lektion / använd mitt paket
 2. **Var** — two large cards: "Jag kommer till er" (location picker) or
    "Hämta mig" (Google Places autocomplete, restricted to SE)
 3. **Vem** — instructor list, **language filter first**, map/list toggle
@@ -567,7 +574,7 @@ and nineteen 409s; the same Idempotency-Key twice returns one booking.
 ### Task 5 — Cancellation + notifications
 **Files:** `src/app/api/bookings/[id]/**`, `src/lib/notifications/**`
 **Prompt:** *"Implement PATCH /api/bookings/[id] per R14–R18, and the
-Notification queue. SMS via 46elks. The app does not send email. Templates in all five
+Notification queue. SMS via 46elks. The app does not send email. Templates in all four
 locales: booking_confirmed, booking_cancelled_by_student,
 booking_cancelled_by_teacher, booking_reminder_24h."*
 **Done when:** cancelling 25 h out refunds a credit, 23 h out does not, and an
@@ -587,10 +594,11 @@ ignored.
 ### Task 7 — Public site
 **Files:** `src/app/[locale]/(marketing)/**`, `src/components/**`,
 `messages/*.json`
-**Prompt:** *"Build the homepage, /korlektioner, /paket/[slug], /larare with
-the instructor map and list, and /larare/[slug]. Use tokens from §8.1 only.
+**Prompt:** *"Build the homepage, /korlektioner, /paket/[slug], and /larare
+with the instructor map and list. Keep /larare/[slug] only as a permanent
+redirect to the list. Use tokens from §8.1 only.
 Language filter renders before location (R23). Map is lazy-loaded behind a
-static image (§8.5). Add every string to all five message files."*
+static image (§8.5). Add every string to all four message files."*
 **Done when:** Lighthouse mobile performance ≥ 90 on the homepage; no hex
 literal in any component; switching to `ar` flips `dir` with no overflow.
 
@@ -631,7 +639,7 @@ URLs."*
 - [ ] Sentry live, `/api/health` monitored
 - [ ] Cron running: release expired holds, expire credits, send 24 h reminders,
       recompute instructor ratings
-- [ ] Full mobile QA in all five locales including RTL
+- [ ] Full mobile QA in all four locales including RTL
 - [ ] Google Maps key referrer-restricted; billing alerts on the client's account
 - [ ] Every recurring service (Railway, Stripe, Google Cloud, 46elks, domain)
       on accounts owned and paid for by the client's company
@@ -647,12 +655,12 @@ building today. These change data, not architecture.
    is 5 lessons + Risk 1 & 2 at 6 125 kr; live Körpaket B5 is 5 lessons, no
    risk courses, 3 634 kr. Silver/Guld/Platinum match. *Blocks Task 6 going
    live.* Default: seeded live prices, marked `PROVISIONAL`.
-2. **Theory question bank** — the school's own bank of 585 questions, imported
-   with `npm run theory:import`. The real bank file is not committed to the
-   repository.
-3. **Fifth language** — their own copy says the theory books exist in Swedish,
-   Tigrinya, Arabic and **Amharic**, not Somali. *Blocks translation spend.*
-   Default: Somali, matching the mockup.
+2. **Theory question bank** — the committed 180-question starter bank is free
+   and awaits legal/content review (`needsReview = true`). The school's own
+   future 585-question bank remains external and is imported with
+   `npm run theory:import`.
+3. **Additional language** — do not add another UI locale until the client
+   supplies approved copy and confirms the language.
 4. **All locations** with addresses. The live site shows one (Upplands Väsby).
 5. **Instructor list** — names, photos, languages, transmissions, hours,
    locations. *Blocks the map having anything real in it.*
@@ -679,13 +687,18 @@ These files are the current copies. Do not paste them into this spec.
 - `.cursor/rules/20-security.mdc`
 - `.cursor/rules/30-ui-and-i18n.mdc`
 - `.cursor/rules/40-data-model.mdc`
-- `messages/sv.json`, `messages/en.json`, `messages/ti.json`, `messages/ar.json`, `messages/so.json`
+- `messages/sv.json`, `messages/en.json`, `messages/ti.json`, `messages/ar.json`
 
-Theory questions are imported with `npm run theory:import`, not stored in this file.
+Theory questions are imported with `npm run theory:import`, not stored in this
+file. The committed 180-question starter bank is the development and free
+practice fallback; export its review sheet with `npm run theory:review:export`.
 
 Launch flags: `BOOKING_ENABLED=0` hides public booking. `INSTRUCTORS_ENABLED=0` hides public instructor pages. Login is email and password, Swedish SMS, and Google. The app does not send email. Stripe sends receipts. Payments are card, Swish and Klarna. Lesson credits and packages are valid for 12 months. Digital theory has no time limit. Cancellation is free only more than 24 hours before the start. Lessons are 50 minutes. Pickup is by arrangement.
 
-Teaching languages are Swedish, English, Tigrinya and Kurdish. Somali is coming soon. The website itself is in five languages. Do not promise free theory questions until `freeTheoryQuestionCount()` is greater than zero.
+Teaching languages are Swedish, English, Tigrinya and Kurdish. The website is
+in four languages: Swedish, English, Tigrinya and Arabic. There is no selectable
+dark mode, test-lesson product, or standalone profile page. Do not promise free
+theory questions until `freeTheoryQuestionCount()` is greater than zero.
 
 A location address that starts with `TODO` is unconfirmed and is hidden by `publicAddress()`. A boolean column would be cleaner later.
 
@@ -721,7 +734,6 @@ BOOKING_HOLD_MINUTES=15
 | slug | kind | credits | price | compareAt |
 |---|---|---|---|---|
 | `riskettan` | COURSE_SEAT | 0 | 49500 | 54500 |
-| `testlektion` | TEST_LESSON | 1 | 49500 | — |
 | `en-korlektion` | SINGLE_LESSON | 1 | 76100 | 89500 |
 | `korpaket-b5` | PACKAGE | 5 | 363400 | 427400 |
 | `korpaket-b10` | PACKAGE | 10 | 728900 | 857600 |

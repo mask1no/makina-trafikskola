@@ -60,28 +60,6 @@
   color-scheme: light;
 }
 
-html[data-theme="dark"] {
-  --page: #0d0d0f;
-  --card: #17171a;
-  --card-muted: #1c1c20;
-  --border: #2c2c32;
-  --border-strong: #3a3a42;
-  --ink: #f5f5f7;
-  --ink-muted: #a7a7af;
-  --ink-subtle: #a7a7af;
-  --line: color-mix(in srgb, var(--ink) 16%, transparent);
-  --line-hover: color-mix(in srgb, var(--ink) 28%, transparent);
-  --accent-soft: #3a2f14;
-  --success: #86efac;
-  --success-strong: #166534;
-  --success-soft: #052e1a;
-  --danger: #fca5a5;
-  --danger-soft: #3f1212;
-  --quiz-correct: #166534;
-  --quiz-wrong: #b91c1c;
-  color-scheme: dark;
-}
-
 html {
   background: var(--surface);
   scroll-behavior: smooth;
@@ -127,8 +105,7 @@ html[lang="ar"] [class*="uppercase"] {
   text-transform: none;
 }
 
-html[lang="sv"],
-html[lang="so"] {
+html[lang="sv"] {
   hyphens: auto;
 }
 
@@ -290,12 +267,6 @@ textarea {
 
   [dir="rtl"] .benefit-track {
     animation-name: benefit-marquee-rtl;
-  }
-
-  .benefit-marquee-region:hover .benefit-track,
-  .benefit-marquee-region:focus-within .benefit-track,
-  .benefit-marquee-region:active .benefit-track {
-    animation-play-state: paused;
   }
 
   @keyframes benefit-marquee {

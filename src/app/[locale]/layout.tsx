@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import type { Metadata } from "next";
-import { cookies, headers } from "next/headers";
+import { headers } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -11,18 +11,19 @@ import { Avatar } from "@/components/Avatar";
 import { BottomTabBar, type BottomTabIcon } from "@/components/BottomTabBar";
 import { CloseDetailsOnNavigate } from "@/components/CloseDetailsOnNavigate";
 import { CookieConsent } from "@/components/CookieConsent";
+import { CallButton, MailButton } from "@/components/ContactButtons";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
-import { ThemeToggle } from "@/components/ThemeToggle";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { ServiceWorkerRegistration } from "@/components/ServiceWorkerRegistration";
+import { SiteFooter } from "@/components/SiteFooter";
+import { SiteHeader } from "@/components/SiteHeader";
 import { isLocale, locales } from "@/i18n/routing";
 import { openingHoursSpecification } from "@/lib/company/opening-hours";
 import {
-  COMING_SOON_TEACHING_LANGUAGES,
   formatLanguageList,
   offeredTeachingLanguagesFrom,
 } from "@/lib/company/staff";
-import { displayPhone, telHref } from "@/lib/format/phone";
+import { telHref } from "@/lib/format/phone";
 import { db } from "@/lib/db";
 import { loadPublicNavData } from "@/lib/layout/public-nav";
 import {
@@ -86,7 +87,7 @@ export async function generateMetadata(
   });
   const pathname =
     (await headers()).get("x-makina-pathname") ?? `/${params.locale}`;
-  const suffix = pathname.replace(/^\/(?:sv|en|ti|ar|so)/, "") || "/";
+  const suffix = pathname.replace(/^\/(?:sv|en|ti|ar)/, "") || "/";
   const siteOrigin = validSiteOrigin();
   const localizedPath = (locale: string) =>
     `/${locale}${suffix === "/" ? "" : suffix}`;
@@ -158,9 +159,8 @@ export default async function LocaleLayout(
   ]);
   const { places: publicPlaces, languages: activeLanguages } = await loadPublicNavData();
   const offeredLanguages = offeredTeachingLanguagesFrom(activeLanguages);
-  const [headerStore, cookieStore] = await Promise.all([headers(), cookies()]);
+  const headerStore = await headers();
   const pathname = headerStore.get("x-makina-pathname") ?? "";
-  const theme = cookieStore.get("makina-theme")?.value === "dark" ? "dark" : "light";
   if (session?.user.id && !pathname.includes("/verifiera-mobil")) {
     const account = await db.user.findUnique({
       where: { id: session.user.id },
@@ -204,26 +204,11 @@ export default async function LocaleLayout(
     "flex min-h-11 items-center rounded-sm px-3 font-semibold hover:bg-card-muted";
   const menuPanelClass =
     "absolute end-0 top-[calc(100%+0.5rem)] z-50 min-w-56 max-w-[calc(100vw-2rem)] rounded-md border border-border bg-card p-2 text-small text-ink shadow-float";
-  const teacherProfile =
-    session?.user.role === "TEACHER"
-      ? await db.teacherProfile.findUnique({
-          where: { userId: session.user.id },
-          select: { slug: true },
-        })
-      : null;
   const siteUrl = validSiteOrigin();
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "DrivingSchool",
     name: company("legalName"),
-    taxID: company("orgnr"),
-    telephone: company("phone"),
-    email: company("email"),
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: company("visitingAddress"),
-      addressCountry: "SE",
-    },
     areaServed: { "@type": "City", name: "Stockholm" },
     availableLanguage: offeredLanguages,
     openingHoursSpecification: openingHoursSpecification(),
@@ -241,17 +226,9 @@ export default async function LocaleLayout(
     const url = process.env[key]?.trim();
     return url?.startsWith("https://") ? [{ url, label }] : [];
   });
-  const callLabel = t.rich("callName", {
-    phone: () => (
-      <bdi dir="ltr" className="numbers-ltr">
-        {displayPhone(company("phone"))}
-      </bdi>
-    ),
-  });
-
   const centerTab = {
     href: canBook ? `${base}/boka` : telHref(company("phone")),
-    label: canBook ? t("book") : callLabel,
+    label: canBook ? t("book") : t("callUs"),
     icon: canBook ? "bookings" : "call",
   } as const;
   const tabs = (
@@ -304,7 +281,7 @@ export default async function LocaleLayout(
             __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
           }}
         />
-        <header className="sticky top-0 z-40 border-b border-surface-soft bg-surface text-ink-inverse shadow-soft">
+        <SiteHeader>
           <div className="site-container grid min-h-[var(--header-height)] min-w-0 grid-cols-[auto_1fr_auto] items-center gap-1.5 sm:gap-2 lg:min-h-[var(--header-height-lg)] lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
             <Link
               href={base}
@@ -395,7 +372,6 @@ export default async function LocaleLayout(
                   ) : session.user.role === "TEACHER" ? (
                     <>
                       <Link className={menuLinkClass} href={`${base}/larare-portal`}>{t("teacherPortal")}</Link>
-                      <Link className={menuLinkClass} href={teacherProfile ? `${base}/larare/${teacherProfile.slug}` : `${base}/larare`}>{t("profile")}</Link>
                     </>
                   ) : (
                     <>
@@ -427,24 +403,19 @@ export default async function LocaleLayout(
                   {t("book")}
                 </Link>
               ) : (
-                <a
-                  href={telHref(company("phone"))}
-                  className="hidden min-h-11 shrink-0 items-center whitespace-nowrap rounded-sm border border-accent bg-accent px-4 text-nav font-extrabold text-accent-ink shadow-soft md:inline-flex"
+                <CallButton
+                  phone={company("phone")}
+                  className="hidden shrink-0 whitespace-nowrap md:inline-flex"
                 >
                   <span className="xl:hidden">{t("callUs")}</span>
-                  <span className="hidden xl:inline">{callLabel}</span>
-                </a>
+                  <span className="hidden xl:inline">{t("callUs")}</span>
+                </CallButton>
               )}
-              <ThemeToggle
-                initialTheme={theme}
-                toDarkLabel={t("themeToDark")}
-                toLightLabel={t("themeToLight")}
-              />
             </div>
           </div>
-        </header>
+        </SiteHeader>
         <main id="main" tabIndex={-1}>{children}</main>
-        <footer className="border-t border-surface-soft bg-surface py-10 text-ink-inverse sm:py-14">
+        <SiteFooter>
           <div className="site-container grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-12 lg:gap-8">
             <div className="col-span-2 lg:col-span-4">
               <Logo />
@@ -453,18 +424,14 @@ export default async function LocaleLayout(
               </p>
               <address className="mt-5 max-w-[70ch] text-small not-italic leading-6 text-ink-inverse-muted">
                 <p className="font-bold text-ink-inverse">{company("legalName")}</p>
-                <p className="numbers-ltr">{t("orgnrLabel")}: {company("orgnr")}</p>
-                <p>{company("visitingAddress")}</p>
-                <p>
-                  <a className="inline-flex min-h-11 items-center hover:text-ink-inverse" href={telHref(company("phone"))}>
-                    {callLabel}
-                  </a>
-                </p>
-                <p>
-                  <a className="inline-flex min-h-11 items-center break-all hover:text-ink-inverse" href={`mailto:${company("email")}`}>
-                    {company("email")}
-                  </a>
-                </p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <CallButton phone={company("phone")} size="small">
+                    {t("callUs")}
+                  </CallButton>
+                  <MailButton email={company("email")} size="small">
+                    {t("mailUs")}
+                  </MailButton>
+                </div>
               </address>
             </div>
             <div className="min-w-0 lg:col-span-2">
@@ -509,9 +476,6 @@ export default async function LocaleLayout(
                     {t(`languagePage.${code}`)}
                   </li>
                 ))}
-                {COMING_SOON_TEACHING_LANGUAGES.map((code) => (
-                  <li key={code} className="flex min-h-11 items-center py-2 leading-5">{t("comingSoonPlace", { town: t(`languagePage.${code}`) })}</li>
-                ))}
               </ul>
             </div>
             <div className="min-w-0 lg:col-span-2">
@@ -549,7 +513,7 @@ export default async function LocaleLayout(
           <div className="site-container mt-10 border-t border-surface-soft pt-6 text-center text-xs font-semibold text-ink-inverse-muted">
             <p>{t("copyright", { year: new Date().getFullYear() })}</p>
           </div>
-        </footer>
+        </SiteFooter>
         <BottomTabBar tabs={tabs} center={centerTab} />
         <CloseDetailsOnNavigate />
         <ScrollToTop label={t("scrollTop")} />

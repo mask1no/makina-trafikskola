@@ -16,7 +16,7 @@ const registrationSchema = z
     phone: z.string().trim().min(3).max(32),
     password: z.string().min(8).max(128),
     code: z.string().regex(/^\d{6}$/),
-    locale: z.enum(["sv", "en", "ti", "ar", "so"]).default("sv"),
+    locale: z.enum(["sv", "en", "ti", "ar"]).default("sv"),
   })
   .strict();
 

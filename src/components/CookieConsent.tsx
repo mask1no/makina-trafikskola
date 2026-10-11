@@ -12,24 +12,24 @@ export async function CookieConsent({ locale }: { locale: string }) {
     <aside
       role="region"
       aria-label={t("title")}
-      className="fixed inset-x-3 bottom-[calc(var(--tab-bar-height)+var(--safe-bottom)+0.75rem)] z-50 mx-auto grid max-w-3xl gap-3 rounded-lg border border-[var(--line)] bg-card p-3 text-ink shadow-float sm:inset-x-4 md:bottom-4 md:grid-cols-[minmax(0,1.4fr)_minmax(12rem,0.8fr)] md:p-4"
+      className="fixed inset-x-3 bottom-[calc(var(--tab-bar-height)+var(--safe-bottom)+0.75rem)] z-50 mx-auto flex max-w-2xl flex-col gap-3 rounded-md border border-[var(--line)] bg-card p-3 text-ink shadow-float sm:inset-x-4 sm:flex-row sm:items-center md:bottom-4"
     >
-      <div className="rounded-md bg-page p-4 sm:p-5">
-        <h2 className="text-lg font-extrabold tracking-tight">{t("title")}</h2>
-        <p className="mt-2 text-sm leading-6 text-ink-muted">
+      <div className="min-w-0 flex-1">
+        <h2 className="sr-only">{t("title")}</h2>
+        <p className="text-small leading-5 text-ink-muted">
           {t("description")}{" "}
           <Link className="font-bold text-ink underline underline-offset-4" href={`/${locale}/cookies`}>
             {t("readMore")}
           </Link>
         </p>
       </div>
-      <form action={saveCookieConsent} className="flex items-stretch rounded-md bg-accent p-4 sm:p-5">
+      <form action={saveCookieConsent} className="shrink-0">
         <input type="hidden" name="locale" value={locale} />
         <button
           type="submit"
           name="consent"
           value="necessary"
-          className="inline-flex min-h-11 w-full items-center justify-center rounded-sm bg-surface px-4 text-sm font-bold text-ink-inverse shadow-soft"
+          className="inline-flex min-h-11 w-full items-center justify-center rounded-sm bg-surface px-5 text-small font-bold text-ink-inverse shadow-soft"
         >
           {t("ok")}
         </button>

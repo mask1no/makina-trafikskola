@@ -26,7 +26,7 @@ import { seedTheory } from "./seed-theory";
 
 const db = new PrismaClient();
 
-const LOCALES = ["sv", "en", "ti", "ar", "so"] as const;
+const LOCALES = ["sv", "en", "ti", "ar"] as const;
 const RETIRED_INSTRUCTOR_SLUGS = [
   "sara-johansson",
   "amina-hassan",
@@ -41,7 +41,6 @@ const RETIRED_INSTRUCTOR_EMAILS = [
 ];
 const TIME_ZONE = "Europe/Stockholm";
 const PRODUCTION_PRODUCT_SLUGS = new Set([
-  "testlektion",
   "en-korlektion",
   "korpaket-b3",
   "korpaket-b5",
@@ -154,36 +153,32 @@ const ROLE_TITLE: Record<
     en: "principal",
     ti: "ሓላፊ ትራፊክ ትምህርቲ",
     ar: "مدير المدرسة",
-    so: "maamulaha dugsiga",
   },
   utbildningsledare: {
     sv: "utbildningsledare",
     en: "head of training",
     ti: "ሓላፊ ትምህርቲ",
     ar: "مسؤول التدريب",
-    so: "madaxa tababarka",
   },
   trafiklarare: {
     sv: "trafiklärare",
     en: "driving instructor",
     ti: "መምህር ትራፊክ",
     ar: "معلّم قيادة",
-    so: "macallinka wadista",
   },
 };
 
 const LANGUAGE_NAME: Record<Locale, Record<string, string>> = {
-  sv: { sv: "svenska", en: "engelska", ti: "tigrinska", ar: "arabiska", so: "somaliska", ku: "kurdiska" },
-  en: { sv: "Swedish", en: "English", ti: "Tigrinya", ar: "Arabic", so: "Somali", ku: "Kurdish" },
-  ti: { sv: "ስዊድን", en: "እንግሊዝ", ti: "ትግርኛ", ar: "ዓረብ", so: "ሶማሊ", ku: "ኩርዲሽ" },
-  ar: { sv: "السويدية", en: "الإنجليزية", ti: "التغرينية", ar: "العربية", so: "الصومالية", ku: "الكردية" },
-  so: { sv: "Iswiidhish", en: "Ingiriis", ti: "Tigrinya", ar: "Carabi", so: "Soomaali", ku: "Kurdish" },
+  sv: { sv: "svenska", en: "engelska", ti: "tigrinska", ar: "arabiska", ku: "kurdiska" },
+  en: { sv: "Swedish", en: "English", ti: "Tigrinya", ar: "Arabic", ku: "Kurdish" },
+  ti: { sv: "ስዊድን", en: "እንግሊዝ", ti: "ትግርኛ", ar: "ዓረብ", ku: "ኩርዲሽ" },
+  ar: { sv: "السويدية", en: "الإنجليزية", ti: "التغرينية", ar: "العربية", ku: "الكردية" },
 };
 
 function languageList(languages: readonly string[], locale: Locale) {
   const names = languages.map((language) => LANGUAGE_NAME[locale][language] ?? language);
   if (names.length <= 1) return names[0] ?? "";
-  const conjunction = { sv: "och", en: "and", ti: "እና", ar: "و", so: "iyo" }[locale];
+  const conjunction = { sv: "och", en: "and", ti: "እና", ar: "و" }[locale];
   return `${names.slice(0, -1).join(", ")} ${conjunction} ${names.at(-1)}`;
 }
 
@@ -202,9 +197,6 @@ function instructorBio(
   }
   if (locale === "ar") {
     return `${name} ${role} في ماكينا ترافيك سكولا في أوبلاندس فيسبي، ويدّرس بـ${languages}.`;
-  }
-  if (locale === "so") {
-    return `${name} waa ${role} ee Makina Trafikskola ee Upplands Väsby, wuxuuna wax ku baraa ${languages}.`;
   }
   return `${name} är ${role} på Makina Trafikskola i Upplands Väsby och undervisar på ${languages}.`;
 }
@@ -238,21 +230,6 @@ const PRODUCTS: Seed[] = [
       en: { name: "Single driving lesson", shortDesc: "50 minutes behind the wheel with an instructor who matches your pace. Good if you want to try us, top up before the driving test, or take extra lessons beside private practice.", features: ["50 minutes of driving", "Manual or automatic", "Personal feedback"] },
       ti: { name: "ሓደ ትምህርቲ ምዝዋር", shortDesc: "50 ደቒቕ ድሕሪ መሪሕ መንእሰይ ምስ መምህር ፍጥነትካ ዝሰማማዕ። ንምፍታን፣ ቅድሚ ፈተነ ንምምላእ ወይ ኣብ ጎኒ ብሕታዊ ልምምድ ተወሳኺ ትምህርቲ እንተደሊኻ ይሰርሕ።", features: ["50 ደቒቕ ምዝዋር", "ማንዋል ወይ ኣውቶማቲክ", "ውልቃዊ ግብረ መልሲ"] },
       ar: { name: "درس قيادة منفرد", shortDesc: "50 دقيقة خلف المقود مع معلّم يضبط السرعة حسبك. مناسب للتجربة أو للتعزيز قبل الاختبار أو لدروس إضافية إلى جانب التدريب الخاص.", features: ["50 دقيقة قيادة", "يدوي أو أوتوماتيكي", "ملاحظات شخصية"] },
-      so: { name: "Hal cashar wadis", shortDesc: "50 daqiiqo oo giraangiraha gadaashiisa ah macallin ku habboon xawaarahaaga. Waa fiican tahay haddii aad tijaabinayso, ku kordhinayso ka hor imtixaanka, ama casharro dheeraad ah ka qaadanayso tababarka gaarka ah.", features: ["50 daqiiqo oo wadis ah", "Gacanta ama otomaatig", "Qiimayn kuu gaar ah"] },
-    },
-  },
-  {
-    slug: "testlektion",
-    kind: ProductKind.TEST_LESSON,
-    active: false,
-    priceOre: 49900,
-    lessonCredits: 1,
-    translations: {
-      sv: { name: "Testlektion", shortDesc: "Vi bedömer din nuvarande nivå och ger dig en tydlig plan: ungefär hur många lektioner du behöver, vad du ska öva på och i vilken ordning. Börja här om du är osäker på vilket paket som passar.", features: ["50 minuters nivåbedömning", "Personlig utbildningsplan"] },
-      en: { name: "Assessment lesson", shortDesc: "We assess your current level and give you a clear plan: roughly how many lessons you need, what to practise and in which order. Start here if you are unsure which package fits.", features: ["50-minute level assessment", "Personal training plan"] },
-      ti: { name: "ናይ ግምገማ ትምህርቲ", shortDesc: "ናይ ሕጂ ደረጃኻ ነገምግም እሞ ንጹር መደብ ንህበካ፦ ክንደይ ትምህርቲ ከምእትድልየካ፣ እንታይ ከተለማምድ ከምዘለካን ብዝኣከለ ተኸተልን። ኣየናይ ፓኬጅ ከምዝሰማማዕ እንተዘይፈሊጥካ ኣብዚ ጀምር።", features: ["ናይ 50 ደቒቕ ግምገማ ደረጃ", "ውልቃዊ መደብ ትምህርቲ"] },
-      ar: { name: "درس تقييم", shortDesc: "نقيّم مستواك الحالي ونضع خطة واضحة: كم درساً تحتاج تقريباً، وماذا تتدرّب وبأي ترتيب. ابدأ من هنا إن لم تعرف أي باقة تناسبك.", features: ["تقييم مستوى لمدة 50 دقيقة", "خطة تدريب شخصية"] },
-      so: { name: "Cashar qiimayn ah", shortDesc: "Waxaanu qiimeynaa heerkaaga hadda waxaanu ku siinnaa qorshe cad: qiyaastii immisa cashar aad u baahan tahay, maxaad ku celcelinaysaa iyo kala horreynta. Halkan ka bilow haddii aadan hubin xirmada kugu habboon.", features: ["Qiimayn heer oo 50 daqiiqo ah", "Qorshe tababar oo qofeed"] },
     },
   },
   {
@@ -268,7 +245,6 @@ const PRODUCTS: Seed[] = [
       en: { name: "3 driving lessons", shortDesc: "Three 50-minute lessons when you want to top up quickly without a larger package.", features: ["3 driving lessons of 50 minutes", "Personal planning with an instructor", "Valid for 12 months", "Save 98 kr"] },
       ti: { name: "3 ትምህርቲ ምዝዋር", shortDesc: "ሰለስተ ትምህርቲ ን50 ደቒቕ ንቕልጡፍ ምምላእ ብዘይ ዓቢ ፓኬጅ።", features: ["3 ትምህርትታት፣ ነፍሲ ወከፍ 50 ደቒቕ", "ውልቃዊ መደብ ምስ መምህር", "ን12 ወርሒ ይሰርሕ", "98 kr ትቑጥብ"] },
       ar: { name: "3 دروس قيادة", shortDesc: "ثلاثة دروس مدة كل منها 50 دقيقة عندما تريد التعزيز بسرعة دون باقة أكبر.", features: ["3 دروس، مدة كل منها 50 دقيقة", "تخطيط فردي مع معلّم", "صالحة لمدة 12 شهرًا", "وفّر 98 كرونة"] },
-      so: { name: "3 cashar wadis", shortDesc: "Saddex cashar oo 50 daqiiqo ah marka aad rabto inaad si degdeg ah u kordhiso adigoon xirmo weyn qaadan.", features: ["3 cashar oo min 50 daqiiqo ah", "Qorshe shakhsi ah oo macallin ah", "Waxay shaqaynaysaa 12 bilood", "Kaydi 98 kr"] },
     },
   },
   {
@@ -284,7 +260,6 @@ const PRODUCTS: Seed[] = [
       en: { name: "B5 package", shortDesc: "Five driving lessons with personal planning, basic technique practice and test preparation. Valid for 12 months.", features: ["5 driving lessons of 50 minutes", "Personal planning with an instructor", "Basic driving technique practice", "Preparation for the driving test", "Valid for 12 months"] },
       ti: { name: "ፓኬጅ B5", shortDesc: "ሓሙሽተ ትምህርቲ ምዝዋር ምስ ውልቃዊ መደብ፣ መሰረታዊ ቴክኒክን ናይ ፈተነ ምድላውን። ን12 ወርሒ ይሰርሕ።", features: ["5 ትምህርትታት፣ ነፍሲ ወከፍ 50 ደቒቕ", "ውልቃዊ መደብ ምስ መምህር", "መሰረታዊ ቴክኒክ ምዝዋር", "ናይ ፈተነ ምድላው", "ን12 ወርሒ ይሰርሕ"] },
       ar: { name: "باقة B5", shortDesc: "خمسة دروس مع تخطيط فردي وتمارين تقنية أساسية والتحضير للاختبار. صالحة 12 شهراً.", features: ["5 دروس، مدة كل منها 50 دقيقة", "تخطيط فردي مع معلّم", "تدريب على التقنية الأساسية", "التحضير لاختبار القيادة", "صالحة لمدة 12 شهرًا"] },
-      so: { name: "Xirmada B5", shortDesc: "Shan cashar oo leh qorshe shakhsi, tababarka farsamada aasaasiga ah iyo diyaarinta imtixaanka. Waxay shaqaynaysaa 12 bilood.", features: ["5 cashar oo min 50 daqiiqo ah", "Qorshe shakhsi ah oo macallin ah", "Tababarka farsamada aasaasiga", "Diyaarinta imtixaanka wadista", "Waxay shaqaynaysaa 12 bilood"] },
     },
   },
   {
@@ -300,7 +275,6 @@ const PRODUCTS: Seed[] = [
       en: { name: "B10 package", shortDesc: "Ten driving lessons with personal planning, basic technique practice and test preparation. Valid for 12 months.", features: ["10 driving lessons of 50 minutes", "Personal planning with an instructor", "Basic driving technique practice", "Preparation for the driving test", "Valid for 12 months"] },
       ti: { name: "ፓኬጅ B10", shortDesc: "ዓሰርተ ትምህርቲ ምዝዋር ምስ ውልቃዊ መደብ፣ መሰረታዊ ቴክኒክን ናይ ፈተነ ምድላውን። ን12 ወርሒ ይሰርሕ።", features: ["10 ትምህርትታት፣ ነፍሲ ወከፍ 50 ደቒቕ", "ውልቃዊ መደብ ምስ መምህር", "መሰረታዊ ቴክኒክ ምዝዋር", "ናይ ፈተነ ምድላው", "ን12 ወርሒ ይሰርሕ"] },
       ar: { name: "باقة B10", shortDesc: "عشرة دروس مع تخطيط فردي وتمارين تقنية أساسية والتحضير للاختبار. صالحة 12 شهراً.", features: ["10 دروس، مدة كل منها 50 دقيقة", "تخطيط فردي مع معلّم", "تدريب على التقنية الأساسية", "التحضير لاختبار القيادة", "صالحة لمدة 12 شهرًا"] },
-      so: { name: "Xirmada B10", shortDesc: "Toban cashar oo leh qorshe shakhsi, tababarka farsamada aasaasiga ah iyo diyaarinta imtixaanka. Waxay shaqaynaysaa 12 bilood.", features: ["10 cashar oo min 50 daqiiqo ah", "Qorshe shakhsi ah oo macallin ah", "Tababarka farsamada aasaasiga", "Diyaarinta imtixaanka wadista", "Waxay shaqaynaysaa 12 bilood"] },
     },
   },
   {
@@ -316,7 +290,6 @@ const PRODUCTS: Seed[] = [
       en: { name: "20 driving lessons", shortDesc: "Twenty 50-minute lessons when you want to build driving skill step by step at a fixed package price.", features: ["20 driving lessons of 50 minutes", "Personal planning with an instructor", "Valid for 12 months", "Save 1,981 kr"] },
       ti: { name: "20 ትምህርቲ ምዝዋር", shortDesc: "ዕስራ ትምህርቲ ን50 ደቒቕ ንምዝዋርካ ብቐዋሚ ዋጋ ንምሕናጽ።", features: ["20 ትምህርትታት፣ ነፍሲ ወከፍ 50 ደቒቕ", "ውልቃዊ መደብ ምስ መምህር", "ን12 ወርሒ ይሰርሕ", "1 981 kr ትቑጥብ"] },
       ar: { name: "20 درس قيادة", shortDesc: "عشرون درساً مدة كل منها 50 دقيقة لبناء القيادة خطوة بخطوة بسعر باقة ثابت.", features: ["20 درسًا، مدة كل منها 50 دقيقة", "تخطيط فردي مع معلّم", "صالحة لمدة 12 شهرًا", "وفّر 1 981 كرونة"] },
-      so: { name: "20 cashar wadis", shortDesc: "Labaatan cashar oo 50 daqiiqo ah marka aad rabto inaad u dhisto wadista tallaabo tallaabo qiimo go'an.", features: ["20 cashar oo min 50 daqiiqo ah", "Qorshe shakhsi ah oo macallin ah", "Waxay shaqaynaysaa 12 bilood", "Kaydi 1 981 kr"] },
     },
   },
   {
@@ -335,7 +308,6 @@ const PRODUCTS: Seed[] = [
       en: { name: "Silver intensive package", shortDesc: "Ten driving lessons, Risk 1, Risk 2 and digital theory — in one fixed price. Valid for 12 months.", features: ["10 driving lessons of 50 minutes", "Risk 1", "Risk 2 skid pad", "Digital theory", "Personal planning with an instructor", "Valid for 12 months"] },
       ti: { name: "ሲልቨር ጽዑቕ ፓኬጅ", shortDesc: "ዓሰርተ ትምህርቲ፣ ሪስክ 1፣ ሪስክ 2ን ዲጂታላዊ ቲዮሪን ብቐዋሚ ዋጋ። ን12 ወርሒ ይሰርሕ።", features: ["10 ትምህርትታት፣ ነፍሲ ወከፍ 50 ደቒቕ", "ሪስክ 1", "ሪስክ 2", "ዲጂታላዊ ቲዮሪ", "ውልቃዊ መደብ", "ን12 ወርሒ ይሰርሕ"] },
       ar: { name: "الباقة المكثفة الفضية", shortDesc: "عشرة دروس ودورتا المخاطر والنظري الرقمي بسعر ثابت. صالحة 12 شهراً.", features: ["10 دروس، مدة كل منها 50 دقيقة", "المخاطر 1", "المخاطر 2", "نظري رقمي", "تخطيط فردي", "صالحة لمدة 12 شهرًا"] },
-      so: { name: "Xirmada degdegga ah ee Silver", shortDesc: "Toban cashar, Risk 1, Risk 2 iyo teoriga dijitaalka ah qiimo go'an. Waxay shaqaynaysaa 12 bilood.", features: ["10 cashar oo min 50 daqiiqo ah", "Risk 1", "Risk 2", "Teori dijitaal ah", "Qorshe shakhsi ah", "Waxay shaqaynaysaa 12 bilood"] },
     },
   },
   {
@@ -355,7 +327,6 @@ const PRODUCTS: Seed[] = [
       en: { name: "Gold intensive package", shortDesc: "Twenty driving lessons, Risk 1, Risk 2 and digital theory — our most common intensive choice. Valid for 12 months.", features: ["20 driving lessons of 50 minutes", "Risk 1", "Risk 2 skid pad", "Digital theory", "Personal planning with an instructor", "Valid for 12 months"] },
       ti: { name: "ጎልድ ጽዑቕ ፓኬጅ", shortDesc: "ዕስራ ትምህርቲ፣ ሪስክ 1፣ ሪስክ 2ን ዲጂታላዊ ቲዮሪን። ን12 ወርሒ ይሰርሕ።", features: ["20 ትምህርትታት፣ ነፍሲ ወከፍ 50 ደቒቕ", "ሪስክ 1", "ሪስክ 2", "ዲጂታላዊ ቲዮሪ", "ውልቃዊ መደብ", "ን12 ወርሒ ይሰርሕ"] },
       ar: { name: "الباقة المكثفة الذهبية", shortDesc: "عشرون درساً ودورتا المخاطر والنظري الرقمي. صالحة 12 شهراً.", features: ["20 درسًا، مدة كل منها 50 دقيقة", "المخاطر 1", "المخاطر 2", "نظري رقمي", "تخطيط فردي", "صالحة لمدة 12 شهرًا"] },
-      so: { name: "Xirmada degdegga ah ee Gold", shortDesc: "Labaatan cashar, Risk 1, Risk 2 iyo teoriga dijitaalka ah. Waxay shaqaynaysaa 12 bilood.", features: ["20 cashar oo min 50 daqiiqo ah", "Risk 1", "Risk 2", "Teori dijitaal ah", "Qorshe shakhsi ah", "Waxay shaqaynaysaa 12 bilood"] },
     },
   },
   {
@@ -374,7 +345,6 @@ const PRODUCTS: Seed[] = [
       en: { name: "Platinum intensive package", shortDesc: "Thirty driving lessons, Risk 1, Risk 2 and digital theory if you want more wheel time. Valid for 12 months.", features: ["30 driving lessons of 50 minutes", "Risk 1", "Risk 2 skid pad", "Digital theory", "Personal planning with an instructor", "Valid for 12 months"] },
       ti: { name: "ፕላቲነም ጽዑቕ ፓኬጅ", shortDesc: "ሰላሳ ትምህርቲ፣ ሪስክ 1፣ ሪስክ 2ን ዲጂታላዊ ቲዮሪን። ን12 ወርሒ ይሰርሕ።", features: ["30 ትምህርትታት፣ ነፍሲ ወከፍ 50 ደቒቕ", "ሪስክ 1", "ሪስክ 2", "ዲጂታላዊ ቲዮሪ", "ውልቃዊ መደብ", "ን12 ወርሒ ይሰርሕ"] },
       ar: { name: "الباقة المكثفة البلاتينية", shortDesc: "ثلاثون درساً ودورتا المخاطر والنظري الرقمي. صالحة 12 شهراً.", features: ["30 درسًا، مدة كل منها 50 دقيقة", "المخاطر 1", "المخاطر 2", "نظري رقمي", "تخطيط فردي", "صالحة لمدة 12 شهرًا"] },
-      so: { name: "Xirmada degdegga ah ee Platinum", shortDesc: "Soddon cashar, Risk 1, Risk 2 iyo teoriga dijitaalka ah. Waxay shaqaynaysaa 12 bilood.", features: ["30 cashar oo min 50 daqiiqo ah", "Risk 1", "Risk 2", "Teori dijitaal ah", "Qorshe shakhsi ah", "Waxay shaqaynaysaa 12 bilood"] },
     },
   },
   {
@@ -392,7 +362,6 @@ const PRODUCTS: Seed[] = [
       en: { name: "Driving licence guarantee", shortDesc: "Lessons until you pass the driving test at a fixed price, with a personal plan, Risk 1, Risk 2 and a full digital theory package. Valid for 12 months.", features: ["Lessons until you pass the driving test", "Personal training plan", "Risk 1 and Risk 2", "Full digital theory package", "Valid for 12 months"] },
       ti: { name: "ውሕስነት ፍቓድ ምዝዋር", shortDesc: "ክሳብ ፈተነ ምዝዋር ብዕዉት ክትሰግር ብቐዋሚ ዋጋ፣ ምስ ውልቃዊ መደብ፣ ሪስክ 1ን 2ን ዲጂታላዊ ቲዮሪን። ን12 ወርሒ ይሰርሕ።", features: ["ክሳብ እትሰግር ትምህርቲ", "ውልቃዊ መደብ", "ሪስክ 1ን 2ን", "ዲጂታላዊ ቲዮሪ", "ን12 ወርሒ ይሰርሕ"] },
       ar: { name: "ضمان رخصة القيادة", shortDesc: "دروس حتى تنجح في الاختبار بسعر ثابت، مع خطة شخصية ودورتي المخاطر ونظري رقمي كامل. صالح 12 شهراً.", features: ["دروس حتى النجاح في الاختبار", "خطة تدريب شخصية", "المخاطر 1 و2", "باقة نظري رقمية كاملة", "صالحة لمدة 12 شهرًا"] },
-      so: { name: "Dammaanadda laysanka wadista", shortDesc: "Casharro ilaa aad ku guulaysato imtixaanka qiimo go'an, qorshe shakhsi, Risk 1 & 2 iyo teori dijitaal oo buuxa. Waxay shaqaynaysaa 12 bilood.", features: ["Casharro ilaa aad ku guulaysato", "Qorshe tababar oo qofeed", "Risk 1 iyo Risk 2", "Xirmo teori dijitaal oo buuxa", "Waxay shaqaynaysaa 12 bilood"] },
     },
   },
   {
@@ -406,7 +375,6 @@ const PRODUCTS: Seed[] = [
       en: { name: "Risk 1", shortDesc: "Mandatory part 1 risk training for a category B licence.", features: ["Risk behaviour, alcohol and fatigue", "Course times appear when occasions are ready"] },
       ti: { name: "ሪስክ 1", shortDesc: "ንፍቓድ B ግዴታዊ ቀዳማይ ክፋል ስልጠና ሓደጋ።", features: ["ባህሪ ሓደጋ፣ ኣልኮላን ድኻምን", "ግዜ ኮርስ ምስ ተዳለወ ይዝርጋሕ"] },
       ar: { name: "المخاطر 1", shortDesc: "الجزء الأول الإلزامي من تدريب المخاطر لرخصة الفئة B.", features: ["سلوك المخاطر والكحول والإرهاق", "تظهر المواعيد عند اعتماد الدورات"] },
-      so: { name: "Risk 1", shortDesc: "Qaybta koowaad ee khasabka ah ee tababarka khatarta laysanka B.", features: ["Dabeecadaha khatarta, khamriga iyo daalka", "Waqtiyada ayaa soo baxaya marka la diyaariyo"] },
     },
   },
   {
@@ -420,7 +388,6 @@ const PRODUCTS: Seed[] = [
       en: { name: "Risk 2", shortDesc: "Mandatory practical part 2 risk training for a category B licence.", features: ["Practical skid-pad exercises", "Time and venue appear after confirmation"] },
       ti: { name: "ሪስክ 2", shortDesc: "ንፍቓድ B ግዴታዊ ግብራዊ ካልኣይ ክፋል ስልጠና ሓደጋ።", features: ["ግብራዊ ልምምድ ኣብ መንሸራተቲ ሜዳ", "ግዜን ቦታን ምስ ተረጋገጸ ይዝርጋሕ"] },
       ar: { name: "المخاطر 2", shortDesc: "الجزء الثاني العملي والإلزامي من تدريب المخاطر لرخصة B.", features: ["تمارين عملية على حلبة الانزلاق", "يظهر الموعد والمكان بعد تأكيدهما"] },
-      so: { name: "Risk 2", shortDesc: "Qaybta labaad ee khasabka ah iyo wax-ku-oolka ah ee tababarka khatarta laysanka B.", features: ["Layliyo wax-ku-ool ah oo goobta simbiriirixashada ah", "Waqtiga iyo goobta ayaa soo baxaya marka la xaqiijiyo"] },
     },
   },
   {
@@ -433,7 +400,6 @@ const PRODUCTS: Seed[] = [
       en: { name: "Supervisor course", shortDesc: "Introduction course for learners and supervisors practising privately.", features: ["For learner and supervisor", "Course times appear when occasions are ready"] },
       ti: { name: "ስልጠና ተቖጻጻሪ", shortDesc: "ንብሕታዊ ልምምድ ምዝዋር ንተማሃራይን ተቖጻጻሪን መእተዊ ስልጠና።", features: ["ንተማሃራይን ተቖጻጻሪን", "ግዜ ኮርስ ምስ ተዳለወ ይዝርጋሕ"] },
       ar: { name: "دورة المشرف", shortDesc: "دورة تمهيدية للمتعلم والمشرف عند التدريب الخاص على القيادة.", features: ["للمتعلم والمشرف", "تظهر المواعيد عند اعتماد الدورات"] },
-      so: { name: "Koorsada kormeeraha", shortDesc: "Koorsada hordhaca ah ee ardayga iyo kormeeraha marka si gaar ah loo tababaranayo.", features: ["Ardayga iyo kormeeraha", "Waqtiyada ayaa soo baxaya marka la diyaariyo"] },
     },
   },
   {
@@ -447,7 +413,6 @@ const PRODUCTS: Seed[] = [
       en: { name: "Digital driving theory", shortDesc: "Practise category by category and take mock exams in the same format as the knowledge test. Buy once — access has no time limit.", features: ["Unlimited access, no time limit", "Study mode and mock exams", "Mock tests in the same form as the knowledge test"] },
       ti: { name: "ዲጂታላዊ ቲዮሪ ምዝዋር", shortDesc: "ብዓይነት ብዓይነት ለምምድ እሞ ከም ናይ ፍልጠት ፈተነ ዝኾነ ልምምዲ ፈተነ ግበር። ሓንሳብ ደርጊ — ፍቓድ ግዜ ገደብ የብሉን።", features: ["ዘይተወሰነ ፍቓድ፣ ግዜ ገደብ የለን", "ናይ መጽናዕትን ፈተነን ኣገባብ", "ከም ናይ ፍልጠት ፈተና ዝመስል ልምምድ ፈተና"] },
       ar: { name: "نظري القيادة الرقمي", shortDesc: "تدرّب فئة تلو فئة وأجرِ اختبارات تجريبية بنفس أسلوب اختبار المعرفة. اشترِ مرة واحدة — الوصول بلا مهلة زمنية.", features: ["وصول غير محدود، بلا مهلة زمنية", "وضع دراسة واختبارات تجريبية", "اختبار تجريبي بنفس شكل اختبار المعرفة"] },
-      so: { name: "Teoriga wadista ee dijitaalka ah", shortDesc: "Ku celceli qayb qayb oo samee imtixaano tijaabo ah oo la mid ah qaabka imtixaanka aqoonta. Hal mar iibso — gelitaanku xilli xadidan ma laha.", features: ["Gelitaan aan xadidnayn, xilli xadidan ma jiro", "Hab waxbarasho iyo imtixaano tijaabo ah", "Imtixaan tijaabo ah oo la mid ah imtixaanka aqoonta"] },
     },
   },
 ];
@@ -469,7 +434,6 @@ const MOMENTS: {
       en: { title: "Driving position", description: "Seat, steering wheel, mirrors and seatbelt." },
       ti: { title: "ናይ ምዝዋር ኣቀማምጣ", description: "መንበር፣ መሪሕ መንእሰይ፣ መስትያትን ቀጽሪ ድሕንነትን።" },
       ar: { title: "وضعية القيادة", description: "المقعد والمقود والمرايا وحزام الأمان." },
-      so: { title: "Soo-degista wadista", description: "Kursiga, isteerinka, muraayadaha iyo suunka." },
     },
   },
   {
@@ -482,7 +446,6 @@ const MOMENTS: {
       en: { title: "Manoeuvring", description: "Starting, stopping, steering and gear changes in a calm setting." },
       ti: { title: "ምምሕዳር ናይ መኪና", description: "ምጅማር፣ ምእጋት፣ ምምራሕን ምቕያር ማርሻን ኣብ ህዱእ ከባቢ።" },
       ar: { title: "المناورة", description: "الانطلاق والتوقف والتوجيه وتغيير السرعات في مكان هادئ." },
-      so: { title: "Maareynta baabuurka", description: "Bilow, joogsi, isteerin iyo beddelka gears-ka meel deggan." },
     },
   },
   {
@@ -495,7 +458,6 @@ const MOMENTS: {
       en: { title: "Introductory town driving", description: "Simple stretches in built-up areas with light traffic." },
       ti: { title: "መእተዊ ናይ ከተማ ምዝዋር", description: "ኣብ ውሑድ ትራፊክ ዘለዎ ከተማ ቀሊል መንገድታት።" },
       ar: { title: "قيادة حضرية أولى", description: "مقاطع بسيطة داخل المدينة مع حركة خفيفة." },
-      so: { title: "Wadista magaalada ee hordhaca", description: "Waddooyin fudud oo magaalada dhexdeeda ah taraafiko yar." },
     },
   },
   {
@@ -508,7 +470,6 @@ const MOMENTS: {
       en: { title: "Braking and distance", description: "Smooth braking and space to the vehicle in front." },
       ti: { title: "ምዕጻውን ርሕቀትን", description: "ልኡል ምዕጻውን ካብቲ ኣብ ቅድሚኻ ዘሎ ዘላ ርሕቀትን።" },
       ar: { title: "الفرملة والمسافة", description: "فرملة هادئة ومسافة إلى المركبة الأمامية." },
-      so: { title: "Biriikada iyo fogaanta", description: "Biriiko jilicsan iyo fogaanta gaadhiga hore." },
     },
   },
   {
@@ -521,7 +482,6 @@ const MOMENTS: {
       en: { title: "Yielding rules", description: "The right-hand rule, priority roads and duty to give way." },
       ti: { title: "ሕግታት ምሃብ መንገዲ", description: "ሕጊ የማን፣ ቀንዲ መንገዲን ግዴታ ምሃብ መንገዲን።" },
       ar: { title: "قواعد التراجع", description: "قاعدة اليمين والطريق الرئيسي وواجب إفساح المجال." },
-      so: { title: "Xeerarka u-gudbinta", description: "Xeerka midig, waddada weyn iyo waajibka u-gudbinta." },
     },
   },
   {
@@ -534,7 +494,6 @@ const MOMENTS: {
       en: { title: "Roundabout", description: "Entry, position and exit in a roundabout." },
       ti: { title: "ዙርያ መንገዲ", description: "ኣታወንታ፣ ኣቀማምጣን ውጻእን ኣብ ራውንድኣባውት።" },
       ar: { title: "الدوّار", description: "الدخول والتموضع والخروج من الدوّار." },
-      so: { title: "Wareegga", description: "Gelitaanka, booska iyo ka-bixitaanka wareegga." },
     },
   },
   {
@@ -547,7 +506,6 @@ const MOMENTS: {
       en: { title: "Rural road", description: "Higher speed, overtaking and oncoming traffic." },
       ti: { title: "ገጠራዊ ጽርግያ", description: "ዝለዓለ ፍጥነት፣ ምሕላፍን መጋጠምን።" },
       ar: { title: "طريق ريفي", description: "سرعة أعلى وتجاوز ومقابلة حركة قادمة." },
-      so: { title: "Waddada miyiga", description: "Xawaare sare, dhaafitaan iyo kala horimaad." },
     },
   },
   {
@@ -560,7 +518,6 @@ const MOMENTS: {
       en: { title: "Turning and parking", description: "Reversing, turning and parking in town." },
       ti: { title: "ምምላስን ምዕጻውን", description: "ድሕሪት ምዝዋር፣ ምምላስን ኣብ ከተማ ምዕጻውን።" },
       ar: { title: "الالتفاف والركن", description: "الرجوع والالتفاف والركن في المدينة." },
-      so: { title: "Leexashada iyo parking-ka", description: "Dib-u-socod, leexasho iyo parking magaalada dhexdeeda." },
     },
   },
   {
@@ -573,7 +530,6 @@ const MOMENTS: {
       en: { title: "Night driving", description: "Dipped beam, main beam and dipping for others." },
       ti: { title: "ናይ ጸልማት ምዝዋር", description: "ቕጽበታዊ ብርሃን፣ ሙሉእ ብርሃንን ንኻልኦት ምጉዳል ብርሃንን።" },
       ar: { title: "القيادة ليلاً", description: "الضوء الخافت والضوء العالي وخفض الضوء للآخرين." },
-      so: { title: "Wadista habeennimo", description: "Iftiinka hoose, iftiinka sare iyo hoos-u-dhigista dadka kale." },
     },
   },
   {
@@ -586,7 +542,6 @@ const MOMENTS: {
       en: { title: "Slippery conditions", description: "Grip, distance and smoother inputs when the road is slippery." },
       ti: { title: "ዝንሸርተት መንገዲ", description: "ምትሕዝዝ ጎማ፣ ርሕቀትን መንገዲ ምስ ዝንሸርተት ልኡል ምምሕዳርን።" },
       ar: { title: "طريق زلق", description: "التماسك والمسافة وحركات ألطف عندما يكون الطريق زلقاً." },
-      so: { title: "Waddo simbiriirixan", description: "Qabsashada, fogaanta iyo dhaqdhaqaaq jilicsan marka waddadu simbiriirixanto." },
     },
   },
   {
@@ -599,7 +554,6 @@ const MOMENTS: {
       en: { title: "Motorway", description: "Joining, lane changes and leaving at higher speed." },
       ti: { title: "ሞተርዌይ", description: "ምእታው፣ ምቕያር መስመርን ምውጻእን ብዝለዓለ ፍጥነት።" },
       ar: { title: "الطريق السريع", description: "الدخول وتغيير المسار والخروج بسرعة أعلى." },
-      so: { title: "Waddada weyn", description: "Gelitaanka, beddelka haadka iyo ka-bixitaanka xawaare sare." },
     },
   },
   {
@@ -612,7 +566,6 @@ const MOMENTS: {
       en: { title: "Dense traffic", description: "Cooperation, positioning and staying calm in queues." },
       ti: { title: "ዝተጸናናዐ ትራፊክ", description: "ምትሕብባር፣ ኣቀማምጣን ኣብ ወረፋ ህድኣትን።" },
       ar: { title: "حركة كثيفة", description: "التعاون والتموضع والهدوء في الازدحام." },
-      so: { title: "Taraafiko cufan", description: "Wada-shaqeyn, boos-qaadid iyo degganaansho safafka dhexdooda." },
     },
   },
   {
@@ -625,7 +578,6 @@ const MOMENTS: {
       en: { title: "Economical driving", description: "Planning, engine braking and an even pace." },
       ti: { title: "ቁጠባዊ ምዝዋር", description: "ውጥን፣ ምዕጻው ሞተርን ማዕሪ ፍጥነትን።" },
       ar: { title: "قيادة موفّرة", description: "التخطيط والفرملة بالمحرك ووتيرة ثابتة." },
-      so: { title: "Wadis dhaqaale", description: "Qorsheyn, biriikada matoorka iyo xawaare siman." },
     },
   },
   {
@@ -638,7 +590,6 @@ const MOMENTS: {
       en: { title: "Independent driving", description: "You navigate and decide with little support." },
       ti: { title: "ውልቀ-ናጻ ምዝዋር", description: "ብውሑድ ደገፍ መንገዲ ትመርሕን ውሳነ ትወስድን።" },
       ar: { title: "قيادة مستقلة", description: "تتنقّل وتقرّر مع قليل من الدعم." },
-      so: { title: "Wadis madax-bannaan", description: "Adiga ayaa haga hannaanka oo go'aanno qaata taageero yar." },
     },
   },
   {
@@ -651,7 +602,6 @@ const MOMENTS: {
       en: { title: "Driving-test preparation", description: "An overall assessment before the Trafikverket driving test." },
       ti: { title: "ናይ ፈተነ ምዝዋር ምድላው", description: "ቅድሚ ፈተነ ምዝዋር ናይ ትራፊክቨርከት ምሉእ ግምገማ።" },
       ar: { title: "الاستعداد لاختبار القيادة", description: "تقييم شامل قبل اختبار القيادة لدى Trafikverket." },
-      so: { title: "Diyaarinta imtixaanka wadista", description: "Qiimayn guud ka hor imtixaanka wadista ee Trafikverket." },
     },
   },
 ];
@@ -674,6 +624,15 @@ async function main() {
   const productsToSeed = isProduction
     ? PRODUCTS.filter((product) => PRODUCTION_PRODUCT_SLUGS.has(product.slug))
     : PRODUCTS;
+
+  if (process.env.NODE_ENV === "test") {
+    await db.rateLimit.deleteMany();
+  }
+
+  await db.product.updateMany({
+    where: { OR: [{ slug: "testlektion" }, { kind: ProductKind.TEST_LESSON }] },
+    data: { active: false },
+  });
 
   const locationsBySlug = new Map<string, string>();
   for (const location of locationsToSeed) {

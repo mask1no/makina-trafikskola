@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
+import { auth } from "@/auth";
 import { EmptyState } from "@/components/EmptyState";
 import { LinkButton } from "@/components/LinkButton";
 import { isLocale } from "@/i18n/routing";
@@ -13,6 +14,8 @@ import { theoryMode, theorySalesOpen } from "@/lib/launch";
 import { freeTheoryQuestionCount } from "@/lib/theory/questions";
 
 export const dynamic = "force-dynamic";
+
+const CATEGORY_ICONS = ["⚖️", "🛡️", "🧠", "🚗", "🌿", "🛣️", "🏙️", "🅿️", "🧭"];
 
 export async function generateMetadata(
   props: { params: Promise<{ locale: string }> },
@@ -57,7 +60,8 @@ export default async function TeoriPage(
       </div>
     );
   }
-  const [t, homeTheory, categories, freeQuestionCount] = await Promise.all([
+  const session = await auth();
+  const [t, homeTheory, categories, freeQuestionCount, attempts] = await Promise.all([
     getTranslations("theory"),
     getTranslations("home.theory"),
     db.theoryCategory.findMany({
@@ -72,8 +76,19 @@ export default async function TeoriPage(
       },
     }),
     freeTheoryQuestionCount(),
+    session?.user?.role === "STUDENT"
+      ? db.theoryAttempt.findMany({
+          where: { studentId: session.user.id },
+          distinct: ["questionId"],
+          select: { questionId: true, question: { select: { categoryId: true } } },
+        })
+      : Promise.resolve([]),
   ]);
   const available = categories.filter((category) => category._count.questions > 0);
+  const attemptedByCategory = attempts.reduce<Record<string, number>>((counts, attempt) => {
+    counts[attempt.question.categoryId] = (counts[attempt.question.categoryId] ?? 0) + 1;
+    return counts;
+  }, {});
 
   return (
     <div className="section-shell">
@@ -123,7 +138,7 @@ export default async function TeoriPage(
               </p>
               <h2 className="mt-3 text-3xl font-black">{t("freeIntro")}</h2>
             </div>
-            <div className="mt-7 grid gap-4 sm:grid-cols-2">
+            <div className="mt-7 flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4">
             {available.map((category) => {
               const content = resolveContent(category.translations, params.locale);
               if (!content.translation) return null;
@@ -131,26 +146,28 @@ export default async function TeoriPage(
                 <Link
                   key={category.id}
                   href={`/${params.locale}/teori/${category.slug}`}
-                    className="group flex min-h-52 flex-col justify-between rounded-lg border border-[var(--line)] bg-card p-6 shadow-card transition duration-300 ease-premium hover:border-[var(--line-hover)]"
+                    className="group flex w-44 shrink-0 snap-start flex-col items-center text-center"
                 >
-                    <div className="flex items-start justify-between gap-4">
-                      <span className="grid size-12 place-items-center rounded-full bg-accent text-lg font-black text-accent-ink">
-                        {category.order}
+                    <div className="relative grid size-36 place-items-center rounded-full border border-[var(--line)] bg-card shadow-card transition group-hover:border-accent">
+                      <span aria-hidden="true" className="text-4xl">
+                        {CATEGORY_ICONS[category.order - 1] ?? "📘"}
                       </span>
                       <span
                         aria-hidden="true"
-                        className="rtl-directional text-2xl"
+                        className="rtl-directional absolute end-4 top-1/2 -translate-y-1/2 text-xl"
                       >
                         →
                       </span>
                     </div>
-                    <div>
-                      <h3 className="text-xl font-black">{content.translation.name}</h3>
-                      <p className="mt-2 text-sm text-ink-muted">
-                        {t("freeCount", { count: category._count.questions, n: String(category._count.questions) })}
-                      </p>
-                      <p className="mt-4 font-bold underline underline-offset-4">
-                        {t("startPractice")}
+                    <div className="mt-3">
+                      <h3 className="font-black">{content.translation.name}</h3>
+                      <p className="numbers-ltr mt-1 text-sm text-ink-muted">
+                        {session?.user?.role === "STUDENT"
+                          ? t("categoryProgress", {
+                              attempted: Math.min(attemptedByCategory[category.id] ?? 0, 20),
+                              total: 20,
+                            })
+                          : t("freeCount", { count: category._count.questions, n: String(category._count.questions) })}
                       </p>
                     </div>
                   {content.swedishOnly ? (
@@ -167,9 +184,16 @@ export default async function TeoriPage(
           </div>
         )}
         {freeQuestionCount > 0 ? (
-          <LinkButton href={`/${params.locale}/teori/ovning`} className="mt-8">
-            {t("practiceAll", { count: freeQuestionCount })}
-          </LinkButton>
+          <div className="mt-8 flex flex-wrap gap-3">
+            {available[0] ? (
+              <LinkButton href={`/${params.locale}/teori/${available[0].slug}`}>
+                {t("startPractice")}
+              </LinkButton>
+            ) : null}
+            <LinkButton href={`/${params.locale}/teori/ovning`} variant="secondary">
+              {t("practiceAll", { count: freeQuestionCount })}
+            </LinkButton>
+          </div>
         ) : null}
         {theorySalesOpen() ? (
           <LinkButton href={`/${params.locale}/teori/prov`} className="mt-4" variant="secondary">

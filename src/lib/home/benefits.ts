@@ -45,14 +45,15 @@ export function benefitItems(input: {
   products: readonly BenefitProduct[];
   hasRiskCourse?: boolean;
 }) {
-  const hasRisk =
-    Boolean(input.hasRiskCourse) ||
-    input.products.some((product) => product.includesRisk1 || product.includesRisk2);
-  const hasGuarantee = input.products.some((product) => product.kind === "GUARANTEE");
-
-  const items: BenefitItem[] = [item("language"), item("pickup")];
-  if (hasRisk) items.push(item("risk"));
-  if (hasGuarantee) items.push(item("guarantee"));
-  if (input.bookingEnabled) items.push(item("selfBook"));
-  return items;
+  void input;
+  return [
+    item("language"),
+    item("pickup"),
+    item("lesson"),
+    item("prices"),
+    item("payment"),
+    item("local"),
+    item("cancel"),
+    item("reminder"),
+  ];
 }

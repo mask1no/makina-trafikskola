@@ -15,10 +15,11 @@ export function apiError(
   code: string,
   status: number,
   fields?: Record<string, string[] | undefined>,
+  headers?: HeadersInit,
 ) {
   return Response.json(
     { error: { code, message: code, ...(fields ? { fields } : {}) } },
-    { status },
+    { status, headers },
   );
 }
 

@@ -4,12 +4,12 @@ import path from "node:path";
 import { PrismaClient } from "@prisma/client";
 import { z } from "zod";
 
-const LOCALES = ["sv", "en", "ti", "ar", "so"] as const;
-const NON_SWEDISH_LOCALES = ["en", "ti", "ar", "so"] as const;
+const LOCALES = ["sv", "en", "ti", "ar"] as const;
+const NON_SWEDISH_LOCALES = ["en", "ti", "ar"] as const;
 
 const localizedQuestionSchema = z.object({
   question: z.string().trim().min(1),
-  options: z.array(z.string().trim().min(1)).min(2),
+  options: z.array(z.string().trim().min(1)).min(3).max(4),
   explanation: z.string().trim().min(1),
 });
 
@@ -17,16 +17,14 @@ const bankQuestionSchema = z.object({
   id: z.string().trim().min(1),
   parm: z.number().int().min(1).max(9),
   question_sv: z.string().trim().min(1),
-  options_sv: z.array(z.string().trim().min(1)).min(2),
-  explanation_sv: z.string().trim().min(1).optional(),
-  translations: z
-    .object({
-      en: localizedQuestionSchema.optional(),
-      ti: localizedQuestionSchema.optional(),
-      ar: localizedQuestionSchema.optional(),
-      so: localizedQuestionSchema.optional(),
-    })
-    .optional(),
+  options_sv: z.array(z.string().trim().min(1)).min(3).max(4),
+  explanation_sv: z.string().trim().min(1),
+  source_citation: z.string().trim().min(8),
+  translations: z.object({
+    en: localizedQuestionSchema,
+    ti: localizedQuestionSchema,
+    ar: localizedQuestionSchema,
+  }),
   correct_index: z.number().int().min(0),
   difficulty: z.number().int().min(1).max(3).optional(),
   needs_image: z.boolean(),
@@ -52,28 +50,25 @@ const CATEGORY_NAMES: Record<
     en: "Traffic rules",
     ti: "ሕግታት ትራፊክ",
     ar: "قواعد المرور",
-    so: "Xeerarka waddooyinka",
   },
   2: {
     sv: "Trafiksäkerhet",
     en: "Road safety",
     ti: "ድሕነት ትራፊክ",
     ar: "السلامة المرورية",
-    so: "Badbaadada waddooyinka",
   },
   3: {
     sv: "Människan i trafiken",
     en: "People in traffic",
     ti: "ሰብ ኣብ ትራፊክ",
     ar: "الإنسان في المرور",
-    so: "Dadka waddooyinka",
   },
-  4: { sv: "Fordon", en: "Vehicles", ti: "ተሽከርከርቲ", ar: "المركبات", so: "Gaadiidka" },
-  5: { sv: "Miljö", en: "Environment", ti: "ከባቢ", ar: "البيئة", so: "Deegaanka" },
-  6: { sv: "Landsväg", en: "Rural roads", ti: "ገጠራዊ መንገዲ", ar: "الطرق الريفية", so: "Waddooyinka miyiga" },
-  7: { sv: "Stadstrafik", en: "Urban traffic", ti: "ትራፊክ ከተማ", ar: "المرور داخل المدن", so: "Gaadiidka magaalada" },
-  8: { sv: "Parkering", en: "Parking", ti: "ምዕራፍ", ar: "الوقوف", so: "Baarkinka" },
-  9: { sv: "Blandade frågor", en: "Mixed questions", ti: "ዝተፈላለዩ ሕቶታት", ar: "أسئلة متنوعة", so: "Su'aalo isku dhafan" },
+  4: { sv: "Fordon", en: "Vehicles", ti: "ተሽከርከርቲ", ar: "المركبات" },
+  5: { sv: "Miljö", en: "Environment", ti: "ከባቢ", ar: "البيئة" },
+  6: { sv: "Landsväg", en: "Rural roads", ti: "ገጠራዊ መንገዲ", ar: "الطرق الريفية" },
+  7: { sv: "Stadstrafik", en: "Urban traffic", ti: "ትራፊክ ከተማ", ar: "المرور داخل المدن" },
+  8: { sv: "Parkering", en: "Parking", ti: "ምዕራፍ", ar: "الوقوف" },
+  9: { sv: "Blandade frågor", en: "Mixed questions", ti: "ዝተፈላለዩ ሕቶታት", ar: "أسئلة متنوعة" },
 };
 
 export async function importTheory(db: PrismaClient) {
@@ -87,6 +82,15 @@ export async function importTheoryQuestions(
   db: PrismaClient,
   questions: TheoryBankQuestion[],
 ) {
+  const ids = new Set(questions.map((question) => question.id));
+  if (ids.size !== questions.length) throw new Error("THEORY_BANK_DUPLICATE_ID");
+  for (const question of questions) {
+    for (const locale of NON_SWEDISH_LOCALES) {
+      if (question.translations[locale].options.length !== question.options_sv.length) {
+        throw new Error(`THEORY_BANK_OPTION_COUNT ${question.id} ${locale}`);
+      }
+    }
+  }
 
   const categories = new Map<number, { id: string }>();
   for (let parm = 1; parm <= 9; parm += 1) {
@@ -116,24 +120,28 @@ export async function importTheoryQuestions(
     seenInCategory.set(question.parm, indexInCategory + 1);
     const category = categories.get(question.parm);
     if (!category) throw new Error(`THEORY_BANK_PARM ${question.id}`);
-    const isFree = indexInCategory < 20;
+    const isFree = true;
 
     const row = await db.theoryQuestion.upsert({
       where: { sourceRef: question.id },
       update: {
         categoryId: category.id,
         isFree,
+        needsReview: true,
+        sourceCitation: question.source_citation,
         difficulty: question.difficulty ?? 2,
-        active: question.status === "ok",
-        imageUrl: question.needs_image ? `/theory/${question.id}.webp` : null,
+        active: true,
+        imageUrl: null,
       },
       create: {
         sourceRef: question.id,
         categoryId: category.id,
         isFree,
+        needsReview: true,
+        sourceCitation: question.source_citation,
         difficulty: question.difficulty ?? 2,
-        active: question.status === "ok",
-        imageUrl: question.needs_image ? `/theory/${question.id}.webp` : null,
+        active: true,
+        imageUrl: null,
       },
     });
 
@@ -145,8 +153,8 @@ export async function importTheoryQuestions(
         explanation: question.explanation_sv,
       },
       ...NON_SWEDISH_LOCALES.flatMap((locale) => {
-        const translation = question.translations?.[locale];
-        return translation ? [{ locale, ...translation }] : [];
+        const translation = question.translations[locale];
+        return [{ locale, ...translation }];
       }),
     ];
 
@@ -193,8 +201,7 @@ export async function importTheoryQuestions(
         create: { answerId, locale: "sv", text },
       });
       for (const locale of NON_SWEDISH_LOCALES) {
-        const translatedText = question.translations?.[locale]?.options[index];
-        if (!translatedText) continue;
+        const translatedText = question.translations[locale].options[index];
         await db.theoryAnswerTranslation.upsert({
           where: { answerId_locale: { answerId, locale } },
           update: { text: translatedText },

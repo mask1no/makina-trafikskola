@@ -20,13 +20,13 @@ const { auth } = NextAuth({
 });
 
 function requiredRoles(pathname: string): readonly Role[] | null {
-  if (/^\/(?:sv|en|ti|ar|so)\/admin(?:\/|$)/.test(pathname)) {
+  if (/^\/(?:sv|en|ti|ar)\/admin(?:\/|$)/.test(pathname)) {
     return ["ADMIN"];
   }
-  if (/^\/(?:sv|en|ti|ar|so)\/larare-portal(?:\/|$)/.test(pathname)) {
+  if (/^\/(?:sv|en|ti|ar)\/larare-portal(?:\/|$)/.test(pathname)) {
     return ["TEACHER", "ADMIN"];
   }
-  if (/^\/(?:sv|en|ti|ar|so)\/mina-sidor(?:\/|$)/.test(pathname)) {
+  if (/^\/(?:sv|en|ti|ar)\/mina-sidor(?:\/|$)/.test(pathname)) {
     return ["STUDENT"];
   }
   return null;

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { cookies, headers } from "next/headers";
+import { headers } from "next/headers";
 import localFont from "next/font/local";
 import { Noto_Sans_Arabic, Noto_Sans_Ethiopic } from "next/font/google";
 
@@ -43,13 +43,12 @@ export default async function RootLayout(
     children: React.ReactNode;
   }>
 ) {
-  const [headerStore, cookieStore] = await Promise.all([headers(), cookies()]);
+  const headerStore = await headers();
   const requestedLocale = headerStore.get("x-makina-locale") ?? "sv";
   const locale = isLocale(requestedLocale) ? requestedLocale : "sv";
-  const theme = cookieStore.get("makina-theme")?.value === "dark" ? "dark" : "light";
 
   return (
-    <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"} data-theme={theme} suppressHydrationWarning>
+    <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"}>
       <body
         className={`${geistSans.variable} ${notoArabic.variable} ${notoEthiopic.variable} antialiased ${
           locale === "ar"

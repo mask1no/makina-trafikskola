@@ -13,7 +13,7 @@ import { hasTheoryAccess, presentQuestion } from "@/lib/theory/access";
 import { scoreMockExam } from "@/lib/theory/exam";
 
 const paramsSchema = z.object({ id: z.string().cuid() });
-const localeSchema = z.enum(["sv", "en", "ti", "ar", "so"]);
+const localeSchema = z.enum(["sv", "en", "ti", "ar"]);
 
 const inputSchema = z.object({
   id: z.string().cuid(),

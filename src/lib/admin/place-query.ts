@@ -1,9 +1,7 @@
 import { db } from "@/lib/db";
 
-import { isSchoolLocation } from "./places";
-
 export async function schoolLocations() {
-  const rows = await db.location.findMany({
+  return db.location.findMany({
     where: { active: true, status: "ACTIVE" },
     orderBy: { name: "asc" },
     select: {
@@ -15,7 +13,6 @@ export async function schoolLocations() {
       postalCode: true,
     },
   });
-  return rows.filter((row) => isSchoolLocation(row.slug));
 }
 
 export async function locationSummaries() {

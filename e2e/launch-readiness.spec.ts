@@ -72,13 +72,11 @@ test.describe("public localized experience", () => {
     await expect(notice).not.toContainText("AccessDenied");
   });
 
-  test("preserves an instructor deep link in booking", async ({ page }) => {
-    await page.goto("/en/larare/aron-kessete");
-    await page.getByRole("link", { name: /Aron/ }).last().click();
-    await expect(page).toHaveURL(/\/en\/boka\?teacher=/);
-    const teacher = page.getByRole("button", { name: /Aron Kessete/ });
-    test.skip((await teacher.count()) === 0, "This server has booking disabled.");
-    await expect(teacher).toHaveAttribute("aria-pressed", "true");
+  test("redirects instructor detail URLs to the instructor list", async ({ page }) => {
+    const response = await page.goto("/en/larare/aron-kessete");
+    expect(response?.status()).toBe(200);
+    await expect(page).toHaveURL(/\/en\/larare$/);
+    await expect(page.getByRole("heading", { name: "Aron Kessete" })).toBeVisible();
   });
 
   test("falls back to plain pickup input and requires selecting an address suggestion", async ({

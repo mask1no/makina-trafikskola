@@ -21,8 +21,7 @@
     "en": "English",
     "ti": "ትግርኛ",
     "ku": "ኩርዲሽ",
-    "ar": "العربية",
-    "so": "Soomaali"
+    "ar": "العربية"
   },
   "shell": {
     "skipToContent": "ናብ ትሕዝቶ ዝለል",
@@ -57,7 +56,6 @@
       "en": "እንግሊዝኛ",
       "ti": "ትግርኛ",
       "ku": "ኩርዲሽ",
-      "so": "ሶማሊ",
       "ar": "ዓረብኛ"
     },
     "here": "ኣበይ ኣለና",
@@ -75,8 +73,7 @@
     "orgnrLabel": "ቑጽሪ ትካል",
     "call": "ደውል",
     "callUs": "ደውሉልና",
-    "themeToDark": "ናብ ጸልማት ቀይር",
-    "themeToLight": "ናብ ብርሃን ቀይር",
+    "mailUs": "ኢሜይል ስደዱልና",
     "callName": "ደውል <phone></phone>",
     "seePrices": "ዋጋታት",
     "openNow": "ሕጂ ክፉት",
@@ -118,21 +115,27 @@
   "home": {
     "hero": {
       "brand": "Makina",
-      "eyebrow": "መንገድኻ ናብ ፍቓድ ምዝዋር",
       "title": "ብምትእምማን ዘውር፣ ብቋንቋኻ ተማሃር",
       "description": "ትምህርቲ ምዝዋር፣ ቲዮሪን ምኩራት መምህራንን ኣብ ስቶክሆልም።",
-      "findTeacher": "መምህር ድለ",
-      "cardLabel": "ውልቃዊ ትምህርቲ",
-      "cardTitle": "ካብ ቀዳማይ ትምህርቲ ንጹር መደብ",
-      "cardDescription": "ቋንቋ፣ ዓይነት መኪናን መምህርን ብድሌትካ ምረጽ።",
-      "reviews": "ግምገማታት",
-      "pickupProof": "ምውሳድ ብምስምማዕ",
-      "languageProof": "{languages}",
       "areas": "Farsta · Upplands Väsby"
     },
+    "quick": {
+      "eyebrow": "ቅልጡፍ ምርጫ",
+      "title": "እንታይ ክትገብር ትደሊ?",
+      "lessons": "ትምህርቲ ምዝዋር ርአ",
+      "courses": "Risk 1ን Risk 2ን ርአ",
+      "teachers": "መምህር ድለ",
+      "contact": "ርኸበና"
+    },
+    "pickup": {
+      "eyebrow": "ምውሳድ",
+      "title": "ኣብ ከባቢኻ ንራኸበካ",
+      "description": "ምውሳድ ኣብ Farstaን Upplands Väsbyን ብስምምዕ።",
+      "areas": "Farsta · Upplands Väsby",
+      "imageAlt": "ናይ ማኪና ከባቢታት ምውሳድ",
+      "mapLabel": "ከባቢ ምውሳድ"
+    },
     "journey": {
-      "eyebrow": "ከመይ ይሰርሕ",
-      "title": "ካብ ቀዳማይ ምርጫኻ ናብ ውሑስ ምዝዋር",
       "choose": {
         "title": "መደብካ ምረጽ",
         "description": "ሓደ ትምህርቲ ወይ ፓኬጅ ብህድኣት ኣወዳድር።"
@@ -150,27 +153,11 @@
         "description": "ብንጹር መምርሒ ደረጃ ብደረጃ ምዕብል።"
       }
     },
-    "products": {
-      "eyebrow": "ትምህርቲ ምዝዋር",
-      "title": "ዝሰማምዓካ መንገዲ ምረጽ"
-    },
     "teachers": {
       "eyebrow": "ብቋንቋኻ ተማሃር",
       "title": "መምህርካ ረኽብ",
       "description": "ቋንቋኻ ዝዛረብን ኣብ እትደልዮ ቦታ ዝምህርን መምህር ድለ።",
       "languageLabel": "መማህራን ብቋንቋ ፈልጥ"
-    },
-    "reviews": {
-      "eyebrow": "ግምገማ ተማሃሮ",
-      "title": "ዝተፈቐዱ ግምገማታት",
-      "summary": "{count} ዝተሓተመ ግምገማ · ማእከላይ {average}/5"
-    },
-    "location": {
-      "eyebrow": "ኣብ ጥቓኻ",
-      "title": "ኣብ ካርታ መምህራን ድለ",
-      "description": "ኣብ ቦታታትና ዘለዉ መምህራን ርአ። ተንቀሳቓሲ ካርታ ኣብ ገጽ መምህራን ጥራይ ይጽዓን።",
-      "openMap": "ካርታ መምህራን ክፈት",
-      "area": "ከባቢ ስቶክሆልም"
     },
     "faq": {
       "eyebrow": "ብዙሕ ግዜ ዝሕተቱ ሕቶታት",
@@ -181,16 +168,16 @@
       },
       "languages": {
         "question": "ብቋንቋይ ትምህርቲ ክወስድ ይኽእል ድየ?",
-        "answer": "ትምህርቲ ብ{languages}። {comingSoonLanguages} ኣብ ቀረባ።"
+        "answer": "ትምህርቲ ብ{languages}።"
       },
       "pickup": {
         "question": "ክትወስዱኒ ትኽእሉ ዲኹም?",
-        "answer": "ምውሳድ ኣብ ውሽጢ ዞባታት ፋርስታን ኡፕላንድስ ቬስቢን ነጻ እዩ።"
+        "answer": "ምውሳድ ኣብ Farstaን Upplands Väsbyን ብስምምዕ ይግበር።"
       },
       "cancel": {
         "question": "ትምህርቲ ብኸመይ እስርዝ?",
         "answer": "ኣብ ቦታ ቆጸራታተይ ክትስርዙ ትኽእሉ። ዝዝሓለ 24 ሰዓት ቅድሚ ትምህርቲ እንተሰሪዝኩም፣ ክሬዲት ናብ ሳልዶኹም ይምለስ። ድሕሪኡ ምስራዝ ምሉእ ዋጋ ይኽፈል፣ ትምህርቲ ድማ ካብ ሳልዶ ይቑረጽ።",
-        "answerPhone": "ንምስራዝ ወይ ንምቕያር ትምህርቲ <phone></phone> ደውሉ። ዝዝሓለ 24 ሰዓት ቅድሚ ትምህርቲ ብነጻ እዩ፣ ትምህርቲ ድማ ናብ ሳልዶ ይምለስ። ድሕሪኡ ምስራዝ ምሉእ ዋጋ ይኽፈል ከምኡውን ካብ ሳልዶ ይቑረጽ።"
+        "answerPhone": "ትምህርቲ ንምስራዝ ወይ ንምቕያር ብገጽ ርክብ ርኸቡና። ዝዝሓለ 24 ሰዓት ቅድሚ ትምህርቲ ብነጻ እዩ፣ ትምህርቲ ድማ ናብ ሳልዶ ይምለስ። ድሕሪኡ ምስራዝ ምሉእ ዋጋ ይኽፈል ከምኡውን ካብ ሳልዶ ይቑረጽ።"
       },
       "risk": {
         "question": "ኣብ መንጎ Risk 1ን Risk 2ን ዘሎ ፍልልይ እንታይ እዩ?",
@@ -206,17 +193,17 @@
       }
     },
     "theory": {
-      "comingSoon": "ቴዎሪ ብሓሙሽተ ቋንቋታት ኣብ ቀረባ ክወጽእ እዩ።"
+      "comingSoon": "ቴዎሪ ብኣርባዕተ ቋንቋታት ወብሳይትና ይዳሎ ኣሎ።"
     },
     "benefits": {
       "label": "ኣብ ማኪና እትረኽቦ",
       "language": {
         "title": "ቋንቋኻ",
-        "body": "ትምህርቲ ብ{languages}። {comingSoonLanguages} ኣብ ቀረባ።"
+        "body": "ትምህርቲ ብ{languages}።"
       },
       "pickup": {
         "title": "ምልዓል",
-        "body": "ምውሳድ ኣብ ውሽጢ ፋርስታን ኡፕላንድስ ቬስቢን ነጻ እዩ።"
+        "body": "ኣብ Farstaን Upplands Väsbyን ብስምምዕ።"
       },
       "lesson": {
         "title": "50 ደቒቕ",
@@ -225,18 +212,6 @@
       "prices": {
         "title": "ዋጋ",
         "body": "ኩሉ ዋጋ ቫት ዝሓዘ እዩ።"
-      },
-      "testLesson": {
-        "title": "ናይ ፈተና ትምህርቲ",
-        "body": "ናይ ፈተና ትምህርቲ ብ{price}"
-      },
-      "risk": {
-        "title": "ትምህርቲ ሓደጋ",
-        "body": "ክልቲኡ ናይ ሓደጋ ስልጠናታት ኣብ ገዛና"
-      },
-      "guarantee": {
-        "title": "ዋህስ",
-        "body": "ክሳብ እትሓልፍ ዝውር"
       },
       "payment": {
         "title": "ክፍሊት",
@@ -253,10 +228,6 @@
       "reminder": {
         "title": "መዘኻኸሪ",
         "body": "SMS ቅድሚ እቲ ትምህርቲ ብሓደ መዓልቲ።"
-      },
-      "selfBook": {
-        "title": "ብገዛእ ርእስኻ ምዝገባ",
-        "body": "ግዜን መምህርን ብቐጥታ ኣብ መስመር ምረጽ።"
       }
     }
   },
@@ -371,18 +342,10 @@
   },
   "teacher": {
     "yearsExperience": "{count, plural, =0 {ሓድሽ መምህር} =1 {1 ዓመት ተመክሮ} other {{n} ዓመት ተመክሮ}}",
-    "viewProfile": "ፕሮፋይል ርአ",
     "transmission": {
       "manual": "ማንዋል",
       "automatic": "ኣውቶማቲክ"
     },
-    "profileEyebrow": "መምህር ምዝዋር",
-    "demoProfile": "ናይ ምርኢት ፕሮፋይል – ናይ ሓቂ መምህር ኣይኮነን",
-    "bioPending": "መግለጺ መምህር ይሕደስ ኣሎ።",
-    "languages": "ቋንቋታት",
-    "transmissions": "ዓይነት መኪና",
-    "locations": "ቦታታት",
-    "bookWith": "ምስ {name} ሓዝ",
     "nextFree": "ዝቕጽል ናጻ ሰዓት"
   },
   "map": {
@@ -414,6 +377,12 @@
     "seats": "ዝተረፈ ቦታ",
     "seatsLeft": "{count, plural, =0 {መሊኡ} =1 {1 ቦታ ተሪፉ} other {{n} ቦታታት ተሪፎም}}",
     "inactive": "እዚ ኮርስ ገና ንሽያጥ ኣይተኸፍተን።",
+    "soon": "ሓደስቲ ግዜታት ኮርስ ኣብ ቀረባ ክመጹ እዮም።",
+    "callToBook": "ብዛዕባ እቲ ኮርስ ደውሉልና",
+    "info": {
+      "RISK1": "Risk 1 ናይቲ ግዴታዊ ትምህርቲ ሓደጋ ክፍለ ሓሳብ እዩ።",
+      "RISK2": "Risk 2 ግብራዊ ክፋል ኮይኑ ኣብ ሸተት መለማመዲ ይካየድ።"
+    },
     "emptyTitle": "ዝተመደበ ኮርስ የለን",
     "emptyDescription": "ሓደስቲ ግዜታት ምስ ተረጋገጹ ኣብዚ ይርከቡ።",
     "kind": {
@@ -448,7 +417,7 @@
       "features": {
         "categories": "ንጹር ምድባት",
         "practice": "ነጻ ናይ ልምምድ ሕቶታት",
-        "languages": "ትምህርቲ ብ{languages}። {comingSoonLanguages} ኣብ ቀረባ።"
+        "languages": "ትምህርቲ ብ{languages}።"
       }
     },
     "licensingPending": "ምሉእ ባንክ ሕቶታት ክኸፍት እዩ ምስ ትገዝእ ናይ ቴዎሪ መእተዊ።",
@@ -456,6 +425,7 @@
     "freeIntro": "ብነጻ ናሙና ጀምር",
     "startPractice": "ልምምድ ጀምር",
     "freeCount": "{count, plural, =1 {1 ነጻ ሕቶ} other {{n} ነጻ ሕቶታት}}",
+    "categoryProgress": "{attempted}/{total} ዝተመለሱ",
     "swedishOnly": "ብሽወደንኛ ጥራይ",
     "examLink": "ናይ ፈተነ መርመራ ክፈት",
     "emptyTitle": "ነጻ ሕቶታት ድሕሪ ቀረባ ክሕተሙ እዮም",
@@ -510,6 +480,7 @@
     "title": "ቤት ትምህርቲ ምዝዋር ኣብ {city}",
     "description": "ዝተረጋገጸ ቦታናን መምህራንናን ኣብ {city} ርአ።",
     "addressPending": "ልክዕ ኣድራሻ መረጋገጺ ይጽበ ኣሎ።",
+    "addressOnContact": "ናይ ምብጻሕ ኣድራሻን መንገድን ኣብ ገጽ ርክብ ኣሎ።",
     "teachersTitle": "መምህራን ኣብዚ ቦታ",
     "emptyTitle": "መምህራን ገና ኣይተመደቡን",
     "emptyDescription": "ቦታኦም ምስ ተረጋገጸ ኣብዚ ይርከቡ።",
@@ -571,7 +542,7 @@
       "pickup": {
         "short": "ምውሳድ",
         "title": "ኣበይ ክንወስደካ?",
-        "free": "ምውሳድ ኣብ ውሽጢ እቲ ዞባ ነጻ እዩ።",
+        "free": "ምውሳድ ኣብቲ ከባቢ ብስምምዕ ይግበር።",
         "office": "ኣብ ቤት ጽሕፈት ተራኸቡና",
         "address": "ኣድራሻ ምውሳድ",
         "outside": "እቲ ኣድራሻ ካብ ዞባ ወጻኢ እዩ። ኣብ ውሽጢ ዞባ ዝርከብ ኣድራሻ ምረጽ።",
@@ -687,7 +658,7 @@
     "working": "በጃኻ ተጸበ…",
     "devCode": "ንናይ ከባቢ ልምዓት ጥራይ – ኮድ: {code}",
     "secure": "ውሑስ መእተዊ ሕሳብ",
-    "support": "ንምእታው ሓገዝ የድልየካ? 070-097 04 83 ደውል ወይ ናብ info@makina.se ጽሓፍ።",
+    "support": "ንምእታው ሓገዝ የድልየካ? ብገጽ ርክብ ርኸበና።",
     "context": {
       "eyebrow": "Makina Trafikskola",
       "title": "ቦታ ምሓዝ፣ ቀሪን ንድፊን ብቋንቋኻ",
@@ -989,7 +960,7 @@
       ],
       "seller": {
         "title": "ሸያጢ",
-        "body": "እዚ ኣገልግሎት ብ Makina Trafikskola AB ይሽየጥ።\nቑጽሪ ትካል፦ 559531-4146።\nናይ ምብጻሕ ኣድራሻ፦ Centralvägen 5, 194 77 Upplands Väsby።\nናይ ፖስታ ኣድራሻ፦ Centralvägen 5, 194 77 Upplands Väsby።\nኢመይል፦ info@makina.se።\nተሌፎን፦ 070-097 04 83።"
+        "body": "እዚ ኣገልግሎት ብ Makina Trafikskola AB ይሽየጥ። ምሉእ ሓበሬታ ትካልን ርክብን ኣብ ገጽ ርክብ ኣሎ።"
       },
       "prices": {
         "title": "ዋጋን ክፍሊትን",
@@ -1009,11 +980,11 @@
       },
       "withdrawal": {
         "title": "መሰል ምስራዝ",
-        "body": "ከም ሕጊ ርሑቕ ውዕል 14 መዓልቲ ክትስርዝ ትኽእል።\nእቲ ግዜ ውዕል ምስ ተኣተወ ይጅምር።\nልዑላውነት፦ ብንጹር ከምእትሰማማዕ ኣገልግሎት ኣብቲ ግዜ ክጅምር፣ መሰል ምስራዝ ከምእትስእን እንተኣረጋገጽካ፣ ነቲ ዝተዋህበ ክፋል እዚ ልዑላውነት ይሰርሕ።\nክትስርዝ እንተደሊኻ ናብ info@makina.se ጽሓፍ።"
+        "body": "ከም ሕጊ ርሑቕ ውዕል 14 መዓልቲ ክትስርዝ ትኽእል።\nእቲ ግዜ ውዕል ምስ ተኣተወ ይጅምር።\nልዑላውነት፦ ብንጹር ከምእትሰማማዕ ኣገልግሎት ኣብቲ ግዜ ክጅምር፣ መሰል ምስራዝ ከምእትስእን እንተኣረጋገጽካ፣ ነቲ ዝተዋህበ ክፋል እዚ ልዑላውነት ይሰርሕ።\nክትስርዝ እንተደሊኻ ብገጽ ርክብ ርኸበና።"
       },
       "complaints": {
         "title": "ጥርዓን",
-        "body": "መጀመርታ ናብ info@makina.se ወይ 070-097 04 83 ተራኸብ።\nእንተዘይተሰማማዕና ናብ ARN፣ arn.se ክትከይድ ትኽእል።\nመድረኽ EU ንኦንላይ ክትጥቀም ትኽእል፦ https://ec.europa.eu/consumers/odr"
+        "body": "መጀመርታ ብገጽ ርክብ ርኸበና።\nእንተዘይተሰማማዕና ናብ ARN፣ arn.se ክትከይድ ትኽእል።\nመድረኽ EU ንኦንላይ ክትጥቀም ትኽእል፦ https://ec.europa.eu/consumers/odr"
       },
       "law": {
         "title": "ዝሰርሕ ሕጊ",
@@ -1103,7 +1074,7 @@
       ],
       "controller": {
         "title": "ሓላፊ ውልቃዊ ሓበሬታ",
-        "body": "Makina Trafikskola AB ሓላፊ እዩ።\nቑጽሪ ትካል፦ 559531-4146።\nኣድራሻ፦ Centralvägen 5, 194 77 Upplands Väsby።\nኢመይል፦ info@makina.se።\nተሌፎን፦ 070-097 04 83።"
+        "body": "Makina Trafikskola AB ሓላፊ እዩ። ምሉእ ሓበሬታ ትካልን ርክብን ኣብ ገጽ ርክብ ኣሎ።"
       },
       "collected": {
         "title": "እንታይ ንእከብ",
@@ -1182,11 +1153,34 @@
       "overview": "ሓፈሻዊ",
       "places": "ቦታታት",
       "calendar": "ካላንደር",
+      "courses": "ኮርሳት",
       "students": "ተማሃሮ",
       "teachers": "መምህራን",
       "reviews": "ግምገማታት",
       "products": "ፍርያት",
       "areas": "ዞባታት"
+    },
+    "courses": {
+      "title": "ኮርሳት",
+      "description": "ናይ Risk 1ን Risk 2ን ግዜታት ፍጠር፣ ኣስተኻኽል ወይ ሰርዝ።",
+      "createTitle": "ሓድሽ ግዜ ኮርስ",
+      "course": "ኮርስን ፍርያትን",
+      "language": "ቋንቋ ትምህርቲ",
+      "startsAt": "መጀመርታ",
+      "endsAt": "መወዳእታ",
+      "venueName": "ስም ቦታ",
+      "venueAddress": "ኣድራሻ",
+      "capacity": "ብዝሒ ቦታ",
+      "create": "ግዜ ፍጠር",
+      "created": "ግዜ ኮርስ ተፈጢሩ",
+      "save": "ዓቅብ",
+      "saved": "ተዓቂቡ",
+      "saving": "ይዕቀብ ኣሎ…",
+      "cancel": "ግዜ ሰርዝ",
+      "cancelled": "ተሰሪዙ",
+      "occasion": "ግዜ ኮርስ {count}",
+      "booked": "{booked} ካብ {capacity} ተታሒዙ",
+      "error": "ምዕቃብ ኣይተኻእለን። ደጊምካ ፈትን።"
     },
     "editor": {
       "save": "ዓቅብ",
@@ -1484,7 +1478,7 @@
     "locationsDescription": "ኣብ Centralvägen 5, Upplands Väsby ትረኽቡና። ኣብ Google Maps መንገዲ ክፈቱ።",
     "directions": "መግለጺ መንገዲ",
     "languagesTitle": "የናይ ቋንቋ የድልየካ?",
-    "languagesBody": "ትምህርቲ ብ{languages}። {comingSoonLanguages} ኣብ ቀረባ።",
+    "languagesBody": "ትምህርቲ ብ{languages}።",
     "reviewsTitle": "ግምገማ ተማሃሮ",
     "reviewsSummary": "{count} ዝተሓተመ ግምገማ · ማእከላይ {average}/5",
     "staffTitle": "ሰራሕተኛታትና",

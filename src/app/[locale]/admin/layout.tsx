@@ -41,6 +41,7 @@ export default async function AdminLayout(
       matches: [`${base}/larare`, `${base}/instructors`],
     },
     { href: `${base}/calendar`, label: t("calendar") },
+    { href: `${base}/kurser`, label: t("courses") },
     { href: `${base}/recensioner`, label: t("reviews") },
     { href: `${base}/produkter`, label: t("products") },
     { href: `${base}/omraden`, label: t("areas") },

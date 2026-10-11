@@ -3,7 +3,6 @@ import { describe, expect, it } from "vitest";
 import {
   catalogueLessonValueOre,
   completedLessonPayOre,
-  isSchoolLocation,
   netOre,
 } from "./places";
 
@@ -30,10 +29,5 @@ describe("admin place money", () => {
   it("values completed lessons at the single-lesson price", () => {
     expect(catalogueLessonValueOre(4, 79900)).toBe(319600);
     expect(catalogueLessonValueOre(-1, 79900)).toBe(0);
-  });
-
-  it("hides fixture locations", () => {
-    expect(isSchoolLocation("farsta")).toBe(true);
-    expect(isSchoolLocation("webhook-fixture")).toBe(false);
   });
 });

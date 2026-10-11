@@ -8,7 +8,6 @@ import { PageHeader } from "@/components/PageHeader";
 import { StaticMapArtwork } from "@/components/StaticMapArtwork";
 import { isLocale } from "@/i18n/routing";
 import { db } from "@/lib/db";
-import { isAddressConfirmed } from "@/lib/locations/address";
 import { pageCanonical, withSocial } from "@/lib/seo/metadata";
 
 export const dynamic = "force-dynamic";
@@ -101,21 +100,13 @@ export default async function TrafikskolaPage(
       </div>
     );
   }
-  const hasConfirmedAddress = isAddressConfirmed(location.address);
   const localStructuredData = {
     "@context": "https://schema.org",
     "@graph": areas
-      .filter((area) => isAddressConfirmed(area.address))
       .map((area) => ({
         "@type": "DrivingSchool",
         name: area.name,
-        address: {
-          "@type": "PostalAddress",
-          streetAddress: area.address,
-          postalCode: area.postalCode,
-          addressLocality: area.city,
-          addressCountry: "SE",
-        },
+        areaServed: area.city,
         ...(Number.isFinite(area.lat) && Number.isFinite(area.lng)
           ? {
               geo: {
@@ -141,11 +132,7 @@ export default async function TrafikskolaPage(
         <section className="mt-10 grid overflow-hidden rounded-lg border border-border bg-card shadow-card md:grid-cols-[.75fr_1.25fr]">
           <div className="p-6 sm:p-8">
           <h2 className="text-2xl font-black">{location.name}</h2>
-          {hasConfirmedAddress ? (
-            <p className="mt-3 text-ink-muted">{location.address}, {location.postalCode} {location.city}</p>
-          ) : (
-            <Notice className="mt-5">{t("addressPending")}</Notice>
-          )}
+          <Notice className="mt-5">{t("addressOnContact")}</Notice>
           </div>
           <div className="relative min-h-72 border-t border-border md:border-s md:border-t-0" role="img" aria-label={t("title", { city: location.city })}>
             <StaticMapArtwork className="absolute inset-0 size-full" />

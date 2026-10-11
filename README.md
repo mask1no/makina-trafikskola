@@ -1,6 +1,6 @@
 # Makina Trafikskola
 
-Driving school site for Makina Trafikskola in Upplands Väsby. Students book lessons, buy packages and practise theory. The site is in Swedish, English, Tigrinya, Arabic (RTL) and Somali. Teaching is currently in Swedish, English, Tigrinya and Kurdish. Somali is marked as coming soon.
+Driving school site for Makina Trafikskola in Upplands Väsby. Students book lessons, buy packages and practise theory. The four UI locales are Swedish, English, Tigrinya and Arabic (RTL). Teaching languages are Swedish, English, Tigrinya and Kurdish. The public UI has no selectable dark mode.
 
 The app does not send email. Codes, booking messages and the 24-hour reminder are SMS. Stripe sends payment receipts.
 
@@ -11,6 +11,12 @@ Next.js App Router, React server components, and a client leaf only where the sc
 Business rules live in `src/lib` and take `now: Date` when time matters. Prices are integer öre. Times are stored in UTC and shown in Europe/Stockholm with Latin digits.
 
 Notifications are queued, rendered from `src/lib/notifications/templates`, and sent by 46elks. `/api/cron/core` runs the queue, reminders and credit expiry. The Stripe webhook reads the raw body, checks the signature, and inserts `StripeEvent` before it fulfils an order.
+
+## Current state
+
+The public site, authentication, booking and cancellation rules, credit ledger, Stripe integration, theory flows, student/instructor dashboards, admin tools, health checks, backup scripts, and multilingual/RTL foundations are implemented. Public booking and instructor visibility remain launch-gated.
+
+Launch still depends on client-owned production credentials, approved instructor data and photos, licensed full theory content, live card/Swish refund acceptance, working SMS, configured Sentry/R2/cron, an old-site redirect inventory, and final four-locale mobile QA. Keep `BOOKING_ENABLED=0` until payment, SMS, backups, monitoring and real availability have all been verified.
 
 ## Local setup
 
@@ -28,7 +34,7 @@ The app is at http://localhost:3000. Postgres from Compose is on port 5433:
 DATABASE_URL=postgresql://makina:makina_local_dev@localhost:5433/makina
 ```
 
-`npm run theory:import` loads the question bank. The bank file stays out of git.
+`npm run theory:import` loads the question bank. The bank file stays out of git. For each question that needs an image, add `public/theory/<question-id>.webp`; for example, `P3-151` uses `public/theory/P3-151.webp`. Missing files render the translated missing-image note instead of a broken image.
 
 Launch values, cron, calendar sync and the dashboard clicks are in [LAUNCH_SETUP.md](LAUNCH_SETUP.md).
 
@@ -73,7 +79,7 @@ Also used:
 | `npm run typecheck` / `npm run lint` | TypeScript and ESLint |
 | `npm run test:run` | Unit tests only (parallel) |
 | `npm run test:integration` | Integration tests only (`RUN_DB_INTEGRATION=1`, serial, `*_test` DB only) |
-| `npm run check:translations` | The five message files have the same keys |
+| `npm run check:translations` | The four message files have the same keys |
 | `npm run test:concurrency` | Booking lock integration test. Needs `RUN_DB_INTEGRATION=1` |
 | `npm run test:webhook-replay` | Stripe webhook replay. Needs `RUN_DB_INTEGRATION=1` |
 | `npm run test:e2e` | Seed, build, Playwright |
@@ -105,6 +111,8 @@ Google OAuth: create a web client. Redirect URIs are `https://www.example/api/au
 Teacher phones are stored on the user and shown to the teacher in the portal. The calendar feed is `/api/teachers/calendar/[token]`. The token is created in the portal and must not be logged.
 
 Backups upload a `pg_dump` to the R2 backup bucket. `npm run verify:restore` checks that a dump can be restored into `RESTORE_DATABASE_URL`.
+
+The backup runner needs `pg_dump` and `pg_restore`, plus `DATABASE_URL`, the shared R2 credentials and `R2_BACKUP_BUCKET`. `BACKUP_PREFIX` defaults to `postgres`. `RESTORE_DATABASE_URL` must name a disposable database containing `restore` or `test`; restore verification uses `--clean --if-exists` and refuses any other target. Neither script prints credentials. Run and record a real backup and restore after client-owned R2 credentials are available.
 
 ## Railway variables
 
@@ -141,12 +149,6 @@ Pickup address entry keeps form state aligned with visible text. Typing updates 
 
 Typography tokens are defined in `src/app/globals.css` and exposed via Tailwind size utilities in `tailwind.config.ts`: `display`, `hero`, `h2`, `h3`, `body`, `small`, `micro`, and `nav`. Arabic body text is slightly larger with a 1.75 line-height and Tigrinya keeps 1.7 line-height.
 
-## Reviews And Photos
+## Photos and public instructor data
 
-Public reviews render only when at least `MIN_PUBLIC_REVIEWS` (3) approved reviews exist. Teacher/staff/map avatars use uploaded `TeacherProfile.photoUrl` when available, with initials as fallback.
-
-## Post-Launch Refactors
-
-- Split `src/app/api/webhooks/stripe/route.ts` handlers into typed modules
-- Split `src/app/[locale]/(auth)/auth-ui.tsx` into form components
-- Split `src/app/[locale]/layout.tsx` and homepage into smaller sections
+Teacher/staff/map avatars use uploaded `TeacherProfile.photoUrl` when available, with initials as fallback. Before enabling instructor pages, approve each public portrait, teaching languages, transmissions, experience, teaching/base locations, weekly hours, vehicle details and biography. Never publish home addresses, live GPS positions, private phone numbers, personal email addresses or identity numbers.

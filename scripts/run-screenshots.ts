@@ -1,4 +1,5 @@
 import { spawnSync } from "node:child_process";
+import { rmSync } from "node:fs";
 
 function run(command: string, args: string[], env: NodeJS.ProcessEnv = process.env) {
   const windows = process.platform === "win32";
@@ -17,6 +18,7 @@ function run(command: string, args: string[], env: NodeJS.ProcessEnv = process.e
 
 const npmCmd = "npm";
 
+rmSync("screenshots", { recursive: true, force: true });
 run(npmCmd, ["run", "e2e:prepare"]);
 run(npmCmd, ["run", "build"]);
 run(

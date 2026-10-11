@@ -11,6 +11,8 @@
 /playwright-report/
 /test-results/
 /translations-review.csv
+/theory-review.csv
+/.lighthouse-*.json
 /screenshots/
 
 # next.js

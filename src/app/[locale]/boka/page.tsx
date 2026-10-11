@@ -157,6 +157,7 @@ export default async function BookingPage(
       <QuestionsBlock
         title={shell("questions")}
         callLabel={shell("callUs")}
+        mailLabel={shell("mailUs")}
         phone={company("phone")}
         email={company("email")}
       />

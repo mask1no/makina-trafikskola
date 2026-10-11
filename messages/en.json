@@ -21,8 +21,7 @@
     "en": "English",
     "ti": "ትግርኛ",
     "ku": "Kurdish",
-    "ar": "العربية",
-    "so": "Soomaali"
+    "ar": "العربية"
   },
   "shell": {
     "skipToContent": "Skip to content",
@@ -57,7 +56,6 @@
       "en": "English",
       "ti": "Tigrinya",
       "ku": "Kurdish",
-      "so": "Somali",
       "ar": "Arabic"
     },
     "here": "Where we are",
@@ -75,8 +73,7 @@
     "orgnrLabel": "Org. no.",
     "call": "Call",
     "callUs": "Call us",
-    "themeToDark": "Switch to dark mode",
-    "themeToLight": "Switch to light mode",
+    "mailUs": "Email us",
     "callName": "Call <phone></phone>",
     "seePrices": "See prices",
     "openNow": "Open now",
@@ -118,21 +115,27 @@
   "home": {
     "hero": {
       "brand": "Makina",
-      "eyebrow": "Your path to a driving licence",
       "title": "Drive with confidence, learn in your language",
       "description": "Driving lessons, theory and experienced instructors in Stockholm – all in one place.",
-      "findTeacher": "Find an instructor",
-      "cardLabel": "Personal education",
-      "cardTitle": "A clear plan from your first lesson",
-      "cardDescription": "Choose language, transmission and instructor based on your needs.",
-      "reviews": "reviews",
-      "pickupProof": "Pickup by arrangement",
-      "languageProof": "{languages}",
       "areas": "Farsta · Upplands Väsby"
     },
+    "quick": {
+      "eyebrow": "Quick links",
+      "title": "What would you like to do?",
+      "lessons": "View driving lessons",
+      "courses": "View Risk 1 and Risk 2",
+      "teachers": "Find an instructor",
+      "contact": "Contact us"
+    },
+    "pickup": {
+      "eyebrow": "Pickup",
+      "title": "We meet you in your area",
+      "description": "Pickup in Farsta and Upplands Väsby by arrangement.",
+      "areas": "Farsta · Upplands Väsby",
+      "imageAlt": "Makina Trafikskola pickup areas",
+      "mapLabel": "Pickup area"
+    },
     "journey": {
-      "eyebrow": "How it works",
-      "title": "From your first choice to safer driving",
       "choose": {
         "title": "Choose your route",
         "description": "Compare one lesson or a package at your own pace."
@@ -150,27 +153,11 @@
         "description": "Develop step by step with clear guidance."
       }
     },
-    "products": {
-      "eyebrow": "Driving education",
-      "title": "Choose the path that suits you"
-    },
     "teachers": {
       "eyebrow": "Learn in your language",
       "title": "Find your instructor",
       "description": "Find an instructor who speaks your language and teaches where you want to drive.",
       "languageLabel": "Filter instructors by language"
-    },
-    "reviews": {
-      "eyebrow": "Student reviews",
-      "title": "Approved reviews",
-      "summary": "{count} published reviews · average {average}/5"
-    },
-    "location": {
-      "eyebrow": "Near you",
-      "title": "Find instructors on the map",
-      "description": "See the instructors available at our locations. The interactive map loads only when you open the instructor page.",
-      "openMap": "Open instructor map",
-      "area": "Stockholm area"
     },
     "faq": {
       "eyebrow": "Frequently asked questions",
@@ -181,16 +168,16 @@
       },
       "languages": {
         "question": "Can I take lessons in my language?",
-        "answer": "Lessons in {languages}. {comingSoonLanguages} is coming soon."
+        "answer": "Lessons in {languages}."
       },
       "pickup": {
         "question": "Can you pick me up?",
-        "answer": "Pickup is free inside the Farsta and Upplands Väsby areas."
+        "answer": "Pickup in Farsta and Upplands Väsby is available by arrangement."
       },
       "cancel": {
         "question": "How do I cancel a lesson?",
         "answer": "You can cancel under My bookings. If you cancel at the latest 24 hours before the lesson, it costs nothing and the lesson returns to your balance. A later cancellation is charged in full and the lesson is deducted from the balance.",
-        "answerPhone": "Call <phone></phone> to cancel or move a lesson. At the latest 24 hours before the lesson it costs nothing and the lesson returns to your balance. A later cancellation is charged in full and is deducted from the balance."
+        "answerPhone": "Contact us through the contact page to cancel or move a lesson. At the latest 24 hours before the lesson it costs nothing and the lesson returns to your balance. A later cancellation is charged in full and is deducted from the balance."
       },
       "risk": {
         "question": "What is the difference between Risk 1 and Risk 2?",
@@ -206,17 +193,17 @@
       }
     },
     "theory": {
-      "comingSoon": "Theory in five languages is coming soon."
+      "comingSoon": "Theory is being prepared in our four website languages."
     },
     "benefits": {
       "label": "What you get at Makina",
       "language": {
         "title": "Your language",
-        "body": "Lessons in {languages}. {comingSoonLanguages} is coming soon."
+        "body": "Lessons in {languages}."
       },
       "pickup": {
         "title": "Pickup",
-        "body": "Pickup is free inside the Farsta and Upplands Väsby areas."
+        "body": "In Farsta and Upplands Väsby by arrangement."
       },
       "lesson": {
         "title": "50 minutes",
@@ -225,18 +212,6 @@
       "prices": {
         "title": "Prices",
         "body": "All prices include VAT."
-      },
-      "testLesson": {
-        "title": "Test lesson",
-        "body": "Test lesson for {price}"
-      },
-      "risk": {
-        "title": "Risk training",
-        "body": "Both risk courses with us"
-      },
-      "guarantee": {
-        "title": "Guarantee",
-        "body": "Drive until you pass"
       },
       "payment": {
         "title": "Payment",
@@ -253,10 +228,6 @@
       "reminder": {
         "title": "Reminder",
         "body": "An SMS the day before the lesson."
-      },
-      "selfBook": {
-        "title": "Book yourself",
-        "body": "Choose a time and an instructor directly online."
       }
     }
   },
@@ -371,18 +342,10 @@
   },
   "teacher": {
     "yearsExperience": "{count, plural, =0 {New instructor} =1 {1 year of experience} other {{n} years of experience}}",
-    "viewProfile": "View profile",
     "transmission": {
       "manual": "Manual",
       "automatic": "Automatic"
     },
-    "profileEyebrow": "Driving instructor",
-    "demoProfile": "Demo profile – not a real instructor",
-    "bioPending": "The instructor's introduction is being updated.",
-    "languages": "Languages",
-    "transmissions": "Transmission",
-    "locations": "Locations",
-    "bookWith": "Book with {name}",
     "nextFree": "Next free time"
   },
   "map": {
@@ -414,6 +377,12 @@
     "seats": "Available seats",
     "seatsLeft": "{count, plural, =0 {Fully booked} =1 {1 seat left} other {{n} seats left}}",
     "inactive": "This course product is not active for purchase yet.",
+    "soon": "New course dates are coming soon.",
+    "callToBook": "Call us about the course",
+    "info": {
+      "RISK1": "Risk 1 is the theory part of the mandatory risk training.",
+      "RISK2": "Risk 2 is the practical part and takes place on a skid track."
+    },
     "emptyTitle": "No courses are scheduled",
     "emptyDescription": "New occasions will appear here after confirmation.",
     "kind": {
@@ -448,7 +417,7 @@
       "features": {
         "categories": "Clear categories",
         "practice": "Free practice questions",
-        "languages": "Lessons in {languages}. {comingSoonLanguages} is coming soon."
+        "languages": "Lessons in {languages}."
       }
     },
     "licensingPending": "The full question bank opens when you buy theory access.",
@@ -456,6 +425,7 @@
     "freeIntro": "Start with a free sample",
     "startPractice": "Start practising",
     "freeCount": "{count, plural, =1 {1 free question} other {{n} free questions}}",
+    "categoryProgress": "{attempted}/{total} attempted",
     "swedishOnly": "Swedish only",
     "examLink": "Open mock exam",
     "emptyTitle": "Free questions will be published soon",
@@ -510,6 +480,7 @@
     "title": "Driving school in {city}",
     "description": "View our confirmed location and available instructors in {city}.",
     "addressPending": "The exact visiting address is awaiting confirmation.",
+    "addressOnContact": "The visiting address and directions are on the contact page.",
     "teachersTitle": "Instructors at this location",
     "emptyTitle": "No instructors are assigned yet",
     "emptyDescription": "Instructors will appear when their location is confirmed.",
@@ -571,7 +542,7 @@
       "pickup": {
         "short": "Pickup",
         "title": "Where should we pick you up?",
-        "free": "Pickup is free inside the area.",
+        "free": "Pickup in the area is available by arrangement.",
         "office": "Meet us at the office",
         "address": "Pickup address",
         "outside": "That address is outside the area. Choose an address inside the area.",
@@ -687,7 +658,7 @@
     "working": "Please wait…",
     "devCode": "Local development only – code: {code}",
     "secure": "Secure account access",
-    "support": "Need help signing in? Call 070-097 04 83 or email info@makina.se.",
+    "support": "Need help signing in? Contact us through the contact page.",
     "context": {
       "eyebrow": "Makina Trafikskola",
       "title": "Bookings, balance and theory in your language",
@@ -989,7 +960,7 @@
       ],
       "seller": {
         "title": "Seller",
-        "body": "The service is sold by Makina Trafikskola AB.\nOrganisation number: 559531-4146.\nVisiting address: Centralvägen 5, 194 77 Upplands Väsby.\nPostal address: Centralvägen 5, 194 77 Upplands Väsby.\nEmail: info@makina.se.\nPhone: 070-097 04 83."
+        "body": "The service is sold by Makina Trafikskola AB. Full company and contact details are available on the contact page."
       },
       "prices": {
         "title": "Prices and payment",
@@ -1009,11 +980,11 @@
       },
       "withdrawal": {
         "title": "Right of withdrawal",
-        "body": "You have 14 days to withdraw under the distance-selling act.\nThe period starts when the contract is made.\nException: if you clearly agree that the service starts during that period, and confirm that you may then lose the withdrawal right, that exception applies to the part already delivered.\nContact us at info@makina.se if you want to withdraw."
+        "body": "You have 14 days to withdraw under the distance-selling act.\nThe period starts when the contract is made.\nException: if you clearly agree that the service starts during that period, and confirm that you may then lose the withdrawal right, that exception applies to the part already delivered.\nContact us through the contact page if you want to withdraw."
       },
       "complaints": {
         "title": "Complaints",
-        "body": "Contact us first at info@makina.se or 070-097 04 83.\nIf we do not agree, you can turn to the National Board for Consumer Disputes (ARN), arn.se.\nYou can also use the EU online dispute platform: https://ec.europa.eu/consumers/odr"
+        "body": "Contact us first through the contact page.\nIf we do not agree, you can turn to the National Board for Consumer Disputes (ARN), arn.se.\nYou can also use the EU online dispute platform: https://ec.europa.eu/consumers/odr"
       },
       "law": {
         "title": "Governing law",
@@ -1103,7 +1074,7 @@
       ],
       "controller": {
         "title": "Controller",
-        "body": "Makina Trafikskola AB is the controller.\nOrganisation number: 559531-4146.\nAddress: Centralvägen 5, 194 77 Upplands Väsby.\nEmail: info@makina.se.\nPhone: 070-097 04 83."
+        "body": "Makina Trafikskola AB is the controller. Full company and contact details are available on the contact page."
       },
       "collected": {
         "title": "What we collect",
@@ -1182,11 +1153,34 @@
       "overview": "Overview",
       "places": "Places",
       "calendar": "Calendar",
+      "courses": "Courses",
       "students": "Students",
       "teachers": "Instructors",
       "reviews": "Reviews",
       "products": "Products",
       "areas": "Areas"
+    },
+    "courses": {
+      "title": "Courses",
+      "description": "Create, edit and cancel Risk 1 and Risk 2 occasions.",
+      "createTitle": "New course occasion",
+      "course": "Course and product",
+      "language": "Teaching language",
+      "startsAt": "Start",
+      "endsAt": "End",
+      "venueName": "Venue name",
+      "venueAddress": "Address",
+      "capacity": "Seats",
+      "create": "Create occasion",
+      "created": "Course occasion created",
+      "save": "Save",
+      "saved": "Saved",
+      "saving": "Saving…",
+      "cancel": "Cancel occasion",
+      "cancelled": "Cancelled",
+      "occasion": "Course occasion {count}",
+      "booked": "{booked} booked of {capacity}",
+      "error": "Could not save. Try again."
     },
     "editor": {
       "save": "Save",
@@ -1484,7 +1478,7 @@
     "locationsDescription": "You can find us at Centralvägen 5 in Upplands Väsby. Open directions in Google Maps.",
     "directions": "Directions",
     "languagesTitle": "Which language do you need?",
-    "languagesBody": "Lessons in {languages}. {comingSoonLanguages} is coming soon.",
+    "languagesBody": "Lessons in {languages}.",
     "reviewsTitle": "Student reviews",
     "reviewsSummary": "{count} published reviews · average {average}/5",
     "staffTitle": "Our team",

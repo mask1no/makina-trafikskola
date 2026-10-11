@@ -343,7 +343,7 @@ export function BookingFlow({
 
   const placeLabel =
     state.meet === "office"
-      ? selectedArea?.officeAddress || selectedArea?.name
+      ? selectedArea?.name
       : state.pickupAddress;
 
   return (
@@ -436,7 +436,7 @@ export function BookingFlow({
                   {t("back")}
                 </Button>
               ) : null}
-              <Button className="ms-auto" disabled={state.busy} onClick={next}>
+              <Button data-testid="booking-next" className="ms-auto" disabled={state.busy} onClick={next}>
                 {state.step === 4 && state.authenticated ? t("confirm") : t("next")}
               </Button>
             </div>

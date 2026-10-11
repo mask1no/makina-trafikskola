@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 };
 
 const paramsSchema = z.object({
-  locale: z.enum(["sv", "en", "ti", "ar", "so"]),
+  locale: z.enum(["sv", "en", "ti", "ar"]),
   orderId: z.string().cuid(),
 });
 

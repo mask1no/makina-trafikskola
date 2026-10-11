@@ -49,7 +49,7 @@ export type PaymentFailedPayload = z.infer<
   typeof paymentFailedPayloadSchema
 >;
 
-type SupportedLocale = "sv" | "en" | "ti" | "ar" | "so";
+type SupportedLocale = "sv" | "en" | "ti" | "ar";
 
 type PaymentCopy = {
   receiptSubject: string;
@@ -164,29 +164,6 @@ const copy: Record<SupportedLocale, PaymentCopy> = {
     courseRebookingBody:
       "انتهت مهلة الحجز البالغة 15 دقيقة قبل اكتمال الدفع. بقي الشراء متاحًا مرة واحدة بالضبط كاستحقاق دورة غير مستخدم. لم نستعد المقعد القديم.",
     chooseCourse: "اختر موعد دورة آخر",
-  },
-  so: {
-    receiptSubject: "Rasiid ka yimid Makina Trafikskola",
-    receiptTitle: "Waad ku mahadsan tahay iibsigaaga",
-    quantity: (quantity) => `Tirada: ${quantity}`,
-    total: "Wadarta",
-    vat: "Waxaa ku jira VAT",
-    viewOrder: "Eeg dalabka",
-    failedSubject: "Lacag-bixinta lama dhammaystiri karin",
-    failedTitle: "Lacag-bixintu way fashilantay",
-    failedBody:
-      "Dalabkaagu weli wuu sugayaa. Fur xiriirinta si aad mar kale lacag u bixiso.",
-    resume: "Sii wad lacag-bixinta",
-    lessonRebookingSubject: "Dooro waqti cusub oo casharka wadista ah",
-    lessonRebookingTitle: "Lacag-bixintu way guulaysatay – dooro waqti cusub",
-    lessonRebookingBody:
-      "Qabsashadii 15-ka daqiiqo ahayd way dhacday ka hor inta lacag-bixintu dhammaan. Casharku wuxuu kuu ahaanayaa hal mar oo keliya deyn aan la isticmaalin. Waqtigii hore dib looma qabsan.",
-    chooseLesson: "Qabso waqti cashar cusub",
-    courseRebookingSubject: "Dooro waqti koorso kale",
-    courseRebookingTitle: "Lacag-bixintu way guulaysatay – dooro koorso kale",
-    courseRebookingBody:
-      "Qabsashadii 15-ka daqiiqo ahayd way dhacday ka hor inta lacag-bixintu dhammaan. Iibsigu wuxuu kuu ahaanayaa hal mar oo keliya xaq koorso oo aan la isticmaalin. Kursigii hore dib looma qabsan.",
-    chooseCourse: "Dooro waqti koorso kale",
   },
 };
 

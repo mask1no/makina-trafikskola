@@ -73,8 +73,6 @@ export const publicStaff: readonly PublicStaffMember[] = [
   },
 ];
 
-export const COMING_SOON_TEACHING_LANGUAGES = ["so"] as const satisfies readonly TeachingLanguage[];
-
 const PUBLIC_TEACHING_LANGUAGES = ["sv", "en", "ti", "ku"] as const;
 
 export function publicTeachingLanguages(codes: readonly string[]): TeachingLanguage[] {
@@ -97,12 +95,6 @@ export function offeredTeachingLanguages(): TeachingLanguage[] {
 export function offeredTeachingLanguagesFrom(codes: readonly string[]): TeachingLanguage[] {
   const fromProfiles = publicTeachingLanguages(codes);
   return fromProfiles.length ? fromProfiles : offeredTeachingLanguages();
-}
-
-export function sentenceCase(value: string, locale: string) {
-  const trimmed = value.trim();
-  if (!trimmed) return trimmed;
-  return trimmed.charAt(0).toLocaleUpperCase(locale) + trimmed.slice(1);
 }
 
 export function formatLanguageList(

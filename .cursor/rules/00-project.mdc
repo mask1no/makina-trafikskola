@@ -7,7 +7,9 @@ Next.js 16 App Router · TypeScript strict · React 19 · Tailwind · Prisma/Pos
 next-intl · NextAuth 5 · Stripe · Railway.
 
 Driving school in Stockholm. Students are largely newly arrived Swedes.
-Locales: sv (default), en, ti (Tigrinya), ar (Arabic, RTL), so (Somali).
+UI locales: sv (default), en, ti (Tigrinya), ar (Arabic, RTL).
+Teaching languages: sv, en, ti, ku. The product has no selectable dark mode,
+test-lesson product, or standalone profile page.
 
 BEFORE proposing architecture, read /BUILD_SPEC.md. It is authoritative — if
 your suggestion and the spec disagree, the spec wins. If the spec is silent,

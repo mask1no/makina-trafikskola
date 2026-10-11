@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { apiError as sharedApiError } from "@/lib/api/http";
+import { apiError } from "@/lib/api/http";
 import { bearerToken, matchesSecret } from "@/lib/auth/bearer-secret";
 import { db } from "@/lib/db";
 import {
@@ -18,26 +18,22 @@ const querySchema = z.object({ deep: z.literal("1").optional() }).strict();
 
 const noStore = { "cache-control": "no-store" };
 
-function apiError(code: string, status: number) {
-  const response = sharedApiError(code, status);
-  response.headers.set("cache-control", "no-store");
-  return response;
-}
-
 export async function GET(request: Request) {
   const parsed = querySchema.safeParse(
     Object.fromEntries(new URL(request.url).searchParams),
   );
   if (!parsed.success) {
-    return apiError("INVALID_INPUT", 400);
+    return apiError("INVALID_INPUT", 400, undefined, noStore);
   }
 
   if (parsed.data.deep) {
     const token = bearerToken(request);
-    if (!token) return apiError("UNAUTHENTICATED", 401);
+    if (!token) return apiError("UNAUTHENTICATED", 401, undefined, noStore);
     const secret = process.env.CRON_SECRET;
-    if (!secret) return apiError("HEALTH_NOT_CONFIGURED", 503);
-    if (!matchesSecret(token, secret)) return apiError("FORBIDDEN", 403);
+    if (!secret) return apiError("HEALTH_NOT_CONFIGURED", 503, undefined, noStore);
+    if (!matchesSecret(token, secret)) {
+      return apiError("FORBIDDEN", 403, undefined, noStore);
+    }
   }
 
   try {
@@ -90,6 +86,6 @@ export async function GET(request: Request) {
       { status: ok ? 200 : 503, headers: noStore },
     );
   } catch {
-    return apiError("SERVICE_UNAVAILABLE", 503);
+    return apiError("SERVICE_UNAVAILABLE", 503, undefined, noStore);
   }
 }

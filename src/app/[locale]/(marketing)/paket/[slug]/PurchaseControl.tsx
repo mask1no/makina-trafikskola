@@ -5,8 +5,8 @@ import { useState, type ReactNode } from "react";
 
 import { Button } from "@/components/Button";
 import { CheckboxField } from "@/components/CheckboxField";
+import { CallButton } from "@/components/ContactButtons";
 import { Notice } from "@/components/Notice";
-import { telHref } from "@/lib/format/phone";
 
 type Copy = {
   accountRequired: string;
@@ -71,12 +71,9 @@ export function PurchaseControl({
 
   if (!salesOpen) {
     return (
-      <a
-        href={telHref(phone)}
-        className="mt-8 inline-flex min-h-11 w-full items-center justify-center rounded-sm border border-surface bg-surface px-5 font-bold text-ink-inverse"
-      >
+      <CallButton phone={phone} className="mt-8 w-full">
         {callLabel}
-      </a>
+      </CallButton>
     );
   }
 

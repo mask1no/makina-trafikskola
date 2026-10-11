@@ -2,9 +2,8 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
-import { auth } from "@/auth";
-import { EmptyState } from "@/components/EmptyState";
 import { Badge } from "@/components/Badge";
+import { CallButton } from "@/components/ContactButtons";
 import { PageHeader } from "@/components/PageHeader";
 import { isLocale } from "@/i18n/routing";
 import { resolveContent } from "@/lib/content/fallback";
@@ -12,8 +11,6 @@ import { db } from "@/lib/db";
 import { formatStockholm } from "@/lib/format/datetime";
 import { formatPrice } from "@/lib/pricing/format";
 import { pageCanonical, withSocial } from "@/lib/seo/metadata";
-
-import { CourseBookingControl } from "./CourseBookingControl";
 
 export const dynamic = "force-dynamic";
 
@@ -48,11 +45,15 @@ export default async function KurserPage(
   );
   const now = new Date();
   const holdCutoff = new Date(now.getTime() - holdMinutes * 60_000);
-  const [t, authT, occasions, session] = await Promise.all([
+  const [t, company, occasions, courses] = await Promise.all([
     getTranslations("courses"),
-    getTranslations("auth"),
+    getTranslations("company"),
     db.courseOccasion.findMany({
-      where: { cancelled: false, startsAt: { gt: now } },
+      where: {
+        cancelled: false,
+        startsAt: { gt: now },
+        course: { kind: { in: ["RISK1", "RISK2"] } },
+      },
       orderBy: { startsAt: "asc" },
       include: {
         course: {
@@ -77,7 +78,10 @@ export default async function KurserPage(
         },
       },
     }),
-    auth(),
+    db.course.findMany({
+      where: { kind: { in: ["RISK1", "RISK2"] } },
+      include: { product: { include: { translations: true } } },
+    }),
   ]);
   const formatOccasion = (date: Date) =>
     formatStockholm(date, params.locale, {
@@ -90,6 +94,30 @@ export default async function KurserPage(
       <div className="site-container max-w-6xl">
         <div>
           <PageHeader eyebrow={t("eyebrow")} title={t("title")} description={t("description")} />
+        </div>
+        <div className="mt-10 grid gap-4 md:grid-cols-2">
+          {(["RISK1", "RISK2"] as const).map((kind) => {
+            const course = courses.find((item) => item.kind === kind);
+            const upcoming = occasions.find((item) => item.course.kind === kind);
+            return (
+              <article key={kind} className="rounded-lg border border-border bg-card p-6 shadow-soft">
+                <Badge>{t(`kind.${kind}`)}</Badge>
+                <h2 className="mt-3 text-2xl font-black">{t(`kind.${kind}`)}</h2>
+                <p className="mt-3 leading-7 text-ink-muted">{t(`info.${kind}`)}</p>
+                {course ? (
+                  <p className="numbers-ltr mt-5 text-xl font-black">
+                    {formatPrice(course.product.priceOre, params.locale)}
+                  </p>
+                ) : null}
+                <p className="mt-2 text-small font-bold text-ink-muted">
+                  {upcoming ? formatOccasion(upcoming.startsAt) : t("soon")}
+                </p>
+                <CallButton phone={company("phone")} className="mt-5">
+                  {t("callToBook")}
+                </CallButton>
+              </article>
+            );
+          })}
         </div>
         {occasions.length ? (
           <div className="mt-12 grid gap-5">
@@ -135,23 +163,14 @@ export default async function KurserPage(
                       {t("inactive")}
                     </p>
                   ) : null}
-                  <CourseBookingControl
-                    occasionId={occasion.id}
-                    disabled={seatsLeft === 0}
-                    authenticated={session?.user.role === "STUDENT"}
-                    signInHref={`/${params.locale}/logga-in?next=${encodeURIComponent(`/${params.locale}/kurser`)}`}
-                    accountRequired={authT("purchaseGate")}
-                    signInToBuy={authT("signInToBuy")}
-                  />
+                  <CallButton phone={company("phone")} className="mt-5">
+                    {t("callToBook")}
+                  </CallButton>
                 </article>
               );
             })}
           </div>
-        ) : (
-          <div className="mt-10">
-            <EmptyState title={t("emptyTitle")} description={t("emptyDescription")} />
-          </div>
-        )}
+        ) : null}
       </div>
     </div>
   );

@@ -17,6 +17,8 @@ function databaseUrlFromEnvFile() {
   } catch {
     // CI sets DATABASE_URL. A missing .env is fine there.
   }
+  process.env.DATABASE_URL ??=
+    "postgresql://makina:makina_local_dev@localhost:5433/makina_test";
 }
 
 databaseUrlFromEnvFile();

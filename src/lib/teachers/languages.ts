@@ -1,4 +1,4 @@
-export const TEACHING_LANGUAGES = ["sv", "en", "ti", "ku", "ar", "so"] as const;
+export const TEACHING_LANGUAGES = ["sv", "en", "ti", "ku"] as const;
 
 export type TeachingLanguage = (typeof TEACHING_LANGUAGES)[number];
 
