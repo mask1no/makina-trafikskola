@@ -130,7 +130,7 @@
     "pickup": {
       "eyebrow": "Pickup",
       "title": "We meet you in your area",
-      "description": "Pickup in Farsta and Upplands Väsby by arrangement.",
+      "description": "Free pickup within the Farsta and Upplands Väsby areas.",
       "areas": "Farsta · Upplands Väsby",
       "imageAlt": "Makina Trafikskola pickup areas",
       "mapLabel": "Pickup area"
@@ -172,7 +172,7 @@
       },
       "pickup": {
         "question": "Can you pick me up?",
-        "answer": "Pickup in Farsta and Upplands Väsby is available by arrangement."
+        "answer": "Yes, we offer free pickup within the Farsta and Upplands Väsby areas."
       },
       "cancel": {
         "question": "How do I cancel a lesson?",
@@ -202,31 +202,31 @@
         "body": "Lessons in {languages}."
       },
       "pickup": {
-        "title": "Pickup",
-        "body": "In Farsta and Upplands Väsby by arrangement."
+        "title": "Free pickup",
+        "body": "Farsta & Upplands Väsby"
       },
       "lesson": {
         "title": "50 minutes",
         "body": "Every driving lesson is 50 minutes."
       },
-      "prices": {
-        "title": "Prices",
-        "body": "All prices include VAT."
+      "risk": {
+        "title": "Risk training",
+        "body": "Both risk courses with us"
+      },
+      "guarantee": {
+        "title": "Driving licence guarantee",
+        "body": "Drive until you pass"
       },
       "payment": {
-        "title": "Payment",
-        "body": "Card, Swish and Klarna."
-      },
-      "local": {
-        "title": "Visit us",
-        "body": "{address}"
+        "title": "Card/Swish/Klarna",
+        "body": "Choose the payment method that suits you."
       },
       "cancel": {
-        "title": "Cancellation",
+        "title": "Cancel at least 24 h before",
         "body": "Cancel at the latest 24 hours before the lesson at no cost. A later cancellation is charged in full."
       },
       "reminder": {
-        "title": "Reminder",
+        "title": "Text reminder the day before",
         "body": "An SMS the day before the lesson."
       }
     }
@@ -402,7 +402,7 @@
   },
   "theory": {
     "eyebrow": "Driving theory",
-    "title": "Practise with verified questions",
+    "title": "Practise driving theory for free",
     "description": "Free questions are available without purchase. Paid content requires active theory access.",
     "freeDescription": "Free questions to practise, with no purchase.",
     "teaser": {
@@ -542,7 +542,7 @@
       "pickup": {
         "short": "Pickup",
         "title": "Where should we pick you up?",
-        "free": "Pickup in the area is available by arrangement.",
+        "free": "Free pickup within the Farsta and Upplands Väsby areas.",
         "office": "Meet us at the office",
         "address": "Pickup address",
         "outside": "That address is outside the area. Choose an address inside the area.",

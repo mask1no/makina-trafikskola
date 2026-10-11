@@ -2,14 +2,11 @@ export type BenefitId =
   | "language"
   | "pickup"
   | "lesson"
-  | "prices"
   | "risk"
   | "guarantee"
   | "payment"
-  | "local"
   | "cancel"
-  | "reminder"
-  | "selfBook";
+  | "reminder";
 
 export type BenefitSize = "sm" | "lg";
 
@@ -28,7 +25,6 @@ type BenefitProduct = {
 
 const LARGE = new Set<BenefitId>([
   "language",
-  "prices",
   "guarantee",
 ]);
 
@@ -50,10 +46,10 @@ export function benefitItems(input: {
     item("language"),
     item("pickup"),
     item("lesson"),
-    item("prices"),
+    item("risk"),
+    item("guarantee"),
     item("payment"),
-    item("local"),
-    item("cancel"),
     item("reminder"),
+    item("cancel"),
   ];
 }

@@ -196,13 +196,11 @@ async function HomeBelow({
     size: item.size,
     title: t(`home.benefits.${item.id}.title`),
     body:
-      item.id === "local"
-          ? t("home.benefits.local.body", { address: t("shell.contact") })
-          : item.id === "language"
-            ? t("home.benefits.language.body", {
-                languages: offeredLanguageNames,
-              })
-            : t(`home.benefits.${item.id}.body`),
+      item.id === "language"
+        ? t("home.benefits.language.body", {
+            languages: offeredLanguageNames,
+          })
+        : t(`home.benefits.${item.id}.body`),
   }));
   const theoryProduct = products.find((product) => product.slug === "korkortsteori");
   const singleLesson = products.find((product) => product.slug === "en-korlektion");

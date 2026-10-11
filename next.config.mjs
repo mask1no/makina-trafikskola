@@ -29,16 +29,6 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: "/so",
-        destination: "/sv",
-        permanent: true,
-      },
-      {
-        source: "/so/:path*",
-        destination: "/sv/:path*",
-        permanent: true,
-      },
-      {
         source: "/product/:slug*",
         destination: "/sv/paket/:slug*",
         permanent: true,

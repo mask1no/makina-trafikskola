@@ -130,7 +130,7 @@
     "pickup": {
       "eyebrow": "Upphämtning",
       "title": "Vi möter dig i ditt område",
-      "description": "Upphämtning inom Farsta och Upplands Väsby efter överenskommelse.",
+      "description": "Gratis upphämtning inom områdena Farsta och Upplands Väsby.",
       "areas": "Farsta · Upplands Väsby",
       "imageAlt": "Makina Trafikskolas upphämtningsområden",
       "mapLabel": "Upphämtningsområde"
@@ -172,7 +172,7 @@
       },
       "pickup": {
         "question": "Hämtar ni mig?",
-        "answer": "Upphämtning inom Farsta och Upplands Väsby sker efter överenskommelse."
+        "answer": "Ja, vi erbjuder gratis upphämtning inom områdena Farsta och Upplands Väsby."
       },
       "cancel": {
         "question": "Hur avbokar jag en lektion?",
@@ -202,31 +202,31 @@
         "body": "Undervisning på {languages}."
       },
       "pickup": {
-        "title": "Upphämtning",
-        "body": "I Farsta och Upplands Väsby efter överenskommelse."
+        "title": "Gratis upphämtning",
+        "body": "Farsta & Upplands Väsby"
       },
       "lesson": {
         "title": "50 minuter",
         "body": "Varje körlektion är 50 minuter."
       },
-      "prices": {
-        "title": "Priser",
-        "body": "Alla priser visas inklusive moms."
+      "risk": {
+        "title": "Riskutbildning",
+        "body": "Båda riskutbildningarna hos oss"
+      },
+      "guarantee": {
+        "title": "Körkortsgaranti",
+        "body": "Kör tills du klarar"
       },
       "payment": {
-        "title": "Betalning",
-        "body": "Kort, Swish och Klarna."
-      },
-      "local": {
-        "title": "Hos oss",
-        "body": "{address}"
+        "title": "Kort/Swish/Klarna",
+        "body": "Välj det betalsätt som passar dig."
       },
       "cancel": {
-        "title": "Avbokning",
+        "title": "Avboka senast 24 h före",
         "body": "Avboka senast 24 timmar före lektionen utan kostnad. En senare avbokning debiteras fullt pris."
       },
       "reminder": {
-        "title": "Påminnelse",
+        "title": "Sms-påminnelse dagen före",
         "body": "SMS dagen före lektionen."
       }
     }
@@ -402,7 +402,7 @@
   },
   "theory": {
     "eyebrow": "Körkortsteori",
-    "title": "Öva med verifierade frågor",
+    "title": "Öva gratis på körkortsteori",
     "description": "Gratisfrågor visas utan köp. Betalt innehåll kräver en aktiv teoriåtkomst.",
     "freeDescription": "Gratisfrågor att öva, utan köp.",
     "teaser": {
@@ -542,7 +542,7 @@
       "pickup": {
         "short": "Hämtning",
         "title": "Var hämtar vi dig?",
-        "free": "Upphämtning i området sker efter överenskommelse.",
+        "free": "Gratis upphämtning inom områdena Farsta och Upplands Väsby.",
         "office": "Möt oss på kontoret",
         "address": "Hämtningsadress",
         "outside": "Adressen ligger utanför området. Välj en adress i området.",

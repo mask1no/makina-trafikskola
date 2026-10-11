@@ -33,6 +33,26 @@ function requiredRoles(pathname: string): readonly Role[] | null {
 }
 
 export default auth((request) => {
+  const pathname = request.nextUrl.pathname;
+
+  if (pathname === "/so" || pathname.startsWith("/so/")) {
+    const destination = new URL(
+      pathname === "/so" ? "/sv" : `/sv${pathname.slice(3)}`,
+      request.nextUrl,
+    );
+    destination.search = request.nextUrl.search;
+    return NextResponse.redirect(destination, 301);
+  }
+
+  const teacherProfile = pathname.match(
+    /^\/(sv|en|ti|ar)\/larare\/[^/]+\/?$/,
+  );
+  if (teacherProfile) {
+    const destination = new URL(`/${teacherProfile[1]}/larare`, request.nextUrl);
+    destination.search = request.nextUrl.search;
+    return NextResponse.redirect(destination, 301);
+  }
+
   const roles = requiredRoles(request.nextUrl.pathname);
   if (roles && !request.auth?.user) {
     const locale =

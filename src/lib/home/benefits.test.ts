@@ -24,15 +24,15 @@ describe("benefitItems", () => {
       "language",
       "pickup",
       "lesson",
-      "prices",
+      "risk",
+      "guarantee",
       "payment",
-      "local",
-      "cancel",
       "reminder",
+      "cancel",
     ]);
   });
 
-  it("does not turn catalogue products into public claims", () => {
+  it("does not let catalogue contents change the confirmed benefits", () => {
     const items = benefitItems({
       bookingEnabled: true,
       hasRiskCourse: false,
@@ -44,9 +44,30 @@ describe("benefitItems", () => {
       ],
     });
     expect(items.map((item) => item.id).join(" ")).not.toContain("testLesson");
-    expect(items.map((item) => item.id)).not.toContain("risk");
-    expect(items.map((item) => item.id)).not.toContain("guarantee");
+    expect(items.map((item) => item.id)).toContain("risk");
+    expect(items.map((item) => item.id)).toContain("guarantee");
     expect(items).toHaveLength(8);
+  });
+
+  it("uses the confirmed Swedish benefit and pickup copy", () => {
+    expect(sv.home.benefits.pickup).toEqual({
+      title: "Gratis upphämtning",
+      body: "Farsta & Upplands Väsby",
+    });
+    expect(sv.home.benefits.risk).toEqual({
+      title: "Riskutbildning",
+      body: "Båda riskutbildningarna hos oss",
+    });
+    expect(sv.home.benefits.guarantee).toEqual({
+      title: "Körkortsgaranti",
+      body: "Kör tills du klarar",
+    });
+    expect(sv.home.benefits.payment.title).toBe("Kort/Swish/Klarna");
+    expect(sv.home.benefits.reminder.title).toBe("Sms-påminnelse dagen före");
+    expect(sv.home.benefits.cancel.title).toBe("Avboka senast 24 h före");
+    expect(sv.home.pickup.description).toContain("Gratis upphämtning");
+    expect(sv.home.faq.pickup.answer).toContain("gratis upphämtning");
+    expect(sv.booking.step.pickup.free).toContain("Gratis upphämtning");
   });
 
   it("derives teaching claims from translated language names", () => {

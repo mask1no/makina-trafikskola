@@ -130,7 +130,7 @@
     "pickup": {
       "eyebrow": "ምውሳድ",
       "title": "ኣብ ከባቢኻ ንራኸበካ",
-      "description": "ምውሳድ ኣብ Farstaን Upplands Väsbyን ብስምምዕ።",
+      "description": "ኣብ ከባቢታት Farstaን Upplands Väsbyን ብነጻ ምውሳድ።",
       "areas": "Farsta · Upplands Väsby",
       "imageAlt": "ናይ ማኪና ከባቢታት ምውሳድ",
       "mapLabel": "ከባቢ ምውሳድ"
@@ -172,7 +172,7 @@
       },
       "pickup": {
         "question": "ክትወስዱኒ ትኽእሉ ዲኹም?",
-        "answer": "ምውሳድ ኣብ Farstaን Upplands Väsbyን ብስምምዕ ይግበር።"
+        "answer": "እወ፣ ኣብ ከባቢታት Farstaን Upplands Väsbyን ብነጻ ንወስደኩም።"
       },
       "cancel": {
         "question": "ትምህርቲ ብኸመይ እስርዝ?",
@@ -202,31 +202,31 @@
         "body": "ትምህርቲ ብ{languages}።"
       },
       "pickup": {
-        "title": "ምልዓል",
-        "body": "ኣብ Farstaን Upplands Väsbyን ብስምምዕ።"
+        "title": "ብነጻ ምውሳድ",
+        "body": "Farsta & Upplands Väsby"
       },
       "lesson": {
         "title": "50 ደቒቕ",
         "body": "ነፍሲ ወከፍ ትምህርቲ ምዝዋር 50 ደቒቕ እዩ።"
       },
-      "prices": {
-        "title": "ዋጋ",
-        "body": "ኩሉ ዋጋ ቫት ዝሓዘ እዩ።"
+      "risk": {
+        "title": "ስልጠና ሓደጋ",
+        "body": "ክልቲኡ ስልጠናታት ሓደጋ ምሳና"
+      },
+      "guarantee": {
+        "title": "ውሕስነት ፍቓድ ምዝዋር",
+        "body": "ክሳዕ እትሓልፍ ዘውር"
       },
       "payment": {
-        "title": "ክፍሊት",
-        "body": "ካርድ፣ Swishን Klarnaን።"
-      },
-      "local": {
-        "title": "ርኸቡና",
-        "body": "{address}"
+        "title": "ካርድ/Swish/Klarna",
+        "body": "ዝሰማማዕካ ኣገባብ ክፍሊት ምረጽ።"
       },
       "cancel": {
-        "title": "ምስራዝ",
+        "title": "ዝዝሓለ 24 ሰዓት ኣቐዲምካ ሰርዝ",
         "body": "ዝዝሓለ 24 ሰዓት ቅድሚ ትምህርቲ ብነጻ ስረዝ። ድሕሪኡ ምስራዝ ምሉእ ዋጋ ይኽፈል።"
       },
       "reminder": {
-        "title": "መዘኻኸሪ",
+        "title": "ቅድሚኡ ብሓደ መዓልቲ መዘኻኸሪ SMS",
         "body": "SMS ቅድሚ እቲ ትምህርቲ ብሓደ መዓልቲ።"
       }
     }
@@ -402,7 +402,7 @@
   },
   "theory": {
     "eyebrow": "ክልሰ ሓሳብ ምዝዋር",
-    "title": "ብዝተረጋገጹ ሕቶታት ተለማመድ",
+    "title": "ናይ ምዝዋር ክልሰ ሓሳብ ብነጻ ተለማመድ",
     "description": "ነጻ ሕቶታት ብዘይ ዕድጊ ይርከቡ። ዝኽፈሎ ትሕዝቶ ንጡፍ ፍቓድ ይደሊ።",
     "freeDescription": "ነጻ ሕቶታት ንልምምድ፣ ብዘይ ዕድጊ።",
     "teaser": {
@@ -542,7 +542,7 @@
       "pickup": {
         "short": "ምውሳድ",
         "title": "ኣበይ ክንወስደካ?",
-        "free": "ምውሳድ ኣብቲ ከባቢ ብስምምዕ ይግበር።",
+        "free": "ኣብ ከባቢታት Farstaን Upplands Väsbyን ብነጻ ምውሳድ።",
         "office": "ኣብ ቤት ጽሕፈት ተራኸቡና",
         "address": "ኣድራሻ ምውሳድ",
         "outside": "እቲ ኣድራሻ ካብ ዞባ ወጻኢ እዩ። ኣብ ውሽጢ ዞባ ዝርከብ ኣድራሻ ምረጽ።",

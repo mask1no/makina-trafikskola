@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { Avatar } from "@/components/Avatar";
 import { Badge } from "@/components/Badge";
 import { Card } from "@/components/Card";
+import { CallButton, MailButton } from "@/components/ContactButtons";
 import { MapEmbed } from "@/components/MapEmbed";
 import { isLocale } from "@/i18n/routing";
 import {
@@ -19,7 +20,7 @@ import {
   publicStaff,
   staffMemberLanguages,
 } from "@/lib/company/staff";
-import { displayPhone, telHref } from "@/lib/format/phone";
+import { displayPhone } from "@/lib/format/phone";
 import { publicAddress } from "@/lib/locations/address";
 import { db } from "@/lib/db";
 import { pageCanonical, withSocial } from "@/lib/seo/metadata";
@@ -164,11 +165,11 @@ export default async function ContactPage(
         <div className="mt-8 grid items-stretch gap-4 md:grid-cols-2">
           <Card className="flex h-full flex-col" padding="lg">
             <h2 className="text-h3 font-black">{shell("callUs")}</h2>
-            <a className="mt-4 inline-flex min-h-[52px] w-full items-center justify-center rounded-sm bg-accent px-5 text-center text-2xl font-black leading-tight text-accent-ink" href={telHref(phone)}>
+            <p className="mt-4 text-2xl font-black leading-tight">
               <bdi dir="ltr" className="numbers-ltr">
                 {displayPhone(phone)}
               </bdi>
-            </a>
+            </p>
             <div className="mt-5 flex flex-wrap items-center gap-3">
               <Badge tone={open ? "success" : "neutral"}>{open ? shell("openNow") : shell("closed")}</Badge>
               <p className="text-small text-ink-muted">
@@ -186,19 +187,20 @@ export default async function ContactPage(
                 )}
               </p>
             </div>
-            <p className="mt-auto pt-6 text-small text-ink-muted">{visiting}</p>
+            <CallButton phone={phone} size="hero" className="mt-auto w-full">
+              {shell("callUs")}
+            </CallButton>
           </Card>
-          <article className="flex h-full flex-col rounded-md border border-border bg-card p-6 text-ink shadow-soft sm:p-8">
+          <Card className="flex h-full flex-col" padding="lg">
             <h2 className="text-h3 font-black">{t("emailUs")}</h2>
-            <a className="mt-4 inline-flex min-h-[52px] w-full items-center justify-center break-all rounded-sm bg-surface px-5 text-center text-2xl font-black leading-tight text-ink-inverse" href={`mailto:${email}`}>
+            <p className="mt-4 break-all text-2xl font-black leading-tight">
               {email}
-            </a>
-            <p className="mt-4 max-w-[70ch] leading-7">{t("replyLine")}</p>
-            <p className="mt-auto pt-6 text-small">
-              <span className="font-bold">{t("orgnr")}</span>{" "}
-              <span className="numbers-ltr">{orgnr}</span>
             </p>
-          </article>
+            <p className="mt-4 max-w-[70ch] leading-7">{t("replyLine")}</p>
+            <MailButton email={email} size="hero" className="mt-auto w-full">
+              {shell("mailUs")}
+            </MailButton>
+          </Card>
         </div>
         <section className="mt-10">
           <h2 className="text-2xl font-black">{t("locationsTitle")}</h2>
@@ -213,7 +215,14 @@ export default async function ContactPage(
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
             {offices.map((location) => (
               <Card key={location.id} padding="lg">
-                <h3 className="text-lg font-extrabold">{location.name}</h3>
+                <div className="flex flex-wrap items-center gap-2">
+                  <h3 className="text-lg font-extrabold">{location.name}</h3>
+                  {location.status === "COMING_SOON" ? (
+                    <Badge tone="neutral">
+                      {shell("comingSoonPlace", { town: location.city })}
+                    </Badge>
+                  ) : null}
+                </div>
                 <p className="mt-2 max-w-[70ch] text-body leading-7 text-ink-muted">
                   {publicAddress(location.address) ?? location.city}
                   <br />
@@ -257,15 +266,6 @@ export default async function ContactPage(
                         </li>
                       ))}
                     </ul>
-                    <p className="mt-2 max-w-[70ch] text-body leading-7 text-ink-muted">
-                      {t("speaks", {
-                        languages: formatLanguageList(
-                          staffMember.languages,
-                          params.locale,
-                          (code) => shell(`languagePage.${code}`),
-                        ),
-                      })}
-                    </p>
                   </div>
                 </Card>
               </li>
