@@ -7,6 +7,10 @@ type BusyInterval = { start: string; end: string };
 
 const busyCache = new Map<string, { at: number; intervals: BusyInterval[] }>();
 const CACHE_MS = 60_000;
+const CALENDAR_EVENTS_SCOPE =
+  "https://www.googleapis.com/auth/calendar.events";
+const CALENDAR_FREEBUSY_SCOPE =
+  "https://www.googleapis.com/auth/calendar.freebusy";
 
 export function calendarSyncEnabled(
   environment: Record<string, string | undefined> = process.env,
@@ -32,13 +36,14 @@ function credentials() {
   }
 }
 
-async function accessToken() {
+async function accessToken(subject: string, scopes: string[]) {
   const account = credentials();
   if (!account?.client_email || !account.private_key) return null;
   const client = new JWT({
     email: account.client_email,
     key: account.private_key,
-    scopes: ["https://www.googleapis.com/auth/calendar"],
+    subject,
+    scopes,
   });
   const token = await client.getAccessToken();
   return token.token ?? null;
@@ -53,7 +58,7 @@ export async function teacherBusyIntervals(
   const cacheKey = `${calendarEmail}:${from.toISOString()}:${to.toISOString()}`;
   const cached = busyCache.get(cacheKey);
   if (cached && Date.now() - cached.at < CACHE_MS) return cached.intervals;
-  const token = await accessToken();
+  const token = await accessToken(calendarEmail, [CALENDAR_FREEBUSY_SCOPE]);
   if (!token) return [];
   const response = await fetch("https://www.googleapis.com/calendar/v3/freeBusy", {
     method: "POST",
@@ -94,11 +99,12 @@ export function slotOverlapsBusy(
 }
 
 async function calendarRequest(
+  calendarEmail: string,
   path: string,
   method: string,
   body?: unknown,
 ) {
-  const token = await accessToken();
+  const token = await accessToken(calendarEmail, [CALENDAR_EVENTS_SCOPE]);
   if (!token) return null;
   const response = await fetch(`https://www.googleapis.com/calendar/v3${path}`, {
     method,
@@ -134,6 +140,7 @@ export async function syncConfirmedBooking(bookingId: string) {
     if (cancelled || !booking.creditCharged) {
       if (!booking.googleEventId) return;
       await calendarRequest(
+        booking.teacher.googleCalendarEmail,
         `/calendars/${email}/events/${encodeURIComponent(booking.googleEventId)}`,
         "DELETE",
       );
@@ -155,11 +162,17 @@ export async function syncConfirmedBooking(bookingId: string) {
     };
     const response = booking.googleEventId
       ? await calendarRequest(
+          booking.teacher.googleCalendarEmail,
           `/calendars/${email}/events/${encodeURIComponent(booking.googleEventId)}`,
           "PATCH",
           payload,
         )
-      : await calendarRequest(`/calendars/${email}/events`, "POST", payload);
+      : await calendarRequest(
+          booking.teacher.googleCalendarEmail,
+          `/calendars/${email}/events`,
+          "POST",
+          payload,
+        );
     if (!response?.ok) throw new Error(`CALENDAR_EVENT_${response?.status ?? "NO_TOKEN"}`);
     const created = (await response.json()) as { id?: string };
     await db.booking.update({
