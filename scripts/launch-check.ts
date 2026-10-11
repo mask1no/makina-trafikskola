@@ -10,6 +10,7 @@ import {
   backupAgeHours,
   backupConfiguration,
   canonicalUrlStatus,
+  elksBalanceCurrencyUnits,
   ELKS_LOW_BALANCE_SEK,
   MAX_BACKUP_AGE_HOURS,
   newestBackupObject,
@@ -158,7 +159,7 @@ async function checkElks() {
       balance?: number | string;
       currency?: string;
     };
-    const balance = Number(payload.balance);
+    const balance = elksBalanceCurrencyUnits(payload.balance ?? Number.NaN);
     if (!Number.isFinite(balance)) {
       record("46elks", "FAIL", "account balance was not returned");
       return;

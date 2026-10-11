@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
 
-import { backupAgeHours, canonicalUrlStatus } from "./readiness";
+import {
+  backupAgeHours,
+  canonicalUrlStatus,
+  elksBalanceCurrencyUnits,
+} from "./readiness";
 
 describe("canonicalUrlStatus", () => {
   it("requires https and the same canonical host", () => {
@@ -28,5 +32,12 @@ describe("backupAgeHours", () => {
     expect(
       backupAgeHours(new Date("2026-10-03T13:00:00.000Z"), now),
     ).toBe(0);
+  });
+});
+
+describe("elksBalanceCurrencyUnits", () => {
+  it("converts the API's ten-thousandths into account currency units", () => {
+    expect(elksBalanceCurrencyUnits(994_400)).toBe(99.44);
+    expect(elksBalanceCurrencyUnits("3500")).toBe(0.35);
   });
 });

@@ -9,6 +9,7 @@ import { db } from "@/lib/db";
 
 export const MAX_BACKUP_AGE_HOURS = 26;
 export const ELKS_LOW_BALANCE_SEK = 100;
+const ELKS_CURRENCY_SCALE = 10_000;
 
 type Environment = Record<string, string | undefined>;
 
@@ -39,6 +40,10 @@ export function canonicalUrlStatus(
 
 export function backupAgeHours(lastModified: Date, now: Date) {
   return Math.max(0, (now.getTime() - lastModified.getTime()) / 3_600_000);
+}
+
+export function elksBalanceCurrencyUnits(balance: number | string) {
+  return Number(balance) / ELKS_CURRENCY_SCALE;
 }
 
 export function backupConfiguration(environment: Environment = process.env) {
