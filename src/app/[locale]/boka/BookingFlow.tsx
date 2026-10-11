@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useReducer } from "react";
 import { useTranslations } from "next-intl";
 
@@ -61,6 +62,7 @@ export function BookingFlow({
 }: Props) {
   const t = useTranslations("booking");
   const errors = useTranslations("errors");
+  const shell = useTranslations("shell");
   const [state, dispatch] = useReducer(
     bookingReducer,
     { locale, locations, teachers, initialTeacherId, initiallyAuthenticated },
@@ -167,7 +169,7 @@ export function BookingFlow({
       }
     }
     if (state.step === 2 && !state.gearbox) {
-      patch({ error: "TEACHER_REQUIRED" });
+      patch({ error: "GEARBOX_REQUIRED" });
       return;
     }
     if (state.step === 3 && !state.selectedSlot) {
@@ -218,7 +220,23 @@ export function BookingFlow({
         }),
       });
       const payload = await response.json();
-      if (!response.ok) throw new Error(payload.error?.code ?? "UNKNOWN");
+      if (!response.ok) {
+        const code = payload.error?.code ?? "UNKNOWN";
+        if (code === "SLOT_TAKEN") {
+          const refreshed = payload.error?.fields?.slots ?? payload.slots ?? [];
+          patch({
+            step: 3,
+            selectedSlot: "",
+            previews: {
+              ...state.previews,
+              [state.teacherId]: Array.isArray(refreshed) ? refreshed : [],
+            },
+            error: code,
+          });
+          return;
+        }
+        throw new Error(code);
+      }
       patch({ booking: payload as Booking });
     } catch (reason) {
       patch({ error: reason instanceof Error ? reason.message : "UNKNOWN" });
@@ -318,6 +336,12 @@ export function BookingFlow({
                         patch({ withdrawalAcknowledged: event.target.checked })
                       }
                     />
+                    <Link
+                      href={`/${locale}/villkor`}
+                      className="inline-flex min-h-11 items-center font-bold underline underline-offset-4"
+                    >
+                      {shell("terms")}
+                    </Link>
                   </div>
                   <Button
                     className="mt-4 w-full"
@@ -430,7 +454,7 @@ export function BookingFlow({
             </p>
           ) : null}
           {state.step < 5 ? (
-            <div className={`${state.step === 4 ? "static mx-0" : "sticky bottom-[calc(4.5rem+env(safe-area-inset-bottom))] -mx-4"} z-30 mt-6 flex gap-3 border-t border-border bg-card px-4 py-3 md:static md:mx-0 md:border-0 md:bg-transparent md:px-0 md:shadow-none`}>
+            <div className={`${state.step === 4 ? "static mx-0" : "sticky bottom-[calc(var(--tab-bar-height)+var(--safe-bottom))] -mx-4"} z-30 mt-6 flex gap-3 border-t border-border bg-card px-4 py-3 md:static md:mx-0 md:border-0 md:bg-transparent md:px-0 md:shadow-none`}>
               {state.step > 0 ? (
                 <Button variant="secondary" onClick={() => dispatch({ type: "step", update: (current) => current - 1 })}>
                   {t("back")}

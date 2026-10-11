@@ -120,11 +120,11 @@
       "areas": "Farsta · Upplands Väsby"
     },
     "quick": {
-      "eyebrow": "Snabbval",
-      "title": "Vad vill du göra?",
-      "lessons": "Se körlektioner",
-      "courses": "Se Risk 1 och Risk 2",
-      "teachers": "Hitta lärare",
+      "eyebrow": "Börja här",
+      "title": "Vad vill du göra idag?",
+      "lessons": "Körlektioner",
+      "courses": "Kurser",
+      "teachers": "Lärare",
       "contact": "Kontakta oss"
     },
     "pickup": {
@@ -465,7 +465,7 @@
       "features": {
         "categories": "Tydliga kategorier",
         "practice": "Gratis övningsfrågor",
-        "languages": "Undervisning på {languages}."
+        "languages": "Körkortsteori på {languages}."
       }
     },
     "licensingPending": "Hela frågebanken öppnas när du köper teoriåtkomst.",
@@ -655,7 +655,7 @@
     "confirmation": {
       "eyebrow": "Bokningen är registrerad",
       "title": "Din tid är bokad",
-      "deadline": "Kan avbokas senast 24 timmar före lektionen, fram till <time>{deadline}</time>. En senare avbokning debiteras fullt pris.",
+      "deadline": "Kan avbokas utan kostnad fram till <time>{deadline}</time>. En senare avbokning debiteras fullt pris.",
       "calendar": "Lägg till i kalender",
       "creditUsed": "En lektion har dragits från ditt saldo.",
       "hold": "Tiden hålls åt dig till <time>{expires}</time> medan betalningen slutförs.",
@@ -758,6 +758,8 @@
     "overview": {
       "title": "Mina sidor",
       "nextBooking": "Nästa körlektion",
+      "paymentRequired": "Slutför betalningen",
+      "holdUntil": "Tiden hålls åt dig till <time>{deadline}</time>. Öppna bokningen för att fortsätta.",
       "noBooking": "Du har ingen kommande bokning.",
       "viewBookings": "Visa bokningar",
       "saldo": "Mina lektioner",
@@ -774,7 +776,12 @@
       "empty": "Du har inga bokningar.",
       "pickup": "Hämtningsplats",
       "cancel": "Avboka",
+      "pay": "Slutför betalning",
+      "paying": "Öppnar betalning…",
       "keepBooking": "Behåll bokningen",
+      "holdStatus": "Väntar på betalning",
+      "holdUntil": "Tiden hålls åt dig till <time>{deadline}</time>.",
+      "cancelHoldWarning": "Ingen kredit har dragits. Om du avbryter släpps reservationen direkt. Vill du fortsätta?",
       "cancelLateWarning": "Avbokningsfristen har passerat. Lektionen debiteras fullt pris och dras från saldot. Vill du ändå avboka?",
       "cancelRefundWarning": "Avbokar du nu återförs krediten. Fristen är <time>{deadline}</time>. Vill du fortsätta?",
       "deadline": "Kan avbokas fram till <time>{deadline}</time>.",
@@ -882,6 +889,18 @@
       "name": "Namn",
       "email": "E-post",
       "phone": "Telefon",
+      "changePhone": "Byt mobilnummer",
+      "changePhoneDescription": "Av säkerhetsskäl skickar vi en kod till både ditt nuvarande och ditt nya nummer.",
+      "closePhoneChange": "Stäng",
+      "newPhone": "Nytt mobilnummer",
+      "sendCodes": "Skicka verifieringskoder",
+      "requestingCodes": "Skickar koder…",
+      "codesDescription": "Ange koden från ditt nuvarande nummer och koden från ditt nya nummer.",
+      "currentPhoneCode": "Kod till nuvarande nummer",
+      "newPhoneCode": "Kod till nytt nummer",
+      "verifyPhone": "Verifiera och byt nummer",
+      "savingPhone": "Byter nummer…",
+      "phoneChanged": "Mobilnumret har ändrats.",
       "language": "Språk",
       "permit": "Körkortstillstånd",
       "transmission": "Växellåda",
@@ -893,6 +912,10 @@
       "delete": "Radera mitt konto",
       "deleting": "Raderar…",
       "deleteConfirm": "Kontot anonymiseras och du loggas ut. Detta går inte att ångra. Vill du fortsätta?",
+      "deletePhoneRequired": "Kontakta skolan för att radera ett konto som saknar verifierat mobilnummer.",
+      "deleteSendCode": "Skicka säkerhetskod",
+      "deleteCode": "Säkerhetskod till ditt mobilnummer",
+      "deleteConfirmAction": "Radera kontot permanent",
       "permitStatuses": {
         "UNKNOWN": "Okänd status",
         "NOT_APPLIED": "Inte ansökt",
@@ -1198,6 +1221,7 @@
       "title": "Cookiepolicy",
       "sectionOrder": [
         "necessary",
+        "services",
         "analytics",
         "change"
       ],
@@ -1209,9 +1233,18 @@
         "title": "Analys och marknadsföring",
         "body": "Vi sätter inga analys- eller marknadsföringscookies just nu."
       },
+      "services": {
+        "title": "Tjänster från andra leverantörer",
+        "body": "Google Maps laddas först när du väljer att visa en karta. Google Places används när du söker en upphämtningsadress. Stripe laddas i betalningen och Google-inloggning endast när du väljer tjänsten. Sentry används för felsökning utan att skicka personuppgifter. Webbplatsen använder också en lokal cache för offlineläget."
+      },
       "change": {
         "title": "Ändra eller ta tillbaka valet",
-        "body": "Du valde cookies i bannern längst ner på sidan.\nRadera webbplatsens cookies i webbläsaren om du vill se valet igen.\nNödvändiga cookies krävs för inloggning och språk."
+        "body": "Du kan visa cookie-bannern igen med knappen längre ner på sidan. Nödvändiga cookies krävs för inloggning, språk och för att spara ditt val."
+      },
+      "settings": {
+        "title": "Ditt cookieval",
+        "body": "Visa bannern igen om du vill läsa informationen eller bekräfta valet på nytt.",
+        "action": "Visa cookieinställningar"
       },
       "table": {
         "caption": "Cookies som används",
@@ -1513,10 +1546,15 @@
     "RATE_LIMITED": "För många försök. Vänta och försök igen.",
     "SELECT_LOCATION_OR_PICKUP": "Välj en plats eller skriv en hämtningsadress.",
     "PICKUP_ADDRESS_CONFIRMATION_REQUIRED": "Välj en adress i listan för att fortsätta.",
+    "GEARBOX_REQUIRED": "Välj manuell eller automatisk växellåda för att fortsätta.",
     "TEACHER_REQUIRED": "Välj en lärare för att fortsätta.",
     "SLOT_REQUIRED": "Välj en ledig tid.",
     "SLOT_TAKEN": "Tiden hann bokas. Välj en annan ledig tid.",
     "PRODUCT_INACTIVE": "Produkten är ännu inte tillgänglig för köp.",
+    "HOLD_EXPIRED": "Reservationen har gått ut. Välj en ny ledig tid.",
+    "PAYMENT_PROVIDER_NOT_CONFIGURED": "Betalning är inte tillgänglig just nu. Kontakta skolan eller försök igen senare.",
+    "IDEMPOTENCY_KEY_REUSED": "Bokningen kunde inte skickas igen. Uppdatera sidan och försök på nytt.",
+    "ACCOUNT_NOT_FOUND": "Kontot finns inte längre. Logga ut och försök igen.",
     "UNAUTHENTICATED": "Logga in för att fortsätta.",
     "FORBIDDEN": "Du har inte behörighet till detta.",
     "STUDENT_NOT_FOUND": "Eleven finns inte.",
@@ -1528,7 +1566,7 @@
     "LOCATION_NOT_ASSIGNED": "Arbetstiden använder en plats som inte är vald.",
     "SLUG_EXISTS": "Profiladressen används redan.",
     "ACCOUNT_OR_SLUG_EXISTS": "E-postadressen eller profiladressen används redan.",
-    "ACCOUNT_HAS_ACTIVE_BOOKINGS": "Avboka kommande bokningar innan du raderar kontot.",
+    "ACCOUNT_HAS_ACTIVE_BOOKINGS": "Slutför eller avbryt kommande lektioner, kurser och aktiva betalningar innan du raderar kontot.",
     "COURSE_OCCASION_NOT_FOUND": "Kurstillfället finns inte längre.",
     "COURSE_FULL": "Kurstillfället är fullbokat.",
     "COURSE_ALREADY_BOOKED": "Du har redan en bekräftad plats på kurstillfället.",

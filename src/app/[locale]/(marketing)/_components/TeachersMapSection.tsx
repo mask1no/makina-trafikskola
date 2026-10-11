@@ -33,6 +33,7 @@ export function TeachersMapSection({
   swedishOnlyLabel,
   mapTitle,
   mapDescription,
+  mapPrivacy,
   mapCta,
   mapLabel,
   unavailableTitle,
@@ -54,6 +55,7 @@ export function TeachersMapSection({
   swedishOnlyLabel: string;
   mapTitle: string;
   mapDescription: string;
+  mapPrivacy: string;
   mapCta: string;
   mapLabel: string;
   unavailableTitle: string;
@@ -115,6 +117,7 @@ export function TeachersMapSection({
               bookingAvailable={canBook}
               center={mapCenter}
               label={mapLabel}
+              loadDescription={mapPrivacy}
               missingKeyTitle={unavailableTitle}
               missingKeyDescription={unavailableDescription}
               fallbackHref={`/${locale}/larare`}

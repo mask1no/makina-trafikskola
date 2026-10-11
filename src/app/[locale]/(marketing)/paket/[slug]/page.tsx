@@ -206,6 +206,8 @@ export default async function ProductDetailPage(
             callLabel={callLabel}
             authenticated={session?.user.role === "STUDENT"}
             signInHref={`/${params.locale}/logga-in?next=${encodeURIComponent(`/${params.locale}/paket/${product.slug}`)}`}
+            termsHref={`/${params.locale}/villkor`}
+            termsLinkLabel={t("shell.terms")}
             inactiveLabel={t("product.notForSale")}
             copy={{
               accountRequired: t("auth.purchaseGate"),

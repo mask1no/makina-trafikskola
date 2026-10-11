@@ -1,11 +1,13 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({
+  auth: vi.fn(),
   findUser: vi.fn(),
   sendOtpSms: vi.fn(),
   storeOtp: vi.fn(),
 }));
 
+vi.mock("@/auth", () => ({ auth: mocks.auth }));
 vi.mock("@/lib/db", () => ({
   db: { user: { findUnique: mocks.findUser } },
 }));
@@ -25,8 +27,23 @@ function request(body: unknown) {
 describe("OTP request", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    mocks.auth.mockResolvedValue({
+      user: { id: "student-1", role: "STUDENT" },
+    });
     mocks.storeOtp.mockResolvedValue({ allowed: true });
     mocks.sendOtpSms.mockResolvedValue(true);
+  });
+
+  it("requires a signed-in account before sending a phone-link code", async () => {
+    mocks.auth.mockResolvedValue(null);
+
+    const response = await POST(
+      request({ phone: "0701234567", purpose: "phone-link" }),
+    );
+
+    expect(response.status).toBe(401);
+    expect(mocks.storeOtp).not.toHaveBeenCalled();
+    expect(mocks.sendOtpSms).not.toHaveBeenCalled();
   });
 
   it("rejects non-Swedish phone numbers before storing an OTP", async () => {

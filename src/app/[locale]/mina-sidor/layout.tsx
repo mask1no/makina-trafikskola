@@ -2,7 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
 
 import { auth } from "@/auth";
-import { theoryNavVisible } from "@/lib/launch";
+import { bookingEnabled, theoryNavVisible } from "@/lib/launch";
 import { LinkButton } from "@/components/LinkButton";
 import { NavPills } from "@/components/NavPills";
 
@@ -39,6 +39,7 @@ export default async function StudentLayout(
     ["/profil", t("profile")],
   ];
   const base = `/${params.locale}/mina-sidor`;
+  const canBook = bookingEnabled();
 
   return (
     <div>
@@ -48,8 +49,11 @@ export default async function StudentLayout(
             <p className="text-sm font-bold text-ink-inverse-muted">{t("label")}</p>
             <p className="mt-1 text-xl font-black">{session.user.name}</p>
           </div>
-          <LinkButton href={`/${params.locale}/boka`} className="shrink-0">
-            {shellT("book")}
+          <LinkButton
+            href={`/${params.locale}/${canBook ? "boka" : "kontakt"}`}
+            className="shrink-0"
+          >
+            {shellT(canBook ? "book" : "contact")}
           </LinkButton>
         </div>
       </div>

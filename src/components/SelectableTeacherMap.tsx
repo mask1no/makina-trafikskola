@@ -11,6 +11,7 @@ type SelectableTeacherMapProps = {
   bookingAvailable: boolean;
   center: { lat: number; lng: number };
   label: string;
+  loadDescription?: string;
   missingKeyTitle: string;
   fallbackHref: string;
   fallbackLabel: string;

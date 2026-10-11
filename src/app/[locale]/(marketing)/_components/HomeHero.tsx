@@ -106,7 +106,6 @@ export async function HomeHero({ locale }: { locale: Locale }) {
               </span>
             ) : null}
           </p>
-          <p className="mt-2 text-small text-ink-inverse-muted">{t("home.hero.areas")}</p>
           <p className="mt-2 text-small font-bold">{t("home.hero.areas")}</p>
         </aside>
       </div>

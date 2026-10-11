@@ -187,26 +187,26 @@ export default async function TeoriPage(
               const content = resolveContent(category.translations, params.locale);
               if (!content.translation) return null;
               return (
-                <li key={category.id} className="relative w-44 shrink-0 snap-start lg:w-24">
+                <li key={category.id} className="relative w-32 shrink-0 snap-start lg:w-24">
                   {index < available.length - 1 ? (
                     <span
                       aria-hidden="true"
-                      className="absolute start-[calc(50%+4.5rem)] top-[4.5rem] h-px w-9 bg-border lg:start-[calc(50%+3rem)] lg:top-[3rem] lg:w-3 rtl:end-[calc(50%+4.5rem)] rtl:start-auto rtl:lg:end-[calc(50%+3rem)]"
+                      className="absolute start-[calc(50%+3rem)] top-[3rem] h-px w-8 bg-border lg:w-3 rtl:end-[calc(50%+3rem)] rtl:start-auto"
                     />
                   ) : null}
                   <Link
                     href={`/${params.locale}/teori/${category.slug}`}
                     className="group flex flex-col items-center text-center"
                   >
-                    <div className="relative grid size-36 place-items-center rounded-full border border-[var(--line)] bg-card text-ink shadow-card transition group-hover:border-accent group-hover:bg-accent-soft lg:size-24">
+                    <div className="relative grid size-24 place-items-center rounded-full border border-[var(--line)] bg-card text-ink shadow-card transition group-hover:border-accent group-hover:bg-accent-soft">
                       <span
-                        className="numbers-ltr absolute start-3 top-3 grid size-8 place-items-center rounded-full bg-surface text-sm font-black text-ink-inverse"
+                        className="numbers-ltr absolute start-2 top-2 grid size-7 place-items-center rounded-full bg-surface text-xs font-black text-ink-inverse"
                       >
                         {index + 1}
                       </span>
                       <TheoryIcon
                         name={THEORY_CATEGORY_ICONS[category.order - 1] ?? "questions"}
-                        className="size-12 lg:size-9"
+                        className="size-9"
                       />
                     </div>
                     <div className="mt-3">

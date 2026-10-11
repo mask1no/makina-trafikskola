@@ -120,11 +120,11 @@
       "areas": "Farsta · Upplands Väsby"
     },
     "quick": {
-      "eyebrow": "Quick links",
-      "title": "What would you like to do?",
-      "lessons": "View driving lessons",
-      "courses": "View Risk 1 and Risk 2",
-      "teachers": "Find an instructor",
+      "eyebrow": "Start here",
+      "title": "What would you like to do today?",
+      "lessons": "Driving lessons",
+      "courses": "Courses",
+      "teachers": "Instructors",
       "contact": "Contact us"
     },
     "pickup": {
@@ -465,7 +465,7 @@
       "features": {
         "categories": "Clear categories",
         "practice": "Free practice questions",
-        "languages": "Lessons in {languages}."
+        "languages": "Driving theory in {languages}."
       }
     },
     "licensingPending": "The full question bank opens when you buy theory access.",
@@ -655,7 +655,7 @@
     "confirmation": {
       "eyebrow": "Booking registered",
       "title": "Your time is booked",
-      "deadline": "You can cancel at the latest 24 hours before the lesson, until <time>{deadline}</time>. A later cancellation is charged in full.",
+      "deadline": "You can cancel free of charge until <time>{deadline}</time>. A later cancellation is charged in full.",
       "calendar": "Add to calendar",
       "creditUsed": "One lesson has been deducted from your balance.",
       "hold": "This time is held for you until <time>{expires}</time> while payment is completed.",
@@ -758,6 +758,8 @@
     "overview": {
       "title": "My pages",
       "nextBooking": "Next driving lesson",
+      "paymentRequired": "Complete your payment",
+      "holdUntil": "This time is held for you until <time>{deadline}</time>. Open the booking to continue.",
       "noBooking": "You have no upcoming booking.",
       "viewBookings": "View bookings",
       "saldo": "My lessons",
@@ -774,7 +776,12 @@
       "empty": "You have no bookings.",
       "pickup": "Pickup location",
       "cancel": "Cancel",
+      "pay": "Complete payment",
+      "paying": "Opening payment…",
       "keepBooking": "Keep booking",
+      "holdStatus": "Waiting for payment",
+      "holdUntil": "This time is held for you until <time>{deadline}</time>.",
+      "cancelHoldWarning": "No credit has been used. Cancelling releases the reservation immediately. Do you want to continue?",
       "cancelLateWarning": "The cancellation deadline has passed. The lesson is charged in full and deducted from your balance. Cancel anyway?",
       "cancelRefundWarning": "Cancelling now returns your credit. The deadline is <time>{deadline}</time>. Continue?",
       "deadline": "You can cancel until <time>{deadline}</time>.",
@@ -882,6 +889,18 @@
       "name": "Name",
       "email": "Email",
       "phone": "Phone",
+      "changePhone": "Change mobile number",
+      "changePhoneDescription": "For security, we send a code to both your current and your new number.",
+      "closePhoneChange": "Close",
+      "newPhone": "New mobile number",
+      "sendCodes": "Send verification codes",
+      "requestingCodes": "Sending codes…",
+      "codesDescription": "Enter the code sent to your current number and the code sent to your new number.",
+      "currentPhoneCode": "Code for current number",
+      "newPhoneCode": "Code for new number",
+      "verifyPhone": "Verify and change number",
+      "savingPhone": "Changing number…",
+      "phoneChanged": "Your mobile number has been changed.",
       "language": "Language",
       "permit": "Learner's permit",
       "transmission": "Transmission",
@@ -893,6 +912,10 @@
       "delete": "Delete my account",
       "deleting": "Deleting…",
       "deleteConfirm": "The account will be anonymised and you will be signed out. This cannot be undone. Continue?",
+      "deletePhoneRequired": "Contact the school to delete an account without a verified mobile number.",
+      "deleteSendCode": "Send security code",
+      "deleteCode": "Security code sent to your mobile",
+      "deleteConfirmAction": "Delete account permanently",
       "permitStatuses": {
         "UNKNOWN": "Unknown status",
         "NOT_APPLIED": "Not applied",
@@ -1155,6 +1178,7 @@
       "title": "Cookie policy",
       "sectionOrder": [
         "necessary",
+        "services",
         "analytics",
         "change"
       ],
@@ -1166,9 +1190,18 @@
         "title": "Analytics and marketing",
         "body": "We do not set analytics or marketing cookies at the moment."
       },
+      "services": {
+        "title": "Services from other providers",
+        "body": "Google Maps loads only after you choose to show a map. Google Places is used when you search for a pickup address. Stripe loads during payment and Google sign-in only when you choose that service. Sentry is used for troubleshooting without sending personal data. The site also uses a local cache for offline mode."
+      },
       "change": {
         "title": "Change or withdraw your choice",
-        "body": "You chose cookies in the banner at the bottom of the page.\nDelete the site cookies in your browser if you want to see the choice again.\nNecessary cookies are required for sign-in and language."
+        "body": "You can show the cookie banner again with the button further down this page. Necessary cookies are required for sign-in, language and saving your choice."
+      },
+      "settings": {
+        "title": "Your cookie choice",
+        "body": "Show the banner again if you want to read the information or confirm your choice again.",
+        "action": "Show cookie settings"
       },
       "table": {
         "caption": "Cookies in use",
@@ -1470,10 +1503,15 @@
     "RATE_LIMITED": "Too many attempts. Wait and try again.",
     "SELECT_LOCATION_OR_PICKUP": "Choose a location or enter a pickup address.",
     "PICKUP_ADDRESS_CONFIRMATION_REQUIRED": "Choose an address from the list to continue.",
+    "GEARBOX_REQUIRED": "Choose manual or automatic transmission to continue.",
     "TEACHER_REQUIRED": "Choose an instructor to continue.",
     "SLOT_REQUIRED": "Choose an available time.",
     "SLOT_TAKEN": "This time was just booked. Choose another available time.",
     "PRODUCT_INACTIVE": "The product is not yet available to buy.",
+    "HOLD_EXPIRED": "Your reservation has expired. Choose a new available time.",
+    "PAYMENT_PROVIDER_NOT_CONFIGURED": "Payment is not available right now. Contact the school or try again later.",
+    "IDEMPOTENCY_KEY_REUSED": "The booking could not be submitted again. Refresh the page and try again.",
+    "ACCOUNT_NOT_FOUND": "This account no longer exists. Sign out and try again.",
     "UNAUTHENTICATED": "Log in to continue.",
     "FORBIDDEN": "You do not have access to this.",
     "STUDENT_NOT_FOUND": "The student was not found.",
@@ -1485,7 +1523,7 @@
     "LOCATION_NOT_ASSIGNED": "The working hours use a location that is not selected.",
     "SLUG_EXISTS": "The profile address is already in use.",
     "ACCOUNT_OR_SLUG_EXISTS": "The email or profile address is already in use.",
-    "ACCOUNT_HAS_ACTIVE_BOOKINGS": "Cancel upcoming bookings before deleting the account.",
+    "ACCOUNT_HAS_ACTIVE_BOOKINGS": "Complete or cancel upcoming lessons, courses and active payments before deleting the account.",
     "COURSE_OCCASION_NOT_FOUND": "This course occasion is no longer available.",
     "COURSE_FULL": "This course is fully booked.",
     "COURSE_ALREADY_BOOKED": "You already have a confirmed seat on this course.",
@@ -1514,7 +1552,7 @@
     "metadata": "Contact details for Makina Trafikskola in Stockholm.",
     "eyebrow": "Find us",
     "title": "Contact",
-    "description": "Here you find the name, organisation number, addresses and how to reach us. Fill in the placeholders before launch.",
+    "description": "Call, email or visit Makina Trafikskola. Here you can find our opening hours, locations and teaching languages.",
     "orgnr": "Organisation number",
     "visitingAddress": "Visiting address",
     "postalAddress": "Postal address",

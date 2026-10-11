@@ -18,7 +18,6 @@ export function PickupSection({
   imageAlt,
   mapLabel,
   imageExists,
-  mapsConfig,
   pickupAreas,
 }: {
   eyebrow: string;
@@ -28,7 +27,6 @@ export function PickupSection({
   imageAlt: string;
   mapLabel: string;
   imageExists: boolean;
-  mapsConfig: { apiKey?: string; mapId?: string };
   pickupAreas: PickupArea[];
 }) {
   return (
@@ -50,8 +48,6 @@ export function PickupSection({
           </div>
         ) : (
           <PickupAreaMaps
-            apiKey={mapsConfig.apiKey ?? ""}
-            mapId={mapsConfig.mapId ?? ""}
             areas={pickupAreas}
             label={mapLabel}
           />

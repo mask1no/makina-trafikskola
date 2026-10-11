@@ -70,16 +70,27 @@ async function HomeBelow({ locale }: { locale: Locale }) {
     locale,
     (code) => t(`shell.languagePage.${code}`),
   );
+  const theoryLanguageNames = new Intl.ListFormat(locale, {
+    style: "long",
+    type: "conjunction",
+  }).format(
+    (["sv", "en", "ti", "ar"] as const).map((code) =>
+      t(`shell.languagePage.${code}`),
+    ),
+  );
   const canBook = bookingEnabled();
   const showInstructors = instructorsEnabled() && teachers.length > 0;
+  const activeProducts = products.filter((product) => product.active);
+  const hasRisk1 = activeProducts.some((product) => product.includesRisk1);
+  const hasRisk2 = activeProducts.some((product) => product.includesRisk2);
   const benefitCards = benefitItems({
     bookingEnabled: canBook,
     products,
-    hasRiskCourse: products.some(
-      (product) =>
-        product.kind === "COURSE_SEAT" &&
-        (product.includesRisk1 || product.includesRisk2),
+    hasPickupArea: locations.some(
+      (location) =>
+        location.status === "ACTIVE" && Boolean(location.boundary),
     ),
+    hasRiskCourse: hasRisk1 && hasRisk2,
   }).map((item) => ({
     id: item.id,
     size: item.size,
@@ -91,9 +102,9 @@ async function HomeBelow({ locale }: { locale: Locale }) {
           })
         : t(`home.benefits.${item.id}.body`),
   }));
-  const theoryProduct = products.find((product) => product.slug === "korkortsteori");
-  const singleLesson = products.find((product) => product.slug === "en-korlektion");
-  const entryPackage = products
+  const theoryProduct = activeProducts.find((product) => product.slug === "korkortsteori");
+  const singleLesson = activeProducts.find((product) => product.slug === "en-korlektion");
+  const entryPackage = activeProducts
     .filter((product) => product.kind === "PACKAGE")
     .sort((a, b) => a.priceOre - b.priceOre)[0];
   const homeMapMarkers = teachers.flatMap((teacher) =>
@@ -117,7 +128,10 @@ async function HomeBelow({ locale }: { locale: Locale }) {
   const mapsConfig = googleMapsBrowserConfig();
   const pickupImageExists = existsSync(join(process.cwd(), "public", "images", "pickup-feature.png"));
   const pickupAreas = locations
-    .filter((location) => location.boundary)
+    .filter(
+      (location) =>
+        location.status === "ACTIVE" && Boolean(location.boundary),
+    )
     .slice(0, 2)
     .map((location) => ({
       id: location.id,
@@ -126,13 +140,15 @@ async function HomeBelow({ locale }: { locale: Locale }) {
       marker: { lat: location.lat, lng: location.lng },
     }));
   const faqItems: FaqItem[] = [
-    {
-      question: t("home.faq.cost.question"),
-      answer: t("home.faq.cost.answer", {
-        singlePrice: formatPrice(singleLesson?.priceOre ?? 0, locale),
-        packagePrice: formatPrice(entryPackage?.priceOre ?? 0, locale),
-      }),
-    },
+    ...(singleLesson && entryPackage
+      ? [{
+          question: t("home.faq.cost.question"),
+          answer: t("home.faq.cost.answer", {
+            singlePrice: formatPrice(singleLesson.priceOre, locale),
+            packagePrice: formatPrice(entryPackage.priceOre, locale),
+          }),
+        }]
+      : []),
     ...(["languages", "pickup", "cancel", "late", "risk", "validity"] as const).map((key) => {
       const answer =
         key === "cancel" && !canBook
@@ -203,7 +219,7 @@ async function HomeBelow({ locale }: { locale: Locale }) {
         links={([
           ["lessons", "korlektioner"],
           ["courses", "kurser"],
-          ["teachers", "larare"],
+          ...(showInstructors ? [["teachers", "larare"] as const] : []),
           ["contact", "kontakt"],
         ] as const).map(([key, href]) => ({
           key,
@@ -219,7 +235,6 @@ async function HomeBelow({ locale }: { locale: Locale }) {
         imageAlt={t("home.pickup.imageAlt")}
         mapLabel={t("home.pickup.mapLabel")}
         imageExists={pickupImageExists}
-        mapsConfig={mapsConfig}
         pickupAreas={pickupAreas}
       />
       {showInstructors ? (
@@ -242,6 +257,7 @@ async function HomeBelow({ locale }: { locale: Locale }) {
           swedishOnlyLabel={t("common.swedishOnly")}
           mapTitle={t("map.homeTeaserTitle")}
           mapDescription={t("map.homeTeaserDescription")}
+          mapPrivacy={t("shell.mapPrivacy")}
           mapCta={t("map.homeTeaserCta")}
           mapLabel={t("map.interactiveLabel")}
           unavailableTitle={t("map.unavailableTitle")}
@@ -270,7 +286,7 @@ async function HomeBelow({ locale }: { locale: Locale }) {
               label:
                 item === "languages"
                   ? t("theory.teaser.features.languages", {
-                      languages: offeredLanguageNames,
+                      languages: theoryLanguageNames,
                     })
                   : t(`theory.teaser.features.${item}`),
             }))}

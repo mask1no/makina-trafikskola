@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 import { Button } from "@/components/Button";
 import { CheckboxField } from "@/components/CheckboxField";
@@ -32,6 +32,8 @@ export function CourseBookingControl({
 }) {
   const t = useTranslations("courses.booking");
   const errors = useTranslations("errors");
+  const shell = useTranslations("shell");
+  const locale = useLocale();
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [withdrawalAcknowledged, setWithdrawalAcknowledged] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -99,6 +101,12 @@ export function CourseBookingControl({
             setWithdrawalAcknowledged(event.target.checked)
           }
         />
+        <Link
+          href={`/${locale}/villkor`}
+          className="inline-flex min-h-11 items-center font-bold underline underline-offset-4 sm:col-span-2"
+        >
+          {shell("terms")}
+        </Link>
       </div>
       <Button
         className="mt-4 w-full sm:w-auto"

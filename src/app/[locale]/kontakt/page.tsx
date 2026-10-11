@@ -210,6 +210,7 @@ export default async function ContactPage(
               address={`${visiting}, Sweden`}
               title={t("locationsTitle")}
               privacy={shell("mapPrivacy")}
+              loadLabel={shell("showMap")}
             />
           </div>
           <div className="mt-6 grid gap-4 sm:grid-cols-2">

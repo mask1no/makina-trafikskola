@@ -27,16 +27,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
 
   let products: { slug: string }[] = [];
-  let teachers: { slug: string }[] = [];
   let categories: { slug: string }[] = [];
   let locations: { slug: string }[] = [];
   try {
-    [products, teachers, categories, locations] = await Promise.all([
+    [products, categories, locations] = await Promise.all([
       db.product.findMany({ where: { active: true }, select: { slug: true } }),
-      db.teacherProfile.findMany({
-        where: { active: true },
-        select: { slug: true },
-      }),
       db.theoryCategory.findMany({ select: { slug: true } }),
       db.location.findMany({
         where: { active: true },
@@ -52,12 +47,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ...products
         .filter((product) => theorySalesOpen() || product.slug !== "korkortsteori")
         .map((product) => `/paket/${product.slug}`),
-      ...(instructorsEnabled()
-        ? [
-            "/larare",
-            ...teachers.map((teacher) => `/larare/${teacher.slug}`),
-          ]
-        : []),
+      ...(instructorsEnabled() ? ["/larare"] : []),
       ...(theoryNavVisible()
         ? categories.map((category) => `/teori/${category.slug}`)
         : []),

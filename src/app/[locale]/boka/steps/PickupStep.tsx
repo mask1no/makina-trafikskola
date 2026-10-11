@@ -75,6 +75,7 @@ export function PickupStep({
   onPickupSelected: (address: string, coordinates: { lat: number; lng: number }) => void;
 }) {
   const t = useTranslations("booking");
+  const shell = useTranslations("shell");
   const showHint = meet === "pickup" && pickupAddress.trim().length > 0 && !pickupCoordinates;
   const [mapFailed, setMapFailed] = useState(false);
   const failMap = useCallback(() => setMapFailed(true), []);
@@ -134,6 +135,11 @@ export function PickupStep({
               autoComplete="street-address"
             />
           )}
+          {mapApiKey ? (
+            <p className="mt-2 text-small leading-6 text-ink-muted">
+              {shell("mapPrivacy")}
+            </p>
+          ) : null}
           {showHint ? (
             <p className="mt-2 text-small leading-6 text-ink-muted">{t("step.where.selectFromList")}</p>
           ) : null}

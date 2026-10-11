@@ -4,11 +4,17 @@ import { z } from "zod";
 
 import { auth } from "@/auth";
 import { AuthorizationError, requireRole } from "@/lib/auth/guards";
+import { consumeOtp } from "@/lib/auth/otp-store";
 import { db } from "@/lib/db";
 
 export const runtime = "nodejs";
 
-const deleteSchema = z.object({ confirm: z.literal("DELETE") }).strict();
+const deleteSchema = z
+  .object({
+    confirm: z.literal("DELETE"),
+    code: z.string().regex(/^\d{6}$/),
+  })
+  .strict();
 
 export async function DELETE(request: Request) {
   const body = await request.json().catch(() => null);
@@ -28,14 +34,34 @@ export async function DELETE(request: Request) {
   }
 
   const now = new Date();
+  const activePaymentCutoff = new Date(now.getTime() - 24 * 60 * 60 * 1000);
   const user = await db.user.findFirst({
     where: { id: studentId, role: "STUDENT", deletedAt: null },
     select: {
       id: true,
+      phone: true,
       _count: {
         select: {
           bookings: {
             where: { status: "CONFIRMED", startsAt: { gt: now } },
+          },
+          courseBookings: {
+            where: {
+              status: { in: ["CONFIRMED", "PENDING_PAYMENT"] },
+              occasion: { startsAt: { gt: now }, cancelled: false },
+            },
+          },
+          orders: {
+            where: {
+              status: "PENDING",
+              createdAt: { gt: activePaymentCutoff },
+              payment: {
+                is: {
+                  status: "PENDING",
+                  stripePaymentIntentId: { not: null },
+                },
+              },
+            },
           },
         },
       },
@@ -44,8 +70,18 @@ export async function DELETE(request: Request) {
   if (!user) {
     return errorResponse("ACCOUNT_NOT_FOUND", 404);
   }
-  if (user._count.bookings > 0) {
+  if (
+    user._count.bookings > 0 ||
+    user._count.courseBookings > 0 ||
+    user._count.orders > 0
+  ) {
     return errorResponse("ACCOUNT_HAS_ACTIVE_BOOKINGS", 409);
+  }
+  if (
+    !user.phone ||
+    !(await consumeOtp(user.phone, parsed.data.code, now))
+  ) {
+    return errorResponse("INVALID_OTP", 401);
   }
 
   await db.$transaction(

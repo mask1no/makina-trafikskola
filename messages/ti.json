@@ -120,11 +120,11 @@
       "areas": "Farsta · Upplands Väsby"
     },
     "quick": {
-      "eyebrow": "ቅልጡፍ ምርጫ",
-      "title": "እንታይ ክትገብር ትደሊ?",
-      "lessons": "ትምህርቲ ምዝዋር ርአ",
-      "courses": "Risk 1ን Risk 2ን ርአ",
-      "teachers": "መምህር ድለ",
+      "eyebrow": "ኣብዚ ጀምር",
+      "title": "ሎሚ እንታይ ክትገብር ትደሊ?",
+      "lessons": "ትምህርቲ ምዝዋር",
+      "courses": "ኮርሳት",
+      "teachers": "መምህራን",
       "contact": "ርኸበና"
     },
     "pickup": {
@@ -465,7 +465,7 @@
       "features": {
         "categories": "ንጹር ምድባት",
         "practice": "ነጻ ናይ ልምምድ ሕቶታት",
-        "languages": "ትምህርቲ ብ{languages}።"
+        "languages": "ናይ መንጃ ፍቓድ ክልሰ-ሓሳብ ብ{languages} ይርከብ።"
       }
     },
     "licensingPending": "ምሉእ ባንክ ሕቶታት ክኸፍት እዩ ምስ ትገዝእ ናይ ቴዎሪ መእተዊ።",
@@ -655,7 +655,7 @@
     "confirmation": {
       "eyebrow": "ቦታ ምሓዝ ተመዝጊቡ",
       "title": "ግዜኻ ተሓዚኡ",
-      "deadline": "ዝዝሓለ ምስራዝ 24 ሰዓት ቅድሚ ትምህርቲ እዩ፣ ክሳብ <time>{deadline}</time>። ድሕሪኡ ምሉእ ዋጋ ይኽፈል።",
+      "deadline": "ክሳብ <time>{deadline}</time> ብነጻ ክትስርዝ ትኽእል። ድሕሪኡ ምሉእ ዋጋ ይኽፈል።",
       "calendar": "ናብ ካላንደር ወስኽ",
       "creditUsed": "ሓደ ትምህርቲ ካብ ሒሳብካ ተቐኒሱ።",
       "hold": "ክሳብ <time>{expires}</time> ክፍሊት ዝዛዘም ግዜኻ ተታሒዙልካ።",
@@ -758,6 +758,8 @@
     "overview": {
       "title": "ገጻተይ",
       "nextBooking": "ዝቕጽል ትምህርቲ",
+      "paymentRequired": "ክፍሊትካ ዛዝም",
+      "holdUntil": "እዚ ግዜ ክሳብ <time>{deadline}</time> ንዓኻ ተዓቂቡ ኣሎ። ንምቕጻል ቦታ ምሓዝ ክፈት።",
       "noBooking": "ዝመጽእ ቦታ ምሓዝ የብልካን።",
       "viewBookings": "ቦታ ምሓዝ ርአ",
       "saldo": "ትምህርተይ",
@@ -774,7 +776,12 @@
       "empty": "ቦታ ምሓዝ የብልካን።",
       "pickup": "ናይ ምውሳድ ቦታ",
       "cancel": "ሰርዝ",
+      "pay": "ክፍሊት ዛዝም",
+      "paying": "ክፍሊት ይኽፈት ኣሎ…",
       "keepBooking": "ምሓዝ ኣቐምጥ",
+      "holdStatus": "ክፍሊት ይጽበ",
+      "holdUntil": "እዚ ግዜ ክሳብ <time>{deadline}</time> ንዓኻ ተዓቂቡ ኣሎ።",
+      "cancelHoldWarning": "ክረዲት ኣይተቖርጸን። ምስራዝ ነቲ ዝተዓቀበ ግዜ ብቕጽበት ይለቆ። ክትቅጽል ትደሊ?",
       "cancelLateWarning": "ናይ ምስራዝ ግዜ ሓሊፉ። ትምህርቲ ምሉእ ዋጋ ይኽፈል ከምኡውን ካብ ሳልዶ ይቑረጽ። ገና ክትስርዝ ትደሊ?",
       "cancelRefundWarning": "ሕጂ እንተሰሪዝካ ክረዲት ይምለስ። መወዳእታ <time>{deadline}</time> እዩ። ቀጽል?",
       "deadline": "ክሳብ <time>{deadline}</time> ክትስርዝ ትኽእል።",
@@ -882,6 +889,18 @@
       "name": "ስም",
       "email": "ኢመይል",
       "phone": "ተሌፎን",
+      "changePhone": "ቁጽሪ ሞባይል ቀይር",
+      "changePhoneDescription": "ንድሕነት ናብ ሕጂ ዘሎካን ሓድሽን ቁጽሪ ኮድ ንሰድድ።",
+      "closePhoneChange": "ዕጾ",
+      "newPhone": "ሓድሽ ቁጽሪ ሞባይል",
+      "sendCodes": "ኮዳት መረጋገጺ ስደድ",
+      "requestingCodes": "ኮዳት ይለኣኹ ኣለዉ…",
+      "codesDescription": "ናብ ሕጂ ዘሎካ ቁጽርን ናብ ሓድሽ ቁጽርን ዝተላእከ ኮድ ኣእቱ።",
+      "currentPhoneCode": "ኮድ ናይ ሕጂ ቁጽሪ",
+      "newPhoneCode": "ኮድ ናይ ሓድሽ ቁጽሪ",
+      "verifyPhone": "ኣረጋግጽን ቁጽሪ ቀይርን",
+      "savingPhone": "ቁጽሪ ይቕየር ኣሎ…",
+      "phoneChanged": "ቁጽሪ ሞባይል ተቐይሩ።",
       "language": "ቋንቋ",
       "permit": "ፍቓድ ትምህርቲ",
       "transmission": "ዓይነት መኪና",
@@ -893,6 +912,10 @@
       "delete": "ሕሳበይ ሰርዝ",
       "deleting": "ይስረዝ…",
       "deleteConfirm": "ሕሳብ መንነቱ ይስወርን ክትወጽእን ኢኻ። ክምለስ ኣይክእልን። ቀጽል?",
+      "deletePhoneRequired": "ዝተረጋገጸ ቁጽሪ ሞባይል ዘይብሉ ሕሳብ ንምስራዝ ንቤት ትምህርቲ ርኸብ።",
+      "deleteSendCode": "ናይ ድሕነት ኮድ ስደድ",
+      "deleteCode": "ናብ ሞባይልካ ዝተላእከ ናይ ድሕነት ኮድ",
+      "deleteConfirmAction": "ሕሳብ ንሓዋሩ ሰርዝ",
       "permitStatuses": {
         "UNKNOWN": "ዘይተፈልጠ",
         "NOT_APPLIED": "ኣይተመልከተን",
@@ -1155,6 +1178,7 @@
       "title": "ፖሊሲ ኩኪ",
       "sectionOrder": [
         "necessary",
+        "services",
         "analytics",
         "change"
       ],
@@ -1166,9 +1190,18 @@
         "title": "ትንታነን ዕዳጋን",
         "body": "ሕጂ ናይ ትንታነ ወይ ዕዳጋ ኩኪ ኣይንገብርን።"
       },
+      "services": {
+        "title": "ኣገልግሎታት ካብ ካልኦት ኣቕረብቲ",
+        "body": "Google Maps ካርታ ንምርኣይ ምስ መረጽካ ጥራይ ይጽዕን። Google Places ናይ ምውሳድ ኣድራሻ ክትደሊ እንከለኻ ይጥቀም። Stripe ኣብ ክፍሊት፣ Google መእተዊ ድማ ነቲ ኣገልግሎት ምስ መረጽካ ጥራይ ይጽዕኑ። Sentry ብዘይ ውልቃዊ ሓበሬታ ጌጋታት ንምፍታሕ ይጥቀም። እቲ መርበብ ንኦፍላይን ኣገልግሎት ውሽጣዊ መዝገብ እውን ይጥቀም።"
+      },
       "change": {
         "title": "ምርጫኻ ቀይር ወይ መልስ",
-        "body": "ኩኪ ኣብ ታሕቲ ገጽ ምስ መረጽካ።\nእንተደሊኻ ኣብ መርበብ ኩኪ ሰርዝ ምእንቲ መማረጺ እንደገና ክትርኢ።\nናይ ምእታውን ቋንቋን ኩኪ የድሊ።"
+        "body": "ኣብ ታሕቲ እዚ ገጽ ባነር ኩኪ እንደገና ከተርእዮ ትኽእል። ኣድለይቲ ኩኪታት ንምእታው፣ ቋንቋን ምርጫኻ ንምዕቃብን የድልዩ።"
+      },
+      "settings": {
+        "title": "ምርጫ ኩኪኻ",
+        "body": "ሓበሬታ እንደገና ከተንብብ ወይ ምርጫኻ ከተረጋግጽ እንተደሊኻ ባነር ኣርኢ።",
+        "action": "ምርጫ ኩኪ ኣርኢ"
       },
       "table": {
         "caption": "ዝጥቀሙ ኩኪ",
@@ -1471,10 +1504,15 @@
     "RATE_LIMITED": "ብዙሕ ፈተነ። ጽናሕ እሞ ደጊምካ ፈትን።",
     "SELECT_LOCATION_OR_PICKUP": "ቦታ ምረጽ ወይ ኣድራሻ ጽሓፍ።",
     "PICKUP_ADDRESS_CONFIRMATION_REQUIRED": "ንምቕጻል ካብ ዝርዝር ኣድራሻ ምረጽ።",
+    "GEARBOX_REQUIRED": "ንምቕጻል ማንዋል ወይ ኣውቶማቲክ ማርሻ ምረጽ።",
     "TEACHER_REQUIRED": "ንምቕጻል መምህር ምረጽ።",
     "SLOT_REQUIRED": "ክፉት ግዜ ምረጽ።",
     "SLOT_TAKEN": "እዚ ግዜ ተታሒዙ። ካልእ ምረጽ።",
     "PRODUCT_INACTIVE": "እዚ ፍርያት ገና ኣይሽየጥን።",
+    "HOLD_EXPIRED": "ግዜ ምዕቃብ ቦታኻ ወዲኡ። ሓድሽ ክፉት ግዜ ምረጽ።",
+    "PAYMENT_PROVIDER_NOT_CONFIGURED": "ክፍሊት ሕጂ ኣይርከብን። ንቤት ትምህርቲ ርኸብ ወይ ጸኒሕካ ፈትን።",
+    "IDEMPOTENCY_KEY_REUSED": "ቦታ ምሓዝ እንደገና ክለኣኽ ኣይከኣለን። ገጹ ኣሐድስ እሞ ደጊምካ ፈትን።",
+    "ACCOUNT_NOT_FOUND": "እዚ ሕሳብ ድሕሪ ሕጂ የለን። ውጻእ እሞ ደጊምካ ፈትን።",
     "UNAUTHENTICATED": "ንምቕጻል እቶ።",
     "FORBIDDEN": "ፍቓድ የብልካን።",
     "STUDENT_NOT_FOUND": "ተማሃራይ ኣይተረኽበን።",
@@ -1485,7 +1523,7 @@
     "LOCATION_NOT_ASSIGNED": "ሰዓት ስራሕ ዘይተመርጸ ቦታ ይጥቀም።",
     "SLUG_EXISTS": "ኣድራሻ ፕሮፋይል ድሮ ይጥቀም።",
     "ACCOUNT_OR_SLUG_EXISTS": "ኢመይል ወይ ኣድራሻ ፕሮፋይል ድሮ ይጥቀም።",
-    "ACCOUNT_HAS_ACTIVE_BOOKINGS": "ቅድሚ ሕሳብካ ምስራዝ ዝመጹ ቦታ ምሓዝ ሰርዝ።",
+    "ACCOUNT_HAS_ACTIVE_BOOKINGS": "ቅድሚ ሕሳብካ ምስራዝ ዝመጹ ትምህርትታት፣ ኮርሳትን ንጡፋት ክፍሊታትን ዛዝም ወይ ሰርዝ።",
     "COURSE_OCCASION_NOT_FOUND": "እዚ ኮርስ ድሕሪ ሕጂ ኣይርከብን።",
     "COURSE_FULL": "እዚ ኮርስ መሊኡ።",
     "COURSE_ALREADY_BOOKED": "ኣብዚ ኮርስ ድሮ ዝተረጋገጸ ቦታ ኣለካ።",

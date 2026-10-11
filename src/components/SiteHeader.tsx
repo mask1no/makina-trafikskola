@@ -123,7 +123,7 @@ export function SiteHeader({
           ))}
         </nav>
         <div className="ms-auto flex shrink-0 items-center gap-1.5 sm:gap-2 lg:ms-0 lg:justify-self-end lg:gap-2">
-          <LanguageSwitcher />
+          <LanguageSwitcher authenticated={Boolean(user)} />
           {!user ? (
             <>
               <details data-header-menu className="relative shrink-0 lg:hidden">

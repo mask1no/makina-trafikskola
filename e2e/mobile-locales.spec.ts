@@ -52,6 +52,8 @@ test("has no horizontal overflow and shows the tab bar only under md", async ({ 
       "",
       "/korlektioner",
       "/paket/korpaket-b5",
+      "/larare",
+      "/kurser",
       "/kontakt",
       "/teori",
       "/logga-in",

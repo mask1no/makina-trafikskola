@@ -1,6 +1,6 @@
-const CACHE = "makina-shell-v1";
+const CACHE = "makina-shell-v2";
 const OFFLINE_URL = "/sv/offline";
-const OFFLINE_URLS = ["sv", "en", "ti", "ar", "so"].map(
+const OFFLINE_URLS = ["sv", "en", "ti", "ar"].map(
   (locale) => `/${locale}/offline`,
 );
 
@@ -25,7 +25,7 @@ self.addEventListener("fetch", (event) => {
   event.respondWith(
     fetch(event.request).catch(async () => {
       const locale = new URL(event.request.url).pathname.split("/")[1];
-      const supported = ["sv", "en", "ti", "ar", "so"].includes(locale)
+      const supported = ["sv", "en", "ti", "ar"].includes(locale)
         ? locale
         : "sv";
       return (

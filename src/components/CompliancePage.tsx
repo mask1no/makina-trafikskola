@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
 
+import { clearCookieConsent } from "@/app/[locale]/cookie-actions";
 import { PageHeader } from "@/components/PageHeader";
 
 export async function CompliancePage({
@@ -44,10 +45,11 @@ export async function CompliancePage({
           </section>
         ))}
         {namespace === "cookies" ? (
-          <section className="p-6 sm:p-8">
-            <h2 className="text-xl font-black">{t("table.caption")}</h2>
-            <div className="mt-4 overflow-x-auto">
-              <table className="w-full min-w-[36rem] border-collapse text-start text-sm">
+          <>
+            <section className="p-6 sm:p-8">
+              <h2 className="text-xl font-black">{t("table.caption")}</h2>
+              <div className="mt-4 overflow-x-auto">
+                <table className="w-full min-w-[36rem] border-collapse text-start text-sm">
                 <thead>
                   <tr className="border-b border-border">
                     <th className="py-3 pe-4 font-extrabold">{t("table.name")}</th>
@@ -64,9 +66,25 @@ export async function CompliancePage({
                     </tr>
                   ))}
                 </tbody>
-              </table>
-            </div>
-          </section>
+                </table>
+              </div>
+            </section>
+            <section className="border-t border-border p-6 sm:p-8">
+              <h2 className="text-xl font-black">{t("settings.title")}</h2>
+              <p className="mt-3 leading-7 text-ink-muted">
+                {t("settings.body")}
+              </p>
+              <form action={clearCookieConsent} className="mt-5">
+                <input type="hidden" name="locale" value={locale} />
+                <button
+                  type="submit"
+                  className="inline-flex min-h-11 items-center rounded-sm border border-border-strong bg-card px-5 font-bold shadow-soft hover:border-ink"
+                >
+                  {t("settings.action")}
+                </button>
+              </form>
+            </section>
+          </>
         ) : null}
       </div>
       {namespace === "privacy" ? (

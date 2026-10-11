@@ -32,6 +32,7 @@ export type SiteFooterLabels = {
   legal: string;
   lessons: string;
   mailUs: string;
+  prices: string;
   privacy: string;
   schoolIn: (town: string) => string;
   teachers: string;
@@ -88,6 +89,9 @@ export function SiteFooter({
           <div className="mt-4 grid text-small text-ink-inverse-muted">
             <Link className={footerLinkClass} href={`${base}/korlektioner`}>
               {labels.lessons}
+            </Link>
+            <Link className={footerLinkClass} href={`${base}/priser`}>
+              {labels.prices}
             </Link>
             <Link className={footerLinkClass} href={`${base}/kurser`}>
               {labels.courses}

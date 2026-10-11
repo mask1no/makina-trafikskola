@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -18,11 +19,29 @@ import { nextFreeSlots } from "@/lib/bookings/availability";
 import { formatLessonDateTime } from "@/lib/format/datetime";
 import { bookingEnabled, instructorsEnabled } from "@/lib/launch";
 import { googleMapsBrowserConfig } from "@/lib/maps/config";
+import { pageCanonical, withSocial } from "@/lib/seo/metadata";
 
 import { getLocations, getTeachers } from "../_lib/data";
 import type { Transmission } from "@prisma/client";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata(
+  props: { params: Promise<{ locale: string }> },
+): Promise<Metadata> {
+  const { locale } = await props.params;
+  if (!isLocale(locale)) return {};
+  const t = await getTranslations({ locale, namespace: "teachers" });
+  const title = t("title");
+  const description = t("description");
+  const canonical = pageCanonical(locale, "/larare");
+  return {
+    title,
+    description,
+    alternates: { canonical },
+    ...withSocial({ title, description, canonical, locale }),
+  };
+}
 
 function FilterChoice({
   href,
@@ -271,6 +290,12 @@ export default async function LararePage(
                         ? formatLessonDateTime(nextFree.get(teacher.id)!, params.locale)
                         : undefined
                     }
+                    actionHref={
+                      canBook
+                        ? `/${params.locale}/boka?teacher=${teacher.id}`
+                        : `/${params.locale}/kontakt`
+                    }
+                    actionLabel={t(canBook ? "map.book" : "map.contact")}
                     swedishOnly={teacher.swedishOnly}
                     swedishOnlyLabel={t("common.swedishOnly")}
                   />
@@ -313,6 +338,7 @@ export default async function LararePage(
                 })),
               )}
               label={t("map.interactiveLabel")}
+              loadDescription={t("shell.mapPrivacy")}
               missingKeyTitle={t("map.pendingKey")}
               fallbackHref="#teacher-results"
               fallbackLabel={t("teachers.showAsList")}

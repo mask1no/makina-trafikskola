@@ -12,7 +12,11 @@ import { BottomSheet } from "@/components/BottomSheet";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { locales, type Locale } from "@/i18n/routing";
 
-export function LanguageSwitcher() {
+export function LanguageSwitcher({
+  authenticated = false,
+}: {
+  authenticated?: boolean;
+}) {
   const currentLocale = useLocale() as Locale;
   const pathname = usePathname();
   const router = useRouter();
@@ -39,8 +43,15 @@ export function LanguageSwitcher() {
     setOpen(true);
   }
 
-  function chooseLocale(locale: Locale) {
+  async function chooseLocale(locale: Locale) {
     setOpen(false);
+    if (authenticated) {
+      await fetch("/api/me/locale", {
+        method: "PATCH",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ locale }),
+      }).catch(() => null);
+    }
     router.replace(pathname, { locale });
   }
 
@@ -109,7 +120,7 @@ export function LanguageSwitcher() {
           }
           if (event.key === "Enter") {
             event.preventDefault();
-            chooseLocale(locales[activeIndex]);
+            void chooseLocale(locales[activeIndex]);
           }
         }}
       >
@@ -130,7 +141,7 @@ export function LanguageSwitcher() {
               itemsRef.current[index] = element;
             }}
             onFocus={() => setActiveIndex(index)}
-            onClick={() => chooseLocale(locale)}
+            onClick={() => void chooseLocale(locale)}
           >
             <span lang={locale}>{t(locale)}</span>
             <span

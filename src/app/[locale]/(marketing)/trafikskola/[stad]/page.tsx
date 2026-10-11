@@ -8,6 +8,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { StaticMapArtwork } from "@/components/StaticMapArtwork";
 import { isLocale } from "@/i18n/routing";
 import { db } from "@/lib/db";
+import { publicAddress } from "@/lib/locations/address";
 import { pageCanonical, withSocial } from "@/lib/seo/metadata";
 
 export const dynamic = "force-dynamic";
@@ -58,7 +59,7 @@ export default async function TrafikskolaPage(
   const params = await props.params;
   if (!isLocale(params.locale)) notFound();
   setRequestLocale(params.locale);
-  const [t, location, areas] = await Promise.all([
+  const [t, location] = await Promise.all([
     getTranslations("localSchool"),
     db.location.findFirst({
       where: { slug: params.stad },
@@ -77,17 +78,6 @@ export default async function TrafikskolaPage(
         },
       },
     }),
-    db.location.findMany({
-      where: { status: "ACTIVE" },
-      select: {
-        name: true,
-        address: true,
-        city: true,
-        postalCode: true,
-        lat: true,
-        lng: true,
-      },
-    }),
   ]);
   if (!location) notFound();
   if (location.status === "COMING_SOON") {
@@ -102,21 +92,29 @@ export default async function TrafikskolaPage(
   }
   const localStructuredData = {
     "@context": "https://schema.org",
-    "@graph": areas
-      .map((area) => ({
-        "@type": "DrivingSchool",
-        name: area.name,
-        areaServed: area.city,
-        ...(Number.isFinite(area.lat) && Number.isFinite(area.lng)
-          ? {
-              geo: {
-                "@type": "GeoCoordinates",
-                latitude: area.lat,
-                longitude: area.lng,
-              },
-            }
-          : {}),
-      })),
+    "@type": "DrivingSchool",
+    name: location.name,
+    areaServed: location.city,
+    ...(publicAddress(location.address)
+      ? {
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: publicAddress(location.address),
+            addressLocality: location.city,
+            postalCode: location.postalCode,
+            addressCountry: "SE",
+          },
+        }
+      : {}),
+    ...(Number.isFinite(location.lat) && Number.isFinite(location.lng)
+      ? {
+          geo: {
+            "@type": "GeoCoordinates",
+            latitude: location.lat,
+            longitude: location.lng,
+          },
+        }
+      : {}),
   };
 
   return (

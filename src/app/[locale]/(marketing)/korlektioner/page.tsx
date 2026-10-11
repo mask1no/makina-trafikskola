@@ -54,7 +54,6 @@ export default async function KorlektionerPage(
     .sort((a, b) =>
       sort === "lessons" ? b.lessonCredits - a.lessonCredits : a.priceOre - b.priceOre,
     );
-  const best = products.find((product) => product.bestSeller) ?? products.find((product) => product.kind === "PACKAGE");
   const singleLesson = products.find((product) => product.kind === "SINGLE_LESSON");
   const canBook = bookingEnabled();
   const allSections = groupProducts(products);
@@ -140,20 +139,6 @@ export default async function KorlektionerPage(
             {t("shell.seePrices")}
           </Link>
         </p>
-        {best ? (
-          <div className="mt-8 max-w-xl">
-            <p className="mb-3 text-small font-bold">{t("lessons.bestSeller")}</p>
-            <ProductCard
-              {...toProductCardModel({
-                locale: params.locale,
-                bookingEnabled: canBook,
-                product: best,
-                includeImage: false,
-                labels: cardLabels,
-              })}
-            />
-          </div>
-        ) : null}
         <div className="mt-6 flex flex-wrap gap-2">
           <Link className="inline-flex min-h-11 items-center rounded-full border border-border bg-card px-4 text-small font-bold" href={`/${params.locale}/korlektioner?sort=price${group ? `&group=${group}` : ""}`}>{t("lessons.sortPrice")}</Link>
           <Link className="inline-flex min-h-11 items-center rounded-full border border-border bg-card px-4 text-small font-bold" href={`/${params.locale}/korlektioner?sort=lessons${group ? `&group=${group}` : ""}`}>{t("lessons.sortLessons")}</Link>
@@ -165,7 +150,7 @@ export default async function KorlektionerPage(
         </div>
         {sections.length ? (
           <>
-            <nav className="sticky top-[var(--header-height)] z-30 -mx-4 mt-8 flex gap-2 overflow-x-auto bg-page px-4 py-3 lg:hidden" aria-label={t("lessons.groups.label")}>
+            <nav className="sticky top-[var(--header-height)] z-30 mt-8 flex max-w-full gap-2 overflow-x-auto bg-page py-3 lg:hidden" aria-label={t("lessons.groups.label")}>
               {sections.map((section) => (
                 <a key={section.key} href={`#${section.key}`} className="inline-flex min-h-11 shrink-0 items-center rounded-full border border-border bg-card px-4 text-small font-bold">
                   {t(`lessons.groups.${section.key}.title`)}

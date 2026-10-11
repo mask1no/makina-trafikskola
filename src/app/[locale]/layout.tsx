@@ -166,6 +166,9 @@ export default async function LocaleLayout(props: {
   const navItems = [
     { href: `${base}/korlektioner`, label: t("lessons") },
     { href: `${base}/kurser`, label: t("courses") },
+    ...(showInstructors
+      ? [{ href: `${base}/larare`, label: t("teachers") }]
+      : []),
     { href: `${base}/priser`, label: t("prices") },
     ...(showTheory ? [{ href: `${base}/teori`, label: t("theory") }] : []),
     { href: `${base}/kontakt`, label: t("contact") },
@@ -175,6 +178,13 @@ export default async function LocaleLayout(props: {
     "@context": "https://schema.org",
     "@type": "DrivingSchool",
     name: company("legalName"),
+    telephone: company("phone"),
+    email: company("email"),
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: company("visitingAddress"),
+      addressCountry: "SE",
+    },
     areaServed: { "@type": "City", name: "Stockholm" },
     availableLanguage: offeredLanguages,
     openingHoursSpecification: openingHoursSpecification(),
@@ -192,11 +202,14 @@ export default async function LocaleLayout(props: {
     const url = process.env[key]?.trim();
     return url?.startsWith("https://") ? [{ url, label }] : [];
   });
-  const centerTab = {
-    href: canBook ? `${base}/boka` : telHref(company("phone")),
-    label: canBook ? t("book") : t("callUs"),
-    icon: canBook ? "bookings" : "call",
-  } as const;
+  const centerTab =
+    session?.user.role === "ADMIN" || session?.user.role === "TEACHER"
+      ? undefined
+      : ({
+          href: canBook ? `${base}/boka` : telHref(company("phone")),
+          label: canBook ? t("book") : t("callUs"),
+          icon: canBook ? "bookings" : "call",
+        } as const);
   const tabs = (
     session?.user.role === "ADMIN"
       ? [
@@ -217,21 +230,40 @@ export default async function LocaleLayout(props: {
         ? [
             {
               href: `${base}/larare-portal`,
-              label: teacherT("eyebrow"),
+              label: teacherT("views.today"),
               icon: "bookings",
+            },
+            {
+              href: `${base}/larare-portal?view=week`,
+              label: teacherT("views.week"),
+              icon: "messages",
             },
             { href: base, label: t("home"), icon: "home" },
             {
-              href: `${base}/korlektioner`,
-              label: t("lessonsShort"),
-              icon: "packages",
-            },
-            {
-              href: showTheory ? `${base}/teori` : `${base}/kurser`,
-              label: showTheory ? t("theory") : t("courses"),
-              icon: "messages" as const,
+              href: telHref(company("phone")),
+              label: t("callUs"),
+              icon: "call",
             },
           ]
+        : session?.user.role === "STUDENT"
+          ? [
+              { href: base, label: t("home"), icon: "home" },
+              {
+                href: `${base}/priser`,
+                label: t("prices"),
+                icon: "packages",
+              },
+              {
+                href: `${base}/mina-sidor/bokningar`,
+                label: t("bookings"),
+                icon: "bookings",
+              },
+              {
+                href: `${base}/mina-sidor/meddelanden`,
+                label: t("messages"),
+                icon: "messages",
+              },
+            ]
         : [
             { href: base, label: t("home"), icon: "home" },
             {
@@ -304,7 +336,6 @@ export default async function LocaleLayout(props: {
         <main
           id="main"
           tabIndex={-1}
-          className="pb-[var(--tab-bar-height)] md:pb-0"
         >
           {children}
         </main>
@@ -337,6 +368,7 @@ export default async function LocaleLayout(props: {
             legal: t("legal"),
             lessons: t("lessons"),
             mailUs: t("mailUs"),
+            prices: t("prices"),
             privacy: t("privacy"),
             schoolIn: (town) => t("schoolIn", { town }),
             teachers: t("teachers"),

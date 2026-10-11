@@ -2,7 +2,9 @@ import { randomInt } from "node:crypto";
 
 import { z } from "zod";
 
-import { apiError, errorResponse } from "@/lib/api/http";
+import { auth } from "@/auth";
+import { apiError, authorizationError, errorResponse } from "@/lib/api/http";
+import { requireRole } from "@/lib/auth/guards";
 import { storeOtp } from "@/lib/auth/otp-store";
 import { normalizeSwedishPhone } from "@/lib/auth/phone";
 import { sendOtpSms } from "@/lib/auth/sms";
@@ -33,6 +35,14 @@ export async function POST(request: Request) {
     return apiError("INVALID_PHONE", 400, {
       phone: ["INVALID_PHONE"],
     });
+  }
+
+  if (parsed.data.purpose === "phone-link") {
+    try {
+      requireRole(await auth(), ["STUDENT", "TEACHER", "ADMIN"]);
+    } catch (error) {
+      return authorizationError(error);
+    }
   }
 
   if (parsed.data.purpose === "login") {

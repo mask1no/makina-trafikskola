@@ -32,7 +32,9 @@ export function Input({ id, label, error, hint, valid, className = "", required,
       {message ? (
         <p
           id={inputId ? `${inputId}-error` : undefined}
-          className={`text-small font-medium ${error ? "text-danger" : "text-success"}`}
+          className={`text-small font-medium ${
+            error ? "text-danger" : valid ? "text-success" : "text-ink-muted"
+          }`}
           role={error ? "alert" : undefined}
         >
           {message}

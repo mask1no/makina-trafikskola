@@ -135,10 +135,15 @@ export function MobileTabBar({
   const leftCount = Math.ceil(tabs.length / 2);
   const left = tabs.slice(0, leftCount);
   const right = tabs.slice(leftCount);
+  const columns = center
+    ? "grid-cols-5"
+    : tabs.length === 4
+      ? "grid-cols-4"
+      : "grid-cols-3";
 
   return (
     <nav className="fixed bottom-0 start-0 end-0 z-40 border-t border-[var(--line)] bg-card pb-[var(--safe-bottom)] shadow-soft md:hidden">
-      <ul className="grid grid-cols-5">
+      <ul className={`grid ${columns}`}>
         {left.map((tab) => (
           <li key={tab.href} className="min-w-0">
             <TabLink tab={tab} pathname={pathname} />

@@ -27,3 +27,13 @@ export async function saveCookieConsent(formData: FormData) {
   });
   revalidatePath(`/${parsed.data.locale}`, "layout");
 }
+
+export async function clearCookieConsent(formData: FormData) {
+  const locale = z.enum(["sv", "en", "ti", "ar"]).safeParse(
+    formData.get("locale"),
+  );
+  if (!locale.success) return;
+
+  (await cookies()).delete("makina-cookie-consent");
+  revalidatePath(`/${locale.data}`, "layout");
+}

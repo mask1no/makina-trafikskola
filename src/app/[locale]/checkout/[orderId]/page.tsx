@@ -91,11 +91,12 @@ export default async function CheckoutPage({
   const configured = stripeIsConfigured() && Boolean(publishableKey);
   let clientSecret: string | null = null;
   let unavailable = false;
+  const payable =
+    order.status === "PENDING" && order.payment.status !== "SUCCEEDED";
 
   if (
     configured &&
-    order.status === "PENDING" &&
-    order.payment.status !== "SUCCEEDED" &&
+    payable &&
     order.payment.stripePaymentIntentId
   ) {
     try {
@@ -114,7 +115,7 @@ export default async function CheckoutPage({
     } catch {
       unavailable = true;
     }
-  } else if (production) {
+  } else if (production && payable) {
     unavailable = true;
   }
 

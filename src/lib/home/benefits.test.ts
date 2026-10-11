@@ -12,6 +12,7 @@ import {
 import { benefitItems } from "./benefits";
 
 const lesson = {
+  active: true,
   kind: "SINGLE_LESSON",
   priceOre: 49900,
   includesRisk1: false,
@@ -19,34 +20,41 @@ const lesson = {
 };
 
 describe("benefitItems", () => {
-  it("always returns the eight confirmed public benefits", () => {
+  it("only returns benefits supported by active features and products", () => {
     expect(benefitItems({ bookingEnabled: false, products: [lesson] }).map((item) => item.id)).toEqual([
       "language",
-      "pickup",
       "lesson",
-      "risk",
-      "guarantee",
       "payment",
-      "reminder",
-      "cancel",
     ]);
   });
 
-  it("does not let catalogue contents change the confirmed benefits", () => {
+  it("adds booking and explicitly confirmed service benefits", () => {
     const items = benefitItems({
       bookingEnabled: true,
-      hasRiskCourse: false,
+      hasPickupArea: true,
+      hasRiskCourse: true,
       products: [
         lesson,
-        { kind: "TEST_LESSON", priceOre: 50000, includesRisk1: false, includesRisk2: false },
-        { kind: "PACKAGE", priceOre: 1, includesRisk1: true, includesRisk2: false },
-        { kind: "GUARANTEE", priceOre: 2, includesRisk1: false, includesRisk2: false },
+        { active: false, kind: "TEST_LESSON", priceOre: 50000, includesRisk1: false, includesRisk2: false },
+        { active: true, kind: "PACKAGE", priceOre: 1, includesRisk1: true, includesRisk2: false },
+        { active: true, kind: "GUARANTEE", priceOre: 2, includesRisk1: false, includesRisk2: false },
       ],
     });
     expect(items.map((item) => item.id).join(" ")).not.toContain("testLesson");
     expect(items.map((item) => item.id)).toContain("risk");
     expect(items.map((item) => item.id)).toContain("guarantee");
     expect(items).toHaveLength(8);
+  });
+
+  it("does not advertise inactive guarantee products", () => {
+    const items = benefitItems({
+      bookingEnabled: false,
+      products: [
+        lesson,
+        { active: false, kind: "GUARANTEE", priceOre: 2, includesRisk1: true, includesRisk2: true },
+      ],
+    });
+    expect(items.map((item) => item.id)).not.toContain("guarantee");
   });
 
   it("uses the confirmed Swedish benefit and pickup copy", () => {

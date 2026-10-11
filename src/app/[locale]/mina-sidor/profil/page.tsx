@@ -5,6 +5,7 @@ import { PageHeader } from "@/components/PageHeader";
 
 import { requireStudent } from "../_lib";
 import { AccountPrivacyControls } from "./AccountPrivacyControls";
+import { ChangePhoneControl } from "./ChangePhoneControl";
 
 export const dynamic = "force-dynamic";
 
@@ -70,7 +71,10 @@ export default async function ProfilePage(
           </div>
         ))}
       </dl>
-      <AccountPrivacyControls locale={params.locale} />
+      {student.phone ? (
+        <ChangePhoneControl currentPhone={student.phone} />
+      ) : null}
+      <AccountPrivacyControls locale={params.locale} phone={student.phone} />
     </section>
   );
 }

@@ -24,8 +24,8 @@ function Cards({ items, hidden = false }: { items: BenefitCard[]; hidden?: boole
       {items.map((item) => (
         <li
           key={`${hidden ? "copy-" : ""}${item.id}`}
-          className={`flex h-[9.5rem] shrink-0 flex-col justify-between rounded-md border border-[var(--line)] bg-card p-4 shadow-soft ${
-            item.size === "lg" ? "w-[22rem] max-w-[85vw]" : "w-[16rem] max-w-[85vw]"
+          className={`flex h-32 shrink-0 flex-col justify-between rounded-md border border-[var(--line)] bg-card p-4 shadow-soft ${
+            item.size === "lg" ? "w-[20rem] max-w-[82vw]" : "w-56 max-w-[82vw]"
           }`}
         >
           <BenefitIcon />

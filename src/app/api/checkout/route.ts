@@ -6,7 +6,7 @@ import { requireRole } from "@/lib/auth/guards";
 import { checkoutHoldError } from "@/lib/bookings/hold";
 import { db } from "@/lib/db";
 import { createPaymentIntentForOrder } from "@/lib/payments/payment-intents";
-import { stripeIsConfigured } from "@/lib/stripe";
+import { getStripe, stripeIsConfigured } from "@/lib/stripe";
 
 export const runtime = "nodejs";
 
@@ -76,6 +76,54 @@ export async function POST(request: Request) {
 
   if (!stripeIsConfigured() && process.env.NODE_ENV === "production") {
     return errorResponse("PAYMENT_PROVIDER_NOT_CONFIGURED", 503);
+  }
+
+  if (parsed.data.bookingId && stripeIsConfigured()) {
+    const pendingOrders = await db.order.findMany({
+      where: {
+        studentId: session.user.id,
+        status: "PENDING",
+        items: {
+          some: {
+            productId: product.id,
+            quantity: parsed.data.quantity,
+          },
+        },
+        payment: {
+          is: {
+            status: "PENDING",
+            stripePaymentIntentId: { not: null },
+          },
+        },
+      },
+      orderBy: { createdAt: "desc" },
+      take: 5,
+      select: {
+        id: true,
+        payment: { select: { stripePaymentIntentId: true } },
+      },
+    });
+    for (const pending of pendingOrders) {
+      const intentId = pending.payment?.stripePaymentIntentId;
+      if (!intentId) continue;
+      try {
+        const intent = await getStripe().paymentIntents.retrieve(intentId);
+        if (
+          intent.metadata.bookingId === parsed.data.bookingId &&
+          !["canceled", "succeeded"].includes(intent.status)
+        ) {
+          const existing = await createPaymentIntentForOrder(pending.id, {
+            bookingId: parsed.data.bookingId,
+          });
+          return Response.json({
+            url: existing.url,
+            status: existing.mock ? "MOCK" : "PENDING_PAYMENT",
+          });
+        }
+      } catch {
+        // A stale provider reference must not prevent a fresh payment attempt.
+      }
+    }
   }
 
   const translation =

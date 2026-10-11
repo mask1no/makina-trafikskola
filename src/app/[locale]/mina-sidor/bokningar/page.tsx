@@ -15,7 +15,7 @@ export default async function BookingsPage(
 ) {
   const params = await props.params;
   const studentId = await requireStudent(params.locale);
-  const [t, bookings] = await Promise.all([
+  const [t, bookings, paymentProduct] = await Promise.all([
     getTranslations("student.bookings"),
     db.booking.findMany({
       where: { studentId },
@@ -24,6 +24,11 @@ export default async function BookingsPage(
         teacher: { include: { user: true } },
         location: true,
       },
+    }),
+    db.product.findFirst({
+      where: { active: true, kind: "SINGLE_LESSON" },
+      orderBy: { sortOrder: "asc" },
+      select: { id: true },
     }),
   ]);
   const configured = Number(process.env.CANCELLATION_WINDOW_HOURS ?? "24");
@@ -36,10 +41,13 @@ export default async function BookingsPage(
         cancellationWindowHours={
           Number.isFinite(configured) && configured >= 0 ? configured : 24
         }
+        paymentProductId={paymentProduct?.id}
         bookings={bookings.map((booking) => ({
           id: booking.id,
           startsAt: booking.startsAt.toISOString(),
           status: booking.status,
+          creditCharged: booking.creditCharged,
+          holdExpiresAt: booking.holdExpiresAt?.toISOString() ?? null,
           teacherName: `${booking.teacher.user.firstName} ${booking.teacher.user.lastName}`,
           place:
             booking.location?.name ??

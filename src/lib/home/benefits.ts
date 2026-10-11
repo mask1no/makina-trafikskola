@@ -17,6 +17,7 @@ export type BenefitItem = {
 };
 
 type BenefitProduct = {
+  active: boolean;
   kind: string;
   priceOre: number;
   includesRisk1: boolean;
@@ -40,16 +41,21 @@ export function benefitItems(input: {
   bookingEnabled: boolean;
   products: readonly BenefitProduct[];
   hasRiskCourse?: boolean;
+  hasPickupArea?: boolean;
 }) {
-  void input;
+  const activeProducts = input.products.filter((product) => product.active);
+  const hasGuarantee = activeProducts.some(
+    (product) => product.kind === "GUARANTEE",
+  );
+  const canPayOnline = activeProducts.length > 0;
+
   return [
     item("language"),
-    item("pickup"),
+    ...(input.hasPickupArea ? [item("pickup")] : []),
     item("lesson"),
-    item("risk"),
-    item("guarantee"),
-    item("payment"),
-    item("reminder"),
-    item("cancel"),
+    ...(input.hasRiskCourse ? [item("risk")] : []),
+    ...(hasGuarantee ? [item("guarantee")] : []),
+    ...(canPayOnline ? [item("payment")] : []),
+    ...(input.bookingEnabled ? [item("reminder"), item("cancel")] : []),
   ];
 }

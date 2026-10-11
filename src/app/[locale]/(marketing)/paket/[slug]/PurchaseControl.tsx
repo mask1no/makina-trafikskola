@@ -26,6 +26,8 @@ export function PurchaseControl({
   callLabel,
   authenticated,
   signInHref,
+  termsHref,
+  termsLinkLabel,
   inactiveLabel,
   copy,
 }: {
@@ -36,6 +38,8 @@ export function PurchaseControl({
   callLabel: ReactNode;
   authenticated: boolean;
   signInHref: string;
+  termsHref: string;
+  termsLinkLabel: string;
   inactiveLabel: string;
   copy: Copy;
 }) {
@@ -116,6 +120,12 @@ export function PurchaseControl({
           checked={withdrawalAcknowledged}
           onChange={(event) => setWithdrawalAcknowledged(event.target.checked)}
         />
+        <Link
+          href={termsHref}
+          className="inline-flex min-h-11 items-center font-bold underline underline-offset-4"
+        >
+          {termsLinkLabel}
+        </Link>
       </div>
       <Button
         disabled={!termsAccepted || !withdrawalAcknowledged || busy}

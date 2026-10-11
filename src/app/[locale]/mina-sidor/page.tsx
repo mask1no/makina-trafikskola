@@ -41,13 +41,28 @@ export default async function StudentDashboard(
         minute: "2-digit",
       })
     : null;
+  const unpaidHold =
+    Boolean(nextBooking) &&
+    !nextBooking?.creditCharged &&
+    Boolean(nextBooking?.holdExpiresAt);
+  const holdExpires = nextBooking?.holdExpiresAt
+    ? formatStockholm(nextBooking.holdExpiresAt, params.locale, {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        hour: "2-digit",
+        minute: "2-digit",
+      })
+    : null;
 
   return (
     <section>
       <PageHeader title={t("title")} />
       <div className="mt-8 grid gap-4 lg:grid-cols-[1.4fr_0.6fr]">
         <article className="rounded-lg border border-border bg-card p-6 shadow-card sm:p-8">
-          <p className="text-sm font-bold text-ink-muted">{t("nextBooking")}</p>
+          <p className="text-sm font-bold text-ink-muted">
+            {t(unpaidHold ? "paymentRequired" : "nextBooking")}
+          </p>
           {nextBooking ? (
             <>
               <p className="mt-3 break-words text-2xl font-black tracking-tight sm:text-3xl">
@@ -59,6 +74,14 @@ export default async function StudentDashboard(
                   {nextBooking.teacher.user.lastName}
                 </bdi>
               </p>
+              {unpaidHold && holdExpires ? (
+                <p className="mt-4 rounded-sm border border-accent bg-accent-soft p-3 text-sm font-bold">
+                  {t.rich("holdUntil", {
+                    deadline: holdExpires,
+                    time: (chunks) => <bdi>{chunks}</bdi>,
+                  })}
+                </p>
+              ) : null}
             </>
           ) : (
             <p className="mt-3 leading-7 text-ink-muted">{t("noBooking")}</p>

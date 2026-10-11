@@ -4,7 +4,7 @@ import path from "node:path";
 import { expect, type BrowserContext, type Page, test } from "@playwright/test";
 
 const enabled = process.env.SCREENSHOTS === "1";
-const locales = ["sv", "ar"] as const;
+const locales = ["sv", "en", "ti", "ar"] as const;
 const viewports = [
   { width: 360, height: 800, label: "360x800" },
   { width: 390, height: 844, label: "390x844" },
@@ -103,9 +103,19 @@ async function captureBookingSteps(page: Page, locale: string, folder: string) {
   await page.getByTestId("booking-next").click();
   await capture(page, folder, "boka-step-2-pickup");
 
-  const pickup = page.locator("main .choice-card").first();
+  const meetingChoices = page.locator("main .choice-card");
+  const pickup =
+    (await meetingChoices.count()) > 1
+      ? meetingChoices.last()
+      : meetingChoices.first();
   await pickup.click();
   await expect(pickup).toHaveAttribute("aria-pressed", "true");
+  await capture(page, folder, "boka-step-2-pickup-address");
+  if ((await meetingChoices.count()) > 1) {
+    const office = meetingChoices.first();
+    await office.click();
+    await expect(office).toHaveAttribute("aria-pressed", "true");
+  }
   await page.getByTestId("booking-next").click();
   await capture(page, folder, "boka-step-3-gearbox");
 
