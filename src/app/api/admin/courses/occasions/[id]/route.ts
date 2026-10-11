@@ -19,7 +19,10 @@ const bodySchema = z.discriminatedUnion("action", [
     capacity: z.number().int().min(1).max(500),
     language: z.enum(["sv", "en", "ti", "ku"]),
   }).strict(),
-  z.object({ action: z.literal("cancel") }).strict(),
+  z.object({
+    action: z.literal("cancel"),
+    confirm: z.literal(true),
+  }).strict(),
 ]);
 
 export async function PATCH(
@@ -62,6 +65,9 @@ export async function PATCH(
 
   if (parsedBody.data.action === "cancel") {
     if (occasion.cancelled) return Response.json({ id: occasion.id });
+    if (occasion._count.bookings > 0) {
+      return apiError("COURSE_OCCASION_HAS_BOOKINGS", 409);
+    }
     await db.$transaction([
       db.courseOccasion.update({
         where: { id: occasion.id },

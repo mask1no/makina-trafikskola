@@ -782,6 +782,16 @@
       "holdStatus": "Waiting for payment",
       "holdUntil": "This time is held for you until <time>{deadline}</time>.",
       "cancelHoldWarning": "No credit has been used. Cancelling releases the reservation immediately. Do you want to continue?",
+      "lessonFeedback": "Your lesson feedback",
+      "practiced": "What you practised",
+      "nextFocus": "Next focus",
+      "leaveReview": "Leave a review",
+      "reviewModeration": "The review is checked before publication. The comment is optional.",
+      "rating": "Rating",
+      "ratingValue": "{value} out of 5",
+      "reviewComment": "Comment (optional)",
+      "submitReview": "Submit review",
+      "submittingReview": "Submitting…",
       "cancelLateWarning": "The cancellation deadline has passed. The lesson is charged in full and deducted from your balance. Cancel anyway?",
       "cancelRefundWarning": "Cancelling now returns your credit. The deadline is <time>{deadline}</time>. Continue?",
       "deadline": "You can cancel until <time>{deadline}</time>.",
@@ -982,6 +992,7 @@
       "start": "From",
       "end": "To",
       "reason": "Reason",
+      "confirm": "I understand that confirmed lessons during this time will be cancelled, credits returned and students notified.",
       "submit": "Block time"
     }
   },
@@ -1259,6 +1270,10 @@
       "saving": "Saving…",
       "cancel": "Cancel occasion",
       "cancelled": "Cancelled",
+      "cancelConfirmTitle": "Confirm cancellation",
+      "cancelConfirm": "This occasion has {booked} of {capacity} seats booked. An empty occasion can be cancelled immediately.",
+      "cancelBlocked": "This occasion has bookings. Handle the participants before cancelling.",
+      "keep": "Keep occasion",
       "occasion": "Course occasion {count}",
       "booked": "{booked} booked of {capacity}",
       "error": "Could not save. Try again."
@@ -1375,6 +1390,7 @@
         "newTime": "New local time",
         "newInstructor": "New instructor",
         "reason": "Written reason",
+        "confirmCancel": "I understand that the lesson will be cancelled, the credit returned and the student notified.",
         "save": "Save change",
         "saving": "Saving…"
       }
@@ -1525,6 +1541,7 @@
     "ACCOUNT_OR_SLUG_EXISTS": "The email or profile address is already in use.",
     "ACCOUNT_HAS_ACTIVE_BOOKINGS": "Complete or cancel upcoming lessons, courses and active payments before deleting the account.",
     "COURSE_OCCASION_NOT_FOUND": "This course occasion is no longer available.",
+    "COURSE_OCCASION_HAS_BOOKINGS": "This course occasion has bookings. Handle the participants before cancelling.",
     "COURSE_FULL": "This course is fully booked.",
     "COURSE_ALREADY_BOOKED": "You already have a confirmed seat on this course.",
     "PAYMENT_PROVIDER_ERROR": "Payment could not be started. Try again.",

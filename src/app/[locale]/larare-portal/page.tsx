@@ -13,6 +13,7 @@ import { Input } from "@/components/Input";
 import { PageHeader } from "@/components/PageHeader";
 import { Textarea } from "@/components/Textarea";
 import { Card } from "@/components/Card";
+import { CheckboxField } from "@/components/CheckboxField";
 import { formatLessonDateTime, formatLessonTime } from "@/lib/format/datetime";
 import { formatPrice } from "@/lib/pricing/format";
 import { displayPhone, telHref } from "@/lib/format/phone";
@@ -396,6 +397,15 @@ export default async function TeacherPortal(
           <Input id="block-end" name="endTime" type="time" label={t("block.end")} />
           <div className="sm:col-span-2">
             <Input id="block-reason" name="reason" label={t("block.reason")} />
+          </div>
+          <div className="sm:col-span-2">
+            <CheckboxField
+              id="block-confirm"
+              name="confirm"
+              value="yes"
+              label={t("block.confirm")}
+              required
+            />
           </div>
           <Button className="sm:col-span-2" type="submit">
             {t("block.submit")}

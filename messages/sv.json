@@ -782,6 +782,16 @@
       "holdStatus": "Väntar på betalning",
       "holdUntil": "Tiden hålls åt dig till <time>{deadline}</time>.",
       "cancelHoldWarning": "Ingen kredit har dragits. Om du avbryter släpps reservationen direkt. Vill du fortsätta?",
+      "lessonFeedback": "Din återkoppling från lektionen",
+      "practiced": "Det här tränade ni på",
+      "nextFocus": "Nästa fokus",
+      "leaveReview": "Lämna ett omdöme",
+      "reviewModeration": "Omdömet granskas innan det publiceras. Kommentaren är valfri.",
+      "rating": "Betyg",
+      "ratingValue": "{value} av 5",
+      "reviewComment": "Kommentar (valfri)",
+      "submitReview": "Skicka omdöme",
+      "submittingReview": "Skickar…",
       "cancelLateWarning": "Avbokningsfristen har passerat. Lektionen debiteras fullt pris och dras från saldot. Vill du ändå avboka?",
       "cancelRefundWarning": "Avbokar du nu återförs krediten. Fristen är <time>{deadline}</time>. Vill du fortsätta?",
       "deadline": "Kan avbokas fram till <time>{deadline}</time>.",
@@ -982,6 +992,7 @@
       "start": "Från",
       "end": "Till",
       "reason": "Orsak",
+      "confirm": "Jag förstår att bekräftade lektioner i tiden avbokas, krediter återförs och elever meddelas.",
       "submit": "Blockera tiden"
     }
   },
@@ -1302,6 +1313,10 @@
       "saving": "Sparar…",
       "cancel": "Avboka tillfälle",
       "cancelled": "Avbokat",
+      "cancelConfirmTitle": "Bekräfta avbokning",
+      "cancelConfirm": "Tillfället har {booked} bokade av {capacity} platser. Ett tomt tillfälle kan avbokas direkt.",
+      "cancelBlocked": "Tillfället har bokningar. Hantera deltagarna innan du avbokar.",
+      "keep": "Behåll tillfället",
       "occasion": "Kurstillfälle {count}",
       "booked": "{booked} bokade av {capacity}",
       "error": "Det gick inte att spara. Försök igen."
@@ -1418,6 +1433,7 @@
         "newTime": "Ny lokal tid",
         "newInstructor": "Ny lärare",
         "reason": "Skriftlig orsak",
+        "confirmCancel": "Jag förstår att lektionen avbokas, krediten återförs och eleven meddelas.",
         "save": "Spara ändring",
         "saving": "Sparar…"
       }
@@ -1568,6 +1584,7 @@
     "ACCOUNT_OR_SLUG_EXISTS": "E-postadressen eller profiladressen används redan.",
     "ACCOUNT_HAS_ACTIVE_BOOKINGS": "Slutför eller avbryt kommande lektioner, kurser och aktiva betalningar innan du raderar kontot.",
     "COURSE_OCCASION_NOT_FOUND": "Kurstillfället finns inte längre.",
+    "COURSE_OCCASION_HAS_BOOKINGS": "Kurstillfället har bokningar. Hantera deltagarna innan du avbokar.",
     "COURSE_FULL": "Kurstillfället är fullbokat.",
     "COURSE_ALREADY_BOOKED": "Du har redan en bekräftad plats på kurstillfället.",
     "PAYMENT_PROVIDER_ERROR": "Betalningen kunde inte startas. Försök igen.",

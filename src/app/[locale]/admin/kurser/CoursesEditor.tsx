@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { formatInTimeZone, fromZonedTime } from "date-fns-tz";
 
 import { Button } from "@/components/Button";
+import { BottomSheet } from "@/components/BottomSheet";
 import { Card } from "@/components/Card";
 
 type Course = { id: string; label: string };
@@ -60,6 +61,7 @@ export function CoursesEditor({
   const [draft, setDraft] = useState(emptyOccasion(courses[0]?.id));
   const [message, setMessage] = useState("");
   const [busy, setBusy] = useState("");
+  const [pendingCancel, setPendingCancel] = useState<Occasion | null>(null);
 
   async function save(row: Occasion, create = false) {
     setBusy(create ? "create" : row.id);
@@ -106,13 +108,14 @@ export function CoursesEditor({
     const response = await fetch(`/api/admin/courses/occasions/${id}`, {
       method: "PATCH",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ action: "cancel" }),
+      body: JSON.stringify({ action: "cancel", confirm: true }),
     });
     const body = await response.json().catch(() => null);
     setMessage(response.ok ? t("cancelled") : body?.error?.code ?? t("error"));
     setBusy("");
     if (response.ok) {
       setRows((value) => value.map((row) => row.id === id ? { ...row, cancelled: true } : row));
+      setPendingCancel(null);
       router.refresh();
     }
   }
@@ -179,13 +182,49 @@ export function CoursesEditor({
             <Button type="button" disabled={Boolean(busy) || row.cancelled} onClick={() => void save(row)}>
               {busy === row.id ? t("saving") : t("save")}
             </Button>
-            <Button type="button" variant="tertiary" disabled={Boolean(busy) || row.cancelled} onClick={() => void cancel(row.id)}>
+            <Button type="button" variant="tertiary" disabled={Boolean(busy) || row.cancelled} onClick={() => setPendingCancel(row)}>
               {t("cancel")}
             </Button>
           </div>
         </Card>
       ))}
       {message ? <p className="font-bold" role="status">{message}</p> : null}
+      {pendingCancel ? (
+        <BottomSheet
+          title={t("cancelConfirmTitle")}
+          onClose={() => {
+            if (!busy) setPendingCancel(null);
+          }}
+        >
+          <p className="leading-7 text-ink-muted">
+            {t("cancelConfirm", {
+              booked: pendingCancel.booked,
+              capacity: pendingCancel.capacity,
+            })}
+          </p>
+          <div className="mt-6 grid gap-3 sm:grid-cols-2">
+            <Button
+              type="button"
+              variant="tertiary"
+              onClick={() => setPendingCancel(null)}
+            >
+              {t("keep")}
+            </Button>
+            <Button
+              type="button"
+              disabled={Boolean(busy) || pendingCancel.booked > 0}
+              onClick={() => void cancel(pendingCancel.id)}
+            >
+              {busy ? t("saving") : t("cancel")}
+            </Button>
+          </div>
+          {pendingCancel.booked > 0 ? (
+            <p className="mt-4 text-sm font-bold text-danger">
+              {t("cancelBlocked")}
+            </p>
+          ) : null}
+        </BottomSheet>
+      ) : null}
     </div>
   );
 }

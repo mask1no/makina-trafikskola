@@ -83,7 +83,7 @@ export function BookingFlow({
     [state.areaId, state.gearbox, teachers],
   );
   const dates = useMemo(() => {
-    return Array.from({ length: 7 }, (_, index) => {
+    return Array.from({ length: 14 }, (_, index) => {
       const date = addCalendarDays(new Date(), index);
       return {
         key: localDateKey(date.toISOString()),

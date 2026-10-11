@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/Button";
+import { CheckboxField } from "@/components/CheckboxField";
 import { Input } from "@/components/Input";
 import { Select } from "@/components/Select";
 import { Textarea } from "@/components/Textarea";
@@ -38,6 +39,7 @@ export function AdminBookingControls({
   const [reason, setReason] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [confirmed, setConfirmed] = useState(false);
 
   async function submit() {
     setBusy(true);
@@ -49,6 +51,7 @@ export function AdminBookingControls({
         body: JSON.stringify({
           action,
           reason,
+          ...(action === "cancel" ? { confirm: confirmed } : {}),
           ...(action === "move"
             ? {
                 startsAt: fromZonedTime(
@@ -89,11 +92,12 @@ export function AdminBookingControls({
             id={`action-${bookingId}`}
             label={t("action")}
             value={action}
-            onChange={(event) =>
+            onChange={(event) => {
               setAction(
                 event.target.value as "move" | "cancel" | "reassign",
-              )
-            }
+              );
+              setConfirmed(false);
+            }}
           >
             <option value="move">{t("move")}</option>
             <option value="reassign">{t("reassign")}</option>
@@ -130,9 +134,21 @@ export function AdminBookingControls({
             className="min-h-20"
             required
           />
+          {action === "cancel" ? (
+            <CheckboxField
+              id={`confirm-cancel-${bookingId}`}
+              label={t("confirmCancel")}
+              checked={confirmed}
+              onChange={(event) => setConfirmed(event.target.checked)}
+            />
+          ) : null}
           <Button
             type="button"
-            disabled={busy || reason.trim().length < 3}
+            disabled={
+              busy ||
+              reason.trim().length < 3 ||
+              (action === "cancel" && !confirmed)
+            }
             onClick={submit}
           >
             {busy ? t("saving") : t("save")}

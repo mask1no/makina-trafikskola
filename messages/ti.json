@@ -782,6 +782,16 @@
       "holdStatus": "ክፍሊት ይጽበ",
       "holdUntil": "እዚ ግዜ ክሳብ <time>{deadline}</time> ንዓኻ ተዓቂቡ ኣሎ።",
       "cancelHoldWarning": "ክረዲት ኣይተቖርጸን። ምስራዝ ነቲ ዝተዓቀበ ግዜ ብቕጽበት ይለቆ። ክትቅጽል ትደሊ?",
+      "lessonFeedback": "ካብ ትምህርቲ ዝተዋህበካ ርእይቶ",
+      "practiced": "ዝተለማመድኩምሉ",
+      "nextFocus": "ዝቕጽል ትኹረት",
+      "leaveReview": "ግምገማ ሃብ",
+      "reviewModeration": "ግምገማ ቅድሚ ምሕታሙ ይምርመር። ርእይቶ ኣማራጺ እዩ።",
+      "rating": "ደረጃ",
+      "ratingValue": "{value} ካብ 5",
+      "reviewComment": "ርእይቶ (ኣማራጺ)",
+      "submitReview": "ግምገማ ስደድ",
+      "submittingReview": "ይለኣኽ ኣሎ…",
       "cancelLateWarning": "ናይ ምስራዝ ግዜ ሓሊፉ። ትምህርቲ ምሉእ ዋጋ ይኽፈል ከምኡውን ካብ ሳልዶ ይቑረጽ። ገና ክትስርዝ ትደሊ?",
       "cancelRefundWarning": "ሕጂ እንተሰሪዝካ ክረዲት ይምለስ። መወዳእታ <time>{deadline}</time> እዩ። ቀጽል?",
       "deadline": "ክሳብ <time>{deadline}</time> ክትስርዝ ትኽእል።",
@@ -982,6 +992,7 @@
       "start": "ካብ",
       "end": "ክሳብ",
       "reason": "ምኽንያት",
+      "confirm": "ኣብዚ ግዜ ዘለዉ ዝተረጋገጹ ትምህርትታት ከም ዝስረዙ፣ ክረዲት ከም ዝምለስን ተማሃሮ ከም ዝሕበሩን ተረዲአ።",
       "submit": "ግዜ ዕገት"
     }
   },
@@ -1259,6 +1270,10 @@
       "saving": "ይዕቀብ ኣሎ…",
       "cancel": "ግዜ ሰርዝ",
       "cancelled": "ተሰሪዙ",
+      "cancelConfirmTitle": "ምስራዝ ኣረጋግጽ",
+      "cancelConfirm": "ካብ {capacity} ቦታታት {booked} ተታሒዙ ኣሎ። ባዶ ግዜ ብቐጥታ ክስረዝ ይኽእል።",
+      "cancelBlocked": "እዚ ግዜ ቦታ ምሓዝ ኣለዎ። ቅድሚ ምስራዝ ተሳተፍቲ ኣስተናግድ።",
+      "keep": "ግዜ ኣቐምጥ",
       "occasion": "ግዜ ኮርስ {count}",
       "booked": "{booked} ካብ {capacity} ተታሒዙ",
       "error": "ምዕቃብ ኣይተኻእለን። ደጊምካ ፈትን።"
@@ -1375,6 +1390,7 @@
         "newTime": "ሓድሽ ናይ ከባቢ ግዜ",
         "newInstructor": "ሓድሽ መምህር",
         "reason": "ጽሑፍ ምኽንያት",
+        "confirmCancel": "ትምህርቲ ከም ዝስረዝ፣ ክረዲት ከም ዝምለስን ተማሃራይ ከም ዝሕበርን ተረዲአ።",
         "save": "ለውጢ ዓቅብ",
         "saving": "ይዕቀብ…"
       }
@@ -1525,6 +1541,7 @@
     "ACCOUNT_OR_SLUG_EXISTS": "ኢመይል ወይ ኣድራሻ ፕሮፋይል ድሮ ይጥቀም።",
     "ACCOUNT_HAS_ACTIVE_BOOKINGS": "ቅድሚ ሕሳብካ ምስራዝ ዝመጹ ትምህርትታት፣ ኮርሳትን ንጡፋት ክፍሊታትን ዛዝም ወይ ሰርዝ።",
     "COURSE_OCCASION_NOT_FOUND": "እዚ ኮርስ ድሕሪ ሕጂ ኣይርከብን።",
+    "COURSE_OCCASION_HAS_BOOKINGS": "እዚ ግዜ ቦታ ምሓዝ ኣለዎ። ቅድሚ ምስራዝ ተሳተፍቲ ኣስተናግድ።",
     "COURSE_FULL": "እዚ ኮርስ መሊኡ።",
     "COURSE_ALREADY_BOOKED": "ኣብዚ ኮርስ ድሮ ዝተረጋገጸ ቦታ ኣለካ።",
     "PAYMENT_PROVIDER_ERROR": "ክፍሊት ክጅምር ኣይከኣለን። ደጊምካ ፈትን።",

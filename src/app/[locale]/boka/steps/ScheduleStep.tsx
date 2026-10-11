@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useTranslations } from "next-intl";
 
 import { Avatar } from "@/components/Avatar";
@@ -39,16 +40,86 @@ export function ScheduleStep({
   onSlot: (startsAt: string) => void;
 }) {
   const t = useTranslations("booking");
+  const languageNames = useTranslations("shell.languagePage");
+  const teacherCopy = useTranslations("teachers");
+  const [language, setLanguage] = useState("");
+  const languageOptions = Array.from(
+    new Set(teachers.flatMap((teacher) => teacher.languages)),
+  );
+  const displayedTeachers = language
+    ? teachers.filter((teacher) => teacher.languages.includes(language))
+    : teachers;
   const selectedSlots = previews[teacherId] ?? [];
   const dateSlots = selectedSlots.filter(
     (slot) => localDateKey(slot.startsAt) === selectedDate,
   );
+  const firstAvailable = displayedTeachers
+    .flatMap((teacher) =>
+      (previews[teacher.id] ?? []).map((slot) => ({
+        teacherId: teacher.id,
+        slot,
+      })),
+    )
+    .sort(
+      (a, b) =>
+        new Date(a.slot.startsAt).getTime() -
+        new Date(b.slot.startsAt).getTime(),
+    )[0];
   return (
     <section>
       <h2 className="text-h2 font-black">{t("step.schedule.title")}</h2>
-      {teachers.length ? (
+      {languageOptions.length > 1 ? (
+        <div className="mt-4">
+          <p className="text-small font-bold text-ink-muted">
+            {t("step.who.languageFirst")}
+          </p>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {["", ...languageOptions].map((option) => (
+              <button
+                key={option || "all"}
+                type="button"
+                aria-pressed={language === option}
+                className="inline-flex min-h-11 items-center rounded-full border border-border bg-card px-3 text-small font-bold aria-pressed:border-ink aria-pressed:bg-surface aria-pressed:text-ink-inverse"
+                onClick={() => {
+                  setLanguage(option);
+                  const first = option
+                    ? teachers.find((teacher) =>
+                        teacher.languages.includes(option),
+                      )
+                    : teachers[0];
+                  if (first) onTeacher(first.id);
+                  onSlot("");
+                }}
+              >
+                {option
+                  ? languageNames.has(option)
+                    ? languageNames(option)
+                    : option.toUpperCase()
+                  : teacherCopy("anyLanguage")}
+              </button>
+            ))}
+          </div>
+        </div>
+      ) : null}
+      {firstAvailable ? (
+        <button
+          type="button"
+          className="mt-4 inline-flex min-h-11 items-center rounded-sm border border-accent bg-accent px-4 font-bold text-accent-ink shadow-soft"
+          onClick={() => {
+            onTeacher(firstAvailable.teacherId);
+            onSlot(firstAvailable.slot.startsAt);
+            onDate(localDateKey(firstAvailable.slot.startsAt));
+          }}
+        >
+          {t("step.when.firstAvailable")}
+          <bdi dir="ltr" className="ms-2">
+            {formatLessonTime(new Date(firstAvailable.slot.startsAt), locale)}
+          </bdi>
+        </button>
+      ) : null}
+      {displayedTeachers.length ? (
         <div className="mt-6 grid gap-3">
-          {teachers.map((teacher) => {
+          {displayedTeachers.map((teacher) => {
             const next = (previews[teacher.id] ?? []).slice(0, 3);
             return (
               <div key={teacher.id} className="grid gap-2">
@@ -62,7 +133,21 @@ export function ScheduleStep({
                       imageUrl={teacher.photoUrl}
                       size="sm"
                     />
-                    <span className="truncate">{teacher.name}</span>
+                    <span className="min-w-0">
+                      <span className="block truncate">{teacher.name}</span>
+                      <span className="mt-1 flex flex-wrap gap-1">
+                        {teacher.languages.map((language) => (
+                          <span
+                            key={language}
+                            className="rounded-full border border-[var(--line)] px-2 py-0.5 text-xs font-semibold text-ink-muted"
+                          >
+                            {languageNames.has(language)
+                              ? languageNames(language)
+                              : language.toUpperCase()}
+                          </span>
+                        ))}
+                      </span>
+                    </span>
                   </span>
                 </ChoiceCard>
                 <div className="flex flex-wrap gap-2">

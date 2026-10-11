@@ -23,6 +23,10 @@ export default async function BookingsPage(
       include: {
         teacher: { include: { user: true } },
         location: true,
+        lessonReport: {
+          select: { summary: true, nextFocus: true },
+        },
+        review: { select: { id: true } },
       },
     }),
     db.product.findFirst({
@@ -48,6 +52,8 @@ export default async function BookingsPage(
           status: booking.status,
           creditCharged: booking.creditCharged,
           holdExpiresAt: booking.holdExpiresAt?.toISOString() ?? null,
+          lessonReport: booking.lessonReport,
+          reviewExists: Boolean(booking.review),
           teacherName: `${booking.teacher.user.firstName} ${booking.teacher.user.lastName}`,
           place:
             booking.location?.name ??

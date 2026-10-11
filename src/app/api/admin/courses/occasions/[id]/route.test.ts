@@ -65,7 +65,7 @@ describe("admin course occasion cancellation", () => {
   });
 
   it("verifies the Risk course occasion then audits cancellation", async () => {
-    const response = await PATCH(request({ action: "cancel" }), {
+    const response = await PATCH(request({ action: "cancel", confirm: true }), {
       params: Promise.resolve({ id: occasionId }),
     });
     expect(response.status).toBe(200);
@@ -81,6 +81,26 @@ describe("admin course occasion cancellation", () => {
         action: "courseOccasion.cancel",
       }),
     }));
+  });
+
+  it("refuses cancellation while participants remain booked", async () => {
+    mocks.occasionFindFirst.mockResolvedValueOnce({
+      id: occasionId,
+      cancelled: false,
+      courseId: "clh2234567890123456789012",
+      course: { id: "course-1", kind: "RISK1", productId: "product-1" },
+      _count: { bookings: 2 },
+    });
+
+    const response = await PATCH(request({ action: "cancel", confirm: true }), {
+      params: Promise.resolve({ id: occasionId }),
+    });
+
+    expect(response.status).toBe(409);
+    await expect(response.json()).resolves.toMatchObject({
+      error: { code: "COURSE_OCCASION_HAS_BOOKINGS" },
+    });
+    expect(mocks.transaction).not.toHaveBeenCalled();
   });
 
   it("verifies the linked product and audits edits", async () => {

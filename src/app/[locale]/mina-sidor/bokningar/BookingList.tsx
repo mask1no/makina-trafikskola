@@ -15,6 +15,7 @@ import { Badge } from "@/components/Badge";
 import { BottomSheet } from "@/components/BottomSheet";
 import { CheckboxField } from "@/components/CheckboxField";
 import { EmptyState } from "@/components/EmptyState";
+import { Textarea } from "@/components/Textarea";
 
 type BookingItem = {
   id: string;
@@ -22,6 +23,8 @@ type BookingItem = {
   status: string;
   creditCharged: boolean;
   holdExpiresAt: string | null;
+  lessonReport: { summary: string | null; nextFocus: string | null } | null;
+  reviewExists: boolean;
   teacherName: string;
   place: string;
 };
@@ -49,6 +52,10 @@ export function BookingList({
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [withdrawalAcknowledged, setWithdrawalAcknowledged] = useState(false);
   const [paying, setPaying] = useState(false);
+  const [pendingReview, setPendingReview] = useState<BookingItem | null>(null);
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
+  const [reviewing, setReviewing] = useState(false);
   const [lateCancellation, setLateCancellation] = useState(false);
   const [error, setError] = useState("");
   const formatWhen = (date: Date) =>
@@ -132,6 +139,34 @@ export function BookingList({
     }
   }
 
+  async function submitReview(booking: BookingItem) {
+    setReviewing(true);
+    setError("");
+    try {
+      const response = await fetch("/api/reviews", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          bookingId: booking.id,
+          rating,
+          ...(comment.trim() ? { comment: comment.trim() } : {}),
+        }),
+      });
+      const payload = await response.json();
+      if (!response.ok) {
+        throw new Error(payload.error?.code ?? "UNKNOWN");
+      }
+      setPendingReview(null);
+      setRating(0);
+      setComment("");
+      router.refresh();
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : "UNKNOWN");
+    } finally {
+      setReviewing(false);
+    }
+  }
+
   if (!bookings.length) {
     return (
       <div className="mt-6">
@@ -195,6 +230,37 @@ export function BookingList({
                   time: (chunks) => <bdi>{chunks}</bdi>,
                 })}
               </p>
+            ) : null}
+            {booking.status === "COMPLETED" && booking.lessonReport ? (
+              <div className="mt-4 rounded-sm border border-border bg-page p-4">
+                <p className="font-bold">{t("lessonFeedback")}</p>
+                {booking.lessonReport.summary ? (
+                  <p className="mt-2 text-sm leading-6 text-ink-muted">
+                    <span className="font-bold text-ink">{t("practiced")}: </span>
+                    {booking.lessonReport.summary}
+                  </p>
+                ) : null}
+                {booking.lessonReport.nextFocus ? (
+                  <p className="mt-2 text-sm leading-6 text-ink-muted">
+                    <span className="font-bold text-ink">{t("nextFocus")}: </span>
+                    {booking.lessonReport.nextFocus}
+                  </p>
+                ) : null}
+              </div>
+            ) : null}
+            {booking.status === "COMPLETED" && !booking.reviewExists ? (
+              <Button
+                className="mt-4"
+                variant="tertiary"
+                onClick={() => {
+                  setPendingReview(booking);
+                  setRating(0);
+                  setComment("");
+                  setError("");
+                }}
+              >
+                {t("leaveReview")}
+              </Button>
             ) : null}
           </article>
         );
@@ -277,6 +343,55 @@ export function BookingList({
               {paying ? t("paying") : checkout("continue")}
             </Button>
           </div>
+        </BottomSheet>
+      ) : null}
+      {pendingReview ? (
+        <BottomSheet
+          title={t("leaveReview")}
+          onClose={() => {
+            if (!reviewing) setPendingReview(null);
+          }}
+        >
+          <p className="text-sm leading-6 text-ink-muted">
+            {t("reviewModeration")}
+          </p>
+          <fieldset className="mt-5">
+            <legend className="text-sm font-bold">{t("rating")}</legend>
+            <div className="mt-2 flex gap-2" dir="ltr">
+              {[1, 2, 3, 4, 5].map((value) => (
+                <button
+                  key={value}
+                  type="button"
+                  aria-label={t("ratingValue", { value })}
+                  aria-pressed={rating === value}
+                  className="grid size-11 place-items-center rounded-full border border-border bg-card text-xl text-ink aria-pressed:border-accent aria-pressed:bg-accent"
+                  onClick={() => setRating(value)}
+                >
+                  ★
+                </button>
+              ))}
+            </div>
+          </fieldset>
+          <Textarea
+            id="student-review-comment"
+            className="mt-5 min-h-28"
+            label={t("reviewComment")}
+            value={comment}
+            maxLength={2000}
+            onChange={(event) => setComment(event.target.value)}
+          />
+          {error ? (
+            <p role="alert" className="mt-4 text-sm font-medium text-danger">
+              {errors.has(error) ? errors(error) : errors("UNKNOWN")}
+            </p>
+          ) : null}
+          <Button
+            className="mt-5 w-full"
+            disabled={reviewing || rating < 1}
+            onClick={() => void submitReview(pendingReview)}
+          >
+            {reviewing ? t("submittingReview") : t("submitReview")}
+          </Button>
         </BottomSheet>
       ) : null}
     </div>

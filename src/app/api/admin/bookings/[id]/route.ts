@@ -27,6 +27,7 @@ const requestSchema = z
     startsAt: z.coerce.date().optional(),
     teacherId: z.string().cuid().optional(),
     reason: z.string().trim().min(3).max(500),
+    confirm: z.boolean().optional(),
   })
   .strict()
   .superRefine((value, context) => {
@@ -42,6 +43,13 @@ const requestSchema = z
         code: "custom",
         path: ["teacherId"],
         message: "TEACHER_REQUIRED",
+      });
+    }
+    if (value.action === "cancel" && value.confirm !== true) {
+      context.addIssue({
+        code: "custom",
+        path: ["confirm"],
+        message: "CONFIRMATION_REQUIRED",
       });
     }
   });

@@ -84,6 +84,7 @@ const blockSchema = z
     startTime: z.string().regex(/^\d{2}:\d{2}$/).optional(),
     endTime: z.string().regex(/^\d{2}:\d{2}$/).optional(),
     reason: z.string().trim().max(200).optional(),
+    confirm: z.literal("yes"),
   })
   .refine(
     (value) =>
@@ -99,6 +100,7 @@ export async function blockAvailability(formData: FormData) {
     startTime: formData.get("startTime") || undefined,
     endTime: formData.get("endTime") || undefined,
     reason: formData.get("reason") || undefined,
+    confirm: formData.get("confirm"),
   });
   const session = requireRole(await auth(), ["TEACHER"]);
   const teacher = await db.teacherProfile.findUnique({
