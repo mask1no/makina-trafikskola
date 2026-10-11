@@ -24,7 +24,15 @@ export default async function StudentDashboard(
   const [t, nextBooking, credits, theoryAccess] = await Promise.all([
     getTranslations("student.overview"),
     db.booking.findFirst({
-      where: { studentId, status: "CONFIRMED", startsAt: { gt: now } },
+      where: {
+        studentId,
+        status: "CONFIRMED",
+        startsAt: { gt: now },
+        OR: [
+          { creditCharged: true },
+          { creditCharged: false, holdExpiresAt: { gt: now } },
+        ],
+      },
       orderBy: { startsAt: "asc" },
       include: { teacher: { include: { user: true } } },
     }),
@@ -44,7 +52,7 @@ export default async function StudentDashboard(
   const unpaidHold =
     Boolean(nextBooking) &&
     !nextBooking?.creditCharged &&
-    Boolean(nextBooking?.holdExpiresAt);
+    Boolean(nextBooking?.holdExpiresAt && nextBooking.holdExpiresAt > now);
   const holdExpires = nextBooking?.holdExpiresAt
     ? formatStockholm(nextBooking.holdExpiresAt, params.locale, {
         weekday: "long",

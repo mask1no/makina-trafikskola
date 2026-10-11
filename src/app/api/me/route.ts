@@ -6,6 +6,7 @@ import { auth } from "@/auth";
 import { AuthorizationError, requireRole } from "@/lib/auth/guards";
 import { consumeOtp } from "@/lib/auth/otp-store";
 import { db } from "@/lib/db";
+import { getStripe, stripeIsConfigured } from "@/lib/stripe";
 
 export const runtime = "nodejs";
 
@@ -34,7 +35,6 @@ export async function DELETE(request: Request) {
   }
 
   const now = new Date();
-  const activePaymentCutoff = new Date(now.getTime() - 24 * 60 * 60 * 1000);
   const user = await db.user.findFirst({
     where: { id: studentId, role: "STUDENT", deletedAt: null },
     select: {
@@ -51,18 +51,21 @@ export async function DELETE(request: Request) {
               occasion: { startsAt: { gt: now }, cancelled: false },
             },
           },
-          orders: {
-            where: {
+        },
+      },
+      orders: {
+        where: {
+          status: "PENDING",
+          payment: {
+            is: {
               status: "PENDING",
-              createdAt: { gt: activePaymentCutoff },
-              payment: {
-                is: {
-                  status: "PENDING",
-                  stripePaymentIntentId: { not: null },
-                },
-              },
+              stripePaymentIntentId: { not: null },
             },
           },
+        },
+        select: {
+          id: true,
+          payment: { select: { stripePaymentIntentId: true } },
         },
       },
     },
@@ -72,8 +75,7 @@ export async function DELETE(request: Request) {
   }
   if (
     user._count.bookings > 0 ||
-    user._count.courseBookings > 0 ||
-    user._count.orders > 0
+    user._count.courseBookings > 0
   ) {
     return errorResponse("ACCOUNT_HAS_ACTIVE_BOOKINGS", 409);
   }
@@ -84,8 +86,38 @@ export async function DELETE(request: Request) {
     return errorResponse("INVALID_OTP", 401);
   }
 
+  if (user.orders.length && !stripeIsConfigured()) {
+    return errorResponse("PAYMENT_PROVIDER_NOT_CONFIGURED", 503);
+  }
+  for (const order of user.orders) {
+    const intentId = order.payment?.stripePaymentIntentId;
+    if (!intentId) continue;
+    try {
+      const intent = await getStripe().paymentIntents.retrieve(intentId);
+      if (["succeeded", "processing"].includes(intent.status)) {
+        return errorResponse("ACCOUNT_HAS_ACTIVE_BOOKINGS", 409);
+      }
+      if (intent.status !== "canceled") {
+        await getStripe().paymentIntents.cancel(intent.id);
+      }
+    } catch {
+      return errorResponse("PAYMENT_PROVIDER_ERROR", 502);
+    }
+  }
+
   await db.$transaction(
     async (tx) => {
+      const pendingOrderIds = user.orders.map((order) => order.id);
+      if (pendingOrderIds.length) {
+        await tx.payment.updateMany({
+          where: { orderId: { in: pendingOrderIds }, status: "PENDING" },
+          data: { status: "FAILED" },
+        });
+        await tx.order.updateMany({
+          where: { id: { in: pendingOrderIds }, status: "PENDING" },
+          data: { status: "FAILED" },
+        });
+      }
       await tx.user.update({
         where: { id: user.id },
         data: {

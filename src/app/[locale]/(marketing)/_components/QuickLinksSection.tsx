@@ -74,7 +74,7 @@ export function QuickLinksSection({
                 </span>
                 <span className="flex items-end justify-between gap-2">
                   <span>{link.label}</span>
-                  <span aria-hidden="true" className="rtl-directional text-lg transition group-hover:translate-x-0.5">
+                  <span aria-hidden="true" className="rtl-directional text-lg transition-[margin] group-hover:ms-1">
                     →
                   </span>
                 </span>

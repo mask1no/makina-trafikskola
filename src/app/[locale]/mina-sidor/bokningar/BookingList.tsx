@@ -23,6 +23,8 @@ type BookingItem = {
   status: string;
   creditCharged: boolean;
   holdExpiresAt: string | null;
+  holdActive: boolean;
+  holdExpired: boolean;
   lessonReport: { summary: string | null; nextFocus: string | null } | null;
   reviewExists: boolean;
   teacherName: string;
@@ -180,7 +182,9 @@ export function BookingList({
       {bookings.map((booking) => {
         const deadline = deadlineFor(booking.startsAt);
         const unpaidHold =
-          booking.status === "CONFIRMED" && !booking.creditCharged;
+          booking.status === "CONFIRMED" && booking.holdActive;
+        const expiredHold =
+          booking.status === "CONFIRMED" && booking.holdExpired;
         return (
           <article key={booking.id} className="relative overflow-hidden rounded-md border border-border bg-card p-5 shadow-soft sm:p-6">
             <span aria-hidden="true" className="absolute bottom-0 start-0 top-0 w-1 bg-border" />
@@ -193,8 +197,12 @@ export function BookingList({
                   <bdi>{booking.teacherName}</bdi>
                 </p>
                 <p className="mt-1 text-sm text-ink-muted">{booking.place}</p>
-                <Badge className="mt-3" tone={unpaidHold ? "accent" : booking.status === "CONFIRMED" ? "success" : "neutral"}>
-                  {unpaidHold ? t("holdStatus") : t(`statuses.${booking.status}`)}
+                <Badge className="mt-3" tone={unpaidHold ? "accent" : booking.status === "CONFIRMED" && !expiredHold ? "success" : "neutral"}>
+                  {unpaidHold
+                    ? t("holdStatus")
+                    : expiredHold
+                      ? t("statuses.EXPIRED_HOLD")
+                      : t(`statuses.${booking.status}`)}
                 </Badge>
                 {unpaidHold && booking.holdExpiresAt ? (
                   <p className="mt-3 text-sm font-bold text-ink">
@@ -205,7 +213,7 @@ export function BookingList({
                   </p>
                 ) : null}
               </div>
-              {booking.status === "CONFIRMED" ? (
+              {booking.status === "CONFIRMED" && !expiredHold ? (
                 <div className="flex shrink-0 flex-wrap gap-2">
                   {unpaidHold && paymentProductId ? (
                     <Button onClick={() => openPayment(booking)}>

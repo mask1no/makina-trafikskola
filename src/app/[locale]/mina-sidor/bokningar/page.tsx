@@ -15,6 +15,7 @@ export default async function BookingsPage(
 ) {
   const params = await props.params;
   const studentId = await requireStudent(params.locale);
+  const now = new Date();
   const [t, bookings, paymentProduct] = await Promise.all([
     getTranslations("student.bookings"),
     db.booking.findMany({
@@ -52,6 +53,12 @@ export default async function BookingsPage(
           status: booking.status,
           creditCharged: booking.creditCharged,
           holdExpiresAt: booking.holdExpiresAt?.toISOString() ?? null,
+          holdActive:
+            !booking.creditCharged &&
+            Boolean(booking.holdExpiresAt && booking.holdExpiresAt > now),
+          holdExpired:
+            !booking.creditCharged &&
+            Boolean(booking.holdExpiresAt && booking.holdExpiresAt <= now),
           lessonReport: booking.lessonReport,
           reviewExists: Boolean(booking.review),
           teacherName: `${booking.teacher.user.firstName} ${booking.teacher.user.lastName}`,

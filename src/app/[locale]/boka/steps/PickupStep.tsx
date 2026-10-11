@@ -78,15 +78,16 @@ export function PickupStep({
   const shell = useTranslations("shell");
   const showHint = meet === "pickup" && pickupAddress.trim().length > 0 && !pickupCoordinates;
   const [mapFailed, setMapFailed] = useState(false);
+  const [mapLoaded, setMapLoaded] = useState(false);
   const failMap = useCallback(() => setMapFailed(true), []);
   const hasBoundary = useMemo(() => boundaryRings(area?.boundary).length > 0, [area?.boundary]);
-  const showMap = Boolean(mapApiKey && mapId) && !mapFailed && hasBoundary;
+  const canLoadMap = Boolean(mapApiKey && mapId) && !mapFailed && hasBoundary;
   return (
     <section>
       <h2 className="text-h2 font-black">{t("step.pickup.title")}</h2>
       <p className="mt-2 text-ink-muted">{t("step.pickup.free")}</p>
       <div className="mt-5 overflow-hidden rounded-md border border-[var(--line)] bg-card shadow-soft">
-        {showMap ? (
+        {canLoadMap && mapLoaded ? (
           <AreaOutlineMap
             apiKey={mapApiKey ?? ""}
             mapId={mapId ?? ""}
@@ -96,7 +97,23 @@ export function PickupStep({
             onFailure={failMap}
           />
         ) : (
-          <Outline boundary={area?.boundary} label={t("step.pickup.outline")} />
+          <div className="grid justify-items-center p-4">
+            <Outline boundary={area?.boundary} label={t("step.pickup.outline")} />
+            {canLoadMap ? (
+              <>
+                <p className="mt-2 text-center text-small leading-6 text-ink-muted">
+                  {shell("mapPrivacy")}
+                </p>
+                <button
+                  type="button"
+                  className="mt-3 inline-flex min-h-11 items-center rounded-sm bg-surface px-5 font-bold text-ink-inverse"
+                  onClick={() => setMapLoaded(true)}
+                >
+                  {shell("showMap")}
+                </button>
+              </>
+            ) : null}
+          </div>
         )}
       </div>
       {area?.officeAddress ? (

@@ -25,7 +25,8 @@ export function ChangePhoneControl({
   const [phone, setPhone] = useState("");
   const [currentCode, setCurrentCode] = useState("");
   const [newCode, setNewCode] = useState("");
-  const [codesSent, setCodesSent] = useState(false);
+  const [currentCodeSent, setCurrentCodeSent] = useState(false);
+  const [newCodeSent, setNewCodeSent] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
@@ -52,10 +53,16 @@ export function ChangePhoneControl({
     setError("");
     setSuccess(false);
     try {
-      const currentDevCode = await requestCode(currentPhone);
-      const nextDevCode = await requestCode(phone);
-      setDevCodes({ current: currentDevCode, next: nextDevCode });
-      setCodesSent(true);
+      if (!currentCodeSent) {
+        const currentDevCode = await requestCode(currentPhone);
+        setDevCodes((value) => ({ ...value, current: currentDevCode }));
+        setCurrentCodeSent(true);
+      }
+      if (!newCodeSent) {
+        const nextDevCode = await requestCode(phone);
+        setDevCodes((value) => ({ ...value, next: nextDevCode }));
+        setNewCodeSent(true);
+      }
     } catch (reason) {
       setError(reason instanceof Error ? reason.message : "UNKNOWN");
     } finally {
@@ -78,7 +85,8 @@ export function ChangePhoneControl({
       }
       setSuccess(true);
       setOpen(false);
-      setCodesSent(false);
+      setCurrentCodeSent(false);
+      setNewCodeSent(false);
       setCurrentCode("");
       setNewCode("");
       setPhone("");
@@ -122,11 +130,13 @@ export function ChangePhoneControl({
             value={phone}
             onChange={(event) => {
               setPhone(event.target.value);
-              setCodesSent(false);
+              setNewCodeSent(false);
+              setNewCode("");
+              setDevCodes((value) => ({ ...value, next: undefined }));
             }}
             required
           />
-          {!codesSent ? (
+          {!currentCodeSent || !newCodeSent ? (
             <Button
               type="button"
               disabled={busy || phone.trim().length < 3}
