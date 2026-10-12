@@ -253,7 +253,17 @@ textarea {
 
   .benefit-viewport {
     overflow: hidden;
-    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 6%,
+      #000 94%,
+      transparent
+    );
+  }
+
+  .theory-path-line {
+    stroke-dasharray: none;
   }
 
   .benefit-track {
@@ -322,6 +332,11 @@ textarea {
 
     .benefit-track {
       width: 100%;
+    }
+
+    .theory-path-line {
+      animation: none !important;
+      stroke-dashoffset: 0 !important;
     }
   }
 }

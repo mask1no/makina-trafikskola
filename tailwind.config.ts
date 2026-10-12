@@ -37,6 +37,7 @@ const config: Config = {
         },
         success: {
           DEFAULT: "var(--success)",
+          strong: "var(--success-strong)",
           soft: "var(--success-soft)",
         },
         danger: {

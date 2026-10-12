@@ -109,7 +109,10 @@
     "googlePlay": "Google Play",
     "instagram": "Instagram",
     "facebook": "Facebook",
-    "tiktok": "TikTok"
+    "tiktok": "TikTok",
+    "languages": "Språk",
+    "appBadges": "Appar",
+    "socials": "Sociala medier"
   },
   "common": {
     "bookNow": "Boka nu",
@@ -125,7 +128,9 @@
       "brand": "Makina",
       "title": "Kör tryggt, lär på ditt språk",
       "description": "Körlektioner, teori och erfarna lärare i Stockholm – samlat på ett ställe.",
-      "areas": "Farsta · Upplands Väsby"
+      "areas": "Farsta · Upplands Väsby",
+      "openUntil": "Öppet nu till {time}",
+      "introOffer": "Första lektionen {price}"
     },
     "quick": {
       "eyebrow": "Börja här",
@@ -133,7 +138,9 @@
       "lessons": "Körlektioner",
       "courses": "Kurser",
       "teachers": "Lärare",
-      "contact": "Kontakta oss"
+      "contact": "Kontakta oss",
+      "theory": "Teori",
+      "prices": "Priser"
     },
     "pickup": {
       "eyebrow": "Upphämtning",
@@ -211,15 +218,15 @@
       },
       "pickup": {
         "title": "Gratis upphämtning",
-        "body": "I de gröna områdena – tar ingen tid från lektionen"
+        "body": "Farsta & Upplands Väsby"
       },
       "lesson": {
         "title": "50 minuter",
         "body": "Varje körlektion är 50 minuter."
       },
       "risk": {
-        "title": "Riskutbildning",
-        "body": "Båda riskutbildningarna hos oss"
+        "title": "Riskettan hos oss",
+        "body": "Teoretisk riskutbildning hos oss"
       },
       "guarantee": {
         "title": "Körkortsgaranti",
@@ -237,6 +244,10 @@
       "reminder": {
         "title": "Sms-påminnelse dagen före",
         "body": "SMS dagen före lektionen."
+      },
+      "validity": {
+        "title": "Gäller i 12 månader",
+        "body": "Körlektioner och paket gäller i 12 månader från köpet."
       }
     }
   },
@@ -529,7 +540,9 @@
       "error": "Provet kunde inte uppdateras. Försök igen.",
       "imageMissing": "Bilden kunde inte visas."
     },
-    "practiceAll": "Öva alla {count} frågor"
+    "practiceAll": "Öva alla {count} frågor",
+    "stepQuestions": "{count} frågor",
+    "stepDone": "Klart"
   },
   "localSchool": {
     "eyebrow": "Trafikskola nära dig",
@@ -1054,8 +1067,8 @@
   },
   "cookieConsent": {
     "title": "Cookieinställningar",
-    "description": "Vi använder nödvändiga cookies för inloggning, språk och dina cookieval. Inga analys- eller marknadsföringscookies är aktiverade.",
-    "readMore": "Läs om cookies",
+    "description": "Vi använder nödvändiga cookies för inloggning och språk.",
+    "readMore": "Läs mer",
     "necessary": "Endast nödvändiga",
     "accept": "Godkänn",
     "ok": "OK"

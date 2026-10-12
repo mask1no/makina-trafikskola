@@ -194,6 +194,13 @@ export default async function LocaleLayout(props: {
     [
       ["APP_STORE_URL", t("appStore")],
       ["GOOGLE_PLAY_URL", t("googlePlay")],
+    ] as const
+  ).flatMap(([key, label]) => {
+    const url = process.env[key]?.trim();
+    return url?.startsWith("https://") ? [{ url, label }] : [];
+  });
+  const socialLinks = (
+    [
       ["INSTAGRAM_URL", t("instagram")],
       ["FACEBOOK_URL", t("facebook")],
       ["TIKTOK_URL", t("tiktok")],
@@ -356,9 +363,7 @@ export default async function LocaleLayout(props: {
             explore: t("explore"),
             footerDescription: t("footerDescription"),
             here: t("here"),
-            languageHelp: t("languageHelp"),
-            languageHelpDescription: (languages) =>
-              t("languageHelpDescription", { languages }),
+            languages: t("languages"),
             languageNames: {
               sv: t("languagePage.sv"),
               en: t("languagePage.en"),
@@ -369,7 +374,6 @@ export default async function LocaleLayout(props: {
               prs: t("languagePage.prs"),
               tig: t("languagePage.tig"),
             },
-            legal: t("legal"),
             lessons: t("lessons"),
             mailUs: t("mailUs"),
             prices: t("prices"),
@@ -378,13 +382,16 @@ export default async function LocaleLayout(props: {
             teachers: t("teachers"),
             terms: t("terms"),
             theory: t("theory"),
+            appBadges: t("appBadges"),
+            socials: t("socials"),
           }}
-          locale={params.locale}
           offeredLanguages={offeredLanguages}
           places={publicPlaces}
           showInstructors={showInstructors}
           showTheory={showTheory}
           storeLinks={storeLinks}
+          socialLinks={socialLinks}
+          authenticated={Boolean(session?.user)}
         />
         <MobileTabBar tabs={tabs} center={centerTab} />
         <CloseDetailsOnNavigate />

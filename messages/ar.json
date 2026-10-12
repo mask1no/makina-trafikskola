@@ -109,7 +109,10 @@
     "googlePlay": "Google Play",
     "instagram": "Instagram",
     "facebook": "Facebook",
-    "tiktok": "TikTok"
+    "tiktok": "TikTok",
+    "languages": "اللغات",
+    "appBadges": "التطبيقات",
+    "socials": "وسائل التواصل"
   },
   "common": {
     "bookNow": "احجز الآن",
@@ -125,7 +128,9 @@
       "brand": "Makina",
       "title": "قُد بثقة وتعلّم بلغتك",
       "description": "دروس قيادة ونظري ومدربون ذوو خبرة في ستوكهولم، كل ذلك في مكان واحد.",
-      "areas": "Farsta · Upplands Väsby"
+      "areas": "Farsta · Upplands Väsby",
+      "openUntil": "مفتوح الآن حتى {time}",
+      "introOffer": "الدرس الأول {price}"
     },
     "quick": {
       "eyebrow": "ابدأ هنا",
@@ -133,7 +138,9 @@
       "lessons": "دروس القيادة",
       "courses": "الدورات",
       "teachers": "المدربون",
-      "contact": "اتصل بنا"
+      "contact": "اتصل بنا",
+      "theory": "النظري",
+      "prices": "الأسعار"
     },
     "pickup": {
       "eyebrow": "الاصطحاب",
@@ -211,15 +218,15 @@
       },
       "pickup": {
         "title": "اصطحاب مجاني",
-        "body": "داخل المناطق الخضراء – لا يُحتسب من وقت الدرس"
+        "body": "Farsta و Upplands Väsby"
       },
       "lesson": {
         "title": "50 دقيقة",
         "body": "كل درس قيادة 50 دقيقة."
       },
       "risk": {
-        "title": "تدريب المخاطر",
-        "body": "دورتا المخاطر كلتاهما لدينا"
+        "title": "Riskettan لدينا",
+        "body": "تدريب نظري على المخاطر لدينا"
       },
       "guarantee": {
         "title": "ضمان رخصة القيادة",
@@ -237,6 +244,10 @@
       "reminder": {
         "title": "تذكير نصي في اليوم السابق",
         "body": "رسالة SMS في اليوم السابق للدرس."
+      },
+      "validity": {
+        "title": "صالح لمدة 12 شهرًا",
+        "body": "دروس القيادة والباقات صالحة لمدة 12 شهرًا من الشراء."
       }
     }
   },
@@ -529,7 +540,9 @@
       "error": "تعذر تحديث الاختبار. حاول مجددًا.",
       "imageMissing": "تعذر عرض الصورة."
     },
-    "practiceAll": "تدرّب على كل الأسئلة ({count})"
+    "practiceAll": "تدرّب على كل الأسئلة ({count})",
+    "stepQuestions": "{count} أسئلة",
+    "stepDone": "مكتمل"
   },
   "localSchool": {
     "eyebrow": "مدرسة قيادة قريبة منك",
@@ -1054,8 +1067,8 @@
   },
   "cookieConsent": {
     "title": "إعدادات ملفات تعريف الارتباط",
-    "description": "نستخدم ملفات ضرورية لتسجيل الدخول واللغة وحفظ اختيارك. لا توجد ملفات تحليل أو تسويق مفعلة.",
-    "readMore": "اقرأ عن ملفات تعريف الارتباط",
+    "description": "نستخدم ملفات تعريف ارتباط ضرورية لتسجيل الدخول واللغة.",
+    "readMore": "اقرأ المزيد",
     "necessary": "الضرورية فقط",
     "accept": "موافق",
     "ok": "حسنًا"

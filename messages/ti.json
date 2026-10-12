@@ -109,7 +109,10 @@
     "googlePlay": "Google Play",
     "instagram": "Instagram",
     "facebook": "Facebook",
-    "tiktok": "TikTok"
+    "tiktok": "TikTok",
+    "languages": "ቋንቋታት",
+    "appBadges": "ኣፕልኬሽናት",
+    "socials": "ማሕበራዊ ሚድያ"
   },
   "common": {
     "bookNow": "ሕጂ ሓዝ",
@@ -125,7 +128,9 @@
       "brand": "Makina",
       "title": "ብምትእምማን ዘውር፣ ብቋንቋኻ ተማሃር",
       "description": "ትምህርቲ ምዝዋር፣ ቲዮሪን ምኩራት መምህራንን ኣብ ስቶክሆልም።",
-      "areas": "Farsta · Upplands Väsby"
+      "areas": "Farsta · Upplands Väsby",
+      "openUntil": "ሕጂ ክሳብ {time} ክፉት",
+      "introOffer": "ቀዳማይ ትምህርቲ {price}"
     },
     "quick": {
       "eyebrow": "ኣብዚ ጀምር",
@@ -133,7 +138,9 @@
       "lessons": "ትምህርቲ ምዝዋር",
       "courses": "ኮርሳት",
       "teachers": "መምህራን",
-      "contact": "ርኸበና"
+      "contact": "ርኸበና",
+      "theory": "ቲዮሪ",
+      "prices": "ዋጋታት"
     },
     "pickup": {
       "eyebrow": "ምውሳድ",
@@ -211,15 +218,15 @@
       },
       "pickup": {
         "title": "ብነጻ ምውሳድ",
-        "body": "ኣብ ኣረንጓዴ ዞባታት – ካብ ግዜ ትምህርቲ ኣይወስድን"
+        "body": "Farsta & Upplands Väsby"
       },
       "lesson": {
         "title": "50 ደቒቕ",
         "body": "ነፍሲ ወከፍ ትምህርቲ ምዝዋር 50 ደቒቕ እዩ።"
       },
       "risk": {
-        "title": "ስልጠና ሓደጋ",
-        "body": "ክልቲኡ ስልጠናታት ሓደጋ ምሳና"
+        "title": "Riskettan ኣባና",
+        "body": "ቲዮረቲካዊ ስግኣት ስልጠና ኣባና"
       },
       "guarantee": {
         "title": "ውሕስነት ፍቓድ ምዝዋር",
@@ -237,6 +244,10 @@
       "reminder": {
         "title": "ቅድሚኡ ብሓደ መዓልቲ መዘኻኸሪ SMS",
         "body": "SMS ቅድሚ እቲ ትምህርቲ ብሓደ መዓልቲ።"
+      },
+      "validity": {
+        "title": "ን12 ኣዋርሕ የገልግሉ",
+        "body": "ትምህርቲ ምዝዋርን ጥቕላታትን ካብ ዕደጋ ን12 ኣዋርሕ የገልግሉ።"
       }
     }
   },
@@ -529,7 +540,9 @@
       "error": "ፈተና ክሕደስ ኣይከኣለን። ደጊምካ ፈትን።",
       "imageMissing": "እቲ ስእሊ ክረአ ኣይከኣለን።"
     },
-    "practiceAll": "ኩሉ {count} ሕቶታት ለመን"
+    "practiceAll": "ኩሉ {count} ሕቶታት ለመን",
+    "stepQuestions": "{count} ሕቶታት",
+    "stepDone": "ተዛዚሙ"
   },
   "localSchool": {
     "eyebrow": "ኣብ ቀረባኻ ቤት ትምህርቲ ምዝዋር",
@@ -1054,8 +1067,8 @@
   },
   "cookieConsent": {
     "title": "ምርጫ ኩኪ",
-    "description": "ንምእታው፣ ቋንቋን ምርጫ ኩኪኻን ኣድለይቲ ኩኪታት ንጥቀም። ናይ ትንተና ወይ ምልክታ ኩኪታት ኣይሰርሑን።",
-    "readMore": "ብዛዕባ ኩኪ ኣንብብ",
+    "description": "ንመእተዊን ቋንቋን ኣገደስቲ ኩኪታት ንጥቀም።",
+    "readMore": "ተወሳኺ ኣንብብ",
     "necessary": "ኣድለይቲ ጥራይ",
     "accept": "ተቐበል",
     "ok": "ሕራይ"

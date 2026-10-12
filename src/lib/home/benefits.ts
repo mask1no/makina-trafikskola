@@ -2,11 +2,12 @@ export type BenefitId =
   | "language"
   | "pickup"
   | "lesson"
-  | "risk"
-  | "guarantee"
   | "payment"
   | "cancel"
-  | "reminder";
+  | "validity"
+  | "risk"
+  | "reminder"
+  | "guarantee";
 
 export type BenefitSize = "sm" | "lg";
 
@@ -24,10 +25,7 @@ type BenefitProduct = {
   includesRisk2: boolean;
 };
 
-const LARGE = new Set<BenefitId>([
-  "language",
-  "guarantee",
-]);
+const LARGE = new Set<BenefitId>(["language", "validity"]);
 
 function item(id: BenefitId, priceOre?: number): BenefitItem {
   return {
@@ -38,25 +36,27 @@ function item(id: BenefitId, priceOre?: number): BenefitItem {
 }
 
 export function benefitItems(input: {
-  bookingEnabled: boolean;
+  bookingEnabled?: boolean;
   products: readonly BenefitProduct[];
   hasRiskCourse?: boolean;
   hasPickupArea?: boolean;
   guaranteeConfirmed?: boolean;
 }) {
+  void input.bookingEnabled;
+  void input.guaranteeConfirmed;
   const activeProducts = input.products.filter((product) => product.active);
-  const hasGuarantee = activeProducts.some(
-    (product) => product.kind === "GUARANTEE",
-  ) && input.guaranteeConfirmed;
+  const hasRisk1 = activeProducts.some((product) => product.includesRisk1);
   const canPayOnline = activeProducts.length > 0;
+  const showRisk = hasRisk1 || Boolean(input.hasRiskCourse);
 
   return [
     item("language"),
     ...(input.hasPickupArea ? [item("pickup")] : []),
     item("lesson"),
-    ...(input.hasRiskCourse ? [item("risk")] : []),
-    ...(hasGuarantee ? [item("guarantee")] : []),
     ...(canPayOnline ? [item("payment")] : []),
-    ...(input.bookingEnabled ? [item("reminder"), item("cancel")] : []),
+    item("cancel"),
+    item("validity"),
+    ...(showRisk ? [item("risk")] : []),
+    item("reminder"),
   ];
 }

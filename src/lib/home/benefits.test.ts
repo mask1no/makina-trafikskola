@@ -20,20 +20,22 @@ const lesson = {
 };
 
 describe("benefitItems", () => {
-  it("only returns benefits supported by active features and products", () => {
+  it("returns the core benefit set without optional service cards", () => {
     expect(benefitItems({ bookingEnabled: false, products: [lesson] }).map((item) => item.id)).toEqual([
       "language",
       "lesson",
       "payment",
+      "cancel",
+      "validity",
+      "reminder",
     ]);
   });
 
-  it("adds booking and explicitly confirmed service benefits", () => {
+  it("adds pickup and risk when those services are available", () => {
     const items = benefitItems({
       bookingEnabled: true,
       hasPickupArea: true,
       hasRiskCourse: true,
-      guaranteeConfirmed: true,
       products: [
         lesson,
         { active: false, kind: "TEST_LESSON", priceOre: 50000, includesRisk1: false, includesRisk2: false },
@@ -42,12 +44,22 @@ describe("benefitItems", () => {
       ],
     });
     expect(items.map((item) => item.id).join(" ")).not.toContain("testLesson");
-    expect(items.map((item) => item.id)).toContain("risk");
-    expect(items.map((item) => item.id)).toContain("guarantee");
+    expect(items.map((item) => item.id).join(" ")).not.toContain("guarantee");
+    expect(items.map((item) => item.id)).toEqual([
+      "language",
+      "pickup",
+      "lesson",
+      "payment",
+      "cancel",
+      "validity",
+      "risk",
+      "reminder",
+    ]);
+    expect(new Set(items.map((item) => item.id)).size).toBe(items.length);
     expect(items).toHaveLength(8);
   });
 
-  it("does not advertise inactive guarantee products", () => {
+  it("does not advertise risk when no risk product exists", () => {
     const items = benefitItems({
       bookingEnabled: false,
       products: [
@@ -55,21 +67,21 @@ describe("benefitItems", () => {
         { active: false, kind: "GUARANTEE", priceOre: 2, includesRisk1: true, includesRisk2: true },
       ],
     });
-    expect(items.map((item) => item.id)).not.toContain("guarantee");
+    expect(items.map((item) => item.id)).not.toContain("risk");
   });
 
   it("uses the confirmed Swedish benefit and pickup copy", () => {
     expect(sv.home.benefits.pickup).toEqual({
       title: "Gratis upphämtning",
-      body: "I de gröna områdena – tar ingen tid från lektionen",
+      body: "Farsta & Upplands Väsby",
     });
     expect(sv.home.benefits.risk).toEqual({
-      title: "Riskutbildning",
-      body: "Båda riskutbildningarna hos oss",
+      title: "Riskettan hos oss",
+      body: "Teoretisk riskutbildning hos oss",
     });
-    expect(sv.home.benefits.guarantee).toEqual({
-      title: "Körkortsgaranti",
-      body: "25 lektioner, Risk 1, Risk 2 och teori",
+    expect(sv.home.benefits.validity).toEqual({
+      title: "Gäller i 12 månader",
+      body: "Körlektioner och paket gäller i 12 månader från köpet.",
     });
     expect(sv.home.benefits.payment.title).toBe("Kort, Swish och Klarna");
     expect(sv.home.benefits.payment.titleSwishSoon).toBe("Kort och Klarna (Swish kommer snart)");

@@ -16,7 +16,9 @@ export function BenefitsSection({
 }) {
   return (
     <div className="relative z-20 mt-6 border-b border-[var(--line)] bg-page pb-6 lg:mt-8 lg:pb-8">
-      <BenefitMarquee label={label} items={items} />
+      <div className="site-container">
+        <BenefitMarquee label={label} items={items} />
+      </div>
     </div>
   );
 }

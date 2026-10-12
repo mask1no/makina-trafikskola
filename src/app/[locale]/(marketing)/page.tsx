@@ -5,10 +5,8 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { isLocale, type Locale } from "@/i18n/routing";
 import {
   bookingEnabled,
-  guaranteeConfirmed,
   instructorsEnabled,
   productLaunchApproved,
-  risk2Confirmed,
   theoryMode,
   theoryNavVisible,
   theorySalesOpen,
@@ -88,7 +86,6 @@ async function HomeBelow({ locale }: { locale: Locale }) {
     (product) => product.active && productLaunchApproved(product),
   );
   const hasRisk1 = activeProducts.some((product) => product.includesRisk1);
-  const hasRisk2 = activeProducts.some((product) => product.includesRisk2);
   const benefitCards = benefitItems({
     bookingEnabled: canBook,
     products: activeProducts,
@@ -96,8 +93,7 @@ async function HomeBelow({ locale }: { locale: Locale }) {
       (location) =>
         location.status === "ACTIVE" && Boolean(location.boundary),
     ),
-    hasRiskCourse: hasRisk1 && hasRisk2 && risk2Confirmed(),
-    guaranteeConfirmed: guaranteeConfirmed(),
+    hasRiskCourse: hasRisk1,
   }).map((item) => ({
     id: item.id,
     size: item.size,
@@ -232,8 +228,8 @@ async function HomeBelow({ locale }: { locale: Locale }) {
         links={([
           ["lessons", "korlektioner"],
           ["courses", "kurser"],
-          ...(showInstructors ? [["teachers", "larare"] as const] : []),
-          ["contact", "kontakt"],
+          ["theory", "teori"],
+          ["prices", "priser"],
         ] as const).map(([key, href]) => ({
           key,
           href,

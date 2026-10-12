@@ -109,7 +109,10 @@
     "googlePlay": "Google Play",
     "instagram": "Instagram",
     "facebook": "Facebook",
-    "tiktok": "TikTok"
+    "tiktok": "TikTok",
+    "languages": "Languages",
+    "appBadges": "Apps",
+    "socials": "Social media"
   },
   "common": {
     "bookNow": "Book now",
@@ -125,7 +128,9 @@
       "brand": "Makina",
       "title": "Drive with confidence, learn in your language",
       "description": "Driving lessons, theory and experienced instructors in Stockholm – all in one place.",
-      "areas": "Farsta · Upplands Väsby"
+      "areas": "Farsta · Upplands Väsby",
+      "openUntil": "Open now until {time}",
+      "introOffer": "First lesson {price}"
     },
     "quick": {
       "eyebrow": "Start here",
@@ -133,7 +138,9 @@
       "lessons": "Driving lessons",
       "courses": "Courses",
       "teachers": "Instructors",
-      "contact": "Contact us"
+      "contact": "Contact us",
+      "theory": "Theory",
+      "prices": "Prices"
     },
     "pickup": {
       "eyebrow": "Pickup",
@@ -211,15 +218,15 @@
       },
       "pickup": {
         "title": "Free pickup",
-        "body": "In the green areas – doesn't take time from your lesson"
+        "body": "Farsta & Upplands Väsby"
       },
       "lesson": {
         "title": "50 minutes",
         "body": "Every driving lesson is 50 minutes."
       },
       "risk": {
-        "title": "Risk training",
-        "body": "Both risk courses with us"
+        "title": "Risk 1 with us",
+        "body": "Theoretical risk training with us"
       },
       "guarantee": {
         "title": "Driving licence guarantee",
@@ -237,6 +244,10 @@
       "reminder": {
         "title": "Text reminder the day before",
         "body": "An SMS the day before the lesson."
+      },
+      "validity": {
+        "title": "Valid for 12 months",
+        "body": "Driving lessons and packages are valid for 12 months from purchase."
       }
     }
   },
@@ -529,7 +540,9 @@
       "error": "The exam could not be updated. Try again.",
       "imageMissing": "The image could not be displayed."
     },
-    "practiceAll": "Practise all {count} questions"
+    "practiceAll": "Practise all {count} questions",
+    "stepQuestions": "{count} questions",
+    "stepDone": "Done"
   },
   "localSchool": {
     "eyebrow": "Driving school near you",
@@ -1054,8 +1067,8 @@
   },
   "cookieConsent": {
     "title": "Cookie settings",
-    "description": "We use necessary cookies for sign-in, language and your cookie choice. No analytics or marketing cookies are active.",
-    "readMore": "Read about cookies",
+    "description": "We use necessary cookies for sign-in and language.",
+    "readMore": "Read more",
     "necessary": "Necessary only",
     "accept": "Accept",
     "ok": "OK"

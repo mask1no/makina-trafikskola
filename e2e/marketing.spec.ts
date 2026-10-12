@@ -40,8 +40,10 @@ test.describe("marketing layout", () => {
   test("call actions use generic labels without exposed details", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("/sv");
-    const heroCall = page.locator("main section").first().getByRole("link", { name: "Ring oss" });
-    await expect(heroCall).toBeVisible();
+    const hero = page.locator("main section").first();
+    await expect(hero.getByRole("link", { name: "Ring oss" })).toHaveCount(0);
+    await expect(hero.getByRole("link", { name: "Boka första lektionen" })).toBeVisible();
+    await expect(hero.getByRole("link", { name: "Se priser" })).toBeVisible();
     await expect(page.locator("nav.fixed.bottom-0 a")).toHaveCount(5);
     const bottomCall = page.locator("nav.fixed.bottom-0 a[href^='tel:']");
     const bottomBooking = page.locator("nav.fixed.bottom-0 a[href$='/boka']");
@@ -110,12 +112,12 @@ test.describe("marketing layout", () => {
       .locator(":scope > ul > li");
     await expect(staffCards).toHaveCount(6);
     const contact = await page.locator("body").innerText();
-    expect(contact).toContain("Kontakta oss på svenska, engelska, tigrinja och kurdiska.");
+    expect(contact).toContain("Undervisning på svenska, engelska, tigrinja och kurdiska.");
     expect(contact).not.toMatch(/arabiska/i);
 
     await page.goto("/sv");
     const home = await page.locator("body").innerText();
-    expect(home).toContain("Kontakta oss på svenska, engelska, tigrinja och kurdiska.");
+    expect(home).toContain("Undervisning på svenska, engelska, tigrinja och kurdiska.");
 
     const prefixes = {
       sv: "Undervisning på ",

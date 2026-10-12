@@ -102,7 +102,7 @@ test("stores cookie consent", async ({ page }) => {
   await page.goto("/en");
   const banner = page.getByRole("region", { name: "Cookie settings" });
   await expect(banner).toBeVisible();
-  await banner.getByRole("button", { name: "Necessary only" }).click();
+  await banner.getByRole("button", { name: "OK" }).click();
   await expect(banner).toBeHidden();
   await page.reload();
   await expect(banner).toBeHidden();
