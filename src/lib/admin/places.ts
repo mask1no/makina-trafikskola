@@ -1,7 +1,3 @@
-export function netOre(rows: { amountOre: number; refundedOre: number }[]) {
-  return rows.reduce((sum, row) => sum + row.amountOre - row.refundedOre, 0);
-}
-
 export function completedLessonPayOre(lessons: { payRateOre: number | null }[]) {
   return lessons.reduce((sum, lesson) => sum + (lesson.payRateOre ?? 0), 0);
 }

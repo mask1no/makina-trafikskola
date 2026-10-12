@@ -15,6 +15,7 @@ import { ScrollToTop } from "@/components/ScrollToTop";
 import { ServiceWorkerRegistration } from "@/components/ServiceWorkerRegistration";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { VisualViewportSync } from "@/components/VisualViewportSync";
 import { isLocale, locales } from "@/i18n/routing";
 import { openingHoursSpecification } from "@/lib/company/opening-hours";
 import { offeredTeachingLanguagesFrom } from "@/lib/company/staff";
@@ -287,7 +288,7 @@ export default async function LocaleLayout(props: {
               href: session?.user
                 ? `${base}/mina-sidor`
                 : `${base}/logga-in`,
-              label: session?.user ? t("myPages") : t("signIn"),
+              label: session?.user ? t("myPages") : t("tabSignIn"),
               icon: "profile",
             },
           ]
@@ -298,7 +299,7 @@ export default async function LocaleLayout(props: {
       <div className="min-h-screen bg-page pb-[calc(var(--tab-bar-height)+var(--safe-bottom))] md:pb-0">
         <a
           href="#main"
-          className="fixed start-4 top-0 z-[100] -translate-y-full rounded-b-sm bg-accent px-4 py-3 font-bold text-accent-ink transition-transform focus:translate-y-0"
+          className="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:start-4 focus-visible:top-0 focus-visible:z-50 focus-visible:rounded-b-sm focus-visible:bg-accent focus-visible:px-4 focus-visible:py-3 focus-visible:font-bold focus-visible:text-accent-ink"
         >
           {t("skipToContent")}
         </a>
@@ -397,6 +398,7 @@ export default async function LocaleLayout(props: {
         <CloseDetailsOnNavigate />
         <ScrollToTop label={t("scrollTop")} />
         <CookieConsent locale={params.locale} />
+        <VisualViewportSync />
         <ServiceWorkerRegistration />
       </div>
     </NextIntlClientProvider>

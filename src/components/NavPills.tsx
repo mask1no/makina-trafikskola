@@ -21,7 +21,7 @@ export function NavPills({
 
   return (
     <nav aria-label={label} className="max-w-full">
-      <ul className="flex flex-wrap gap-1 rounded-md border border-border bg-card-muted p-1">
+      <ul className="-mx-1 flex max-w-full gap-1 overflow-x-auto overscroll-x-contain rounded-md border border-border bg-card-muted p-1 [scrollbar-width:none] md:flex-wrap md:overflow-visible [&::-webkit-scrollbar]:hidden">
         {items.map((item) => {
           const prefixes = item.matches ?? [item.href];
           const current =
@@ -32,7 +32,7 @@ export function NavPills({
                 (href.split("/").length > 3 && pathname.startsWith(`${href}/`)),
             );
           return (
-          <li key={item.href}>
+          <li key={item.href} className="shrink-0">
             <Link
               href={item.href}
               aria-current={current ? "page" : undefined}

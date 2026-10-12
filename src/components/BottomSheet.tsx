@@ -110,7 +110,7 @@ export function BottomSheet({
         data-bottom-sheet-layer=""
         aria-label={title}
         onClick={() => onCloseRef.current()}
-        className="fixed inset-0 z-40 bg-surface/60"
+        className="fixed inset-0 z-[55] bg-surface/60"
       />
       <section
         data-bottom-sheet-layer=""
@@ -119,7 +119,8 @@ export function BottomSheet({
         aria-modal="true"
         aria-labelledby={titleId}
         tabIndex={-1}
-        className="fixed bottom-0 start-0 end-0 z-50 max-h-[85vh] overflow-y-auto rounded-t-lg border border-border bg-card p-5 shadow-2xl md:start-auto md:end-6 md:w-[28rem] md:rounded-lg"
+        className="fixed inset-x-0 z-[60] max-h-[min(85vh,calc(var(--vv-height,100dvh)-1rem))] overflow-y-auto overscroll-contain rounded-t-lg border border-border bg-card p-5 pb-[max(1.25rem,calc(var(--safe-bottom)+0.5rem))] shadow-2xl md:inset-x-auto md:end-6 md:bottom-6 md:w-[28rem] md:rounded-lg md:pb-5"
+        style={{ bottom: "var(--keyboard-inset, 0px)" }}
       >
         <div className="mx-auto mb-4 h-1 w-12 rounded-full bg-border md:hidden" />
         <h2 id={titleId} className="text-xl font-bold">

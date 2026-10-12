@@ -280,7 +280,11 @@ export default async function TeacherPortal(
                     ) : null}
                     <div className="mt-2 grid text-sm">
                       {lesson.student.phone ? (
-                        <a className="inline-flex min-h-11 items-center font-bold underline" href={telHref(lesson.student.phone)}>
+                        <a
+                          className="inline-flex min-h-11 items-center font-bold underline"
+                          href={telHref(lesson.student.phone)}
+                          aria-label={t("call")}
+                        >
                           <bdi dir="ltr" className="numbers-ltr">{displayPhone(lesson.student.phone)}</bdi>
                         </a>
                       ) : null}
@@ -290,6 +294,7 @@ export default async function TeacherPortal(
                           href={mapsHref}
                           target="_blank"
                           rel="noreferrer"
+                          aria-label={t("openAddress")}
                         >
                           {pickup ?? lesson.location?.name ?? address}
                         </a>

@@ -24,7 +24,7 @@ export function Textarea({
         <span>{label}</span>
         <textarea
           id={textareaId}
-          className={`min-h-28 w-full resize-y rounded-sm border bg-card px-4 py-3 text-ink shadow-soft outline-none transition duration-200 ease-premium placeholder:text-ink-subtle hover:border-border-strong focus:border-ink ${
+          className={`min-h-28 w-full resize-y rounded-sm border bg-card px-4 py-3 text-base text-ink shadow-soft outline-none transition duration-200 ease-premium placeholder:text-ink-subtle hover:border-border-strong focus:border-ink ${
             error ? "border-danger" : "border-border"
           } ${className}`}
           aria-invalid={Boolean(error)}

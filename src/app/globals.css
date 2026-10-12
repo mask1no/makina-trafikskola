@@ -29,6 +29,9 @@
   --header-height-lg: 4.5rem;
   --tab-bar-height: 5rem;
   --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --keyboard-inset: 0px;
+  --sticky-bottom: calc(var(--tab-bar-height) + var(--safe-bottom));
+  --vv-height: 100dvh;
   --danger: #dc2626;
   --danger-soft: #fef0f0;
   --quiz-correct: #15803d;

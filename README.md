@@ -16,7 +16,7 @@ Notifications are queued, rendered from `src/lib/notifications/templates`, and s
 
 The public site, authentication, booking and cancellation rules, credit ledger, Stripe integration, theory flows, student/instructor dashboards, admin tools, health checks, backup scripts, and multilingual/RTL foundations are implemented. Public booking and instructor visibility remain launch-gated.
 
-Launch still depends on client-owned production credentials, approved instructor data and photos, licensed full theory content, live card/Swish refund acceptance, working SMS, configured Sentry/R2/cron, an old-site redirect inventory, and final four-locale mobile QA. Keep `BOOKING_ENABLED=0` until payment, SMS, backups, monitoring and real availability have all been verified.
+Foundation work through the mobile pass is in place: account access and login protection, booking go-live rules, design fixes, and phone-first layouts (360/390, keyboard-aware sticky CTAs, bottom sheets for edits). Launch still depends on client-owned production credentials, approved instructor data and photos, licensed full theory content, live card/Swish refund acceptance, working SMS, configured Sentry/R2/cron, an old-site redirect inventory, and a final four-locale touch QA before DNS cutover. Keep `BOOKING_ENABLED=0` until payment, SMS, backups, monitoring and real availability have all been verified.
 
 ## Local setup
 

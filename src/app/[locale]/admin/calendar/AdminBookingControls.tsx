@@ -3,7 +3,8 @@
 import { formatInTimeZone, fromZonedTime } from "date-fns-tz";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { BottomSheet } from "@/components/BottomSheet";
 import { Button } from "@/components/Button";
 import { CheckboxField } from "@/components/CheckboxField";
 import { Input } from "@/components/Input";
@@ -11,6 +12,18 @@ import { Select } from "@/components/Select";
 import { Textarea } from "@/components/Textarea";
 
 type Teacher = { id: string; name: string };
+
+function useDesktop() {
+  const [desktop, setDesktop] = useState(false);
+  useEffect(() => {
+    const media = window.matchMedia("(min-width: 768px)");
+    const update = () => setDesktop(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+  return desktop;
+}
 
 export function AdminBookingControls({
   bookingId,
@@ -26,6 +39,7 @@ export function AdminBookingControls({
   const t = useTranslations("admin.calendar.controls");
   const errors = useTranslations("errors");
   const router = useRouter();
+  const desktop = useDesktop();
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState<"move" | "cancel" | "reassign">("move");
   const [dateTime, setDateTime] = useState(
@@ -76,6 +90,80 @@ export function AdminBookingControls({
     }
   }
 
+  const form = (
+    <div className="grid gap-3">
+      <Select
+        id={`action-${bookingId}`}
+        label={t("action")}
+        value={action}
+        onChange={(event) => {
+          setAction(event.target.value as "move" | "cancel" | "reassign");
+          setConfirmed(false);
+        }}
+      >
+        <option value="move">{t("move")}</option>
+        <option value="reassign">{t("reassign")}</option>
+        <option value="cancel">{t("cancel")}</option>
+      </Select>
+      {action === "move" ? (
+        <Input
+          id={`time-${bookingId}`}
+          label={t("newTime")}
+          type="datetime-local"
+          value={dateTime}
+          onChange={(event) => setDateTime(event.target.value)}
+        />
+      ) : null}
+      {action === "reassign" ? (
+        <Select
+          id={`teacher-${bookingId}`}
+          label={t("newInstructor")}
+          value={teacherId}
+          onChange={(event) => setTeacherId(event.target.value)}
+        >
+          {teachers.map((teacher) => (
+            <option value={teacher.id} key={teacher.id}>
+              {teacher.name}
+            </option>
+          ))}
+        </Select>
+      ) : null}
+      <Textarea
+        id={`reason-${bookingId}`}
+        label={t("reason")}
+        value={reason}
+        onChange={(event) => setReason(event.target.value)}
+        className="min-h-20"
+        required
+      />
+      {action === "cancel" ? (
+        <CheckboxField
+          id={`confirm-cancel-${bookingId}`}
+          label={t("confirmCancel")}
+          checked={confirmed}
+          onChange={(event) => setConfirmed(event.target.checked)}
+        />
+      ) : null}
+      <Button
+        type="button"
+        className="w-full"
+        disabled={
+          busy ||
+          reason.trim().length < 3 ||
+          (action === "cancel" && !confirmed)
+        }
+        onClick={submit}
+      >
+        {busy ? t("saving") : t("save")}
+      </Button>
+      {error ? (
+        <p role="alert" className="text-danger">
+          {errors.has(error) ? errors(error) : errors("UNKNOWN")}
+        </p>
+      ) : null}
+    </div>
+  );
+
   return (
     <div className="mt-2">
       <Button
@@ -86,79 +174,13 @@ export function AdminBookingControls({
       >
         {open ? t("close") : t("manage")}
       </Button>
-      {open ? (
-        <div className="mt-3 grid gap-3 border-t border-border pt-3">
-          <Select
-            id={`action-${bookingId}`}
-            label={t("action")}
-            value={action}
-            onChange={(event) => {
-              setAction(
-                event.target.value as "move" | "cancel" | "reassign",
-              );
-              setConfirmed(false);
-            }}
-          >
-            <option value="move">{t("move")}</option>
-            <option value="reassign">{t("reassign")}</option>
-            <option value="cancel">{t("cancel")}</option>
-          </Select>
-          {action === "move" ? (
-              <Input
-                id={`time-${bookingId}`}
-                label={t("newTime")}
-                type="datetime-local"
-                value={dateTime}
-                onChange={(event) => setDateTime(event.target.value)}
-              />
-          ) : null}
-          {action === "reassign" ? (
-              <Select
-                id={`teacher-${bookingId}`}
-                label={t("newInstructor")}
-                value={teacherId}
-                onChange={(event) => setTeacherId(event.target.value)}
-              >
-                {teachers.map((teacher) => (
-                  <option value={teacher.id} key={teacher.id}>
-                    {teacher.name}
-                  </option>
-                ))}
-              </Select>
-          ) : null}
-          <Textarea
-            id={`reason-${bookingId}`}
-            label={t("reason")}
-            value={reason}
-            onChange={(event) => setReason(event.target.value)}
-            className="min-h-20"
-            required
-          />
-          {action === "cancel" ? (
-            <CheckboxField
-              id={`confirm-cancel-${bookingId}`}
-              label={t("confirmCancel")}
-              checked={confirmed}
-              onChange={(event) => setConfirmed(event.target.checked)}
-            />
-          ) : null}
-          <Button
-            type="button"
-            disabled={
-              busy ||
-              reason.trim().length < 3 ||
-              (action === "cancel" && !confirmed)
-            }
-            onClick={submit}
-          >
-            {busy ? t("saving") : t("save")}
-          </Button>
-          {error ? (
-            <p role="alert" className="text-danger">
-              {errors.has(error) ? errors(error) : errors("UNKNOWN")}
-            </p>
-          ) : null}
-        </div>
+      {open && desktop ? (
+        <div className="mt-3 border-t border-border pt-3">{form}</div>
+      ) : null}
+      {open && !desktop ? (
+        <BottomSheet title={t("manage")} onClose={() => setOpen(false)}>
+          {form}
+        </BottomSheet>
       ) : null}
     </div>
   );

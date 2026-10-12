@@ -101,7 +101,7 @@ function TabLink({
         ) : (
           <TabIcon icon={tab.icon} />
         )}
-        <span className="w-full truncate">{tab.label}</span>
+        <span className="w-full max-w-full px-0.5 text-balance [overflow-wrap:anywhere]">{tab.label}</span>
       </a>
     );
   }
@@ -119,7 +119,7 @@ function TabLink({
       ) : (
         <TabIcon icon={tab.icon} />
       )}
-      <span className="w-full truncate">{tab.label}</span>
+      <span className="w-full max-w-full px-0.5 text-balance [overflow-wrap:anywhere]">{tab.label}</span>
     </Link>
   );
 }

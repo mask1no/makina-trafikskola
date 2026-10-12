@@ -3,19 +3,9 @@ import { describe, expect, it } from "vitest";
 import {
   catalogueLessonValueOre,
   completedLessonPayOre,
-  netOre,
 } from "./places";
 
 describe("admin place money", () => {
-  it("keeps payment totals in integer öre after refunds", () => {
-    expect(
-      netOre([
-        { amountOre: 79900, refundedOre: 0 },
-        { amountOre: 229900, refundedOre: 10000 },
-      ]),
-    ).toBe(299800);
-  });
-
   it("sums instructor pay and skips missing rates", () => {
     expect(
       completedLessonPayOre([

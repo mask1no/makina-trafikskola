@@ -2,11 +2,24 @@
 
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
+import { BottomSheet } from "@/components/BottomSheet";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Notice } from "@/components/Notice";
+
+function useDesktop() {
+  const [desktop, setDesktop] = useState(false);
+  useEffect(() => {
+    const media = window.matchMedia("(min-width: 768px)");
+    const update = () => setDesktop(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+  return desktop;
+}
 
 export function StudentEditor({
   student,
@@ -22,6 +35,8 @@ export function StudentEditor({
   const t = useTranslations("admin.students");
   const errors = useTranslations("errors");
   const router = useRouter();
+  const desktop = useDesktop();
+  const [open, setOpen] = useState(false);
   const [firstName, setFirstName] = useState(student.firstName);
   const [lastName, setLastName] = useState(student.lastName);
   const [email, setEmail] = useState(student.email ?? "");
@@ -50,6 +65,7 @@ export function StudentEditor({
         throw new Error(payload?.error?.code ?? "UNKNOWN");
       }
       setSaved(true);
+      setOpen(false);
       router.refresh();
     } catch (reason) {
       const code = reason instanceof Error ? reason.message : "UNKNOWN";
@@ -59,20 +75,78 @@ export function StudentEditor({
     }
   }
 
-  return (
-    <div className="mt-5 grid gap-3 border-t border-border pt-5">
-      <h3 className="font-bold">{t("editTitle")}</h3>
+  const form = (
+    <div className="grid gap-3">
       <div className="grid gap-3 sm:grid-cols-2">
-        <Input id="admin-first" label={t("firstName")} value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-        <Input id="admin-last" label={t("lastName")} value={lastName} onChange={(e) => setLastName(e.target.value)} />
-        <Input id="admin-email" type="email" label={t("email")} value={email} onChange={(e) => setEmail(e.target.value)} />
-        <Input id="admin-phone" type="tel" label={t("phone")} value={phone} onChange={(e) => setPhone(e.target.value)} />
+        <Input
+          id="admin-first"
+          label={t("firstName")}
+          value={firstName}
+          autoComplete="given-name"
+          onChange={(e) => setFirstName(e.target.value)}
+        />
+        <Input
+          id="admin-last"
+          label={t("lastName")}
+          value={lastName}
+          autoComplete="family-name"
+          onChange={(e) => setLastName(e.target.value)}
+        />
+        <Input
+          id="admin-email"
+          type="email"
+          inputMode="email"
+          autoComplete="email"
+          label={t("email")}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <Input
+          id="admin-phone"
+          type="tel"
+          inputMode="tel"
+          autoComplete="tel"
+          label={t("phone")}
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+        />
       </div>
       {error ? <Notice tone="danger">{error}</Notice> : null}
-      {saved ? <Notice tone="success">{t("saved")}</Notice> : null}
-      <Button type="button" disabled={busy} onClick={() => void save()}>
+      {saved && desktop ? <Notice tone="success">{t("saved")}</Notice> : null}
+      <Button type="button" className="w-full" disabled={busy} onClick={() => void save()}>
         {busy ? t("saving") : t("save")}
       </Button>
+    </div>
+  );
+
+  return (
+    <div className="mt-5 grid gap-3 border-t border-border pt-5">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <h3 className="font-bold">{t("editTitle")}</h3>
+        <Button
+          type="button"
+          variant="tertiary"
+          onClick={() => {
+            setOpen((value) => !value);
+            setError("");
+            setSaved(false);
+          }}
+        >
+          {open ? t("close") : t("edit")}
+        </Button>
+      </div>
+      {open && desktop ? form : null}
+      {open && !desktop ? (
+        <BottomSheet
+          title={t("editTitle")}
+          onClose={() => {
+            setOpen(false);
+            setError("");
+          }}
+        >
+          {form}
+        </BottomSheet>
+      ) : null}
     </div>
   );
 }

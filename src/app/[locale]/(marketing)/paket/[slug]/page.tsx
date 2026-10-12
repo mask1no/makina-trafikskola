@@ -235,7 +235,7 @@ export default async function ProductDetailPage(
           <p className="mt-4 text-sm text-ink-muted">{t("product.cancelNote")}</p>
         </aside>
       </article>
-      <div className="fixed inset-x-0 z-30 border-t border-border bg-card px-4 py-3 md:hidden" style={{ bottom: "calc(var(--tab-bar-height) + var(--safe-bottom))" }}>
+      <div className="fixed inset-x-0 z-30 border-t border-border bg-card px-4 py-3 md:hidden" style={{ bottom: "var(--sticky-bottom)" }}>
         <div className="flex items-center justify-between gap-3">
           <p className="numbers-ltr text-lg font-black">{formatPrice(product.priceOre, params.locale)}</p>
           {salesOpen && product.active ? (

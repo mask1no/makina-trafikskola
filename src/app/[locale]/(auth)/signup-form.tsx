@@ -209,11 +209,7 @@ export function SignupForm({
       {codeSent ? (
         <Button
           type="submit"
-          className={
-            onAuthenticated
-              ? "sticky bottom-[calc(4.5rem+env(safe-area-inset-bottom))] z-30 w-full md:static"
-              : "w-full"
-          }
+          className="sticky bottom-[var(--sticky-bottom)] z-30 w-full md:static"
           disabled={busy}
         >
           {busy ? t("working") : register("submit")}
@@ -221,11 +217,7 @@ export function SignupForm({
       ) : (
         <Button
           type="button"
-          className={
-            onAuthenticated
-              ? "sticky bottom-[calc(4.5rem+env(safe-area-inset-bottom))] z-30 w-full md:static"
-              : "w-full"
-          }
+          className="sticky bottom-[var(--sticky-bottom)] z-30 w-full md:static"
           disabled={busy || !phone}
           onClick={requestCode}
         >

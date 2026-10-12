@@ -334,7 +334,7 @@ function PickupMapBody({
       role="dialog"
       aria-modal="true"
       aria-label={t("title")}
-      className="fixed inset-0 z-[100] flex flex-col bg-page"
+      className="fixed inset-0 z-[110] flex flex-col bg-page"
     >
       <div className="relative z-10 flex items-center gap-2 border-b border-border bg-card p-3">
         <button
@@ -365,7 +365,7 @@ function PickupMapBody({
         </Map>
         <CentrePin lifted={moving} />
       </div>
-      <div className="rounded-t-lg border-t border-border bg-card p-4 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-soft">
+      <div className="rounded-t-lg border-t border-border bg-card p-4 shadow-soft [padding-bottom:max(1rem,calc(var(--safe-bottom)+var(--keyboard-inset,0px)))]">
         <h2 className="text-base font-black">{t("sheetTitle")}</h2>
         <p className="mt-2 min-h-6 break-words font-semibold" dir="auto">
           {addressLabel}
@@ -432,7 +432,7 @@ function FallbackMapShell({
       role="dialog"
       aria-modal="true"
       aria-label={t("title")}
-      className="fixed inset-0 z-[100] flex flex-col bg-page"
+      className="fixed inset-0 z-[110] flex flex-col bg-page"
     >
       <div className="relative z-10 flex items-center gap-2 border-b border-border bg-card p-3">
         <button

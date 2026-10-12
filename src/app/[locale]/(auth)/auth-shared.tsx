@@ -70,7 +70,7 @@ export function PhoneField({
             onChange={(event) => onChange(event.target.value)}
             aria-invalid={Boolean(error || invalid)}
             aria-describedby={hint ? "phone-error" : undefined}
-            className="min-h-11 w-full bg-transparent px-4 text-body text-ink outline-none placeholder:text-ink-subtle"
+            className="min-h-11 w-full bg-transparent px-4 text-base text-ink outline-none placeholder:text-ink-subtle"
           />
         </span>
       </label>
@@ -117,7 +117,7 @@ export function PasswordField({
             onChange={(event) => onChange(event.target.value)}
             aria-invalid={Boolean(error)}
             aria-describedby={error ? "password-error" : undefined}
-            className="min-h-11 w-full rounded-sm border border-border bg-card px-4 pe-14 text-body text-ink shadow-soft outline-none focus:border-ink"
+            className="min-h-11 w-full rounded-sm border border-border bg-card px-4 pe-14 text-base text-ink shadow-soft outline-none focus:border-ink"
           />
           <button
             type="button"

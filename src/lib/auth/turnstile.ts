@@ -1,10 +1,3 @@
-export function turnstileConfigured() {
-  return Boolean(
-    process.env.TURNSTILE_SITE_KEY?.trim() &&
-      process.env.TURNSTILE_SECRET_KEY?.trim(),
-  );
-}
-
 export function turnstileSiteKey() {
   return process.env.TURNSTILE_SITE_KEY?.trim() || null;
 }

@@ -639,7 +639,10 @@ URLs."*
 - [ ] Sentry live, `/api/health` monitored
 - [ ] Cron running: release expired holds, expire credits, send 24 h reminders,
       recompute instructor ratings
-- [ ] Full mobile QA in all four locales including RTL
+- [x] Phone-first mobile pass (360/390, sv+ar) for Mina sidor, booking
+      (incl. pickup map), auth, teacher portal and SMS-linked admin screens;
+      keyboard-aware sticky CTAs via `visualViewport`; unused i18n/dead exports
+      cleaned. Remaining: full four-locale touch QA before DNS cutover.
 - [ ] Google Maps key referrer-restricted; billing alerts on the client's account
 - [ ] Every recurring service (Railway, Stripe, Google Cloud, 46elks, domain)
       on accounts owned and paid for by the client's company

@@ -21,7 +21,7 @@ export function Input({ id, label, error, hint, valid, className = "", required,
         <input
           id={inputId}
           required={required}
-          className={`min-h-11 w-full rounded-sm border bg-card px-4 py-2.5 text-body text-ink shadow-soft outline-none transition duration-150 ease-premium placeholder:text-ink-subtle hover:border-border-strong focus:border-ink ${
+          className={`min-h-11 w-full rounded-sm border bg-card px-4 py-2.5 text-base text-ink shadow-soft outline-none transition duration-150 ease-premium placeholder:text-ink-subtle hover:border-border-strong focus:border-ink ${
             error ? "border-danger" : valid ? "border-success" : "border-border"
           } ${className}`}
           aria-invalid={Boolean(error)}

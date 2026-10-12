@@ -23,6 +23,13 @@ run(npmCmd, ["run", "e2e:prepare"]);
 run(npmCmd, ["run", "build"]);
 run(
   npmCmd,
-  ["exec", "playwright", "test", "e2e/screenshots.spec.ts"],
+  [
+    "exec",
+    "playwright",
+    "test",
+    "e2e/screenshots.spec.ts",
+    "e2e/mobile-pass-screenshots.spec.ts",
+    "e2e/pickup-modal-screenshots.spec.ts",
+  ],
   { ...process.env, SCREENSHOTS: "1" },
 );

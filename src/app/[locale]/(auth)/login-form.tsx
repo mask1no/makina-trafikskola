@@ -210,7 +210,12 @@ export function LoginForm({
             value={identifier}
             onChange={(event) => setIdentifier(event.target.value)}
             onBlur={() => setIdentifierTouched(true)}
+            type={identifier.includes("@") ? "email" : "tel"}
+            inputMode={identifier.includes("@") ? "email" : "tel"}
             autoComplete="username"
+            autoCapitalize="off"
+            autoCorrect="off"
+            spellCheck={false}
             required
             valid={identifierTouched && identifierLooksValid(identifier)}
             error={
@@ -247,11 +252,20 @@ export function LoginForm({
         </p>
       ) : null}
       {method === "phone" && !codeSent ? (
-        <Button type="button" className="w-full" disabled={busy || !phone} onClick={requestCode}>
+        <Button
+          type="button"
+          className="sticky bottom-[var(--sticky-bottom)] z-30 w-full md:static"
+          disabled={busy || !phone}
+          onClick={requestCode}
+        >
           {busy ? t("working") : t("sendCode")}
         </Button>
       ) : (
-        <Button type="submit" className="w-full" disabled={busy}>
+        <Button
+          type="submit"
+          className="sticky bottom-[var(--sticky-bottom)] z-30 w-full md:static"
+          disabled={busy}
+        >
           {busy ? t("working") : login("submit")}
         </Button>
       )}

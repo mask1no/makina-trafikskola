@@ -111,7 +111,6 @@ describe("benefitItems", () => {
       expect(messages.home.faq.languages.answer).toContain("{languages}");
       expect(messages.theory.teaser.features.languages).toContain("{languages}");
       expect(messages.contact.languagesBody).toContain("{languages}");
-      expect(messages.shell.languageHelpDescription).toContain("{languages}");
     }
   });
 

@@ -141,11 +141,20 @@ export function ForgotPasswordForm({
         </p>
       ) : null}
       {codeSent ? (
-        <Button type="submit" className="w-full" disabled={busy}>
+        <Button
+          type="submit"
+          className="sticky bottom-[var(--sticky-bottom)] z-30 w-full md:static"
+          disabled={busy}
+        >
           {busy ? t("working") : forgot("submit")}
         </Button>
       ) : (
-        <Button type="button" className="w-full" disabled={busy || !phone} onClick={requestCode}>
+        <Button
+          type="button"
+          className="sticky bottom-[var(--sticky-bottom)] z-30 w-full md:static"
+          disabled={busy || !phone}
+          onClick={requestCode}
+        >
           {busy ? t("working") : t("sendCode")}
         </Button>
       )}

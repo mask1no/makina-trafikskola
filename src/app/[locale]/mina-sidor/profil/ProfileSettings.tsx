@@ -290,8 +290,8 @@ export function ProfileSettings({ initial }: { initial: Profile }) {
         }}
         desktop={desktop}
       >
-        <Input id="profile-first" label={t("firstName")} value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
-        <Input id="profile-last" label={t("lastName")} value={lastName} onChange={(e) => setLastName(e.target.value)} required />
+        <Input id="profile-first" label={t("firstName")} value={firstName} autoComplete="given-name" onChange={(e) => setFirstName(e.target.value)} required />
+        <Input id="profile-last" label={t("lastName")} value={lastName} autoComplete="family-name" onChange={(e) => setLastName(e.target.value)} required />
         {error && open === "name" ? <Notice tone="danger">{error}</Notice> : null}
         <Button type="button" disabled={busy || !firstName.trim()} onClick={() => void saveName()}>
           {busy ? t("saving") : t("save")}
@@ -308,7 +308,7 @@ export function ProfileSettings({ initial }: { initial: Profile }) {
         }}
         desktop={desktop}
       >
-        <Input id="profile-email" type="email" label={t("email")} value={email} onChange={(e) => setEmail(e.target.value)} required />
+        <Input id="profile-email" type="email" inputMode="email" autoComplete="email" label={t("email")} value={email} onChange={(e) => setEmail(e.target.value)} required />
         <fieldset className="grid gap-2">
           <legend className="text-small font-bold">{t("confirmWith")}</legend>
           <label className="flex min-h-11 items-center gap-2 text-small">
@@ -332,7 +332,7 @@ export function ProfileSettings({ initial }: { initial: Profile }) {
             >
               {t("sendCode")}
             </Button>
-            <Input id="email-code" label={t("smsCode")} inputMode="numeric" maxLength={6} value={emailCode} onChange={(e) => setEmailCode(e.target.value)} />
+            <Input id="email-code" label={t("smsCode")} inputMode="numeric" autoComplete="one-time-code" maxLength={6} value={emailCode} onChange={(e) => setEmailCode(e.target.value)} />
           </div>
         )}
         {error && open === "email" ? <Notice tone="danger">{error}</Notice> : null}
@@ -377,7 +377,7 @@ export function ProfileSettings({ initial }: { initial: Profile }) {
             >
               {t("sendCode")}
             </Button>
-            <Input id="password-code" label={t("smsCode")} inputMode="numeric" maxLength={6} value={passwordCode} onChange={(e) => setPasswordCode(e.target.value)} />
+            <Input id="password-code" label={t("smsCode")} inputMode="numeric" autoComplete="one-time-code" maxLength={6} value={passwordCode} onChange={(e) => setPasswordCode(e.target.value)} />
           </div>
         )}
         {error && open === "password" ? <Notice tone="danger">{error}</Notice> : null}
@@ -396,7 +396,7 @@ export function ProfileSettings({ initial }: { initial: Profile }) {
         }}
         desktop={desktop}
       >
-        <Input id="new-phone" type="tel" label={t("newPhone")} value={newPhone} onChange={(e) => setNewPhone(e.target.value)} />
+        <Input id="new-phone" type="tel" inputMode="tel" autoComplete="tel" label={t("newPhone")} value={newPhone} onChange={(e) => setNewPhone(e.target.value)} />
         <label className="flex min-h-11 items-start gap-2 text-small">
           <input
             type="checkbox"
@@ -407,7 +407,7 @@ export function ProfileSettings({ initial }: { initial: Profile }) {
           <span>{t("lostOldNumber")}</span>
         </label>
         {lostOld ? (
-          <Input id="phone-password" type="password" label={t("password")} value={phonePassword} onChange={(e) => setPhonePassword(e.target.value)} hint={t("lostOldNumberHint")} />
+          <Input id="phone-password" type="password" autoComplete="current-password" label={t("password")} value={phonePassword} onChange={(e) => setPhonePassword(e.target.value)} hint={t("lostOldNumberHint")} />
         ) : null}
         <div className="grid gap-3 sm:grid-cols-2">
           {!lostOld ? (
@@ -439,9 +439,9 @@ export function ProfileSettings({ initial }: { initial: Profile }) {
           </Button>
         </div>
         {!lostOld ? (
-          <Input id="current-phone-code" label={t("currentPhoneCode")} inputMode="numeric" maxLength={6} value={currentPhoneCode} onChange={(e) => setCurrentPhoneCode(e.target.value)} />
+          <Input id="current-phone-code" label={t("currentPhoneCode")} inputMode="numeric" autoComplete="one-time-code" maxLength={6} value={currentPhoneCode} onChange={(e) => setCurrentPhoneCode(e.target.value)} />
         ) : null}
-        <Input id="new-phone-code" label={t("newPhoneCode")} inputMode="numeric" maxLength={6} value={newPhoneCode} onChange={(e) => setNewPhoneCode(e.target.value)} />
+        <Input id="new-phone-code" label={t("newPhoneCode")} inputMode="numeric" autoComplete="one-time-code" maxLength={6} value={newPhoneCode} onChange={(e) => setNewPhoneCode(e.target.value)} />
         {error && open === "phone" ? <Notice tone="danger">{error}</Notice> : null}
         <Button type="button" disabled={busy || newPhoneCode.length !== 6} onClick={() => void savePhone()}>
           {busy ? t("savingPhone") : t("verifyPhone")}
@@ -514,7 +514,7 @@ export function ProfileSettings({ initial }: { initial: Profile }) {
             </label>
           </fieldset>
           {deleteProof === "password" ? (
-            <Input id="delete-password" type="password" className="mt-4" label={t("password")} value={deletePassword} onChange={(e) => setDeletePassword(e.target.value)} />
+            <Input id="delete-password" type="password" autoComplete="current-password" className="mt-4" label={t("password")} value={deletePassword} onChange={(e) => setDeletePassword(e.target.value)} />
           ) : (
             <div className="mt-4 grid gap-3">
               <Button
@@ -524,7 +524,7 @@ export function ProfileSettings({ initial }: { initial: Profile }) {
               >
                 {t("deleteSendCode")}
               </Button>
-              <Input id="delete-code" label={t("deleteCode")} inputMode="numeric" maxLength={6} value={deleteCode} onChange={(e) => setDeleteCode(e.target.value)} />
+              <Input id="delete-code" label={t("deleteCode")} inputMode="numeric" autoComplete="one-time-code" maxLength={6} value={deleteCode} onChange={(e) => setDeleteCode(e.target.value)} />
             </div>
           )}
           {error ? <Notice className="mt-4" tone="danger">{error}</Notice> : null}

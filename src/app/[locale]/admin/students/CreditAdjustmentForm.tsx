@@ -48,6 +48,7 @@ export function CreditAdjustmentForm({ studentId }: { studentId: string }) {
             id={`credit-delta-${studentId}`}
             label={t("delta")}
             type="number"
+            inputMode="numeric"
             min="-100"
             max="100"
             step="1"
