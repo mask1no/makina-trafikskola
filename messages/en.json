@@ -21,6 +21,10 @@
     "en": "English",
     "ti": "ትግርኛ",
     "ku": "Kurdish",
+    "am": "Amharic",
+    "fa": "Persian",
+    "prs": "Dari",
+    "tig": "Tigre",
     "ar": "العربية"
   },
   "shell": {
@@ -57,6 +61,10 @@
       "en": "English",
       "ti": "Tigrinya",
       "ku": "Kurdish",
+      "am": "Amharic",
+      "fa": "Persian",
+      "prs": "Dari",
+      "tig": "Tigre",
       "ar": "Arabic"
     },
     "here": "Where we are",
@@ -164,7 +172,7 @@
       "title": "Answers before you start",
       "cost": {
         "question": "How much does it cost to get a driving licence with Makina?",
-        "answer": "The cost depends on how many lessons you need. A single lesson costs {singlePrice}, and our packages start at {packagePrice}. All prices include VAT, and you can see exactly what is included before paying."
+        "answer": "First lesson 499 kr, then 745 kr. Packages start at {packagePrice}. All prices include VAT."
       },
       "languages": {
         "question": "Can I take lessons in my language?",
@@ -172,7 +180,7 @@
       },
       "pickup": {
         "question": "Can you pick me up?",
-        "answer": "Yes, we offer free pickup within the Farsta and Upplands Väsby areas."
+        "answer": "Yes. Pickup is free inside the green areas (Farsta and Upplands Väsby) and it doesn't take time from your lesson."
       },
       "cancel": {
         "question": "How do I cancel a lesson?",
@@ -203,7 +211,7 @@
       },
       "pickup": {
         "title": "Free pickup",
-        "body": "Farsta & Upplands Väsby"
+        "body": "In the green areas – doesn't take time from your lesson"
       },
       "lesson": {
         "title": "50 minutes",
@@ -218,7 +226,8 @@
         "body": "25 lessons, Risk 1, Risk 2 and theory"
       },
       "payment": {
-        "title": "Card/Swish/Klarna",
+        "title": "Card, Swish and Klarna",
+        "titleSwishSoon": "Card and Klarna (Swish coming soon)",
         "body": "Choose the payment method that suits you."
       },
       "cancel": {
@@ -590,11 +599,24 @@
       "pickup": {
         "short": "Pickup",
         "title": "Where should we pick you up?",
-        "free": "Free pickup within the Farsta and Upplands Väsby areas.",
+        "free": "Pickup is free inside the green areas and it doesn't take time from your lesson.",
         "office": "Meet us at the office",
         "address": "Pickup address",
         "outside": "That address is outside the area. Choose an address inside the area.",
-        "outline": "Pickup area"
+        "outline": "Pickup area",
+        "map": {
+          "open": "Choose on the map",
+          "title": "Choose pickup spot",
+          "close": "Close",
+          "search": "Search address",
+          "areaLabel": "Map of pickup areas",
+          "sheetTitle": "Choose a spot inside a green area",
+          "addressLoading": "Finding address…",
+          "addressUnknown": "Selected spot on the map",
+          "inside": "Pickup is free at this spot.",
+          "outsideHint": "Move the map so the pin is inside the green area.",
+          "confirm": "Confirm"
+        }
       },
       "gearbox": {
         "short": "Gearbox",
@@ -615,7 +637,8 @@
         "title": "Pay for the lesson",
         "single": "One driving lesson",
         "packageTitle": "Save with a package",
-        "packageBody": "A package costs less per lesson. You can buy one at any time."
+        "packageBody": "A package costs less per lesson. You can buy one at any time.",
+        "introLabel": "First lesson 499 kr (ord. 745 kr)"
       }
     },
     "account": {
@@ -664,7 +687,8 @@
     "calendar": {
       "summary": "Driving lesson with Makina Trafikskola",
       "description": "Cancellation deadline: {deadline}."
-    }
+    },
+    "introPriceLabel": "First lesson 499 kr (ord. 745 kr)"
   },
   "auth": {
     "required": "You need an account to book and pay. It takes about 30 seconds.",
@@ -985,6 +1009,30 @@
       "rotate": "Replace link",
       "summary": "Driving lesson – {name}"
     },
+    "hours": {
+      "title": "My regular hours",
+      "help": "Set your regular hours here. Block time in Google Calendar and it disappears from booking.",
+      "day": "Day",
+      "from": "From",
+      "to": "To",
+      "area": "Area",
+      "row": "Time {n}",
+      "add": "Add time",
+      "remove": "Remove",
+      "save": "Save hours",
+      "saved": "Your hours are saved.",
+      "empty": "You have no regular hours yet. Add a time so students can book you.",
+      "noLocations": "No area is linked to you yet. Contact the school and we will add one.",
+      "errors": {
+        "HOURS_OVERLAP": "The times overlap or end before they start. Adjust the times and try again.",
+        "LOCATION_NOT_ASSIGNED": "You can only choose areas linked to you. Pick a different area.",
+        "INVALID_INPUT": "Check the times and try again.",
+        "TEACHER_NOT_FOUND": "No teacher account is linked to you. Contact the school.",
+        "UNAUTHENTICATED": "Sign in again and then try once more.",
+        "FORBIDDEN": "You do not have permission to change these hours.",
+        "UNKNOWN": "Could not save. Try again in a moment."
+      }
+    },
     "block": {
       "title": "Block availability",
       "description": "Leave the times empty to block the whole day.",
@@ -1046,6 +1094,7 @@
       },
       "prices": {
         "title": "Prices and payment",
+        "bodySwishSoon": "All prices are shown in Swedish kronor including VAT.\nYou pay by card or Klarna via Stripe. Swish is coming soon.\nThe price is taken from the product list at purchase.\nStripe sends the receipt to your email. We do not send our own emails.\nCodes and reminders are sent by text message.",
         "body": "All prices are shown in Swedish kronor including VAT.\nYou pay by card, Swish or Klarna via Stripe.\nThe price is taken from the product list at purchase.\nStripe sends the receipt to your email. We do not send our own emails.\nCodes and reminders are sent by text message."
       },
       "delivery": {
@@ -1276,7 +1325,16 @@
       "keep": "Keep occasion",
       "occasion": "Course occasion {count}",
       "booked": "{booked} booked of {capacity}",
-      "error": "Could not save. Try again."
+      "error": "Could not save. Try again.",
+      "recurrenceTitle": "Risk 1 online – recurring",
+      "recurrenceHelp": "Occasions are created on the 15th and 28th each month. Edit or cancel individual dates below.",
+      "startTime": "Start time",
+      "duration": "Length (minutes)",
+      "capacityDefault": "Seats",
+      "venueNameDefault": "Venue name",
+      "venueAddressDefault": "Address",
+      "saveRecurrence": "Save defaults",
+      "days": "Days of month"
     },
     "editor": {
       "save": "Save",
@@ -1563,7 +1621,9 @@
     "forbiddenDescription": "This page is for a different role. Go to the home page or to your own pages.",
     "forbiddenDashboard": "To my pages",
     "OUTSIDE_PICKUP_AREA": "That address is outside the pickup area. Choose an address inside the area.",
-    "AREA_UNAVAILABLE": "That area is not open for booking yet. Choose Farsta or Upplands Väsby."
+    "AREA_UNAVAILABLE": "That area is not open for booking yet. Choose Farsta or Upplands Väsby.",
+    "OUTSIDE_BOOKING_HORIZON": "You can book at most four weeks ahead. Choose an earlier time.",
+    "INTRO_OFFER_USED": "The intro price applies only to your first lesson. Choose the regular lesson."
   },
   "contact": {
     "metadata": "Contact details for Makina Trafikskola in Stockholm.",

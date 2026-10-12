@@ -28,12 +28,17 @@ describe("public staff languages", () => {
       formatLanguageList(
         aron!.languages,
         "sv",
-        (code) => ({
-          sv: "Svenska",
-          en: "Engelska",
-          ti: "Tigrinja",
-          ku: "Kurdiska",
-        })[code],
+        (code) =>
+          ({
+            sv: "Svenska",
+            en: "Engelska",
+            ti: "Tigrinja",
+            ku: "Kurdiska",
+            am: "Amhariska",
+            fa: "Persiska",
+            prs: "Dari",
+            tig: "Tigre",
+          })[code] ?? code,
       ),
     ).toBe(
       "Svenska, Engelska och Tigrinja",

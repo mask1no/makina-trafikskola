@@ -343,10 +343,15 @@ export async function runCoreCron(now: Date, scope?: CoreCronScope) {
     { isolationLevel: Prisma.TransactionIsolationLevel.Serializable },
   );
 
+  let risk1OccasionsCreated = 0;
   if (!result.skipped) {
     await dispatchNotifications(result.reminderIds, now);
     const { repairCalendarSync } = await import("@/lib/calendar/google");
     await repairCalendarSync(now);
+    const { ensureRisk1Occasions } = await import(
+      "@/lib/courses/risk1-recurrence"
+    );
+    risk1OccasionsCreated = await ensureRisk1Occasions(db, now);
   }
 
   let cancelledPaymentIntents = 0;
@@ -375,5 +380,6 @@ export async function runCoreCron(now: Date, scope?: CoreCronScope) {
     purgedPickupDetails: result.purgedPickupDetails,
     remindersDispatched: result.reminderIds.length,
     cancelledPaymentIntents,
+    risk1OccasionsCreated,
   };
 }

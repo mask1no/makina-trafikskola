@@ -23,6 +23,8 @@ import { formatInTimeZone, fromZonedTime } from "date-fns-tz";
 
 import { publicStaff } from "../src/lib/company/staff";
 import { seedTheory } from "./seed-theory";
+import farstaBoundary from "../src/lib/areas/boundaries/farsta.json";
+import upplandsVasbyBoundary from "../src/lib/areas/boundaries/upplands-vasby.json";
 
 const db = new PrismaClient();
 
@@ -41,6 +43,7 @@ const RETIRED_INSTRUCTOR_EMAILS = [
 ];
 const TIME_ZONE = "Europe/Stockholm";
 const PRODUCTION_PRODUCT_SLUGS = new Set([
+  "forsta-korlektionen",
   "en-korlektion",
   "korpaket-b3",
   "korpaket-b5",
@@ -72,7 +75,7 @@ function stockholmAt(now: Date, daysAhead: number, time: string) {
 function box(lng: number, lat: number, delta = 0.08) {
   return {
     type: "Feature",
-    properties: { review: "TODO" },
+    properties: {},
     geometry: {
       type: "Polygon",
       coordinates: [[
@@ -98,7 +101,7 @@ export const CLIENT_DATA = {
       lng: 18.093,
       status: "ACTIVE" as const,
       officeAddress: null as string | null,
-      boundary: box(18.093, 59.243),
+      boundary: farstaBoundary,
     },
     {
       slug: "upplands-vasby",
@@ -110,7 +113,7 @@ export const CLIENT_DATA = {
       lng: 17.9088,
       status: "ACTIVE" as const,
       officeAddress: "Centralvägen 5, 194 77 Upplands Väsby",
-      boundary: box(17.9088, 59.5194),
+      boundary: upplandsVasbyBoundary,
     },
     {
       slug: "uppsala",
@@ -215,16 +218,31 @@ type Seed = {
   includesRisk2?: boolean;
   badge?: string;
   accentHex?: string;
+  isIntroOffer?: boolean;
   translations: Record<Locale, Translation>;
 };
 
 const PRODUCTS: Seed[] = [
   {
-    slug: "en-korlektion",
+    slug: "forsta-korlektionen",
     kind: ProductKind.SINGLE_LESSON,
     active: true,
     priceOre: 49900,
     compareAtOre: 74500,
+    lessonCredits: 1,
+    isIntroOffer: true,
+    translations: {
+      sv: { name: "Första körlektionen", shortDesc: "Din första lektion hos oss för 499 kr. 50 minuter bakom ratten med en lärare som anpassar tempot efter dig.", features: ["50 minuters körning", "Manuell eller automat", "Endast för nya kunder"] },
+      en: { name: "First driving lesson", shortDesc: "Your first lesson with us for 499 kr. 50 minutes behind the wheel with an instructor who matches your pace.", features: ["50 minutes of driving", "Manual or automatic", "New customers only"] },
+      ti: { name: "ቀዳማይ ትምህርቲ ምዝዋር", shortDesc: "ናይ መጀመርታ ትምህርትካ ምስና ን 499 kr። 50 ደቂቅ ድሕሪ መሪሕ መንእሰይ።", features: ["50 ደቂቅ ምዝዋር","ማንዋል ወይ ኣውቶማቲክ","ንሓደስቲ ዓማዊል ጥራይ"] },
+      ar: { name: "درس القيادة الأول", shortDesc: "درسك الأول معنا مقابل 499 كرونة. 50 دقيقة خلف المقود مع معلّم يضبط السرعة حسبك.", features: ["50 دقيقة قيادة", "يدوي أو أوتوماتيكي", "للعملاء الجدد فقط"] },
+    },
+  },
+  {
+    slug: "en-korlektion",
+    kind: ProductKind.SINGLE_LESSON,
+    active: true,
+    priceOre: 74500,
     lessonCredits: 1,
     translations: {
       sv: { name: "En körlektion", shortDesc: "50 minuter bakom ratten med en lärare som anpassar tempot efter dig. Passar dig som vill prova på, fylla på inför uppkörningen eller köra enstaka lektioner vid sidan av privat övningskörning.", features: ["50 minuters körning", "Manuell eller automat", "Personlig återkoppling"] },
@@ -690,6 +708,7 @@ async function main() {
       creditValidDays: 365,
       badge: p.badge ?? null,
       accentHex: p.accentHex ?? null,
+      isIntroOffer: p.isIntroOffer ?? false,
     };
     const product = await db.product.upsert({
       where: { slug: p.slug },
@@ -845,10 +864,22 @@ async function main() {
   ]) {
     const productId = seededProductIds.get(course.slug);
     if (!productId) continue;
+    const risk1Defaults =
+      course.kind === CourseKind.RISK1
+        ? {
+            recurrenceEnabled: true,
+            recurrenceDays: [15, 28],
+            defaultStartTime: "18:00",
+            durationMinutes: 210,
+            defaultCapacity: 16,
+            defaultVenueName: "Makina Trafikskola, Upplands Väsby",
+            defaultVenueAddress: "Centralvägen 5, 194 77 Upplands Väsby",
+          }
+        : {};
     await db.course.upsert({
       where: { id: course.id },
-      update: { kind: course.kind, productId },
-      create: { id: course.id, kind: course.kind, productId },
+      update: { kind: course.kind, productId, ...risk1Defaults },
+      create: { id: course.id, kind: course.kind, productId, ...risk1Defaults },
     });
   }
 

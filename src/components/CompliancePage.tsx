@@ -3,6 +3,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 
 import { clearCookieConsent } from "@/app/[locale]/cookie-actions";
 import { PageHeader } from "@/components/PageHeader";
+import { swishActive } from "@/lib/payments/swish";
 
 export async function CompliancePage({
   namespace,
@@ -40,7 +41,11 @@ export async function CompliancePage({
           <section className="border-b border-border p-6 last:border-b-0 sm:p-8" key={section}>
             <h2 className="text-xl font-black">{t(`${section}.title`)}</h2>
             <p className="mt-3 whitespace-pre-line leading-7 text-ink-muted">
-              {t(`${section}.body`)}
+              {t(
+                namespace === "terms" && section === "prices" && !swishActive()
+                  ? "prices.bodySwishSoon"
+                  : `${section}.body`,
+              )}
             </p>
           </section>
         ))}

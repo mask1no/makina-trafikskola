@@ -73,7 +73,16 @@ export const publicStaff: readonly PublicStaffMember[] = [
   },
 ];
 
-const PUBLIC_TEACHING_LANGUAGES = ["sv", "en", "ti", "ku"] as const;
+const PUBLIC_TEACHING_LANGUAGES = [
+  "sv",
+  "en",
+  "ti",
+  "ku",
+  "am",
+  "fa",
+  "prs",
+  "tig",
+] as const;
 
 export function publicTeachingLanguages(codes: readonly string[]): TeachingLanguage[] {
   const present = new Set(codes);

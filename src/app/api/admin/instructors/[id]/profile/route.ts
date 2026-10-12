@@ -7,11 +7,12 @@ import { AuthorizationError, requireRole } from "@/lib/auth/guards";
 import { normalizeSwedishPhone } from "@/lib/auth/phone";
 import { revalidateTeacherLanguages } from "@/lib/admin/revalidate-public";
 import { db } from "@/lib/db";
+import { hoursOverlap, weeklyHoursSchema } from "@/lib/teachers/hours";
+import { TEACHING_LANGUAGES } from "@/lib/teachers/languages";
 
 export const runtime = "nodejs";
 
-const timeSchema = z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/);
-const offered = ["sv", "en", "ti", "ku"] as const;
+const offered = TEACHING_LANGUAGES;
 
 const profileSchema = z
   .object({
@@ -22,40 +23,10 @@ const profileSchema = z
     yearsExperience: z.number().int().min(0).max(70),
     googleCalendarEmail: z.string().trim().email().or(z.literal("")),
     payRateKr: z.number().int().min(0).max(100_000).nullable(),
-    hours: z
-      .array(
-        z.object({
-          dayOfWeek: z.number().int().min(0).max(6),
-          startTime: timeSchema,
-          endTime: timeSchema,
-          locationId: z.string().cuid(),
-        }),
-      )
-      .max(50),
+    hours: weeklyHoursSchema,
     daysOff: z.array(z.string().regex(/^\d{4}-\d{2}-\d{2}$/)).max(60),
   })
   .strict();
-
-function hoursOverlap(
-  hours: { dayOfWeek: number; startTime: string; endTime: string }[],
-) {
-  const byDay = new Map<number, typeof hours>();
-  for (const hour of hours) {
-    if (hour.startTime >= hour.endTime) return true;
-    const list = byDay.get(hour.dayOfWeek) ?? [];
-    list.push(hour);
-    byDay.set(hour.dayOfWeek, list);
-  }
-  for (const list of byDay.values()) {
-    const sorted = [...list].sort((a, b) => a.startTime.localeCompare(b.startTime));
-    for (let index = 1; index < sorted.length; index += 1) {
-      const previous = sorted[index - 1];
-      const current = sorted[index];
-      if (previous && current && current.startTime < previous.endTime) return true;
-    }
-  }
-  return false;
-}
 
 
 

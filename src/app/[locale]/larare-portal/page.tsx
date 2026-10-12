@@ -26,6 +26,7 @@ import {
   rotateCalendarToken,
 } from "./actions";
 import { CalendarLink } from "./CalendarLink";
+import { HoursEditor } from "./HoursEditor";
 
 export const dynamic = "force-dynamic";
 
@@ -65,6 +66,13 @@ export default async function TeacherPortal(
         photoUrl: true,
         calendarToken: true,
         payRateOre: true,
+        locations: {
+          select: { location: { select: { id: true, name: true } } },
+        },
+        availability: {
+          select: { dayOfWeek: true, startTime: true, endTime: true, locationId: true },
+          orderBy: [{ dayOfWeek: "asc" }, { startTime: "asc" }],
+        },
         user: {
           select: {
             firstName: true,
@@ -383,6 +391,21 @@ export default async function TeacherPortal(
             <Button type="submit">{t("calendar.create")}</Button>
           </form>
         )}
+      </section>
+
+      <section className="mt-10 rounded-md border border-border bg-card p-5 shadow-soft sm:p-6">
+        <h2 className="text-xl font-bold">{t("hours.title")}</h2>
+        <p className="mt-2 text-sm text-ink-muted">{t("hours.help")}</p>
+        <HoursEditor
+          locale={params.locale}
+          locations={teacher.locations.map((item) => item.location)}
+          initial={teacher.availability.map((hour) => ({
+            dayOfWeek: hour.dayOfWeek,
+            startTime: hour.startTime,
+            endTime: hour.endTime,
+            locationId: hour.locationId ?? teacher.locations[0]?.location.id ?? "",
+          }))}
+        />
       </section>
 
       <section className="mt-10 rounded-md border border-border bg-card p-5 shadow-soft sm:p-6">

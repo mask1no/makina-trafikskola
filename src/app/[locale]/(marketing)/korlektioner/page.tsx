@@ -55,7 +55,12 @@ export default async function KorlektionerPage(
     .sort((a, b) =>
       sort === "lessons" ? b.lessonCredits - a.lessonCredits : a.priceOre - b.priceOre,
     );
-  const singleLesson = products.find((product) => product.kind === "SINGLE_LESSON");
+  const introLesson = products.find((product) => product.isIntroOffer);
+  const singleLesson =
+    introLesson ?? products.find((product) => product.kind === "SINGLE_LESSON");
+  const regularLesson = products.find(
+    (product) => product.kind === "SINGLE_LESSON" && !product.isIntroOffer,
+  );
   const canBook = bookingEnabled();
   const allSections = groupProducts(products);
   const sections = allSections.filter((section) => !group || section.key === group);
@@ -99,11 +104,14 @@ export default async function KorlektionerPage(
               <div className="min-w-56 rounded-md border border-ink-inverse/15 bg-surface-raised p-5">
                 <p className="text-sm text-ink-inverse-muted">
                   {t("lessons.introOffer.ordinary")}{" "}
-                  {singleLesson.compareAtOre ? (
-                    <s className="numbers-ltr">
-                      {formatPrice(singleLesson.compareAtOre, params.locale)}
-                    </s>
-                  ) : null}
+                  <s className="numbers-ltr">
+                    {formatPrice(
+                      singleLesson.compareAtOre ??
+                        regularLesson?.priceOre ??
+                        74500,
+                      params.locale,
+                    )}
+                  </s>
                 </p>
                 <p className="numbers-ltr mt-1 text-4xl font-black text-accent">
                   {formatPrice(singleLesson.priceOre, params.locale)}

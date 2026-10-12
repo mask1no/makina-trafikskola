@@ -19,6 +19,7 @@ import { syncConfirmedBooking } from "@/lib/calendar/google";
 import { db } from "@/lib/db";
 import { bookingNotificationContext } from "@/lib/notifications/context";
 import { dispatchNotifications } from "@/lib/notifications/dispatch";
+import { notifyOwnerOfBooking } from "@/lib/notifications/owner";
 import { enqueueBookingNotifications, enqueueTeacherBookingNotification } from "@/lib/notifications/queue";
 import {
   enqueueOrderReceipt,
@@ -185,8 +186,11 @@ export async function processVerifiedStripeEvent(
         : [];
 
   const creditStudentId = await studentIdForCreditLock(normalized);
+  // Set only when this delivery itself converted a hold, so replays never re-SMS the owner.
+  let ownerNewBookingId: string | undefined;
 
   for (let attempt = 1; attempt <= 20; attempt += 1) {
+    ownerNewBookingId = undefined;
     try {
       notificationIds = await db.$transaction(
       async (tx) => {
@@ -426,6 +430,7 @@ export async function processVerifiedStripeEvent(
                 data: { creditCharged: true, holdExpiresAt: null },
               });
               if (converted.count === 1) {
+                ownerNewBookingId = heldBooking.id;
                 await tx.creditTransaction.create({
                   data: {
                     studentId: order.studentId,
@@ -749,6 +754,7 @@ export async function processVerifiedStripeEvent(
         isUniqueViolationOn(error, "StripeEvent")
       ) {
         notificationIds = replayNotificationIds;
+        ownerNewBookingId = undefined;
         break;
       }
       throw error;
@@ -758,6 +764,14 @@ export async function processVerifiedStripeEvent(
   await dispatchNotifications(notificationIds, eventTime);
   if (normalized?.kind === "payment_succeeded" && normalized.bookingId) {
     await syncConfirmedBooking(normalized.bookingId);
+    // Assigned inside the transaction callback, so widen what flow analysis narrowed.
+    const convertedBookingId = ownerNewBookingId as string | undefined;
+    if (convertedBookingId) {
+      await notifyOwnerOfBooking(convertedBookingId, "new");
+    } else {
+      // Replay or no hold converted: keep the owner calendar in step, no SMS.
+      await notifyOwnerOfBooking(normalized.bookingId, "new", { sms: false });
+    }
   }
   return new Response(null, { status: 200 });
 }

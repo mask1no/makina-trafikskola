@@ -42,12 +42,25 @@ function emptyOccasion(courseId = ""): Occasion {
   };
 }
 
+type Risk1Defaults = {
+  id: string;
+  recurrenceEnabled: boolean;
+  recurrenceDays: number[];
+  defaultStartTime: string;
+  durationMinutes: number;
+  defaultCapacity: number;
+  defaultVenueName: string;
+  defaultVenueAddress: string;
+};
+
 export function CoursesEditor({
   courses,
   initialOccasions,
+  risk1Defaults,
 }: {
   courses: Course[];
   initialOccasions: Occasion[];
+  risk1Defaults?: Risk1Defaults | null;
 }) {
   const t = useTranslations("admin.courses");
   const router = useRouter();
@@ -62,6 +75,7 @@ export function CoursesEditor({
   const [message, setMessage] = useState("");
   const [busy, setBusy] = useState("");
   const [pendingCancel, setPendingCancel] = useState<Occasion | null>(null);
+  const [risk1, setRisk1] = useState(risk1Defaults ?? null);
 
   async function save(row: Occasion, create = false) {
     setBusy(create ? "create" : row.id);
@@ -159,8 +173,128 @@ export function CoursesEditor({
     );
   }
 
+  async function saveRisk1() {
+    if (!risk1) return;
+    setBusy("risk1");
+    setMessage("");
+    const response = await fetch(`/api/admin/courses/${risk1.id}`, {
+      method: "PATCH",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        recurrenceEnabled: risk1.recurrenceEnabled,
+        recurrenceDays: risk1.recurrenceDays,
+        defaultStartTime: risk1.defaultStartTime,
+        durationMinutes: risk1.durationMinutes,
+        defaultCapacity: risk1.defaultCapacity,
+        defaultVenueName: risk1.defaultVenueName,
+        defaultVenueAddress: risk1.defaultVenueAddress,
+      }),
+    });
+    const body = await response.json().catch(() => null);
+    setMessage(response.ok ? t("saved") : body?.error?.code ?? t("error"));
+    setBusy("");
+    if (response.ok) router.refresh();
+  }
+
   return (
     <div className="grid gap-6">
+      {risk1 ? (
+        <Card className="grid gap-4">
+          <h2 className="text-h3 font-black">{t("recurrenceTitle")}</h2>
+          <p className="text-ink-muted">{t("recurrenceHelp")}</p>
+          <div className="grid gap-3 md:grid-cols-2">
+            <label className="grid gap-1 text-small font-semibold">
+              {t("startTime")}
+              <input
+                type="time"
+                className="min-h-11 rounded-sm border border-border px-3"
+                value={risk1.defaultStartTime}
+                onChange={(event) =>
+                  setRisk1({ ...risk1, defaultStartTime: event.target.value })
+                }
+              />
+            </label>
+            <label className="grid gap-1 text-small font-semibold">
+              {t("duration")}
+              <input
+                type="number"
+                min={30}
+                max={720}
+                className="min-h-11 rounded-sm border border-border px-3"
+                value={risk1.durationMinutes}
+                onChange={(event) =>
+                  setRisk1({
+                    ...risk1,
+                    durationMinutes: Number(event.target.value),
+                  })
+                }
+              />
+            </label>
+            <label className="grid gap-1 text-small font-semibold">
+              {t("capacityDefault")}
+              <input
+                type="number"
+                min={1}
+                max={200}
+                className="min-h-11 rounded-sm border border-border px-3"
+                value={risk1.defaultCapacity}
+                onChange={(event) =>
+                  setRisk1({
+                    ...risk1,
+                    defaultCapacity: Number(event.target.value),
+                  })
+                }
+              />
+            </label>
+            <label className="grid gap-1 text-small font-semibold">
+              {t("days")}
+              <input
+                className="min-h-11 rounded-sm border border-border px-3"
+                value={risk1.recurrenceDays.join(",")}
+                onChange={(event) =>
+                  setRisk1({
+                    ...risk1,
+                    recurrenceDays: event.target.value
+                      .split(",")
+                      .map((part) => Number(part.trim()))
+                      .filter((day) => Number.isFinite(day) && day >= 1 && day <= 28),
+                  })
+                }
+              />
+            </label>
+            <label className="grid gap-1 text-small font-semibold">
+              {t("venueNameDefault")}
+              <input
+                className="min-h-11 rounded-sm border border-border px-3"
+                value={risk1.defaultVenueName}
+                onChange={(event) =>
+                  setRisk1({ ...risk1, defaultVenueName: event.target.value })
+                }
+              />
+            </label>
+            <label className="grid gap-1 text-small font-semibold">
+              {t("venueAddressDefault")}
+              <input
+                className="min-h-11 rounded-sm border border-border px-3"
+                value={risk1.defaultVenueAddress}
+                onChange={(event) =>
+                  setRisk1({
+                    ...risk1,
+                    defaultVenueAddress: event.target.value,
+                  })
+                }
+              />
+            </label>
+          </div>
+          <Button
+            type="button"
+            disabled={busy === "risk1"}
+            onClick={() => void saveRisk1()}
+          >
+            {busy === "risk1" ? t("saving") : t("saveRecurrence")}
+          </Button>
+        </Card>
+      ) : null}
       <Card className="grid gap-4">
         <h2 className="text-h3 font-black">{t("createTitle")}</h2>
         {fields(draft, setDraft)}

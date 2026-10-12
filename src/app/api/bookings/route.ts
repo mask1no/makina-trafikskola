@@ -10,6 +10,7 @@ import {
 import { allowRateLimitedAction } from "@/lib/auth/otp-store";
 import { loadAvailability } from "@/lib/bookings/availability";
 import { getCancellationDeadline } from "@/lib/bookings/cancellation";
+import { isWithinBookingHorizon } from "@/lib/bookings/rules";
 import {
   isBookingExclusionViolation,
   isSerializationOrTxTimeout,
@@ -33,6 +34,7 @@ import { db } from "@/lib/db";
 import * as Sentry from "@sentry/nextjs";
 import { dispatchNotifications } from "@/lib/notifications/dispatch";
 import { bookingNotificationContext } from "@/lib/notifications/context";
+import { notifyOwnerOfBooking } from "@/lib/notifications/owner";
 import {
   enqueueBookingNotifications,
   enqueueTeacherBookingNotification,
@@ -132,6 +134,9 @@ export async function POST(request: Request) {
   const from = addDays(parsed.data.startsAt, -1);
   const to = addDays(parsed.data.startsAt, 1);
   const minNoticeHours = configuredNumber("MIN_BOOKING_NOTICE_HOURS", 12);
+  if (!isWithinBookingHorizon(parsed.data.startsAt, now)) {
+    return errorResponse("OUTSIDE_BOOKING_HORIZON", 409);
+  }
   const availableSlots = await loadAvailability({
     teacherId: parsed.data.teacherId,
     from,
@@ -299,6 +304,10 @@ export async function POST(request: Request) {
     await dispatchNotifications(result.notificationIds, now);
     if (result.booking.creditCharged) {
       await syncConfirmedBooking(result.booking.id);
+      // An idempotent replay returns no new notifications: sync only, no second SMS.
+      await notifyOwnerOfBooking(result.booking.id, "new", {
+        sms: result.notificationIds.length > 0,
+      });
     }
     return Response.json(result.booking, {
       status: result.notificationIds.length > 0 ? 201 : 200,

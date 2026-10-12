@@ -7,6 +7,7 @@ import { checkoutHoldError } from "@/lib/bookings/hold";
 import { db } from "@/lib/db";
 import { productLaunchApproved } from "@/lib/launch";
 import { createPaymentIntentForOrder } from "@/lib/payments/payment-intents";
+import { isIntroOfferEligible } from "@/lib/products/intro-offer";
 import { getStripe, stripeIsConfigured } from "@/lib/stripe";
 
 export const runtime = "nodejs";
@@ -35,7 +36,7 @@ export async function POST(request: Request) {
   const now = new Date();
   const student = await db.user.findUnique({
     where: { id: session.user.id },
-    select: { localePref: true },
+    select: { localePref: true, phone: true },
   });
   if (!student) {
     return errorResponse("UNAUTHENTICATED", 401);
@@ -52,6 +53,15 @@ export async function POST(request: Request) {
     (product.kind === "THEORY_ACCESS" && process.env.THEORY_MODE !== "full")
   ) {
     return errorResponse("PRODUCT_INACTIVE", 409);
+  }
+  if (product.isIntroOffer) {
+    const eligible = await isIntroOfferEligible(db, {
+      userId: session.user.id,
+      phone: student.phone,
+    });
+    if (!eligible) {
+      return errorResponse("INTRO_OFFER_USED", 409);
+    }
   }
   if (parsed.data.bookingId && product.lessonCredits < 1) {
     return errorResponse("INVALID_INPUT", 400);

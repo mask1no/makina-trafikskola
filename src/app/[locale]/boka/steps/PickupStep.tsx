@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 
 import { ChoiceCard } from "@/components/ChoiceCard";
 import { Input } from "@/components/Input";
-import { boundaryRings } from "@/lib/areas/geo";
+import { boundaryRings, pointInGeoJson } from "@/lib/areas/geo";
 
 import type { Location, MeetMode } from "./state";
 
@@ -14,6 +14,10 @@ const PickupAddressAutocomplete = dynamic(
   () => import("@/components/PickupAddressAutocomplete"),
   { ssr: false },
 );
+
+const PickupMapModal = dynamic(() => import("@/components/PickupMapModal"), {
+  ssr: false,
+});
 
 const AreaOutlineMap = dynamic(() => import("@/components/AreaOutlineMap"), {
   ssr: false,
@@ -46,8 +50,9 @@ function Outline({ boundary, label }: { boundary: unknown; label: string }) {
     <svg viewBox="0 0 100 100" className="h-48 w-full" role="img" aria-label={label}>
       <polygon
         points={path}
-        fill="color-mix(in srgb, var(--accent) 35%, transparent)"
+        fill="color-mix(in srgb, var(--success-strong) 40%, transparent)"
         stroke="var(--ink)"
+        strokeWidth="0.5"
       />
     </svg>
   );
@@ -55,6 +60,7 @@ function Outline({ boundary, label }: { boundary: unknown; label: string }) {
 
 export function PickupStep({
   area,
+  locations,
   meet,
   pickupAddress,
   pickupCoordinates,
@@ -65,6 +71,7 @@ export function PickupStep({
   onPickupSelected,
 }: {
   area: Location | undefined;
+  locations: Location[];
   meet: MeetMode;
   pickupAddress: string;
   pickupCoordinates: { lat: number; lng: number } | null;
@@ -72,14 +79,32 @@ export function PickupStep({
   mapId?: string;
   onMeet: (mode: MeetMode) => void;
   onPickupTyped: (address: string) => void;
-  onPickupSelected: (address: string, coordinates: { lat: number; lng: number }) => void;
+  /** areaId is set when the point lies inside an active location's boundary. */
+  onPickupSelected: (
+    address: string,
+    coordinates: { lat: number; lng: number },
+    areaId?: string,
+  ) => void;
 }) {
   const t = useTranslations("booking");
   const shell = useTranslations("shell");
   const showHint = meet === "pickup" && pickupAddress.trim().length > 0 && !pickupCoordinates;
   const [mapFailed, setMapFailed] = useState(false);
   const [mapLoaded, setMapLoaded] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const failMap = useCallback(() => setMapFailed(true), []);
+  const closeModal = useCallback(() => setModalOpen(false), []);
+  const confirmPickup = useCallback(
+    (address: string, coordinates: { lat: number; lng: number }, areaId: string) => {
+      onPickupSelected(address, coordinates, areaId);
+      setModalOpen(false);
+    },
+    [onPickupSelected],
+  );
+  const canPickOnMap = locations.some(
+    (location) =>
+      location.status === "ACTIVE" && boundaryRings(location.boundary).length > 0,
+  );
   const hasBoundary = useMemo(() => boundaryRings(area?.boundary).length > 0, [area?.boundary]);
   const canLoadMap = Boolean(mapApiKey && mapId) && !mapFailed && hasBoundary;
   return (
@@ -138,7 +163,15 @@ export function PickupStep({
               value={pickupAddress}
               onChange={(value, coordinates) => {
                 if (coordinates) {
-                  onPickupSelected(value, coordinates);
+                  onPickupSelected(
+                    value,
+                    coordinates,
+                    locations.find(
+                      (location) =>
+                        location.status === "ACTIVE" &&
+                        pointInGeoJson(coordinates, location.boundary),
+                    )?.id,
+                  );
                   return;
                 }
                 onPickupTyped(value);
@@ -152,6 +185,15 @@ export function PickupStep({
               autoComplete="street-address"
             />
           )}
+          {canPickOnMap ? (
+            <button
+              type="button"
+              className="mt-3 inline-flex min-h-11 items-center rounded-sm bg-surface px-5 font-bold text-ink-inverse"
+              onClick={() => setModalOpen(true)}
+            >
+              {t("step.pickup.map.open")}
+            </button>
+          ) : null}
           {mapApiKey ? (
             <p className="mt-2 text-small leading-6 text-ink-muted">
               {shell("mapPrivacy")}
@@ -161,6 +203,19 @@ export function PickupStep({
             <p className="mt-2 text-small leading-6 text-ink-muted">{t("step.where.selectFromList")}</p>
           ) : null}
         </div>
+      ) : null}
+      {modalOpen && canPickOnMap ? (
+        <PickupMapModal
+          apiKey={mapApiKey ?? ""}
+          mapId={mapId ?? ""}
+          areas={locations}
+          initialAreaId={area?.id}
+          initialPoint={pickupCoordinates}
+          initialAddress={pickupAddress}
+          onConfirm={confirmPickup}
+          onClose={closeModal}
+          onFailure={failMap}
+        />
       ) : null}
     </section>
   );

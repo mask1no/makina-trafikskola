@@ -21,7 +21,11 @@ export function PayStep({
       <Card className="mt-6">
         <p className="text-small font-bold text-ink-muted">{t("step.pay.single")}</p>
         <p className="mt-2 text-h3 font-black">{product?.name}</p>
-        {product ? (
+        {product?.isIntroOffer ? (
+          <p className="numbers-ltr mt-2 text-h2 font-black">
+            {t("step.pay.introLabel")}
+          </p>
+        ) : product ? (
           <p className="numbers-ltr mt-2 text-h2 font-black">{product.priceLabel}</p>
         ) : null}
       </Card>

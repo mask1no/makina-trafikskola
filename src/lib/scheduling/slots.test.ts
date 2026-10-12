@@ -75,6 +75,19 @@ describe("getAvailableSlots", () => {
       expectedCount: 1,
     },
     {
+      name: "15-minute teacher buffer blocks the adjacent slot",
+      input: mondayInput({
+        travelBufferMin: 15,
+        bookings: [
+          {
+            startsAt: date("2026-01-12T08:50:00Z"),
+            endsAt: date("2026-01-12T09:40:00Z"),
+          },
+        ],
+      }),
+      expectedCount: 1,
+    },
+    {
       name: "FULL_DAY_OFF removes everything",
       input: mondayInput({
         exceptions: [

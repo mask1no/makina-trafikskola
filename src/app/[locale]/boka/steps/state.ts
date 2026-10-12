@@ -5,6 +5,8 @@ export type Product = {
   lessonMinutes: number;
   name: string;
   priceLabel: string;
+  isIntroOffer?: boolean;
+  compareAtLabel?: string | null;
 };
 
 export type PackageOffer = {

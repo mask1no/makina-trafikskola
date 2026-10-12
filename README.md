@@ -65,6 +65,9 @@ Also used:
 | `R2_*` | Instructor photos and database backups |
 | `BOOKING_ENABLED` | `1` shows booking. `0` replaces it with a phone call |
 | `INSTRUCTORS_ENABLED` | `1` shows instructor pages and the map |
+| `SWISH_ACTIVE` | `0` (default) shows "Kort och Klarna (Swish kommer snart)". `1` shows Swish too |
+| `ADMIN_NOTIFY_PHONE` | Optional. Owner gets an SMS for each confirmed booking, cancel or move |
+| `ADMIN_CALENDAR_EMAIL` | Optional. Owner calendar gets an event per booking (needs Google Calendar sync on) |
 | `CANCELLATION_WINDOW_HOURS` | Free-cancel cutoff. Default 24 |
 | `MIN_BOOKING_NOTICE_HOURS` | Shortest notice for a new booking |
 | `BOOKING_HOLD_MINUTES` | Unpaid booking hold |

@@ -10,6 +10,7 @@ import { googleMapsBrowserConfig } from "@/lib/maps/config";
 import { isLocale } from "@/i18n/routing";
 import { db } from "@/lib/db";
 import { formatPrice } from "@/lib/pricing/format";
+import { isIntroOfferEligible } from "@/lib/products/intro-offer";
 import { bookingEnabled } from "@/lib/launch";
 import { notFound } from "next/navigation";
 import { orderedTeacherIds } from "@/lib/teachers/query";
@@ -42,15 +43,24 @@ export default async function BookingPage(
   const company = await getTranslations({ locale: params.locale, namespace: "company" });
 
   const session = await auth();
-  const preferredLanguages =
+  const student =
     session?.user?.role === "STUDENT"
-      ? (
-          await db.studentProfile.findUnique({
-            where: { userId: session.user.id },
-            select: { preferredLanguages: true },
-          })
-        )?.preferredLanguages
-      : undefined;
+      ? await db.user.findUnique({
+          where: { id: session.user.id },
+          select: {
+            id: true,
+            phone: true,
+            studentProfile: { select: { preferredLanguages: true } },
+          },
+        })
+      : null;
+  const preferredLanguages = student?.studentProfile?.preferredLanguages;
+  const introEligible = student
+    ? await isIntroOfferEligible(db, {
+        userId: student.id,
+        phone: student.phone,
+      })
+    : true;
   const [products, locations, orderedIds] = await Promise.all([
     db.product.findMany({
       where: { active: true, kind: { in: ["SINGLE_LESSON", "PACKAGE"] } },
@@ -101,6 +111,9 @@ export default async function BookingPage(
   });
   const localizedProducts = localized
     .filter((item) => item.product.kind === "SINGLE_LESSON")
+    .filter((item) =>
+      introEligible ? item.product.isIntroOffer : !item.product.isIntroOffer,
+    )
     .map((item) => ({
       id: item.product.id,
       kind: "SINGLE_LESSON" as const,
@@ -108,6 +121,12 @@ export default async function BookingPage(
       lessonMinutes: item.product.lessonMinutes,
       name: item.name,
       priceLabel: formatPrice(item.product.priceOre, params.locale),
+      isIntroOffer: item.product.isIntroOffer,
+      compareAtLabel:
+        item.product.compareAtOre &&
+        item.product.compareAtOre > item.product.priceOre
+          ? formatPrice(item.product.compareAtOre, params.locale)
+          : null,
     }));
   const packages = localized
     .filter((item) => item.product.kind === "PACKAGE")

@@ -201,6 +201,7 @@ model Product {
   badge           String?                      // "POPULARAST"
   bestSeller      Boolean     @default(false)
   accentHex       String?                      // tier colour — data, not CSS
+  isIntroOffer    Boolean     @default(false)  // once-per-person first lesson
 
   translations ProductTranslation[]
   orderItems   OrderItem[]
@@ -409,9 +410,10 @@ model Booking {
 
   studentNote     String?
   idempotencyKey  String?       @unique
-  googleEventId   String?
-  googleSyncedAt  DateTime?
-  createdAt      DateTime      @default(now())
+  googleEventId       String?
+  ownerGoogleEventId  String?
+  googleSyncedAt      DateTime?
+  createdAt           DateTime      @default(now())
 
   credits      CreditTransaction[]
   lessonReport LessonReport?
@@ -432,10 +434,19 @@ enum CourseKind {
 }
 
 model Course {
-  id        String     @id @default(cuid())
-  kind      CourseKind
-  productId String
-  product   Product    @relation(fields: [productId], references: [id])
+  id                String     @id @default(cuid())
+  kind              CourseKind
+  productId         String
+  product           Product    @relation(fields: [productId], references: [id])
+  /// When true, cron creates occasions on recurrenceDays each month.
+  recurrenceEnabled Boolean    @default(false)
+  /// Calendar days of month, e.g. [15, 28] for Risk 1 online.
+  recurrenceDays    Int[]      @default([])
+  defaultStartTime  String?    // "18:00" Europe/Stockholm
+  durationMinutes   Int?
+  defaultCapacity   Int?
+  defaultVenueName  String?
+  defaultVenueAddress String?
 
   occasions CourseOccasion[]
 }

@@ -13,6 +13,7 @@ import { loadAvailability } from "@/lib/bookings/availability";
 import { db } from "@/lib/db";
 import { dispatchNotifications } from "@/lib/notifications/dispatch";
 import { bookingNotificationContext } from "@/lib/notifications/context";
+import { notifyOwnerOfBooking } from "@/lib/notifications/owner";
 import {
   enqueueBookingNotifications,
   enqueueTeacherBookingNotification,
@@ -190,6 +191,9 @@ export async function PATCH(
       throw error;
     }
     await dispatchNotifications(result.notificationIds, now);
+    if (booking.creditCharged) {
+      await notifyOwnerOfBooking(booking.id, "cancelled");
+    }
     return Response.json(result.updated);
   }
 
@@ -310,6 +314,11 @@ export async function PATCH(
       { isolationLevel: Prisma.TransactionIsolationLevel.Serializable },
     );
     await dispatchNotifications(updated.notificationIds, now);
+    if (booking.creditCharged) {
+      await notifyOwnerOfBooking(booking.id, "moved", {
+        previousStartsAt: booking.startsAt,
+      });
+    }
     return Response.json(updated.moved);
   } catch (error) {
     if (error instanceof Error && error.message === "BOOKING_NOT_ACTIVE") {

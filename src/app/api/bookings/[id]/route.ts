@@ -28,6 +28,7 @@ import { configuredNumber } from "@/lib/config/number";
 import { db } from "@/lib/db";
 import { dispatchNotifications } from "@/lib/notifications/dispatch";
 import { bookingNotificationContext } from "@/lib/notifications/context";
+import { notifyOwnerOfBooking } from "@/lib/notifications/owner";
 import {
   enqueueBookingNotifications,
   enqueueTeacherBookingNotification,
@@ -207,6 +208,12 @@ export async function PATCH(
       });
       await dispatchNotifications(updated.notificationIds, now);
       await syncConfirmedBooking(booking.id);
+      // Unpaid holds were never announced to the owner.
+      if (booking.creditCharged) {
+        await notifyOwnerOfBooking(booking.id, "moved", {
+          previousStartsAt: booking.startsAt,
+        });
+      }
       return Response.json(updated.moved);
     } catch (error) {
       if (
@@ -329,5 +336,8 @@ export async function PATCH(
 
   await dispatchNotifications(result.notificationIds, now);
   await syncConfirmedBooking(booking.id);
+  if (booking.creditCharged) {
+    await notifyOwnerOfBooking(booking.id, "cancelled");
+  }
   return Response.json(result.cancelled);
 }

@@ -11,6 +11,7 @@ import { Notice } from "@/components/Notice";
 import { Stepper } from "@/components/Stepper";
 import { pointInGeoJson } from "@/lib/areas/geo";
 import { getCancellationDeadline } from "@/lib/bookings/cancellation";
+import { maxBookingHorizonDays } from "@/lib/bookings/rules";
 import { formatDate, formatDeadline, formatLessonTime } from "@/lib/format/datetime";
 
 import { AccountStep } from "./steps/AccountStep";
@@ -69,9 +70,12 @@ export function BookingFlow({
     initialBookingState,
   );
   const patch = (next: Partial<typeof state>) => dispatch({ type: "patch", patch: next });
-  const selectedProduct = products.find((product) => product.kind === "SINGLE_LESSON");
+  const selectedProduct =
+    products.find((product) => product.isIntroOffer) ??
+    products.find((product) => product.kind === "SINGLE_LESSON");
   const lessonMinutes = selectedProduct?.lessonMinutes === 100 ? 100 : 50;
   const selectedArea = locations.find((location) => location.id === state.areaId);
+  const horizonDays = maxBookingHorizonDays();
   const filteredTeachers = useMemo(
     () =>
       teachers.filter(
@@ -83,7 +87,7 @@ export function BookingFlow({
     [state.areaId, state.gearbox, teachers],
   );
   const dates = useMemo(() => {
-    return Array.from({ length: 14 }, (_, index) => {
+    return Array.from({ length: horizonDays }, (_, index) => {
       const date = addCalendarDays(new Date(), index);
       return {
         key: localDateKey(date.toISOString()),
@@ -94,13 +98,13 @@ export function BookingFlow({
         }),
       };
     });
-  }, [locale]);
+  }, [horizonDays, locale]);
 
   useEffect(() => {
     if (state.step !== 3 || !filteredTeachers.length) return;
     const controller = new AbortController();
     const from = new Date();
-    const to = addCalendarDays(from, 14);
+    const to = addCalendarDays(from, horizonDays);
     dispatch({ type: "patch", patch: { loadingSlots: true, error: "" } });
     Promise.all(
       filteredTeachers.map(async (teacher) => {
@@ -133,7 +137,14 @@ export function BookingFlow({
       })
       .finally(() => dispatch({ type: "patch", patch: { loadingSlots: false } }));
     return () => controller.abort();
-  }, [dates, filteredTeachers, lessonMinutes, state.step, state.teacherId]);
+  }, [
+    dates,
+    filteredTeachers,
+    horizonDays,
+    lessonMinutes,
+    state.step,
+    state.teacherId,
+  ]);
 
   const selectedTeacher = teachers.find((teacher) => teacher.id === state.teacherId);
   const selectedDateLabel = state.selectedSlot
@@ -402,6 +413,7 @@ export function BookingFlow({
           {state.step === 1 ? (
             <PickupStep
               area={selectedArea}
+              locations={locations}
               meet={state.meet}
               pickupAddress={state.pickupAddress}
               pickupCoordinates={state.pickupCoordinates}
@@ -409,9 +421,13 @@ export function BookingFlow({
               mapId={mapId}
               onMeet={(meet: MeetMode) => patch({ meet })}
               onPickupTyped={(value) => dispatch({ type: "pickupTyped", value })}
-              onPickupSelected={(value, coordinates) =>
-                dispatch({ type: "pickupSelected", value, coordinates })
-              }
+              onPickupSelected={(value, coordinates, areaId) => {
+                dispatch({ type: "pickupSelected", value, coordinates });
+                // The area that contains the pin decides which teachers are offered.
+                if (areaId && areaId !== state.areaId) {
+                  patch({ areaId, teacherId: "", selectedSlot: "" });
+                }
+              }}
             />
           ) : null}
           {state.step === 2 ? (

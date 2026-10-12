@@ -4,6 +4,7 @@ import * as Sentry from "@sentry/nextjs";
 import { z } from "zod";
 
 import { loadAvailability } from "@/lib/bookings/availability";
+import { maxBookingHorizonDays } from "@/lib/bookings/rules";
 import { db } from "@/lib/db";
 import {
   calendarSyncEnabled,
@@ -24,7 +25,8 @@ const querySchema = z
     path: ["to"],
   })
   .refine(
-    (value) => differenceInCalendarDays(value.to, value.from) <= 31,
+    (value) =>
+      differenceInCalendarDays(value.to, value.from) <= maxBookingHorizonDays(),
     {
       message: "DATE_RANGE_TOO_LARGE",
       path: ["to"],
@@ -45,9 +47,15 @@ export async function GET(request: Request) {
     return invalidInput(parsed.error.flatten().fieldErrors);
   }
 
+  const now = new Date();
+  const horizonMs = maxBookingHorizonDays() * 24 * 60 * 60 * 1000;
+  const cappedTo = new Date(
+    Math.min(parsed.data.to.getTime(), now.getTime() + horizonMs),
+  );
   const slots = await loadAvailability({
     ...parsed.data,
-    now: new Date(),
+    to: cappedTo,
+    now,
     minNoticeHours: minNoticeHours(),
   });
   if (!slots) {

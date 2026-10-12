@@ -57,9 +57,11 @@ test.describe("marketing layout", () => {
     await expect(page.locator("header").getByRole("link", { name: "Kontakt" })).toHaveCount(1);
   });
 
-  test("contact map is visible without a load button", async ({ page }) => {
+  test("contact map loads after the privacy confirmation", async ({ page }) => {
     await page.goto("/sv/kontakt");
-    await expect(page.getByRole("button", { name: "Visa karta" })).toHaveCount(0);
+    const load = page.getByRole("button", { name: "Visa karta" });
+    await expect(load).toBeVisible();
+    await load.click();
     const map = page.getByTitle("Hitta oss");
     await expect(map).toBeVisible();
     await expect(map).toHaveAttribute("src", /google\.com\/maps/);

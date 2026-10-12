@@ -187,6 +187,74 @@ export async function syncConfirmedBooking(bookingId: string) {
   }
 }
 
+export function ownerCalendarEmail(
+  environment: Record<string, string | undefined> = process.env,
+) {
+  const email = environment.ADMIN_CALENDAR_EMAIL?.trim();
+  return email ? email : null;
+}
+
+/** Mirrors a booking into the owner's calendar. Title includes the teacher's name. */
+export async function syncOwnerBooking(bookingId: string) {
+  const ownerEmail = ownerCalendarEmail();
+  if (!ownerEmail || !calendarSyncEnabled()) return;
+  const booking = await db.booking.findUnique({
+    where: { id: bookingId },
+    select: {
+      id: true,
+      status: true,
+      creditCharged: true,
+      startsAt: true,
+      endsAt: true,
+      ownerGoogleEventId: true,
+      student: { select: { firstName: true } },
+      teacher: { select: { user: { select: { firstName: true, lastName: true } } } },
+      location: { select: { name: true } },
+    },
+  });
+  if (!booking) return;
+  const email = encodeURIComponent(ownerEmail);
+  const cancelled = booking.status.startsWith("CANCELLED") || booking.status === "EXPIRED_HOLD";
+  try {
+    if (cancelled || !booking.creditCharged) {
+      if (!booking.ownerGoogleEventId) return;
+      await calendarRequest(
+        ownerEmail,
+        `/calendars/${email}/events/${encodeURIComponent(booking.ownerGoogleEventId)}`,
+        "DELETE",
+      );
+      await db.booking.update({
+        where: { id: booking.id },
+        data: { ownerGoogleEventId: null },
+      });
+      return;
+    }
+    const teacherName = `${booking.teacher.user.firstName} ${booking.teacher.user.lastName}`.trim();
+    const payload = {
+      summary: `Körlektion – ${teacherName} – ${booking.student.firstName}`,
+      location: booking.location?.name ?? undefined,
+      start: { dateTime: booking.startsAt.toISOString() },
+      end: { dateTime: booking.endsAt.toISOString() },
+    };
+    const response = booking.ownerGoogleEventId
+      ? await calendarRequest(
+          ownerEmail,
+          `/calendars/${email}/events/${encodeURIComponent(booking.ownerGoogleEventId)}`,
+          "PATCH",
+          payload,
+        )
+      : await calendarRequest(ownerEmail, `/calendars/${email}/events`, "POST", payload);
+    if (!response?.ok) throw new Error(`OWNER_CALENDAR_EVENT_${response?.status ?? "NO_TOKEN"}`);
+    const created = (await response.json()) as { id?: string };
+    await db.booking.update({
+      where: { id: booking.id },
+      data: { ownerGoogleEventId: created.id ?? booking.ownerGoogleEventId },
+    });
+  } catch (error) {
+    Sentry.captureException(error);
+  }
+}
+
 export async function repairCalendarSync(now: Date) {
   if (!calendarSyncEnabled()) return 0;
   const bookings = await db.booking.findMany({

@@ -21,6 +21,10 @@
     "en": "English",
     "ti": "ትግርኛ",
     "ku": "Kurdiska",
+    "am": "Amhariska",
+    "fa": "Persiska",
+    "prs": "Dari",
+    "tig": "Tigre",
     "ar": "العربية"
   },
   "shell": {
@@ -57,6 +61,10 @@
       "en": "engelska",
       "ti": "tigrinja",
       "ku": "kurdiska",
+      "am": "amhariska",
+      "fa": "persiska",
+      "prs": "dari",
+      "tig": "tigre",
       "ar": "arabiska"
     },
     "here": "Här finns vi",
@@ -164,7 +172,7 @@
       "title": "Svar innan du börjar",
       "cost": {
         "question": "Vad kostar det att ta körkort hos Makina?",
-        "answer": "Priset beror på hur många lektioner du behöver. En enskild körlektion kostar {singlePrice} och våra paket börjar på {packagePrice}. Alla priser visas inklusive moms och du ser exakt vad som ingår innan du betalar."
+        "answer": "Första lektionen 499 kr, därefter 745 kr. Paket börjar på {packagePrice}. Alla priser visas inklusive moms."
       },
       "languages": {
         "question": "Kan jag få undervisning på mitt språk?",
@@ -172,7 +180,7 @@
       },
       "pickup": {
         "question": "Hämtar ni mig?",
-        "answer": "Ja, vi erbjuder gratis upphämtning inom områdena Farsta och Upplands Väsby."
+        "answer": "Ja. Upphämtning är gratis inom de grönmarkerade områdena (Farsta och Upplands Väsby) och tar ingen tid från din lektion."
       },
       "cancel": {
         "question": "Hur avbokar jag en lektion?",
@@ -203,7 +211,7 @@
       },
       "pickup": {
         "title": "Gratis upphämtning",
-        "body": "Farsta & Upplands Väsby"
+        "body": "I de gröna områdena – tar ingen tid från lektionen"
       },
       "lesson": {
         "title": "50 minuter",
@@ -218,7 +226,8 @@
         "body": "25 lektioner, Risk 1, Risk 2 och teori"
       },
       "payment": {
-        "title": "Kort/Swish/Klarna",
+        "title": "Kort, Swish och Klarna",
+        "titleSwishSoon": "Kort och Klarna (Swish kommer snart)",
         "body": "Välj det betalsätt som passar dig."
       },
       "cancel": {
@@ -590,11 +599,24 @@
       "pickup": {
         "short": "Hämtning",
         "title": "Var hämtar vi dig?",
-        "free": "Gratis upphämtning inom områdena Farsta och Upplands Väsby.",
+        "free": "Upphämtning är gratis inom de gröna områdena och tar ingen tid från din lektion.",
         "office": "Möt oss på kontoret",
         "address": "Hämtningsadress",
         "outside": "Adressen ligger utanför området. Välj en adress i området.",
-        "outline": "Upphämtningsområde"
+        "outline": "Upphämtningsområde",
+        "map": {
+          "open": "Välj på kartan",
+          "title": "Välj upphämtningsplats",
+          "close": "Stäng",
+          "search": "Sök adress",
+          "areaLabel": "Karta över upphämtningsområden",
+          "sheetTitle": "Välj en plats i grönmarkerat område",
+          "addressLoading": "Hämtar adress…",
+          "addressUnknown": "Vald plats på kartan",
+          "inside": "Upphämtning är gratis på den här platsen.",
+          "outsideHint": "Flytta kartan så att nålen hamnar inom det gröna området.",
+          "confirm": "Bekräfta"
+        }
       },
       "gearbox": {
         "short": "Växel",
@@ -615,7 +637,8 @@
         "title": "Betala lektionen",
         "single": "En körlektion",
         "packageTitle": "Spara med paket",
-        "packageBody": "Ett paket kostar mindre per lektion. Du kan köpa det när som helst."
+        "packageBody": "Ett paket kostar mindre per lektion. Du kan köpa det när som helst.",
+        "introLabel": "Första lektionen 499 kr (ord. 745 kr)"
       }
     },
     "account": {
@@ -664,7 +687,8 @@
     "calendar": {
       "summary": "Körlektion med Makina Trafikskola",
       "description": "Avbokningsfrist: {deadline}."
-    }
+    },
+    "introPriceLabel": "Första lektionen 499 kr (ord. 745 kr)"
   },
   "auth": {
     "required": "Du behöver ett konto för att boka och betala. Det tar 30 sekunder.",
@@ -985,6 +1009,30 @@
       "rotate": "Byt länk",
       "summary": "Körlektion – {name}"
     },
+    "hours": {
+      "title": "Mina vanliga tider",
+      "help": "Sätt dina vanliga tider här. Blockera tid i Google Kalender så försvinner den från bokningen.",
+      "day": "Dag",
+      "from": "Från",
+      "to": "Till",
+      "area": "Område",
+      "row": "Tid {n}",
+      "add": "Lägg till tid",
+      "remove": "Ta bort",
+      "save": "Spara tider",
+      "saved": "Dina tider är sparade.",
+      "empty": "Du har inga vanliga tider ännu. Lägg till en tid för att kunna bli bokad.",
+      "noLocations": "Du har inget område kopplat till dig ännu. Kontakta skolan så lägger vi till ett.",
+      "errors": {
+        "HOURS_OVERLAP": "Tiderna överlappar eller slutar före de börjar. Justera tiderna och försök igen.",
+        "LOCATION_NOT_ASSIGNED": "Du kan bara välja områden som är kopplade till dig. Välj ett annat område.",
+        "INVALID_INPUT": "Kontrollera tiderna och försök igen.",
+        "TEACHER_NOT_FOUND": "Inget lärarkonto är kopplat till dig. Kontakta skolan.",
+        "UNAUTHENTICATED": "Logga in igen och försök sedan på nytt.",
+        "FORBIDDEN": "Du har inte behörighet att ändra de här tiderna.",
+        "UNKNOWN": "Det gick inte att spara. Försök igen om en stund."
+      }
+    },
     "block": {
       "title": "Blockera tillgänglighet",
       "description": "Lämna tiderna tomma för att blockera hela dagen.",
@@ -1089,6 +1137,7 @@
       },
       "prices": {
         "title": "Priser och betalning",
+        "bodySwishSoon": "Alla priser visas i svenska kronor inklusive 25 procent moms. Det pris som visas när du beställer gäller för köpet.\nDu betalar med kort eller Klarna via Stripe. Swish kommer snart. Betalningen är genomförd först när den har godkänts av betaltjänsten.\nKvitton skickas av Stripe till den e-postadress du anger. Makina Trafikskola skickar bokningskoder och påminnelser med sms.",
         "body": "Alla priser visas i svenska kronor inklusive 25 procent moms. Det pris som visas när du beställer gäller för köpet.\nDu betalar med kort, Swish eller Klarna via Stripe. Betalningen är genomförd först när den har godkänts av betaltjänsten.\nKvitton skickas av Stripe till den e-postadress du anger. Makina Trafikskola skickar bokningskoder och påminnelser med sms."
       },
       "delivery": {
@@ -1319,7 +1368,16 @@
       "keep": "Behåll tillfället",
       "occasion": "Kurstillfälle {count}",
       "booked": "{booked} bokade av {capacity}",
-      "error": "Det gick inte att spara. Försök igen."
+      "error": "Det gick inte att spara. Försök igen.",
+      "recurrenceTitle": "Risk 1 online – återkommande",
+      "recurrenceHelp": "Tillfällen skapas den 15:e och 28:e varje månad. Ändra eller avboka enskilda datum nedan.",
+      "startTime": "Starttid",
+      "duration": "Längd (minuter)",
+      "capacityDefault": "Platser",
+      "venueNameDefault": "Platsnamn",
+      "venueAddressDefault": "Adress",
+      "saveRecurrence": "Spara standard",
+      "days": "Dagar i månaden"
     },
     "editor": {
       "save": "Spara",
@@ -1606,6 +1664,8 @@
     "forbiddenDescription": "Den här sidan är till för en annan roll. Gå till startsidan eller till dina egna sidor.",
     "forbiddenDashboard": "Till mina sidor",
     "OUTSIDE_PICKUP_AREA": "Adressen ligger utanför upphämtningsområdet. Välj en adress i området.",
-    "AREA_UNAVAILABLE": "Det området är inte öppet för bokning ännu. Välj Farsta eller Upplands Väsby."
+    "AREA_UNAVAILABLE": "Det området är inte öppet för bokning ännu. Välj Farsta eller Upplands Väsby.",
+    "OUTSIDE_BOOKING_HORIZON": "Du kan boka högst fyra veckor framåt. Välj en tidigare tid.",
+    "INTRO_OFFER_USED": "Introduktionspriset gäller bara första lektionen. Välj ordinarie körlektion."
   }
 }

@@ -36,6 +36,25 @@ export default async function AdminCoursesPage() {
             course.product.slug
           }`,
         }))}
+        risk1Defaults={(() => {
+          const risk1 = courses.find((course) => course.kind === "RISK1");
+          if (!risk1) return null;
+          return {
+            id: risk1.id,
+            recurrenceEnabled: risk1.recurrenceEnabled,
+            recurrenceDays: risk1.recurrenceDays.length
+              ? risk1.recurrenceDays
+              : [15, 28],
+            defaultStartTime: risk1.defaultStartTime ?? "18:00",
+            durationMinutes: risk1.durationMinutes ?? 210,
+            defaultCapacity: risk1.defaultCapacity ?? 16,
+            defaultVenueName:
+              risk1.defaultVenueName ?? "Makina Trafikskola, Upplands Väsby",
+            defaultVenueAddress:
+              risk1.defaultVenueAddress ??
+              "Centralvägen 5, 194 77 Upplands Väsby",
+          };
+        })()}
         initialOccasions={occasions.map((occasion) => ({
           id: occasion.id,
           courseId: occasion.courseId,

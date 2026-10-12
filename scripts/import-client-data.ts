@@ -4,7 +4,16 @@ import path from "node:path";
 import type { Transmission } from "@prisma/client";
 import { z } from "zod";
 
-const OFFERED_TEACHING_LANGUAGES = ["sv", "en", "ti", "ku"] as const;
+const OFFERED_TEACHING_LANGUAGES = [
+  "sv",
+  "en",
+  "ti",
+  "ku",
+  "am",
+  "fa",
+  "prs",
+  "tig",
+] as const;
 
 const root = path.join(process.cwd(), "client-data");
 const apply = process.argv.includes("--apply");

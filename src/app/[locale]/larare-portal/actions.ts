@@ -12,6 +12,7 @@ import { requireRole } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
 import { bookingNotificationContext } from "@/lib/notifications/context";
 import { dispatchNotifications } from "@/lib/notifications/dispatch";
+import { notifyOwnerOfBooking } from "@/lib/notifications/owner";
 import { enqueueBookingNotifications } from "@/lib/notifications/queue";
 
 const localeSchema = z.enum(["sv", "en", "ti", "ar"]);
@@ -133,7 +134,9 @@ export async function blockAvailability(formData: FormData) {
       student: { select: { localePref: true } },
     },
   });
+  const ownerCancelledIds: string[] = [];
   const notificationIds = await db.$transaction(async (tx) => {
+    ownerCancelledIds.length = 0;
     const exception = await tx.availabilityException.create({
       data: {
         teacherId: teacher.id,
@@ -173,6 +176,7 @@ export async function blockAvailability(formData: FormData) {
       });
       if (!updated.count) continue;
       if (booking.creditCharged) {
+        ownerCancelledIds.push(booking.id);
         await tx.creditTransaction.create({
           data: {
             studentId: booking.studentId,
@@ -200,6 +204,9 @@ export async function blockAvailability(formData: FormData) {
     return ids;
   });
   await dispatchNotifications(notificationIds, now);
+  for (const bookingId of ownerCancelledIds) {
+    await notifyOwnerOfBooking(bookingId, "cancelled");
+  }
   revalidatePath(`/${parsed.locale}/larare-portal`);
 }
 

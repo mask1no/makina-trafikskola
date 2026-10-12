@@ -19,6 +19,7 @@ import {
 } from "@/lib/company/staff";
 import { benefitItems } from "@/lib/home/benefits";
 import { googleMapsBrowserConfig } from "@/lib/maps/config";
+import { swishActive } from "@/lib/payments/swish";
 import { activeTeacherLanguages } from "@/lib/teachers/query";
 import { nextFreeSlots } from "@/lib/bookings/availability";
 import { formatLessonDateTime } from "@/lib/format/datetime";
@@ -100,7 +101,10 @@ async function HomeBelow({ locale }: { locale: Locale }) {
   }).map((item) => ({
     id: item.id,
     size: item.size,
-    title: t(`home.benefits.${item.id}.title`),
+    title:
+      item.id === "payment" && !swishActive()
+        ? t("home.benefits.payment.titleSwishSoon")
+        : t(`home.benefits.${item.id}.title`),
     body:
       item.id === "language"
         ? t("home.benefits.language.body", {
@@ -109,7 +113,6 @@ async function HomeBelow({ locale }: { locale: Locale }) {
         : t(`home.benefits.${item.id}.body`),
   }));
   const theoryProduct = activeProducts.find((product) => product.slug === "korkortsteori");
-  const singleLesson = activeProducts.find((product) => product.slug === "en-korlektion");
   const entryPackage = activeProducts
     .filter((product) => product.kind === "PACKAGE")
     .sort((a, b) => a.priceOre - b.priceOre)[0];
@@ -146,15 +149,19 @@ async function HomeBelow({ locale }: { locale: Locale }) {
       marker: { lat: location.lat, lng: location.lng },
     }));
   const faqItems: FaqItem[] = [
-    ...(singleLesson && entryPackage
+    ...(entryPackage
       ? [{
           question: t("home.faq.cost.question"),
           answer: t("home.faq.cost.answer", {
-            singlePrice: formatPrice(singleLesson.priceOre, locale),
             packagePrice: formatPrice(entryPackage.priceOre, locale),
           }),
         }]
-      : []),
+      : [{
+          question: t("home.faq.cost.question"),
+          answer: t("home.faq.cost.answer", {
+            packagePrice: formatPrice(229900, locale),
+          }),
+        }]),
     ...(["languages", "pickup", "cancel", "late", "risk", "validity"] as const).map((key) => {
       const answer =
         key === "cancel" && !canBook
