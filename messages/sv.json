@@ -757,7 +757,12 @@
       "submit": "Logga in",
       "noAccount": "Inget konto?",
       "create": "Skapa konto",
-      "phoneAccountMissing": "Inget konto med det numret."
+      "phoneAccountMissing": "Inget konto med det numret.",
+      "codeSentNeutral": "Om numret finns hos oss skickar vi en kod.",
+      "changedNumber": "Har du bytt nummer?",
+      "changedNumberHelp": "Om du inte längre har tillgång till numret du registrerade dig med, ring eller mejla oss så hjälper vi dig vidare säkert.",
+      "callUs": "Ring oss",
+      "mailUs": "Maila oss"
     },
     "register": {
       "title": "Skapa konto",
@@ -890,6 +895,13 @@
         "FAILED": "Misslyckad",
         "REFUNDED": "Återbetald",
         "PARTIALLY_REFUNDED": "Delvis återbetald"
+      },
+      "live": {
+        "paid": "Betalningen är klar",
+        "failed": "Betalningen misslyckades",
+        "slow": "Det tar lite längre tid – du får ett sms när den är klar",
+        "myPages": "Till Mina sidor",
+        "pending": "Vi väntar på bekräftelse från betalningen…"
       }
     },
     "theory": {
@@ -972,7 +984,35 @@
       "transmissions": {
         "MANUAL": "Manuell",
         "AUTOMATIC": "Automat"
-      }
+      },
+      "settingsDescription": "Hantera namn, e-post, lösenord, telefon och sms-språk.",
+      "edit": "Ändra",
+      "close": "Stäng",
+      "saved": "Ändringarna är sparade.",
+      "saving": "Sparar…",
+      "save": "Spara",
+      "firstName": "Förnamn",
+      "lastName": "Efternamn",
+      "emailSaved": "E-postadressen är uppdaterad.",
+      "passwordSaved": "Lösenordet är sparat.",
+      "confirmWith": "Bekräfta med",
+      "confirmPassword": "Lösenord",
+      "confirmSms": "Sms-kod",
+      "password": "Lösenord",
+      "sendCode": "Skicka kod",
+      "smsCode": "Sms-kod",
+      "passwordSet": "Lösenord är inställt",
+      "passwordMissing": "Inget lösenord ännu",
+      "newPassword": "Nytt lösenord",
+      "currentPassword": "Nuvarande lösenord",
+      "lostOldNumber": "Jag har inte kvar mitt gamla nummer",
+      "lostOldNumberHint": "Bekräfta med ditt lösenord, eller om du nyss loggat in / använder Google.",
+      "sendCurrentCode": "Skicka kod till nuvarande nummer",
+      "sendNewCode": "Skicka kod till nytt nummer",
+      "smsLanguage": "Sms-språk",
+      "smsLanguageHelp": "Språket används för koder och påminnelser via sms.",
+      "unusedCreditsWarning": "Du har {count} lektioner kvar som försvinner.",
+      "unusedCreditsAck": "Jag förstår att oanvända lektioner och krediter försvinner."
     }
   },
   "teacherPortal": {
@@ -1555,7 +1595,15 @@
         "reason": "Obligatorisk skriftlig orsak",
         "submit": "Registrera justering",
         "saving": "Sparar…"
-      }
+      },
+      "editTitle": "Redigera elev",
+      "firstName": "Förnamn",
+      "lastName": "Efternamn",
+      "email": "E-post",
+      "phone": "Telefon",
+      "saved": "Eleven är uppdaterad.",
+      "saving": "Sparar…",
+      "save": "Spara"
     },
     "instructors": {
       "eyebrow": "Administration",
@@ -1630,7 +1678,7 @@
     "LESSON_NOT_STARTED": "Lektionen har inte börjat ännu.",
     "SMS_PROVIDER_NOT_CONFIGURED": "Sms-inloggning är inte konfigurerad ännu. Kontakta skolan eller använd e-post.",
     "SMS_DELIVERY_FAILED": "Sms kunde inte skickas. Kontrollera numret och försök igen.",
-    "RATE_LIMITED": "För många försök. Vänta och försök igen.",
+    "RATE_LIMITED": "Försök igen senare.",
     "SELECT_LOCATION_OR_PICKUP": "Välj en plats eller skriv en hämtningsadress.",
     "PICKUP_ADDRESS_CONFIRMATION_REQUIRED": "Välj en adress i listan för att fortsätta.",
     "GEARBOX_REQUIRED": "Välj manuell eller automatisk växellåda för att fortsätta.",
@@ -1679,6 +1727,9 @@
     "OUTSIDE_PICKUP_AREA": "Adressen ligger utanför upphämtningsområdet. Välj en adress i området.",
     "AREA_UNAVAILABLE": "Det området är inte öppet för bokning ännu. Välj Farsta eller Upplands Väsby.",
     "OUTSIDE_BOOKING_HORIZON": "Du kan boka högst fyra veckor framåt. Välj en tidigare tid.",
-    "INTRO_OFFER_USED": "Introduktionspriset gäller bara första lektionen. Välj ordinarie körlektion."
+    "INTRO_OFFER_USED": "Introduktionspriset gäller bara första lektionen. Välj ordinarie körlektion.",
+    "EMAIL_TAKEN": "E-postadressen används redan. Välj en annan.",
+    "LOST_PHONE_NOT_ALLOWED": "Bekräfta med lösenord eller logga in igen innan du byter nummer utan det gamla.",
+    "TURNSTILE_FAILED": "Säkerhetskontrollen misslyckades. Uppdatera sidan och försök igen."
   }
 }

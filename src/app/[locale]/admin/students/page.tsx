@@ -13,6 +13,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { StatCard } from "@/components/StatCard";
 
 import { CreditAdjustmentForm } from "./CreditAdjustmentForm";
+import { StudentEditor } from "./StudentEditor";
 
 export const dynamic = "force-dynamic";
 
@@ -65,6 +66,7 @@ export default async function AdminStudentsPage(
           firstName: true,
           lastName: true,
           email: true,
+          phone: true,
           localePref: true,
           credits: {
             orderBy: { createdAt: "desc" },
@@ -168,9 +170,19 @@ export default async function AdminStudentsPage(
               </h2>
               <p className="mt-1 text-ink-muted">
                 {selected.email ?? t("noEmail")} ·{" "}
+                {selected.phone ?? t("noPhone")} ·{" "}
                 {selected.localePref.toUpperCase()}
               </p>
               <div className="mt-5 max-w-sm"><StatCard label={t("balance")} value={balance} /></div>
+              <StudentEditor
+                student={{
+                  id: selected.id,
+                  firstName: selected.firstName,
+                  lastName: selected.lastName,
+                  email: selected.email,
+                  phone: selected.phone,
+                }}
+              />
               <CreditAdjustmentForm studentId={selected.id} />
             </article>
 

@@ -6,6 +6,7 @@ import { QuestionsBlock } from "@/components/QuestionsBlock";
 
 import { auth } from "@/auth";
 import { googleSignInEnabled } from "@/lib/auth/google";
+import { turnstileSiteKey } from "@/lib/auth/turnstile";
 import { googleMapsBrowserConfig } from "@/lib/maps/config";
 import { isLocale } from "@/i18n/routing";
 import { db } from "@/lib/db";
@@ -168,6 +169,7 @@ export default async function BookingPage(
         }))}
         initialTeacherId={initialTeacherId}
         googleEnabled={googleSignInEnabled()}
+        turnstileSiteKey={turnstileSiteKey()}
         initiallyAuthenticated={
           session?.user?.role === "STUDENT" && Boolean(session.user.id)
         }

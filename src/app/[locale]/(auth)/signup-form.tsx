@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useCallback, useEffect, useState } from "react";
 import { signIn } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
@@ -8,6 +8,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
+import { TurnstileField } from "@/components/TurnstileField";
 import { normalizeSwedishPhone } from "@/lib/auth/phone";
 import { safeRedirect } from "@/lib/auth/safe-redirect";
 import {
@@ -22,10 +23,12 @@ import { OtpResend } from "./otp-resend";
 export function SignupForm({
   locale,
   googleEnabled = false,
+  turnstileSiteKey = null,
   onAuthenticated,
 }: {
   locale: string;
   googleEnabled?: boolean;
+  turnstileSiteKey?: string | null;
   onAuthenticated?: () => void | Promise<void>;
 }) {
   const t = useTranslations("auth");
@@ -48,6 +51,8 @@ export function SignupForm({
   const [formError, setFormError] = useState("");
   const [phoneError, setPhoneError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const onTurnstile = useCallback((token: string) => setTurnstileToken(token), []);
 
   useEffect(() => {
     if (secondsLeft <= 0) return;
@@ -68,7 +73,11 @@ export function SignupForm({
       const response = await fetch("/api/auth/otp/request", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ phone: normalized }),
+        body: JSON.stringify({
+          phone: normalized,
+          purpose: "signup",
+          turnstileToken: turnstileToken || undefined,
+        }),
       });
       const payload = await response.json().catch(() => null);
       if (!response.ok) throw new Error(payload?.error?.code ?? "UNKNOWN");
@@ -181,6 +190,7 @@ export function SignupForm({
         showLabel={t("showPassword")}
         hideLabel={t("hidePassword")}
       />
+      <TurnstileField siteKey={turnstileSiteKey} onToken={onTurnstile} />
       <OtpResend
         code={code}
         onCodeChange={setCode}

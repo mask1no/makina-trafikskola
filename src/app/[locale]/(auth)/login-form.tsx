@@ -1,13 +1,15 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useCallback, useEffect, useState } from "react";
 import { signIn } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import { Button } from "@/components/Button";
+import { CallButton, MailButton } from "@/components/ContactButtons";
 import { Input } from "@/components/Input";
+import { TurnstileField } from "@/components/TurnstileField";
 import { normalizeSwedishPhone } from "@/lib/auth/phone";
 import { safeRedirect } from "@/lib/auth/safe-redirect";
 import {
@@ -29,9 +31,15 @@ function identifierLooksValid(value: string) {
 export function LoginForm({
   locale,
   googleEnabled = false,
+  turnstileSiteKey = null,
+  companyPhone,
+  companyEmail,
 }: {
   locale: string;
   googleEnabled?: boolean;
+  turnstileSiteKey?: string | null;
+  companyPhone: string;
+  companyEmail: string;
 }) {
   const t = useTranslations("auth");
   const login = useTranslations("auth.login");
@@ -50,7 +58,10 @@ export function LoginForm({
   const [busy, setBusy] = useState(false);
   const [formError, setFormError] = useState("");
   const [phoneError, setPhoneError] = useState("");
-  const [noPhoneAccount, setNoPhoneAccount] = useState(false);
+  const [codeHint, setCodeHint] = useState("");
+  const [changedNumberHelp, setChangedNumberHelp] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const onTurnstile = useCallback((token: string) => setTurnstileToken(token), []);
 
   useEffect(() => {
     if (secondsLeft <= 0) return;
@@ -61,7 +72,7 @@ export function LoginForm({
   async function requestCode() {
     setFormError("");
     setPhoneError("");
-    setNoPhoneAccount(false);
+    setCodeHint("");
     const normalized = normalizeSwedishPhone(phone);
     if (!normalized) {
       setPhoneError(errorText("INVALID_PHONE"));
@@ -72,21 +83,21 @@ export function LoginForm({
       const response = await fetch("/api/auth/otp/request", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ phone: normalized, purpose: "login" }),
+        body: JSON.stringify({
+          phone: normalized,
+          purpose: "login",
+          turnstileToken: turnstileToken || undefined,
+        }),
       });
       const payload = await response.json().catch(() => null);
       if (!response.ok) throw new Error(payload?.error?.code ?? "UNKNOWN");
       setPhone(normalized);
       setDevCode(typeof payload?.devCode === "string" ? payload.devCode : "");
       setCodeSent(true);
+      setCodeHint(login("codeSentNeutral"));
       setSecondsLeft(60);
     } catch (reason) {
-      const code = reason instanceof Error ? reason.message : "UNKNOWN";
-      if (code === "NO_ACCOUNT") {
-        setNoPhoneAccount(true);
-      } else {
-        setFormError(errorText(code));
-      }
+      setFormError(errorText(reason instanceof Error ? reason.message : "UNKNOWN"));
     } finally {
       setBusy(false);
     }
@@ -117,7 +128,10 @@ export function LoginForm({
           password,
           redirect: false,
         });
-        if (result?.error) throw new Error("INVALID_CREDENTIALS");
+        if (result?.error) {
+          if (result.code === "RATE_LIMITED") throw new Error("RATE_LIMITED");
+          throw new Error("INVALID_CREDENTIALS");
+        }
       }
       router.push(destinationFor(locale, searchParams));
       router.refresh();
@@ -148,7 +162,7 @@ export function LoginForm({
               onClick={() => {
                 setMethod(value === "phone" ? "phone" : "password");
                 setFormError("");
-                setNoPhoneAccount(false);
+                setCodeHint("");
                 setCodeSent(false);
                 setCode("");
               }}
@@ -167,11 +181,16 @@ export function LoginForm({
             value={phone}
             onChange={(value) => {
               setPhone(value);
-              setNoPhoneAccount(false);
+              setCodeHint("");
             }}
             error={phoneError}
             disabled={codeSent}
           />
+          {codeHint ? (
+            <p className="text-small text-ink-muted" role="status">
+              {codeHint}
+            </p>
+          ) : null}
           <OtpResend
             code={code}
             onCodeChange={setCode}
@@ -181,6 +200,7 @@ export function LoginForm({
             busy={busy}
             onResend={requestCode}
           />
+          <TurnstileField siteKey={turnstileSiteKey} onToken={onTurnstile} />
         </>
       ) : (
         <>
@@ -226,14 +246,6 @@ export function LoginForm({
           {formError}
         </p>
       ) : null}
-      {noPhoneAccount ? (
-        <p role="alert" className="text-small text-danger">
-          {login("phoneAccountMissing")}{" "}
-          <Link className="font-bold underline" href={signupHref}>
-            {login("create")}
-          </Link>
-        </p>
-      ) : null}
       {method === "phone" && !codeSent ? (
         <Button type="button" className="w-full" disabled={busy || !phone} onClick={requestCode}>
           {busy ? t("working") : t("sendCode")}
@@ -249,6 +261,26 @@ export function LoginForm({
           {login("create")}
         </Link>
       </p>
+      <button
+        type="button"
+        className="min-h-11 text-center text-small font-bold text-ink underline"
+        onClick={() => setChangedNumberHelp((value) => !value)}
+      >
+        {login("changedNumber")}
+      </button>
+      {changedNumberHelp ? (
+        <div className="rounded-sm border border-border bg-page p-4 text-small leading-6 text-ink-muted">
+          <p>{login("changedNumberHelp")}</p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <CallButton phone={companyPhone} size="small">
+              {login("callUs")}
+            </CallButton>
+            <MailButton email={companyEmail} size="small">
+              {login("mailUs")}
+            </MailButton>
+          </div>
+        </div>
+      ) : null}
     </form>
     <GoogleButton
       enabled={googleEnabled}

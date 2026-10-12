@@ -15,18 +15,25 @@ const mocks = vi.hoisted(() => {
     cancelIntent: vi.fn(),
     consumeOtp: vi.fn(),
     findUser: vi.fn(),
+    updateUser: vi.fn(),
+    auditCreate: vi.fn(),
     retrieveIntent: vi.fn(),
     stripeIsConfigured: vi.fn(),
     transaction: vi.fn(),
+    getAvailableCreditBalance: vi.fn(),
     tx,
   };
 });
 
 vi.mock("@/auth", () => ({ auth: mocks.auth }));
 vi.mock("@/lib/auth/otp-store", () => ({ consumeOtp: mocks.consumeOtp }));
+vi.mock("@/lib/credits/ledger", () => ({
+  getAvailableCreditBalance: mocks.getAvailableCreditBalance,
+}));
 vi.mock("@/lib/db", () => ({
   db: {
-    user: { findFirst: mocks.findUser },
+    user: { findFirst: mocks.findUser, update: mocks.updateUser },
+    auditLog: { create: mocks.auditCreate },
     $transaction: mocks.transaction,
   },
 }));
@@ -40,13 +47,18 @@ vi.mock("@/lib/stripe", () => ({
   }),
 }));
 
-import { DELETE } from "./route";
+import { DELETE, PATCH } from "./route";
 
-function request() {
+function request(body: Record<string, unknown> = {}) {
   return new Request("http://localhost/api/me", {
     method: "DELETE",
     headers: { "content-type": "application/json" },
-    body: JSON.stringify({ confirm: "DELETE", code: "123456" }),
+    body: JSON.stringify({
+      confirm: "DELETE",
+      unusedCreditsAck: true,
+      code: "123456",
+      ...body,
+    }),
   });
 }
 
@@ -54,6 +66,7 @@ function userWithPendingIntent() {
   return {
     id: "student-1",
     phone: "+46701111111",
+    passwordHash: "hash",
     _count: { bookings: 0, courseBookings: 0 },
     orders: [
       {
@@ -112,4 +125,45 @@ describe("student account deletion", () => {
     expect(mocks.cancelIntent).not.toHaveBeenCalled();
     expect(mocks.transaction).not.toHaveBeenCalled();
   });
+
+  it("requires unusedCreditsAck before deleting", async () => {
+    const response = await DELETE(
+      new Request("http://localhost/api/me", {
+        method: "DELETE",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ confirm: "DELETE", code: "123456" }),
+      }),
+    );
+    expect(response.status).toBe(400);
+  });
+
+  it("updates the student name after validation", async () => {
+    mocks.findUser.mockResolvedValue({
+      id: "student-1",
+      firstName: "Ada",
+      lastName: "Student",
+    });
+    mocks.updateUser.mockResolvedValue({
+      firstName: "Nova",
+      lastName: "Student",
+    });
+
+    const response = await PATCH(
+      new Request("http://localhost/api/me", {
+        method: "PATCH",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ firstName: "Nova" }),
+      }),
+    );
+
+    expect(response.status).toBe(200);
+    await expect(response.json()).resolves.toEqual({
+      firstName: "Nova",
+      lastName: "Student",
+    });
+    expect(mocks.auditCreate).toHaveBeenCalledWith({
+      data: expect.objectContaining({ action: "user.name_changed" }),
+    });
+  });
 });
+

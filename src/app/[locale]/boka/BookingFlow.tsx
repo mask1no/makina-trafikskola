@@ -46,6 +46,7 @@ type Props = {
   mapApiKey?: string;
   mapId?: string;
   googleEnabled?: boolean;
+  turnstileSiteKey?: string | null;
 };
 
 export function BookingFlow({
@@ -60,6 +61,7 @@ export function BookingFlow({
   mapApiKey,
   mapId,
   googleEnabled = false,
+  turnstileSiteKey = null,
 }: Props) {
   const t = useTranslations("booking");
   const errors = useTranslations("errors");
@@ -458,6 +460,7 @@ export function BookingFlow({
             <AccountStep
               locale={locale}
               googleEnabled={googleEnabled}
+              turnstileSiteKey={turnstileSiteKey}
               onAuthenticated={async () => {
                 patch({ authenticated: true });
                 await createBooking(true);

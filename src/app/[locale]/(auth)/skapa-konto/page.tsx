@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { googleSignInEnabled } from "@/lib/auth/google";
 import { safeRedirect } from "@/lib/auth/safe-redirect";
+import { turnstileSiteKey } from "@/lib/auth/turnstile";
 
 import { SignupForm } from "../auth-ui";
 
@@ -41,6 +42,7 @@ export default async function RegisterPage(
           <SignupForm
             locale={params.locale}
             googleEnabled={googleSignInEnabled()}
+            turnstileSiteKey={turnstileSiteKey()}
           />
         </div>
         <p className="mt-10 text-small leading-6 text-ink-muted">{authT("support")}</p>

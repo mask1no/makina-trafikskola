@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 
 import { auth } from "@/auth";
 import { googleSignInEnabled } from "@/lib/auth/google";
+import { turnstileSiteKey } from "@/lib/auth/turnstile";
 import { safeRedirect } from "@/lib/auth/safe-redirect";
 
 import { LoginForm } from "../auth-ui";
@@ -29,9 +30,10 @@ export default async function LoginPage(
       ),
     );
   }
-  const [t, authT] = await Promise.all([
+  const [t, authT, company] = await Promise.all([
     getTranslations("auth.login"),
     getTranslations("auth"),
+    getTranslations("company"),
   ]);
   const errorKey =
     searchParams.error === "AccessDenied"
@@ -58,6 +60,9 @@ export default async function LoginPage(
           <LoginForm
             locale={params.locale}
             googleEnabled={googleSignInEnabled()}
+            turnstileSiteKey={turnstileSiteKey()}
+            companyPhone={company("phone")}
+            companyEmail={company("email")}
           />
         </div>
         <p className="mt-10 text-small leading-6 text-ink-muted">{authT("support")}</p>

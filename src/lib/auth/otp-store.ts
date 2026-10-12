@@ -12,14 +12,22 @@ const HOUR_SECONDS = 60 * 60;
 const DAY_SECONDS = 24 * HOUR_SECONDS;
 const LOGIN_WINDOW_SECONDS = 15 * 60;
 const LOGIN_LIMIT = 5;
+const OTP_IP_WINDOW_SECONDS = 15 * 60;
+const OTP_IP_LIMIT = 10;
 const MAX_OTP_ATTEMPTS = 5;
 
 export type OtpStoreResult =
   | { allowed: true }
-  | { allowed: false; retryAfterSeconds: number };
+  | { allowed: false; retryAfterSeconds: number; reason?: "phone" | "ip" | "global" };
 
 function phoneKey(phone: string) {
   return createHash("sha256").update(phone).digest("hex");
+}
+
+export function otpDailyCap() {
+  const raw = Number(process.env.OTP_DAILY_CAP ?? "300");
+  if (!Number.isFinite(raw) || raw < 1) return 300;
+  return Math.floor(raw);
 }
 
 async function bumpRateLimit(key: string, windowSeconds: number, now: Date) {
@@ -44,12 +52,37 @@ async function bumpRateLimit(key: string, windowSeconds: number, now: Date) {
   return { count: updated.count, retryAfterSeconds };
 }
 
-export async function storeOtp(
+/** Per-IP + global daily + per-phone budgets for every OTP request. */
+export async function checkOtpRequestLimits(
   phone: string,
-  code: string,
   now: Date,
+  options?: { ip?: string },
 ): Promise<OtpStoreResult> {
   const key = phoneKey(phone);
+  const ip = options?.ip?.trim() || "unknown";
+
+  const global = await bumpRateLimit("otp:global:day", DAY_SECONDS, now);
+  if (global.count > otpDailyCap()) {
+    return {
+      allowed: false,
+      retryAfterSeconds: global.retryAfterSeconds,
+      reason: "global",
+    };
+  }
+
+  const ipLimit = await bumpRateLimit(
+    `otp:ip:${phoneKey(ip)}:window`,
+    OTP_IP_WINDOW_SECONDS,
+    now,
+  );
+  if (ipLimit.count > OTP_IP_LIMIT) {
+    return {
+      allowed: false,
+      retryAfterSeconds: ipLimit.retryAfterSeconds,
+      reason: "ip",
+    };
+  }
+
   const hourly = await bumpRateLimit(`otp:${key}:hour`, HOUR_SECONDS, now);
   const daily = await bumpRateLimit(`otp:${key}:day`, DAY_SECONDS, now);
   if (hourly.count > HOURLY_LIMIT || daily.count > DAILY_LIMIT) {
@@ -59,8 +92,22 @@ export async function storeOtp(
         hourly.count > HOURLY_LIMIT
           ? hourly.retryAfterSeconds
           : daily.retryAfterSeconds,
+      reason: "phone",
     };
   }
+
+  return { allowed: true };
+}
+
+export async function storeOtp(
+  phone: string,
+  code: string,
+  now: Date,
+  options?: { ip?: string },
+): Promise<OtpStoreResult> {
+  const key = phoneKey(phone);
+  const limits = await checkOtpRequestLimits(phone, now, options);
+  if (!limits.allowed) return limits;
 
   await db.otpCode.upsert({
     where: { phoneHash: key },
@@ -107,14 +154,23 @@ export async function consumeOtp(
   return true;
 }
 
+/** 5 attempts / 15 min per account identifier AND per IP. */
 export async function allowLoginAttempt(
   identifier: string,
-  _ip: string,
+  ip: string,
   now: Date,
 ): Promise<boolean> {
-  const key = `login:${phoneKey(identifier)}`;
-  const result = await bumpRateLimit(key, LOGIN_WINDOW_SECONDS, now);
-  return result.count <= LOGIN_LIMIT;
+  const idResult = await bumpRateLimit(
+    `login:${phoneKey(identifier)}`,
+    LOGIN_WINDOW_SECONDS,
+    now,
+  );
+  const ipResult = await bumpRateLimit(
+    `login:ip:${phoneKey(ip || "unknown")}`,
+    LOGIN_WINDOW_SECONDS,
+    now,
+  );
+  return idResult.count <= LOGIN_LIMIT && ipResult.count <= LOGIN_LIMIT;
 }
 
 export async function allowRateLimitedAction(

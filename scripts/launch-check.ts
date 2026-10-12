@@ -243,6 +243,22 @@ async function checkConfiguration() {
     googleMissing.length ? "WARN" : "PASS",
     googleMissing.length ? `missing: ${googleMissing.join(", ")}` : "configured",
   );
+
+  const turnstileMissing = ["TURNSTILE_SITE_KEY", "TURNSTILE_SECRET_KEY"].filter(
+    (name) => !configured(name),
+  );
+  record(
+    "Cloudflare Turnstile",
+    turnstileMissing.length ? "WARN" : "PASS",
+    turnstileMissing.length
+      ? `missing: ${turnstileMissing.join(", ")} (OTP bot checks skipped)`
+      : "configured",
+  );
+  record(
+    "OTP_DAILY_CAP",
+    "PASS",
+    `OTP_DAILY_CAP=${process.env.OTP_DAILY_CAP?.trim() || "300 (default)"}`,
+  );
   const mapsKey =
     configured("GOOGLE_MAPS_BROWSER_KEY") ||
     configured("NEXT_PUBLIC_GOOGLE_MAPS_KEY");

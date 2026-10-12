@@ -1,5 +1,7 @@
 import { getTranslations } from "next-intl/server";
 
+import { turnstileSiteKey } from "@/lib/auth/turnstile";
+
 import { ForgotPasswordForm } from "../auth-ui";
 
 export default async function ForgotPasswordPage(props: {
@@ -19,7 +21,10 @@ export default async function ForgotPasswordPage(props: {
         </h1>
         <p className="mt-3 max-w-[70ch] text-body leading-7 text-ink-muted">{t("description")}</p>
         <div className="mx-auto mt-8 w-full max-w-[420px] rounded-lg border border-border bg-card p-5 sm:p-6">
-          <ForgotPasswordForm locale={params.locale} />
+          <ForgotPasswordForm
+            locale={params.locale}
+            turnstileSiteKey={turnstileSiteKey()}
+          />
         </div>
       </div>
     </div>

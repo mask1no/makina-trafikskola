@@ -757,7 +757,12 @@
       "submit": "Log in",
       "noAccount": "No account?",
       "create": "Create account",
-      "phoneAccountMissing": "No account uses that number."
+      "phoneAccountMissing": "No account uses that number.",
+      "codeSentNeutral": "If the number is registered with us, we will send a code.",
+      "changedNumber": "Changed your number?",
+      "changedNumberHelp": "If you no longer have the number you registered with, call or email us and we will help you securely.",
+      "callUs": "Call us",
+      "mailUs": "Email us"
     },
     "register": {
       "title": "Create account",
@@ -890,6 +895,13 @@
         "FAILED": "Failed",
         "REFUNDED": "Refunded",
         "PARTIALLY_REFUNDED": "Partially refunded"
+      },
+      "live": {
+        "paid": "Payment complete",
+        "failed": "Payment failed",
+        "slow": "This is taking a little longer - you will get an SMS when it is done",
+        "myPages": "Go to My pages",
+        "pending": "Waiting for payment confirmation..."
       }
     },
     "theory": {
@@ -972,7 +984,35 @@
       "transmissions": {
         "MANUAL": "Manual",
         "AUTOMATIC": "Automatic"
-      }
+      },
+      "settingsDescription": "Manage name, email, password, phone and SMS language.",
+      "edit": "Edit",
+      "close": "Close",
+      "saved": "Your changes are saved.",
+      "saving": "Saving...",
+      "save": "Save",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "emailSaved": "Your email address is updated.",
+      "passwordSaved": "Your password is saved.",
+      "confirmWith": "Confirm with",
+      "confirmPassword": "Password",
+      "confirmSms": "SMS code",
+      "password": "Password",
+      "sendCode": "Send code",
+      "smsCode": "SMS code",
+      "passwordSet": "Password is set",
+      "passwordMissing": "No password yet",
+      "newPassword": "New password",
+      "currentPassword": "Current password",
+      "lostOldNumber": "I no longer have my old number",
+      "lostOldNumberHint": "Confirm with your password, or if you recently signed in / use Google.",
+      "sendCurrentCode": "Send code to current number",
+      "sendNewCode": "Send code to new number",
+      "smsLanguage": "SMS language",
+      "smsLanguageHelp": "Used for codes and reminders sent by SMS.",
+      "unusedCreditsWarning": "You have {count} lessons left that will disappear.",
+      "unusedCreditsAck": "I understand that unused lessons and credits will disappear."
     }
   },
   "teacherPortal": {
@@ -1512,7 +1552,15 @@
         "reason": "Required written reason",
         "submit": "Record adjustment",
         "saving": "Saving…"
-      }
+      },
+      "editTitle": "Edit student",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "email": "Email",
+      "phone": "Phone",
+      "saved": "Student updated.",
+      "saving": "Saving...",
+      "save": "Save"
     },
     "instructors": {
       "eyebrow": "Administration",
@@ -1587,7 +1635,7 @@
     "LESSON_NOT_STARTED": "The lesson has not started yet.",
     "SMS_PROVIDER_NOT_CONFIGURED": "Text-message sign-in is not configured yet. Contact the school or use email.",
     "SMS_DELIVERY_FAILED": "The text message could not be sent. Check the number and try again.",
-    "RATE_LIMITED": "Too many attempts. Wait and try again.",
+    "RATE_LIMITED": "Try again later.",
     "SELECT_LOCATION_OR_PICKUP": "Choose a location or enter a pickup address.",
     "PICKUP_ADDRESS_CONFIRMATION_REQUIRED": "Choose an address from the list to continue.",
     "GEARBOX_REQUIRED": "Choose manual or automatic transmission to continue.",
@@ -1636,7 +1684,10 @@
     "OUTSIDE_PICKUP_AREA": "That address is outside the pickup area. Choose an address inside the area.",
     "AREA_UNAVAILABLE": "That area is not open for booking yet. Choose Farsta or Upplands Väsby.",
     "OUTSIDE_BOOKING_HORIZON": "You can book at most four weeks ahead. Choose an earlier time.",
-    "INTRO_OFFER_USED": "The intro price applies only to your first lesson. Choose the regular lesson."
+    "INTRO_OFFER_USED": "The intro price applies only to your first lesson. Choose the regular lesson.",
+    "EMAIL_TAKEN": "That email is already in use. Choose another.",
+    "LOST_PHONE_NOT_ALLOWED": "Confirm with your password or sign in again before changing number without the old one.",
+    "TURNSTILE_FAILED": "Security check failed. Refresh the page and try again."
   },
   "contact": {
     "metadata": "Contact details for Makina Trafikskola in Stockholm.",

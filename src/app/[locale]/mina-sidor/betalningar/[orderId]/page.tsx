@@ -8,6 +8,7 @@ import { LinkButton } from "@/components/LinkButton";
 import { Notice } from "@/components/Notice";
 
 import { requireStudent } from "../../_lib";
+import { PaymentStatusPoller } from "./PaymentStatusPoller";
 
 export const dynamic = "force-dynamic";
 
@@ -94,6 +95,11 @@ export default async function PaymentStatusPage(
     <section className="mx-auto max-w-4xl">
       <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-ink-muted">{t("eyebrow")}</p>
       <h1 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">{t("title")}</h1>
+      <PaymentStatusPoller
+        orderId={order.id}
+        locale={parsed.data.locale}
+        initialStatus={order.status}
+      />
       <div className={`mt-6 rounded-lg border p-5 sm:p-6 ${statusTone}`} role="status">
         <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-ink-muted">{t("eyebrow")}</p>
         <p className="mt-1 text-2xl font-black">{t(`statuses.${order.status}`)}</p>

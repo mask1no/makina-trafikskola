@@ -1,10 +1,11 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useCallback, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 
 import { Button } from "@/components/Button";
+import { TurnstileField } from "@/components/TurnstileField";
 import { normalizeSwedishPhone } from "@/lib/auth/phone";
 import {
   PasswordField,
@@ -13,7 +14,13 @@ import {
 } from "./auth-shared";
 import { OtpResend } from "./otp-resend";
 
-export function ForgotPasswordForm({ locale }: { locale: string }) {
+export function ForgotPasswordForm({
+  locale,
+  turnstileSiteKey = null,
+}: {
+  locale: string;
+  turnstileSiteKey?: string | null;
+}) {
   const t = useTranslations("auth");
   const forgot = useTranslations("auth.forgot");
   const errorText = useErrorText();
@@ -27,6 +34,8 @@ export function ForgotPasswordForm({ locale }: { locale: string }) {
   const [done, setDone] = useState(false);
   const [formError, setFormError] = useState("");
   const [phoneError, setPhoneError] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const onTurnstile = useCallback((token: string) => setTurnstileToken(token), []);
 
   useEffect(() => {
     if (secondsLeft <= 0) return;
@@ -47,7 +56,11 @@ export function ForgotPasswordForm({ locale }: { locale: string }) {
       const response = await fetch("/api/auth/otp/request", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ phone: normalized }),
+        body: JSON.stringify({
+          phone: normalized,
+          purpose: "password-reset",
+          turnstileToken: turnstileToken || undefined,
+        }),
       });
       const payload = await response.json().catch(() => null);
       if (!response.ok) throw new Error(payload?.error?.code ?? "UNKNOWN");
@@ -103,6 +116,7 @@ export function ForgotPasswordForm({ locale }: { locale: string }) {
         error={phoneError}
         disabled={codeSent}
       />
+      <TurnstileField siteKey={turnstileSiteKey} onToken={onTurnstile} />
       <OtpResend
         code={code}
         onCodeChange={setCode}

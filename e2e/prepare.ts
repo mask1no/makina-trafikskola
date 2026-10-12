@@ -24,14 +24,18 @@ function databaseUrlFromEnvFile() {
 databaseUrlFromEnvFile();
 integrationGlobalSetup();
 
-const result = spawnSync(
-  process.execPath,
-  ["node_modules/prisma/build/index.js", "db", "seed"],
-  {
-  env: { ...process.env, NODE_ENV: "test" },
-  stdio: "inherit",
-  },
-);
+function runPrisma(args: string[]) {
+  const result = spawnSync(
+    process.execPath,
+    ["node_modules/prisma/build/index.js", ...args],
+    {
+      env: { ...process.env, NODE_ENV: "test" },
+      stdio: "inherit",
+    },
+  );
+  if (result.error) throw result.error;
+  if (result.status !== 0) process.exit(result.status ?? 1);
+}
 
-if (result.error) throw result.error;
-if (result.status !== 0) process.exit(result.status ?? 1);
+runPrisma(["migrate", "deploy"]);
+runPrisma(["db", "seed"]);

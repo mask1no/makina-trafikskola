@@ -757,7 +757,12 @@
       "submit": "እቶ",
       "noAccount": "ሕሳብ የብልካን?",
       "create": "ሕሳብ ክፈት",
-      "phoneAccountMissing": "በዚ ቁጽሪ ስልኪ ሕሳብ የለን።"
+      "phoneAccountMissing": "በዚ ቁጽሪ ስልኪ ሕሳብ የለን።",
+      "codeSentNeutral": "እቲ ቁጽሪ ኣብና እንተሃልዩ ኮድ ንሰድድ።",
+      "changedNumber": "ቁጽሪ ቀይርካ ዲያ?",
+      "changedNumberHelp": "እቲ ዝተመዝገብካሉ ቁጽሪ እንተዘይብልካ፣ ደውሉና ወይ ኢመይል ግበሩና ብድሕን ንሕግዘካ።",
+      "callUs": "ደውሉና",
+      "mailUs": "ኢመይል ግበሩና"
     },
     "register": {
       "title": "ሕሳብ ክፈት",
@@ -890,6 +895,13 @@
         "FAILED": "ኣይተዓወተን",
         "REFUNDED": "ተመሊሱ",
         "PARTIALLY_REFUNDED": "ብኸፊል ተመሊሱ"
+      },
+      "live": {
+        "paid": "ክፍሊት ተዛዚሙ",
+        "failed": "ክፍሊት ኣይሰለጠን",
+        "slow": "ቁሩብ ይወስድ ኣሎ – ምስ ተዛዘመ SMS ክትረክብ ኢኻ",
+        "myPages": "ናብ ገጻትይ",
+        "pending": "ምርጋጋጽ ክፍሊት ንጽበ…"
       }
     },
     "theory": {
@@ -972,7 +984,35 @@
       "transmissions": {
         "MANUAL": "ማንዋል",
         "AUTOMATIC": "ኣውቶማቲክ"
-      }
+      },
+      "settingsDescription": "ስም፣ ኢመይል፣ መሕለፊ ቃል፣ ስልኪን ቋንቋ SMSን ኣመሓድር።",
+      "edit": "ቀይር",
+      "close": "ዕጶ",
+      "saved": "ለውጥታት ተቀሚጦም።",
+      "saving": "ይቅመጥ ኣሎ…",
+      "save": "ኣቀምጥ",
+      "firstName": "ስም",
+      "lastName": "ስድራቤት ስም",
+      "emailSaved": "ኢመይል ተሓዲሱ።",
+      "passwordSaved": "መሕለፊ ቃል ተቀሚጡ።",
+      "confirmWith": "ኣረጋግጽ ብ",
+      "confirmPassword": "መሕለፊ ቃል",
+      "confirmSms": "ኮድ SMS",
+      "password": "መሕለፊ ቃል",
+      "sendCode": "ኮድ ስደድ",
+      "smsCode": "ኮድ SMS",
+      "passwordSet": "መሕለፊ ቃል ተሰሪዑ",
+      "passwordMissing": "መሕለፊ ቃል የለን",
+      "newPassword": "ሓድሽ መሕለፊ ቃል",
+      "currentPassword": "ናይ ሕጂ መሕለፊ ቃል",
+      "lostOldNumber": "ናይ ቀደም ቁጽረይ የብለይን",
+      "lostOldNumberHint": "ብመሕለፊ ቃል ኣረጋግጽ፣ ወይ ብቅርቡ እንተኣቲያ / Google ትጥቀም እንተኮይኑ።",
+      "sendCurrentCode": "ናብ ናይ ሕጂ ቁጽሪ ኮድ ስደድ",
+      "sendNewCode": "ናብ ሓድሽ ቁጽሪ ኮድ ስደድ",
+      "smsLanguage": "ቋንቋ SMS",
+      "smsLanguageHelp": "ንኮዳትን መዘኻከሪታት ብSMS ይጥቀም።",
+      "unusedCreditsWarning": "{count} ትምህርቲታት ክጠፍኡ እዮም።",
+      "unusedCreditsAck": "ዘይተጠቅሙ ትምህርቲታትን ክረዲትን ከም ዝጠፍኡ ይርድኣኒ።"
     }
   },
   "teacherPortal": {
@@ -1512,7 +1552,15 @@
         "reason": "ኣድላዪ ጽሑፍ ምኽንያት",
         "submit": "ለውጢ መዝግብ",
         "saving": "ይዕቀብ…"
-      }
+      },
+      "editTitle": "ተማሃራይ ኣርም",
+      "firstName": "ስም",
+      "lastName": "ስድራቤት ስም",
+      "email": "ኢመይል",
+      "phone": "ስልኪ",
+      "saved": "ተማሃራይ ተሓዲሱ።",
+      "saving": "ይቅመጥ ኣሎ…",
+      "save": "ኣቀምጥ"
     },
     "instructors": {
       "eyebrow": "ምምሕዳር",
@@ -1588,7 +1636,7 @@
     "LESSON_NOT_STARTED": "ትምህርቲ ገና ኣይጀመረን።",
     "SMS_PROVIDER_NOT_CONFIGURED": "ናይ SMS ምእታው ገና ኣይተዳለወን። ምስ ቤት ትምህርቲ ተራኸብ ወይ ኢመይል ተጠቐም።",
     "SMS_DELIVERY_FAILED": "SMS ክሰደድ ኣይከኣለን። ቁጽሪ ኣረጋግጽ እሞ ደጊምካ ፈትን።",
-    "RATE_LIMITED": "ብዙሕ ፈተነ። ጽናሕ እሞ ደጊምካ ፈትን።",
+    "RATE_LIMITED": "ጸኒሕካ ደጊምካ ፈትን።",
     "SELECT_LOCATION_OR_PICKUP": "ቦታ ምረጽ ወይ ኣድራሻ ጽሓፍ።",
     "PICKUP_ADDRESS_CONFIRMATION_REQUIRED": "ንምቕጻል ካብ ዝርዝር ኣድራሻ ምረጽ።",
     "GEARBOX_REQUIRED": "ንምቕጻል ማንዋል ወይ ኣውቶማቲክ ማርሻ ምረጽ።",
@@ -1636,7 +1684,10 @@
     "OUTSIDE_PICKUP_AREA": "እቲ ኣድራሻ ካብ ዞባ ምውሳድ ወጻኢ እዩ። ኣብ ውሽጢ ዞባ ዝርከብ ኣድራሻ ምረጽ።",
     "AREA_UNAVAILABLE": "እቲ ዞባ ንቦታ ምሓዝ ኣይተኸፍተን። ፋርስታ ወይ ኡፕላንድስ ቬስቢ ምረጽ።",
     "OUTSIDE_BOOKING_HORIZON": "ክሳብ ኣርባዕተ ሰሙን ጥራይ ክትሓዝ ትክእል። ቅድሚኡ ዝወነ ግዜ ምረጽ።",
-    "INTRO_OFFER_USED": "ናይ መግቢ ዋጋ ንቀዳማይ ትምህርቲ ጥራይ እዩ። ንቡር ትምህርቲ ምረጽ።"
+    "INTRO_OFFER_USED": "ናይ መግቢ ዋጋ ንቀዳማይ ትምህርቲ ጥራይ እዩ። ንቡር ትምህርቲ ምረጽ።",
+    "EMAIL_TAKEN": "እዚ ኢመይል ድሮ ተታሒዙ እዩ። ካልእ ምረጽ።",
+    "LOST_PHONE_NOT_ALLOWED": "ብመሕለፊ ቃል ኣረጋግጽ ወይ ዳግማይ እተ፣ ቅድሚ ብዘይ ናይ ቀደም ቁጽሪ ምቅያር።",
+    "TURNSTILE_FAILED": "ናይ ድሕንነት መርመራ ኣይሰለጠን። ገጽ ኣሐድስ እሞ ደጊምካ ፈትን።"
   },
   "contact": {
     "metadata": "ናይ ማኪና ትራፊክስኮላ ኣድራሻን ርክብን ኣብ ስቶኮልም።",

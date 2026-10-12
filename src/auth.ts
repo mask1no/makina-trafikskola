@@ -1,5 +1,5 @@
 import type { DefaultSession } from "next-auth";
-import NextAuth from "next-auth";
+import NextAuth, { CredentialsSignin } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
 import type { Role } from "@prisma/client";
@@ -7,18 +7,28 @@ import bcrypt from "bcryptjs";
 import { z } from "zod";
 
 import { allowLoginAttempt, consumeOtp } from "@/lib/auth/otp-store";
+import { touchLastAuth } from "@/lib/auth/session-version";
+import { clientIp } from "@/lib/http/client-ip";
 import { db } from "@/lib/db";
+
+class RateLimitedSignin extends CredentialsSignin {
+  code = "RATE_LIMITED";
+}
 
 declare module "next-auth" {
   interface Session {
     user: {
       id: string;
       role: Role;
+      sessionVersion?: number;
+      authenticatedAt?: string;
+      googleLinked?: boolean;
     } & DefaultSession["user"];
   }
 
   interface User {
     role: Role;
+    sessionVersion?: number;
   }
 }
 
@@ -28,6 +38,8 @@ declare module "@auth/core/jwt" {
     role: Role;
     googleSub?: string;
     checkedAt?: number;
+    sessionVersion?: number;
+    authenticatedAt?: number;
   }
 }
 
@@ -45,19 +57,6 @@ const phoneCredentialsSchema = z.object({
   firstName: z.string().trim().min(1).max(80).optional(),
   lastName: z.string().trim().min(1).max(80).optional(),
 });
-
-function clientIp(request: Request) {
-  const forwarded = request.headers.get("x-forwarded-for");
-  if (forwarded) {
-    const hops = forwarded
-      .split(",")
-      .map((part) => part.trim())
-      .filter(Boolean);
-    const trustedHop = hops.at(-1);
-    if (trustedHop) return trustedHop;
-  }
-  return request.headers.get("x-real-ip") ?? "unknown";
-}
 
 function splitName(name: string) {
   const parts = name.trim().split(/\s+/).filter(Boolean);
@@ -103,7 +102,7 @@ export const {
             now,
           ))
         ) {
-          return null;
+          throw new RateLimitedSignin();
         }
 
         const user = parsed.data.phone
@@ -120,11 +119,14 @@ export const {
           return null;
         }
 
+        await touchLastAuth(user.id, now);
+
         return {
           id: user.id,
           email: user.email,
           name: `${user.firstName} ${user.lastName}`,
           role: user.role,
+          sessionVersion: user.sessionVersion,
         };
       },
     }),
@@ -151,7 +153,7 @@ export const {
             now,
           ))
         ) {
-          return null;
+          throw new RateLimitedSignin();
         }
         if (!(await consumeOtp(parsed.data.phone, parsed.data.code, now))) {
           return null;
@@ -182,10 +184,13 @@ export const {
           });
         }
 
+        await touchLastAuth(user.id, now);
+
         return {
           id: user.id,
           name: `${user.firstName} ${user.lastName}`,
           role: user.role,
+          sessionVersion: user.sessionVersion,
         };
       },
     }),
@@ -259,16 +264,20 @@ export const {
       user.email = dbUser.email;
       user.name = `${dbUser.firstName} ${dbUser.lastName}`.trim();
       user.role = dbUser.role;
+      user.sessionVersion = dbUser.sessionVersion;
+      await touchLastAuth(dbUser.id, new Date());
       return true;
     },
     async jwt({ token, user, account, trigger, session }) {
       if (user?.id) {
         token.userId = user.id;
         token.role = user.role;
+        token.sessionVersion = user.sessionVersion ?? 0;
         token.googleSub =
           account?.provider === "google"
             ? account.providerAccountId
-            : undefined;
+            : token.googleSub;
+        token.authenticatedAt = Date.now();
         token.checkedAt = Date.now();
         return token;
       }
@@ -319,23 +328,39 @@ export const {
         }
       }
 
+      if (!token.userId) return token;
       const checkedAt =
         typeof token.checkedAt === "number" ? token.checkedAt : 0;
-      if (!token.userId || Date.now() - checkedAt < 5 * 60 * 1000) {
-        return token;
-      }
+      const stale = Date.now() - checkedAt >= 5 * 60 * 1000;
+      // Always re-check sessionVersion so password/phone changes revoke other devices promptly.
       const dbUser = await db.user.findUnique({
         where: { id: token.userId },
-        select: { role: true, deletedAt: true },
+        select: { role: true, deletedAt: true, sessionVersion: true, googleSub: true },
       });
       if (!dbUser || dbUser.deletedAt) return null;
-      token.role = dbUser.role;
-      token.checkedAt = Date.now();
+      if (
+        typeof token.sessionVersion === "number" &&
+        dbUser.sessionVersion !== token.sessionVersion
+      ) {
+        return null;
+      }
+      if (stale) {
+        token.role = dbUser.role;
+        token.sessionVersion = dbUser.sessionVersion;
+        if (dbUser.googleSub) token.googleSub = dbUser.googleSub;
+        token.checkedAt = Date.now();
+      }
       return token;
     },
     session({ session, token }) {
       session.user.id = token.userId;
       session.user.role = token.role;
+      session.user.sessionVersion = token.sessionVersion;
+      session.user.authenticatedAt =
+        typeof token.authenticatedAt === "number"
+          ? new Date(token.authenticatedAt).toISOString()
+          : undefined;
+      session.user.googleLinked = Boolean(token.googleSub);
       return session;
     },
   },

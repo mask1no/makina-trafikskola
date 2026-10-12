@@ -8,10 +8,12 @@ import { SignupForm } from "../../(auth)/auth-ui";
 export function AccountStep({
   locale,
   googleEnabled,
+  turnstileSiteKey = null,
   onAuthenticated,
 }: {
   locale: string;
   googleEnabled: boolean;
+  turnstileSiteKey?: string | null;
   onAuthenticated: () => void | Promise<void>;
 }) {
   const t = useTranslations("booking");
@@ -23,6 +25,7 @@ export function AccountStep({
         <SignupForm
           locale={locale}
           googleEnabled={googleEnabled}
+          turnstileSiteKey={turnstileSiteKey}
           onAuthenticated={onAuthenticated}
         />
       </div>

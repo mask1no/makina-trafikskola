@@ -1,11 +1,11 @@
 import { getTranslations } from "next-intl/server";
 
-import { db } from "@/lib/db";
 import { PageHeader } from "@/components/PageHeader";
+import { getAvailableCreditBalance } from "@/lib/credits/ledger";
+import { db } from "@/lib/db";
 
 import { requireStudent } from "../_lib";
-import { AccountPrivacyControls } from "./AccountPrivacyControls";
-import { ChangePhoneControl } from "./ChangePhoneControl";
+import { ProfileSettings } from "./ProfileSettings";
 
 export const dynamic = "force-dynamic";
 
@@ -26,55 +26,30 @@ export default async function ProfilePage(
         email: true,
         phone: true,
         localePref: true,
-        studentProfile: {
-          select: {
-            korkortstillstand: true,
-            preferredLanguages: true,
-            preferredTransmission: true,
-            defaultPickupAddress: true,
-          },
-        },
+        passwordHash: true,
+        googleSub: true,
       },
     }),
   ]);
   if (!student) return null;
 
-  const fields = [
-    [t("name"), `${student.firstName} ${student.lastName}`],
-    [t("email"), student.email ?? t("missing")],
-    [t("phone"), student.phone ?? t("missing")],
-    [t("language"), student.localePref.toUpperCase()],
-    [
-      t("permit"),
-      t(`permitStatuses.${student.studentProfile?.korkortstillstand ?? "UNKNOWN"}`),
-    ],
-    [
-      t("transmission"),
-      student.studentProfile?.preferredTransmission
-        ? t(`transmissions.${student.studentProfile.preferredTransmission}`)
-        : t("missing"),
-    ],
-    [
-      t("pickup"),
-      student.studentProfile?.defaultPickupAddress ?? t("missing"),
-    ],
-  ];
+  const credits = await getAvailableCreditBalance(db, studentId, new Date());
 
   return (
     <section>
-      <PageHeader title={t("title")} />
-      <dl className="mt-6 divide-y divide-border rounded-md border border-border bg-card px-5">
-        {fields.map(([label, value]) => (
-          <div className="grid gap-1 py-4 sm:grid-cols-3" key={label}>
-            <dt className="text-sm font-bold text-ink-muted">{label}</dt>
-            <dd className="sm:col-span-2">{value}</dd>
-          </div>
-        ))}
-      </dl>
-      {student.phone ? (
-        <ChangePhoneControl currentPhone={student.phone} />
-      ) : null}
-      <AccountPrivacyControls locale={params.locale} phone={student.phone} />
+      <PageHeader title={t("title")} description={t("settingsDescription")} />
+      <ProfileSettings
+        initial={{
+          firstName: student.firstName,
+          lastName: student.lastName,
+          email: student.email,
+          phone: student.phone,
+          localePref: student.localePref,
+          hasPassword: Boolean(student.passwordHash),
+          googleLinked: Boolean(student.googleSub),
+          unusedLessonCredits: credits.balance,
+        }}
+      />
     </section>
   );
 }

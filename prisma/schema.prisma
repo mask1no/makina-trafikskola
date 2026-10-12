@@ -49,6 +49,8 @@ model User {
   lastName           String
   identityVerifiedAt DateTime?                  // reserved for BankID
   deletedAt          DateTime?                  // soft delete + anonymise
+  sessionVersion     Int       @default(0)      // bumped to invalidate other JWTs
+  lastAuthAt         DateTime?                  // last successful sign-in
   createdAt          DateTime  @default(now())
   updatedAt          DateTime  @updatedAt
 
