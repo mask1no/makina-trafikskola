@@ -23,12 +23,22 @@ export async function orderedTeacherIds({
   languages,
   locationId,
   transmission,
+  bookableOnly,
 }: {
   languages?: string[];
   locationId?: string;
   transmission?: Transmission;
+  bookableOnly?: boolean;
 } = {}) {
   const languageArray = languages?.length ? [...new Set(languages)] : null;
+  const availabilityFilter = bookableOnly
+    ? Prisma.sql`
+        AND EXISTS (
+          SELECT 1 FROM "TeacherAvailability" ta
+          WHERE ta."teacherId" = t."id"
+        )
+      `
+    : Prisma.empty;
   return db.$queryRaw<Array<{ id: string }>>(Prisma.sql`
     SELECT t."id"
     FROM "TeacherProfile" t
@@ -40,6 +50,7 @@ export async function orderedTeacherIds({
       ))
       AND (${transmission ?? null}::"Transmission" IS NULL
         OR ${transmission ?? null}::"Transmission" = ANY(t."transmissions"))
+      ${availabilityFilter}
     ORDER BY
       CASE WHEN ${languageArray}::text[] IS NULL THEN 0
         ELSE (

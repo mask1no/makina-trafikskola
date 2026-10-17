@@ -187,6 +187,34 @@ export async function syncConfirmedBooking(bookingId: string) {
   }
 }
 
+export async function syncReassignedBooking(
+  bookingId: string,
+  previousCalendarEmail: string | null,
+  previousGoogleEventId: string | null,
+) {
+  if (!calendarSyncEnabled()) return;
+  if (previousCalendarEmail && previousGoogleEventId) {
+    try {
+      const email = encodeURIComponent(previousCalendarEmail);
+      const response = await calendarRequest(
+        previousCalendarEmail,
+        `/calendars/${email}/events/${encodeURIComponent(previousGoogleEventId)}`,
+        "DELETE",
+      );
+      if (response && !response.ok && response.status !== 404) {
+        throw new Error(`CALENDAR_EVENT_DELETE_${response.status}`);
+      }
+    } catch (error) {
+      Sentry.captureException(error);
+    }
+  }
+  await db.booking.update({
+    where: { id: bookingId },
+    data: { googleEventId: null, googleSyncedAt: null },
+  });
+  await syncConfirmedBooking(bookingId);
+}
+
 export function ownerCalendarEmail(
   environment: Record<string, string | undefined> = process.env,
 ) {

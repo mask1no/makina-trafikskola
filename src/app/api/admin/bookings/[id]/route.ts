@@ -1,5 +1,6 @@
 import { errorResponse, invalidInput } from "@/lib/api/http";
 import { Prisma } from "@prisma/client";
+import * as Sentry from "@sentry/nextjs";
 import { addDays } from "date-fns";
 import { z } from "zod";
 
@@ -10,6 +11,13 @@ import {
   isSerializationOrTxTimeout,
 } from "@/lib/bookings/errors";
 import { loadAvailability } from "@/lib/bookings/availability";
+import {
+  calendarSyncEnabled,
+  slotOverlapsBusy,
+  syncConfirmedBooking,
+  syncReassignedBooking,
+  teacherBusyIntervals,
+} from "@/lib/calendar/google";
 import { db } from "@/lib/db";
 import { dispatchNotifications } from "@/lib/notifications/dispatch";
 import { bookingNotificationContext } from "@/lib/notifications/context";
@@ -91,7 +99,9 @@ export async function PATCH(
       endsAt: true,
       status: true,
       creditCharged: true,
+      googleEventId: true,
       student: { select: { localePref: true } },
+      teacher: { select: { googleCalendarEmail: true } },
     },
   });
   if (!booking) return errorResponse("BOOKING_NOT_FOUND", 404);
@@ -100,6 +110,7 @@ export async function PATCH(
   }
 
   let targetTeacherId = booking.teacherId;
+  let targetCalendarEmail = booking.teacher.googleCalendarEmail;
   if (parsed.data.action === "reassign") {
     const teacher = await db.teacherProfile.findFirst({
       where: {
@@ -109,10 +120,11 @@ export async function PATCH(
           ? { locations: { some: { locationId: booking.locationId } } }
           : {}),
       },
-      select: { id: true },
+      select: { id: true, googleCalendarEmail: true },
     });
     if (!teacher) return errorResponse("TEACHER_NOT_FOUND", 404);
     targetTeacherId = teacher.id;
+    targetCalendarEmail = teacher.googleCalendarEmail;
   }
 
   const now = new Date();
@@ -191,6 +203,7 @@ export async function PATCH(
       throw error;
     }
     await dispatchNotifications(result.notificationIds, now);
+    await syncConfirmedBooking(booking.id);
     if (booking.creditCharged) {
       await notifyOwnerOfBooking(booking.id, "cancelled");
     }
@@ -216,6 +229,21 @@ export async function PATCH(
     (slot) => slot.startsAt.getTime() === startsAt.getTime(),
   );
   if (!targetSlot) return errorResponse("SLOT_TAKEN", 409);
+
+  if (calendarSyncEnabled() && targetCalendarEmail) {
+    try {
+      const busy = await teacherBusyIntervals(
+        targetCalendarEmail,
+        targetSlot.startsAt,
+        targetSlot.endsAt,
+      );
+      if (slotOverlapsBusy(targetSlot, busy)) {
+        return errorResponse("SLOT_TAKEN", 409);
+      }
+    } catch (error) {
+      Sentry.captureException(error);
+    }
+  }
 
   try {
     const updated = await db.$transaction(
@@ -314,6 +342,15 @@ export async function PATCH(
       { isolationLevel: Prisma.TransactionIsolationLevel.Serializable },
     );
     await dispatchNotifications(updated.notificationIds, now);
+    if (booking.teacherId === updated.moved.teacherId) {
+      await syncConfirmedBooking(booking.id);
+    } else {
+      await syncReassignedBooking(
+        booking.id,
+        booking.teacher.googleCalendarEmail,
+        booking.googleEventId,
+      );
+    }
     if (booking.creditCharged) {
       await notifyOwnerOfBooking(booking.id, "moved", {
         previousStartsAt: booking.startsAt,

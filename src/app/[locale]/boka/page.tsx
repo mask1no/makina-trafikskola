@@ -80,7 +80,10 @@ export default async function BookingPage(
         boundary: true,
       },
     }),
-    orderedTeacherIds({ languages: preferredLanguages }),
+    orderedTeacherIds({
+      languages: preferredLanguages,
+      bookableOnly: true,
+    }),
   ]);
   const unorderedTeachers = orderedIds.length
     ? await db.teacherProfile.findMany({
