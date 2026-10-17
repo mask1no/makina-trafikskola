@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
@@ -221,17 +222,18 @@ export default async function LocaleLayout(props: {
   const tabs = (
     session?.user.role === "ADMIN"
       ? [
-          { href: `${base}/admin`, label: t("admin"), icon: "profile" },
+          { href: `${base}/admin`, label: adminT("overview"), icon: "profile", exact: true },
           {
             href: `${base}/admin/calendar`,
             label: t("calendar"),
             icon: "bookings",
+            exact: true,
           },
-          { href: base, label: t("home"), icon: "home" },
           {
             href: `${base}/admin/students`,
             label: t("students"),
             icon: "messages",
+            exact: true,
           },
         ]
       : session?.user.role === "TEACHER"
@@ -240,13 +242,15 @@ export default async function LocaleLayout(props: {
               href: `${base}/larare-portal`,
               label: teacherT("views.today"),
               icon: "bookings",
+              exact: true,
             },
             {
               href: `${base}/larare-portal?view=week`,
               label: teacherT("views.week"),
               icon: "messages",
+              exact: true,
             },
-            { href: base, label: t("home"), icon: "home" },
+            { href: base, label: t("home"), icon: "home", exact: true },
             {
               href: telHref(company("phone")),
               label: t("callUs"),
@@ -255,11 +259,12 @@ export default async function LocaleLayout(props: {
           ]
         : session?.user.role === "STUDENT"
           ? [
-              { href: base, label: t("home"), icon: "home" },
+              { href: base, label: t("home"), icon: "home", exact: true },
               {
                 href: `${base}/priser`,
                 label: t("prices"),
                 icon: "packages",
+                exact: true,
               },
               {
                 href: `${base}/mina-sidor/bokningar`,
@@ -270,19 +275,22 @@ export default async function LocaleLayout(props: {
                 href: `${base}/mina-sidor/meddelanden`,
                 label: t("messages"),
                 icon: "messages",
+                exact: true,
               },
             ]
         : [
-            { href: base, label: t("home"), icon: "home" },
+            { href: base, label: t("home"), icon: "home", exact: true },
             {
               href: `${base}/korlektioner`,
               label: t("lessonsShort"),
               icon: "packages",
+              exact: true,
             },
             {
               href: showTheory ? `${base}/teori` : `${base}/kurser`,
               label: showTheory ? t("theory") : t("courses"),
               icon: "messages" as const,
+              exact: true,
             },
             {
               href: session?.user
@@ -290,13 +298,30 @@ export default async function LocaleLayout(props: {
                 : `${base}/logga-in`,
               label: session?.user ? t("myPages") : t("tabSignIn"),
               icon: "profile",
+              exact: true,
             },
           ]
-  ) satisfies { href: string; label: string; icon: MobileTabIcon }[];
+  ) satisfies { href: string; label: string; icon: MobileTabIcon; exact?: boolean }[];
+  const adminMore =
+    session?.user.role === "ADMIN"
+      ? {
+          label: t("more"),
+          title: adminT("label"),
+          items: [
+            { href: base, label: t("home") },
+            { href: `${base}/admin/platser`, label: adminT("places") },
+            { href: `${base}/admin/larare`, label: adminT("teachers") },
+            { href: `${base}/admin/kurser`, label: adminT("courses") },
+            { href: `${base}/admin/recensioner`, label: adminT("reviews") },
+            { href: `${base}/admin/produkter`, label: adminT("products") },
+            { href: `${base}/admin/omraden`, label: adminT("areas") },
+          ],
+        }
+      : undefined;
 
   return (
     <NextIntlClientProvider>
-      <div className="min-h-screen bg-page pb-[calc(var(--tab-bar-height)+var(--safe-bottom))] md:pb-0">
+      <div className="min-h-screen bg-page pb-[calc(var(--tab-bar-height)+var(--safe-bottom))] lg:pb-0">
         <a
           href="#main"
           className="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:start-4 focus-visible:top-0 focus-visible:z-50 focus-visible:rounded-b-sm focus-visible:bg-accent focus-visible:px-4 focus-visible:py-3 focus-visible:font-bold focus-visible:text-accent-ink"
@@ -329,8 +354,16 @@ export default async function LocaleLayout(props: {
             signOut: t("signOut"),
             students: t("students"),
             teacherPortal: t("teacherPortal"),
+            teacherOffice: t("teacherOffice"),
+            closeMenu: t("closeMenu"),
           }}
           navItems={navItems}
+          mobileNavItems={navItems.filter(
+            (item) =>
+              !tabs.some(
+                (tab) => tab.href.split("?")[0] === item.href,
+              ),
+          )}
           phone={company("phone")}
           user={
             session?.user
@@ -394,7 +427,9 @@ export default async function LocaleLayout(props: {
           socialLinks={socialLinks}
           authenticated={Boolean(session?.user)}
         />
-        <MobileTabBar tabs={tabs} center={centerTab} />
+        <Suspense fallback={null}>
+          <MobileTabBar tabs={tabs} center={centerTab} more={adminMore} />
+        </Suspense>
         <CloseDetailsOnNavigate />
         <ScrollToTop label={t("scrollTop")} />
         <CookieConsent locale={params.locale} />

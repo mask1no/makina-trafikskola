@@ -40,12 +40,6 @@ test.describe("pickup modal screenshots", () => {
         .getByRole("button", { name: /Fortsätt|Continue|متابعة/i })
         .click();
 
-      await page
-        .getByRole("button", {
-          name: /Hämta mig|Pick me up|تعال لاصطحابي/i,
-        })
-        .click();
-
       const openMap = page.getByRole("button", {
         name: /Välj på kartan|Choose on the map|اختر على الخريطة/i,
       });

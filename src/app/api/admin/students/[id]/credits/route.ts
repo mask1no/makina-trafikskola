@@ -4,6 +4,7 @@ import { z } from "zod";
 
 import { auth } from "@/auth";
 import { AuthorizationError, requireRole } from "@/lib/auth/guards";
+import { adminCreditExpiresAt } from "@/lib/credits/validity";
 import { db } from "@/lib/db";
 
 export const runtime = "nodejs";
@@ -47,6 +48,8 @@ export async function POST(
     return errorResponse("STUDENT_NOT_FOUND", 404);
   }
 
+  const now = new Date();
+  const expiresAt = adminCreditExpiresAt(parsed.data.delta, now);
   const result = await db.$transaction(
     async (tx) => {
       const credit = await tx.creditTransaction.create({
@@ -56,6 +59,7 @@ export async function POST(
           reason: "ADMIN_ADJUSTMENT",
           note: parsed.data.note,
           createdById: actorId,
+          expiresAt,
         },
       });
       await tx.auditLog.create({
@@ -69,6 +73,7 @@ export async function POST(
             creditTransactionId: credit.id,
             delta: credit.delta,
             note: credit.note,
+            expiresAt: credit.expiresAt,
           },
         },
       });

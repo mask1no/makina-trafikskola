@@ -99,6 +99,24 @@ export default async function AdminPage(props: {
         title={t("title")}
         description={t("description")}
       />
+      <Card className="mt-6">
+        <h2 className="text-lg font-black">{t("lessonsToday")}</h2>
+        {lessonsToday.length ? (
+          <ul className="mt-4 grid gap-3">
+            {lessonsToday.map((lesson) => (
+              <li key={lesson.id} className="rounded-sm border border-border bg-page px-4 py-3 text-sm leading-6 text-ink">
+                {t("lessonLine", {
+                  time: formatLessonTime(lesson.startsAt, params.locale),
+                  instructor: `${lesson.teacher.user.firstName} ${lesson.teacher.user.lastName}`,
+                  student: `${lesson.student.firstName} ${lesson.student.lastName}`,
+                })}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="mt-3 text-sm text-ink-muted">{t("lessonsTodayEmpty")}</p>
+        )}
+      </Card>
       <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4">
         <StatCard size="sm" label={t("bookingsToday")} value={bookingsToday} />
         <StatCard size="sm" label={t("bookingsMonth")} value={bookingsMonth} />
@@ -127,25 +145,6 @@ export default async function AdminPage(props: {
           />
         </div>
       </div>
-
-      <Card className="mt-8">
-        <h2 className="text-lg font-black">{t("lessonsToday")}</h2>
-        {lessonsToday.length ? (
-          <ul className="mt-4 grid gap-3">
-            {lessonsToday.map((lesson) => (
-              <li key={lesson.id} className="text-sm leading-6 text-ink">
-                {t("lessonLine", {
-                  time: formatLessonTime(lesson.startsAt, params.locale),
-                  instructor: `${lesson.teacher.user.firstName} ${lesson.teacher.user.lastName}`,
-                  student: `${lesson.student.firstName} ${lesson.student.lastName}`,
-                })}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="mt-3 text-sm text-ink-muted">{t("lessonsTodayEmpty")}</p>
-        )}
-      </Card>
     </section>
   );
 }

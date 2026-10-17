@@ -36,10 +36,7 @@ for (const locale of ["sv", "ar"] as const) {
     );
     await page.locator("form").getByRole("button").click();
     await page.waitForURL(`**${callbackUrl}`);
-    await expect(page.locator("html")).toHaveAttribute(
-      "dir",
-      locale === "ar" ? "rtl" : "ltr",
-    );
+    await expect(page.locator("html")).toHaveAttribute("dir", "ltr");
     await expect(
       page.locator('iframe[name^="__privateStripeFrame"]').first(),
     ).toBeVisible();

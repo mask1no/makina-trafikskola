@@ -27,7 +27,6 @@ import {
   type Booking,
   type Gearbox,
   type Location,
-  type MeetMode,
   type PackageOffer,
   type Product,
   type Slot,
@@ -165,7 +164,7 @@ export function BookingFlow({
         return;
       }
     }
-    if (state.step === 1 && state.meet === "pickup") {
+    if (state.step === 1) {
       if (!state.pickupCoordinates) {
         patch({ error: "PICKUP_ADDRESS_CONFIRMATION_REQUIRED" });
         return;
@@ -223,13 +222,9 @@ export function BookingFlow({
           lessonMinutes,
           locationId: state.areaId,
           transmission: state.gearbox,
-          ...(state.meet === "pickup"
-            ? {
-                pickupAddress: state.pickupAddress.trim(),
-                pickupLat: state.pickupCoordinates?.lat,
-                pickupLng: state.pickupCoordinates?.lng,
-              }
-            : {}),
+          pickupAddress: state.pickupAddress.trim(),
+          pickupLat: state.pickupCoordinates?.lat,
+          pickupLng: state.pickupCoordinates?.lng,
         }),
       });
       const payload = await response.json();
@@ -378,10 +373,7 @@ export function BookingFlow({
     );
   }
 
-  const placeLabel =
-    state.meet === "office"
-      ? selectedArea?.name
-      : state.pickupAddress;
+  const placeLabel = state.pickupAddress;
 
   return (
     <div className="grid min-w-0 gap-4 md:gap-6">
@@ -403,6 +395,30 @@ export function BookingFlow({
         completed={state.authenticated ? [5] : []}
         progressLabel={t("progress")}
       />
+      <dl className="grid grid-cols-2 gap-x-4 gap-y-3 rounded-md border border-border bg-card p-4 text-sm lg:hidden">
+        <div>
+          <dt className="text-ink-muted">{t("summary.place")}</dt>
+          <dd className="mt-1 font-bold">{selectedArea?.city || t("summary.notSelected")}</dd>
+        </div>
+        <div>
+          <dt className="text-ink-muted">{t("step.pickup.short")}</dt>
+          <dd className="mt-1 font-bold">{placeLabel || t("summary.notSelected")}</dd>
+        </div>
+        <div>
+          <dt className="text-ink-muted">{t("summary.teacher")}</dt>
+          <dd className="mt-1 font-bold">{selectedTeacher?.name ?? t("summary.notSelected")}</dd>
+        </div>
+        <div>
+          <dt className="text-ink-muted">{t("summary.time")}</dt>
+          <dd className="mt-1 font-bold">
+            {state.selectedSlot ? (
+              <bdi dir="ltr">{formatLessonTime(new Date(state.selectedSlot), locale)}</bdi>
+            ) : (
+              t("summary.notSelected")
+            )}
+          </dd>
+        </div>
+      </dl>
       <div className="grid min-w-0 items-start gap-8 lg:grid-cols-[minmax(0,1fr)_18rem]">
         <div className="min-w-0">
           {state.step === 0 ? (
@@ -416,12 +432,10 @@ export function BookingFlow({
             <PickupStep
               area={selectedArea}
               locations={locations}
-              meet={state.meet}
               pickupAddress={state.pickupAddress}
               pickupCoordinates={state.pickupCoordinates}
               mapApiKey={mapApiKey}
               mapId={mapId}
-              onMeet={(meet: MeetMode) => patch({ meet })}
               onPickupTyped={(value) => dispatch({ type: "pickupTyped", value })}
               onPickupSelected={(value, coordinates, areaId) => {
                 dispatch({ type: "pickupSelected", value, coordinates });
@@ -473,7 +487,7 @@ export function BookingFlow({
             </p>
           ) : null}
           {state.step < 5 ? (
-            <div className={`${state.step === 4 ? "static mx-0" : "sticky bottom-[var(--sticky-bottom)] -mx-4"} z-30 mt-6 flex gap-3 border-t border-border bg-card px-4 py-3 md:static md:mx-0 md:border-0 md:bg-transparent md:px-0 md:shadow-none`}>
+            <div className={`${state.step === 4 ? "static mx-0" : "sticky bottom-[var(--sticky-bottom)] -mx-4"} z-30 mt-6 flex gap-3 border-t border-border bg-card px-4 py-3 lg:static lg:mx-0 lg:border-0 lg:bg-transparent lg:px-0 lg:shadow-none`}>
               {state.step > 0 ? (
                 <Button variant="secondary" onClick={() => dispatch({ type: "step", update: (current) => current - 1 })}>
                   {t("back")}

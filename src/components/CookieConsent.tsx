@@ -12,7 +12,7 @@ export async function CookieConsent({ locale }: { locale: string }) {
     <aside
       role="region"
       aria-label={t("title")}
-      className="fixed inset-x-3 bottom-[calc(var(--sticky-bottom)+0.75rem)] z-50 mx-auto max-w-3xl rounded-md border border-ink-inverse/15 bg-surface text-ink-inverse shadow-float sm:inset-x-4 md:bottom-4"
+      className="fixed inset-x-3 top-[calc(var(--header-height)+0.75rem)] z-30 mx-auto max-w-3xl rounded-md border border-ink-inverse/15 bg-surface text-ink-inverse shadow-float sm:inset-x-4 lg:top-auto lg:bottom-4"
     >
       <div className="flex flex-wrap items-center gap-x-4 gap-y-3 px-4 py-3 sm:px-5">
         <p className="min-w-0 flex-1 text-small leading-5 text-ink-inverse-muted">

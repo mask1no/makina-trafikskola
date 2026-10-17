@@ -11,10 +11,12 @@ describe("opening hours", () => {
     expect(isOpenNow(closing)).toBe(false);
   });
 
-  it("is closed on Sunday", () => {
-    const sunday = new Date("2026-10-04T10:00:00.000Z");
-    expect(todayHours(sunday)).toBeNull();
-    expect(isOpenNow(sunday)).toBe(false);
+  it("is open on Sunday between 10 and 18", () => {
+    const sundayMorning = new Date("2026-10-04T09:00:00.000Z"); // 11:00 Stockholm (CEST)
+    const sundayEvening = new Date("2026-10-04T17:00:00.000Z"); // 19:00 Stockholm
+    expect(todayHours(sundayMorning)).toEqual({ open: "10:00", close: "18:00" });
+    expect(isOpenNow(sundayMorning)).toBe(true);
+    expect(isOpenNow(sundayEvening)).toBe(false);
   });
 
   it("names the next opening when closed", () => {
@@ -30,11 +32,11 @@ describe("opening hours", () => {
       weekday: 5,
       sameDay: false,
     });
-    const sunday = new Date("2026-10-04T10:00:00.000Z");
-    expect(nextOpening(sunday)).toEqual({
-      time: "08:00",
-      weekday: 1,
-      sameDay: false,
+    const sundayBeforeOpen = new Date("2026-10-04T07:00:00.000Z"); // 09:00 Stockholm
+    expect(nextOpening(sundayBeforeOpen)).toEqual({
+      time: "10:00",
+      weekday: 0,
+      sameDay: true,
     });
   });
 

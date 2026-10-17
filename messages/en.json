@@ -69,7 +69,7 @@
     "here": "Where we are",
     "schoolIn": "Driving school in {town}",
     "comingSoonPlace": "{town} – coming soon",
-    "openingHours": "Opening hours: Mon–Fri 08–21, Sat 08–19",
+    "openingHours": "Opening hours: Mon–Fri 08–21, Sat–Sun 10–18",
     "copyright": "© {year} Makina Trafikskola",
     "footerDescription": "Driving education with clear guidance and support in your language.",
     "explore": "Explore",
@@ -104,7 +104,13 @@
     "languages": "Languages",
     "appBadges": "Apps",
     "socials": "Social media",
-    "tabSignIn": "Sign in"
+    "tabSignIn": "Sign in",
+    "more": "More",
+    "teacherOffice": "Hours and calendar",
+    "closeMenu": "Close menu",
+    "statusOpen": "Open · until {time}",
+    "statusClosedSameDay": "Closed · opens {time}",
+    "statusClosedOtherDay": "Closed · opens {day} {time}"
   },
   "common": {
     "bookNow": "Book now",
@@ -121,7 +127,7 @@
       "title": "Drive with confidence, learn in your language",
       "description": "Driving lessons, theory and experienced instructors in Stockholm – all in one place.",
       "areas": "Farsta · Upplands Väsby",
-      "openUntil": "Open now until {time}",
+      "openUntil": "Open · until {time}",
       "introOffer": "First lesson {price}"
     },
     "quick": {
@@ -162,8 +168,9 @@
     },
     "teachers": {
       "eyebrow": "Learn in your language",
-      "title": "Find your instructor",
-      "description": "Find an instructor who speaks your language and teaches where you want to drive.",
+      "title": "Find an instructor near you",
+      "description": "Free pickup within Farsta and Upplands Väsby",
+      "cta": "Find your instructor",
       "languageLabel": "Filter instructors by language"
     },
     "faq": {
@@ -996,6 +1003,7 @@
     "summary": "Lesson note",
     "nextFocus": "Next focus",
     "completeLesson": "Complete and save",
+    "writeNote": "Write lesson note",
     "updateReport": "Update report",
     "empty": "You have no lessons today.",
     "weekTitle": "This week's driving lessons",
@@ -1477,8 +1485,8 @@
     "students": {
       "eyebrow": "Administration",
       "title": "Students",
-      "description": "Find a student, review balance and payments, or adjust credits.",
-      "searchLabel": "Name or email",
+      "description": "Find a student, review balance and payments, or record what they already had on the earlier website.",
+      "searchLabel": "Name, email or mobile",
       "search": "Search",
       "results": "{count} results",
       "noEmail": "No email",
@@ -1514,11 +1522,23 @@
       "noPayments": "No payments.",
       "ledger": "Credit transactions",
       "noLedger": "No credit transactions.",
+      "expires": "Valid until {date}",
       "adjustment": {
-        "title": "Adjust credits",
-        "delta": "Change",
+        "title": "Lessons from the earlier website",
+        "help": "Add lessons this student already paid for. They last 12 months from today. A minus removes lessons. Write what they had, for example the old package name. Only the owner can do this.",
+        "delta": "Lessons",
         "reason": "Required written reason",
-        "submit": "Record adjustment",
+        "submit": "Save lessons",
+        "saving": "Saving…"
+      },
+      "theory": {
+        "title": "Theory from the earlier website",
+        "help": "Theory they already paid for has no time limit. Instructors cannot change balance or theory.",
+        "active": "Theory is active",
+        "inactive": "No theory",
+        "grant": "Grant theory",
+        "revoke": "Remove theory",
+        "reason": "Required written reason",
         "saving": "Saving…"
       },
       "editTitle": "Edit student",
@@ -1671,7 +1691,7 @@
     "phone": "Phone",
     "email": "Email",
     "openingHours": "Opening hours",
-    "openingHoursValue": "Monday–Friday 08.00–21.00, Saturday 08.00–19.00, Sunday closed (Europe/Stockholm).",
+    "openingHoursValue": "Monday–Friday 08.00–21.00, Saturday–Sunday 10.00–18.00 (Europe/Stockholm).",
     "locationsTitle": "Find us",
     "locationsDescription": "You can find us at Centralvägen 5 in Upplands Väsby. Open directions in Google Maps.",
     "directions": "Directions",

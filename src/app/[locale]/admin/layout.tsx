@@ -56,11 +56,13 @@ export default async function AdminLayout(
         </div>
       </div>
       <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8">
-        <NavPills
-          label={t("label")}
-          items={links}
-        />
-        <div className="mt-8">{children}</div>
+        <div className="hidden lg:block">
+          <NavPills
+            label={t("label")}
+            items={links}
+          />
+        </div>
+        <div className="lg:mt-8">{children}</div>
       </div>
     </div>
   );

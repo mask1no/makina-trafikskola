@@ -26,10 +26,7 @@ test("renders key public routes on mobile", async ({ page }, testInfo) => {
     await expect(page.locator("main")).toBeVisible();
   }
 
-  await expect(page.locator("html")).toHaveAttribute(
-    "dir",
-    locale === "ar" ? "rtl" : "ltr",
-  );
+  await expect(page.locator("html")).toHaveAttribute("dir", "ltr");
 });
 
 test("has no horizontal overflow and shows the tab bar only under md", async ({ page }, testInfo) => {

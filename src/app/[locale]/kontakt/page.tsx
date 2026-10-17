@@ -7,13 +7,9 @@ import { Badge } from "@/components/Badge";
 import { Card } from "@/components/Card";
 import { CallButton, MailButton } from "@/components/ContactButtons";
 import { MapEmbed } from "@/components/MapEmbed";
+import { OpeningStatus } from "@/components/OpeningStatus";
 import { isLocale } from "@/i18n/routing";
-import {
-  isOpenNow,
-  nextOpening,
-  openingHoursSpecification,
-  todayHours,
-} from "@/lib/company/opening-hours";
+import { openingHoursSpecification } from "@/lib/company/opening-hours";
 import {
   formatLanguageList,
   offeredTeachingLanguagesFrom,
@@ -103,9 +99,6 @@ export default async function ContactPage(
   const email = company("email");
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
   const now = new Date();
-  const open = isOpenNow(now);
-  const hours = todayHours(now);
-  const opens = nextOpening(now);
   const offeredLanguages = offeredTeachingLanguagesFrom(
     staff.flatMap((member) => member.languages),
   );
@@ -170,22 +163,8 @@ export default async function ContactPage(
                 {displayPhone(phone)}
               </bdi>
             </p>
-            <div className="mt-5 flex flex-wrap items-center gap-3">
-              <Badge tone={open ? "success" : "neutral"}>{open ? shell("openNow") : shell("closed")}</Badge>
-              <p className="text-small text-ink-muted">
-                {open && hours ? (
-                  <span className="numbers-ltr">{hours.open}–{hours.close}</span>
-                ) : opens ? (
-                  opens.sameDay
-                    ? shell("opensAt", { time: opens.time })
-                    : shell("opensOn", {
-                        day: shell(`weekdayShort.${opens.weekday}`),
-                        time: opens.time,
-                      })
-                ) : (
-                  shell("closed")
-                )}
-              </p>
+            <div className="mt-5">
+              <OpeningStatus initialNow={now.toISOString()} />
             </div>
             <CallButton phone={phone} size="hero" className="mt-auto w-full">
               {shell("callUs")}

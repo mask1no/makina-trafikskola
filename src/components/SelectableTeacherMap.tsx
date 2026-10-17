@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import { TeacherMap } from "@/components/TeacherMap";
 import type { TeacherMarker } from "@/components/GoogleMapClient";
+import type { MapArea } from "@/lib/maps/area-style";
 
 type SelectableTeacherMapProps = {
   apiKey?: string;
@@ -11,11 +12,11 @@ type SelectableTeacherMapProps = {
   bookingAvailable: boolean;
   center: { lat: number; lng: number };
   label: string;
-  loadDescription?: string;
   missingKeyTitle: string;
   fallbackHref: string;
   fallbackLabel: string;
   markers: TeacherMarker[];
+  areas?: MapArea[];
 };
 
 export function SelectableTeacherMap(props: SelectableTeacherMapProps) {

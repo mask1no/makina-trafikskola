@@ -106,7 +106,7 @@ export default async function AdminCalendarPage(
         }
       />
 
-      <div className="mt-6 grid gap-4 md:hidden">
+      <div className="mt-6 grid gap-4 xl:hidden">
         {days.map((day) => {
           const dayBookings = teachers.flatMap((teacher) =>
             teacher.bookings
@@ -150,8 +150,8 @@ export default async function AdminCalendarPage(
         })}
       </div>
 
-      <div className="mt-6 hidden overflow-x-auto rounded-md border border-border bg-card shadow-soft md:block">
-        <div className="grid min-w-[76rem] grid-cols-[12rem_repeat(7,minmax(9rem,1fr))]">
+      <div className="mt-6 hidden rounded-md border border-border bg-card shadow-soft xl:block">
+        <div className="grid grid-cols-[7rem_repeat(7,minmax(0,1fr))]">
           <div className="border-b border-e border-border p-3 font-bold">
             {t("instructor")}
           </div>
@@ -165,7 +165,7 @@ export default async function AdminCalendarPage(
           ))}
           {teachers.map((teacher) => (
             <div className="contents" key={teacher.id}>
-              <div className="border-b border-e border-border p-3 font-bold">
+              <div className="min-w-0 break-words border-b border-e border-border p-2 text-sm font-bold">
                 {teacher.user.firstName} {teacher.user.lastName}
               </div>
               {days.map((day) => {
@@ -177,7 +177,7 @@ export default async function AdminCalendarPage(
                 return (
                   <div
                     key={day}
-                    className="min-h-32 border-b border-e border-border p-2 last:border-e-0"
+                    className="min-h-24 min-w-0 border-b border-e border-border p-2 last:border-e-0"
                   >
                     <div className="grid gap-2">
                       {bookings.map((booking) => (

@@ -48,7 +48,7 @@ export default async function RootLayout(
   const locale = isLocale(requestedLocale) ? requestedLocale : "sv";
 
   return (
-    <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"}>
+    <html lang={locale} dir="ltr">
       <body
         className={`${geistSans.variable} ${notoArabic.variable} ${notoEthiopic.variable} antialiased ${
           locale === "ar"

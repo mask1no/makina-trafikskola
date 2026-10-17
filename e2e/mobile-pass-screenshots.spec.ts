@@ -109,30 +109,25 @@ async function captureBookingSteps(page: Page, locale: string, folder: string) {
   await page.getByTestId("booking-next").click();
   await capture(page, folder, "boka-step-2-pickup");
 
-  const meetingChoices = page.locator("main .choice-card");
-  if ((await meetingChoices.count()) > 1) {
-    await meetingChoices.last().click();
-    await capture(page, folder, "boka-step-2-pickup-address");
-    const openMap = page.getByRole("button", {
-      name: /Välj på kartan|Choose on the map|اختر على الخريطة|ካርታ/i,
-    });
-    if (await openMap.isVisible().catch(() => false)) {
-      await openMap.click();
-      const dialog = page.getByRole("dialog");
-      await expect(dialog).toBeVisible({ timeout: 20_000 });
-      await capture(page, folder, "boka-pickup-map");
-      await simulateKeyboard(page, true);
-      const search = dialog.locator("input, [contenteditable='true']").first();
-      if (await search.count()) {
-        await search.focus().catch(() => undefined);
-      }
-      await capture(page, folder, "boka-pickup-map-keyboard");
-      await simulateKeyboard(page, false);
-      await page.keyboard.press("Escape").catch(() => undefined);
-      const close = dialog.getByRole("button", { name: /Stäng|Close|إغلاق|ዕጸው/i }).first();
-      if (await close.isVisible().catch(() => false)) await close.click();
+  await capture(page, folder, "boka-step-2-pickup-address");
+  const openMap = page.getByRole("button", {
+    name: /Välj på kartan|Choose on the map|اختر على الخريطة|ካርታ/i,
+  });
+  if (await openMap.isVisible().catch(() => false)) {
+    await openMap.click();
+    const dialog = page.getByRole("dialog");
+    await expect(dialog).toBeVisible({ timeout: 20_000 });
+    await capture(page, folder, "boka-pickup-map");
+    await simulateKeyboard(page, true);
+    const search = dialog.locator("input, [contenteditable='true']").first();
+    if (await search.count()) {
+      await search.focus().catch(() => undefined);
     }
-    await meetingChoices.first().click();
+    await capture(page, folder, "boka-pickup-map-keyboard");
+    await simulateKeyboard(page, false);
+    await page.keyboard.press("Escape").catch(() => undefined);
+    const close = dialog.getByRole("button", { name: /Stäng|Close|إغلاق|ዕጸው/i }).first();
+    if (await close.isVisible().catch(() => false)) await close.click();
   }
   await page.getByTestId("booking-next").click();
   await capture(page, folder, "boka-step-3-gearbox");

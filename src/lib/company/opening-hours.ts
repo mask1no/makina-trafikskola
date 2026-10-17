@@ -4,13 +4,13 @@ export type DayHours = { open: string; close: string } | null;
 
 /** Sunday-first, matching JavaScript's weekday index. Europe/Stockholm wall clock. */
 export const companyOpeningHours: readonly DayHours[] = [
-  null,
+  { open: "10:00", close: "18:00" },
   { open: "08:00", close: "21:00" },
   { open: "08:00", close: "21:00" },
   { open: "08:00", close: "21:00" },
   { open: "08:00", close: "21:00" },
   { open: "08:00", close: "21:00" },
-  { open: "08:00", close: "19:00" },
+  { open: "10:00", close: "18:00" },
 ];
 
 const WEEKDAY_INDEX: Record<string, number> = {
@@ -96,4 +96,24 @@ export function nextOpening(
     if (slot) return { time: slot.open, weekday, sameDay: false };
   }
   return null;
+}
+
+export type OpeningStatus = {
+  open: boolean;
+  /** Close time when open; otherwise null. */
+  until: string | null;
+  /** Next opening when closed; otherwise null. */
+  next: NextOpening | null;
+};
+
+/** Snapshot used by the live opening-status UI. */
+export function getOpeningStatus(
+  now: Date,
+  hours: readonly DayHours[] = companyOpeningHours,
+): OpeningStatus {
+  const open = isOpenNow(now, hours);
+  if (open) {
+    return { open: true, until: todayHours(now, hours)?.close ?? null, next: null };
+  }
+  return { open: false, until: null, next: nextOpening(now, hours) };
 }

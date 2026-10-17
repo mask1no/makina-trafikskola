@@ -131,6 +131,16 @@ export default async function LararePage(
   const center = locations[0]
     ? { lat: locations[0].lat, lng: locations[0].lng }
     : { lat: 59.3293, lng: 18.0686 };
+  const mapAreas = locations
+    .filter(
+      (item) => item.status === "ACTIVE" && Boolean(item.boundary),
+    )
+    .map((item) => ({
+      id: item.id,
+      name: item.name,
+      boundary: item.boundary,
+      marker: { lat: item.lat, lng: item.lng },
+    }));
 
   return (
     <div className="section-shell">
@@ -323,6 +333,7 @@ export default async function LararePage(
               mapId={mapsConfig.mapId}
               bookingAvailable={canBook}
               center={center}
+              areas={mapAreas}
               markers={teachers.flatMap((teacher) =>
                 teacher.locations.map(({ location }, index) => ({
                   id: `${teacher.id}-${index}`,
@@ -338,7 +349,6 @@ export default async function LararePage(
                 })),
               )}
               label={t("map.interactiveLabel")}
-              loadDescription={t("shell.mapPrivacy")}
               missingKeyTitle={t("map.pendingKey")}
               fallbackHref="#teacher-results"
               fallbackLabel={t("teachers.showAsList")}

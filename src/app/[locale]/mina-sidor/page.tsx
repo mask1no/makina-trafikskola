@@ -66,17 +66,17 @@ export default async function StudentDashboard(
   return (
     <section>
       <PageHeader title={t("title")} />
-      <div className="mt-8 grid gap-4 lg:grid-cols-[1.4fr_0.6fr]">
+      <div className="mt-8 grid gap-4">
         <article className="rounded-lg border border-border bg-card p-6 shadow-card sm:p-8">
           <p className="text-sm font-bold text-ink-muted">
             {t(unpaidHold ? "paymentRequired" : "nextBooking")}
           </p>
           {nextBooking ? (
             <>
-              <p className="mt-3 break-words text-2xl font-black tracking-tight sm:text-3xl">
+              <p className="mt-3 break-words text-3xl font-black tracking-tight sm:text-4xl">
                 <bdi>{date}</bdi>
               </p>
-              <p className="mt-2 text-ink-muted">
+              <p className="mt-2 text-lg text-ink-muted">
                 <bdi>
                   {nextBooking.teacher.user.firstName}{" "}
                   {nextBooking.teacher.user.lastName}
@@ -92,23 +92,24 @@ export default async function StudentDashboard(
               ) : null}
             </>
           ) : (
-            <p className="mt-3 leading-7 text-ink-muted">{t("noBooking")}</p>
+            <p className="mt-3 text-lg leading-7 text-ink-muted">{t("noBooking")}</p>
           )}
           <LinkButton className="mt-6" href={`/${params.locale}/mina-sidor/bokningar`}>
             {t("viewBookings")}
           </LinkButton>
         </article>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+        <div className="grid gap-4 sm:grid-cols-2">
           <StatCard
+            size="sm"
             label={t("saldo")}
             value={t("lessonsLeft", { count: credits.balance, n: String(credits.balance) })}
-            detail={<Link className="inline-flex min-h-11 items-center font-bold underline" href={`/${params.locale}/mina-sidor/lektioner`}>{t("viewSaldo")}</Link>}
+            detail={<Link className="inline-flex min-h-11 items-center font-bold" href={`/${params.locale}/mina-sidor/lektioner`}>{t("viewSaldo")}</Link>}
           />
           <StatCard
+            size="sm"
             label={t("theory")}
             value={theoryAccess ? t("theoryActive") : t("theoryInactive")}
-            className="[&_[class*='text-3xl']]:text-lg"
-            detail={<Link className="inline-flex min-h-11 items-center font-bold underline" href={`/${params.locale}/mina-sidor/teori`}>{t("viewTheory")}</Link>}
+            detail={<Link className="inline-flex min-h-11 items-center font-bold" href={`/${params.locale}/mina-sidor/teori`}>{t("viewTheory")}</Link>}
           />
         </div>
       </div>

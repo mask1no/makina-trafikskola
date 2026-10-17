@@ -1,8 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import type { ReactNode } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useEffect, useState, type ReactNode } from "react";
+
+import { BottomSheet } from "@/components/BottomSheet";
+import { currentTabHref } from "@/lib/navigation/current-tab";
+import { announcePopover, subscribePopover } from "@/lib/ui/popover";
 
 export type MobileTabIcon =
   | "home"
@@ -10,12 +14,20 @@ export type MobileTabIcon =
   | "bookings"
   | "messages"
   | "profile"
-  | "call";
+  | "call"
+  | "more";
 
 export type MobileTab = {
   href: string;
   label: ReactNode;
   icon: MobileTabIcon;
+  exact?: boolean;
+};
+
+export type MobileTabMore = {
+  label: string;
+  title: string;
+  items: { href: string; label: string }[];
 };
 
 function TabIcon({
@@ -51,6 +63,11 @@ function TabIcon({
         <path d="M4.5 20c.7-4.2 3.2-6.3 7.5-6.3s6.8 2.1 7.5 6.3" />
       </>
     ),
+    more: (
+      <>
+        <path d="M4 7h16M4 12h16M4 17h16" />
+      </>
+    ),
     call: (
       <path d="M7 4.5h3l1.5 3.5-2 1.2a12 12 0 0 0 5.3 5.3l1.2-2 3.5 1.5v3A2 2 0 0 1 17.5 19 14.5 14.5 0 0 1 5 6.5 2 2 0 0 1 7 4.5Z" />
     ),
@@ -72,20 +89,13 @@ function TabIcon({
   );
 }
 
-function isCurrent(pathname: string, href: string) {
-  return (
-    pathname === href ||
-    (href.split("/").length > 2 && pathname.startsWith(`${href}/`))
-  );
-}
-
 function TabLink({
   tab,
-  pathname,
+  active,
   prominent = false,
 }: {
   tab: MobileTab;
-  pathname: string;
+  active: boolean;
   prominent?: boolean;
 }) {
   const className = prominent
@@ -109,7 +119,7 @@ function TabLink({
   return (
     <Link
       href={tab.href}
-      aria-current={isCurrent(pathname, tab.href) ? "page" : undefined}
+      aria-current={active ? "page" : undefined}
       className={className}
     >
       {prominent ? (
@@ -124,41 +134,98 @@ function TabLink({
   );
 }
 
+function MoreTab({ more }: { more: MobileTabMore }) {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => subscribePopover("admin-more", () => setOpen(false)), []);
+
+  return (
+    <>
+      <button
+        type="button"
+        aria-expanded={open}
+        aria-haspopup="dialog"
+        onClick={() => {
+          if (open) {
+            setOpen(false);
+            return;
+          }
+          announcePopover("admin-more");
+          setOpen(true);
+        }}
+        className="relative flex h-16 min-w-11 w-full flex-col items-center justify-center gap-0.5 px-1 text-center text-micro font-bold leading-none text-ink-muted aria-expanded:text-ink"
+      >
+        <TabIcon icon="more" />
+        <span className="w-full max-w-full px-0.5 text-balance [overflow-wrap:anywhere]">
+          {more.label}
+        </span>
+      </button>
+      {open ? (
+        <BottomSheet title={more.title} onClose={() => setOpen(false)}>
+          <nav className="grid">
+            {more.items.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setOpen(false)}
+                className="flex min-h-11 items-center rounded-sm px-3 text-sm font-bold hover:bg-card-muted"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+        </BottomSheet>
+      ) : null}
+    </>
+  );
+}
+
 export function MobileTabBar({
   tabs,
   center,
+  more,
 }: {
   tabs: MobileTab[];
   center?: MobileTab;
+  more?: MobileTabMore;
 }) {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const activeHref = currentTabHref(
+    pathname,
+    searchParams.toString(),
+    [...tabs, ...(center ? [center] : [])],
+  );
   const leftCount = Math.ceil(tabs.length / 2);
   const left = tabs.slice(0, leftCount);
   const right = tabs.slice(leftCount);
-  const columns = center
-    ? "grid-cols-5"
-    : tabs.length === 4
-      ? "grid-cols-4"
-      : "grid-cols-3";
+  const count = tabs.length + (center ? 1 : 0) + (more ? 1 : 0);
+  const columns =
+    count >= 5 ? "grid-cols-5" : count === 4 ? "grid-cols-4" : "grid-cols-3";
 
   return (
-    <nav className="fixed bottom-0 start-0 end-0 z-40 border-t border-[var(--line)] bg-card pb-[var(--safe-bottom)] shadow-soft md:hidden">
+    <nav className="fixed bottom-0 start-0 end-0 z-40 border-t border-[var(--line)] bg-card pb-[var(--safe-bottom)] shadow-soft lg:hidden">
       <ul className={`grid ${columns}`}>
         {left.map((tab) => (
           <li key={tab.href} className="min-w-0">
-            <TabLink tab={tab} pathname={pathname} />
+            <TabLink tab={tab} active={tab.href === activeHref} />
           </li>
         ))}
         {center ? (
           <li className="min-w-0">
-            <TabLink tab={center} pathname={pathname} prominent />
+            <TabLink tab={center} active={center.href === activeHref} prominent />
           </li>
         ) : null}
         {right.map((tab) => (
           <li key={tab.href} className="min-w-0">
-            <TabLink tab={tab} pathname={pathname} />
+            <TabLink tab={tab} active={tab.href === activeHref} />
           </li>
         ))}
+        {more ? (
+          <li className="min-w-0">
+            <MoreTab more={more} />
+          </li>
+        ) : null}
       </ul>
     </nav>
   );

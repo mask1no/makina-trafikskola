@@ -14,6 +14,8 @@ import {
 import { Avatar } from "@/components/Avatar";
 import { Badge } from "@/components/Badge";
 import { BottomSheet } from "@/components/BottomSheet";
+import { AreasLayer } from "@/components/map/AreasLayer";
+import type { MapArea } from "@/lib/maps/area-style";
 import { fanOutPositions } from "@/lib/maps/place-teachers";
 import { reportMapFailure } from "@/lib/maps/report-failure";
 
@@ -34,6 +36,8 @@ export type TeacherMarker = {
   locationName?: string;
 };
 
+export type MapVariant = "directory" | "home";
+
 type GoogleMapClientProps = {
   apiKey: string;
   mapId: string;
@@ -41,6 +45,8 @@ type GoogleMapClientProps = {
   center: { lat: number; lng: number };
   label: string;
   markers: TeacherMarker[];
+  areas?: MapArea[];
+  variant?: MapVariant;
   selectedTeacherId?: string;
   onSelectTeacher?: (teacherId: string) => void;
 };
@@ -79,6 +85,26 @@ function PersonPin({
       <span className="mt-1 rounded-full bg-surface px-2 py-0.5 text-xs font-bold text-ink-inverse shadow-soft">
         {firstName(name)}
       </span>
+    </span>
+  );
+}
+
+function PhotoPin({
+  name,
+  photoUrl,
+  selected,
+}: {
+  name: string;
+  photoUrl?: string | null;
+  selected: boolean;
+}) {
+  return (
+    <span
+      className={`block overflow-hidden rounded-full shadow-soft ring-2 ${
+        selected ? "ring-accent" : "ring-card"
+      }`}
+    >
+      <Avatar name={name} imageUrl={photoUrl} size="sm" />
     </span>
   );
 }
@@ -144,6 +170,7 @@ function ZoomRail({
   zoomInLabel,
   zoomOutLabel,
   recenterLabel,
+  showRecenter,
 }: {
   onZoomIn: () => void;
   onZoomOut: () => void;
@@ -151,6 +178,7 @@ function ZoomRail({
   zoomInLabel: string;
   zoomOutLabel: string;
   recenterLabel: string;
+  showRecenter: boolean;
 }) {
   return (
     <div className="flex flex-col gap-2">
@@ -170,24 +198,26 @@ function ZoomRail({
       >
         −
       </button>
-      <button
-        type="button"
-        aria-label={recenterLabel}
-        onClick={onRecenter}
-        className="grid size-11 place-items-center rounded-sm border border-accent bg-accent text-accent-ink shadow-soft transition duration-500 ease-premium hover:border-accent-hover hover:bg-accent-hover"
-      >
-        <svg
-          aria-hidden="true"
-          viewBox="0 0 24 24"
-          className="size-5"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.75"
+      {showRecenter ? (
+        <button
+          type="button"
+          aria-label={recenterLabel}
+          onClick={onRecenter}
+          className="grid size-11 place-items-center rounded-sm border border-accent bg-accent text-accent-ink shadow-soft transition duration-500 ease-premium hover:border-accent-hover hover:bg-accent-hover"
         >
-          <circle cx="12" cy="12" r="3" />
-          <path d="M12 3v3M12 18v3M3 12h3M18 12h3" strokeLinecap="round" />
-        </svg>
-      </button>
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            className="size-5"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.75"
+          >
+            <circle cx="12" cy="12" r="3" />
+            <path d="M12 3v3M12 18v3M3 12h3M18 12h3" strokeLinecap="round" />
+          </svg>
+        </button>
+      ) : null}
     </div>
   );
 }
@@ -195,9 +225,11 @@ function ZoomRail({
 function MarkerDetails({
   bookingAvailable,
   marker,
+  compact,
 }: {
   bookingAvailable: boolean;
   marker: TeacherMarker;
+  compact: boolean;
 }) {
   const t = useTranslations("map");
   const locale = useLocale();
@@ -214,20 +246,26 @@ function MarkerDetails({
           ))}
         </div>
       ) : null}
-      {marker.transmission ? <p className="text-sm">{marker.transmission}</p> : null}
-      {marker.locationName ? (
-        <p className="text-sm text-ink-muted">{marker.locationName}</p>
-      ) : null}
-      <Link
-        href={
-          bookingAvailable
-            ? `/${locale}/boka?teacher=${marker.teacherId}`
-            : `/${locale}/kontakt`
-        }
-        className="inline-flex min-h-11 items-center justify-center rounded-sm bg-accent px-4 font-bold text-accent-ink"
-      >
-        {t(bookingAvailable ? "book" : "contact")}
-      </Link>
+      {compact ? null : (
+        <>
+          {marker.transmission ? (
+            <p className="text-sm">{marker.transmission}</p>
+          ) : null}
+          {marker.locationName ? (
+            <p className="text-sm text-ink-muted">{marker.locationName}</p>
+          ) : null}
+          <Link
+            href={
+              bookingAvailable
+                ? `/${locale}/boka?teacher=${marker.teacherId}`
+                : `/${locale}/kontakt`
+            }
+            className="inline-flex min-h-11 items-center justify-center rounded-sm bg-accent px-4 font-bold text-accent-ink"
+          >
+            {t(bookingAvailable ? "book" : "contact")}
+          </Link>
+        </>
+      )}
     </div>
   );
 }
@@ -239,10 +277,13 @@ export default function GoogleMapClient({
   center,
   label,
   markers,
+  areas = [],
+  variant = "directory",
   selectedTeacherId,
   onSelectTeacher,
 }: GoogleMapClientProps) {
   const t = useTranslations("map");
+  const home = variant === "home";
   const [openId, setOpenId] = useState<string | null>(null);
   const [mobile, setMobile] = useState(false);
   const [loadFailed, setLoadFailed] = useState(false);
@@ -308,9 +349,14 @@ export default function GoogleMapClient({
         zoomInLabel={t("zoomIn")}
         zoomOutLabel={t("zoomOut")}
         recenterLabel={t("recenter")}
+        showRecenter={!home}
       />
     );
   }
+
+  const mapShellClass = home
+    ? "relative h-full min-h-[280px] overflow-hidden rounded-lg border border-border bg-card"
+    : "relative h-[28rem] overflow-hidden rounded-lg border border-ink bg-card";
 
   return (
     <APIProvider
@@ -320,49 +366,67 @@ export default function GoogleMapClient({
         setLoadFailed(true);
       }}
     >
-      <div className="rtl-no-mirror" aria-label={label}>
-        <div className="relative h-[28rem] overflow-hidden rounded-lg border border-ink bg-card">
-            <Map
-              defaultCenter={center}
-              defaultZoom={13}
-              gestureHandling="cooperative"
-              disableDefaultUI
-              mapId={mapId}
-              className="size-full"
-            >
-              <MapHandle mapRef={mapRef} />
-              <FrameTeachers positions={pinPositions} />
-              {placed.map((marker) => {
-                const selected =
-                  selectedTeacherId === marker.teacherId ||
-                  openMarker?.id === marker.id;
-                return (
-                  <AdvancedMarker
-                    key={marker.id}
-                    position={marker.displayPosition}
-                    title={marker.title}
-                    zIndex={selected ? 10 : 1}
-                    onClick={() => select(marker)}
-                  >
-                    <PersonPin name={marker.title} selected={selected} />
-                  </AdvancedMarker>
-                );
-              })}
-              {openMarker && !mobile ? (
-                <InfoWindow
-                  position={openMarker.displayPosition}
-                  onCloseClick={() => setOpenId(null)}
+      <div className={`rtl-no-mirror ${home ? "h-full" : ""}`} aria-label={label}>
+        <div className={mapShellClass}>
+          <Map
+            defaultCenter={center}
+            defaultZoom={13}
+            gestureHandling={home ? "greedy" : "cooperative"}
+            scrollwheel={!home}
+            disableDefaultUI
+            mapId={mapId}
+            colorScheme="LIGHT"
+            className="size-full"
+          >
+            <MapHandle mapRef={mapRef} />
+            {home && areas.length ? (
+              <AreasLayer areas={areas} fit />
+            ) : (
+              <>
+                {areas.length ? <AreasLayer areas={areas} /> : null}
+                <FrameTeachers positions={pinPositions} />
+              </>
+            )}
+            {placed.map((marker) => {
+              const selected =
+                selectedTeacherId === marker.teacherId ||
+                openMarker?.id === marker.id;
+              return (
+                <AdvancedMarker
+                  key={marker.id}
+                  position={marker.displayPosition}
+                  title={marker.title}
+                  zIndex={selected ? 10 : 1}
+                  onClick={() => select(marker)}
                 >
-                  <MarkerDetails
-                    bookingAvailable={bookingAvailable}
-                    marker={openMarker}
-                  />
-                </InfoWindow>
-              ) : null}
-            </Map>
+                  {home ? (
+                    <PhotoPin
+                      name={marker.title}
+                      photoUrl={marker.photoUrl}
+                      selected={selected}
+                    />
+                  ) : (
+                    <PersonPin name={marker.title} selected={selected} />
+                  )}
+                </AdvancedMarker>
+              );
+            })}
+            {openMarker && !mobile ? (
+              <InfoWindow
+                position={openMarker.displayPosition}
+                onCloseClick={() => setOpenId(null)}
+              >
+                <MarkerDetails
+                  bookingAvailable={bookingAvailable}
+                  marker={openMarker}
+                  compact={home}
+                />
+              </InfoWindow>
+            ) : null}
+          </Map>
           <div className="absolute end-3 top-3 z-10">{zoomRail()}</div>
         </div>
-        {showingPeople && teacherChoices.length > 1 ? (
+        {!home && showingPeople && teacherChoices.length > 1 ? (
           <div className="mt-3 flex gap-2 overflow-x-auto">
             {teacherChoices.map((marker) => (
               <button
@@ -392,6 +456,7 @@ export default function GoogleMapClient({
           <MarkerDetails
             bookingAvailable={bookingAvailable}
             marker={openMarker}
+            compact={home}
           />
           <button
             type="button"

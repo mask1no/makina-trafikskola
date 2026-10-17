@@ -42,7 +42,7 @@ test.describe("marketing layout", () => {
     await page.goto("/sv");
     const hero = page.locator("main section").first();
     await expect(hero.getByRole("link", { name: "Ring oss" })).toHaveCount(0);
-    await expect(hero.getByRole("link", { name: "Boka första lektionen" })).toBeVisible();
+    await expect(hero.getByRole("link", { name: "Boka nu" })).toBeVisible();
     await expect(hero.getByRole("link", { name: "Se priser" })).toBeVisible();
     await expect(page.locator("nav.fixed.bottom-0 a")).toHaveCount(5);
     const bottomCall = page.locator("nav.fixed.bottom-0 a[href^='tel:']");
@@ -167,10 +167,10 @@ test.describe("marketing layout", () => {
     await expect(page.getByText("Ett urval är gratis")).toHaveCount(0);
   });
 
-  test("tablet header stays on one line and hides the tab bar", async ({ page }) => {
+  test("tablet keeps the tab bar and the header on one line", async ({ page }) => {
     await page.setViewportSize({ width: 768, height: 1024 });
     await page.goto("/sv");
-    await expect(page.locator("nav.fixed.bottom-0")).toBeHidden();
+    await expect(page.locator("nav.fixed.bottom-0")).toBeVisible();
     const wraps = await page.getByRole("banner").evaluate((node) => node.scrollWidth <= node.clientWidth + 1);
     expect(wraps).toBeTruthy();
   });

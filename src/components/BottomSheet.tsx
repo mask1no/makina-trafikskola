@@ -9,6 +9,8 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 
+import { lockScroll } from "@/lib/ui/scroll-lock";
+
 type BottomSheetProps = {
   title: string;
   children: ReactNode;
@@ -45,13 +47,12 @@ export function BottomSheet({
 
     const returnFocus = document.activeElement as HTMLElement | null;
     const body = document.body;
-    const previousOverflow = body.style.overflow;
     const previousPaddingInlineEnd = body.style.paddingInlineEnd;
+    const unlock = lockScroll();
     const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
     const currentPadding = Number.parseFloat(
       window.getComputedStyle(body).paddingInlineEnd,
     ) || 0;
-    body.style.overflow = "hidden";
     if (scrollbarWidth > 0) {
       body.style.paddingInlineEnd = `${currentPadding + scrollbarWidth}px`;
     }
@@ -95,7 +96,7 @@ export function BottomSheet({
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
       for (const [element, inert] of previousInert) element.inert = inert;
-      body.style.overflow = previousOverflow;
+      unlock();
       body.style.paddingInlineEnd = previousPaddingInlineEnd;
       if (returnFocus?.isConnected) returnFocus.focus();
     };

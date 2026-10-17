@@ -43,6 +43,7 @@ export function CreditAdjustmentForm({ studentId }: { studentId: string }) {
   return (
     <form onSubmit={submit} className="mt-6 grid gap-3">
       <h3 className="font-bold">{t("title")}</h3>
+      <p className="text-sm leading-6 text-ink-muted">{t("help")}</p>
       <div className="grid gap-2 sm:grid-cols-[8rem_1fr]">
           <Input
             id={`credit-delta-${studentId}`}

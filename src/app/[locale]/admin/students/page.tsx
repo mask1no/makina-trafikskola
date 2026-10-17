@@ -4,7 +4,9 @@ import { getTranslations } from "next-intl/server";
 import { calculateAvailableCreditBalance } from "@/lib/credits/ledger";
 import { formatStockholm } from "@/lib/format/datetime";
 import { formatPrice } from "@/lib/pricing/format";
+import { normalizeSwedishPhone } from "@/lib/auth/phone";
 import { db } from "@/lib/db";
+import { getActiveTheoryAccess } from "@/lib/theory/access";
 import { Badge } from "@/components/Badge";
 import { Button } from "@/components/Button";
 import { EmptyState } from "@/components/EmptyState";
@@ -14,6 +16,7 @@ import { StatCard } from "@/components/StatCard";
 
 import { CreditAdjustmentForm } from "./CreditAdjustmentForm";
 import { StudentEditor } from "./StudentEditor";
+import { TheoryAccessForm } from "./TheoryAccessForm";
 
 export const dynamic = "force-dynamic";
 
@@ -26,6 +29,7 @@ export default async function AdminStudentsPage(
   const searchParams = await props.searchParams;
   const params = await props.params;
   const q = (searchParams.q ?? "").trim().slice(0, 100);
+  const phoneQuery = normalizeSwedishPhone(q);
   const [t, allT, students] = await Promise.all([
     getTranslations("admin.students"),
     getTranslations(),
@@ -39,6 +43,8 @@ export default async function AdminStudentsPage(
                 { firstName: { contains: q, mode: "insensitive" } },
                 { lastName: { contains: q, mode: "insensitive" } },
                 { email: { contains: q, mode: "insensitive" } },
+                { phone: { contains: q } },
+                ...(phoneQuery ? [{ phone: phoneQuery }] : []),
               ],
             }
           : {}),
@@ -50,6 +56,7 @@ export default async function AdminStudentsPage(
         firstName: true,
         lastName: true,
         email: true,
+        phone: true,
         localePref: true,
       },
     }),
@@ -103,6 +110,9 @@ export default async function AdminStudentsPage(
       })
     : null;
   const now = new Date();
+  const theoryActive = selected
+    ? Boolean(await getActiveTheoryAccess(db, selected.id, now))
+    : false;
   const balance = selected
     ? calculateAvailableCreditBalance(selected.credits, now).balance
     : 0;
@@ -152,7 +162,7 @@ export default async function AdminStudentsPage(
                   {student.firstName} {student.lastName}
                 </span>
                 <span className="block text-sm text-ink-muted">
-                  {student.email ?? t("noEmail")}
+                  {student.phone ?? student.email ?? t("noEmail")}
                 </span>
               </Link>
             ))}
@@ -184,6 +194,7 @@ export default async function AdminStudentsPage(
                 }}
               />
               <CreditAdjustmentForm studentId={selected.id} />
+              <TheoryAccessForm studentId={selected.id} active={theoryActive} />
             </article>
 
             <article className="rounded-md border border-border bg-card p-5">
@@ -253,6 +264,11 @@ export default async function AdminStudentsPage(
                       </p>
                       {credit.note ? (
                         <p className="mt-2 text-sm">{credit.note}</p>
+                      ) : null}
+                      {credit.expiresAt ? (
+                        <p className="mt-1 text-sm text-ink-muted">
+                          {t("expires", { date: formatStamp(credit.expiresAt) })}
+                        </p>
                       ) : null}
                     </div>
                     <p className="text-xl font-black" dir="ltr">

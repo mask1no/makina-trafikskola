@@ -69,7 +69,7 @@
     "here": "Här finns vi",
     "schoolIn": "Trafikskola i {town}",
     "comingSoonPlace": "{town} – kommer snart",
-    "openingHours": "Öppettider: mån–fre 08–21, lör 08–19",
+    "openingHours": "Öppettider: mån–fre 08–21, lör–sön 10–18",
     "copyright": "© {year} Makina Trafikskola",
     "footerDescription": "Körutbildning med tydlig vägledning och stöd på ditt språk.",
     "explore": "Utforska",
@@ -104,7 +104,13 @@
     "languages": "Språk",
     "appBadges": "Appar",
     "socials": "Sociala medier",
-    "tabSignIn": "Logga in"
+    "tabSignIn": "Logga in",
+    "more": "Mer",
+    "teacherOffice": "Tider och kalender",
+    "closeMenu": "Stäng menyn",
+    "statusOpen": "Öppet · till {time}",
+    "statusClosedSameDay": "Stängt · öppnar {time}",
+    "statusClosedOtherDay": "Stängt · öppnar {day} {time}"
   },
   "common": {
     "bookNow": "Boka nu",
@@ -121,7 +127,7 @@
       "title": "Kör tryggt, lär på ditt språk",
       "description": "Körlektioner, teori och erfarna lärare i Stockholm – samlat på ett ställe.",
       "areas": "Farsta · Upplands Väsby",
-      "openUntil": "Öppet nu till {time}",
+      "openUntil": "Öppet · till {time}",
       "introOffer": "Första lektionen {price}"
     },
     "quick": {
@@ -162,8 +168,9 @@
     },
     "teachers": {
       "eyebrow": "Lär dig på ditt språk",
-      "title": "Hitta din lärare",
-      "description": "Hitta en lärare som talar ditt språk och undervisar där du vill köra.",
+      "title": "Hitta lärare nära dig",
+      "description": "Gratis upphämtning inom Farsta och Upplands Väsby",
+      "cta": "Hitta din lärare",
       "languageLabel": "Filtrera lärare efter språk"
     },
     "faq": {
@@ -996,6 +1003,7 @@
     "summary": "Lektionsanteckning",
     "nextFocus": "Nästa fokus",
     "completeLesson": "Slutför och spara",
+    "writeNote": "Skriv lektionsanteckning",
     "updateReport": "Uppdatera rapport",
     "empty": "Du har inga lektioner idag.",
     "weekTitle": "Veckans körlektioner",
@@ -1098,7 +1106,7 @@
     "phone": "Telefon",
     "email": "E-post",
     "openingHours": "Öppettider",
-    "openingHoursValue": "Måndag–fredag 08.00–21.00, lördag 08.00–19.00, söndag stängt (Europe/Stockholm).",
+    "openingHoursValue": "Måndag–fredag 08.00–21.00, lördag–söndag 10.00–18.00 (Europe/Stockholm).",
     "locationsTitle": "Hitta oss",
     "locationsDescription": "Du hittar oss på Centralvägen 5 i Upplands Väsby. Öppna vägbeskrivning i Google Maps.",
     "directions": "Vägbeskrivning",
@@ -1520,8 +1528,8 @@
     "students": {
       "eyebrow": "Administration",
       "title": "Elever",
-      "description": "Sök elev, granska saldo och betalningar eller justera krediter.",
-      "searchLabel": "Namn eller e-post",
+      "description": "Sök elev, granska saldo och betalningar, eller lägg in det eleven hade på den tidigare webbplatsen.",
+      "searchLabel": "Namn, e-post eller mobil",
       "search": "Sök",
       "results": "{count} resultat",
       "noEmail": "Ingen e-post",
@@ -1557,11 +1565,23 @@
       "noPayments": "Inga betalningar.",
       "ledger": "Kredittransaktioner",
       "noLedger": "Inga kredittransaktioner.",
+      "expires": "Gäller till {date}",
       "adjustment": {
-        "title": "Justera krediter",
-        "delta": "Förändring",
+        "title": "Lektioner från den tidigare webbplatsen",
+        "help": "Lägg till lektioner eleven redan har betalat. De gäller i 12 månader från idag. Ett minus tar bort lektioner. Skriv vad eleven hade, till exempel paketets namn. Bara ägaren kan göra detta.",
+        "delta": "Lektioner",
         "reason": "Obligatorisk skriftlig orsak",
-        "submit": "Registrera justering",
+        "submit": "Spara lektioner",
+        "saving": "Sparar…"
+      },
+      "theory": {
+        "title": "Teori från den tidigare webbplatsen",
+        "help": "Teori som redan är betald gäller utan tidsgräns. Lärare kan inte ändra saldo eller teori.",
+        "active": "Teori är aktiv",
+        "inactive": "Ingen teori",
+        "grant": "Ge teori",
+        "revoke": "Ta bort teori",
+        "reason": "Obligatorisk skriftlig orsak",
         "saving": "Sparar…"
       },
       "editTitle": "Redigera elev",

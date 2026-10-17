@@ -87,6 +87,7 @@ describe("benefitItems", () => {
     expect(sv.home.benefits.payment.titleSwishSoon).toBe("Kort och Klarna (Swish kommer snart)");
     expect(sv.home.benefits.reminder.title).toBe("Sms-påminnelse dagen före");
     expect(sv.home.benefits.cancel.title).toBe("Avboka senast 24 h före");
+    expect(sv.home.teachers.description.toLowerCase()).toContain("gratis");
     expect(sv.home.pickup.description.toLowerCase()).toContain("gratis");
     expect(sv.home.faq.pickup.answer.toLowerCase()).toContain("gratis");
     expect(sv.booking.step.pickup.free.toLowerCase()).toContain("gratis");

@@ -56,7 +56,7 @@ export default function GlobalError({
   }, [selectedLocale]);
 
   return (
-    <html lang={selectedLocale} dir={selectedLocale === "ar" ? "rtl" : "ltr"}>
+    <html lang={selectedLocale} dir="ltr">
       <body>
         {messages ? (
           <NextIntlClientProvider locale={selectedLocale} messages={messages}>

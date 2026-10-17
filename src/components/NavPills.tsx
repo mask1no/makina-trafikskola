@@ -8,6 +8,7 @@ type NavPill = {
   label: string;
   active?: boolean;
   matches?: string[];
+  hideBelowLg?: boolean;
 };
 
 export function NavPills({
@@ -32,7 +33,7 @@ export function NavPills({
                 (href.split("/").length > 3 && pathname.startsWith(`${href}/`)),
             );
           return (
-          <li key={item.href} className="shrink-0">
+          <li key={item.href} className={`shrink-0 ${item.hideBelowLg ? "max-lg:hidden" : ""}`}>
             <Link
               href={item.href}
               aria-current={current ? "page" : undefined}

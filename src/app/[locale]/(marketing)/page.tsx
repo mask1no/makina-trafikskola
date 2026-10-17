@@ -1,5 +1,3 @@
-import { existsSync } from "node:fs";
-import { join } from "node:path";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { isLocale, type Locale } from "@/i18n/routing";
@@ -19,15 +17,12 @@ import { benefitItems } from "@/lib/home/benefits";
 import { googleMapsBrowserConfig } from "@/lib/maps/config";
 import { swishActive } from "@/lib/payments/swish";
 import { activeTeacherLanguages } from "@/lib/teachers/query";
-import { nextFreeSlots } from "@/lib/bookings/availability";
-import { formatLessonDateTime } from "@/lib/format/datetime";
 import { formatPrice } from "@/lib/pricing/format";
 import { freeTheoryQuestionCount } from "@/lib/theory/questions";
 
 import { BenefitsSection } from "./_components/BenefitsSection";
 import { FaqSection, type FaqItem } from "./_components/FaqSection";
 import { HomeHero } from "./_components/HomeHero";
-import { PickupSection } from "./_components/PickupSection";
 import { QuickLinksSection } from "./_components/QuickLinksSection";
 import { TeachersMapSection } from "./_components/TeachersMapSection";
 import { TheoryTeaserSection } from "./_components/TheoryTeaserSection";
@@ -62,10 +57,6 @@ async function HomeBelow({ locale }: { locale: Locale }) {
     freeTheoryQuestionCount(),
     activeTeacherLanguages(),
   ]);
-  const nextFree = await nextFreeSlots(
-    teachers.slice(0, 4).map((teacher) => teacher.id),
-    new Date(),
-  );
   const offeredLanguages = offeredTeachingLanguagesFrom(activeLanguages);
   const offeredLanguageNames = formatLanguageList(
     offeredLanguages,
@@ -112,38 +103,38 @@ async function HomeBelow({ locale }: { locale: Locale }) {
   const entryPackage = activeProducts
     .filter((product) => product.kind === "PACKAGE")
     .sort((a, b) => a.priceOre - b.priceOre)[0];
-  const homeMapMarkers = teachers.flatMap((teacher) =>
-    teacher.locations.map(({ location }, index) => ({
-      id: `${teacher.id}-${index}`,
-      teacherId: teacher.id,
-      title: `${teacher.user.firstName} ${teacher.user.lastName}`,
-      position: { lat: location.lat, lng: location.lng },
-      photoUrl: teacher.photoUrl,
-      languages: teacher.languages.map((language) => t(`shell.languagePage.${language}`)),
-      transmission: teacher.transmissions
-        .map((item) => t(`teacher.transmission.${item.toLowerCase()}`))
-        .join(", "),
-      locationName: location.name,
-    })),
-  );
-  const homeMapCenter = homeMapMarkers[0]?.position ?? {
-    lat: 59.3293,
-    lng: 18.0686,
-  };
-  const mapsConfig = googleMapsBrowserConfig();
-  const pickupImageExists = existsSync(join(process.cwd(), "public", "images", "pickup-feature.png"));
-  const pickupAreas = locations
+  const mapAreas = locations
     .filter(
       (location) =>
         location.status === "ACTIVE" && Boolean(location.boundary),
     )
-    .slice(0, 2)
     .map((location) => ({
       id: location.id,
       name: location.name,
       boundary: location.boundary,
       marker: { lat: location.lat, lng: location.lng },
     }));
+  const homeMapMarkers = teachers.flatMap((teacher) =>
+    teacher.locations
+      .filter(({ location }) => location.status === "ACTIVE")
+      .map(({ location }, index) => ({
+        id: `${teacher.id}-${index}`,
+        teacherId: teacher.id,
+        title: `${teacher.user.firstName} ${teacher.user.lastName}`,
+        position: { lat: location.lat, lng: location.lng },
+        photoUrl: teacher.photoUrl,
+        languages: teacher.languages.map((language) =>
+          t(`shell.languagePage.${language}`),
+        ),
+        locationName: location.name,
+      })),
+  );
+  const homeMapCenter = mapAreas[0]?.marker ??
+    homeMapMarkers[0]?.position ?? {
+      lat: 59.3293,
+      lng: 18.0686,
+    };
+  const mapsConfig = googleMapsBrowserConfig();
   const faqItems: FaqItem[] = [
     ...(entryPackage
       ? [{
@@ -177,27 +168,6 @@ async function HomeBelow({ locale }: { locale: Locale }) {
       };
     }),
   ];
-  const teacherCards = teachers.slice(0, 4).map((teacher) => ({
-    id: teacher.id,
-    name: `${teacher.user.firstName} ${teacher.user.lastName}`,
-    photoUrl: teacher.photoUrl,
-    languages: teacher.languages.map((language) => t(`shell.languagePage.${language}`)),
-    transmissions: teacher.transmissions.map((transmission) =>
-      t(`teacher.transmission.${transmission.toLowerCase()}`),
-    ),
-    locationNames: teacher.locations.map(({ location }) => location.name),
-    experienceLabel:
-      teacher.yearsExperience > 0
-        ? t("teacher.yearsExperience", {
-            count: teacher.yearsExperience,
-            n: String(teacher.yearsExperience),
-          })
-        : "",
-    nextFreeTime: nextFree.get(teacher.id)
-      ? formatLessonDateTime(nextFree.get(teacher.id)!, locale)
-      : undefined,
-    swedishOnly: teacher.swedishOnly,
-  }));
   const theoryIsFree = theoryMode() === "free";
   const theorySalesAreOpen = theorySalesOpen();
 
@@ -221,31 +191,6 @@ async function HomeBelow({ locale }: { locale: Locale }) {
         }}
       />
       <BenefitsSection label={t("home.benefits.label")} items={benefitCards} />
-      <QuickLinksSection
-        locale={locale}
-        eyebrow={t("home.quick.eyebrow")}
-        title={t("home.quick.title")}
-        links={([
-          ["lessons", "korlektioner"],
-          ["courses", "kurser"],
-          ["theory", "teori"],
-          ["prices", "priser"],
-        ] as const).map(([key, href]) => ({
-          key,
-          href,
-          label: t(`home.quick.${key}`),
-        }))}
-      />
-      <PickupSection
-        eyebrow={t("home.pickup.eyebrow")}
-        title={t("home.pickup.title")}
-        description={t("home.pickup.description")}
-        areasLabel={t("home.pickup.areas")}
-        imageAlt={t("home.pickup.imageAlt")}
-        mapLabel={t("home.pickup.mapLabel")}
-        imageExists={pickupImageExists}
-        pickupAreas={pickupAreas}
-      />
       {showInstructors ? (
         <TeachersMapSection
           locale={locale}
@@ -261,21 +206,31 @@ async function HomeBelow({ locale }: { locale: Locale }) {
               t(`shell.languagePage.${language}`),
             ]),
           )}
-          teachers={teacherCards}
-          nextFreeLabel={t("teacher.nextFree")}
-          swedishOnlyLabel={t("common.swedishOnly")}
-          mapTitle={t("map.homeTeaserTitle")}
-          mapDescription={t("map.homeTeaserDescription")}
-          mapPrivacy={t("shell.mapPrivacy")}
-          mapCta={t("map.homeTeaserCta")}
+          cta={t("home.teachers.cta")}
           mapLabel={t("map.interactiveLabel")}
           unavailableTitle={t("map.unavailableTitle")}
           unavailableDescription={t("map.unavailableDescription")}
           mapsConfig={mapsConfig}
           mapCenter={homeMapCenter}
           mapMarkers={homeMapMarkers}
+          mapAreas={mapAreas}
         />
       ) : null}
+      <QuickLinksSection
+        locale={locale}
+        eyebrow={t("home.quick.eyebrow")}
+        title={t("home.quick.title")}
+        links={([
+          ["lessons", "korlektioner"],
+          ["courses", "kurser"],
+          ["theory", "teori"],
+          ["prices", "priser"],
+        ] as const).map(([key, href]) => ({
+          key,
+          href,
+          label: t(`home.quick.${key}`),
+        }))}
+      />
       {theoryNavVisible() && freeQuestions > 0 ? (
         <TheoryTeaserSection
           locale={locale}

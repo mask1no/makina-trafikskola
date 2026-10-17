@@ -4,11 +4,10 @@ import dynamic from "next/dynamic";
 import { useCallback, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 
-import { ChoiceCard } from "@/components/ChoiceCard";
 import { Input } from "@/components/Input";
 import { boundaryRings, pointInGeoJson } from "@/lib/areas/geo";
 
-import type { Location, MeetMode } from "./state";
+import type { Location } from "./state";
 
 const PickupAddressAutocomplete = dynamic(
   () => import("@/components/PickupAddressAutocomplete"),
@@ -61,23 +60,19 @@ function Outline({ boundary, label }: { boundary: unknown; label: string }) {
 export function PickupStep({
   area,
   locations,
-  meet,
   pickupAddress,
   pickupCoordinates,
   mapApiKey,
   mapId,
-  onMeet,
   onPickupTyped,
   onPickupSelected,
 }: {
   area: Location | undefined;
   locations: Location[];
-  meet: MeetMode;
   pickupAddress: string;
   pickupCoordinates: { lat: number; lng: number } | null;
   mapApiKey?: string;
   mapId?: string;
-  onMeet: (mode: MeetMode) => void;
   onPickupTyped: (address: string) => void;
   /** areaId is set when the point lies inside an active location's boundary. */
   onPickupSelected: (
@@ -88,7 +83,7 @@ export function PickupStep({
 }) {
   const t = useTranslations("booking");
   const shell = useTranslations("shell");
-  const showHint = meet === "pickup" && pickupAddress.trim().length > 0 && !pickupCoordinates;
+  const showHint = pickupAddress.trim().length > 0 && !pickupCoordinates;
   const [mapFailed, setMapFailed] = useState(false);
   const [mapLoaded, setMapLoaded] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
@@ -141,69 +136,54 @@ export function PickupStep({
           </div>
         )}
       </div>
-      {area?.officeAddress ? (
-        <div className="mt-4">
-          <ChoiceCard selected={meet === "office"} onClick={() => onMeet("office")}>
-            <span className="block">{t("step.pickup.office")}</span>
-            <span className="mt-1 block text-small font-semibold">{area.name}</span>
-          </ChoiceCard>
-        </div>
-      ) : null}
-      <div className="mt-4">
-        <ChoiceCard selected={meet === "pickup"} onClick={() => onMeet("pickup")}>
-          {t("step.where.pickup")}
-        </ChoiceCard>
+      <div className="mt-5">
+        {mapApiKey ? (
+          <PickupAddressAutocomplete
+            apiKey={mapApiKey}
+            label={t("step.pickup.address")}
+            value={pickupAddress}
+            onChange={(value, coordinates) => {
+              if (coordinates) {
+                onPickupSelected(
+                  value,
+                  coordinates,
+                  locations.find(
+                    (location) =>
+                      location.status === "ACTIVE" &&
+                      pointInGeoJson(coordinates, location.boundary),
+                  )?.id,
+                );
+                return;
+              }
+              onPickupTyped(value);
+            }}
+          />
+        ) : (
+          <Input
+            label={t("step.pickup.address")}
+            value={pickupAddress}
+            onChange={(event) => onPickupTyped(event.target.value)}
+            autoComplete="street-address"
+          />
+        )}
+        {canPickOnMap ? (
+          <button
+            type="button"
+            className="mt-3 inline-flex min-h-11 items-center rounded-sm bg-surface px-5 font-bold text-ink-inverse"
+            onClick={() => setModalOpen(true)}
+          >
+            {t("step.pickup.map.open")}
+          </button>
+        ) : null}
+        {mapApiKey ? (
+          <p className="mt-2 text-small leading-6 text-ink-muted">
+            {shell("mapPrivacy")}
+          </p>
+        ) : null}
+        {showHint ? (
+          <p className="mt-2 text-small leading-6 text-ink-muted">{t("step.where.selectFromList")}</p>
+        ) : null}
       </div>
-      {meet === "pickup" ? (
-        <div className="mt-5">
-          {mapApiKey ? (
-            <PickupAddressAutocomplete
-              apiKey={mapApiKey}
-              label={t("step.pickup.address")}
-              value={pickupAddress}
-              onChange={(value, coordinates) => {
-                if (coordinates) {
-                  onPickupSelected(
-                    value,
-                    coordinates,
-                    locations.find(
-                      (location) =>
-                        location.status === "ACTIVE" &&
-                        pointInGeoJson(coordinates, location.boundary),
-                    )?.id,
-                  );
-                  return;
-                }
-                onPickupTyped(value);
-              }}
-            />
-          ) : (
-            <Input
-              label={t("step.pickup.address")}
-              value={pickupAddress}
-              onChange={(event) => onPickupTyped(event.target.value)}
-              autoComplete="street-address"
-            />
-          )}
-          {canPickOnMap ? (
-            <button
-              type="button"
-              className="mt-3 inline-flex min-h-11 items-center rounded-sm bg-surface px-5 font-bold text-ink-inverse"
-              onClick={() => setModalOpen(true)}
-            >
-              {t("step.pickup.map.open")}
-            </button>
-          ) : null}
-          {mapApiKey ? (
-            <p className="mt-2 text-small leading-6 text-ink-muted">
-              {shell("mapPrivacy")}
-            </p>
-          ) : null}
-          {showHint ? (
-            <p className="mt-2 text-small leading-6 text-ink-muted">{t("step.where.selectFromList")}</p>
-          ) : null}
-        </div>
-      ) : null}
       {modalOpen && canPickOnMap ? (
         <PickupMapModal
           apiKey={mapApiKey ?? ""}

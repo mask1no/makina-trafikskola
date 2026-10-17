@@ -72,9 +72,9 @@ export function SiteFooter({
     "flex min-h-11 items-center py-2 leading-5 transition hover:text-ink-inverse";
 
   return (
-    <footer className="bg-surface py-10 text-ink-inverse sm:py-14">
+    <footer className="bg-page py-10 sm:py-14">
       <div className="site-container">
-        <div className="rounded-xl border border-ink-inverse/15 bg-surface-raised p-5 sm:p-7 lg:p-8">
+        <div className="rounded-xl bg-surface p-5 text-ink-inverse sm:p-7 lg:p-8">
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-12 lg:gap-6">
             <div className="sm:col-span-2 lg:col-span-4">
               <SiteLogo />

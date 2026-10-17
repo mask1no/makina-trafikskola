@@ -4,6 +4,7 @@ import Link from "next/link";
 import { signOut } from "@/auth";
 import { Avatar } from "@/components/Avatar";
 import { CallButton } from "@/components/ContactButtons";
+import { HeaderMenu } from "@/components/HeaderMenu";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 export type SiteHeaderNavItem = {
@@ -35,6 +36,8 @@ export type SiteHeaderLabels = {
   signOut: string;
   students: string;
   teacherPortal: string;
+  teacherOffice: string;
+  closeMenu: string;
 };
 
 export function SiteLogo({
@@ -78,6 +81,7 @@ export function SiteHeader({
   companyName,
   labels,
   navItems,
+  mobileNavItems,
   phone,
   user,
 }: {
@@ -86,18 +90,21 @@ export function SiteHeader({
   companyName: string;
   labels: SiteHeaderLabels;
   navItems: SiteHeaderNavItem[];
+  mobileNavItems?: SiteHeaderNavItem[];
   phone: string;
   user: SiteHeaderUser | null;
 }) {
+  const phoneMenuItems = mobileNavItems ?? navItems;
   const inlineNavClass =
     "inline-flex min-h-11 shrink-0 items-center whitespace-nowrap rounded-sm px-3 text-nav font-bold transition hover:bg-surface-raised aria-[current=page]:bg-surface-raised";
   const menuLinkClass =
     "flex min-h-11 items-center rounded-sm px-3 font-semibold hover:bg-card-muted";
-  const menuPanelClass =
-    "absolute end-0 top-[calc(100%+0.5rem)] z-50 min-w-56 max-w-[calc(100vw-2rem)] rounded-md border border-border bg-card p-2 text-small text-ink shadow-float";
 
   return (
-    <header className="sticky top-0 z-40 border-b border-surface-soft bg-surface text-ink-inverse shadow-soft">
+    <header
+      data-site-header=""
+      className="sticky top-0 z-40 border-b border-surface-soft bg-surface text-ink-inverse shadow-soft"
+    >
       <div className="site-container grid min-h-[var(--header-height)] min-w-0 grid-cols-[auto_1fr_auto] items-center gap-1.5 sm:gap-2 lg:min-h-[var(--header-height-lg)] lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
         <Link
           href={base}
@@ -126,69 +133,31 @@ export function SiteHeader({
           <LanguageSwitcher authenticated={Boolean(user)} />
           {!user ? (
             <>
-              <details data-header-menu className="relative shrink-0 lg:hidden">
-                <summary
-                  aria-label={labels.account}
-                  className="flex size-11 cursor-pointer list-none items-center justify-center rounded-full border border-surface-soft text-ink-inverse outline-none ring-offset-surface focus-visible:ring-2 focus-visible:ring-accent [&::-webkit-details-marker]:hidden"
-                >
-                  <svg
-                    aria-hidden="true"
-                    viewBox="0 0 24 24"
-                    className="size-5"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.75"
-                  >
-                    <circle cx="12" cy="8" r="3.25" />
-                    <path
-                      d="M5.5 19.5c.8-3.2 3-4.75 6.5-4.75s5.7 1.55 6.5 4.75"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                </summary>
-                <div className={menuPanelClass}>
-                  <nav aria-label={labels.navigation} className="grid">
-                    {navItems.map((item) => (
-                      <Link
-                        key={item.href}
-                        className={menuLinkClass}
-                        href={item.href}
-                      >
-                        {item.label}
-                      </Link>
-                    ))}
-                  </nav>
-                  <div className="my-1 border-t border-border" />
-                  <Link className={menuLinkClass} href={`${base}/logga-in`}>
-                    {labels.signIn}
-                  </Link>
-                </div>
-              </details>
-              <Link
-                href={`${base}/logga-in`}
-                className="hidden min-h-11 shrink-0 items-center whitespace-nowrap px-2 text-nav font-bold underline-offset-4 hover:underline lg:inline-flex"
+              <HeaderMenu
+                className="shrink-0 lg:hidden"
+                label={labels.navigation}
+                closeLabel={labels.closeMenu}
+                trigger={
+                  <span className="flex size-11 items-center justify-center rounded-full border border-surface-soft text-ink-inverse">
+                    <svg
+                      aria-hidden="true"
+                      viewBox="0 0 24 24"
+                      className="size-5"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.75"
+                    >
+                      <circle cx="12" cy="8" r="3.25" />
+                      <path
+                        d="M5.5 19.5c.8-3.2 3-4.75 6.5-4.75s5.7 1.55 6.5 4.75"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  </span>
+                }
               >
-                {labels.signIn}
-              </Link>
-            </>
-          ) : (
-            <details data-header-menu className="group relative shrink-0">
-              <summary
-                aria-label={labels.account}
-                className="flex min-h-11 cursor-pointer list-none items-center rounded-full outline-none ring-offset-surface focus-visible:ring-2 focus-visible:ring-accent [&::-webkit-details-marker]:hidden"
-              >
-                <Avatar
-                  name={user.name ?? user.email ?? labels.account}
-                  imageUrl={user.imageUrl}
-                  size="sm"
-                />
-              </summary>
-              <div className={menuPanelClass}>
-                <nav
-                  aria-label={labels.navigation}
-                  className="grid lg:hidden"
-                >
-                  {navItems.map((item) => (
+                <nav aria-label={labels.navigation} className="grid">
+                  {phoneMenuItems.map((item) => (
                     <Link
                       key={item.href}
                       className={menuLinkClass}
@@ -197,89 +166,136 @@ export function SiteHeader({
                       {item.label}
                     </Link>
                   ))}
-                  <div className="my-1 border-t border-border" />
                 </nav>
-                {user.role === "STUDENT" ? (
-                  <>
-                    <Link className={menuLinkClass} href={`${base}/mina-sidor`}>
-                      {labels.myPages}
-                    </Link>
-                    <Link
-                      className={menuLinkClass}
-                      href={`${base}/mina-sidor/bokningar`}
-                    >
-                      {labels.bookings}
-                    </Link>
-                    <Link
-                      className={menuLinkClass}
-                      href={`${base}/mina-sidor/lektioner`}
-                    >
-                      {labels.balance}
-                    </Link>
-                    <Link
-                      className={menuLinkClass}
-                      href={`${base}/mina-sidor/profil`}
-                    >
-                      {labels.profile}
-                    </Link>
-                  </>
-                ) : user.role === "TEACHER" ? (
-                  <Link className={menuLinkClass} href={`${base}/larare-portal`}>
+                <div className="my-1 border-t border-border" />
+                <Link className={menuLinkClass} href={`${base}/logga-in`}>
+                  {labels.signIn}
+                </Link>
+              </HeaderMenu>
+              <Link
+                href={`${base}/logga-in`}
+                className="hidden min-h-11 shrink-0 items-center whitespace-nowrap px-2 text-nav font-bold underline-offset-4 hover:underline lg:inline-flex"
+              >
+                {labels.signIn}
+              </Link>
+            </>
+          ) : (
+            <HeaderMenu
+              className="shrink-0"
+              label={labels.account}
+              closeLabel={labels.closeMenu}
+              trigger={
+                <span className="flex min-h-11 items-center rounded-full">
+                  <Avatar
+                    name={user.name ?? user.email ?? labels.account}
+                    imageUrl={user.imageUrl}
+                    size="sm"
+                  />
+                </span>
+              }
+            >
+              <nav aria-label={labels.navigation} className="grid lg:hidden">
+                {phoneMenuItems.map((item) => (
+                  <Link key={item.href} className={menuLinkClass} href={item.href}>
+                    {item.label}
+                  </Link>
+                ))}
+                <div className="my-1 border-t border-border" />
+              </nav>
+              {user.role === "STUDENT" ? (
+                <>
+                  <Link className={menuLinkClass} href={`${base}/mina-sidor`}>
+                    {labels.myPages}
+                  </Link>
+                  <Link
+                    className={`${menuLinkClass} max-lg:hidden`}
+                    href={`${base}/mina-sidor/bokningar`}
+                  >
+                    {labels.bookings}
+                  </Link>
+                  <Link
+                    className={menuLinkClass}
+                    href={`${base}/mina-sidor/lektioner`}
+                  >
+                    {labels.balance}
+                  </Link>
+                  <Link
+                    className={menuLinkClass}
+                    href={`${base}/mina-sidor/profil`}
+                  >
+                    {labels.profile}
+                  </Link>
+                </>
+              ) : user.role === "TEACHER" ? (
+                <>
+                  <Link
+                    className={`${menuLinkClass} max-lg:hidden`}
+                    href={`${base}/larare-portal`}
+                  >
                     {labels.teacherPortal}
                   </Link>
-                ) : (
-                  <>
-                    <Link className={menuLinkClass} href={`${base}/admin`}>
-                      {labels.adminPanel}
-                    </Link>
-                    <Link
-                      className={menuLinkClass}
-                      href={`${base}/admin/calendar`}
-                    >
-                      {labels.calendar}
-                    </Link>
-                    <Link
-                      className={menuLinkClass}
-                      href={`${base}/admin/students`}
-                    >
-                      {labels.students}
-                    </Link>
-                    <Link
-                      className={menuLinkClass}
-                      href={`${base}/admin/recensioner`}
-                    >
-                      {labels.reviews}
-                    </Link>
-                  </>
-                )}
-                <div className="my-1 border-t border-border" />
-                <form
-                  action={async () => {
-                    "use server";
-                    await signOut({ redirectTo: base });
-                  }}
-                >
-                  <button
-                    type="submit"
-                    className="flex min-h-11 w-full items-center rounded-sm px-3 text-start font-semibold text-danger hover:bg-card-muted"
+                  <Link
+                    className={menuLinkClass}
+                    href={`${base}/larare-portal?view=office`}
                   >
-                    {labels.signOut}
-                  </button>
-                </form>
-              </div>
-            </details>
+                    {labels.teacherOffice}
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link
+                    className={`${menuLinkClass} max-lg:hidden`}
+                    href={`${base}/admin`}
+                  >
+                    {labels.adminPanel}
+                  </Link>
+                  <Link
+                    className={`${menuLinkClass} max-lg:hidden`}
+                    href={`${base}/admin/calendar`}
+                  >
+                    {labels.calendar}
+                  </Link>
+                  <Link
+                    className={`${menuLinkClass} max-lg:hidden`}
+                    href={`${base}/admin/students`}
+                  >
+                    {labels.students}
+                  </Link>
+                  <Link
+                    className={menuLinkClass}
+                    href={`${base}/admin/recensioner`}
+                  >
+                    {labels.reviews}
+                  </Link>
+                </>
+              )}
+              <div className="my-1 border-t border-border" />
+              <form
+                action={async () => {
+                  "use server";
+                  await signOut({ redirectTo: base });
+                }}
+              >
+                <button
+                  type="submit"
+                  className="flex min-h-11 w-full items-center rounded-sm px-3 text-start font-semibold text-danger hover:bg-card-muted"
+                >
+                  {labels.signOut}
+                </button>
+              </form>
+            </HeaderMenu>
           )}
           {canBook ? (
             <Link
               href={`${base}/boka`}
-              className="hidden min-h-11 shrink-0 items-center whitespace-nowrap rounded-sm border border-accent bg-accent px-4 text-nav font-extrabold text-accent-ink shadow-soft md:inline-flex"
+              className="hidden min-h-11 shrink-0 items-center whitespace-nowrap rounded-sm border border-accent bg-accent px-4 text-nav font-extrabold text-accent-ink shadow-soft lg:inline-flex"
             >
               {labels.book}
             </Link>
           ) : (
             <CallButton
               phone={phone}
-              className="hidden shrink-0 whitespace-nowrap md:inline-flex"
+              className="hidden shrink-0 whitespace-nowrap lg:inline-flex"
             >
               <span className="xl:hidden">{labels.callUs}</span>
               <span className="hidden xl:inline">{labels.callUs}</span>

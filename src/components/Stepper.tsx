@@ -39,7 +39,9 @@ export function Stepper({
               />
               <span
                 className={`truncate text-xs sm:text-sm ${
-                  active ? "font-bold text-ink" : "font-medium text-ink-muted"
+                  active
+                    ? "font-bold text-ink"
+                    : "font-medium text-ink-muted max-sm:sr-only"
                 }`}
               >
                 {step}

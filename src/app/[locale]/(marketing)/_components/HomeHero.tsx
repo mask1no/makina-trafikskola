@@ -4,10 +4,9 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { auth } from "@/auth";
 import { LinkButton } from "@/components/LinkButton";
+import { OpeningStatus } from "@/components/OpeningStatus";
 import type { Locale } from "@/i18n/routing";
-import { isOpenNow, nextOpening, todayHours } from "@/lib/company/opening-hours";
 import { db } from "@/lib/db";
-import { bookingEnabled } from "@/lib/launch";
 import { formatPrice } from "@/lib/pricing/format";
 import { isIntroOfferEligible } from "@/lib/products/intro-offer";
 
@@ -20,11 +19,7 @@ export async function HomeHero({ locale }: { locale: Locale }) {
     auth(),
     getProducts(locale),
   ]);
-  const canBook = bookingEnabled();
   const now = new Date();
-  const openNow = isOpenNow(now);
-  const hoursToday = todayHours(now);
-  const opens = nextOpening(now);
 
   const introProduct = products.find(
     (product) => product.active && product.isIntroOffer,
@@ -74,52 +69,21 @@ export async function HomeHero({ locale }: { locale: Locale }) {
             {t("home.hero.description")}
           </p>
           <div className="mt-6 flex flex-col gap-3 md:flex-row">
-            {canBook ? (
-              <LinkButton href={`/${locale}/boka`} size="lg" className="w-full md:w-auto">
-                {t("lessons.introOffer.book")}
-              </LinkButton>
-            ) : (
-              <LinkButton href={`/${locale}/priser`} size="lg" className="w-full md:w-auto">
-                {t("shell.seePrices")}
-              </LinkButton>
-            )}
+            <LinkButton href={`/${locale}/boka`} size="lg" className="w-full md:w-auto">
+              {t("common.bookNow")}
+            </LinkButton>
             <Link
-              href={canBook ? `/${locale}/priser` : `/${locale}/kontakt`}
+              href={`/${locale}/priser`}
               className="inline-flex min-h-[52px] w-full items-center justify-center rounded-sm border border-[color-mix(in_srgb,var(--ink-inverse)_28%,transparent)] bg-[color-mix(in_srgb,var(--surface)_68%,transparent)] px-6 text-small font-bold text-ink-inverse shadow-soft backdrop-blur-xl md:w-auto"
             >
-              {canBook ? t("shell.seePrices") : t("shell.contact")}
+              {t("shell.seePrices")}
             </Link>
           </div>
-          <ul className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs leading-5 text-ink-inverse-muted sm:text-small">
-            <li className="inline-flex min-h-11 items-center gap-2">
-              <span
-                aria-hidden="true"
-                className={`size-2 shrink-0 rounded-full ${
-                  openNow ? "bg-success-strong" : "bg-ink-inverse-muted"
-                }`}
-              />
-              {openNow && hoursToday ? (
-                <span>
-                  {t("home.hero.openUntil", { time: hoursToday.close })}
-                </span>
-              ) : (
-                <span>
-                  {t("shell.closed")}
-                  {opens ? (
-                    <>
-                      {" · "}
-                      {opens.sameDay
-                        ? t("shell.opensAt", { time: opens.time })
-                        : t("shell.opensOn", {
-                            day: t(`shell.weekdayShort.${opens.weekday}`),
-                            time: opens.time,
-                          })}
-                    </>
-                  ) : null}
-                </span>
-              )}
+          <ul className="mt-5 flex list-none flex-wrap items-center gap-x-4 gap-y-2 p-0">
+            <li className="list-none">
+              <OpeningStatus initialNow={now.toISOString()} variant="inverse" />
             </li>
-            <li className="inline-flex min-h-11 items-center gap-2">
+            <li className="inline-flex min-h-11 list-none items-center gap-2 text-xs leading-5 text-ink-inverse-muted sm:text-small">
               <svg
                 aria-hidden="true"
                 viewBox="0 0 24 24"
@@ -138,7 +102,7 @@ export async function HomeHero({ locale }: { locale: Locale }) {
               <span>{t("home.hero.areas")}</span>
             </li>
             {showIntroOffer && introProduct ? (
-              <li className="inline-flex min-h-11 items-center gap-2">
+              <li className="inline-flex min-h-11 list-none items-center gap-2 text-xs leading-5 text-ink-inverse-muted sm:text-small">
                 <svg
                   aria-hidden="true"
                   viewBox="0 0 24 24"

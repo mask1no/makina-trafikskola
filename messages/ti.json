@@ -69,7 +69,7 @@
     "here": "ኣበይ ኣለና",
     "schoolIn": "ትራፊክ ትምህርቲ ኣብ {town}",
     "comingSoonPlace": "{town} – ኣብ ቀረባ እዋን",
-    "openingHours": "ሰዓታት ክፈት: ሰኑ–ዓርቢ 08–21፣ ቀዳም 08–19",
+    "openingHours": "ሰዓታት ክፈት: ሰኑ–ዓርቢ 08–21፣ ቀዳም–ሰንበት 10–18",
     "copyright": "© {year} Makina Trafikskola",
     "footerDescription": "ንጹር መምርሒን ብቋንቋኻ ደገፍን ዘለዎ ትምህርቲ ምዝዋር።",
     "explore": "ዳህስስ",
@@ -104,7 +104,13 @@
     "languages": "ቋንቋታት",
     "appBadges": "ኣፕልኬሽናት",
     "socials": "ማሕበራዊ ሚድያ",
-    "tabSignIn": "እተው"
+    "tabSignIn": "እተው",
+    "more": "ተወሳኺ",
+    "teacherOffice": "ሰዓታትን ዘመን መቑጸርን",
+    "closeMenu": "መዝገብ ዕጸው",
+    "statusOpen": "ክፉት · ክሳብ {time}",
+    "statusClosedSameDay": "ዕጹው · ይኽፈት {time}",
+    "statusClosedOtherDay": "ዕጹው · ይኽፈት {day} {time}"
   },
   "common": {
     "bookNow": "ሕጂ ሓዝ",
@@ -121,7 +127,7 @@
       "title": "ብምትእምማን ዘውር፣ ብቋንቋኻ ተማሃር",
       "description": "ትምህርቲ ምዝዋር፣ ቲዮሪን ምኩራት መምህራንን ኣብ ስቶክሆልም።",
       "areas": "Farsta · Upplands Väsby",
-      "openUntil": "ሕጂ ክሳብ {time} ክፉት",
+      "openUntil": "ክፉት · ክሳብ {time}",
       "introOffer": "ቀዳማይ ትምህርቲ {price}"
     },
     "quick": {
@@ -162,8 +168,9 @@
     },
     "teachers": {
       "eyebrow": "ብቋንቋኻ ተማሃር",
-      "title": "መምህርካ ረኽብ",
-      "description": "ቋንቋኻ ዝዛረብን ኣብ እትደልዮ ቦታ ዝምህርን መምህር ድለ።",
+      "title": "ኣብ ቀረባኻ መምህር ርከብ",
+      "description": "ኣብ ከባቢታት Farstaን Upplands Väsbyን ብነጻ ምውሳድ",
+      "cta": "መምህርካ ረኽብ",
       "languageLabel": "መማህራን ብቋንቋ ፈልጥ"
     },
     "faq": {
@@ -996,6 +1003,7 @@
     "summary": "መዘኻኸሪ ትምህርቲ",
     "nextFocus": "ዝቕጽል ትኹረት",
     "completeLesson": "ዛዝምን ዓቅብን",
+    "writeNote": "መዘክር ትምህርቲ ጽሓፍ",
     "updateReport": "ጸብጻብ ኣሐድስ",
     "empty": "ሎሚ ትምህርቲ የብልካን።",
     "weekTitle": "ናይዚ ሰሙን ትምህርቲ",
@@ -1477,8 +1485,8 @@
     "students": {
       "eyebrow": "ምምሕዳር",
       "title": "ተማሃሮ",
-      "description": "ተማሃራይ ድለ፣ ሒሳብን ክፍሊትን ርአ ወይ ክረዲት ቀይር።",
-      "searchLabel": "ስም ወይ ኢመይል",
+      "description": "ተማሃራይ ድለ፣ ሒሳብን ክፍሊትን ርአ፣ ወይ ኣብ ዝሓለፈ መርበብ ዝነበሮ መዝግብ።",
+      "searchLabel": "ስም፣ ኢመይል ወይ ሞባይል",
       "search": "ድለ",
       "results": "{count} ውጽኢት",
       "noEmail": "ኢመይል የለን",
@@ -1514,11 +1522,23 @@
       "noPayments": "ክፍሊት የለን።",
       "ledger": "ምንቅስቓስ ክረዲት",
       "noLedger": "ምንቅስቓስ ክረዲት የለን።",
+      "expires": "ክሳብ {date} ይሰርሕ",
       "adjustment": {
-        "title": "ክረዲት ቀይር",
-        "delta": "ለውጢ",
+        "title": "ካብ ዝሓለፈ መርበብ ዝመጻ ትምህርቲ",
+        "help": "እቲ ተማሃራይ ዘቕደሞ ትምህርቲ ወስኽ። ካብ ሎሚ 12 ኣዋርሕ ይሰርሕ። ሲነስ ትምህርቲ የውጽእ። እንታይ ከም ዝነበሮ ጽሓፍ። እዚ ንወናኒ ጥራይ እዩ።",
+        "delta": "ትምህርቲ",
         "reason": "ኣድላዪ ጽሑፍ ምኽንያት",
-        "submit": "ለውጢ መዝግብ",
+        "submit": "ትምህርቲ ዓቅብ",
+        "saving": "ይዕቀብ…"
+      },
+      "theory": {
+        "title": "ካብ ዝሓለፈ መርበብ ዝመጸ ቲዎሪ",
+        "help": "ዝተኸፈለ ቲዎሪ ግዜ የብሉን። መምህራን ሒሳብ ወይ ቲዎሪ ክቐይሩ ኣይክእሉን።",
+        "active": "ቲዎሪ ንጡፍ እዩ",
+        "inactive": "ቲዎሪ የለን",
+        "grant": "ቲዎሪ ሃብ",
+        "revoke": "ቲዎሪ ኣውጽእ",
+        "reason": "ኣድላዪ ጽሑፍ ምኽንያት",
         "saving": "ይዕቀብ…"
       },
       "editTitle": "ተማሃራይ ኣርም",
@@ -1671,7 +1691,7 @@
     "phone": "ተሌፎን",
     "email": "ኢመይል",
     "openingHours": "ሰዓታት ስራሕ",
-    "openingHoursValue": "ሰኑይ–ዓርቢ 08.00–21.00፣ ቀዳም 08.00–19.00፣ ሰንበት ዕጹው (Europe/Stockholm)።",
+    "openingHoursValue": "ሰኑይ–ዓርቢ 08.00–21.00፣ ቀዳም–ሰንበት 10.00–18.00 (Europe/Stockholm)።",
     "locationsTitle": "ኣበይ ከም እንርከብ",
     "locationsDescription": "ኣብ Centralvägen 5, Upplands Väsby ትረኽቡና። ኣብ Google Maps መንገዲ ክፈቱ።",
     "directions": "መግለጺ መንገዲ",

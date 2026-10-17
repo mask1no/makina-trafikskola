@@ -1,55 +1,43 @@
 "use client";
 
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  type ComponentProps,
-} from "react";
+import { useEffect, useState, type ComponentProps } from "react";
 
 import type { TeacherMap } from "@/components/TeacherMap";
 
 type TeacherMapProps = ComponentProps<typeof TeacherMap>;
 
 export function LazyTeacherMap(props: TeacherMapProps) {
-  const [MapComponent, setMapComponent] = useState<typeof TeacherMap | null>(null);
-  const placeholderRef = useRef<HTMLDivElement>(null);
-  const loadMap = useCallback(() => {
-    void import("@/components/TeacherMap").then((mod) => {
-      setMapComponent(() => mod.TeacherMap);
-    });
-  }, []);
+  const [MapComponent, setMapComponent] = useState<typeof TeacherMap | null>(
+    null,
+  );
+  const home = props.variant === "home";
 
   useEffect(() => {
-    const placeholder = placeholderRef.current;
-    if (!placeholder || MapComponent) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry?.isIntersecting) return;
-        observer.disconnect();
-        loadMap();
-      },
-      { rootMargin: "320px 0px" },
-    );
-    observer.observe(placeholder);
-    return () => observer.disconnect();
-  }, [MapComponent, loadMap]);
+    let cancelled = false;
+    void import("@/components/TeacherMap").then((mod) => {
+      if (!cancelled) setMapComponent(() => mod.TeacherMap);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
-  if (MapComponent) return <MapComponent {...props} />;
+  if (!MapComponent) {
+    return (
+      <div
+        className={
+          home
+            ? "h-full min-h-[280px] overflow-hidden rounded-lg border border-border bg-page"
+            : "min-h-[30rem] rounded-lg border border-border bg-page"
+        }
+        aria-hidden="true"
+      />
+    );
+  }
 
   return (
-    <div
-      ref={placeholderRef}
-      className="grid min-h-[30rem] place-items-center rounded-lg border border-border bg-page"
-    >
-      <button
-        type="button"
-        className="inline-flex min-h-11 items-center rounded-sm bg-surface px-5 font-bold text-ink-inverse"
-        onClick={loadMap}
-      >
-        {props.fallbackLabel ?? props.label}
-      </button>
+    <div className={home ? "h-full min-h-[280px]" : undefined}>
+      <MapComponent {...props} />
     </div>
   );
 }

@@ -11,6 +11,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { BottomSheet } from "@/components/BottomSheet";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { locales, type Locale } from "@/i18n/routing";
+import { announcePopover, subscribePopover } from "@/lib/ui/popover";
 
 export function LanguageSwitcher({
   authenticated = false,
@@ -38,6 +39,7 @@ export function LanguageSwitcher({
   }
 
   function openMenu() {
+    announcePopover("language");
     setActiveIndex(Math.max(0, locales.indexOf(currentLocale)));
     setMobile(window.matchMedia("(max-width: 767px)").matches);
     setOpen(true);
@@ -94,6 +96,8 @@ export function LanguageSwitcher({
       document.removeEventListener("keydown", handleEscape);
     };
   }, [mobile, open]);
+
+  useEffect(() => subscribePopover("language", () => setOpen(false)), []);
 
   useEffect(() => {
     if (previousPathRef.current === pathname) return;

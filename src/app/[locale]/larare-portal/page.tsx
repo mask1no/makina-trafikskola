@@ -16,7 +16,7 @@ import { Card } from "@/components/Card";
 import { CheckboxField } from "@/components/CheckboxField";
 import { formatLessonDateTime, formatLessonTime } from "@/lib/format/datetime";
 import { formatPrice } from "@/lib/pricing/format";
-import { displayPhone, telHref } from "@/lib/format/phone";
+import { telHref } from "@/lib/format/phone";
 import { db } from "@/lib/db";
 
 import {
@@ -46,7 +46,12 @@ export default async function TeacherPortal(
 ) {
   const params = await props.params;
   const searchParams = await props.searchParams;
-  const view = searchParams.view === "week" ? "week" : "today";
+  const view =
+    searchParams.view === "week"
+      ? "week"
+      : searchParams.view === "office"
+        ? "office"
+        : "today";
   const session = await auth();
   if (!session?.user?.id) {
     redirect(
@@ -202,47 +207,26 @@ export default async function TeacherPortal(
           />
           <PageHeader
             eyebrow={t("eyebrow")}
-            title={view === "week" ? t("weekTitle") : t("title")}
-            description={t(view === "week" ? "weekCount" : "lessonCount", { count: lessons.length, n: String(lessons.length) })}
+            title={
+              view === "office"
+                ? t("hours.title")
+                : view === "week"
+                  ? t("weekTitle")
+                  : t("title")
+            }
+            description={
+              view === "office"
+                ? t("hours.help")
+                : t(view === "week" ? "weekCount" : "lessonCount", {
+                    count: lessons.length,
+                    n: String(lessons.length),
+                  })
+            }
           />
         </div>
-        <Card className="mt-6" padding="lg" key={monthKey}>
-          <div className="flex flex-wrap items-start justify-between gap-4">
-            <div>
-              <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-ink-muted">{t("monthTitle")}</p>
-              <h2 className="mt-2 text-h2 font-black capitalize">{monthLabel}</h2>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              <a className="inline-flex min-h-11 items-center rounded-sm border border-border bg-page px-3 text-small font-bold" href={monthHref(previousMonthKey)}>{t("previousMonth")}</a>
-              <a className="inline-flex min-h-11 items-center rounded-sm border border-border bg-page px-3 text-small font-bold" href={monthHref(nextMonthKey)}>{t("nextMonth")}</a>
-            </div>
-          </div>
-          <div className="mt-5 grid gap-3 sm:grid-cols-3">
-            <div className="rounded-md bg-page p-4">
-              <p className="text-lg font-black">{t("lessonsDriven", { count: completed.length })}</p>
-            </div>
-            <div className="rounded-md bg-page p-4">
-              <p className="text-lg font-black">{t("hoursDriven", { hours: drivenHours.toFixed(1) })}</p>
-            </div>
-            {teacher.payRateOre != null ? (
-              <div className="rounded-md bg-accent p-4 text-accent-ink sm:col-span-1">
-                <p className="text-lg font-black">{t("estimatedPay", { pay: formatPrice(completed.length * teacher.payRateOre, params.locale) })}</p>
-              </div>
-            ) : null}
-          </div>
-          {completed.length ? (
-            <ul className="mt-4 grid gap-2">
-              {completed.map((lesson) => (
-                <li key={lesson.id} className="text-small">
-                  {formatLessonDateTime(lesson.startsAt, params.locale)} · {lesson.student.firstName}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="mt-4 text-ink-muted">{t("monthEmpty")}</p>
-          )}
-        </Card>
-        <div className="mt-6 grid grid-cols-2 gap-2">
+        {view === "office" ? null : (
+        <>
+        <div className="mt-6 hidden grid-cols-2 gap-2 lg:grid">
           {(["today", "week"] as const).map((value) => (
             <a
               key={value}
@@ -278,33 +262,25 @@ export default async function TeacherPortal(
                     {!lesson.creditCharged ? (
                       <Badge className="mt-2" tone="danger">{t("awaitingPayment")}</Badge>
                     ) : null}
-                    <div className="mt-2 grid text-sm">
+                    <div className="mt-4 grid gap-2 sm:grid-cols-2">
                       {lesson.student.phone ? (
                         <a
-                          className="inline-flex min-h-11 items-center font-bold underline"
+                          className="inline-flex min-h-11 items-center justify-center rounded-sm border border-accent bg-accent px-4 text-small font-bold text-accent-ink"
                           href={telHref(lesson.student.phone)}
-                          aria-label={t("call")}
                         >
-                          <bdi dir="ltr" className="numbers-ltr">{displayPhone(lesson.student.phone)}</bdi>
+                          {t("call")}
                         </a>
                       ) : null}
                       {mapsHref ? (
                         <a
-                          className="inline-flex min-h-11 items-center break-words font-bold underline"
+                          className="inline-flex min-h-11 items-center justify-center rounded-sm border border-border bg-card px-4 text-center text-small font-bold text-ink"
                           href={mapsHref}
                           target="_blank"
                           rel="noreferrer"
-                          aria-label={t("openAddress")}
                         >
-                          {pickup ?? lesson.location?.name ?? address}
+                          {t("openAddress")}
                         </a>
                       ) : null}
-                      <a
-                        href={`#lesson-report-${lesson.id}`}
-                        className="inline-flex min-h-11 items-center font-bold underline"
-                      >
-                        {lesson.status === "COMPLETED" ? t("updateReport") : t("completeLesson")}
-                      </a>
                     </div>
                 </div>
                 <div className="mt-4 min-w-0 rounded-sm bg-page p-4">
@@ -314,6 +290,10 @@ export default async function TeacherPortal(
                   </p>
                 </div>
                 {lesson.creditCharged ? (
+                <details className="mt-4">
+                  <summary className="flex min-h-11 cursor-pointer list-none items-center font-bold [&::-webkit-details-marker]:hidden">
+                    {lesson.status === "COMPLETED" ? t("updateReport") : t("writeNote")}
+                  </summary>
                 <form id={`lesson-report-${lesson.id}`} action={reportLesson} className="mt-4 grid scroll-mt-24 gap-3">
                   <input type="hidden" name="bookingId" value={lesson.id} />
                   <input type="hidden" name="locale" value={params.locale} />
@@ -334,6 +314,7 @@ export default async function TeacherPortal(
                     {lesson.status === "COMPLETED" ? t("updateReport") : t("completeLesson")}
                   </Button>
                 </form>
+                </details>
                 ) : null}
               </article>
             );
@@ -342,8 +323,47 @@ export default async function TeacherPortal(
             <div className="relative z-10 bg-page"><EmptyState title={view === "week" ? t("weekEmpty") : t("empty")} description={t(view === "week" ? "weekCount" : "lessonCount", { count: 0, n: "0" })} /></div>
           ) : null}
         </div>
+        <Card className="mt-8" padding="lg" key={monthKey}>
+          <div className="flex flex-wrap items-start justify-between gap-4">
+            <div>
+              <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-ink-muted">{t("monthTitle")}</p>
+              <h2 className="mt-2 text-h2 font-black capitalize">{monthLabel}</h2>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <a className="inline-flex min-h-11 items-center rounded-sm border border-border bg-page px-3 text-small font-bold" href={monthHref(previousMonthKey)}>{t("previousMonth")}</a>
+              <a className="inline-flex min-h-11 items-center rounded-sm border border-border bg-page px-3 text-small font-bold" href={monthHref(nextMonthKey)}>{t("nextMonth")}</a>
+            </div>
+          </div>
+          <div className="mt-5 grid gap-3 sm:grid-cols-3">
+            <div className="rounded-md bg-page p-4">
+              <p className="text-lg font-black">{t("lessonsDriven", { count: completed.length })}</p>
+            </div>
+            <div className="rounded-md bg-page p-4">
+              <p className="text-lg font-black">{t("hoursDriven", { hours: drivenHours.toFixed(1) })}</p>
+            </div>
+            {teacher.payRateOre != null ? (
+              <div className="rounded-md bg-accent p-4 text-accent-ink">
+                <p className="text-lg font-black">{t("estimatedPay", { pay: formatPrice(completed.length * teacher.payRateOre, params.locale) })}</p>
+              </div>
+            ) : null}
+          </div>
+          {completed.length ? (
+            <ul className="mt-4 grid gap-2">
+              {completed.map((lesson) => (
+                <li key={lesson.id} className="text-small">
+                  {formatLessonDateTime(lesson.startsAt, params.locale)} · {lesson.student.firstName}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="mt-4 text-ink-muted">{t("monthEmpty")}</p>
+          )}
+        </Card>
+        </>
+        )}
       </section>
 
+      {view === "office" ? null : (
       <section className="mt-10">
         <h2 className="text-xl font-black">{t("students.title")}</h2>
         <div className="mt-4 grid gap-3 md:grid-cols-2">
@@ -376,7 +396,10 @@ export default async function TeacherPortal(
           ) : null}
         </div>
       </section>
+      )}
 
+      {view === "office" ? (
+      <>
       <section className="mt-10 rounded-md border border-border bg-card p-5 shadow-soft sm:p-6">
         <h2 className="text-xl font-bold">{t("calendar.title")}</h2>
         <p className="mt-2 text-sm text-ink-muted">{t("calendar.description")}</p>
@@ -440,6 +463,8 @@ export default async function TeacherPortal(
           </Button>
         </form>
       </section>
+      </>
+      ) : null}
     </div>
   );
 }

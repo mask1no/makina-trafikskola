@@ -22,10 +22,10 @@ test.describe("public localized experience", () => {
     await expect(page.locator("html")).toHaveAttribute("lang", "en");
   });
 
-  test("renders Arabic right-to-left", async ({ page }) => {
+  test("renders Arabic left-to-right like other locales", async ({ page }) => {
     await page.goto("/ar");
     await expect(page.locator("html")).toHaveAttribute("lang", "ar");
-    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+    await expect(page.locator("html")).toHaveAttribute("dir", "ltr");
   });
 
   test("offers localized free theory questions", async ({ page }) => {
@@ -91,7 +91,6 @@ test.describe("public localized experience", () => {
       "This server has booking disabled.",
     );
     await nextButton.click();
-    await page.getByRole("button", { name: "Hämta mig" }).click();
     await page.getByLabel("Hämtningsadress").fill("Centralvägen 5");
     await nextButton.click();
     await expect(page.getByText("Välj en adress i listan.")).toBeVisible();

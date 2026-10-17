@@ -31,12 +31,14 @@ export default async function StudentLayout(
     getTranslations("shell"),
   ]);
   const links = [
-    ["", t("overview")],
-    ["/bokningar", t("bookings")],
-    ["/lektioner", t("saldo")],
-    ...(theoryNavVisible() ? [["/teori", t("theory")] as const] : []),
-    ["/meddelanden", t("messages")],
-    ["/profil", t("profile")],
+    { path: "", label: t("overview"), hideBelowLg: false },
+    { path: "/bokningar", label: t("bookings"), hideBelowLg: true },
+    { path: "/lektioner", label: t("saldo"), hideBelowLg: false },
+    ...(theoryNavVisible()
+      ? [{ path: "/teori", label: t("theory"), hideBelowLg: false }]
+      : []),
+    { path: "/meddelanden", label: t("messages"), hideBelowLg: true },
+    { path: "/profil", label: t("profile"), hideBelowLg: false },
   ];
   const base = `/${params.locale}/mina-sidor`;
   const canBook = bookingEnabled();
@@ -60,9 +62,10 @@ export default async function StudentLayout(
       <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-8">
         <NavPills
           label={t("label")}
-          items={links.map(([path, label]) => ({
-            href: `${base}${path}`,
-            label,
+          items={links.map((item) => ({
+            href: `${base}${item.path}`,
+            label: item.label,
+            hideBelowLg: item.hideBelowLg,
           }))}
         />
         <div className="mt-8">{children}</div>

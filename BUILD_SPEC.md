@@ -249,8 +249,8 @@ Numbered so you can say "implement R7". Every rule here has a unit test.
 - **R24** Content translation fallback: requested locale → `sv` → first
   available. Never render an empty string; render Swedish with a small
   "endast på svenska" marker.
-- **R25** `dir="rtl"` on `<html>` for `ar`. Directional icons mirror; photos,
-  logos and the map do not. Numbers stay LTR.
+- **R25** UI stays `dir="ltr"` for all locales including `ar` (Arabic copy
+  only; no full-page RTL flip). Numbers stay LTR.
 
 ---
 
