@@ -16,10 +16,10 @@ export function FaqSection({
   items: FaqItem[];
 }) {
   return (
-    <section className="section-shell border-t border-border">
+    <section className="section-shell border-t border-[var(--line)]">
       <div className="site-container grid gap-8 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:items-start">
         <SectionHeader eyebrow={eyebrow} title={title} />
-        <div className="divide-y divide-border border-y border-border">
+        <div className="divide-y divide-[var(--line)] border-y border-[var(--line)]">
           {items.map((item) => (
             <details key={item.question} className="group">
               <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-6 py-4 font-bold marker:hidden [&::-webkit-details-marker]:hidden">

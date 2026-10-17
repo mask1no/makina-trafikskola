@@ -42,7 +42,7 @@ export function TeachersMapSection({
   mapAreas: MapArea[];
 }) {
   return (
-    <section className="section-shell">
+    <section className="section-shell border-t border-[var(--line)]">
       <div className="site-container">
         <div className="grid gap-8 lg:grid-cols-2 lg:items-stretch">
           <div className="flex flex-col justify-center">
@@ -56,7 +56,7 @@ export function TeachersMapSection({
                   key={language}
                   href={`/${locale}/larare?language=${language}`}
                   lang={language}
-                  className="inline-flex min-h-11 items-center rounded-full border border-[var(--line)] bg-card px-4 text-small font-bold shadow-soft transition duration-150 hover:border-[var(--line-hover)]"
+                  className="inline-flex min-h-11 items-center rounded-full border border-ink bg-card px-4 text-small font-bold shadow-soft transition duration-150 hover:bg-page"
                 >
                   {languageNames[language]}
                 </Link>

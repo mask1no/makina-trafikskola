@@ -1,6 +1,10 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { hasPaidLessonOrPackage, isIntroOfferEligible } from "./intro-offer";
+import {
+  hasBookedDrivingLesson,
+  hasPaidLessonOrPackage,
+  isIntroOfferEligible,
+} from "./intro-offer";
 
 type OrderFind = ReturnType<typeof vi.fn>;
 
@@ -8,15 +12,18 @@ function mockDb(overrides?: {
   userPhone?: string | null;
   phoneUsers?: { id: string }[];
   priorOrder?: { id: string } | null;
+  priorBooking?: { id: string } | null;
 }) {
   const findUnique = vi.fn(async () => ({
     phone: overrides?.userPhone ?? null,
   }));
   const findMany = vi.fn(async () => overrides?.phoneUsers ?? []);
   const findFirst: OrderFind = vi.fn(async () => overrides?.priorOrder ?? null);
+  const bookingFindFirst = vi.fn(async () => overrides?.priorBooking ?? null);
   return {
     user: { findUnique, findMany },
     order: { findFirst },
+    booking: { findFirst: bookingFindFirst },
   };
 }
 
@@ -68,6 +75,35 @@ describe("intro offer eligibility", () => {
       expect.objectContaining({
         where: expect.objectContaining({
           studentId: { in: expect.arrayContaining(["user-new", "user-old"]) },
+        }),
+      }),
+    );
+  });
+
+  it("blocks anyone who has booked a driving lesson", async () => {
+    const db = mockDb({ priorBooking: { id: "booking-1" } });
+    await expect(
+      isIntroOfferEligible(db as never, {
+        userId: "user-1",
+        phone: "+46701234567",
+      }),
+    ).resolves.toBe(false);
+    await expect(
+      hasBookedDrivingLesson(db as never, {
+        userId: "user-1",
+        phone: "+46701234567",
+      }),
+    ).resolves.toBe(true);
+    expect(db.booking.findFirst).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: expect.objectContaining({
+          status: {
+            notIn: [
+              "CANCELLED_BY_STUDENT",
+              "CANCELLED_BY_TEACHER",
+              "EXPIRED_HOLD",
+            ],
+          },
         }),
       }),
     );

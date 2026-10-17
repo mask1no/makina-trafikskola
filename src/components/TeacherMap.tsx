@@ -79,7 +79,7 @@ export function TeacherMap({
         areas={areas}
         label={label}
         className="size-full"
-        height={home ? 280 : 448}
+        height={home ? 280 : 320}
       />
     </div>
   );
@@ -129,5 +129,5 @@ export function TeacherMap({
     return <div className="h-full min-h-[280px]">{map}</div>;
   }
 
-  return <div className="min-h-[24rem] sm:min-h-[28rem]">{map}</div>;
+  return <div className="min-h-[20rem]">{map}</div>;
 }

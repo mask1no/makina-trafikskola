@@ -355,8 +355,8 @@ export default function GoogleMapClient({
   }
 
   const mapShellClass = home
-    ? "relative h-full min-h-[280px] overflow-hidden rounded-lg border border-border bg-card"
-    : "relative h-[28rem] overflow-hidden rounded-lg border border-ink bg-card";
+    ? "relative h-full min-h-[280px] overflow-hidden rounded-lg border border-ink bg-card"
+    : "relative h-[20rem] overflow-hidden rounded-lg border border-ink bg-card";
 
   return (
     <APIProvider
@@ -371,8 +371,8 @@ export default function GoogleMapClient({
           <Map
             defaultCenter={center}
             defaultZoom={13}
-            gestureHandling={home ? "greedy" : "cooperative"}
-            scrollwheel={!home}
+            gestureHandling="cooperative"
+            scrollwheel={false}
             disableDefaultUI
             mapId={mapId}
             colorScheme="LIGHT"

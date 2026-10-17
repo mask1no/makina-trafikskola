@@ -27,7 +27,11 @@ export function productLaunchApproved(
   if (product.kind === "GUARANTEE" && !guaranteeConfirmed(environment)) {
     return false;
   }
-  if (product.includesRisk2 && !risk2Confirmed(environment)) {
+  if (
+    product.includesRisk2 &&
+    product.kind !== "COURSE_SEAT" &&
+    !risk2Confirmed(environment)
+  ) {
     return false;
   }
   return true;

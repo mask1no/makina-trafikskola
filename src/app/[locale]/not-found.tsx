@@ -21,8 +21,8 @@ export default async function LocaleNotFound() {
       />
       <div className="mt-8 flex flex-wrap gap-3">
         <LinkButton href={base}>{shell("home")}</LinkButton>
-        <LinkButton href={`${base}/korlektioner`} variant="tertiary">
-          {shell("lessons")}
+        <LinkButton href={`${base}/priser`} variant="tertiary">
+          {shell("prices")}
         </LinkButton>
         {showInstructors ? (
           <LinkButton href={`${base}/larare`} variant="tertiary">

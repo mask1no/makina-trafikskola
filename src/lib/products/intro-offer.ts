@@ -4,9 +4,15 @@ import type { db as appDb } from "@/lib/db";
 
 const INTRO_BLOCKING_KINDS: ProductKind[] = ["SINGLE_LESSON", "PACKAGE"];
 
-type IntroDb = Pick<typeof appDb, "user" | "order"> | Prisma.TransactionClient;
+const CANCELLED_BOOKING_STATUSES = [
+  "CANCELLED_BY_STUDENT",
+  "CANCELLED_BY_TEACHER",
+  "EXPIRED_HOLD",
+] as const;
 
-export async function hasPaidLessonOrPackage(
+type IntroDb = Pick<typeof appDb, "user" | "order" | "booking"> | Prisma.TransactionClient;
+
+async function relatedUserIds(
   db: IntroDb,
   input: { userId: string; phone: string | null | undefined },
 ) {
@@ -27,10 +33,17 @@ export async function hasPaidLessonOrPackage(
     });
     for (const match of matches) userIds.add(match.id);
   }
+  return [...userIds];
+}
 
+export async function hasPaidLessonOrPackage(
+  db: IntroDb,
+  input: { userId: string; phone: string | null | undefined },
+) {
+  const userIds = await relatedUserIds(db, input);
   const prior = await db.order.findFirst({
     where: {
-      studentId: { in: [...userIds] },
+      studentId: { in: userIds },
       status: "PAID",
       items: {
         some: {
@@ -44,9 +57,25 @@ export async function hasPaidLessonOrPackage(
   return Boolean(prior);
 }
 
+export async function hasBookedDrivingLesson(
+  db: IntroDb,
+  input: { userId: string; phone: string | null | undefined },
+) {
+  const userIds = await relatedUserIds(db, input);
+  const prior = await db.booking.findFirst({
+    where: {
+      studentId: { in: userIds },
+      status: { notIn: [...CANCELLED_BOOKING_STATUSES] },
+    },
+    select: { id: true },
+  });
+  return Boolean(prior);
+}
+
 export async function isIntroOfferEligible(
   db: IntroDb,
   input: { userId: string; phone: string | null | undefined },
 ) {
-  return !(await hasPaidLessonOrPackage(db, input));
+  if (await hasPaidLessonOrPackage(db, input)) return false;
+  return !(await hasBookedDrivingLesson(db, input));
 }

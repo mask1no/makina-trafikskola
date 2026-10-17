@@ -232,10 +232,10 @@ const PRODUCTS: Seed[] = [
     lessonCredits: 1,
     isIntroOffer: true,
     translations: {
-      sv: { name: "Första körlektionen", shortDesc: "Din första lektion hos oss för 499 kr. 50 minuter bakom ratten med en lärare som anpassar tempot efter dig.", features: ["50 minuters körning", "Manuell eller automat", "Endast för nya kunder"] },
-      en: { name: "First driving lesson", shortDesc: "Your first lesson with us for 499 kr. 50 minutes behind the wheel with an instructor who matches your pace.", features: ["50 minutes of driving", "Manual or automatic", "New customers only"] },
-      ti: { name: "ቀዳማይ ትምህርቲ ምዝዋር", shortDesc: "ናይ መጀመርታ ትምህርትካ ምስና ን 499 kr። 50 ደቂቅ ድሕሪ መሪሕ መንእሰይ።", features: ["50 ደቂቅ ምዝዋር","ማንዋል ወይ ኣውቶማቲክ","ንሓደስቲ ዓማዊል ጥራይ"] },
-      ar: { name: "درس القيادة الأول", shortDesc: "درسك الأول معنا مقابل 499 كرونة. 50 دقيقة خلف المقود مع معلّم يضبط السرعة حسبك.", features: ["50 دقيقة قيادة", "يدوي أو أوتوماتيكي", "للعملاء الجدد فقط"] },
+      sv: { name: "Första körlektionen", shortDesc: "Din första lektion hos oss för 499 kr. 50 minuter bakom ratten med en lärare som anpassar tempot efter dig.", features: ["50 minuters körning", "Manuell eller automat", "För dig som inte bokat en körlektion"] },
+      en: { name: "First driving lesson", shortDesc: "Your first lesson with us for 499 kr. 50 minutes behind the wheel with an instructor who matches your pace.", features: ["50 minutes of driving", "Manual or automatic", "If you have not booked a driving lesson"] },
+      ti: { name: "ቀዳማይ ትምህርቲ ምዝዋር", shortDesc: "ናይ መጀመርታ ትምህርትካ ምስና ን 499 kr። 50 ደቂቅ ድሕሪ መሪሕ መንእሰይ።", features: ["50 ደቂቅ ምዝዋር", "ማንዋል ወይ ኣውቶማቲክ", "ንዘይተመዝገቡ ትምህርቲ ምዝዋር"] },
+      ar: { name: "درس القيادة الأول", shortDesc: "درسك الأول معنا مقابل 499 كرونة. 50 دقيقة خلف المقود مع معلّم يضبط السرعة حسبك.", features: ["50 دقيقة قيادة", "يدوي أو أوتوماتيكي", "لمن لم يحجز درس قيادة"] },
     },
   },
   {
@@ -245,10 +245,10 @@ const PRODUCTS: Seed[] = [
     priceOre: 74500,
     lessonCredits: 1,
     translations: {
-      sv: { name: "En körlektion", shortDesc: "50 minuter bakom ratten med en lärare som anpassar tempot efter dig. Passar dig som vill prova på, fylla på inför uppkörningen eller köra enstaka lektioner vid sidan av privat övningskörning.", features: ["50 minuters körning", "Manuell eller automat", "Personlig återkoppling"] },
-      en: { name: "Single driving lesson", shortDesc: "50 minutes behind the wheel with an instructor who matches your pace. Good if you want to try us, top up before the driving test, or take extra lessons beside private practice.", features: ["50 minutes of driving", "Manual or automatic", "Personal feedback"] },
-      ti: { name: "ሓደ ትምህርቲ ምዝዋር", shortDesc: "50 ደቒቕ ድሕሪ መሪሕ መንእሰይ ምስ መምህር ፍጥነትካ ዝሰማማዕ። ንምፍታን፣ ቅድሚ ፈተነ ንምምላእ ወይ ኣብ ጎኒ ብሕታዊ ልምምድ ተወሳኺ ትምህርቲ እንተደሊኻ ይሰርሕ።", features: ["50 ደቒቕ ምዝዋር", "ማንዋል ወይ ኣውቶማቲክ", "ውልቃዊ ግብረ መልሲ"] },
-      ar: { name: "درس قيادة منفرد", shortDesc: "50 دقيقة خلف المقود مع معلّم يضبط السرعة حسبك. مناسب للتجربة أو للتعزيز قبل الاختبار أو لدروس إضافية إلى جانب التدريب الخاص.", features: ["50 دقيقة قيادة", "يدوي أو أوتوماتيكي", "ملاحظات شخصية"] },
+      sv: { name: "En körlektion", shortDesc: "En lektion på 50 minuter. Läraren anpassar tempot efter dig — prova på, träna inför uppkörningen eller komplettera din privata övningskörning.", features: ["50 minuters körning", "Manuell eller automat", "Personlig återkoppling"] },
+      en: { name: "Single driving lesson", shortDesc: "A 50-minute lesson. Your instructor matches the pace to you — try a lesson, practise before the driving test, or add lessons beside private practice.", features: ["50 minutes of driving", "Manual or automatic", "Personal feedback"] },
+      ti: { name: "ሓደ ትምህርቲ ምዝዋር", shortDesc: "ሓደ ትምህርቲ ን50 ደቒቕ። መምህር ፍጥነትካ ይሰማማዕ — ፈትን፣ ቅድሚ ፈተነ ለምምድ፣ ወይ ብሕታዊ ልምምድካ ምሉእ።", features: ["50 ደቒቕ ምዝዋር", "ማንዋል ወይ ኣውቶማቲክ", "ውልቃዊ ግብረ መልሲ"] },
+      ar: { name: "درس قيادة منفرد", shortDesc: "درس مدته 50 دقيقة. يضبط المعلّم السرعة حسبك — جرّب، تدرّب قبل الاختبار، أو أكمل تدريبك الخاص.", features: ["50 دقيقة قيادة", "يدوي أو أوتوماتيكي", "ملاحظات شخصية"] },
     },
   },
   {
@@ -403,10 +403,10 @@ const PRODUCTS: Seed[] = [
     priceOre: 239500,
     includesRisk2: true,
     translations: {
-      sv: { name: "Risktvåan", shortDesc: "Obligatorisk praktisk riskutbildning del 2 för B-körkort.", features: ["Praktiska övningar på halkbana", "Tid och anläggning publiceras när de är bekräftade"] },
-      en: { name: "Risk 2", shortDesc: "Mandatory practical part 2 risk training for a category B licence.", features: ["Practical skid-pad exercises", "Time and venue appear after confirmation"] },
-      ti: { name: "ሪስክ 2", shortDesc: "ንፍቓድ B ግዴታዊ ግብራዊ ካልኣይ ክፋል ስልጠና ሓደጋ።", features: ["ግብራዊ ልምምድ ኣብ መንሸራተቲ ሜዳ", "ግዜን ቦታን ምስ ተረጋገጸ ይዝርጋሕ"] },
-      ar: { name: "المخاطر 2", shortDesc: "الجزء الثاني العملي والإلزامي من تدريب المخاطر لرخصة B.", features: ["تمارين عملية على حلبة الانزلاق", "يظهر الموعد والمكان بعد تأكيدهما"] },
+      sv: { name: "Risktvåan", shortDesc: "Obligatorisk praktisk riskutbildning på halkbana för B-körkort. Kursen är 09:00–13:00 på Centralvägen 5, 194 77 Upplands Väsby.", features: ["Praktiska övningar på halkbana", "09:00–13:00", "Centralvägen 5, 194 77 Upplands Väsby"] },
+      en: { name: "Risk 2", shortDesc: "Mandatory practical risk training on a skid pad for a category B licence. The course runs 09:00–13:00 at Centralvägen 5, 194 77 Upplands Väsby.", features: ["Practical skid-pad exercises", "09:00–13:00", "Centralvägen 5, 194 77 Upplands Väsby"] },
+      ti: { name: "ሪስክ 2", shortDesc: "ንፍቓድ B ግዴታዊ ግብራዊ ስልጠና ሓደጋ ኣብ መንሸራተቲ ሜዳ። ኮርስ 09:00–13:00 ኣብ Centralvägen 5, 194 77 Upplands Väsby።", features: ["ግብራዊ ልምምድ ኣብ መንሸራተቲ ሜዳ", "09:00–13:00", "Centralvägen 5, 194 77 Upplands Väsby"] },
+      ar: { name: "المخاطر 2", shortDesc: "التدريب العملي الإلزامي على المخاطر في حلبة الانزلاق لرخصة B. الدورة من 09:00 إلى 13:00 في Centralvägen 5, 194 77 Upplands Väsby.", features: ["تمارين عملية على حلبة الانزلاق", "09:00–13:00", "Centralvägen 5, 194 77 Upplands Väsby"] },
     },
   },
   {
@@ -875,7 +875,14 @@ async function main() {
             defaultVenueName: "Makina Trafikskola, Upplands Väsby",
             defaultVenueAddress: "Centralvägen 5, 194 77 Upplands Väsby",
           }
-        : {};
+        : course.kind === CourseKind.RISK2
+          ? {
+              defaultStartTime: "09:00",
+              durationMinutes: 240,
+              defaultVenueName: "Makina Trafikskola, Upplands Väsby",
+              defaultVenueAddress: "Centralvägen 5, 194 77 Upplands Väsby",
+            }
+          : {};
     await db.course.upsert({
       where: { id: course.id },
       update: { kind: course.kind, productId, ...risk1Defaults },
@@ -910,11 +917,11 @@ async function main() {
       id: "seed-occasion-risktvaan-1",
       courseId: "seed-course-risktvaan",
       daysAhead: 31,
-      start: "08:00",
-      end: "16:00",
+      start: "09:00",
+      end: "13:00",
       capacity: 12,
-      venueName: "Halkbanan Arlandastad",
-      venueAddress: "Driftvägen 1, 190 60 Stockholm-Arlanda",
+      venueName: "Makina Trafikskola, Upplands Väsby",
+      venueAddress: "Centralvägen 5, 194 77 Upplands Väsby",
       teacherId: null,
     },
     {

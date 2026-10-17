@@ -4,25 +4,30 @@ import { SectionHeader } from "@/components/SectionHeader";
 import type { Locale } from "@/i18n/routing";
 
 type QuickLink = {
-  key: "lessons" | "courses" | "theory" | "prices";
+  key: "theory" | "lessons" | "courses";
   href: string;
   label: string;
 };
 
 function QuickIcon({ kind }: { kind: QuickLink["key"] }) {
   const paths = {
-    lessons: <path d="M4 17h16M6 17l1.5-7h9L18 17M9 10V7h6v3M8 20h.01M16 20h.01" />,
-    courses: <path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3V4Zm3 13h11M9 8h6M9 11h4" />,
     theory: (
       <>
         <path d="M6 4.5h12v15H6z" />
         <path d="M9 8h6M9 12h6M9 16h3" />
       </>
     ),
-    prices: (
+    lessons: (
       <>
-        <circle cx="12" cy="12" r="8" />
-        <path d="M12 8v8M9.5 10.5c.6-1 1.5-1.5 2.5-1.5s2 .6 2 1.75-1 1.5-2.5 1.75-2.5.7-2.5 1.85 1.1 1.65 2.5 1.65 1.9-.5 2.5-1.4" />
+        <circle cx="12" cy="12" r="7.5" />
+        <circle cx="12" cy="12" r="2.25" />
+        <path d="M12 4.5v2.25M12 17.25V19.5M4.5 12h2.25M17.25 12H19.5" />
+      </>
+    ),
+    courses: (
+      <>
+        <path d="M5 7.5h14v11H5z" />
+        <path d="M8 7.5V5.75h8V7.5M8 12h8M8 15.5h5" />
       </>
     ),
   };
@@ -54,10 +59,10 @@ export function QuickLinksSection({
   links: QuickLink[];
 }) {
   return (
-    <section className="section-shell">
+    <section className="section-shell border-t border-[var(--line)]">
       <div className="site-container">
         <SectionHeader eyebrow={eyebrow} title={title} />
-        <div className="mt-8 grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <div className="mt-8 grid gap-3 sm:grid-cols-3">
           {links.map((link) => (
             <Link
               key={link.key}

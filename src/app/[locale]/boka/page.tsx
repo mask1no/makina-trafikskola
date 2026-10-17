@@ -40,7 +40,6 @@ export default async function BookingPage(
   const mapsConfig = googleMapsBrowserConfig();
   if (!isLocale(params.locale)) notFound();
   if (!bookingEnabled()) notFound();
-  const shell = await getTranslations({ locale: params.locale, namespace: "shell" });
   const company = await getTranslations({ locale: params.locale, namespace: "company" });
 
   const session = await auth();
@@ -178,9 +177,6 @@ export default async function BookingPage(
         mapId={mapsConfig.mapId}
       />
       <QuestionsBlock
-        title={shell("questions")}
-        callLabel={shell("callUs")}
-        mailLabel={shell("mailUs")}
         phone={company("phone")}
         email={company("email")}
       />

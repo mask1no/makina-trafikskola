@@ -56,7 +56,7 @@ export function ProductCard(props: ProductCardProps) {
       className={`relative flex h-full flex-col overflow-hidden break-words hyphens-auto rounded-lg border bg-card shadow-soft ${
         props.featured
           ? "border-accent"
-          : "border-s-4 border-s-[var(--tier-accent,var(--accent))] border-border"
+          : "border-s-2 border-s-[var(--tier-accent,var(--accent))] border-border"
       } ${props.bookingEnabled && !props.active ? "border-border-strong" : ""}`}
       style={tierStyle}
     >

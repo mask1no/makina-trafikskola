@@ -43,5 +43,17 @@ describe("client confirmation launch gates", () => {
         {},
       ),
     ).toBe(true);
+    expect(
+      productLaunchApproved(
+        { kind: "COURSE_SEAT", includesRisk2: true },
+        {},
+      ),
+    ).toBe(true);
+    expect(
+      productLaunchApproved(
+        { kind: "PACKAGE", includesRisk2: true },
+        {},
+      ),
+    ).toBe(false);
   });
 });

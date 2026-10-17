@@ -97,7 +97,9 @@ async function HomeBelow({ locale }: { locale: Locale }) {
         ? t("home.benefits.language.body", {
             languages: offeredLanguageNames,
           })
-        : t(`home.benefits.${item.id}.body`),
+        : item.id === "payment" && !swishActive()
+          ? t("home.benefits.payment.bodySwishSoon")
+          : t(`home.benefits.${item.id}.body`),
   }));
   const theoryProduct = activeProducts.find((product) => product.slug === "korkortsteori");
   const entryPackage = activeProducts
@@ -221,10 +223,9 @@ async function HomeBelow({ locale }: { locale: Locale }) {
         eyebrow={t("home.quick.eyebrow")}
         title={t("home.quick.title")}
         links={([
-          ["lessons", "korlektioner"],
-          ["courses", "kurser"],
           ["theory", "teori"],
-          ["prices", "priser"],
+          ["lessons", "priser#single"],
+          ["courses", "priser#courses"],
         ] as const).map(([key, href]) => ({
           key,
           href,

@@ -15,9 +15,7 @@ const viewports = [
 ] as const;
 const publicPages = [
   { route: "/", slug: "home" },
-  { route: "/korlektioner", slug: "korlektioner" },
   { route: "/priser", slug: "priser" },
-  { route: "/kurser", slug: "kurser" },
   { route: "/teori", slug: "teori" },
   { route: "/teori/ovning", slug: "teori-practice" },
   { route: "/teori/ovning?screen=end", slug: "teori-end" },

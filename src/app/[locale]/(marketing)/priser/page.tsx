@@ -2,22 +2,26 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
+import { auth } from "@/auth";
 import { EmptyState } from "@/components/EmptyState";
 import { PageHeader } from "@/components/PageHeader";
 import { ProductCard } from "@/components/ProductCard";
 import { QuestionsBlock } from "@/components/QuestionsBlock";
 import { isLocale } from "@/i18n/routing";
+import { db } from "@/lib/db";
 import {
   bookingEnabled,
   productLaunchApproved,
   theorySalesOpen,
 } from "@/lib/launch";
+import { isIntroOfferEligible } from "@/lib/products/intro-offer";
 import { groupProducts } from "@/lib/pricing/group";
 import { toProductCardModel } from "@/lib/products/card";
 
 import { pageCanonical, withSocial } from "@/lib/seo/metadata";
 
 import { getProducts } from "../_lib/data";
+import { CourseOccasions } from "../_components/CourseOccasions";
 
 export const dynamic = "force-dynamic";
 
@@ -51,10 +55,28 @@ export default async function KorlektionerPage(
   const t = await getTranslations();
   const sort = searchParams.sort === "lessons" ? "lessons" : "price";
   const group = searchParams.group;
+  const session = await auth();
+  const student =
+    session?.user?.role === "STUDENT"
+      ? await db.user.findUnique({
+          where: { id: session.user.id },
+          select: { id: true, phone: true },
+        })
+      : null;
+  const introEligible = student
+    ? await isIntroOfferEligible(db, {
+        userId: student.id,
+        phone: student.phone,
+      })
+    : true;
   const products = (await getProducts(params.locale))
     .filter((product) => product.active && product.kind !== "TEST_LESSON")
     .filter((product) => productLaunchApproved(product))
     .filter((product) => theorySalesOpen() || product.kind !== "THEORY_ACCESS")
+    .filter((product) => {
+      if (product.kind !== "SINGLE_LESSON") return true;
+      return introEligible ? product.isIntroOffer : !product.isIntroOffer;
+    })
     .sort((a, b) =>
       sort === "lessons" ? b.lessonCredits - a.lessonCredits : a.priceOre - b.priceOre,
     );
@@ -74,7 +96,6 @@ export default async function KorlektionerPage(
     detailsLabel: t("common.readMore"),
   };
   const company = await getTranslations("company");
-  const shell = await getTranslations("shell");
 
   return (
     <div className="section-shell">
@@ -132,6 +153,9 @@ export default async function KorlektionerPage(
                         />
                       ))}
                     </div>
+                    {section.key === "courses" ? (
+                      <CourseOccasions locale={params.locale} />
+                    ) : null}
                   </section>
                 ))}
               </div>
@@ -146,9 +170,6 @@ export default async function KorlektionerPage(
           </div>
         )}
         <QuestionsBlock
-          title={shell("questions")}
-          callLabel={shell("callUs")}
-          mailLabel={shell("mailUs")}
           phone={company("phone")}
           email={company("email")}
         />

@@ -170,7 +170,7 @@
       "eyebrow": "ብቋንቋኻ ተማሃር",
       "title": "ኣብ ቀረባኻ መምህር ርከብ",
       "description": "ኣብ ከባቢታት Farstaን Upplands Väsbyን ብነጻ ምውሳድ",
-      "cta": "መምህርካ ረኽብ",
+      "cta": "መምህርካ ዛዝም",
       "languageLabel": "መማህራን ብቋንቋ ፈልጥ"
     },
     "faq": {
@@ -212,41 +212,42 @@
     "benefits": {
       "label": "ኣብ ማኪና እትረኽቦ",
       "language": {
-        "title": "ቋንቋኻ",
+        "title": "ብቋንቋኻ",
         "body": "ትምህርቲ ብ{languages}።"
       },
       "pickup": {
-        "title": "ብነጻ ምውሳድ",
-        "body": "Farsta & Upplands Väsby"
+        "title": "ንወስደካ",
+        "body": "ብነጻ ኣብ Farstaን Upplands Väsbyን።"
       },
       "lesson": {
         "title": "50 ደቒቕ",
-        "body": "ነፍሲ ወከፍ ትምህርቲ ምዝዋር 50 ደቒቕ እዩ።"
+        "body": "ኩሉ ግዜ ድሕሪ መሪሕ።"
       },
       "risk": {
         "title": "Riskettan ኣባና",
-        "body": "ቲዮረቲካዊ ስግኣት ስልጠና ኣባና"
+        "body": "ግዴታዊ ስልጠና ሓደጋ፣ ኣብ ትምህርትና።"
       },
       "guarantee": {
-        "title": "ውሕስነት ፍቓድ ምዝዋር",
-        "body": "25 ትምህርቲ፣ ሪስክ 1፣ ሪስክ 2ን ቲዮሪን"
+        "title": "ውሕስነት ፍቓድ",
+        "body": "25 ትምህርቲ፣ ሪስክ 1፣ ሪስክ 2ን ቲዮሪን።"
       },
       "payment": {
-        "title": "ካርድ፣ Swish ከምኡ Klarna",
-        "titleSwishSoon": "ካርድን Klarnaን (Swish ኣብ ቀረባ ግዜ ይመጽእ)",
-        "body": "ዝሰማማዕካ ኣገባብ ክፍሊት ምረጽ።"
+        "title": "ካርድ፣ Swishን Klarnaን",
+        "titleSwishSoon": "ካርድን Klarnaን",
+        "body": "ብዝመረጽካዮ ክፈል።",
+        "bodySwishSoon": "Swish ኣብ ቀረባ ይኽፈት።"
       },
       "cancel": {
-        "title": "ዝዝሓለ 24 ሰዓት ኣቐዲምካ ሰርዝ",
-        "body": "ዝዝሓለ 24 ሰዓት ቅድሚ ትምህርቲ ብነጻ ስረዝ። ድሕሪኡ ምስራዝ ምሉእ ዋጋ ይኽፈል።"
+        "title": "ብነጻ ሰርዝ",
+        "body": "ቅድሚ 24 ሰዓት ብነጻ። ድሕሪኡ ምሉእ ዋጋ።"
       },
       "reminder": {
-        "title": "ቅድሚኡ ብሓደ መዓልቲ መዘኻኸሪ SMS",
-        "body": "SMS ቅድሚ እቲ ትምህርቲ ብሓደ መዓልቲ።"
+        "title": "SMS ቅድሚ ሓደ መዓልቲ",
+        "body": "መዘኻኸሪ፣ ንኽትድልው።"
       },
       "validity": {
-        "title": "ን12 ኣዋርሕ የገልግሉ",
-        "body": "ትምህርቲ ምዝዋርን ጥቕላታትን ካብ ዕደጋ ን12 ኣዋርሕ የገልግሉ።"
+        "title": "12 ኣዋርሕ ናትካ",
+        "body": "ትምህርትን ጥቕላትን ካብ ዕደጋ ይቑጸሩ።"
       }
     }
   },

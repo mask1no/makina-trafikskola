@@ -170,7 +170,7 @@
       "eyebrow": "Lär dig på ditt språk",
       "title": "Hitta lärare nära dig",
       "description": "Gratis upphämtning inom Farsta och Upplands Väsby",
-      "cta": "Hitta din lärare",
+      "cta": "Boka din lärare",
       "languageLabel": "Filtrera lärare efter språk"
     },
     "faq": {
@@ -212,41 +212,42 @@
     "benefits": {
       "label": "Det här får du hos Makina",
       "language": {
-        "title": "Ditt språk",
+        "title": "På ditt språk",
         "body": "Undervisning på {languages}."
       },
       "pickup": {
-        "title": "Gratis upphämtning",
-        "body": "Farsta & Upplands Väsby"
+        "title": "Vi hämtar dig",
+        "body": "Gratis i Farsta och Upplands Väsby."
       },
       "lesson": {
         "title": "50 minuter",
-        "body": "Varje körlektion är 50 minuter."
+        "body": "Hela passet bakom ratten."
       },
       "risk": {
         "title": "Riskettan hos oss",
-        "body": "Teoretisk riskutbildning hos oss"
+        "body": "Obligatorisk riskutbildning, på plats."
       },
       "guarantee": {
         "title": "Körkortsgaranti",
-        "body": "25 lektioner, Risk 1, Risk 2 och teori"
+        "body": "25 lektioner, Risk 1, Risk 2 och teori."
       },
       "payment": {
         "title": "Kort, Swish och Klarna",
-        "titleSwishSoon": "Kort och Klarna (Swish kommer snart)",
-        "body": "Välj det betalsätt som passar dig."
+        "titleSwishSoon": "Kort och Klarna",
+        "body": "Betala som du vill.",
+        "bodySwishSoon": "Swish öppnar snart."
       },
       "cancel": {
-        "title": "Avboka senast 24 h före",
-        "body": "Avboka senast 24 timmar före lektionen utan kostnad. En senare avbokning debiteras fullt pris."
+        "title": "Avboka gratis",
+        "body": "Gratis senast 24 timmar före lektionen. Därefter fullt pris."
       },
       "reminder": {
-        "title": "Sms-påminnelse dagen före",
-        "body": "SMS dagen före lektionen."
+        "title": "Sms dagen före",
+        "body": "En påminnelse, så du är redo."
       },
       "validity": {
-        "title": "Gäller i 12 månader",
-        "body": "Körlektioner och paket gäller i 12 månader från köpet."
+        "title": "12 månader på dig",
+        "body": "Lektioner och paket gäller från köpet."
       }
     }
   },

@@ -170,7 +170,7 @@
       "eyebrow": "Learn in your language",
       "title": "Find an instructor near you",
       "description": "Free pickup within Farsta and Upplands Väsby",
-      "cta": "Find your instructor",
+      "cta": "Book your instructor",
       "languageLabel": "Filter instructors by language"
     },
     "faq": {
@@ -212,41 +212,42 @@
     "benefits": {
       "label": "What you get at Makina",
       "language": {
-        "title": "Your language",
-        "body": "Lessons in {languages}."
+        "title": "In your language",
+        "body": "Teaching in {languages}."
       },
       "pickup": {
-        "title": "Free pickup",
-        "body": "Farsta & Upplands Väsby"
+        "title": "We pick you up",
+        "body": "Free in Farsta and Upplands Väsby."
       },
       "lesson": {
         "title": "50 minutes",
-        "body": "Every driving lesson is 50 minutes."
+        "body": "The whole session behind the wheel."
       },
       "risk": {
         "title": "Risk 1 with us",
-        "body": "Theoretical risk training with us"
+        "body": "Mandatory risk training, at our school."
       },
       "guarantee": {
-        "title": "Driving licence guarantee",
-        "body": "25 lessons, Risk 1, Risk 2 and theory"
+        "title": "Licence guarantee",
+        "body": "25 lessons, Risk 1, Risk 2 and theory."
       },
       "payment": {
         "title": "Card, Swish and Klarna",
-        "titleSwishSoon": "Card and Klarna (Swish coming soon)",
-        "body": "Choose the payment method that suits you."
+        "titleSwishSoon": "Card and Klarna",
+        "body": "Pay the way you want.",
+        "bodySwishSoon": "Swish is opening soon."
       },
       "cancel": {
-        "title": "Cancel at least 24 h before",
-        "body": "Cancel at the latest 24 hours before the lesson at no cost. A later cancellation is charged in full."
+        "title": "Cancel for free",
+        "body": "Free up to 24 hours before the lesson. After that, the full price."
       },
       "reminder": {
-        "title": "Text reminder the day before",
-        "body": "An SMS the day before the lesson."
+        "title": "A text the day before",
+        "body": "A reminder, so you show up ready."
       },
       "validity": {
-        "title": "Valid for 12 months",
-        "body": "Driving lessons and packages are valid for 12 months from purchase."
+        "title": "12 months to use",
+        "body": "Lessons and packages count from the day you buy."
       }
     }
   },

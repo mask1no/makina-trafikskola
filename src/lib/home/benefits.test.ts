@@ -72,21 +72,22 @@ describe("benefitItems", () => {
 
   it("uses the confirmed Swedish benefit and pickup copy", () => {
     expect(sv.home.benefits.pickup).toEqual({
-      title: "Gratis upphämtning",
-      body: "Farsta & Upplands Väsby",
+      title: "Vi hämtar dig",
+      body: "Gratis i Farsta och Upplands Väsby.",
     });
     expect(sv.home.benefits.risk).toEqual({
       title: "Riskettan hos oss",
-      body: "Teoretisk riskutbildning hos oss",
+      body: "Obligatorisk riskutbildning, på plats.",
     });
     expect(sv.home.benefits.validity).toEqual({
-      title: "Gäller i 12 månader",
-      body: "Körlektioner och paket gäller i 12 månader från köpet.",
+      title: "12 månader på dig",
+      body: "Lektioner och paket gäller från köpet.",
     });
     expect(sv.home.benefits.payment.title).toBe("Kort, Swish och Klarna");
-    expect(sv.home.benefits.payment.titleSwishSoon).toBe("Kort och Klarna (Swish kommer snart)");
-    expect(sv.home.benefits.reminder.title).toBe("Sms-påminnelse dagen före");
-    expect(sv.home.benefits.cancel.title).toBe("Avboka senast 24 h före");
+    expect(sv.home.benefits.payment.titleSwishSoon).toBe("Kort och Klarna");
+    expect(sv.home.benefits.payment.bodySwishSoon).toBe("Swish öppnar snart.");
+    expect(sv.home.benefits.reminder.title).toBe("Sms dagen före");
+    expect(sv.home.benefits.cancel.title).toBe("Avboka gratis");
     expect(sv.home.teachers.description.toLowerCase()).toContain("gratis");
     expect(sv.home.pickup.description.toLowerCase()).toContain("gratis");
     expect(sv.home.faq.pickup.answer.toLowerCase()).toContain("gratis");

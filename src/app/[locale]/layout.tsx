@@ -166,8 +166,6 @@ export default async function LocaleLayout(props: {
   const showInstructors = instructorsEnabled();
   const showTheory = theoryNavVisible();
   const navItems = [
-    { href: `${base}/korlektioner`, label: t("lessons") },
-    { href: `${base}/kurser`, label: t("courses") },
     ...(showInstructors
       ? [{ href: `${base}/larare`, label: t("teachers") }]
       : []),
@@ -201,15 +199,24 @@ export default async function LocaleLayout(props: {
     const url = process.env[key]?.trim();
     return url?.startsWith("https://") ? [{ url, label }] : [];
   });
+  const socialDefaults: Record<string, string> = {
+    FACEBOOK_URL:
+      "https://www.facebook.com/people/Makina-trafikskola/61582442371811/",
+    INSTAGRAM_URL: "https://www.instagram.com/makina.trafikskola/",
+  };
   const socialLinks = (
     [
-      ["INSTAGRAM_URL", t("instagram")],
-      ["FACEBOOK_URL", t("facebook")],
-      ["TIKTOK_URL", t("tiktok")],
+      ["FACEBOOK_URL", t("facebook"), "facebook"],
+      ["INSTAGRAM_URL", t("instagram"), "instagram"],
+      ["TIKTOK_URL", t("tiktok"), "tiktok"],
     ] as const
-  ).flatMap(([key, label]) => {
-    const url = process.env[key]?.trim();
-    return url?.startsWith("https://") ? [{ url, label }] : [];
+  ).flatMap(([key, label, network]) => {
+    const fromEnv = process.env[key]?.trim();
+    const url =
+      fromEnv && fromEnv.startsWith("https://")
+        ? fromEnv
+        : (socialDefaults[key] ?? "");
+    return url.startsWith("https://") ? [{ url, label, network }] : [];
   });
   const centerTab =
     session?.user.role === "ADMIN" || session?.user.role === "TEACHER"
@@ -281,14 +288,14 @@ export default async function LocaleLayout(props: {
         : [
             { href: base, label: t("home"), icon: "home", exact: true },
             {
-              href: `${base}/korlektioner`,
-              label: t("lessonsShort"),
+              href: `${base}/priser`,
+              label: t("prices"),
               icon: "packages",
               exact: true,
             },
             {
-              href: showTheory ? `${base}/teori` : `${base}/kurser`,
-              label: showTheory ? t("theory") : t("courses"),
+              href: showTheory ? `${base}/teori` : `${base}/kontakt`,
+              label: showTheory ? t("theory") : t("contact"),
               icon: "messages" as const,
               exact: true,
             },

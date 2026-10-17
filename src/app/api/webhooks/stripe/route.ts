@@ -368,7 +368,7 @@ export async function processVerifiedStripeEvent(
                   });
                 }
                 const coursesUrl = new URL(
-                  `/${encodeURIComponent(order.student.localePref)}/kurser`,
+                  `/${encodeURIComponent(order.student.localePref)}/priser`,
                   new URL(
                     process.env.NEXT_PUBLIC_SITE_URL ??
                       "http://localhost:3000",

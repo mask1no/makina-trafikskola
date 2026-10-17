@@ -35,7 +35,7 @@ export function TheoryTeaserSection({
   return (
     <section className="section-shell overflow-hidden pt-12 md:pt-20">
       <div className="site-container">
-        <div className="relative overflow-hidden rounded-lg bg-surface text-ink-inverse shadow-float">
+        <div className="relative overflow-hidden rounded-lg border border-ink bg-surface text-ink-inverse shadow-float">
           <div className="relative grid lg:grid-cols-[1.1fr_.9fr]">
             <div className="p-7 sm:p-10 lg:p-14">
               <p className="text-micro font-bold uppercase tracking-wider text-accent">

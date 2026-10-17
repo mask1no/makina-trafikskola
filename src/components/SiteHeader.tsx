@@ -103,19 +103,20 @@ export function SiteHeader({
   return (
     <header
       data-site-header=""
-      className="sticky top-0 z-40 border-b border-surface-soft bg-surface text-ink-inverse shadow-soft"
+      className="sticky top-0 z-40 bg-page py-2 text-ink-inverse sm:py-3"
     >
-      <div className="site-container grid min-h-[var(--header-height)] min-w-0 grid-cols-[auto_1fr_auto] items-center gap-1.5 sm:gap-2 lg:min-h-[var(--header-height-lg)] lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
+      <div className="site-container">
+        <div className="grid min-h-14 min-w-0 grid-cols-[auto_1fr_auto] items-center gap-1.5 rounded-xl border border-ink bg-surface px-3 py-1.5 sm:gap-2 sm:px-5 lg:min-h-0 lg:grid-cols-12 lg:items-center lg:gap-6 lg:px-5 lg:py-3">
         <Link
           href={base}
           aria-label={companyName}
-          className="inline-flex min-h-11 min-w-0 shrink items-center lg:justify-self-start"
+          className="inline-flex min-h-11 min-w-0 shrink items-center lg:col-span-3 lg:justify-self-start"
         >
           <span className="sr-only">{companyName}</span>
           <SiteLogo compactOnMobile />
         </Link>
         <nav
-          className="hidden min-w-0 items-center justify-center gap-0.5 lg:flex lg:justify-self-center"
+          className="hidden min-w-0 items-center justify-start gap-1 lg:col-span-6 lg:flex"
           aria-label={labels.navigation}
         >
           {navItems.map((item) => (
@@ -129,7 +130,7 @@ export function SiteHeader({
             </Link>
           ))}
         </nav>
-        <div className="ms-auto flex shrink-0 items-center gap-1.5 sm:gap-2 lg:ms-0 lg:justify-self-end lg:gap-2">
+        <div className="ms-auto flex shrink-0 items-center gap-1.5 sm:gap-2 lg:col-span-3 lg:ms-0 lg:w-full lg:justify-end lg:gap-2">
           <LanguageSwitcher authenticated={Boolean(user)} />
           {!user ? (
             <>
@@ -301,6 +302,7 @@ export function SiteHeader({
               <span className="hidden xl:inline">{labels.callUs}</span>
             </CallButton>
           )}
+        </div>
         </div>
       </div>
     </header>

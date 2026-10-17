@@ -25,7 +25,7 @@ test.describe("marketing layout", () => {
     for (const locale of locales) {
       test(`${locale} has no horizontal overflow at ${viewport.width}`, async ({ page }) => {
         await page.setViewportSize(viewport);
-        for (const path of ["", "/korlektioner", "/paket/en-korlektion", "/kontakt"]) {
+        for (const path of ["", "/priser", "/paket/en-korlektion", "/kontakt"]) {
           const response = await page.goto(`/${locale}${path}`);
           expect(response?.ok(), `${locale}${path}`).toBeTruthy();
           const fits = await page.evaluate(

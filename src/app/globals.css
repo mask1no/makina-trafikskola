@@ -10,7 +10,7 @@
   --card: #ffffff;
   --card-muted: #fafaf9;
   --border: #e5e5ea;
-  --border-strong: #d3d3d8;
+  --border-strong: #0d0d0f;
   --ink: #0d0d0f;
   --ink-inverse: #ffffff;
   --ink-inverse-muted: #a7a7af;
@@ -25,8 +25,8 @@
   --success: #15803d;
   --success-strong: #1fa971;
   --success-soft: #eaf8f2;
-  --header-height: 4rem;
-  --header-height-lg: 4.5rem;
+  --header-height: 4.75rem;
+  --header-height-lg: 6.25rem;
   --tab-bar-height: 5rem;
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --keyboard-inset: 0px;
@@ -251,13 +251,19 @@ textarea {
 
   .benefit-viewport {
     overflow: hidden;
+    padding-block: 0.25rem;
     mask-image: linear-gradient(
       to right,
       transparent,
-      #000 6%,
-      #000 94%,
+      #000 2%,
+      #000 98%,
       transparent
     );
+  }
+
+  .benefit-marquee-region:hover .benefit-track,
+  .benefit-marquee-region:focus-within .benefit-track {
+    animation-play-state: paused;
   }
 
   .theory-path-line {

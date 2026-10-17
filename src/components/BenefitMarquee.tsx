@@ -24,14 +24,14 @@ function Cards({ items, hidden = false }: { items: BenefitCard[]; hidden?: boole
       {items.map((item) => (
         <li
           key={`${hidden ? "copy-" : ""}${item.id}`}
-          className={`flex h-32 shrink-0 flex-col justify-between rounded-md border border-[var(--line)] bg-card p-4 shadow-soft ${
-            item.size === "lg" ? "w-[20rem] max-w-[82vw]" : "w-56 max-w-[82vw]"
+          className={`flex shrink-0 items-start gap-3 rounded-md border border-border bg-card p-4 shadow-soft ${
+            item.size === "lg" ? "w-[22rem] max-w-[85vw]" : "w-80 max-w-[85vw]"
           }`}
         >
           <BenefitIcon />
-          <div>
-            <p className="font-black">{item.title}</p>
-            <p className="mt-1 line-clamp-2 text-small leading-5 text-ink-muted">{item.body}</p>
+          <div className="min-w-0">
+            <p className="text-balance font-extrabold leading-snug">{item.title}</p>
+            <p className="mt-1 text-small leading-6 text-ink">{item.body}</p>
           </div>
         </li>
       ))}

@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 const locales = ["sv", "en", "ti", "ar"] as const;
-const touchedRoutes = ["", "/korlektioner", "/paket/en-korlektion", "/kontakt", "/villkor", "/teori", "/logga-in"] as const;
+const touchedRoutes = ["", "/priser", "/paket/en-korlektion", "/kontakt", "/villkor", "/teori", "/logga-in"] as const;
 
 test.beforeEach(async ({ context }) => {
   await context.addCookies([
@@ -14,20 +14,20 @@ test.beforeEach(async ({ context }) => {
   ]);
 });
 
-test("desktop nav stays centered within 8px in sv and ar", async ({ page }) => {
+test("desktop header is a rounded panel with the nav inside", async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 800 });
   for (const locale of ["sv", "ar"] as const) {
     await page.goto(`/${locale}`);
-    const delta = await page.evaluate(() => {
+    const inside = await page.evaluate(() => {
       const header = document.querySelector("header");
-      const nav = header?.querySelector("nav[aria-label]");
-      if (!header || !nav) return null;
-      const h = header.getBoundingClientRect();
-      const n = nav.getBoundingClientRect();
-      return Math.abs((n.left + n.width / 2) - (h.left + h.width / 2));
+      const panel = header?.querySelector(".rounded-xl");
+      const nav = panel?.querySelector("nav[aria-label]");
+      if (!header || !panel || !nav) return false;
+      const panelBox = panel.getBoundingClientRect();
+      const navBox = nav.getBoundingClientRect();
+      return navBox.left >= panelBox.left && navBox.right <= panelBox.right + 1;
     });
-    expect(delta).not.toBeNull();
-    expect(delta ?? 999).toBeLessThanOrEqual(8);
+    expect(inside).toBe(true);
   }
 });
 

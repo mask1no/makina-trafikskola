@@ -35,7 +35,22 @@ const nextConfig = {
       },
       {
         source: "/korlektion",
-        destination: "/sv/korlektioner",
+        destination: "/sv/priser",
+        permanent: true,
+      },
+      {
+        source: "/:locale/korlektioner",
+        destination: "/:locale/priser#single",
+        permanent: true,
+      },
+      {
+        source: "/:locale/korlektioner/:path*",
+        destination: "/:locale/priser#single",
+        permanent: true,
+      },
+      {
+        source: "/:locale/kurser",
+        destination: "/:locale/priser#courses",
         permanent: true,
       },
       {

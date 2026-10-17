@@ -13,9 +13,8 @@ test("renders key public routes on mobile", async ({ page }, testInfo) => {
 
   for (const path of [
     "",
-    "/korlektioner",
+    "/priser",
     "/larare",
-    "/kurser",
     "/teori",
     "/teori/prov",
     "/kontakt",
@@ -47,10 +46,9 @@ test("has no horizontal overflow and shows the tab bar only under md", async ({ 
     await page.setViewportSize({ width: viewport.width, height: viewport.height });
     for (const path of [
       "",
-      "/korlektioner",
+      "/priser",
       "/paket/korpaket-b5",
       "/larare",
-      "/kurser",
       "/kontakt",
       "/teori",
       "/logga-in",
