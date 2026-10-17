@@ -42,10 +42,15 @@ export function TeacherEditor({
   };
 }) {
   const t = useTranslations("admin.editor");
+  const errors = useTranslations("errors");
   const router = useRouter();
   const [form, setForm] = useState(initial);
   const [message, setMessage] = useState("");
   const [busy, setBusy] = useState(false);
+
+  function errorMessage(code: string) {
+    return errors.has(code) ? errors(code) : errors("UNKNOWN");
+  }
 
   function toggle(list: string[], value: string) {
     return list.includes(value) ? list.filter((item) => item !== value) : [...list, value];
@@ -68,7 +73,7 @@ export function TeacherEditor({
       if (!response.ok) throw new Error(body?.error?.code ?? "UNKNOWN");
       setMessage(t("saved"));
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : "UNKNOWN");
+      setMessage(errorMessage(error instanceof Error ? error.message : "UNKNOWN"));
     } finally {
       setBusy(false);
     }
@@ -82,14 +87,18 @@ export function TeacherEditor({
       body: data,
     });
     const body = await response.json().catch(() => null);
-    setMessage(response.ok ? t("saved") : body?.error?.code ?? "UNKNOWN");
+    setMessage(response.ok ? t("saved") : errorMessage(body?.error?.code ?? "UNKNOWN"));
     if (response.ok) router.refresh();
   }
 
   async function testCalendar() {
     const response = await fetch(`/api/admin/instructors/${teacherId}/calendar`, { method: "POST" });
     const body = await response.json().catch(() => null);
-    setMessage(body?.ok ? "OK" : body?.message ?? body?.error?.code ?? "UNKNOWN");
+    setMessage(
+      body?.ok
+        ? t("saved")
+        : errorMessage(body?.error?.code ?? body?.message ?? "UNKNOWN"),
+    );
   }
 
   return (

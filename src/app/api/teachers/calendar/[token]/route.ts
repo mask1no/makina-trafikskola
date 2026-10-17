@@ -5,12 +5,14 @@ import { z } from "zod";
 import { allowRateLimitedAction } from "@/lib/auth/otp-store";
 import { buildCalendar } from "@/lib/calendar/ics";
 import { db } from "@/lib/db";
+import am from "../../../../../../messages/am.json";
 import ar from "../../../../../../messages/ar.json";
 import en from "../../../../../../messages/en.json";
+import so from "../../../../../../messages/so.json";
 import sv from "../../../../../../messages/sv.json";
 import ti from "../../../../../../messages/ti.json";
 
-const lessonSummary = { sv, en, ti, ar };
+const calendarMessages = { sv, en, ti, ar, am, so };
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -70,8 +72,8 @@ export async function GET(
       location: { select: { name: true, address: true } },
     },
   });
-  const locale = teacher.user.localePref in lessonSummary
-    ? (teacher.user.localePref as keyof typeof lessonSummary)
+  const locale = teacher.user.localePref in calendarMessages
+    ? (teacher.user.localePref as keyof typeof calendarMessages)
     : "sv";
   const origin = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
   const portalUrl = new URL(
@@ -80,7 +82,7 @@ export async function GET(
   ).toString();
   const body = buildCalendar({
     prodId: "-//Makina Trafikskola//Teacher//SV",
-    name: "Makina – lektioner",
+    name: `Makina – ${calendarMessages[locale].teacherPortal.calendar.title}`,
     timezone: "Europe/Stockholm",
     refreshInterval: "PT1H",
     now,
@@ -88,7 +90,7 @@ export async function GET(
       uid: `${booking.id}@makina.se`,
       startsAt: booking.startsAt,
       endsAt: booking.endsAt,
-      summary: lessonSummary[locale].teacherPortal.calendar.summary.replace(
+      summary: calendarMessages[locale].teacherPortal.calendar.summary.replace(
         "{name}",
         booking.student.firstName,
       ),

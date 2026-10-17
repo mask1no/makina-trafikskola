@@ -59,14 +59,18 @@ test.describe("marketing layout", () => {
     await expect(page.locator("header").getByRole("link", { name: "Kontakt" })).toHaveCount(1);
   });
 
-  test("contact map loads after the privacy confirmation", async ({ page }) => {
+  test("contact locations open Google Maps without embedding it", async ({ page }) => {
     await page.goto("/sv/kontakt");
-    const load = page.getByRole("button", { name: "Visa karta" });
-    await expect(load).toBeVisible();
-    await load.click();
-    const map = page.getByTitle("Hitta oss");
-    await expect(map).toBeVisible();
-    await expect(map).toHaveAttribute("src", /google\.com\/maps/);
+    const directions = page.getByRole("link", { name: "Vägbeskrivning" });
+    await expect(directions).toHaveCount(2);
+    for (const link of await directions.all()) {
+      await expect(link).toHaveAttribute(
+        "href",
+        /^https:\/\/www\.google\.com\/maps\/dir\/\?api=1&destination=/,
+      );
+      await expect(link).toHaveAttribute("target", "_blank");
+    }
+    await expect(page.locator("iframe[src*='google.com/maps']")).toHaveCount(0);
   });
 
   test("marquee copy is hidden and has no pause control", async ({ page }) => {

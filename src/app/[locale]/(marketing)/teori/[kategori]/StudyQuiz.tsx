@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from "react";
 
-import { TheoryQuestionImage } from "@/components/TheoryQuestionImage";
+import { ChoiceCard } from "@/components/ChoiceCard";
 import { LinkButton } from "@/components/LinkButton";
+import { TheoryQuestionImage } from "@/components/TheoryQuestionImage";
 
 type Question = {
   id: string;
@@ -215,24 +216,17 @@ export function StudyQuiz({
         {question.answers.map((answer) => {
           const selected = (result?.answerId ?? picked) === answer.id;
           return (
-            <button
+            <ChoiceCard
               key={answer.id}
-              type="button"
+              selected={selected}
               disabled={Boolean(result) || busy}
               onClick={() => {
                 setPicked(answer.id);
                 void submit(answer.id);
               }}
-              className={`choice-card relative min-h-[52px] overflow-hidden rounded-md border border-[var(--line)] bg-card px-4 py-3 text-start font-bold shadow-soft ${
-                selected ? "text-accent-ink" : ""
-              }`}
-              data-selected={selected ? "true" : undefined}
             >
-              <span className="relative flex items-center justify-between gap-3">
-                <span>{answer.text}</span>
-                {selected ? <span aria-hidden="true">✓</span> : null}
-              </span>
-            </button>
+              {answer.text}
+            </ChoiceCard>
           );
         })}
       </div>

@@ -263,7 +263,6 @@ describe.skipIf(!runIntegration)("booking API concurrency", () => {
   }
 
   function postBooking(
-    studentId: string,
     slot: Date,
     idempotencyKey: string,
     requireCredit = false,
@@ -303,7 +302,7 @@ describe.skipIf(!runIntegration)("booking API concurrency", () => {
     authState.studentIds = [studentId, studentId, studentId, studentId];
     const responses = await Promise.all(
       slots.map((slot, index) =>
-        postBooking(studentId, slot.startsAt, `${runId}:split:${index}`),
+        postBooking(slot.startsAt, `${runId}:split:${index}`),
       ),
     );
     const bodies = await Promise.all(
@@ -339,7 +338,7 @@ describe.skipIf(!runIntegration)("booking API concurrency", () => {
     authState.studentIds = [studentId, studentId, studentId, studentId];
     const responses = await Promise.all(
       [0, 1, 2, 3].map(() =>
-        postBooking(studentId, slot.startsAt, idempotencyKey),
+        postBooking(slot.startsAt, idempotencyKey),
       ),
     );
     const bodies = await Promise.all(
@@ -366,10 +365,10 @@ describe.skipIf(!runIntegration)("booking API concurrency", () => {
     const [slot] = await openSlots(1);
     const idempotencyKey = `${runId}:other-student`;
     authState.studentIds = [studentA];
-    const created = await postBooking(studentA, slot.startsAt, idempotencyKey);
+    const created = await postBooking(slot.startsAt, idempotencyKey);
     expect(created.status).toBe(201);
     authState.studentIds = [studentB];
-    const reused = await postBooking(studentB, slot.startsAt, idempotencyKey);
+    const reused = await postBooking(slot.startsAt, idempotencyKey);
     expect(reused.status).toBe(409);
     await expect(reused.json()).resolves.toMatchObject({
       error: { code: "IDEMPOTENCY_KEY_REUSED" },
@@ -381,7 +380,6 @@ describe.skipIf(!runIntegration)("booking API concurrency", () => {
     const [slot] = await openSlots(1);
     authState.studentIds = [studentId];
     const created = await postBooking(
-      studentId,
       slot.startsAt,
       `${runId}:cancel-once`,
       true,

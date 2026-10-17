@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Makina Trafikskola",
     short_name: "Makina",
-    start_url: "/",
+    start_url: "/sv/",
     scope: "/",
     display: "standalone",
     background_color: "#f5f5f7",

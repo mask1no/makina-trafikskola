@@ -14,6 +14,7 @@ export async function GET(request: Request) {
   if (!parsed.success) return invalidInput(parsed.error.flatten().fieldErrors);
 
   const products = await db.product.findMany({
+    where: { active: true },
     orderBy: [{ sortOrder: "asc" }, { slug: "asc" }],
     include: { translations: true },
   });

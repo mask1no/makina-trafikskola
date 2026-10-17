@@ -273,9 +273,6 @@ textarea {
   .benefit-track {
     display: flex;
     width: max-content;
-  }
-
-  .benefit-track {
     animation: benefit-marquee 45s linear infinite;
   }
 
