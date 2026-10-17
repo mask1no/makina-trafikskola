@@ -5,6 +5,7 @@ import {
   useId,
   useRef,
   useState,
+  useSyncExternalStore,
   type ReactNode,
 } from "react";
 import { createPortal } from "react-dom";
@@ -45,9 +46,17 @@ export function HeaderMenu({
   const pathname = usePathname();
   const triggerRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
-  const [open, setOpen] = useState(false);
+  const [openPath, setOpenPath] = useState<string | null>(null);
   const [box, setBox] = useState<PanelBox | null>(null);
-  const [mounted, setMounted] = useState(false);
+  if (openPath !== null && openPath !== pathname) {
+    setOpenPath(null);
+  }
+  const open = openPath === pathname;
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
 
   function place() {
     const node = triggerRef.current;
@@ -62,23 +71,17 @@ export function HeaderMenu({
   }
 
   function close({ restoreFocus = false } = {}) {
-    setOpen(false);
+    setOpenPath(null);
     if (restoreFocus) triggerRef.current?.focus();
   }
 
   function openMenu() {
     announcePopover("header");
     place();
-    setOpen(true);
+    setOpenPath(pathname);
   }
 
-  useEffect(() => setMounted(true), []);
-
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
-
-  useEffect(() => subscribePopover("header", () => setOpen(false)), []);
+  useEffect(() => subscribePopover("header", () => setOpenPath(null)), []);
 
   useEffect(() => {
     if (!open) return;

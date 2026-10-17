@@ -28,7 +28,7 @@ test("renders key public routes on mobile", async ({ page }, testInfo) => {
   await expect(page.locator("html")).toHaveAttribute("dir", "ltr");
 });
 
-test("has no horizontal overflow and shows the tab bar only under md", async ({ page }, testInfo) => {
+test("has no horizontal overflow and shows the tab bar below the desktop nav", async ({ page }, testInfo) => {
   const locale = testInfo.project.name.replace("mobile-", "");
   await page.context().addCookies([
     {
@@ -63,7 +63,7 @@ test("has no horizontal overflow and shows the tab bar only under md", async ({ 
       expect(fits, `${locale}${path} @${viewport.width}`).toBeTruthy();
     }
     const tabBar = page.locator("nav.fixed.bottom-0");
-    if (viewport.width < 768) {
+    if (viewport.width < 1024) {
       await expect(tabBar).toBeVisible();
     } else {
       await expect(tabBar).toBeHidden();
