@@ -116,7 +116,7 @@ export function SiteHeader({
           <SiteLogo compactOnMobile />
         </Link>
         <nav
-          className="hidden min-w-0 items-center justify-start gap-1 lg:col-span-6 lg:flex"
+          className="hidden min-w-0 items-center justify-center gap-2 lg:col-span-6 lg:flex"
           aria-label={labels.navigation}
         >
           {navItems.map((item) => (

@@ -22,6 +22,7 @@
     "ti": "ትግርኛ",
     "ku": "Kurdiska",
     "am": "Amhariska",
+    "so": "Somaliska",
     "fa": "Persiska",
     "prs": "Dari",
     "tig": "Tigre",
@@ -61,6 +62,7 @@
       "ti": "tigrinja",
       "ku": "kurdiska",
       "am": "amhariska",
+      "so": "somaliska",
       "fa": "persiska",
       "prs": "dari",
       "tig": "tigre",
@@ -171,14 +173,17 @@
       "title": "Hitta lärare nära dig",
       "description": "Gratis upphämtning inom Farsta och Upplands Väsby",
       "cta": "Boka din lärare",
-      "languageLabel": "Filtrera lärare efter språk"
+      "languageLabel": "Filtrera lärare efter språk",
+      "reviewsTitle": "Google-recensioner",
+      "reviewsBody": "Läs omdömen om Makina Trafikskola.",
+      "reviewsCta": "Öppna på Google"
     },
     "faq": {
       "eyebrow": "Vanliga frågor",
       "title": "Svar innan du börjar",
       "cost": {
         "question": "Vad kostar det att ta körkort hos Makina?",
-        "answer": "Första lektionen 499 kr, därefter 745 kr. Paket börjar på {packagePrice}. Alla priser visas inklusive moms."
+        "answer": "Första lektionen 499 kr, därefter 845 kr. Paket börjar på {packagePrice}. Alla priser visas inklusive moms."
       },
       "languages": {
         "question": "Kan jag få undervisning på mitt språk?",
@@ -366,7 +371,9 @@
     "emptyTitle": "Ingen lärare matchar",
     "emptyDescription": "Prova ett annat språk eller en annan plats.",
     "transmissionFilter": "3. Välj växellåda",
-    "allTransmissions": "Alla växellådor"
+    "allTransmissions": "Alla växellådor",
+    "searchLabel": "Sök lärare eller plats",
+    "searchPlaceholder": "Namn eller plats"
   },
   "teacher": {
     "yearsExperience": "{count, plural, =0 {Ny lärare} =1 {1 års erfarenhet} other {{n} års erfarenhet}}",
@@ -391,6 +398,11 @@
     "zoomIn": "Zooma in",
     "zoomOut": "Zooma ut",
     "recenter": "Visa alla",
+    "areaSearchLabel": "Sök adress i området",
+    "areaSearchPlaceholder": "Gatuadress i Farsta eller Upplands Väsby",
+    "areaInside": "Upphämtning inom {area}",
+    "areaOutside": "Den adressen ligger utanför Farsta och Upplands Väsby.",
+    "searchAction": "Sök",
     "homeTeaserTitle": "Hitta lärare nära dig",
     "homeTeaserDescription": "Filtrera på språk och se var lärarna finns.",
     "homeTeaserCta": "Öppna lärarkartan"
@@ -456,6 +468,15 @@
         "description": "Makinas digitala körkortsbok förbereds.",
         "pending": "Boken publiceras här när skolans innehåll är färdigställt och granskat."
       },
+      "ebook": {
+        "title": "E-bok",
+        "description": "Läs eller lyssna när materialet är klart.",
+        "ebookTitle": "E-bok",
+        "ebookBody": "PDF:en läggs till här.",
+        "audioTitle": "Ljudbok",
+        "audioBody": "Ljudfilen läggs till här.",
+        "soon": "Kommer senare"
+      },
       "facts": {
         "title": "Faktabank",
         "description": "Läs förklaringar med källor från svenska myndigheter.",
@@ -467,8 +488,11 @@
     },
     "signGame": {
       "title": "Vägmärkesspel",
-      "description": "Träna på 300 kostnadsfria omgångar med officiella svenska vägmärken.",
+      "description": "Träna på {count} frågor om officiella svenska vägmärken.",
+      "history": "Tidigare svar",
       "progress": "Omgång {current} av {total}",
+      "streak": "{count} rätt i rad",
+      "best": "Bästa {count}",
       "finish": "Visa resultatet",
       "emptyTitle": "Vägmärkesspelet förbereds",
       "emptyDescription": "De officiella vägmärkena importeras. Försök igen snart."
@@ -542,6 +566,7 @@
     },
     "practiceAll": "Öva alla {count} frågor",
     "stepQuestions": "{count} frågor",
+    "stepProgress": "{done} av {total} klara",
     "stepDone": "Klart"
   },
   "localSchool": {
@@ -651,7 +676,7 @@
         "single": "En körlektion",
         "packageTitle": "Spara med paket",
         "packageBody": "Ett paket kostar mindre per lektion. Du kan köpa det när som helst.",
-        "introLabel": "Första lektionen 499 kr (ord. 745 kr)"
+        "introLabel": "Första lektionen 499 kr (ord. 845 kr)"
       }
     },
     "account": {
@@ -701,7 +726,7 @@
       "summary": "Körlektion med Makina Trafikskola",
       "description": "Avbokningsfrist: {deadline}."
     },
-    "introPriceLabel": "Första lektionen 499 kr (ord. 745 kr)"
+    "introPriceLabel": "Första lektionen 499 kr (ord. 845 kr)"
   },
   "auth": {
     "required": "Du behöver ett konto för att boka och betala. Det tar 30 sekunder.",
@@ -910,6 +935,8 @@
       "inactive": "Ingen aktiv åtkomst",
       "progress": "Resultat",
       "correct": "rätt besvarade frågor",
+      "streak": "Bästa svit",
+      "streakNow": "{count} rätt i rad just nu",
       "provisional": "Köp digital körkortsteori för att öva hela frågebanken och göra övningsprov."
     },
     "messages": {
@@ -929,11 +956,13 @@
         "paymentFailed": "Betalningen misslyckades",
         "lessonPaymentNeedsRebooking": "Betald lektion behöver bokas om",
         "coursePaymentNeedsRebooking": "Betald kursplats behöver bokas om",
+        "lessonCompleted": "Lektionen är genomförd",
         "generic": "Servicemeddelande"
       },
       "bodies": {
         "lessonPaymentNeedsRebooking": "Betalningen lyckades efter att reservationen gått ut. Din oanvända lektionskredit finns kvar; välj en ny tid.",
-        "coursePaymentNeedsRebooking": "Betalningen lyckades efter att reservationen gått ut. Din oanvända kursrättighet finns kvar; välj ett nytt tillfälle."
+        "coursePaymentNeedsRebooking": "Betalningen lyckades efter att reservationen gått ut. Din oanvända kursrättighet finns kvar; välj ett nytt tillfälle.",
+        "lessonCompleted": "Lektionen är körd och dras från paketet. {count} lektioner kvar."
       },
       "channels": {
         "EMAIL": "E-post",
@@ -1019,13 +1048,19 @@
     "nextMonth": "Nästa månad",
     "views": {
       "today": "Idag",
-      "week": "Vecka"
+      "week": "Vecka",
+      "office": "Arbetstider"
     },
+    "drivesFrom": "Du kör från {places}.",
+    "phoneLabel": "Mobilnummer",
+    "phoneSave": "Spara nummer",
+    "phoneReady": "Sms om bokningar går till {phone}.",
     "students": {
       "title": "Mina elever",
       "lessonsDone": "{count, plural, =0 {Inga genomförda lektioner} =1 {1 genomförd lektion} other {{n} genomförda lektioner}}",
       "nextLesson": "Nästa lektion <time>{when}</time>",
       "noNext": "Ingen kommande lektion.",
+      "remaining": "{count, plural, =0 {Inga lektioner kvar på saldot} =1 {1 lektion kvar på saldot} other {{n} lektioner kvar på saldot}}",
       "empty": "Inga elever ännu."
     },
     "awaitingPayment": "Väntar på betalning",
@@ -1454,6 +1489,8 @@
       "ratingDetail": "{count} publicerade omdömen",
       "lessonsToday": "Lektioner idag",
       "lessonsTodayEmpty": "Inga lektioner idag.",
+      "completedTitle": "Senast genomförda lektioner",
+      "completedEmpty": "Ingen lektion är markerad som körd ännu.",
       "lessonLine": "{time} · {instructor} · {student}",
       "placesTitle": "Platser",
       "placesDescription": "Lärare och bokningar på varje plats."
@@ -1492,6 +1529,11 @@
       "title": "Recensioner",
       "description": "Opublicerade omdömen. Publicera eller avvisa.",
       "empty": "Inga recensioner väntar.",
+      "googleTitle": "Google-recensioner",
+      "googleBody": "Inget verifierat Google-betyg för Makina Trafikskola ännu.",
+      "googleCta": "Öppna på Google",
+      "googleScore": "{rating} av 5",
+      "googleCount": "{count} recensioner",
       "student": "Elev",
       "instructor": "Lärare",
       "rating": "Betyg",
@@ -1509,6 +1551,8 @@
       "previous": "Föregående vecka",
       "next": "Nästa vecka",
       "instructor": "Lärare",
+      "allTeachers": "Alla lärare",
+      "lessonCount": "{count} bokningar den här veckan",
       "completed": "Genomförd",
       "empty": "Det finns inga aktiva lärare.",
       "controls": {

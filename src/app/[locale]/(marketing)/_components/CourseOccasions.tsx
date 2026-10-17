@@ -60,12 +60,22 @@ export async function CourseOccasions({ locale }: { locale: string }) {
       timeStyle: "short",
     });
   const authenticated = session?.user?.role === "STUDENT";
-  if (!occasions.length) return null;
+  const nextByKind = new Map<string, (typeof occasions)[number]>();
+  for (const occasion of occasions) {
+    if (!nextByKind.has(occasion.course.kind)) {
+      nextByKind.set(occasion.course.kind, occasion);
+    }
+  }
+  const shown = ["RISK1", "RISK2"].flatMap((kind) => {
+    const occasion = nextByKind.get(kind);
+    return occasion ? [occasion] : [];
+  });
+  if (!shown.length) return null;
 
   return (
     <div className="mt-8 grid gap-5">
       <h3 className="text-xl font-black">{t("title")}</h3>
-      {occasions.map((occasion) => {
+      {shown.map((occasion) => {
         const content = resolveContent(
           occasion.course.product.translations,
           locale,

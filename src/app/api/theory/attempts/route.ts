@@ -16,9 +16,17 @@ import { locales } from "@/i18n/routing";
 
 const recordId = z.string().trim().min(1).max(80).regex(/^[A-Za-z0-9_-]+$/);
 
+async function correctAnswerId(questionId: string) {
+  const row = await db.theoryAnswer.findFirst({
+    where: { questionId, isCorrect: true },
+    select: { id: true },
+  });
+  return row?.id ?? null;
+}
+
 const attemptSchema = z
   .object({
-    questionId: z.string().cuid(),
+    questionId: recordId,
     answerId: recordId,
     sessionId: z.string().cuid().optional(),
     locale: z.enum(locales).optional(),
@@ -59,6 +67,7 @@ export async function POST(request: Request) {
     );
     return Response.json({
       correct: selected.isCorrect,
+      correctAnswerId: await correctAnswerId(freeQuestion.id),
       explanation: content.translation?.explanation ?? null,
     });
   }
@@ -163,6 +172,7 @@ export async function POST(request: Request) {
 
   return Response.json({
     ...attempt,
+    correctAnswerId: await correctAnswerId(question.id),
     explanation: content.translation?.explanation ?? null,
     explanationLocale: content.translation?.locale ?? null,
   }, { status: 201 });

@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/Button";
 import { Card } from "@/components/Card";
+import { nativeBridge, pickNativePhoto, shouldUseNativeCamera } from "@/lib/photos/native-photo";
 
 type Hour = { dayOfWeek: number; startTime: string; endTime: string; locationId: string };
 type Location = { id: string; name: string };
@@ -203,10 +204,22 @@ export function TeacherEditor({
       </label>
       <label className="grid gap-2 text-small font-semibold">
         {t("photo")}
-        <input className="min-h-11" type="file" accept="image/jpeg,image/png,image/webp" onChange={(event) => {
-          const file = event.target.files?.[0];
-          if (file) void upload(file);
-        }} />
+        <input
+          className="min-h-11"
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          onClick={(event) => {
+            if (!shouldUseNativeCamera(nativeBridge())) return;
+            event.preventDefault();
+            void pickNativePhoto().then((file) => {
+              if (file) void upload(file);
+            });
+          }}
+          onChange={(event) => {
+            const file = event.target.files?.[0];
+            if (file) void upload(file);
+          }}
+        />
       </label>
       <label className="grid gap-2 text-small font-semibold">
         {t("calendarEmail")}

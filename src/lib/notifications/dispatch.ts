@@ -28,6 +28,7 @@ const bookingPayloadSchema = z
     placeLabel: z.string().max(200).optional(),
     schoolPhone: z.string().max(40).optional(),
     creditRefunded: z.boolean().optional(),
+    creditsRemaining: z.number().int().min(0).optional(),
   })
   .strict();
 
@@ -40,6 +41,7 @@ const bookingTemplates = new Set<BookingTemplate>([
   "teacher_booking_new",
   "teacher_booking_cancelled",
   "teacher_booking_moved",
+  "lesson_completed",
 ]);
 
 const staleTemplates = new Set<BookingTemplate>([
@@ -68,6 +70,7 @@ function renderNotification(notification: {
       placeLabel: payload.placeLabel,
       schoolPhone: payload.schoolPhone,
       creditRefunded: payload.creditRefunded,
+      creditsRemaining: payload.creditsRemaining,
     });
   }
 

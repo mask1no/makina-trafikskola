@@ -19,14 +19,16 @@ const { auth } = NextAuth({
   },
 });
 
+const localePattern = "sv|en|ti|ar|am|so";
+
 function requiredRoles(pathname: string): readonly Role[] | null {
-  if (/^\/(?:sv|en|ti|ar)\/admin(?:\/|$)/.test(pathname)) {
+  if (new RegExp(`^/(?:${localePattern})/admin(?:/|$)`).test(pathname)) {
     return ["ADMIN"];
   }
-  if (/^\/(?:sv|en|ti|ar)\/larare-portal(?:\/|$)/.test(pathname)) {
+  if (new RegExp(`^/(?:${localePattern})/larare-portal(?:/|$)`).test(pathname)) {
     return ["TEACHER", "ADMIN"];
   }
-  if (/^\/(?:sv|en|ti|ar)\/mina-sidor(?:\/|$)/.test(pathname)) {
+  if (new RegExp(`^/(?:${localePattern})/mina-sidor(?:/|$)`).test(pathname)) {
     return ["STUDENT"];
   }
   return null;
@@ -35,17 +37,8 @@ function requiredRoles(pathname: string): readonly Role[] | null {
 export default auth((request) => {
   const pathname = request.nextUrl.pathname;
 
-  if (pathname === "/so" || pathname.startsWith("/so/")) {
-    const destination = new URL(
-      pathname === "/so" ? "/sv" : `/sv${pathname.slice(3)}`,
-      request.nextUrl,
-    );
-    destination.search = request.nextUrl.search;
-    return NextResponse.redirect(destination, 301);
-  }
-
   const teacherProfile = pathname.match(
-    /^\/(sv|en|ti|ar)\/larare\/[^/]+\/?$/,
+    /^\/(sv|en|ti|ar|am|so)\/larare\/[^/]+\/?$/,
   );
   if (teacherProfile) {
     const destination = new URL(`/${teacherProfile[1]}/larare`, request.nextUrl);

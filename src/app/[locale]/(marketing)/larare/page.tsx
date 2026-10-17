@@ -80,7 +80,7 @@ function filterHref(
 export default async function LararePage(
   props: {
     params: Promise<{ locale: string }>;
-    searchParams: Promise<{ language?: string; location?: string; transmission?: string }>;
+    searchParams: Promise<{ language?: string; location?: string; transmission?: string; q?: string }>;
   }
 ) {
   const searchParams = await props.searchParams;
@@ -118,10 +118,19 @@ export default async function LararePage(
       allTeachers.filter((teacher) => teacher.languages.includes(option)).length,
     ]),
   ) as Record<TeachingLanguage, number>;
-  const teachers = language
+  const query = searchParams.q?.trim().toLocaleLowerCase();
+  const teachers = (language
     ? allTeachers.filter((teacher) => teacher.languages.includes(language))
-    : allTeachers;
-  const hasActiveFilter = Boolean(language || location || transmission);
+    : allTeachers
+  ).filter((teacher) => {
+    if (!query) return true;
+    const name = `${teacher.user.firstName} ${teacher.user.lastName}`.toLocaleLowerCase();
+    return name.includes(query) || teacher.locations.some((item) =>
+      item.location.name.toLocaleLowerCase().includes(query) ||
+      item.location.city.toLocaleLowerCase().includes(query),
+    );
+  });
+  const hasActiveFilter = Boolean(language || location || transmission || query);
   const now = new Date();
   const nextFree = await nextFreeSlots(
     teachers.map((teacher) => teacher.id),
@@ -322,6 +331,26 @@ export default async function LararePage(
             aria-label={t("map.title")}
             className="order-1 lg:sticky lg:top-24 lg:order-2 lg:self-start"
           >
+            <form action={`/${params.locale}/larare`} className="mb-3 flex gap-2">
+              {language ? <input type="hidden" name="language" value={language} /> : null}
+              {location ? <input type="hidden" name="location" value={location} /> : null}
+              {transmission ? <input type="hidden" name="transmission" value={transmission} /> : null}
+              <div className="min-w-0 flex-1">
+                <label className="text-sm font-semibold" htmlFor="teacher-map-search">
+                  {t("teachers.searchLabel")}
+                </label>
+                <input
+                  id="teacher-map-search"
+                  name="q"
+                  defaultValue={searchParams.q ?? ""}
+                  placeholder={t("teachers.searchPlaceholder")}
+                  className="mt-2 min-h-11 w-full rounded-sm border border-border bg-card px-4 text-ink shadow-soft"
+                />
+              </div>
+              <button className="mt-7 inline-flex min-h-11 items-center rounded-sm bg-accent px-4 font-bold text-accent-ink">
+                {t("common.applyFilter")}
+              </button>
+            </form>
             <div className="mb-3 rounded-md border border-border bg-card p-4 shadow-soft">
               <p className="text-sm font-bold">{t("map.interactionTitle")}</p>
               <p className="mt-1 text-sm leading-6 text-ink-muted">

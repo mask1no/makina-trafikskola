@@ -79,6 +79,7 @@ const PUBLIC_TEACHING_LANGUAGES = [
   "ti",
   "ku",
   "am",
+  "so",
   "fa",
   "prs",
   "tig",

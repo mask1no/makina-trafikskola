@@ -36,7 +36,7 @@ export function LazyTeacherMap(props: TeacherMapProps) {
   }
 
   return (
-    <div className={home ? "h-full min-h-[280px]" : undefined}>
+    <div className={home ? "min-h-[280px]" : undefined}>
       <MapComponent {...props} />
     </div>
   );

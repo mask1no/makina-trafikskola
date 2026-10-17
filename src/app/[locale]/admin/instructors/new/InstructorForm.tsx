@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Notice } from "@/components/Notice";
+import { nativeBridge, pickNativePhoto, shouldUseNativeCamera } from "@/lib/photos/native-photo";
 import { TEACHING_LANGUAGES } from "@/lib/teachers/languages";
 
 type Location = { id: string; name: string };
@@ -292,6 +293,13 @@ export function InstructorForm({ locations }: { locations: Location[] }) {
           id="instructor-image"
           type="file"
           accept="image/jpeg,image/png,image/webp"
+          onClick={(event) => {
+            if (!shouldUseNativeCamera(nativeBridge())) return;
+            event.preventDefault();
+            void pickNativePhoto().then((file) => {
+              if (file) setImage(file);
+            });
+          }}
           onChange={(event) => setImage(event.target.files?.[0] ?? null)}
           className="min-h-11 rounded-sm border border-border bg-card px-3 py-2"
         />

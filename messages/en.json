@@ -22,6 +22,7 @@
     "ti": "ትግርኛ",
     "ku": "Kurdish",
     "am": "Amharic",
+    "so": "Somali",
     "fa": "Persian",
     "prs": "Dari",
     "tig": "Tigre",
@@ -61,6 +62,7 @@
       "ti": "Tigrinya",
       "ku": "Kurdish",
       "am": "Amharic",
+      "so": "Somali",
       "fa": "Persian",
       "prs": "Dari",
       "tig": "Tigre",
@@ -171,14 +173,17 @@
       "title": "Find an instructor near you",
       "description": "Free pickup within Farsta and Upplands Väsby",
       "cta": "Book your instructor",
-      "languageLabel": "Filter instructors by language"
+      "languageLabel": "Filter instructors by language",
+      "reviewsTitle": "Google reviews",
+      "reviewsBody": "Read what people say about Makina Trafikskola.",
+      "reviewsCta": "Open on Google"
     },
     "faq": {
       "eyebrow": "Frequently asked questions",
       "title": "Answers before you start",
       "cost": {
         "question": "How much does it cost to get a driving licence with Makina?",
-        "answer": "First lesson 499 kr, then 745 kr. Packages start at {packagePrice}. All prices include VAT."
+        "answer": "First lesson 499 kr, then 845 kr. Packages start at {packagePrice}. All prices include VAT."
       },
       "languages": {
         "question": "Can I take lessons in my language?",
@@ -366,7 +371,9 @@
     "emptyTitle": "No instructor matches",
     "emptyDescription": "Try another language or location.",
     "transmissionFilter": "3. Choose transmission",
-    "allTransmissions": "All transmissions"
+    "allTransmissions": "All transmissions",
+    "searchLabel": "Search for an instructor or place",
+    "searchPlaceholder": "Name or place"
   },
   "teacher": {
     "yearsExperience": "{count, plural, =0 {New instructor} =1 {1 year of experience} other {{n} years of experience}}",
@@ -391,6 +398,11 @@
     "zoomIn": "Zoom in",
     "zoomOut": "Zoom out",
     "recenter": "Show all",
+    "areaSearchLabel": "Search an address in the area",
+    "areaSearchPlaceholder": "Street address in Farsta or Upplands Väsby",
+    "areaInside": "Pickup inside {area}",
+    "areaOutside": "That address is outside Farsta and Upplands Väsby.",
+    "searchAction": "Search",
     "homeTeaserTitle": "Find an instructor near you",
     "homeTeaserDescription": "Filter by language and see where the instructors are.",
     "homeTeaserCta": "Open instructor map"
@@ -456,6 +468,15 @@
         "description": "Makina's digital driving theory book is being prepared.",
         "pending": "The book will be published here after the school's content is complete and reviewed."
       },
+      "ebook": {
+        "title": "E-book",
+        "description": "Read or listen when the material is ready.",
+        "ebookTitle": "E-book",
+        "ebookBody": "The PDF will be added here.",
+        "audioTitle": "Audiobook",
+        "audioBody": "The audio file will be added here.",
+        "soon": "Coming later"
+      },
       "facts": {
         "title": "Fact bank",
         "description": "Read sourced explanations based on Swedish authorities.",
@@ -467,8 +488,11 @@
     },
     "signGame": {
       "title": "Road-sign game",
-      "description": "Practise 300 free rounds with official Swedish road signs.",
+      "description": "Practise {count} questions about official Swedish road signs.",
+      "history": "Earlier answers",
       "progress": "Round {current} of {total}",
+      "streak": "{count} in a row",
+      "best": "Best {count}",
       "finish": "Show the result",
       "emptyTitle": "The road-sign game is being prepared",
       "emptyDescription": "The official road signs are being imported. Please try again soon."
@@ -542,6 +566,7 @@
     },
     "practiceAll": "Practise all {count} questions",
     "stepQuestions": "{count} questions",
+    "stepProgress": "{done} of {total} done",
     "stepDone": "Done"
   },
   "localSchool": {
@@ -651,7 +676,7 @@
         "single": "One driving lesson",
         "packageTitle": "Save with a package",
         "packageBody": "A package costs less per lesson. You can buy one at any time.",
-        "introLabel": "First lesson 499 kr (ord. 745 kr)"
+        "introLabel": "First lesson 499 kr (ord. 845 kr)"
       }
     },
     "account": {
@@ -701,7 +726,7 @@
       "summary": "Driving lesson with Makina Trafikskola",
       "description": "Cancellation deadline: {deadline}."
     },
-    "introPriceLabel": "First lesson 499 kr (ord. 745 kr)"
+    "introPriceLabel": "First lesson 499 kr (ord. 845 kr)"
   },
   "auth": {
     "required": "You need an account to book and pay. It takes about 30 seconds.",
@@ -910,6 +935,8 @@
       "inactive": "No active access",
       "progress": "Results",
       "correct": "correctly answered questions",
+      "streak": "Best streak",
+      "streakNow": "{count} correct in a row right now",
       "provisional": "Buy digital driving theory to practise the full question bank and take mock exams."
     },
     "messages": {
@@ -929,11 +956,13 @@
         "paymentFailed": "Payment failed",
         "lessonPaymentNeedsRebooking": "Paid lesson needs rebooking",
         "coursePaymentNeedsRebooking": "Paid course seat needs rebooking",
+        "lessonCompleted": "Lesson completed",
         "generic": "Service message"
       },
       "bodies": {
         "lessonPaymentNeedsRebooking": "Payment succeeded after the reservation expired. Your unused lesson credit remains; choose a new time.",
-        "coursePaymentNeedsRebooking": "Payment succeeded after the reservation expired. Your unused course entitlement remains; choose another occasion."
+        "coursePaymentNeedsRebooking": "Payment succeeded after the reservation expired. Your unused course entitlement remains; choose another occasion.",
+        "lessonCompleted": "The lesson is driven and taken from the package. {count} lessons left."
       },
       "channels": {
         "EMAIL": "Email",
@@ -1019,13 +1048,19 @@
     "nextMonth": "Next month",
     "views": {
       "today": "Today",
-      "week": "Week"
+      "week": "Week",
+      "office": "Working hours"
     },
+    "drivesFrom": "You drive from {places}.",
+    "phoneLabel": "Mobile number",
+    "phoneSave": "Save number",
+    "phoneReady": "Booking texts go to {phone}.",
     "students": {
       "title": "My students",
       "lessonsDone": "{count, plural, =0 {No completed lessons} =1 {1 completed lesson} other {{n} completed lessons}}",
       "nextLesson": "Next lesson <time>{when}</time>",
       "noNext": "No upcoming lesson.",
+      "remaining": "{count, plural, =0 {No lessons left} =1 {1 lesson left} other {{n} lessons left}}",
       "empty": "No students yet."
     },
     "awaitingPayment": "Awaiting payment",
@@ -1411,6 +1446,8 @@
       "ratingDetail": "{count} published reviews",
       "lessonsToday": "Lessons today",
       "lessonsTodayEmpty": "No lessons today.",
+      "completedTitle": "Recently completed lessons",
+      "completedEmpty": "No lesson is marked as driven yet.",
       "lessonLine": "{time} · {instructor} · {student}",
       "placesTitle": "Places",
       "placesDescription": "Instructors and bookings at each place."
@@ -1449,6 +1486,11 @@
       "title": "Reviews",
       "description": "Unpublished reviews. Publish or reject them.",
       "empty": "No reviews are waiting.",
+      "googleTitle": "Google reviews",
+      "googleBody": "No verified Google rating for Makina Trafikskola yet.",
+      "googleCta": "Open on Google",
+      "googleScore": "{rating} out of 5",
+      "googleCount": "{count} reviews",
       "student": "Student",
       "instructor": "Instructor",
       "rating": "Rating",
@@ -1466,6 +1508,8 @@
       "previous": "Previous week",
       "next": "Next week",
       "instructor": "Instructor",
+      "allTeachers": "All instructors",
+      "lessonCount": "{count} bookings this week",
       "completed": "Completed",
       "empty": "There are no active instructors.",
       "controls": {

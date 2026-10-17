@@ -4,6 +4,7 @@ export const TEACHING_LANGUAGES = [
   "ti",
   "ku",
   "am",
+  "so",
   "fa",
   "prs",
   "tig",

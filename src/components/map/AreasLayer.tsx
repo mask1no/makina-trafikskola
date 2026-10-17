@@ -104,18 +104,22 @@ export function FrameAreas({
 export function AreasLayer({
   areas,
   fit = false,
+  focusId = null,
   extraFitPoints = [],
 }: {
   areas: MapArea[];
   fit?: boolean;
+  focusId?: string | null;
   extraFitPoints?: Array<{ lat: number; lng: number }>;
 }) {
   if (!areas.length) return null;
+  const focused = focusId ? areas.filter((area) => area.id === focusId) : [];
+  const fitted = focused.length ? focused : areas;
   return (
     <>
       <AreaPolygons areas={areas} />
       <AreaLabels areas={areas} />
-      {fit ? <FrameAreas areas={areas} extraPoints={extraFitPoints} /> : null}
+      {fit ? <FrameAreas areas={fitted} extraPoints={extraFitPoints} /> : null}
     </>
   );
 }

@@ -27,6 +27,8 @@ function templateKey(template: string) {
       return "lessonPaymentNeedsRebooking" as const;
     case "course_payment_needs_rebooking":
       return "coursePaymentNeedsRebooking" as const;
+    case "lesson_completed":
+      return "lessonCompleted" as const;
     default:
       return "generic" as const;
   }
@@ -46,6 +48,7 @@ export default async function MessagesPage(
       select: {
         id: true,
         template: true,
+        payload: true,
         channel: true,
         sendAfter: true,
         sentAt: true,
@@ -83,9 +86,20 @@ export default async function MessagesPage(
                 {notification.sentAt ? t("sent") : t("scheduled")}
               </p>
                     {key === "lessonPaymentNeedsRebooking" ||
-                    key === "coursePaymentNeedsRebooking" ? (
+                    key === "coursePaymentNeedsRebooking" ||
+                    key === "lessonCompleted" ? (
                       <p className="mt-2 text-sm">
-                        {t(`bodies.${key}`)}
+                        {key === "lessonCompleted"
+                          ? t("bodies.lessonCompleted", {
+                              count:
+                                typeof notification.payload === "object" &&
+                                notification.payload &&
+                                "creditsRemaining" in notification.payload &&
+                                typeof notification.payload.creditsRemaining === "number"
+                                  ? notification.payload.creditsRemaining
+                                  : 0,
+                            })
+                          : t(`bodies.${key}`)}
                       </p>
                     ) : null}
                   </>

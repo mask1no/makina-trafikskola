@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { HomeAreaSearch } from "@/components/GoogleMapClient";
 import { LazyTeacherMap } from "@/components/LazyTeacherMap";
 import { SectionHeader } from "@/components/SectionHeader";
 import type { TeacherMarker } from "@/components/GoogleMapClient";
@@ -23,6 +24,10 @@ export function TeachersMapSection({
   mapCenter,
   mapMarkers,
   mapAreas,
+  focusSlug,
+  reviewsTitle,
+  reviewsBody,
+  reviewsCta,
 }: {
   locale: Locale;
   canBook: boolean;
@@ -40,9 +45,13 @@ export function TeachersMapSection({
   mapCenter: { lat: number; lng: number };
   mapMarkers: TeacherMarker[];
   mapAreas: MapArea[];
+  focusSlug?: string;
+  reviewsTitle: string;
+  reviewsBody: string;
+  reviewsCta: string;
 }) {
   return (
-    <section className="section-shell border-t border-[var(--line)]">
+    <section id="hitta-larare" className="section-shell scroll-mt-28 border-t border-[var(--line)]">
       <div className="site-container">
         <div className="grid gap-8 lg:grid-cols-2 lg:items-stretch">
           <div className="flex flex-col justify-center">
@@ -69,7 +78,9 @@ export function TeachersMapSection({
               {cta}
             </Link>
           </div>
-          <div className="h-[280px] w-full lg:h-full lg:min-h-[280px]">
+          <div className="grid gap-3">
+          <HomeAreaSearch apiKey={mapsConfig.apiKey} areas={mapAreas} />
+          <div className="min-h-[280px] w-full">
             <LazyTeacherMap
               apiKey={mapsConfig.apiKey}
               mapId={mapsConfig.mapId}
@@ -83,7 +94,33 @@ export function TeachersMapSection({
               markers={mapMarkers}
               areas={mapAreas}
               variant="home"
+              focusSlug={focusSlug}
             />
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            {mapAreas.map((area) => (
+              <Link
+                key={area.id}
+                href={area.slug ? `/${locale}?omrade=${area.slug}#hitta-larare` : `/${locale}#hitta-larare`}
+                aria-current={focusSlug && area.slug === focusSlug ? "true" : undefined}
+                className="flex min-h-16 items-center justify-center rounded-md border border-border bg-card px-4 text-center font-black shadow-soft aria-[current=true]:border-ink"
+              >
+                {area.name}
+              </Link>
+            ))}
+          </div>
+          <a
+            href="https://www.google.com/maps/search/?api=1&query=Makina%20Trafikskola%20Centralv%C3%A4gen%205%20Upplands%20V%C3%A4sby"
+            target="_blank"
+            rel="noreferrer"
+            className="flex min-h-16 items-center justify-between gap-3 rounded-md border border-border bg-card px-4 py-3 shadow-soft"
+          >
+            <span>
+              <span className="block font-black">{reviewsTitle}</span>
+              <span className="text-small text-ink-muted">{reviewsBody}</span>
+            </span>
+            <span className="text-small font-bold">{reviewsCta}</span>
+          </a>
           </div>
         </div>
       </div>

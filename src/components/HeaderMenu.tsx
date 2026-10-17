@@ -46,12 +46,14 @@ export function HeaderMenu({
   const pathname = usePathname();
   const triggerRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
-  const [openPath, setOpenPath] = useState<string | null>(null);
+  const [menuPath, setMenuPath] = useState<string | null>(null);
+  const [trackedPath, setTrackedPath] = useState(pathname);
   const [box, setBox] = useState<PanelBox | null>(null);
-  if (openPath !== null && openPath !== pathname) {
-    setOpenPath(null);
+  if (pathname !== trackedPath) {
+    setTrackedPath(pathname);
+    setMenuPath(null);
   }
-  const open = openPath === pathname;
+  const open = menuPath === pathname;
   const mounted = useSyncExternalStore(
     () => () => {},
     () => true,
@@ -71,17 +73,17 @@ export function HeaderMenu({
   }
 
   function close({ restoreFocus = false } = {}) {
-    setOpenPath(null);
+    setMenuPath(null);
     if (restoreFocus) triggerRef.current?.focus();
   }
 
   function openMenu() {
     announcePopover("header");
     place();
-    setOpenPath(pathname);
+    setMenuPath(pathname);
   }
 
-  useEffect(() => subscribePopover("header", () => setOpenPath(null)), []);
+  useEffect(() => subscribePopover("header", () => setMenuPath(null)), []);
 
   useEffect(() => {
     if (!open) return;
@@ -145,7 +147,7 @@ export function HeaderMenu({
       >
         {trigger}
       </button>
-      {mounted && open && box
+      {mounted && open
         ? createPortal(
             <>
               <button
@@ -160,11 +162,15 @@ export function HeaderMenu({
                 role="menu"
                 aria-label={label}
                 className="fixed z-[70] max-h-[min(70vh,calc(100dvh-5rem))] w-[min(20rem,calc(100vw-2rem))] overflow-y-auto rounded-md border border-border bg-card p-2 text-small text-ink shadow-float"
-                style={{
-                  top: box.top,
-                  left: box.left ?? undefined,
-                  right: box.right ?? undefined,
-                }}
+                style={
+                  box
+                    ? {
+                        top: box.top,
+                        left: box.left ?? undefined,
+                        right: box.right ?? undefined,
+                      }
+                    : { top: "4.5rem", insetInlineEnd: "1rem" }
+                }
               >
                 {children}
               </div>

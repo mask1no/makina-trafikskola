@@ -1,0 +1,42 @@
+workflows:
+  makina-shell:
+    name: Makina iOS and Android shell
+    instance_type: mac_mini_m2
+    environment:
+      node: 20
+      xcode: latest
+      cocoapods: default
+      vars:
+        CAPACITOR_SERVER_URL: https://www.makina.se
+        PACKAGE_NAME: se.makina.trafikskola
+    scripts:
+      - name: Install and sync the site shell
+        script: |
+          npm ci
+          npx cap sync
+      - name: Android debug package
+        script: |
+          cd android
+          ./gradlew assembleDebug
+      - name: Android App Bundle
+        script: |
+          if [ -n "$CM_KEYSTORE_PATH" ]; then
+            cd android
+            ./gradlew bundleRelease
+          else
+            echo "No upload keystore yet. The debug package is the installable build."
+          fi
+      - name: iOS archive
+        script: |
+          if [ -z "$(find "$HOME/Library/MobileDevice/Provisioning Profiles" -name '*.mobileprovision' -print -quit 2>/dev/null)" ]; then
+            echo "No App Store profile yet. Skipping the iOS archive."
+            exit 0
+          fi
+          xcode-project use-profiles
+          xcode-project build-ipa \
+            --workspace "$CM_BUILD_DIR/ios/App/App.xcworkspace" \
+            --scheme App
+    artifacts:
+      - ios/App/build/ios/ipa/*.ipa
+      - android/app/build/outputs/**/*.apk
+      - android/app/build/outputs/**/*.aab

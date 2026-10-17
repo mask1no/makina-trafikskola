@@ -1,0 +1,1771 @@
+{
+  "placeholders": {
+    "note": "ከመጀመሩ በፊት በዚህ ፋይል ውስጥ እያንዳንዱን [TOKEN] ይተኩ። ተመሳሳይ ቶከኖች በውሎች፣ በግላዊነት እና በ /kontakt ገጾች ላይ ይጠቀማሉ።",
+    "ORGNR": "559531-4146",
+    "BESOKSADRESS": "Centralvägen 5, 194 77 Upplands Väsby",
+    "POSTADRESS": "Centralvägen 5, 194 77 Upplands Väsby",
+    "TELEFON": "070-097 04 83",
+    "EPOST": "info@makina.se"
+  },
+  "company": {
+    "legalName": "Makina Trafikskola AB",
+    "orgnr": "559531-4146",
+    "visitingAddress": "Centralvägen 5, 194 77 Upplands Väsby",
+    "postalAddress": "Centralvägen 5, 194 77 Upplands Väsby",
+    "phone": "070-097 04 83",
+    "email": "info@makina.se"
+  },
+  "language": {
+    "label": "ቋንቋ ይምረጡ",
+    "sv": "Svenska",
+    "en": "English",
+    "ti": "ትግርኛ",
+    "ku": "ኩርድኛ",
+    "am": "አማርኛ",
+    "so": "ሶማልኛ",
+    "fa": "ፋርስኛ",
+    "prs": "ዳሪ",
+    "tig": "ትግሬ",
+    "ar": "العربية"
+  },
+  "shell": {
+    "skipToContent": "ወደ ይዘት ዝለል",
+    "navigation": "ዋና አሰሳ",
+    "home": "መነሻ",
+    "packages": "ጥቅሎች",
+    "bookings": "የእኔ ቦታ ማስያዣዎች",
+    "messages": "መልዕክቶች",
+    "theory": "ቲዎሪ",
+    "profile": "መገለጫ",
+    "lessons": "የመንዳት ትምህርቶች",
+    "lessonsShort": "ትምህርቶች",
+    "teachers": "አስተማሪዎች",
+    "book": "አሁን ይያዙ",
+    "scrollTop": "ወደ ላይ",
+    "signIn": "ይግቡ",
+    "signOut": "ይውጡ",
+    "account": "የእኔ መለያ",
+    "myPages": "የእኔ ገጾች",
+    "balance": "የእኔ ትምህርቶች",
+    "teacherPortal": "የአስተማሪ መግቢያ",
+    "adminPanel": "የአስተዳዳሪ ፓነል",
+    "admin": "አድሚን",
+    "calendar": "የቀን መቁጠሪያ",
+    "students": "ተማሪዎች",
+    "contact": "ያግኙን",
+    "courses": "ኮርሶች",
+    "prices": "ዋጋዎች",
+    "questions": "ጥያቄ አለዎት?",
+    "languagePage": {
+      "sv": "ስዊድኛ",
+      "en": "እንግሊዝኛ",
+      "ti": "ትግርኛ",
+      "ku": "ኩርድኛ",
+      "am": "አማርኛ",
+      "so": "ሶማልኛ",
+      "fa": "ፋርስኛ",
+      "prs": "ዳሪ",
+      "tig": "ትግሬ",
+      "ar": "አረብኛ"
+    },
+    "here": "የት እንዳለን",
+    "schoolIn": "በ{town} የመንጃ ትምህርት ቤት",
+    "comingSoonPlace": "{town} – በቅርብ ይመጣል",
+    "openingHours": "የስራ ሰዓት: ሰኞ–አርብ 08–21፣ ቅዳሜ–እሑድ 10–18",
+    "copyright": "© {year} Makina Trafikskola",
+    "footerDescription": "በቋንቋዎ ግልጽ መመሪያ እና ድጋፍ ያለው የመንዳት ትምህርት።",
+    "explore": "ያስሱ",
+    "terms": "ውሎች",
+    "privacy": "ግላዊነት",
+    "cookies": "ኩኪዎች",
+    "callUs": "ይደውሉልን",
+    "mailUs": "ኢሜይል ይላኩልን",
+    "seePrices": "ዋጋዎችን ይመልከቱ",
+    "openNow": "አሁን ክፍት ነው",
+    "closed": "ዝግ ነው",
+    "opensAt": "በ{time} ይከፈታል",
+    "opensOn": "{day} በ{time} ይከፈታል",
+    "weekdayShort": {
+      "0": "እሑ",
+      "1": "ሰኞ",
+      "2": "ማክ",
+      "3": "ረቡ",
+      "4": "ሐሙ",
+      "5": "አር",
+      "6": "ቅዳ"
+    },
+    "directions": "አቅጣጫ",
+    "showMap": "ካርታ አሳይ",
+    "mapPrivacy": "ካርታው ከ Google ይታያል። የ Google ኩኪዎች እና የግላዊነት መመሪያ ይተገበራሉ።",
+    "legal": "ሕጋዊ",
+    "appStore": "App Store",
+    "googlePlay": "Google Play",
+    "instagram": "Instagram",
+    "facebook": "Facebook",
+    "tiktok": "TikTok",
+    "languages": "ቋንቋዎች",
+    "appBadges": "መተግበሪያዎች",
+    "socials": "ማኅበራዊ ሚዲያ",
+    "tabSignIn": "ይግቡ",
+    "more": "ተጨማሪ",
+    "teacherOffice": "ሰዓታት እና የቀን መቁጠሪያ",
+    "closeMenu": "ምናሌውን ዝጋ",
+    "statusOpen": "ክፍት · እስከ {time}",
+    "statusClosedSameDay": "ዝግ · በ{time} ይከፈታል",
+    "statusClosedOtherDay": "ዝግ · {day} በ{time} ይከፈታል"
+  },
+  "common": {
+    "bookNow": "አሁን ይያዙ",
+    "viewAll": "ሁሉንም ይመልከቱ",
+    "readMore": "ተጨማሪ ያንብቡ",
+    "swedishOnly": "በስዊድኛ ብቻ",
+    "all": "ሁሉም ቋንቋዎች",
+    "allLocations": "ሁሉም ቦታዎች",
+    "applyFilter": "ውጤቶችን አሳይ"
+  },
+  "home": {
+    "hero": {
+      "brand": "Makina",
+      "title": "በእርግጠኝነት ይንዱ፣ በቋንቋዎ ይማሩ",
+      "description": "የመንዳት ትምህርቶች፣ ቲዎሪ እና ልምድ ያላቸው አስተማሪዎች በ Stockholm – ሁሉም በአንድ ቦታ።",
+      "areas": "Farsta · Upplands Väsby",
+      "openUntil": "ክፍት · እስከ {time}",
+      "introOffer": "የመጀመሪያ ትምህርት {price}"
+    },
+    "quick": {
+      "eyebrow": "እዚህ ይጀምሩ",
+      "title": "ዛሬ ምን ማድረግ ይፈልጋሉ?",
+      "lessons": "የመንዳት ትምህርቶች",
+      "courses": "ኮርሶች",
+      "teachers": "አስተማሪዎች",
+      "contact": "ያግኙን",
+      "theory": "ቲዎሪ",
+      "prices": "ዋጋዎች"
+    },
+    "pickup": {
+      "eyebrow": "መውሰጃ",
+      "title": "በአካባቢዎ እናገኝዎታለን",
+      "description": "በ Farsta እና Upplands Väsby አካባቢዎች ውስጥ ነፃ መውሰጃ።",
+      "areas": "Farsta · Upplands Väsby",
+      "imageAlt": "የ Makina Trafikskola መውሰጃ አካባቢዎች",
+      "mapLabel": "የመውሰጃ አካባቢ"
+    },
+    "journey": {
+      "choose": {
+        "title": "መንገድዎን ይምረጡ",
+        "description": "አንድ ትምህርት ወይም ጥቅልን በራስዎ ፍጥነት ያወዳድሩ።"
+      },
+      "book": {
+        "title": "ከተማ፣ መውሰጃ እና አስተማሪ ይምረጡ",
+        "description": "በቋንቋ፣ በቦታ እና በማርሽ ያጣሩ።"
+      },
+      "call": {
+        "title": "ይደውሉልን",
+        "description": "የሚስማማዎትን አስተማሪ እና ሰዓት እንዲያገኙ እናግዝዎታለን።"
+      },
+      "learn": {
+        "title": "እቅድዎን ይከተሉ",
+        "description": "በግልጽ መመሪያ ደረጃ በደረጃ ያድጉ።"
+      }
+    },
+    "teachers": {
+      "eyebrow": "በቋንቋዎ ይማሩ",
+      "title": "በአቅራቢያዎ አስተማሪ ያግኙ",
+      "description": "በ Farsta እና Upplands Väsby ውስጥ ነፃ መውሰጃ",
+      "cta": "አስተማሪዎን ይያዙ",
+      "languageLabel": "አስተማሪዎችን በቋንቋ ያጣሩ",
+      "reviewsTitle": "የ Google ግምገማዎች",
+      "reviewsBody": "ሰዎች ስለ Makina Trafikskola ምን እንደሚሉ ያንብቡ።",
+      "reviewsCta": "በ Google ይክፈቱ"
+    },
+    "faq": {
+      "eyebrow": "ተደጋጋሚ ጥያቄዎች",
+      "title": "ከመጀመርዎ በፊት መልሶች",
+      "cost": {
+        "question": "በ Makina የመንጃ ፈቃድ ማግኘት ምን ያህል ያስከፍላል?",
+        "answer": "የመጀመሪያ ትምህርት 499 kr፣ ከዚያ 845 kr። ጥቅሎች ከ{packagePrice} ይጀምራሉ። ሁሉም ዋጋዎች VATን ያካትታሉ።"
+      },
+      "languages": {
+        "question": "ትምህርቶችን በቋንቋዬ መውሰድ እችላለሁ?",
+        "answer": "ትምህርቶች በ{languages}።"
+      },
+      "pickup": {
+        "question": "ሊወስዱኝ ይችላሉ?",
+        "answer": "አዎ። በአረንጓዴ አካባቢዎች (Farsta እና Upplands Väsby) ውስጥ መውሰጃ ነፃ ነው፣ ከትምህርትዎም ጊዜ አይቀንስም።"
+      },
+      "cancel": {
+        "question": "ትምህርትን እንዴት እሰርዛለሁ?",
+        "answer": "በየእኔ ቦታ ማስያዣዎች ስር መሰረዝ ይችላሉ። ከትምህርቱ ቢያንስ 24 ሰዓት በፊት ከሰረዙ ምንም አያስከፍልም፣ ትምህርቱም ወደ ቀሪዎ ይመለሳል። ከዚያ በኋላ የሚደረግ ስረዛ ሙሉ በሙሉ ይከፈላል፣ ትምህርቱም ከቀሪው ይቀነሳል።",
+        "answerPhone": "ትምህርት ለመሰረዝ ወይም ለማንቀሳቀስ በእውቂያ ገጹ ያግኙን። ከትምህርቱ ቢያንስ 24 ሰዓት በፊት ምንም አያስከፍልም፣ ትምህርቱም ወደ ቀሪዎ ይመለሳል። ከዚያ በኋላ የሚደረግ ስረዛ ሙሉ በሙሉ ይከፈላል፣ ከቀሪውም ይቀነሳል።"
+      },
+      "risk": {
+        "question": "በ Risk 1 እና Risk 2 መካከል ልዩነቱ ምንድን ነው?",
+        "answer": "Risk 1 ስለ አልኮል፣ አደንዛዥ ዕፅ፣ ድካም እና ሌሎች አደጋዎች የቲዎሪ ኮርስ ነው። Risk 2 በተንሸራታች መንገድ ላይ ስለ ፍጥነት እና አስቸጋሪ የመንዳት ሁኔታዎች ተግባራዊ ስልጠና ነው። ሁለቱም ለምድብ B ፈቃድ ያስፈልጋሉ።"
+      },
+      "validity": {
+        "question": "ጥቅሌ ለምን ያህል ጊዜ ይሰራል?",
+        "answer": "የመንዳት ትምህርቶች እና ጥቅሎች ከግዢው ጀምሮ ለ12 ወራት ይሰራሉ። ቀሪዎ እና የመጨረሻው የሚሰራበት ቀን በየእኔ ገጾች ስር ይታያሉ። ዲጂታል ቲዎሪ የጊዜ ገደብ የለውም።"
+      },
+      "late": {
+        "question": "ዘግይቼ ብደርስ ምን ይሆናል?",
+        "answer": "ትምህርቱ በመደበኛው የማብቂያ ሰዓት ያበቃል።"
+      }
+    },
+    "theory": {
+      "comingSoon": "ቲዎሪ በአራቱ የድረ-ገጽ ቋንቋዎቻችን እየተዘጋጀ ነው።"
+    },
+    "benefits": {
+      "label": "በ Makina የሚያገኙት",
+      "language": {
+        "title": "በቋንቋዎ",
+        "body": "ትምህርት በ{languages}።"
+      },
+      "pickup": {
+        "title": "እንወስድዎታለን",
+        "body": "በ Farsta እና Upplands Väsby ነፃ።"
+      },
+      "lesson": {
+        "title": "50 ደቂቃ",
+        "body": "ሙሉው ክፍለ ጊዜ ከመሪው ጀርባ።"
+      },
+      "risk": {
+        "title": "Risk 1 ከእኛ ጋር",
+        "body": "የግዴታ የአደጋ ስልጠና፣ በትምህርት ቤታችን።"
+      },
+      "guarantee": {
+        "title": "የፈቃድ ዋስትና",
+        "body": "25 ትምህርቶች፣ Risk 1፣ Risk 2 እና ቲዎሪ።"
+      },
+      "payment": {
+        "title": "ካርድ፣ Swish እና Klarna",
+        "titleSwishSoon": "ካርድ እና Klarna",
+        "body": "በሚፈልጉት መንገድ ይክፈሉ።",
+        "bodySwishSoon": "Swish በቅርብ ይከፈታል።"
+      },
+      "cancel": {
+        "title": "በነፃ ይሰርዙ",
+        "body": "ከትምህርቱ እስከ 24 ሰዓት በፊት ነፃ። ከዚያ በኋላ ሙሉ ዋጋ።"
+      },
+      "reminder": {
+        "title": "ከአንድ ቀን በፊት የጽሑፍ መልዕክት",
+        "body": "አስታዋሽ፣ ዝግጁ ሆነው እንዲደርሱ።"
+      },
+      "validity": {
+        "title": "ለመጠቀም 12 ወራት",
+        "body": "ትምህርቶች እና ጥቅሎች ከገዙበት ቀን ጀምሮ ይቆጠራሉ።"
+      }
+    }
+  },
+  "lessons": {
+    "eyebrow": "ዋጋዎች እና ጥቅሎች",
+    "title": "ለእያንዳንዱ ደረጃ የመንዳት ትምህርቶች",
+    "description": "ነጠላ ትምህርቶችን እና ጥቅሎችን ያወዳድሩ። ሁሉም ዋጋዎች VATን ያካትታሉ።",
+    "introOffer": {
+      "eyebrow": "የመግቢያ ቅናሽ",
+      "title": "የመጀመሪያ የመንዳት ትምህርትዎ በ 499 kr",
+      "description": "ደረጃዎን የሚያውቅ እና ቀጣዩን እርምጃ እንዲያቅዱ የሚረዳዎ አስተማሪ ጋር 50 ደቂቃ።",
+      "ordinary": "መደበኛ ዋጋ",
+      "book": "የመጀመሪያውን ትምህርት ይያዙ",
+      "callFirst": "ለመጀመር ያግኙን"
+    },
+    "sortPrice": "ዋጋ",
+    "sortLessons": "የትምህርቶች ብዛት",
+    "bestSeller": "በጣም የሚሸጥ",
+    "groups": {
+      "label": "የምርት ቡድኖች",
+      "single": {
+        "title": "ነጠላ ትምህርቶች",
+        "intro": "አንድ የመንዳት ትምህርት።"
+      },
+      "packages": {
+        "title": "ጥቅሎች",
+        "intro": "በአንድ ጥቅል ውስጥ ብዙ የመንዳት ትምህርቶች።"
+      },
+      "intensive": {
+        "title": "የተጠናከረ",
+        "intro": "የአደጋ ስልጠና፣ ቲዎሪ ወይም ዋስትና ያላቸው ጥቅሎች።"
+      },
+      "courses": {
+        "title": "ኮርሶች",
+        "intro": "የግዴታ ኮርሶች እና የአጃቢ ስልጠና።"
+      },
+      "theory": {
+        "title": "ቲዎሪ",
+        "intro": "ያለ ጊዜ ገደብ ዲጂታል ቲዎሪ።"
+      }
+    },
+    "testCallout": "ምን እንደሚያስፈልግዎ እርግጠኛ አይደሉም? ይደውሉልን፣ እንዲመርጡ እናግዝዎታለን።"
+  },
+  "product": {
+    "popular": "በጣም ተወዳጅ",
+    "notForSale": "እስካሁን ለሽያጭ አይደለም",
+    "visualLabel": "የመንዳት ትምህርት",
+    "save": "ከተለይ ከመግዛት በ{percent}% ያነሰ",
+    "saveAmount": "ከተለይ ከመግዛት ጋር ሲነጻጸር {amount} ይቆጥባሉ",
+    "emptyTitle": "የሚታዩ ምርቶች የሉም",
+    "emptyDescription": "ምርጫው እየተዘመነ ነው። እባክዎ በቅርብ ይመለሱ።",
+    "included": "ምን እንደሚካተት",
+    "priceIncludesVat": "VATን ጨምሮ ዋጋ",
+    "perLesson": "በትምህርት",
+    "images": {
+      "en-korlektion": "ተማሪ እና አስተማሪ በመንዳት ትምህርት ወቅት",
+      "testlektion": "አስተማሪው ከግምገማ ትምህርት በፊት መንዳቱን ያልፋል",
+      "korpaket-b3": "ሦስት ትምህርቶች፣ ተማሪው በጸጥታ መንገድ ላይ እየነዳ"
+    },
+    "validityMonths": "ለ{count} ወራት ይሰራል",
+    "kind": {
+      "SINGLE_LESSON": "ነጠላ ትምህርት",
+      "TEST_LESSON": "የግምገማ ትምህርት",
+      "PACKAGE": "የትምህርት ጥቅል",
+      "INTENSIVE_PACKAGE": "የተጠናከረ ጥቅል",
+      "THEORY_ACCESS": "ቲዎሪ",
+      "GUARANTEE": "ዋስትና",
+      "COURSE_SEAT": "ኮርስ"
+    },
+    "availableDescription": "ይህ ምርት ንቁ ነው፣ አሁንም መግዛት ይቻላል።",
+    "inactiveDescription": "ዋጋው ለንጽጽር ይታያል። የተካተተው አገልግሎት ሁሉ እስኪቀርብ ድረስ ይህ ምርት ሊገዛ አይችልም።",
+    "checkout": {
+      "terms": "የግዢ ውሎችን እቀበላለሁ።",
+      "withdrawal": "ስለ 14 ቀን የመመለስ መብት አንብቤያለሁ፣ አገልግሎቱም በታቀደው መሠረት እንዲጀምር እጠይቃለሁ።",
+      "submit": "ወደ ክፍያ ይቀጥሉ",
+      "redirecting": "ክፍያ እየተከፈተ ነው…",
+      "error": "ክፍያ ሊጀመር አልቻለም። ይግቡ እና እንደገና ይሞክሩ።"
+    },
+    "cancelNote": "ከትምህርቱ ቢያንስ 24 ሰዓት በፊት ያለ ክፍያ ይሰርዙ። ከዚያ በኋላ የሚደረግ ስረዛ ሙሉ በሙሉ ይከፈላል።"
+  },
+  "checkout": {
+    "eyebrow": "ደህንነቱ የተጠበቀ ክፍያ",
+    "title": "ክፍያዎን ያጠናቅቁ",
+    "businessName": "Makina Trafikskola",
+    "description": "ትዕዛዝዎን ይገምግሙ እና የክፍያ ዘዴ ይምረጡ። ክፍያው እስኪጠናቀቅ እዚህ ይቆያሉ።",
+    "paymentTitle": "የክፍያ ዝርዝር",
+    "secureDescription": "የክፍያ ዝርዝርዎ በቀጥታ በክፍያ አቅራቢያችን Stripe ይያዛል።",
+    "summaryTitle": "የእርስዎ ትዕዛዝ",
+    "quantity": "ብዛት: {quantity}",
+    "loading": "ደህንነቱ የተጠበቀ የክፍያ መስኮች እየተጫኑ ነው…",
+    "reassurance": "ክፍያውን ካረጋገጡ በኋላ ብቻ ይከፈላሉ። ዋጋው VATን ያካትታል።",
+    "total": "ድምር",
+    "vat": "VATን ጨምሮ",
+    "submit": "አሁን ይክፈሉ",
+    "submitting": "ክፍያ እየተከናወነ ነው…",
+    "genericError": "ክፍያው ሊጠናቀቅ አልቻለም። ዝርዝርዎን ያረጋግጡ እና እንደገና ይሞክሩ።",
+    "mockTitle": "የልማት የክፍያ ሁኔታ",
+    "mockDescription": "የ Stripe ቁልፎች ጠፍተዋል። ትዕዛዙ በመጠባበቅ ላይ ይቆያል፣ ነገር ግን ክፍያም ሆነ አፈጻጸም አይከሰትም።",
+    "unavailable": "ክፍያ በአሁኑ ጊዜ አይገኝም። ምንም ክፍያ አልተጣለብዎትም።",
+    "alreadyProcessed": "ይህ ትዕዛዝ አስቀድሞ ተከናውኗል።",
+    "viewStatus": "የትዕዛዝ ሁኔታ ይመልከቱ"
+  },
+  "teachers": {
+    "eyebrow": "አስተማሪዎቻችን",
+    "title": "ትክክለኛውን አስተማሪ ያግኙ",
+    "description": "የሚስማማዎትን አስተማሪ ለማግኘት መጀመሪያ ቋንቋ፣ ከዚያ ቦታ ይምረጡ።",
+    "languageFilter": "1. ቋንቋ ይምረጡ",
+    "languageQuestion": "ትምህርቶችን በየትኛው ቋንቋ ይፈልጋሉ?",
+    "anyLanguage": "ሁሉም ቋንቋዎች",
+    "noneAvailable": "አሁን ምንም አስተማሪ አይገኝም",
+    "clearFilters": "ማጣሪያዎችን አጽዳ",
+    "showAsList": "አስተማሪዎችን እንደ ዝርዝር አሳይ",
+    "locationFilter": "2. ቦታ ይምረጡ",
+    "results": "የአስተማሪ ውጤቶች",
+    "resultCount": "{count, plural, =0 {አስተማሪ የለም} =1 {1 አስተማሪ} other {{n} አስተማሪዎች}}",
+    "emptyTitle": "የሚዛመድ አስተማሪ የለም",
+    "emptyDescription": "ሌላ ቋንቋ ወይም ቦታ ይሞክሩ።",
+    "transmissionFilter": "3. ማርሽ ይምረጡ",
+    "allTransmissions": "ሁሉም ማርሾች",
+    "searchLabel": "አስተማሪ ወይም ቦታ ይፈልጉ",
+    "searchPlaceholder": "ስም ወይም ቦታ"
+  },
+  "teacher": {
+    "yearsExperience": "{count, plural, =0 {አዲስ አስተማሪ} =1 {1 ዓመት ልምድ} other {{n} ዓመታት ልምድ}}",
+    "transmission": {
+      "manual": "ማንዋል",
+      "automatic": "አውቶማቲክ"
+    },
+    "nextFree": "ቀጣይ ነፃ ሰዓት"
+  },
+  "map": {
+    "title": "የአስተማሪ ካርታ",
+    "staticLabel": "ቀለል ያለ የ Stockholm አካባቢ ካርታ",
+    "interactiveLabel": "የአስተማሪ ቦታዎች መስተጋብራዊ ካርታ",
+    "unavailableTitle": "ካርታው ሊጫን አልቻለም",
+    "unavailableDescription": "አሁንም ከዝርዝሩ አስተማሪ ማግኘት እና መምረጥ ይችላሉ።",
+    "pendingKey": "የ Google Maps ቁልፍ ሲኖር ካርታው ይነቃል።",
+    "interactionTitle": "አስተማሪዎችን በካርታው ላይ ያስሱ",
+    "interactionHint": "እያንዳንዱ አስተማሪ በካርታው ላይ ነው። ለቋንቋ፣ ማርሽ እና ቦታ ሰውየውን ይንኩ።",
+    "book": "ይያዙ",
+    "contact": "ያግኙን",
+    "close": "ዝጋ",
+    "zoomIn": "አቅርብ",
+    "zoomOut": "አርቅ",
+    "recenter": "ሁሉንም አሳይ",
+    "areaSearchLabel": "በአካባቢው አድራሻ ይፈልጉ",
+    "areaSearchPlaceholder": "በ Farsta ወይም Upplands Väsby የጎዳና አድራሻ",
+    "areaInside": "በ{area} ውስጥ መውሰጃ",
+    "areaOutside": "ያ አድራሻ ከ Farsta እና Upplands Väsby ውጭ ነው።",
+    "searchAction": "ፈልግ",
+    "homeTeaserTitle": "በአቅራቢያዎ አስተማሪ ያግኙ",
+    "homeTeaserDescription": "በቋንቋ ያጣሩ እና አስተማሪዎቹ የት እንዳሉ ይመልከቱ።",
+    "homeTeaserCta": "የአስተማሪ ካርታ ይክፈቱ"
+  },
+  "courses": {
+    "eyebrow": "የአደጋ ስልጠና እና ኮርሶች",
+    "title": "የሚመጡ የኮርስ ጊዜያት",
+    "description": "በእውነት የተያዙ ኮርሶችን እና የቀሩ ወንበሮችን ይመልከቱ።",
+    "when": "ሰዓት",
+    "language": "ቋንቋ",
+    "venue": "ቦታ",
+    "seats": "ያሉ ወንበሮች",
+    "seatsLeft": "{count, plural, =0 {ሙሉ በሙሉ ተይዟል} =1 {1 ወንበር ቀርቷል} other {{n} ወንበሮች ቀርተዋል}}",
+    "inactive": "ይህ የኮርስ ምርት እስካሁን ለግዢ ንቁ አይደለም።",
+    "soon": "ቀጣዩ ቀን በቅርብ ይታተማል።",
+    "callToBook": "ስለ ኮርሱ ይደውሉልን",
+    "info": {
+      "RISK1": "Risk 1 የግዴታ የአደጋ ስልጠና የቲዎሪ ክፍል ነው።",
+      "RISK2": "Risk 2 ተግባራዊ ክፍል ነው፣ በተንሸራታች መንገድ ላይ ይካሄዳል።"
+    },
+    "emptyTitle": "ምንም ኮርስ አልተያዘም",
+    "emptyDescription": "አዲስ ጊዜያት ከማረጋገጥ በኋላ እዚህ ይታያሉ።",
+    "kind": {
+      "RISK1": "Risk 1",
+      "RISK2": "Risk 2",
+      "HANDLEDARUTBILDNING": "የአጃቢ ኮርስ",
+      "INTRO_THEORY": "የቲዎሪ መግቢያ"
+    },
+    "booking": {
+      "terms": "የግዢ ውሎችን እቀበላለሁ።",
+      "withdrawal": "የኮርስ ቦታ ማስያዣው በመመለሻ ጊዜው ውስጥ እንዲጀምር እጠይቃለሁ፣ ይህም የመመለስ መብቴን እንዴት እንደሚነካ እረዳለሁ።",
+      "submit": "የኮርስ ወንበር ይያዙ",
+      "submitting": "ወንበር እና ክፍያ እየተረጋገጠ ነው…",
+      "confirmed": "የኮርስ ወንበርዎ በከፈሉት መብት ተረጋግጧል።",
+      "failed": "ቦታ ማስያዣው ሊጠናቀቅ አልቻለም። እንደገና ይሞክሩ።"
+    }
+  },
+  "theory": {
+    "eyebrow": "የመንዳት ቲዎሪ",
+    "title": "የመንዳት ቲዎሪን በነፃ ይለማመዱ",
+    "description": "ነፃ ጥያቄዎች ያለ ግዢ ይገኛሉ። የሚከፈልበት ይዘት ንቁ የቲዎሪ መዳረሻ ይፈልጋል።",
+    "freeDescription": "ለልምምድ ነፃ ጥያቄዎች፣ ያለ ግዢ።",
+    "hub": {
+      "label": "እንዴት ማጥናት እንደሚፈልጉ ይምረጡ",
+      "free": "ነፃ",
+      "comingSoon": "በቅርብ ይመጣል",
+      "steps": {
+        "title": "ደረጃ በደረጃ",
+        "description": "ምድቦቹን በግልጽ ቅደም ተከተል ይከተሉ።",
+        "scrollHint": "እያንዳንዱን ደረጃ ለማየት ወደ ጎን ያንሸራትቱ።"
+      },
+      "questions": {
+        "title": "የመንዳት ቲዎሪ ጥያቄዎች",
+        "description": "ጥያቄዎችን ይለማመዱ እና እያንዳንዱን ማብራሪያ ወዲያውኑ ይመልከቱ።",
+        "badge": "{count} ጥያቄዎች"
+      },
+      "signs": {
+        "title": "የመንገድ ምልክት ጨዋታ",
+        "description": "የስዊድን የመንገድ ምልክቶችን በአጭር የጨዋታ ዙሮች ይማሩ።"
+      },
+      "book": {
+        "title": "መጽሐፍ",
+        "description": "የ Makina ዲጂታል የመንዳት ቲዎሪ መጽሐፍ እየተዘጋጀ ነው።",
+        "pending": "መጽሐፉ የትምህርት ቤቱ ይዘት ከተጠናቀቀ እና ከተገመገመ በኋላ እዚህ ይታተማል።"
+      },
+      "ebook": {
+        "title": "ኢ-መጽሐፍ",
+        "description": "ቁሳቁሱ ሲዘጋጅ ያንብቡ ወይም ያዳምጡ።",
+        "ebookTitle": "ኢ-መጽሐፍ",
+        "ebookBody": "PDF እዚህ ይጨመራል።",
+        "audioTitle": "የድምጽ መጽሐፍ",
+        "audioBody": "የድምጽ ፋይሉ እዚህ ይጨመራል።",
+        "soon": "በኋላ ይመጣል"
+      },
+      "facts": {
+        "title": "የእውነታ ባንክ",
+        "description": "በስዊድን ባለሥልጣናት ላይ የተመሠረቱ ምንጭ ያላቸው ማብራሪያዎችን ያንብቡ።",
+        "entries": "{count, plural, =1 {1 የእውነታ ግቤት} other {{n} የእውነታ ግቤቶች}}",
+        "read": "የእውነታ ባንኩን ይክፈቱ",
+        "categoryDescription": "ከጥያቄ ባንኩ የመጡ የመጀመሪያ ማብራሪያዎች፣ ለተጨማሪ ንባብ ምንጮች ጋር።",
+        "source": "ምንጭ"
+      }
+    },
+    "signGame": {
+      "title": "የመንገድ ምልክት ጨዋታ",
+      "description": "ስለ ይፋዊ የስዊድን የመንገድ ምልክቶች {count} ጥያቄዎችን ይለማመዱ።",
+      "history": "ቀደምት መልሶች",
+      "progress": "ዙር {current} ከ{total}",
+      "streak": "{count} በተከታታይ",
+      "best": "ምርጥ {count}",
+      "finish": "ውጤቱን አሳይ",
+      "emptyTitle": "የመንገድ ምልክት ጨዋታው እየተዘጋጀ ነው",
+      "emptyDescription": "ይፋዊ የመንገድ ምልክቶች እየገቡ ነው። እባክዎ በቅርብ እንደገና ይሞክሩ።"
+    },
+    "teaser": {
+      "eyebrow": "የመንዳት ቲዎሪ",
+      "title": "ቲዎሪን በቋንቋዎ ያጥኑ",
+      "description": "በምድብ ይለማመዱ እና እንደ እውቀት ፈተናው ቅርጽ የሙከራ ፈተና ይውሰዱ። ናሙና ነፃ ነው። ቀሪው ቲዎሪ ሲገዙ ይከፈታል።",
+      "freeDescription": "ነፃ ጥያቄዎችን ምድብ በምድብ ይለማመዱ።",
+      "tryFree": "በነፃ ይለማመዱ",
+      "buy": "የቲዎሪ መዳረሻ ይግዙ",
+      "pending": "የጥያቄ ባንኩ ሲዘጋጅ ይለቀቃል",
+      "oneTime": "የአንድ ጊዜ ግዢ",
+      "features": {
+        "categories": "ግልጽ ምድቦች",
+        "practice": "ነፃ የልምምድ ጥያቄዎች",
+        "languages": "የመንዳት ቲዎሪ በ{languages}።"
+      }
+    },
+    "licensingPending": "ሙሉ የጥያቄ ባንኩ የቲዎሪ መዳረሻ ሲገዙ ይከፈታል።",
+    "questionsAvailable": "ለመሞከር ዝግጁ ነፃ ጥያቄዎች",
+    "freeIntro": "በነፃ ናሙና ይጀምሩ",
+    "startPractice": "ልምምድ ይጀምሩ",
+    "freeCount": "{count, plural, =1 {1 ነፃ ጥያቄ} other {{n} ነፃ ጥያቄዎች}}",
+    "categoryProgress": "{attempted}/{total} ተሞክረዋል",
+    "swedishOnly": "በስዊድኛ ብቻ",
+    "examLink": "የሙከራ ፈተና ይክፈቱ",
+    "emptyTitle": "ነፃ ጥያቄዎች በቅርብ ይታተማሉ",
+    "emptyDescription": "የትምህርት ቤቱን የራሱ ጥያቄዎች እየጨመርን ነው። በቅርብ ይመለሱ።",
+    "paidAccess": "ንቁ የቲዎሪ መዳረሻ",
+    "freeAccess": "ነፃ ጥያቄዎች",
+    "questionNumber": "ጥያቄ {number}",
+    "categoryEmptyTitle": "ምንም ጥያቄ አይገኝም",
+    "categoryEmptyDescription": "ይህ ምድብ መለያዎ ሊደርስባቸው የሚችል ጥያቄ የለውም።",
+    "submitAnswer": "መልሱን ያረጋግጡ",
+    "correct": "ትክክል",
+    "incorrect": "ትክክል አይደለም",
+    "selectAnswer": "መጀመሪያ መልስ ይምረጡ።",
+    "signInToAnswer": "መልስዎን ለማስቀመጥ እንደ ተማሪ ይግቡ።",
+    "answerError": "መልሱ ሊቀመጥ አልቻለም። እንደገና ይሞክሩ።",
+    "imageMissing": "ምስል ጠፍቷል",
+    "next": "ቀጣይ",
+    "score": "{correct} ከ{total} ትክክል",
+    "reviewMistakes": "ስህተቶችዎን ይመልከቱ",
+    "retry": "እንደገና ይሞክሩ",
+    "bookLesson": "ትምህርት ይያዙ",
+    "comingSoonTitle": "በቅርብ ይመጣል",
+    "comingSoonBody": "የቲዎሪ ልምምድ ሲዘጋጅ እዚህ ይከፈታል።",
+    "exam": {
+      "eyebrow": "የሙከራ ፈተና",
+      "title": "በእውነተኛ የፈተና ሁኔታ ይዘጋጁ",
+      "description": "ፈተናው በአገልጋዩ ላይ ይመዘናል፣ ከተወሰነው ጊዜ በኋላም ያበቃል።",
+      "questions": "ጥያቄዎች",
+      "time": "ደቂቃዎች",
+      "pass": "ለማለፍ ትክክል",
+      "ready": "የጥያቄ ባንኩ ለሙሉ ፈተና ዝግጁ ነው።",
+      "unavailable": "መለያዎ ሊደርስባቸው የሚችል 65 ንቁ ጥያቄዎች እስካሁን የሉም።",
+      "signIn": "የፈተና መዳረሻ ለማረጋገጥ እንደ ተማሪ ይግቡ።",
+      "start": "የ50 ደቂቃ ፈተና ይጀምሩ",
+      "starting": "ፈተና እየተጀመረ ነው…",
+      "finish": "ፈተናውን ጨርስ",
+      "finishing": "እየተመዘነ ነው…",
+      "next": "አስቀምጥ እና ቀጥል",
+      "selectAnswer": "መጀመሪያ መልስ ይምረጡ።",
+      "progress": "ጥያቄ {current} ከ{total}",
+      "timeRemaining": "የቀረ ጊዜ",
+      "passed": "አልፈዋል",
+      "failed": "አላለፉም",
+      "error": "ፈተናው ሊዘመን አልቻለም። እንደገና ይሞክሩ።",
+      "imageMissing": "ምስሉ ሊታይ አልቻለም።"
+    },
+    "practiceAll": "ሁሉንም {count} ጥያቄዎች ይለማመዱ",
+    "stepQuestions": "{count} ጥያቄዎች",
+    "stepProgress": "{done} ከ{total} ተጠናቅቋል",
+    "stepDone": "ተጠናቅቋል"
+  },
+  "localSchool": {
+    "eyebrow": "በአቅራቢያዎ የመንጃ ትምህርት ቤት",
+    "comingSoon": "በቅርብ ይመጣል",
+    "title": "በ{city} የመንጃ ትምህርት ቤት",
+    "description": "በ{city} የተረጋገጠ ቦታችንን እና ያሉ አስተማሪዎችን ይመልከቱ።",
+    "addressPending": "ትክክለኛው የጉብኝት አድራሻ ማረጋገጫ እየጠበቀ ነው።",
+    "addressOnContact": "የጉብኝት አድራሻ እና አቅጣጫዎች በእውቂያ ገጹ ላይ ናቸው።",
+    "teachersTitle": "በዚህ ቦታ ያሉ አስተማሪዎች",
+    "emptyTitle": "እስካሁን ምንም አስተማሪ አልተመደበም",
+    "emptyDescription": "ቦታቸው ሲረጋገጥ አስተማሪዎች ይታያሉ።",
+    "metadataTitle": "በ{city} የመንጃ ትምህርት ቤት",
+    "metadataDescription": "በ{city} የመንዳት ትምህርቶች እና የፈቃድ ስልጠና።"
+  },
+  "booking": {
+    "eyebrow": "የመንዳት ትምህርት ይያዙ",
+    "title": "ትምህርትዎ፣ ደረጃ በደረጃ",
+    "description": "ትምህርት፣ ቦታ፣ አስተማሪ እና ሰዓት ይምረጡ። እየቀጠሉ ምርጫዎችዎ ይቆያሉ።",
+    "progress": "የቦታ ማስያዣ ደረጃዎች",
+    "back": "ተመለስ",
+    "next": "ቀጥል",
+    "confirm": "ቦታ ማስያዣውን አረጋግጥ",
+    "provisional": "ጊዜያዊ አቅርቦት – እስካሁን ለመግዛት አይገኝም",
+    "step": {
+      "what": {
+        "short": "ምን",
+        "title": "ምን መያዝ ይፈልጋሉ?",
+        "description": "ለስልጠናዎ የሚስማማውን አማራጭ ይምረጡ።",
+        "single": "ነጠላ የመንዳት ትምህርት",
+        "credits": "ጥቅሌን እጠቀም",
+        "test": "የሙከራ ትምህርት"
+      },
+      "where": {
+        "short": "የት",
+        "title": "የት መጀመር ይፈልጋሉ?",
+        "school": "እኔ ወደ እርስዎ እመጣለሁ",
+        "pickup": "ውሰዱኝ",
+        "location": "የመንጃ ትምህርት ቤት ይምረጡ",
+        "address": "የመውሰጃ አድራሻ",
+        "selectFromList": "ከዝርዝሩ አድራሻ ይምረጡ።"
+      },
+      "who": {
+        "short": "ማን",
+        "title": "ከማን ጋር መንዳት ይፈልጋሉ?",
+        "languageFirst": "መጀመሪያ ቋንቋ ይምረጡ",
+        "list": "ዝርዝር",
+        "map": "ካርታ",
+        "mapLabel": "ያሉ አስተማሪዎች ካርታ",
+        "mapUnavailable": "ካርታው አይገኝም",
+        "mapUnavailableDescription": "ከዝርዝሩ አስተማሪ ይምረጡ።",
+        "emptyTitle": "የሚዛመድ አስተማሪ የለም",
+        "empty": "ሌላ ቋንቋ ይሞክሩ ወይም ሌላ ቦታ ይምረጡ።"
+      },
+      "when": {
+        "short": "መቼ",
+        "title": "መቼ መንዳት ይፈልጋሉ?",
+        "firstAvailable": "የመጀመሪያው ያለ ሰዓት",
+        "loading": "ያሉ ሰዓቶች እየተጫኑ ነው…",
+        "emptyTitle": "በዚህ ቀን ሰዓት የለም",
+        "empty": "ተጨማሪ ያሉ ሰዓቶችን ለማየት ሌላ ቀን ይምረጡ።"
+      },
+      "area": {
+        "short": "ከተማ",
+        "title": "የት መንዳት ይፈልጋሉ?",
+        "comingSoon": "በቅርብ ይመጣል"
+      },
+      "pickup": {
+        "short": "መውሰጃ",
+        "title": "የት እንውስድዎ?",
+        "free": "በአረንጓዴ አካባቢዎች ውስጥ መውሰጃ ነፃ ነው፣ ከትምህርትዎም ጊዜ አይቀንስም።",
+        "office": "በቢሮው ይገናኙን",
+        "address": "የመውሰጃ አድራሻ",
+        "outside": "ያ አድራሻ ከአካባቢው ውጭ ነው። በአካባቢው ውስጥ አድራሻ ይምረጡ።",
+        "outline": "የመውሰጃ አካባቢ",
+        "map": {
+          "open": "በካርታው ላይ ይምረጡ",
+          "title": "የመውሰጃ ቦታ ይምረጡ",
+          "close": "ዝጋ",
+          "search": "አድራሻ ፈልግ",
+          "areaLabel": "የመውሰጃ አካባቢዎች ካርታ",
+          "sheetTitle": "በአረንጓዴ አካባቢ ውስጥ ቦታ ይምረጡ",
+          "addressLoading": "አድራሻ እየተፈለገ ነው…",
+          "addressUnknown": "በካርታው ላይ የተመረጠ ቦታ",
+          "inside": "በዚህ ቦታ መውሰጃ ነፃ ነው።",
+          "outsideHint": "ምልክቱ በአረንጓዴ አካባቢው ውስጥ እንዲሆን ካርታውን ያንቀሳቅሱ።",
+          "confirm": "አረጋግጥ"
+        }
+      },
+      "gearbox": {
+        "short": "ማርሽ",
+        "title": "ማንዋል ወይስ አውቶማቲክ?",
+        "manual": "ማንዋል",
+        "automatic": "አውቶማቲክ"
+      },
+      "schedule": {
+        "short": "ሰዓት",
+        "title": "አስተማሪዎች እና ሰዓቶች",
+        "next": "ቀጣይ ያለ",
+        "week": "ሳምንት",
+        "empty": "በዚህ ሳምንት ነፃ ሰዓት የለም። ሌላ አስተማሪ ወይም ማርሽ ይምረጡ።",
+        "loading": "ነፃ ሰዓቶች እየተጫኑ ነው…"
+      },
+      "pay": {
+        "short": "ክፈል",
+        "title": "ለትምህርቱ ይክፈሉ",
+        "single": "አንድ የመንዳት ትምህርት",
+        "packageTitle": "በጥቅል ይቆጥቡ",
+        "packageBody": "ጥቅል በትምህርት ያነሰ ያስከፍላል። በማንኛውም ጊዜ መግዛት ይችላሉ።",
+        "introLabel": "የመጀመሪያ ትምህርት 499 kr (መደበኛ 845 kr)"
+      }
+    },
+    "account": {
+      "short": "የእርስዎ መለያ",
+      "title": "የእርስዎ መለያ",
+      "description": "ቦታ ማስያዣዎችዎን፣ ቀሪዎን እንዲያዩ እና በራስዎ እንዲሰርዙ መለያ እንፈጥራለን።",
+      "firstName": "የመጀመሪያ ስም",
+      "lastName": "የአባት ስም",
+      "phone": "የአገር ኮድ ያለው የሞባይል ቁጥር",
+      "code": "ባለስድስት አሃዝ ኮድ",
+      "send": "ኮድ ላክ",
+      "verify": "አረጋግጥ እና ያዝ",
+      "emailLink": "ኢሜይል እና የይለፍ ቃል",
+      "devCode": "ለአካባቢ ልማት ብቻ – ኮድ: {code}"
+    },
+    "credits": {
+      "loading": "ቀሪዎ እየተረጋገጠ ነው…",
+      "signIn": "የጥቅል ክሬዲቶችዎን ለማረጋገጥ ይግቡ።",
+      "balance": "{count, plural, =0 {ምንም ትምህርት የለም} =1 {1 ትምህርት አለ} other {{n} ትምህርቶች አሉ}}"
+    },
+    "summary": {
+      "eyebrow": "የእርስዎ ቦታ ማስያዣ",
+      "title": "ማጠቃለያ",
+      "lesson": "ትምህርት",
+      "place": "ቦታ",
+      "teacher": "አስተማሪ",
+      "time": "ሰዓት",
+      "notSelected": "እስካሁን አልተመረጠም",
+      "reassurance": "ከማረጋገጥዎ በፊት ተመልሰው ምርጫዎችዎን መቀየር ይችላሉ።"
+    },
+    "checkout": {
+      "title": "ከክፍያ በፊት ፈቃድ",
+      "termsConsent": "የግዢ ውሎችን እቀበላለሁ።",
+      "withdrawalConsent": "ስለ 14 ቀን የመመለስ መብት አንብቤያለሁ፣ የተያዘው አገልግሎትም በታቀደው መሠረት እንዲጀምር እጠይቃለሁ።",
+      "continue": "ወደ ደህንነቱ የተጠበቀ ክፍያ ይቀጥሉ"
+    },
+    "confirmation": {
+      "eyebrow": "ቦታ ማስያዣ ተመዝግቧል",
+      "title": "ሰዓትዎ ተይዟል",
+      "deadline": "እስከ <time>{deadline}</time> ድረስ በነፃ መሰረዝ ይችላሉ። ከዚያ በኋላ የሚደረግ ስረዛ ሙሉ በሙሉ ይከፈላል።",
+      "calendar": "ወደ የቀን መቁጠሪያ ጨምር",
+      "creditUsed": "አንድ ትምህርት ከቀሪዎ ተቀንሷል።",
+      "hold": "ክፍያው እስኪጠናቀቅ ይህ ሰዓት እስከ <time>{expires}</time> ድረስ ለእርስዎ ተይዟል።",
+      "provisional": "የዋጋ ዝርዝሩ አልተረጋገጠም፣ ስለዚህ ክፍያ ለጊዜው አይገኝም። የ15 ደቂቃ ማቆያዎ አልተለወጠም።"
+    },
+    "calendar": {
+      "summary": "የመንዳት ትምህርት ከ Makina Trafikskola ጋር",
+      "description": "የመሰረዝ ጊዜ ገደብ: {deadline}።"
+    },
+    "introPriceLabel": "የመጀመሪያ ትምህርት 499 kr (መደበኛ 845 kr)"
+  },
+  "auth": {
+    "required": "ለመያዝ እና ለመክፈል መለያ ያስፈልግዎታል። ወደ 30 ሰከንድ ይወስዳል።",
+    "purchaseGate": "ለመግዛት መለያ ያስፈልግዎታል። ወደ 30 ሰከንድ ይወስዳል፣ የቦታ ማስያዣዎችዎን እና ቀሪዎንም ያገኛሉ።",
+    "signInToBuy": "ለመግዛት ይግቡ",
+    "signInToSeeBalance": "ቀሪዎን ለማየት ይግቡ",
+    "firstName": "የመጀመሪያ ስም",
+    "lastName": "የአባት ስም",
+    "email": "ኢሜይል",
+    "password": "የይለፍ ቃል",
+    "fullName": "ሙሉ ስም",
+    "showPassword": "የይለፍ ቃል አሳይ",
+    "hidePassword": "የይለፍ ቃል ደብቅ",
+    "or": "ወይም",
+    "continueWithGoogle": "በ Google ይቀጥሉ",
+    "oauthError": {
+      "accessDenied": "በ Google መግባት ተከልክሏል። እንደገና ይሞክሩ ወይም ሌላ የመግቢያ መንገድ ይምረጡ።",
+      "configuration": "በ Google መግባት አሁን አይገኝም። ሌላ የመግቢያ መንገድ ይምረጡ።",
+      "default": "በ Google መግባት ሊጠናቀቅ አልቻለም። እንደገና ይሞክሩ።"
+    },
+    "resendWait": "አዲስ ኮድ በ{seconds} ሰ ይላኩ",
+    "identifier": "ኢሜይል ወይም የሞባይል ቁጥር",
+    "forgotLink": "የይለፍ ቃል ረሱ?",
+    "newPassword": "አዲስ የይለፍ ቃል",
+    "phone": "የሞባይል ቁጥር",
+    "phonePlaceholder": "+46 70 123 45 67",
+    "phoneHint": "የአንድ ጊዜ ኮድ በጽሑፍ መልዕክት እንልካለን። ቁጥርዎ ለቦታ ማስያዣ፣ ለአስታዋሽ እና ለድጋፍ ይጠቀማል።",
+    "code": "ባለስድስት አሃዝ ኮድ",
+    "codeSentHint": "ከጽሑፍ መልዕክቱ ኮዱን ያስገቡ። አልደረሰዎትም? አዲስ ኮድ ይላኩ።",
+    "methodLabel": "የመግቢያ ዘዴ",
+    "methods": {
+      "email": "የይለፍ ቃል",
+      "phone": "ኮድ በ SMS"
+    },
+    "sendCode": "ኮድ ላክ",
+    "resendCode": "አዲስ ኮድ ላክ",
+    "verifyCode": "አረጋግጥ እና ቀጥል",
+    "working": "እባክዎ ይጠብቁ…",
+    "devCode": "ለአካባቢ ልማት ብቻ – ኮድ: {code}",
+    "secure": "ደህንነቱ የተጠበቀ የመለያ መዳረሻ",
+    "support": "ለመግባት እገዛ ይፈልጋሉ? በእውቂያ ገጹ ያግኙን።",
+    "context": {
+      "eyebrow": "Makina Trafikskola",
+      "title": "ቦታ ማስያዣዎች፣ ቀሪ እና ቲዎሪ በቋንቋዎ",
+      "bookings": "የመንዳት ትምህርቶችዎን ይመልከቱ እና ያስተዳድሩ",
+      "balance": "ያሉ የትምህርት ክሬዲቶችን ያረጋግጡ",
+      "messages": "የአገልግሎት እና የክፍያ ማሳወቂያዎችን ይከተሉ"
+    },
+    "login": {
+      "title": "ይግቡ",
+      "description": "በሞባይል ቁጥር እና በጽሑፍ ኮድ በጣም ፈጣን ነው። ኢሜይልም መጠቀም ይችላሉ።",
+      "submit": "ይግቡ",
+      "noAccount": "መለያ የለዎትም?",
+      "create": "መለያ ይፍጠሩ",
+      "phoneAccountMissing": "ያንን ቁጥር የሚጠቀም መለያ የለም።",
+      "codeSentNeutral": "ቁጥሩ ከእኛ ጋር ከተመዘገበ ኮድ እንልካለን።",
+      "changedNumber": "ቁጥርዎን ቀይረዋል?",
+      "changedNumberHelp": "የተመዘገቡበት ቁጥር ከእንግዲህ ከሌለዎት ይደውሉልን ወይም ኢሜይል ይላኩልን፣ በደህንነት እናግዝዎታለን።",
+      "callUs": "ይደውሉልን",
+      "mailUs": "ኢሜይል ይላኩልን"
+    },
+    "register": {
+      "title": "መለያ ይፍጠሩ",
+      "description": "ዝርዝርዎን ይሙሉ። የጽሑፍ ኮዱ ትክክል ሲሆን መለያው ይፈጠራል።",
+      "submit": "መለያ ይፍጠሩ",
+      "hasAccount": "አስቀድመው መለያ አለዎት?",
+      "login": "ይግቡ"
+    },
+    "forgot": {
+      "title": "የይለፍ ቃል ረሱ",
+      "description": "የሞባይል ቁጥርዎን ያስገቡ። ኮድ እንልካለን፣ ከዚያ አዲስ የይለፍ ቃል ይመርጣሉ።",
+      "submit": "አዲስ የይለፍ ቃል አስቀምጥ",
+      "done": "የይለፍ ቃሉ ተዘምኗል። በአዲሱ የይለፍ ቃል ይግቡ።"
+    },
+    "verifyPhone": {
+      "title": "የሞባይል ቁጥርዎን ያረጋግጡ",
+      "description": "ለኮዶች እና ለአስታዋሾች የስዊድን የሞባይል ቁጥር ያስፈልገናል። ቁጥሩ አስቀድሞ የመለያ ከሆነ Google ከዚያ መለያ ጋር ይያያዛል።",
+      "submit": "ቁጥሩን አረጋግጥ"
+    },
+    "phoneInvalid": "የስዊድን የሞባይል ቁጥር ያስገቡ፣ ከፊት ባለው ዜሮ ወይም ያለ እሱ።",
+    "phoneValid": "ቁጥሩ ትክክል ይመስላል።",
+    "emailInvalid": "የኢሜይል አድራሻ ያስገቡ፣ ለምሳሌ name@example.com።",
+    "emailValid": "የኢሜይል አድራሻው ትክክል ይመስላል።"
+  },
+  "student": {
+    "nav": {
+      "label": "የእኔ ገጾች",
+      "overview": "አጠቃላይ እይታ",
+      "bookings": "ቦታ ማስያዣዎች",
+      "saldo": "የእኔ ትምህርቶች",
+      "theory": "ቲዎሪ",
+      "messages": "መልዕክቶች",
+      "profile": "መገለጫ"
+    },
+    "overview": {
+      "title": "የእኔ ገጾች",
+      "nextBooking": "ቀጣይ የመንዳት ትምህርት",
+      "paymentRequired": "ክፍያዎን ያጠናቅቁ",
+      "holdUntil": "ይህ ሰዓት እስከ <time>{deadline}</time> ድረስ ለእርስዎ ተይዟል። ለመቀጠል ቦታ ማስያዣውን ይክፈቱ።",
+      "noBooking": "የሚመጣ ቦታ ማስያዣ የለዎትም።",
+      "viewBookings": "ቦታ ማስያዣዎችን ይመልከቱ",
+      "saldo": "የእኔ ትምህርቶች",
+      "viewSaldo": "ትምህርቶችን ይመልከቱ",
+      "lessonsLeft": "{count, plural, =1 {1 ትምህርት ቀርቷል} other {{n} ትምህርቶች ቀርተዋል}}",
+      "theory": "የቲዎሪ መዳረሻ",
+      "theoryActive": "የቲዎሪ መዳረሻዎ ንቁ ነው።",
+      "theoryInactive": "ንቁ የቲዎሪ መዳረሻ የለም።",
+      "viewTheory": "ቲዎሪ ይመልከቱ"
+    },
+    "bookings": {
+      "title": "የእኔ ቦታ ማስያዣዎች",
+      "description": "የሚመጡ እና ያለፉ የመንዳት ትምህርቶችን ይመልከቱ።",
+      "empty": "ቦታ ማስያዣ የለዎትም።",
+      "pickup": "የመውሰጃ ቦታ",
+      "cancel": "ሰርዝ",
+      "pay": "ክፍያ አጠናቅቅ",
+      "paying": "ክፍያ እየተከፈተ ነው…",
+      "keepBooking": "ቦታ ማስያዣውን አቆይ",
+      "holdStatus": "ክፍያ በመጠበቅ ላይ",
+      "holdUntil": "ይህ ሰዓት እስከ <time>{deadline}</time> ድረስ ለእርስዎ ተይዟል።",
+      "cancelHoldWarning": "ምንም ክሬዲት አልተጠቀመም። መሰረዝ ቦታ ማስያዣውን ወዲያውኑ ይለቃል። መቀጠል ይፈልጋሉ?",
+      "lessonFeedback": "የትምህርትዎ ግብረ መልስ",
+      "practiced": "የለማመዱት",
+      "nextFocus": "ቀጣይ ትኩረት",
+      "leaveReview": "ግምገማ ይተዉ",
+      "reviewModeration": "ግምገማው ከመታተሙ በፊት ይመረመራል። አስተያየቱ አማራጭ ነው።",
+      "rating": "ደረጃ",
+      "ratingValue": "{value} ከ 5",
+      "reviewComment": "አስተያየት (አማራጭ)",
+      "submitReview": "ግምገማ አስገባ",
+      "submittingReview": "እየገባ ነው…",
+      "cancelLateWarning": "የመሰረዝ ጊዜ ገደቡ አልፏል። ትምህርቱ ሙሉ በሙሉ ይከፈላል፣ ከቀሪዎም ይቀነሳል። ቢሆንም ይሰረዝ?",
+      "cancelRefundWarning": "አሁን መሰረዝ ክሬዲትዎን ይመልሳል። ጊዜ ገደቡ <time>{deadline}</time> ነው። ይቀጥሉ?",
+      "deadline": "እስከ <time>{deadline}</time> ድረስ መሰረዝ ይችላሉ።",
+      "status": "ሁኔታ: {status}",
+      "statuses": {
+        "CONFIRMED": "ተረጋግጧል",
+        "COMPLETED": "ተጠናቅቋል",
+        "CANCELLED_BY_STUDENT": "በእርስዎ ተሰርዟል",
+        "CANCELLED_BY_TEACHER": "በአስተማሪ ተሰርዟል",
+        "EXPIRED_HOLD": "ማቆያው አብቅቷል",
+        "NO_SHOW": "አልተገኙም"
+      }
+    },
+    "saldo": {
+      "title": "የእኔ ትምህርቶች",
+      "available": "ለመንዳት የቀረ",
+      "remaining": "{count, plural, =1 {1 ትምህርት ቀርቷል} other {{n} ትምህርቶች ቀርተዋል}}",
+      "lotCount": "{count, plural, =1 {+1 ትምህርት} other {+{n} ትምህርቶች}}",
+      "lessons": "የመንዳት ትምህርቶች",
+      "lots": "ንቁ ክሬዲቶች",
+      "expires": "እስከ <time>{date}</time> ድረስ ይሰራል",
+      "noExpiry": "የማብቂያ ቀን የለም",
+      "empty": "ንቁ ክሬዲት የለዎትም።",
+      "reasons": {
+        "PURCHASE": "ግዢ",
+        "BOOKING_CONSUMED": "ቦታ ማስያዣ",
+        "CANCELLATION_REFUND": "የስረዛ መመለስ",
+        "LATE_CANCELLATION_CHARGE": "ዘግይቶ የተደረገ ስረዛ",
+        "TEACHER_CANCELLATION_REFUND": "የአስተማሪ ስረዛ መመለስ",
+        "PAYMENT_REFUND": "የክፍያ መመለስ",
+        "ADMIN_ADJUSTMENT": "የአስተዳደር ማስተካከያ",
+        "EXPIRY": "ያበቃ ክሬዲት"
+      }
+    },
+    "payments": {
+      "eyebrow": "ክፍያ",
+      "title": "የትዕዛዝ ሁኔታ",
+      "orderStatus": "ሁኔታ: {status}",
+      "quantity": "ብዛት: {quantity}",
+      "total": "ድምር",
+      "vat": "VATን ጨምሮ",
+      "retryDescription": "ክፍያው አልተጠናቀቀም። እንደገና ለመሞከር ወደ ደህንነቱ የተጠበቀ ክፍያ ይቀጥሉ።",
+      "retry": "ክፍያውን እንደገና ይሞክሩ",
+      "late": {
+        "lesson": {
+          "title": "ክፍያ ተሳክቷል – አዲስ ሰዓት ይምረጡ",
+          "description": "የ15 ደቂቃ ቦታ ማስያዣዎ አብቅቷል። የተገዛው ትምህርት እንደ ያልተጠቀመ ክሬዲት በትክክል አንድ ጊዜ ይቀራል። የድሮው ሰዓት አልተመለሰም።",
+          "action": "አዲስ የትምህርት ሰዓት ይያዙ"
+        },
+        "course": {
+          "title": "ክፍያ ተሳክቷል – ሌላ የኮርስ ጊዜ ይምረጡ",
+          "description": "የ15 ደቂቃ ቦታ ማስያዣዎ አብቅቷል። የተገዛው የኮርስ ወንበር እንደ ያልተጠቀመ መብት በትክክል አንድ ጊዜ ይቀራል። የድሮው ወንበር አልተመለሰም።",
+          "action": "ሌላ የኮርስ ጊዜ ይምረጡ"
+        }
+      },
+      "statuses": {
+        "PENDING": "ክፍያ በመጠበቅ ላይ",
+        "PAID": "ተከፍሏል",
+        "FAILED": "አልተሳካም",
+        "REFUNDED": "ተመልሷል",
+        "PARTIALLY_REFUNDED": "በከፊል ተመልሷል"
+      },
+      "live": {
+        "paid": "ክፍያ ተጠናቅቋል",
+        "failed": "ክፍያ አልተሳካም",
+        "slow": "ይህ ትንሽ እየዘገየ ነው - ሲጠናቀቅ SMS ያገኛሉ",
+        "myPages": "ወደ የእኔ ገጾች ሂድ",
+        "pending": "የክፍያ ማረጋገጫ በመጠበቅ ላይ..."
+      }
+    },
+    "theory": {
+      "title": "ቲዎሪዬ",
+      "access": "መዳረሻ",
+      "active": "ንቁ – የጊዜ ገደብ የለም",
+      "inactive": "ንቁ መዳረሻ የለም",
+      "progress": "ውጤቶች",
+      "correct": "በትክክል የተመለሱ ጥያቄዎች",
+      "streak": "ምርጥ ተከታታይ",
+      "streakNow": "አሁን {count} በተከታታይ ትክክል",
+      "provisional": "ሙሉ የጥያቄ ባንኩን ለመለማመድ እና የሙከራ ፈተናዎችን ለመውሰድ ዲጂታል የመንዳት ቲዎሪ ይግዙ።"
+    },
+    "messages": {
+      "title": "መልዕክቶች",
+      "description": "የቅርብ የአገልግሎት ማሳወቂያዎችዎ። የግል የይዘት መረጃ እዚህ አይታይም።",
+      "empty": "መልዕክት የለዎትም።",
+      "sent": "ተልኳል",
+      "scheduled": "ቀጠሮ ተይዞለታል",
+      "limited": "የቅርብ 50 መልዕክቶች እየታዩ ነው።",
+      "templates": {
+        "bookingConfirmed": "ቦታ ማስያዣ ተረጋግጧል",
+        "bookingCancelledByStudent": "ቦታ ማስያዣ ተሰርዟል",
+        "bookingCancelledByTeacher": "ቦታ ማስያዣ በአስተማሪ ተሰርዟል",
+        "bookingReminder": "የቦታ ማስያዣ አስታዋሽ",
+        "bookingMoved": "ትምህርት ተንቀሳቅሷል",
+        "paymentReceipt": "የክፍያ ደረሰኝ",
+        "paymentFailed": "ክፍያ አልተሳካም",
+        "lessonPaymentNeedsRebooking": "የተከፈለ ትምህርት እንደገና መያዝ ይፈልጋል",
+        "coursePaymentNeedsRebooking": "የተከፈለ የኮርስ ወንበር እንደገና መያዝ ይፈልጋል",
+        "lessonCompleted": "ትምህርት ተጠናቅቋል",
+        "generic": "የአገልግሎት መልዕክት"
+      },
+      "bodies": {
+        "lessonPaymentNeedsRebooking": "ቦታ ማስያዣው ካበቃ በኋላ ክፍያ ተሳክቷል። ያልተጠቀመ የትምህርት ክሬዲትዎ ይቀራል፤ አዲስ ሰዓት ይምረጡ።",
+        "coursePaymentNeedsRebooking": "ቦታ ማስያዣው ካበቃ በኋላ ክፍያ ተሳክቷል። ያልተጠቀመ የኮርስ መብትዎ ይቀራል፤ ሌላ ጊዜ ይምረጡ።",
+        "lessonCompleted": "ትምህርቱ ተነድቷል፣ ከጥቅሉም ተወስዷል። {count} ትምህርቶች ቀርተዋል።"
+      },
+      "channels": {
+        "EMAIL": "ኢሜይል",
+        "SMS": "SMS",
+        "PUSH": "ፑሽ",
+        "INAPP": "በመተግበሪያ"
+      }
+    },
+    "profile": {
+      "title": "መገለጫዬ",
+      "name": "ስም",
+      "email": "ኢሜይል",
+      "phone": "ስልክ",
+      "newPhone": "አዲስ የሞባይል ቁጥር",
+      "currentPhoneCode": "ለአሁኑ ቁጥር ኮድ",
+      "newPhoneCode": "ለአዲሱ ቁጥር ኮድ",
+      "verifyPhone": "አረጋግጥ እና ቁጥሩን ቀይር",
+      "savingPhone": "ቁጥር እየተቀየረ ነው…",
+      "phoneChanged": "የሞባይል ቁጥርዎ ተቀይሯል።",
+      "missing": "አልተሰጠም",
+      "privacyTitle": "የግል መረጃዎ",
+      "privacyDescription": "መረጃዎን ያውርዱ ወይም መለያውን ይሰርዙ እና ስም-አልባ ያድርጉ።",
+      "export": "መረጃዬን አውርድ",
+      "delete": "መለያዬን ሰርዝ",
+      "deleting": "እየተሰረዘ ነው…",
+      "deleteConfirm": "መለያው ስም-አልባ ይሆናል፣ እርስዎም ይወጣሉ። ይህ ሊመለስ አይችልም። ይቀጥሉ?",
+      "deleteSendCode": "የደህንነት ኮድ ላክ",
+      "deleteCode": "የደህንነት ኮድ ወደ ሞባይልዎ ተልኳል",
+      "deleteConfirmAction": "መለያውን በቋሚነት ሰርዝ",
+      "settingsDescription": "ስም፣ ኢሜይል፣ የይለፍ ቃል፣ ስልክ እና የ SMS ቋንቋ ያስተዳድሩ።",
+      "edit": "አርትዕ",
+      "close": "ዝጋ",
+      "saved": "ለውጦችዎ ተቀምጠዋል።",
+      "saving": "እየተቀመጠ ነው...",
+      "save": "አስቀምጥ",
+      "firstName": "የመጀመሪያ ስም",
+      "lastName": "የአባት ስም",
+      "emailSaved": "የኢሜይል አድራሻዎ ተዘምኗል።",
+      "passwordSaved": "የይለፍ ቃልዎ ተቀምጧል።",
+      "confirmWith": "በዚህ አረጋግጥ",
+      "confirmPassword": "የይለፍ ቃል",
+      "confirmSms": "የ SMS ኮድ",
+      "password": "የይለፍ ቃል",
+      "sendCode": "ኮድ ላክ",
+      "smsCode": "የ SMS ኮድ",
+      "passwordSet": "የይለፍ ቃል ተቀምጧል",
+      "passwordMissing": "እስካሁን የይለፍ ቃል የለም",
+      "newPassword": "አዲስ የይለፍ ቃል",
+      "currentPassword": "የአሁኑ የይለፍ ቃል",
+      "lostOldNumber": "የድሮ ቁጥሬ ከእንግዲህ የለኝም",
+      "lostOldNumberHint": "በይለፍ ቃልዎ ያረጋግጡ፣ ወይም በቅርብ ከገቡ / Google ከተጠቀሙ።",
+      "sendCurrentCode": "ወደ አሁኑ ቁጥር ኮድ ላክ",
+      "sendNewCode": "ወደ አዲሱ ቁጥር ኮድ ላክ",
+      "smsLanguage": "የ SMS ቋንቋ",
+      "smsLanguageHelp": "በ SMS ለሚላኩ ኮዶች እና አስታዋሾች ይጠቀማል።",
+      "unusedCreditsWarning": "{count} ትምህርቶች ቀርተውዎታል፣ ይጠፋሉ።",
+      "unusedCreditsAck": "ያልተጠቀሙ ትምህርቶች እና ክሬዲቶች እንደሚጠፉ እረዳለሁ።"
+    }
+  },
+  "teacherPortal": {
+    "eyebrow": "የአስተማሪ መግቢያ",
+    "title": "የዛሬ የመንዳት ትምህርቶች",
+    "lessonCount": "{count, plural, =0 {ዛሬ ትምህርት የለም} =1 {ዛሬ 1 ትምህርት} other {ዛሬ {n} ትምህርቶች}}",
+    "call": "ለተማሪው ይደውሉ",
+    "openAddress": "አድራሻ ክፈት",
+    "previousNote": "ቀዳሚ ማስታወሻ",
+    "noPreviousNote": "ቀዳሚ ማስታወሻ የለም።",
+    "summary": "የትምህርት ማስታወሻ",
+    "nextFocus": "ቀጣይ ትኩረት",
+    "completeLesson": "አጠናቅቅ እና አስቀምጥ",
+    "writeNote": "የትምህርት ማስታወሻ ጻፍ",
+    "updateReport": "ዘገባ አዘምን",
+    "empty": "ዛሬ ትምህርት የለዎትም።",
+    "weekTitle": "የዚህ ሳምንት የመንዳት ትምህርቶች",
+    "weekCount": "{count, plural, =0 {በዚህ ሳምንት ትምህርት የለም} =1 {በዚህ ሳምንት 1 ትምህርት} other {በዚህ ሳምንት {n} ትምህርቶች}}",
+    "weekEmpty": "በዚህ ሳምንት ትምህርት የለዎትም።",
+    "monthTitle": "የእኔ ወር",
+    "lessonsDriven": "{count} ትምህርቶች",
+    "hoursDriven": "{hours} ሰዓታት",
+    "estimatedPay": "የተገመተ ክፍያ {pay}",
+    "monthEmpty": "በዚህ ወር የተጠናቀቀ ትምህርት የለም።",
+    "previousMonth": "ያለፈው ወር",
+    "nextMonth": "ቀጣይ ወር",
+    "views": {
+      "today": "ዛሬ",
+      "week": "ሳምንት",
+      "office": "የስራ ሰዓታት"
+    },
+    "drivesFrom": "ከ{places} ይነዳሉ።",
+    "phoneLabel": "የሞባይል ቁጥር",
+    "phoneSave": "ቁጥር አስቀምጥ",
+    "phoneReady": "የቦታ ማስያዣ ጽሑፎች ወደ {phone} ይሄዳሉ።",
+    "students": {
+      "title": "ተማሪዎቼ",
+      "lessonsDone": "{count, plural, =0 {የተጠናቀቀ ትምህርት የለም} =1 {1 የተጠናቀቀ ትምህርት} other {{n} የተጠናቀቁ ትምህርቶች}}",
+      "nextLesson": "ቀጣይ ትምህርት <time>{when}</time>",
+      "noNext": "የሚመጣ ትምህርት የለም።",
+      "remaining": "{count, plural, =0 {ቀሪ ትምህርት የለም} =1 {1 ትምህርት ቀርቷል} other {{n} ትምህርቶች ቀርተዋል}}",
+      "empty": "እስካሁን ተማሪ የለም።"
+    },
+    "awaitingPayment": "ክፍያ በመጠበቅ ላይ",
+    "noPhone": "ትምህርት ቤቱ የሞባይል ቁጥርዎን እስኪጨምር ድረስ የቦታ ማስያዣ ጽሑፎች አያገኙም።",
+    "lessonNotStarted": "ትምህርቱ እስካሁን አልተጀመረም። ሪፖርቱ ከተጀመረ በኋላ ሊቀመጥ ይችላል።",
+    "noProfile": "ከዚህ ተጠቃሚ ጋር ምንም የአስተማሪ መገለጫ አልተያያዘም።",
+    "calendar": {
+      "title": "የቀን መቁጠሪያ",
+      "description": "አገናኙን በ Google Calendar ወይም በ iPhone ላይ ይጨምሩ። Google Calendar ለመዘመን ጥቂት ሰዓታት ሊወስድ ይችላል። የጽሑፍ መልዕክቶች ወዲያውኑ ማሳወቂያ ናቸው።",
+      "delay": "Google Calendar ለመዘመን ጥቂት ሰዓታት ሊወስድ ይችላል። የጽሑፍ መልዕክቶች ወዲያውኑ ይደርሳሉ።",
+      "copy": "አገናኝ ቅዳ",
+      "create": "የቀን መቁጠሪያ አገናኝ ፍጠር",
+      "rotate": "አገናኝ ተካ",
+      "summary": "የመንዳት ትምህርት – {name}"
+    },
+    "hours": {
+      "title": "መደበኛ ሰዓቶቼ",
+      "help": "መደበኛ ሰዓቶችዎን እዚህ ያስቀምጡ። በ Google Calendar ጊዜ ይዝጉ፣ ከቦታ ማስያዣም ይጠፋል።",
+      "day": "ቀን",
+      "from": "ከ",
+      "to": "እስከ",
+      "area": "አካባቢ",
+      "row": "ሰዓት {n}",
+      "add": "ሰዓት ጨምር",
+      "remove": "አስወግድ",
+      "save": "ሰዓቶችን አስቀምጥ",
+      "saved": "ሰዓቶችዎ ተቀምጠዋል።",
+      "empty": "እስካሁን መደበኛ ሰዓት የለዎትም። ተማሪዎች እንዲይዙዎት ሰዓት ይጨምሩ።",
+      "noLocations": "እስካሁን ምንም አካባቢ ከእርስዎ ጋር አልተያያዘም። ትምህርት ቤቱን ያግኙ፣ አንዱን እንጨምራለን።",
+      "errors": {
+        "HOURS_OVERLAP": "ሰዓቶቹ ይደራረባሉ ወይም ከመጀመራቸው በፊት ያበቃሉ። ሰዓቶቹን ያስተካክሉ እና እንደገና ይሞክሩ።",
+        "LOCATION_NOT_ASSIGNED": "ከእርስዎ ጋር የተያያዙ አካባቢዎችን ብቻ መምረጥ ይችላሉ። ሌላ አካባቢ ይምረጡ።",
+        "INVALID_INPUT": "ሰዓቶቹን ያረጋግጡ እና እንደገና ይሞክሩ።",
+        "TEACHER_NOT_FOUND": "ምንም የአስተማሪ መለያ ከእርስዎ ጋር አልተያያዘም። ትምህርት ቤቱን ያግኙ።",
+        "UNAUTHENTICATED": "እንደገና ይግቡ እና አንድ ጊዜ ይሞክሩ።",
+        "FORBIDDEN": "እነዚህን ሰዓቶች የመቀየር ፈቃድ የለዎትም።",
+        "UNKNOWN": "ሊቀመጥ አልቻለም። ከጥቂት ጊዜ በኋላ እንደገና ይሞክሩ።"
+      }
+    },
+    "block": {
+      "title": "መገኘትን ዝጋ",
+      "description": "ሙሉውን ቀን ለመዝጋት ሰዓቶቹን ባዶ ይተዉ።",
+      "date": "ቀን",
+      "start": "ከ",
+      "end": "እስከ",
+      "reason": "ምክንያት",
+      "confirm": "በዚህ ጊዜ የተረጋገጡ ትምህርቶች እንደሚሰረዙ፣ ክሬዲቶች እንደሚመለሱ እና ተማሪዎች እንደሚነገሩ እረዳለሁ።",
+      "submit": "ሰዓቱን ዝጋ"
+    }
+  },
+  "metadata": {
+    "brand": "Makina Trafikskola",
+    "title": "Makina Trafikskola – በ Stockholm የመንዳት ትምህርት",
+    "description": "በ Stockholm የመንዳት ትምህርቶች እና የፈቃድ ስልጠና፣ በብዙ ቋንቋዎች ድጋፍ ጋር።"
+  },
+  "pricing": {
+    "valueSeparately": "ተለይተው ከተገዙ ዋጋ: {price}"
+  },
+  "cookieConsent": {
+    "title": "የኩኪ ቅንብሮች",
+    "description": "ለመግባት እና ለቋንቋ አስፈላጊ ኩኪዎችን እንጠቀማለን።",
+    "readMore": "ተጨማሪ ያንብቡ",
+    "ok": "እሺ"
+  },
+  "offline": {
+    "eyebrow": "ግንኙነት የለም",
+    "title": "ከመስመር ውጭ ነዎት",
+    "description": "ግንኙነትዎን ያረጋግጡ እና እንደገና ይሞክሩ። ቦታ ማስያዣዎች እና የመለያ ዝርዝር የበይነመረብ መዳረሻ ይፈልጋሉ።",
+    "retry": "እንደገና ይሞክሩ"
+  },
+  "legal": {
+    "terms": {
+      "metadata": "ለ Makina Trafikskola የግዢ ውሎች።",
+      "eyebrow": "ሕጋዊ መረጃ",
+      "title": "የግዢ ውሎች",
+      "sectionOrder": [
+        "seller",
+        "prices",
+        "delivery",
+        "validity",
+        "cancellation",
+        "packages",
+        "lateArrival",
+        "riskArrival",
+        "digitalTheory",
+        "responsibility",
+        "dataProtection",
+        "refunds",
+        "withdrawal",
+        "complaints",
+        "law"
+      ],
+      "seller": {
+        "title": "ሻጭ",
+        "body": "አገልግሎቱ በ Makina Trafikskola AB ይሸጣል። ሙሉ የኩባንያ እና የእውቂያ ዝርዝር በእውቂያ ገጹ ላይ ይገኛል።"
+      },
+      "prices": {
+        "title": "ዋጋዎች እና ክፍያ",
+        "bodySwishSoon": "ሁሉም ዋጋዎች VATን ጨምሮ በስዊድን kr ይታያሉ።\nበካርድ ወይም በ Klarna በ Stripe በኩል ይከፍላሉ። Swish በቅርብ ይመጣል።\nዋጋው በግዢ ጊዜ ከምርት ዝርዝሩ ይወሰዳል።\nStripe ደረሰኙን ወደ ኢሜይልዎ ይልካል። እኛ የራሳችንን ኢሜይሎች አንልክም።\nኮዶች እና አስታዋሾች በጽሑፍ መልዕክት ይላካሉ።",
+        "body": "ሁሉም ዋጋዎች VATን ጨምሮ በስዊድን kr ይታያሉ።\nበካርድ፣ በ Swish ወይም በ Klarna በ Stripe በኩል ይከፍላሉ።\nዋጋው በግዢ ጊዜ ከምርት ዝርዝሩ ይወሰዳል።\nStripe ደረሰኙን ወደ ኢሜይልዎ ይልካል። እኛ የራሳችንን ኢሜይሎች አንልክም።\nኮዶች እና አስታዋሾች በጽሑፍ መልዕክት ይላካሉ።"
+      },
+      "delivery": {
+        "title": "አገልግሎቱ እንዴት እንደሚሰጥ",
+        "body": "የመንዳት ትምህርቶችን በድረ-ገጹ ላይ ባለው የቀን መቁጠሪያ ይይዛሉ። ትምህርቱ በተስማማው ሰዓት ከአስተማሪዎ ጋር ይካሄዳል።\nዲጂታል ቲዎሪ ክፍያው ሲረጋገጥ ይከፈታል።\nእንደ Risk 1 እና Risk 2 ያሉ ኮርሶች በተመረጠ ጊዜ ወንበር ይሰጣሉ።"
+      },
+      "validity": {
+        "title": "ለምን ያህል ጊዜ እንደሚሰራ",
+        "body": "የትምህርት ክሬዲቶች እና ጥቅሎች ከግዢው ጀምሮ ለ12 ወራት ይሰራሉ። ያልተጠቀሙ ክሬዲቶች ያበቃሉ።\nዲጂታል ቲዎሪ የአንድ ጊዜ ግዢ ነው። የጊዜ ገደብ የለውም።"
+      },
+      "cancellation": {
+        "title": "ማንቀሳቀስ እና መሰረዝ",
+        "body": "የመንዳት ትምህርትን በየእኔ ቦታ ማስያዣዎች ስር መሰረዝ ይችላሉ። ከትምህርቱ ቢያንስ 24 ሰዓት በፊት ከሰረዙ ክሬዲቱ ወደ ቀሪዎ ይመለሳል። ከዚያ በኋላ የሚደረግ ስረዛ ሙሉ በሙሉ ይከፈላል: ትምህርቱ ከቀሪው ይቀነሳል፣ ነጠላ ትምህርትም አይመለስም።\nትምህርት ቤቱ ከሰረዘ ክሬዲቱን ሁልጊዜ ይመለስዎታል።"
+      },
+      "withdrawal": {
+        "title": "የመመለስ መብት",
+        "body": "በርቀት ሽያጭ ሕጉ መሠረት ለመመለስ 14 ቀናት አለዎት።\nጊዜው ኮንትራቱ ሲደረግ ይጀምራል።\nልዩ ሁኔታ: አገልግሎቱ በዚያ ጊዜ ውስጥ እንደሚጀምር በግልጽ ከተስማሙ፣ እና የመመለስ መብትዎን ሊያጡ እንደሚችሉ ካረጋገጡ፣ ያ ልዩ ሁኔታ ቀድሞ በተሰጠው ክፍል ላይ ይተገበራል።\nለመመለስ ከፈለጉ በእውቂያ ገጹ ያግኙን።"
+      },
+      "complaints": {
+        "title": "ቅሬታዎች",
+        "body": "መጀመሪያ በእውቂያ ገጹ ያግኙን።\nካልተስማማን ወደ ብሔራዊ የሸማች ክርክር ቦርድ (ARN)፣ arn.se መሄድ ይችላሉ።\nየ EU የመስመር ላይ ክርክር መድረክንም መጠቀም ይችላሉ: https://ec.europa.eu/consumers/odr"
+      },
+      "law": {
+        "title": "የሚተገበር ሕግ",
+        "body": "በኮንትራቱ ላይ የስዊድን ሕግ ይተገበራል።\nክርክር በስዊድን አጠቃላይ ፍርድ ቤት ይታያል፣ የግዴታ የሸማች ደንቦች ካልሉ በስተቀር።"
+      },
+      "summaryTitle": "አጭር ውሎች",
+      "summaryItems": [
+        {
+          "label": "ተፈጻሚነት",
+          "text": "ሁሉም ጥቅሎች ከግዢው ቀን ጀምሮ ለ12 ወራት ይሰራሉ።"
+        },
+        {
+          "label": "መሰረዝ",
+          "text": "ከትምህርቱ ቢያንስ 24 ሰዓት በፊት፣ ካልሆነ ሙሉ ዋጋ ይከፈላል።"
+        },
+        {
+          "label": "ዘግይቶ መድረስ",
+          "text": "ትምህርቱ በመደበኛው የማብቂያ ሰዓት ያበቃል።"
+        },
+        {
+          "label": "ጥቅሎች",
+          "text": "የግል ናቸው፣ ሊተላለፉ አይችሉም።"
+        },
+        {
+          "label": "የአደጋ ስልጠና",
+          "text": "በሰዓቱ ይድረሱ። ዘግይቶ መድረስ አዲስ ቦታ ማስያዣ ሊያስፈልግ ይችላል።"
+        },
+        {
+          "label": "ዲጂታል ቲዎሪ",
+          "text": "የግል ቁሳቁስ ሊጋራ ወይም ሊቀዳ አይችልም።"
+        },
+        {
+          "label": "ኃላፊነት",
+          "text": "ተማሪው የትራፊክ ደንቦችን እና የአስተማሪውን መመሪያ መከተል አለበት።"
+        },
+        {
+          "label": "ግላዊነት",
+          "text": "የግል መረጃ በ GDPR መሠረት ይያዛል።"
+        },
+        {
+          "label": "ገንዘብ መመለስ",
+          "text": "በሚተገበሩ የስዊድን ደንቦች መሠረት ይያዛል።"
+        }
+      ],
+      "packages": {
+        "title": "ጥቅሎች",
+        "body": "ጥቅሎች የግል ናቸው፣ ሊተላለፉ አይችሉም።"
+      },
+      "lateArrival": {
+        "title": "ዘግይቶ መድረስ",
+        "body": "ዘግይተው ከደረሱ ትምህርቱ በመደበኛው የማብቂያ ሰዓት ያበቃል።"
+      },
+      "riskArrival": {
+        "title": "የአደጋ ስልጠና",
+        "body": "ለአደጋ ስልጠና በሰዓቱ ይድረሱ። ዘግይቶ መድረስ አዲስ ቦታ ማስያዣ ሊያስፈልግ ይችላል።"
+      },
+      "digitalTheory": {
+        "title": "ዲጂታል ቲዎሪ",
+        "body": "ዲጂታል ቲዎሪ የግል ቁሳቁስ ነው፣ ሊጋራ ወይም ሊቀዳ አይችልም።"
+      },
+      "responsibility": {
+        "title": "የተማሪ ኃላፊነት",
+        "body": "ተማሪው የትራፊክ ደንቦችን እና የአስተማሪውን መመሪያ መከተል አለበት።"
+      },
+      "dataProtection": {
+        "title": "ግላዊነት",
+        "body": "የግል መረጃ በ GDPR መሠረት ይያዛል።"
+      },
+      "refunds": {
+        "title": "ገንዘብ መመለስ",
+        "body": "ገንዘብ መመለስ በሚተገበሩ የስዊድን ደንቦች መሠረት ይያዛል።"
+      }
+    },
+    "privacy": {
+      "metadata": "ለ Makina Trafikskola የግላዊነት መመሪያ።",
+      "eyebrow": "ሕጋዊ መረጃ",
+      "title": "የግላዊነት መመሪያ",
+      "accountAction": "መረጃዎን ያውርዱ ወይም ይሰርዙ",
+      "sectionOrder": [
+        "controller",
+        "collected",
+        "purpose",
+        "retention",
+        "recipients",
+        "rights",
+        "supervisory"
+      ],
+      "controller": {
+        "title": "ተቆጣጣሪ",
+        "body": "Makina Trafikskola AB ተቆጣጣሪ ነው። ሙሉ የኩባንያ እና የእውቂያ ዝርዝር በእውቂያ ገጹ ላይ ይገኛል።"
+      },
+      "collected": {
+        "title": "ምን እንደምንሰበስብ",
+        "body": "ስም፣ ኢሜይል እና የስልክ ቁጥር እናስተናግዳለን።\nቦታ ማስያዣዎችን፣ የክፍያ ታሪክን እና የመውሰጃ አድራሻን እናስተናግዳለን።\nየቲዎሪ ውጤቶችን እና በአስተማሪው የተጻፉ የትምህርት ማስታወሻዎችን እናስተናግዳለን።"
+      },
+      "purpose": {
+        "title": "ዓላማ እና ሕጋዊ መሠረት",
+        "body": "ኮንትራት: ትምህርቶችን ለመያዝ፣ የቲዎሪ መዳረሻ ለመስጠት እና ክፍያ ለመቀበል።\nሕጋዊ ግዴታ: የሂሳብ አያያዝ እና ደረሰኞች።\nተገቢ ጥቅም: የአስተማሪ ጊዜ ለማቀድ እና ስልጠናን ለማሻሻል።\nፈቃድ: ከአስፈላጊዎቹ በላይ አማራጭ መልዕክቶች እና ኩኪዎች፣ በኋላ ቢጨመሩ።"
+      },
+      "retention": {
+        "title": "መረጃን ለምን ያህል ጊዜ እንደምንይዝ",
+        "body": "የመውሰጃ አድራሻዎች የተጠናቀቀ ትምህርት ከ90 ቀናት በኋላ ይሰረዛሉ።\nየሂሳብ መረጃ በሂሳብ አያያዝ ሕጉ መሠረት ይያዛል።\nመለያው እና የትምህርት ካርዱ ደንበኛ እስከሆኑ ድረስ ይያዛሉ፣ ከዚያም ሕጉ እስከሚፈልግ ድረስ።"
+      },
+      "recipients": {
+        "title": "ተቀባዮች እና ንዑስ አቀናባሪዎች",
+        "body": "Stripe ክፍያዎችን ያስተናግዳል።\nKlarna በክፍያ ጊዜ Klarna ሲመርጡ ክፍያን ያስተናግዳል።\n46elks SMS ይልካል።\nGoogle በ Google መግባትን ያስተናግዳል፣ ካርታዎችን እና አድራሻዎችንም ያሳያል።\nSentry የስህተት ሪፖርቶችን ይቀበላል።\nRailway አገልግሎቱን ያስተናግዳል።\nCloudflare R2 ፋይሎችን እና ምትኬዎችን ያከማቻል።\nከእነዚህ መካከል አንዳንዶቹ መረጃን ከ EU/EEA ውጭ ሊያስተላልፉ ይችላሉ። ከዚያ የጸደቁ ጥበቃዎች ይጠቀማሉ፣ ለምሳሌ መደበኛ የውል አንቀጾች።"
+      },
+      "rights": {
+        "title": "መብቶችዎ",
+        "body": "መዳረሻ፣ ማረም፣ ማጥፋት፣ የመረጃ ተንቀሳቃሽነት እና ተቃውሞ መጠየቅ ይችላሉ።\nየገቡ ተማሪዎች በየእኔ ገጾች ስር መረጃቸውን መላክ እና መለያውን መሰረዝ ይችላሉ።\nመሰረዝ የግል መረጃን ስም-አልባ ያደርጋል። አንዳንድ መዝገቦች ለሂሳብ አያያዝ መያዝ አለባቸው።"
+      },
+      "supervisory": {
+        "title": "የቁጥጥር ባለሥልጣን",
+        "body": "ለስዊድን የግላዊነት ጥበቃ ባለሥልጣን (IMY)፣ imy.se ቅሬታ ማቅረብ ይችላሉ።"
+      }
+    },
+    "cookies": {
+      "metadata": "ለ Makina Trafikskola የኩኪ መመሪያ።",
+      "eyebrow": "ሕጋዊ መረጃ",
+      "title": "የኩኪ መመሪያ",
+      "sectionOrder": [
+        "necessary",
+        "services",
+        "analytics",
+        "change"
+      ],
+      "necessary": {
+        "title": "የምንጠቀምባቸው ኩኪዎች",
+        "body": "ድረ-ገጹ እንዲሠራ የሚያስፈልጉ ኩኪዎችን ብቻ እናስቀምጣለን። ከታች ያለው ሠንጠረዥ ስም፣ ዓላማ እና ለምን ያህል ጊዜ እንደሚቀመጡ ያሳያል።"
+      },
+      "analytics": {
+        "title": "ትንታኔ እና ግብይት",
+        "body": "በአሁኑ ጊዜ የትንታኔ ወይም የግብይት ኩኪዎች አናስቀምጥም።"
+      },
+      "services": {
+        "title": "ከሌሎች አቅራቢዎች አገልግሎቶች",
+        "body": "Google Maps ካርታ ለማሳየት ከመረጡ በኋላ ብቻ ይጫናል። የመውሰጃ አድራሻ ሲፈልጉ Google Places ይጠቀማል። Stripe በክፍያ ጊዜ ይጫናል፣ በ Google መግባትም ያን አገልግሎት ሲመርጡ ብቻ። Sentry የግል መረጃ ሳይልክ ለችግር ፍለጋ ይጠቀማል። ድረ-ገጹ ለከመስመር ውጭ ሁኔታ የአካባቢ መሸጎጫም ይጠቀማል።"
+      },
+      "change": {
+        "title": "ምርጫዎን ይቀይሩ ወይም ያንሱ",
+        "body": "በዚህ ገጽ ታችኛው ክፍል ባለው አዝራር የኩኪ ማሳሰቢያውን እንደገና ማሳየት ይችላሉ። አስፈላጊ ኩኪዎች ለመግባት፣ ለቋንቋ እና ምርጫዎን ለማስቀመጥ ያስፈልጋሉ።"
+      },
+      "settings": {
+        "title": "የኩኪ ምርጫዎ",
+        "body": "መረጃውን ለማንበብ ወይም ምርጫዎን እንደገና ለማረጋገጥ ከፈለጉ ማሳሰቢያውን እንደገና ያሳዩ።",
+        "action": "የኩኪ ቅንብሮችን አሳይ"
+      },
+      "table": {
+        "caption": "ጥቅም ላይ ያሉ ኩኪዎች",
+        "name": "ስም",
+        "purpose": "ዓላማ",
+        "duration": "የሚቆይበት ጊዜ",
+        "rows": {
+          "session": {
+            "name": "authjs.session-token",
+            "purpose": "እንደገቡ ይይዝዎታል። በምርት ላይ ስሙ __Secure-authjs.session-token ሊሆን ይችላል።",
+            "duration": "ክፍለ ጊዜ፣ ቢበዛ 30 ቀናት"
+          },
+          "locale": {
+            "name": "NEXT_LOCALE",
+            "purpose": "የመረጡትን ቋንቋ ያስታውሳል።",
+            "duration": "1 ዓመት"
+          },
+          "consent": {
+            "name": "makina-cookie-consent",
+            "purpose": "በኩኪ ማሳሰቢያው ውስጥ ያለዎትን ምርጫ ያከማቻል።",
+            "duration": "1 ዓመት"
+          }
+        }
+      }
+    }
+  },
+  "admin": {
+    "nav": {
+      "label": "አስተዳደር",
+      "overview": "አጠቃላይ እይታ",
+      "places": "ቦታዎች",
+      "calendar": "የቀን መቁጠሪያ",
+      "courses": "ኮርሶች",
+      "students": "ተማሪዎች",
+      "teachers": "አስተማሪዎች",
+      "reviews": "ግምገማዎች",
+      "products": "ምርቶች",
+      "areas": "አካባቢዎች"
+    },
+    "courses": {
+      "title": "ኮርሶች",
+      "description": "የ Risk 1 እና Risk 2 ጊዜያትን ይፍጠሩ፣ ያርትዑ እና ይሰርዙ።",
+      "createTitle": "አዲስ የኮርስ ጊዜ",
+      "course": "ኮርስ እና ምርት",
+      "language": "የማስተማሪያ ቋንቋ",
+      "startsAt": "መጀመሪያ",
+      "endsAt": "መጨረሻ",
+      "venueName": "የቦታ ስም",
+      "venueAddress": "አድራሻ",
+      "capacity": "ወንበሮች",
+      "create": "ጊዜ ፍጠር",
+      "created": "የኮርስ ጊዜ ተፈጥሯል",
+      "save": "አስቀምጥ",
+      "saved": "ተቀምጧል",
+      "saving": "እየተቀመጠ ነው…",
+      "cancel": "ጊዜውን ሰርዝ",
+      "cancelled": "ተሰርዟል",
+      "cancelConfirmTitle": "ስረዛውን አረጋግጥ",
+      "cancelConfirm": "ይህ ጊዜ ከ{capacity} ወንበሮች {booked} ተይዟል። ባዶ ጊዜ ወዲያውኑ ሊሰረዝ ይችላል።",
+      "cancelBlocked": "ይህ ጊዜ ቦታ ማስያዣዎች አሉት። ከመሰረዝዎ በፊት ተሳታፊዎቹን ያስተናግዱ።",
+      "keep": "ጊዜውን አቆይ",
+      "occasion": "የኮርስ ጊዜ {count}",
+      "booked": "ከ{capacity} {booked} ተይዟል",
+      "error": "ሊቀመጥ አልቻለም። እንደገና ይሞክሩ።",
+      "recurrenceTitle": "Risk 1 በመስመር ላይ – ተደጋጋሚ",
+      "recurrenceHelp": "ጊዜያት በየወሩ በ15ኛው እና በ28ኛው ይፈጠራሉ። ነጠላ ቀናትን ከታች ያርትዑ ወይም ይሰርዙ።",
+      "startTime": "የመጀመሪያ ሰዓት",
+      "duration": "ርዝመት (ደቂቃዎች)",
+      "capacityDefault": "ወንበሮች",
+      "venueNameDefault": "የቦታ ስም",
+      "venueAddressDefault": "አድራሻ",
+      "saveRecurrence": "ነባሪዎችን አስቀምጥ",
+      "days": "የወሩ ቀናት"
+    },
+    "editor": {
+      "save": "አስቀምጥ",
+      "saved": "ተቀምጧል",
+      "phone": "የሞባይል ቁጥር",
+      "languages": "ቋንቋዎች",
+      "gearbox": "ማርሽ",
+      "manual": "ማንዋል",
+      "automatic": "አውቶማቲክ",
+      "areas": "አካባቢዎች",
+      "years": "የልምድ ዓመታት",
+      "hours": "የስራ ሰዓታት",
+      "addHour": "ሰዓታት ጨምር",
+      "remove": "አስወግድ",
+      "daysOff": "የእረፍት ቀናት",
+      "photo": "ፎቶ",
+      "calendarEmail": "Google የቀን መቁጠሪያ",
+      "testCalendar": "ሙከራ",
+      "payRate": "በትምህርት ክፍያ (kr)",
+      "price": "ዋጋ (kr)",
+      "active": "ንቁ",
+      "bestSeller": "በጣም የሚሸጥ",
+      "shortDesc": "አጭር መግለጫ",
+      "status": "ሁኔታ",
+      "office": "የቢሮ አድራሻ",
+      "boundary": "GeoJSON",
+      "comingSoon": "በቅርብ ይመጣል",
+      "productsTitle": "ምርቶች",
+      "areasTitle": "አካባቢዎች",
+      "editTeacher": "አስተማሪ አርትዕ"
+    },
+    "dashboard": {
+      "eyebrow": "አስተዳደር",
+      "title": "አጠቃላይ እይታ",
+      "description": "የትምህርት ቤቱ ቁጥሮች አሁን።",
+      "bookingsToday": "የዛሬ ቦታ ማስያዣዎች",
+      "bookingsMonth": "የዚህ ወር ቦታ ማስያዣዎች",
+      "revenueToday": "የዛሬ ገቢ",
+      "revenueTotal": "ጠቅላላ ገቢ",
+      "teachers": "አስተማሪዎች",
+      "accounts": "የተማሪ መለያዎች",
+      "rating": "አማካይ ደረጃ",
+      "ratingEmpty": "የታተመ ግምገማ የለም",
+      "ratingDetail": "{count} የታተሙ ግምገማዎች",
+      "lessonsToday": "የዛሬ ትምህርቶች",
+      "lessonsTodayEmpty": "ዛሬ ትምህርት የለም።",
+      "completedTitle": "በቅርብ የተጠናቀቁ ትምህርቶች",
+      "completedEmpty": "እስካሁን ምንም ትምህርት እንደተነዳ አልተመዘገበም።",
+      "lessonLine": "{time} · {instructor} · {student}",
+      "placesTitle": "ቦታዎች",
+      "placesDescription": "በእያንዳንዱ ቦታ አስተማሪዎች እና ቦታ ማስያዣዎች።"
+    },
+    "places": {
+      "eyebrow": "ቦታዎች",
+      "title": "የምንነዳበት",
+      "description": "Farsta እና Upplands Väsby። ለአስተማሪዎች፣ ቦታ ማስያዣዎች እና ገንዘብ ቦታ ይክፈቱ።",
+      "teachers": "{count} አስተማሪዎች",
+      "bookings": "{count} ቦታ ማስያዣዎች",
+      "viewDetails": "ዝርዝር ይመልከቱ",
+      "completed": "የተጠናቀቁ ትምህርቶች",
+      "confirmed": "የሚመጡ ቦታ ማስያዣዎች",
+      "thisMonth": "የዚህ ወር ቦታ ማስያዣዎች",
+      "pay": "የተገመተ የአስተማሪ ክፍያ",
+      "payEmpty": "ለተጠናቀቁት ትምህርቶች የአስተማሪ ክፍያ አልተቀመጠም።",
+      "lessonValue": "የተነዱ ትምህርቶች ዋጋ",
+      "lessonValueDetail": "የአንድ የመንዳት ትምህርት ዋጋ በዚህ ቦታ በተጠናቀቁ ትምህርቶች ተባዝቶ።",
+      "recent": "የቅርብ ቦታ ማስያዣዎች",
+      "emptyBookings": "በዚህ ቦታ እስካሁን ቦታ ማስያዣ የለም።",
+      "teachersTitle": "በዚህ ቦታ ያሉ አስተማሪዎች",
+      "noTeachers": "እዚህ ምንም ንቁ አስተማሪ አልተያያዘም።",
+      "pickupNote": "ቦታ ያልተመረጠባቸው መውሰጃዎች እዚህ አይካተቱም።"
+    },
+    "directory": {
+      "eyebrow": "አስተማሪዎች",
+      "title": "አስተማሪዎች",
+      "description": "ማን የት እንደሚነዳ ይመልከቱ። ሰዓት፣ ክፍያ እና ስልክ ለመቀየር አስተማሪ ይክፈቱ።",
+      "add": "አስተማሪ ጨምር",
+      "edit": "ክፈት",
+      "active": "ንቁ",
+      "inactive": "ንቁ ያልሆነ",
+      "empty": "እስካሁን አስተማሪ የለም።"
+    },
+    "reviews": {
+      "title": "ግምገማዎች",
+      "description": "ያልታተሙ ግምገማዎች። ያትሙ ወይም ይከልክሉ።",
+      "empty": "የሚጠብቅ ግምገማ የለም።",
+      "googleTitle": "የ Google ግምገማዎች",
+      "googleBody": "ለ Makina Trafikskola እስካሁን የተረጋገጠ የ Google ደረጃ የለም።",
+      "googleCta": "በ Google ይክፈቱ",
+      "googleScore": "{rating} ከ 5",
+      "googleCount": "{count} ግምገማዎች",
+      "student": "ተማሪ",
+      "instructor": "አስተማሪ",
+      "rating": "ደረጃ",
+      "comment": "አስተያየት",
+      "date": "ቀን",
+      "noComment": "አስተያየት የለም።",
+      "publish": "አትም",
+      "reject": "ክልክል",
+      "saving": "እየተቀመጠ ነው…"
+    },
+    "calendar": {
+      "eyebrow": "አስተዳደር",
+      "title": "የሳምንት የቀን መቁጠሪያ",
+      "description": "ለእያንዳንዱ ንቁ አስተማሪ ቦታ ማስያዣዎችን ይመልከቱ እና ቦታ ማስያዣ ያስተዳድሩ።",
+      "previous": "ያለፈው ሳምንት",
+      "next": "ቀጣይ ሳምንት",
+      "instructor": "አስተማሪ",
+      "allTeachers": "ሁሉም አስተማሪዎች",
+      "lessonCount": "በዚህ ሳምንት {count} ቦታ ማስያዣዎች",
+      "completed": "ተጠናቅቋል",
+      "empty": "ንቁ አስተማሪዎች የሉም።",
+      "controls": {
+        "manage": "አስተዳድር",
+        "close": "ዝጋ",
+        "action": "እርምጃ",
+        "move": "ሰዓት አንቀሳቅስ",
+        "reassign": "አስተማሪ ቀይር",
+        "cancel": "ሰርዝ",
+        "newTime": "አዲስ የአካባቢ ሰዓት",
+        "newInstructor": "አዲስ አስተማሪ",
+        "reason": "የተጻፈ ምክንያት",
+        "confirmCancel": "ትምህርቱ እንደሚሰረዝ፣ ክሬዲቱ እንደሚመለስ እና ተማሪው እንደሚነገረው እረዳለሁ።",
+        "save": "ለውጡን አስቀምጥ",
+        "saving": "እየተቀመጠ ነው…"
+      }
+    },
+    "students": {
+      "eyebrow": "አስተዳደር",
+      "title": "ተማሪዎች",
+      "description": "ተማሪ ያግኙ፣ ቀሪ እና ክፍያዎችን ይገምግሙ፣ ወይም ቀደም ባለው ድረ-ገጽ ላይ ያላቸውን ይመዝግቡ።",
+      "searchLabel": "ስም፣ ኢሜይል ወይም ሞባይል",
+      "search": "ፈልግ",
+      "results": "{count} ውጤቶች",
+      "noEmail": "ኢሜይል የለም",
+      "empty": "ከፍለጋው ጋር የሚዛመድ ተማሪ የለም።",
+      "selectStudent": "ዝርዝር ለማየት ተማሪ ይምረጡ።",
+      "balance": "የተሰላ ንቁ ቀሪ",
+      "payments": "ክፍያዎች",
+      "paymentLine": "{provider} · {method} · {status} · የተመለሰ {refunded}",
+      "unknownMethod": "ያልታወቀ ዘዴ",
+      "orderStatus": {
+        "PENDING": "በመጠባበቅ ላይ",
+        "PAID": "ተከፍሏል",
+        "FAILED": "አልተሳካም",
+        "REFUNDED": "ተመልሷል",
+        "PARTIALLY_REFUNDED": "በከፊል ተመልሷል"
+      },
+      "paymentStatus": {
+        "PENDING": "በመጠባበቅ ላይ",
+        "SUCCEEDED": "ተሳክቷል",
+        "FAILED": "አልተሳካም",
+        "REFUNDED": "ተመልሷል"
+      },
+      "provider": {
+        "STRIPE": "Stripe",
+        "MANUAL": "በእጅ"
+      },
+      "method": {
+        "card": "ካርድ",
+        "swish": "Swish",
+        "klarna": "Klarna"
+      },
+      "noPayment": "ምንም ክፍያ አልተመዘገበም",
+      "noPayments": "ክፍያ የለም።",
+      "ledger": "የክሬዲት ግብይቶች",
+      "noLedger": "የክሬዲት ግብይት የለም።",
+      "expires": "እስከ {date} ድረስ ይሰራል",
+      "adjustment": {
+        "title": "ከቀድሞው ድረ-ገጽ የመጡ ትምህርቶች",
+        "help": "ይህ ተማሪ አስቀድሞ የከፈለባቸውን ትምህርቶች ይጨምሩ። ከዛሬ ጀምሮ ለ12 ወራት ይቆያሉ። መቀነስ ትምህርቶችን ያስወግዳል። ያላቸውን ይጻፉ፣ ለምሳሌ የድሮው ጥቅል ስም። ይህን ማድረግ የሚችለው ባለቤቱ ብቻ ነው።",
+        "delta": "ትምህርቶች",
+        "reason": "የግዴታ የተጻፈ ምክንያት",
+        "submit": "ትምህርቶችን አስቀምጥ",
+        "saving": "እየተቀመጠ ነው…"
+      },
+      "theory": {
+        "title": "ከቀድሞው ድረ-ገጽ የመጣ ቲዎሪ",
+        "help": "አስቀድመው የከፈሉበት ቲዎሪ የጊዜ ገደብ የለውም። አስተማሪዎች ቀሪ ወይም ቲዎሪ መቀየር አይችሉም።",
+        "active": "ቲዎሪ ንቁ ነው",
+        "inactive": "ቲዎሪ የለም",
+        "grant": "ቲዎሪ ስጥ",
+        "revoke": "ቲዎሪ አስወግድ",
+        "reason": "የግዴታ የተጻፈ ምክንያት",
+        "saving": "እየተቀመጠ ነው…"
+      },
+      "editTitle": "ተማሪ አርትዕ",
+      "edit": "አርትዕ",
+      "close": "ዝጋ",
+      "firstName": "የመጀመሪያ ስም",
+      "lastName": "የአባት ስም",
+      "email": "ኢሜይል",
+      "phone": "ስልክ",
+      "saved": "ተማሪው ተዘምኗል።",
+      "saving": "እየተቀመጠ ነው...",
+      "save": "አስቀምጥ",
+      "noPhone": "ስልክ የለም"
+    },
+    "instructors": {
+      "eyebrow": "አስተዳደር",
+      "title": "አስተማሪ ጨምር",
+      "description": "መለያ፣ ቋንቋዎች፣ ማርሾች፣ ቦታዎች እና ተደጋጋሚ የአካባቢ የስራ ሰዓታት ይፍጠሩ።",
+      "account": "መለያ",
+      "firstName": "የመጀመሪያ ስም",
+      "lastName": "የአባት ስም",
+      "phone": "የሞባይል ቁጥር",
+      "email": "ኢሜይል",
+      "initialPassword": "ጊዜያዊ የይለፍ ቃል",
+      "slug": "የመገለጫ አድራሻ",
+      "yearsExperience": "የልምድ ዓመታት",
+      "languages": "ቋንቋዎች",
+      "transmissions": "ማርሾች",
+      "transmission": {
+        "MANUAL": "ማንዋል",
+        "AUTOMATIC": "አውቶማቲክ"
+      },
+      "locations": "ቦታዎች",
+      "noLocations": "ንቁ ቦታዎች የሉም። አስተማሪ ሊፈጠር አይችልም።",
+      "hours": "የስራ ሰዓታት",
+      "hoursDescription": "ሰዓቶች በ Europe/Stockholm የአካባቢ የግድግዳ ሰዓት ናቸው።",
+      "from": "ከ",
+      "to": "እስከ",
+      "day": {
+        "0": "እሑድ",
+        "1": "ሰኞ",
+        "2": "ማክሰኞ",
+        "3": "ረቡዕ",
+        "4": "ሐሙስ",
+        "5": "አርብ",
+        "6": "ቅዳሜ"
+      },
+      "photo": "የመገለጫ ፎቶ",
+      "photoHelp": "አማራጭ JPEG፣ PNG ወይም WebP፣ ከፍተኛው 5 MB።",
+      "submit": "አስተማሪ ፍጠር",
+      "saving": "እየተፈጠረ ነው…",
+      "created": "አስተማሪው ተፈጥሯል።"
+    },
+    "instructorStatus": {
+      "title": "አስተማሪዎችን አስተዳድር",
+      "description": "አስተማሪዎችን ያንቁ ወይም ያቦዝኑ። ወደፊት የተረጋገጡ ቦታ ማስያዣዎች መጀመሪያ መዛወር ወይም መሰረዝ አለባቸው።",
+      "active": "ንቁ",
+      "inactive": "ንቁ ያልሆነ",
+      "activate": "አንቃ",
+      "deactivate": "አቦዝን",
+      "saving": "እየተቀመጠ ነው…"
+    },
+    "instructorPhone": {
+      "label": "የሞባይል ቁጥር",
+      "missing": "ጠፍቷል",
+      "save": "ቁጥር አስቀምጥ",
+      "saving": "እየተቀመጠ ነው…"
+    }
+  },
+  "errors": {
+    "pageTitle": "ቴክኒካዊ ችግር ገጥሞናል",
+    "retry": "እንደገና ይሞክሩ",
+    "NO_CREDITS": "የጥቅል ክሬዲት የለዎትም። በምትኩ የሚከፈልበት ነጠላ ትምህርት ይምረጡ።",
+    "CHECKOUT_CONSENT_REQUIRED": "ለመቀጠል የግዢ ውሎችን እና የመመለስ መረጃውን ይቀበሉ።",
+    "INVALID_PICKUP_COORDINATES": "በስዊድን ትክክለኛ የመውሰጃ አድራሻ ይምረጡ።",
+    "INVALID_INPUT": "ዝርዝሩን ያረጋግጡ እና እንደገና ይሞክሩ።",
+    "INVALID_CREDENTIALS": "ኢሜይሉ ወይም የይለፍ ቃሉ ትክክል አይደለም።",
+    "ACCOUNT_EXISTS": "በዚህ ኢሜይል ወይም የሞባይል ቁጥር መለያ አስቀድሞ አለ።",
+    "NO_ACCOUNT": "ይህን የሞባይል ቁጥር የሚጠቀም መለያ የለም።",
+    "GOOGLE_ALREADY_LINKED": "ይህ የሞባይል ቁጥር አስቀድሞ ከሌላ የ Google መለያ ጋር ተያይዟል።",
+    "INVALID_OTP": "ኮዱ ትክክል አይደለም ወይም አብቅቷል። አዲስ ኮድ ይጠይቁ።",
+    "INVALID_PHONE": "ትክክለኛ የሞባይል ቁጥር ያስገቡ፣ ለምሳሌ 0701234567 ወይም +46701234567።",
+    "PHONE_IN_USE": "ያ የሞባይል ቁጥር አስቀድሞ ጥቅም ላይ ነው። ሌላ ቁጥር ያስገቡ።",
+    "OUTSIDE_CANCELLATION_WINDOW": "ትምህርቱ ከመጀመሩ ከ24 ሰዓት በታች ሊንቀሳቀስ አይችልም። ትምህርት ቤቱን ያግኙ።",
+    "LESSON_NOT_STARTED": "ትምህርቱ እስካሁን አልተጀመረም።",
+    "SMS_PROVIDER_NOT_CONFIGURED": "በጽሑፍ መልዕክት መግባት እስካሁን አልተዋቀረም። ትምህርት ቤቱን ያግኙ ወይም ኢሜይል ይጠቀሙ።",
+    "SMS_DELIVERY_FAILED": "የጽሑፍ መልዕክቱ ሊላክ አልቻለም። ቁጥሩን ያረጋግጡ እና እንደገና ይሞክሩ።",
+    "RATE_LIMITED": "በኋላ እንደገና ይሞክሩ።",
+    "SELECT_LOCATION_OR_PICKUP": "ቦታ ይምረጡ ወይም የመውሰጃ አድራሻ ያስገቡ።",
+    "PICKUP_ADDRESS_CONFIRMATION_REQUIRED": "ለመቀጠል ከዝርዝሩ አድራሻ ይምረጡ።",
+    "GEARBOX_REQUIRED": "ለመቀጠል ማንዋል ወይም አውቶማቲክ ማርሽ ይምረጡ።",
+    "TEACHER_REQUIRED": "ለመቀጠል አስተማሪ ይምረጡ።",
+    "SLOT_REQUIRED": "ያለ ሰዓት ይምረጡ።",
+    "SLOT_TAKEN": "ይህ ሰዓት አሁን ተይዟል። ሌላ ያለ ሰዓት ይምረጡ።",
+    "PRODUCT_INACTIVE": "ምርቱ እስካሁን ለመግዛት አይገኝም።",
+    "HOLD_EXPIRED": "ቦታ ማስያዣዎ አብቅቷል። አዲስ ያለ ሰዓት ይምረጡ።",
+    "PAYMENT_PROVIDER_NOT_CONFIGURED": "ክፍያ አሁን አይገኝም። ትምህርት ቤቱን ያግኙ ወይም በኋላ እንደገና ይሞክሩ።",
+    "IDEMPOTENCY_KEY_REUSED": "ቦታ ማስያዣው እንደገና ሊላክ አልቻለም። ገጹን ያድሱ እና እንደገና ይሞክሩ።",
+    "ACCOUNT_NOT_FOUND": "ይህ መለያ ከእንግዲህ የለም። ይውጡ እና እንደገና ይሞክሩ።",
+    "UNAUTHENTICATED": "ለመቀጠል ይግቡ።",
+    "FORBIDDEN": "ወደዚህ መዳረሻ የለዎትም።",
+    "STUDENT_NOT_FOUND": "ተማሪው አልተገኘም።",
+    "BOOKING_NOT_FOUND": "ቦታ ማስያዣው አልተገኘም።",
+    "BOOKING_NOT_ACTIVE": "ቦታ ማስያዣው ከእንግዲህ ሊቀየር አይችልም።",
+    "TEACHER_NOT_FOUND": "አስተማሪው አልተገኘም ወይም ንቁ አይደለም።",
+    "TEACHER_HAS_FUTURE_BOOKINGS": "ከማቦዘንዎ በፊት የአስተማሪውን ወደፊት ቦታ ማስያዣዎች ያዛውሩ ወይም ይሰርዙ።",
+    "LOCATION_NOT_FOUND": "የተመረጠ ቦታ አልተገኘም ወይም ንቁ አይደለም።",
+    "LOCATION_NOT_ASSIGNED": "የስራ ሰዓቶቹ ያልተመረጠ ቦታ ይጠቀማሉ።",
+    "SLUG_EXISTS": "የመገለጫ አድራሻው አስቀድሞ ጥቅም ላይ ነው።",
+    "ACCOUNT_OR_SLUG_EXISTS": "ኢሜይሉ ወይም የመገለጫ አድራሻው አስቀድሞ ጥቅም ላይ ነው።",
+    "ACCOUNT_HAS_ACTIVE_BOOKINGS": "መለያውን ከመሰረዝዎ በፊት የሚመጡ ትምህርቶችን፣ ኮርሶችን እና ንቁ ክፍያዎችን ያጠናቅቁ ወይም ይሰርዙ።",
+    "COURSE_OCCASION_NOT_FOUND": "ይህ የኮርስ ጊዜ ከእንግዲህ አይገኝም።",
+    "COURSE_OCCASION_HAS_BOOKINGS": "ይህ የኮርስ ጊዜ ቦታ ማስያዣዎች አሉት። ከመሰረዝዎ በፊት ተሳታፊዎቹን ያስተናግዱ።",
+    "COURSE_FULL": "ይህ ኮርስ ሙሉ በሙሉ ተይዟል።",
+    "COURSE_ALREADY_BOOKED": "በዚህ ኮርስ ላይ አስቀድመው የተረጋገጠ ወንበር አለዎት።",
+    "PAYMENT_PROVIDER_ERROR": "ክፍያ ሊጀመር አልቻለም። እንደገና ይሞክሩ።",
+    "PRODUCT_TRANSLATION_MISSING": "ኮርሱ የሚፈለገውን የምርት መረጃ ይጎድለዋል።",
+    "THEORY_QUESTION_NOT_FOUND": "ይህ ጥያቄ ከእንግዲህ አይገኝም።",
+    "THEORY_ACCESS_REQUIRED": "ለዚህ ጥያቄ ንቁ የቲዎሪ መዳረሻ ያስፈልጋል።",
+    "THEORY_EXAM_NOT_FOUND": "ፈተናው አልተገኘም።",
+    "THEORY_EXAM_FINISHED": "ፈተናው አስቀድሞ ተጠናቋል።",
+    "THEORY_EXAM_EXPIRED": "የፈተና ጊዜው አብቅቷል።",
+    "THEORY_EXAM_COMPLETE": "ሁሉም የፈተና ጥያቄዎች አስቀድመው ተመልሰዋል።",
+    "THEORY_EXAM_UNAVAILABLE": "በቂ ያሉ ጥያቄዎች የሉም።",
+    "BOOKING_NOT_COMPLETED": "የተጠናቀቀ ትምህርት መገምገም ይችላሉ።",
+    "REVIEW_EXISTS": "ይህን ትምህርት አስቀድመው ገምግመዋል።",
+    "UNKNOWN": "የሆነ ችግር ተፈጥሯል። እንደገና ይሞክሩ።",
+    "REVIEW_NOT_FOUND": "ያ ግምገማ የለም።",
+    "notFoundTitle": "ይህን ገጽ ማግኘት አንችልም",
+    "notFoundDescription": "አድራሻው ትክክል አይደለም። ወደ መነሻ ገጽ፣ የመንዳት ትምህርቶች፣ አስተማሪዎች ይሂዱ ወይም ሰዓት ይያዙ።",
+    "forbiddenTitle": "መዳረሻ የለዎትም",
+    "forbiddenDescription": "ይህ ገጽ ለሌላ ሚና ነው። ወደ መነሻ ገጽ ወይም ወደ የራስዎ ገጾች ይሂዱ።",
+    "forbiddenDashboard": "ወደ ገጾቼ",
+    "OUTSIDE_PICKUP_AREA": "ያ አድራሻ ከመውሰጃ አካባቢው ውጭ ነው። በአካባቢው ውስጥ አድራሻ ይምረጡ።",
+    "AREA_UNAVAILABLE": "ያ አካባቢ እስካሁን ለቦታ ማስያዣ ክፍት አይደለም። Farsta ወይም Upplands Väsby ይምረጡ።",
+    "OUTSIDE_BOOKING_HORIZON": "ቢበዛ አራት ሳምንታት ወደፊት መያዝ ይችላሉ። ቀደም ያለ ሰዓት ይምረጡ።",
+    "INTRO_OFFER_USED": "የመግቢያ ዋጋው ለመጀመሪያ ትምህርትዎ ብቻ ነው። መደበኛውን ትምህርት ይምረጡ።",
+    "EMAIL_TAKEN": "ያ ኢሜይል አስቀድሞ ጥቅም ላይ ነው። ሌላ ይምረጡ።",
+    "LOST_PHONE_NOT_ALLOWED": "የድሮው ቁጥር ሳይኖር ቁጥር ከመቀየርዎ በፊት በይለፍ ቃልዎ ያረጋግጡ ወይም እንደገና ይግቡ።",
+    "TURNSTILE_FAILED": "የደህንነት ማረጋገጫ አልተሳካም። ገጹን ያድሱ እና እንደገና ይሞክሩ።"
+  },
+  "contact": {
+    "metadata": "በ Stockholm ለ Makina Trafikskola የእውቂያ ዝርዝር።",
+    "eyebrow": "ያግኙን",
+    "title": "እውቂያ",
+    "description": "ለ Makina Trafikskola ይደውሉ፣ ኢሜይል ይላኩ ወይም ይጎብኙ። እዚህ የስራ ሰዓታችንን፣ ቦታዎቻችንን እና የማስተማሪያ ቋንቋዎቻችንን ያገኛሉ።",
+    "orgnr": "የድርጅት ቁጥር",
+    "visitingAddress": "የጉብኝት አድራሻ",
+    "postalAddress": "የፖስታ አድራሻ",
+    "phone": "ስልክ",
+    "email": "ኢሜይል",
+    "openingHours": "የስራ ሰዓት",
+    "openingHoursValue": "ሰኞ–አርብ 08.00–21.00፣ ቅዳሜ–እሑድ 10.00–18.00 (Europe/Stockholm)።",
+    "locationsTitle": "ያግኙን",
+    "locationsDescription": "በ Upplands Väsby Centralvägen 5 ላይ ያገኙናል። አቅጣጫዎችን በ Google Maps ይክፈቱ።",
+    "directions": "አቅጣጫ",
+    "languagesTitle": "የትኛው ቋንቋ ይፈልጋሉ?",
+    "languagesBody": "ትምህርቶች በ{languages}።",
+    "reviewsTitle": "የተማሪ ግምገማዎች",
+    "reviewsSummary": "{count} የታተሙ ግምገማዎች · አማካይ {average}/5",
+    "staffTitle": "ቡድናችን",
+    "staffDescription": "በ Makina Trafikskola ያለውን ቡድን ያግኙ። የተወሰነ አስተማሪ ለመያዝ ከፈለጉ ትምህርት ቤቱን ያግኙ።",
+    "contactViaSchool": "በትምህርት ቤቱ በኩል ያግኙ",
+    "callSchool": "ለትምህርት ቤቱ ይደውሉ",
+    "sendSms": "የጽሑፍ መልዕክት ላክ",
+    "emailSchool": "ለትምህርት ቤቱ ኢሜይል ላክ",
+    "staffRoles": {
+      "trafikskolechef": "የመንጃ ትምህርት ቤት አስኪያጅ",
+      "utbildningsledare": "የስልጠና ኃላፊ",
+      "trafiklarare": "የመንዳት አስተማሪ"
+    },
+    "day": {
+      "0": "እሑድ",
+      "1": "ሰኞ",
+      "2": "ማክሰኞ",
+      "3": "ረቡዕ",
+      "4": "ሐሙስ",
+      "5": "አርብ",
+      "6": "ቅዳሜ"
+    },
+    "speaks": "በ{languages} ያስተምራል",
+    "emailUs": "ኢሜይል ይላኩልን",
+    "replyLine": "በአንድ የስራ ቀን ውስጥ እንመልሳለን።"
+  }
+}

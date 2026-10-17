@@ -54,6 +54,22 @@ export default async function TeoriKategoriPage(
     const value = presentQuestion(question, params.locale);
     return value ? [value] : [];
   });
+  const answeredIds =
+    session?.user?.role === "STUDENT"
+      ? new Set(
+          (
+            await db.theoryAttempt.findMany({
+              where: {
+                studentId: session.user.id,
+                questionId: { in: presented.map((question) => question.id) },
+              },
+              select: { questionId: true },
+            })
+          ).map((attempt) => attempt.questionId),
+        )
+      : new Set<string>();
+  const firstOpen = presented.findIndex((question) => !answeredIds.has(question.id));
+  const startIndex = firstOpen < 0 ? 0 : firstOpen;
   const title =
     presented[0]?.category.name ??
     category.translations.find((item) => item.locale === params.locale)?.name ??
@@ -68,6 +84,7 @@ export default async function TeoriKategoriPage(
           <StudyQuiz
             locale={params.locale}
             questions={presented}
+            startIndex={startIndex}
             authenticated={session?.user?.role === "STUDENT"}
             copy={{
               questionNumber: t.raw("questionNumber"),

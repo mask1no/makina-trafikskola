@@ -6,7 +6,6 @@ import { Avatar } from "@/components/Avatar";
 import { Badge } from "@/components/Badge";
 import { Card } from "@/components/Card";
 import { CallButton, MailButton } from "@/components/ContactButtons";
-import { MapEmbed } from "@/components/MapEmbed";
 import { OpeningStatus } from "@/components/OpeningStatus";
 import { isLocale } from "@/i18n/routing";
 import { openingHoursSpecification } from "@/lib/company/opening-hours";
@@ -184,14 +183,6 @@ export default async function ContactPage(
         <section className="mt-10">
           <h2 className="text-2xl font-black">{t("locationsTitle")}</h2>
           <p className="mt-3 max-w-2xl text-ink-muted">{t("locationsDescription")}</p>
-          <div className="mt-6">
-            <MapEmbed
-              address={`${visiting}, Sweden`}
-              title={t("locationsTitle")}
-              privacy={shell("mapPrivacy")}
-              loadLabel={shell("showMap")}
-            />
-          </div>
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
             {offices.map((location) => (
               <Card key={location.id} padding="lg">

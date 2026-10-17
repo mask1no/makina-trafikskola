@@ -16,6 +16,7 @@ type BookingPayload = {
   placeLabel?: string;
   schoolPhone?: string;
   creditRefunded?: boolean;
+  creditsRemaining?: number;
 };
 
 function bookingPayload(input: {
@@ -28,6 +29,7 @@ function bookingPayload(input: {
   placeLabel?: string;
   schoolPhone?: string;
   creditRefunded?: boolean;
+  creditsRemaining?: number;
 }): BookingPayload {
   return {
     bookingId: input.bookingId,
@@ -47,6 +49,9 @@ function bookingPayload(input: {
     ...(input.placeLabel ? { placeLabel: input.placeLabel } : {}),
     ...(input.schoolPhone ? { schoolPhone: input.schoolPhone } : {}),
     ...(input.creditRefunded ? { creditRefunded: true } : {}),
+    ...(typeof input.creditsRemaining === "number"
+      ? { creditsRemaining: input.creditsRemaining }
+      : {}),
   };
 }
 
@@ -65,6 +70,7 @@ export async function enqueueBookingNotifications(
     placeLabel?: string;
     schoolPhone?: string;
     creditRefunded?: boolean;
+    creditsRemaining?: number;
     channels?: Array<"SMS" | "INAPP">;
     now: Date;
     ids?: Partial<Record<"SMS" | "INAPP", string>>;

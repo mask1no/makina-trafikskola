@@ -121,7 +121,7 @@ export function SiteFooter({
                       key={item.network}
                       href={item.url}
                       aria-label={item.label}
-                      className="inline-flex size-11 items-center justify-center rounded-sm border border-ink-inverse/20 text-ink-inverse transition hover:border-ink-inverse/40 hover:bg-surface-raised"
+                      className="inline-flex size-11 items-center justify-center rounded-sm border border-accent text-accent transition hover:bg-surface-raised"
                       rel="noreferrer"
                       target="_blank"
                     >
@@ -226,7 +226,8 @@ export function SiteFooter({
             </div>
           </div>
 
-          <div className="mt-8 flex flex-col gap-3 border-t border-ink-inverse/10 pt-5 text-xs font-semibold text-ink-inverse-muted sm:flex-row sm:items-center sm:justify-between">
+          <div className="mx-auto mt-8 w-3/4 border-t border-accent" />
+          <div className="mt-5 flex flex-col gap-3 text-xs font-semibold text-ink-inverse-muted sm:flex-row sm:items-center sm:justify-between">
             <p>{labels.copyright}</p>
             <div className="flex flex-wrap gap-x-4 gap-y-1">
               <Link className="min-h-11 inline-flex items-center hover:text-ink-inverse" href={`${base}/villkor`}>

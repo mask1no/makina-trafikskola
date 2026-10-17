@@ -133,7 +133,7 @@ export function LanguageSwitcher({
             className={`flex min-h-11 items-center justify-between gap-6 whitespace-nowrap rounded-sm px-3 text-start text-sm font-semibold transition hover:bg-card-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
               locale === "ar"
                 ? "font-[family-name:var(--font-arabic)]"
-                : locale === "ti"
+                : locale === "ti" || locale === "am"
                   ? "font-[family-name:var(--font-ethiopic)]"
                   : ""
             }`}

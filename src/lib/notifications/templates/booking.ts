@@ -1,4 +1,4 @@
-import { supportedLocale } from "@/i18n/routing";
+import { supportedLocale, type Locale } from "@/i18n/routing";
 import { formatLessonTime } from "@/lib/format/datetime";
 
 export type BookingTemplate =
@@ -9,9 +9,10 @@ export type BookingTemplate =
   | "booking_moved"
   | "teacher_booking_new"
   | "teacher_booking_cancelled"
-  | "teacher_booking_moved";
+  | "teacher_booking_moved"
+  | "lesson_completed";
 
-type SupportedLocale = "sv" | "en" | "ti" | "ar";
+type SupportedLocale = Locale;
 
 type BookingParts = {
   time: string;
@@ -22,6 +23,7 @@ type BookingParts = {
   place?: string;
   schoolPhone?: string;
   creditRefunded?: boolean;
+  creditsRemaining?: number;
 };
 
 const localeTags: Record<SupportedLocale, string> = {
@@ -29,6 +31,8 @@ const localeTags: Record<SupportedLocale, string> = {
   en: "en-SE",
   ti: "ti-ER",
   ar: "ar-SE",
+  am: "am-ET",
+  so: "so-SO",
 };
 
 function clean(value: string | undefined) {
@@ -41,11 +45,60 @@ function teacherSuffix(locale: SupportedLocale, teacher?: string) {
   if (locale === "en") return ` with ${teacher}`;
   if (locale === "ar") return ` مع ${teacher}`;
   if (locale === "ti") return ` ምስ ${teacher}`;
+  if (locale === "am") return ` ከ${teacher} ጋር`;
+  if (locale === "so") return ` oo ay la socoto ${teacher}`;
   return ` med ${teacher}`;
 }
 
 function placeSuffix(place?: string) {
   return place ? `, ${place}` : "";
+}
+
+function extraLocaleText(
+  locale: "am" | "so",
+  template: BookingTemplate,
+  parts: BookingParts,
+  teacher: string,
+  place: string,
+  time: string,
+) {
+  const remaining =
+    typeof parts.creditsRemaining === "number" ? String(parts.creditsRemaining) : "";
+  const student = parts.student ?? "";
+  if (locale === "am") {
+    if (template === "booking_confirmed") {
+      return `የመንዳት ትምህርትዎ ተይዟል ${time}${teacher}${place}.`;
+    }
+    if (template === "booking_reminder_24h") return `ማስታወሻ፦ ትምህርት ${time}${teacher}${place}.`;
+    if (template === "booking_moved") return `ትምህርትዎ ወደ ${time}${teacher}${place} ተዛውሯል።`;
+    if (template === "booking_cancelled_by_student") return `ትምህርት ${time} ተሰርዟል።`;
+    if (template === "booking_cancelled_by_teacher") {
+      return `ትምህርት ቤቱ ትምህርት ${time} ሰርዟል።${parts.creditRefunded ? " ክሬዲትዎ ተመልሷል።" : ""}`;
+    }
+    if (template === "lesson_completed") {
+      return remaining
+        ? `የመንዳት ትምህርቱ ተጠናቋል። ${remaining} ትምህርት ቀርቷል።`
+        : "የመንዳት ትምህርቱ ተጠናቋል።";
+    }
+    if (template === "teacher_booking_new") return `አዲስ ትምህርት ${time}፦ ${student}${place}.`;
+    if (template === "teacher_booking_cancelled") return `የተሰረዘ ትምህርት ${time} ከ${student} ጋር።`;
+    return `የተቀየረ ትምህርት፦ ${student}፣ አሁን ${time}${place}.`;
+  }
+  if (template === "booking_confirmed") return `Casharkaaga waa la qabsaday ${time}${teacher}${place}.`;
+  if (template === "booking_reminder_24h") return `Xasuusin: cashar ${time}${teacher}${place}.`;
+  if (template === "booking_moved") return `Casharkaaga waxaa loo raray ${time}${teacher}${place}.`;
+  if (template === "booking_cancelled_by_student") return `Casharka ${time} waa la joojiyay.`;
+  if (template === "booking_cancelled_by_teacher") {
+    return `Dugsigu wuxuu joojiyay casharka ${time}.${parts.creditRefunded ? " Credit-kaaga waa la soo celiyay." : ""}`;
+  }
+  if (template === "lesson_completed") {
+    return remaining
+      ? `Casharka waa la dhammeeyay. ${remaining} cashar ayaa haray.`
+      : "Casharka waa la dhammeeyay.";
+  }
+  if (template === "teacher_booking_new") return `Cashar cusub ${time}: ${student}${place}.`;
+  if (template === "teacher_booking_cancelled") return `Cashar la joojiyay ${time} oo leh ${student}.`;
+  return `Cashar la beddelay: ${student}, hadda ${time}${place}.`;
 }
 
 function bookingText(
@@ -56,6 +109,9 @@ function bookingText(
   const teacher = teacherSuffix(locale, parts.teacher);
   const place = placeSuffix(parts.place);
   const time = parts.time;
+  if (locale === "am" || locale === "so") {
+    return extraLocaleText(locale, template, parts, teacher, place, time);
+  }
 
   if (template === "booking_confirmed") {
     const deadline = parts.deadline
@@ -119,6 +175,29 @@ function bookingText(
     return `Trafikskolan har avbokat din körlektion ${time}.${refund}`;
   }
 
+  if (template === "lesson_completed") {
+    const remaining =
+      typeof parts.creditsRemaining === "number" ? String(parts.creditsRemaining) : "";
+    if (locale === "en") {
+      return remaining
+        ? `The driving lesson is completed. ${remaining} lessons remain.`
+        : "The driving lesson is completed.";
+    }
+    if (locale === "ar") {
+      return remaining
+        ? `اكتمل درس القيادة. تبقّى ${remaining} دروس.`
+        : "اكتمل درس القيادة.";
+    }
+    if (locale === "ti") {
+      return remaining
+        ? `ትምህርቲ ምዝዋር ተዛዚሙ። ${remaining} ትምህርቲ ተሪፉ።`
+        : "ትምህርቲ ምዝዋር ተዛዚሙ።";
+    }
+    return remaining
+      ? `Körlektionen är genomförd. ${remaining} lektioner kvar.`
+      : "Körlektionen är genomförd.";
+  }
+
   if (template === "teacher_booking_new") {
     const student = parts.student ?? "";
     if (locale === "en") return `New lesson ${time}: ${student}${place}. See the teacher portal.`;
@@ -154,6 +233,7 @@ export function renderBookingMessage(input: {
   placeLabel?: string;
   schoolPhone?: string;
   creditRefunded?: boolean;
+  creditsRemaining?: number;
 }) {
   const locale = supportedLocale(input.locale);
   const text = bookingText(locale, input.template, {
@@ -169,6 +249,7 @@ export function renderBookingMessage(input: {
     place: clean(input.placeLabel),
     schoolPhone: clean(input.schoolPhone),
     creditRefunded: input.creditRefunded,
+    creditsRemaining: input.creditsRemaining,
   }).replace(/\s+/g, " ").replace(" .", ".").trim();
 
   return { text };

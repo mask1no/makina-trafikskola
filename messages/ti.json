@@ -22,6 +22,7 @@
     "ti": "ትግርኛ",
     "ku": "ኩርዲሽ",
     "am": "ኣምሓርኛ",
+    "so": "ሶማልኛ",
     "fa": "ፋርሲ",
     "prs": "ዳሪ",
     "tig": "ትግረ",
@@ -61,6 +62,7 @@
       "ti": "ትግርኛ",
       "ku": "ኩርዲሽ",
       "am": "ኣምሓርኛ",
+      "so": "ሶማልኛ",
       "fa": "ፋርሲ",
       "prs": "ዳሪ",
       "tig": "ትግረ",
@@ -171,14 +173,17 @@
       "title": "ኣብ ቀረባኻ መምህር ርከብ",
       "description": "ኣብ ከባቢታት Farstaን Upplands Väsbyን ብነጻ ምውሳድ",
       "cta": "መምህርካ ዛዝም",
-      "languageLabel": "መማህራን ብቋንቋ ፈልጥ"
+      "languageLabel": "መማህራን ብቋንቋ ፈልጥ",
+      "reviewsTitle": "Google ግምገማ",
+      "reviewsBody": "ብዛዕባ Makina Trafikskola ዝተጻሕፈ ርአ።",
+      "reviewsCta": "ኣብ Google ክፈት"
     },
     "faq": {
       "eyebrow": "ብዙሕ ግዜ ዝሕተቱ ሕቶታት",
       "title": "ቅድሚ ምጅማርኩም መልስታት",
       "cost": {
         "question": "ኣብ Makina ፍቓድ ምዝዋር ንምውሳድ ክንደይ ይዋጋእ?",
-        "answer": "ቀዳማይ ትምህርቲ 499 kr፣ ድሕሪኡ 745 kr። ፓኬጃት ካብ {packagePrice} ይጅምሩ። ኩሉ ዋጋታት ብVAT እዩ።"
+        "answer": "ቀዳማይ ትምህርቲ 499 kr፣ ድሕሪኡ 845 kr። ፓኬጃት ካብ {packagePrice} ይጅምሩ። ኩሉ ዋጋታት ብVAT እዩ።"
       },
       "languages": {
         "question": "ብቋንቋይ ትምህርቲ ክወስድ ይኽእል ድየ?",
@@ -366,7 +371,9 @@
     "emptyTitle": "ዝሰማማዕ መምህር የለን",
     "emptyDescription": "ካልእ ቋንቋ ወይ ቦታ ፈትን።",
     "transmissionFilter": "3. ዓይነት መኪና ምረጽ",
-    "allTransmissions": "ኩሎም ዓይነታት"
+    "allTransmissions": "ኩሎም ዓይነታት",
+    "searchLabel": "መምህር ወይ ቦታ ድለ",
+    "searchPlaceholder": "ስም ወይ ቦታ"
   },
   "teacher": {
     "yearsExperience": "{count, plural, =0 {ሓድሽ መምህር} =1 {1 ዓመት ተመክሮ} other {{n} ዓመት ተመክሮ}}",
@@ -391,6 +398,11 @@
     "zoomIn": "ኣዕቢ",
     "zoomOut": "ኣንእስ",
     "recenter": "ኩሎም ኣርኢ",
+    "areaSearchLabel": "ኣድራሻ ኣብ ከባቢ ድለ",
+    "areaSearchPlaceholder": "ኣድራሻ ኣብ Farsta ወይ Upplands Väsby",
+    "areaInside": "ምውሳድ ኣብ ውሽጢ {area}",
+    "areaOutside": "እዚ ኣድራሻ ካብ Farstaን Upplands Väsbyን ወጻኢ እዩ።",
+    "searchAction": "ድለ",
     "homeTeaserTitle": "ኣብ ቀረባኻ መምህር ርከብ",
     "homeTeaserDescription": "ብቋንቋ ኣጻርዩን መምህራን ኣበይ ከም ዘለዉ ርአ።",
     "homeTeaserCta": "ናይ መምህር ካርታ ክፈት"
@@ -456,6 +468,15 @@
         "description": "ዲጂታላዊ መጽሓፍ ምዝዋር ማኪና ይዳሎ ኣሎ።",
         "pending": "ትሕዝቶ እቲ ቤት ትምህርቲ ምስ ተዛዘመን ምስ ተገምገመን እቲ መጽሓፍ ኣብዚ ክዝርጋሕ እዩ።"
       },
+      "ebook": {
+        "title": "ኢ-መጽሓፍ",
+        "description": "እቲ ትሕዝቶ ምስ ተዳለወ ኣንብብ ወይ ስምዕ።",
+        "ebookTitle": "ኢ-መጽሓፍ",
+        "ebookBody": "PDF ኣብዚ ክውሰኽ እዩ።",
+        "audioTitle": "ድምጺ መጽሓፍ",
+        "audioBody": "ድምጺ ፋይል ኣብዚ ክውሰኽ እዩ።",
+        "soon": "ድሕሪ እዋን"
+      },
       "facts": {
         "title": "ባንክ ሓበሬታ",
         "description": "ካብ ሽወደናውያን ትካላት ምንጪ ዘለዎ መብርሂ ኣንብብ።",
@@ -467,8 +488,11 @@
     },
     "signGame": {
       "title": "ጸወታ ምልክታት መንገዲ",
-      "description": "ብወግዓዊ ምልክታት መንገዲ ሽወደን 300 ነጻ ዙርያታት ተለማመድ።",
+      "description": "ብ{count} ሕቶታት ብዛዕባ ወግዓዊ ምልክታት መንገዲ ሽወደን ተለማመድ።",
+      "history": "ዝሓለፉ መልስታት",
       "progress": "ዙርያ {current} ካብ {total}",
+      "streak": "{count} ብተኸታታሊ ቅኑዕ",
+      "best": "ዝበለጸ {count}",
       "finish": "ውጽኢት ኣርኢ",
       "emptyTitle": "ጸወታ ምልክታት መንገዲ ይዳሎ ኣሎ",
       "emptyDescription": "ወግዓዊ ምልክታት ይኣትዉ ኣለዉ። ድሕሪ ቁሩብ ደጊምካ ፈትን።"
@@ -542,6 +566,7 @@
     },
     "practiceAll": "ኩሉ {count} ሕቶታት ለመን",
     "stepQuestions": "{count} ሕቶታት",
+    "stepProgress": "{done} ካብ {total} ተዛዚሙ",
     "stepDone": "ተዛዚሙ"
   },
   "localSchool": {
@@ -651,7 +676,7 @@
         "single": "ሓደ ትምህርቲ ምዝዋር",
         "packageTitle": "ብጥቕላ ዓቅብ",
         "packageBody": "ጥቕላ ብሓደ ትምህርቲ ዝሓተ ዋጋ እዩ። ኣብ ዝኾነ እዋን ክትገዝኦ ትኽእል።",
-        "introLabel": "ቀዳማይ ትምህርቲ 499 kr (ቅድሚ 745 kr)"
+        "introLabel": "ቀዳማይ ትምህርቲ 499 kr (ቅድሚ 845 kr)"
       }
     },
     "account": {
@@ -701,7 +726,7 @@
       "summary": "ትምህርቲ ምዝዋር ምስ Makina Trafikskola",
       "description": "መወዳእታ ግዜ ምስራዝ፦ {deadline}።"
     },
-    "introPriceLabel": "ቀዳማይ ትምህርቲ 499 kr (ቅድሚ 745 kr)"
+    "introPriceLabel": "ቀዳማይ ትምህርቲ 499 kr (ቅድሚ 845 kr)"
   },
   "auth": {
     "required": "ንምሓዝን ክፍሊትን ሕሳብ የድልየካ። ዝበዝሐ 30 ሴኮንድ ይወስድ።",
@@ -910,6 +935,8 @@
       "inactive": "ንጡፍ ፍቓድ የለን",
       "progress": "ውጽኢት",
       "correct": "ብትኽክል ዝተመለሱ ሕቶታት",
+      "streak": "ዝበለጸ ተኸታታሊ",
+      "streakNow": "{count} ብትኽክል ብተኸታታሊ",
       "provisional": "ንምሉእ ባንክ ሕቶታት ንምልምማድን ናይ ልምምድ ፈተና ንምግባርን ዲጂታላዊ ቲዮሪ ግዛእ።"
     },
     "messages": {
@@ -929,11 +956,13 @@
         "paymentFailed": "ክፍሊት ኣይተዓወተን",
         "lessonPaymentNeedsRebooking": "ዝተኸፍለ ትምህርቲ ሓድሽ ግዜ የድልዮ",
         "coursePaymentNeedsRebooking": "ዝተኸፍለ ኮርስ ሓድሽ ግዜ የድልዮ",
+        "lessonCompleted": "ትምህርቲ ተዛዚሙ",
         "generic": "መልእኽቲ ኣገልግሎት"
       },
       "bodies": {
         "lessonPaymentNeedsRebooking": "ምሓዝ ድሕሪ ምውድኡ ክፍሊት ተዓዊቱ። ዘይተጠቐምካሉ ክረዲት ኣሎ፤ ሓድሽ ግዜ ምረጽ።",
-        "coursePaymentNeedsRebooking": "ምሓዝ ድሕሪ ምውድኡ ክፍሊት ተዓዊቱ። ዘይተጠቐምካሉ መሰል ኮርስ ኣሎ፤ ካልእ ግዜ ምረጽ።"
+        "coursePaymentNeedsRebooking": "ምሓዝ ድሕሪ ምውድኡ ክፍሊት ተዓዊቱ። ዘይተጠቐምካሉ መሰል ኮርስ ኣሎ፤ ካልእ ግዜ ምረጽ።",
+        "lessonCompleted": "ትምህርቲ ተዛዚሙ ካብ ፓኬጅ ተቐኒጡ። {count} ትምህርቲ ተሪፉ።"
       },
       "channels": {
         "EMAIL": "ኢመይል",
@@ -1019,13 +1048,19 @@
     "nextMonth": "ዝቕጽል ወርሒ",
     "views": {
       "today": "ሎሚ",
-      "week": "ሰሙን"
+      "week": "ሰሙን",
+      "office": "ሰዓታት ስራሕ"
     },
+    "drivesFrom": "ካብ {places} ትዝውር።",
+    "phoneLabel": "ቁጽሪ ሞባይል",
+    "phoneSave": "ቁጽሪ ዓቅብ",
+    "phoneReady": "ናይ ቦታ ምሓዝ SMS ናብ {phone} ይኸይድ።",
     "students": {
       "title": "ተማሃሮይ",
       "lessonsDone": "{count, plural, =0 {ዝተዛዘመ ትምህርቲ የለን} =1 {1 ዝተዛዘመ ትምህርቲ} other {{n} ዝተዛዘሙ ትምህርትታት}}",
       "nextLesson": "ዝቕጽል ትምህርቲ <time>{when}</time>",
       "noNext": "ዝመጽእ ትምህርቲ የለን።",
+      "remaining": "{count, plural, =0 {ትምህርቲ ኣይተረፈን} =1 {1 ትምህርቲ ተሪፉ} other {{n} ትምህርቲ ተሪፉ}}",
       "empty": "ገና ተማሃሮ የለዉን።"
     },
     "awaitingPayment": "ክፍሊት ይጽበ",
@@ -1411,6 +1446,8 @@
       "ratingDetail": "{count} ዝተሓትሙ ግምገማታት",
       "lessonsToday": "ትምህርቲ ሎሚ",
       "lessonsTodayEmpty": "ሎሚ ትምህርቲ የለን።",
+      "completedTitle": "ናይ ቀረባ ዝተዛዘሙ ትምህርትታት",
+      "completedEmpty": "ገና ትምህርቲ ከም ዝተዛዘመ ኣይተመዝገበን።",
       "lessonLine": "{time} · {instructor} · {student}",
       "placesTitle": "ቦታታት",
       "placesDescription": "መምህራንን ቦታ ምሓዝን ኣብ ነፍሲ ወከፍ ቦታ።"
@@ -1449,6 +1486,11 @@
       "title": "ግምገማታት",
       "description": "ዘይተሓትሙ ግምገማታት። ኣሕትም ወይ ምለስ።",
       "empty": "ዝጽበይ ግምገማ የለን።",
+      "googleTitle": "Google ግምገማ",
+      "googleBody": "ንMakina Trafikskola ዝተረጋገጸ Google ደረጃ ገና የለን።",
+      "googleCta": "ኣብ Google ክፈት",
+      "googleScore": "{rating} ካብ 5",
+      "googleCount": "{count} ግምገማ",
       "student": "ተማሃራይ",
       "instructor": "መምህር",
       "rating": "ደረጃ",
@@ -1466,6 +1508,8 @@
       "previous": "ዝሓለፈ ሰሙን",
       "next": "ዝቕጽል ሰሙን",
       "instructor": "መምህር",
+      "allTeachers": "ኩሎም መምህራን",
+      "lessonCount": "{count} ቦታ ምሓዝ ኣብዚ ሰሙን",
       "completed": "ተዛዚሙ",
       "empty": "ንጡፍ መምህር የለን።",
       "controls": {

@@ -11,9 +11,10 @@ import { requireRole } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
 import { hasTheoryAccess, presentQuestion } from "@/lib/theory/access";
 import { scoreMockExam } from "@/lib/theory/exam";
+import { locales } from "@/i18n/routing";
 
 const paramsSchema = z.object({ id: z.string().cuid() });
-const localeSchema = z.enum(["sv", "en", "ti", "ar"]);
+const localeSchema = z.enum(locales);
 
 const inputSchema = z.object({
   id: z.string().cuid(),

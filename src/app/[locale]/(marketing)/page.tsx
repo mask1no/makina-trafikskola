@@ -33,21 +33,31 @@ export const dynamic = "force-dynamic";
 export default async function MarketingHome(
   props: {
     params: Promise<{ locale: string }>;
+    searchParams: Promise<{ omrade?: string }>;
   }
 ) {
-  const params = await props.params;
+  const [params, searchParams] = await Promise.all([
+    props.params,
+    props.searchParams,
+  ]);
   const locale = params.locale;
   if (!isLocale(locale)) return null;
   setRequestLocale(locale);
   return (
     <>
       <HomeHero locale={locale} />
-      <HomeBelow locale={locale} />
+      <HomeBelow locale={locale} focusSlug={searchParams.omrade} />
     </>
   );
 }
 
-async function HomeBelow({ locale }: { locale: Locale }) {
+async function HomeBelow({
+  locale,
+  focusSlug,
+}: {
+  locale: Locale;
+  focusSlug?: string;
+}) {
   setRequestLocale(locale);
   const t = await getTranslations();
   const [products, teachers, locations, freeQuestions, activeLanguages] = await Promise.all([
@@ -113,6 +123,7 @@ async function HomeBelow({ locale }: { locale: Locale }) {
     .map((location) => ({
       id: location.id,
       name: location.name,
+      slug: location.slug,
       boundary: location.boundary,
       marker: { lat: location.lat, lng: location.lng },
     }));
@@ -216,6 +227,10 @@ async function HomeBelow({ locale }: { locale: Locale }) {
           mapCenter={homeMapCenter}
           mapMarkers={homeMapMarkers}
           mapAreas={mapAreas}
+          focusSlug={mapAreas.some((area) => area.slug === focusSlug) ? focusSlug : undefined}
+          reviewsTitle={t("home.teachers.reviewsTitle")}
+          reviewsBody={t("home.teachers.reviewsBody")}
+          reviewsCta={t("home.teachers.reviewsCta")}
         />
       ) : null}
       <QuickLinksSection

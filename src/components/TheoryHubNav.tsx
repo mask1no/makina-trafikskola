@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 type HubItem = {
-  key: "steps" | "questions" | "signs" | "facts";
+  key: "steps" | "questions" | "signs" | "facts" | "ebook";
   href: string;
   title: string;
 };
@@ -16,7 +16,7 @@ export function TheoryHubNav({
   activeKey?: HubItem["key"];
 }) {
   return (
-    <nav aria-label={label} className="mt-8">
+    <nav aria-label={label}>
       <ul className="m-0 flex list-none flex-wrap justify-center gap-2 p-0">
         {items.map((item) => {
           const active = item.key === activeKey;

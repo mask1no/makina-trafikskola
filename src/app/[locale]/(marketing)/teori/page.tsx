@@ -5,7 +5,6 @@ import { notFound } from "next/navigation";
 import { auth } from "@/auth";
 import { EmptyState } from "@/components/EmptyState";
 import { LinkButton } from "@/components/LinkButton";
-import { TheoryHubNav } from "@/components/TheoryHubNav";
 import { TheoryStepsPath } from "@/components/TheoryStepsPath";
 import { isLocale } from "@/i18n/routing";
 import { resolveContent } from "@/lib/content/fallback";
@@ -89,28 +88,6 @@ export default async function TeoriPage(
     counts[attempt.question.categoryId] = (counts[attempt.question.categoryId] ?? 0) + 1;
     return counts;
   }, {});
-  const hubItems = [
-    {
-      key: "steps" as const,
-      href: `/${params.locale}/teori#steg-for-steg`,
-      title: t("hub.steps.title"),
-    },
-    {
-      key: "questions" as const,
-      href: `/${params.locale}/teori/ovning`,
-      title: t("hub.questions.title"),
-    },
-    {
-      key: "signs" as const,
-      href: `/${params.locale}/teori/vagmarkesspel`,
-      title: t("hub.signs.title"),
-    },
-    {
-      key: "facts" as const,
-      href: `/${params.locale}/teori/faktabank`,
-      title: t("hub.facts.title"),
-    },
-  ];
   const mappedSteps = available.flatMap((category) => {
     const content = resolveContent(category.translations, params.locale);
     if (!content.translation) return [];
@@ -120,7 +97,10 @@ export default async function TeoriPage(
       id: category.id,
       href: `/${params.locale}/teori/${category.slug}`,
       name: content.translation.name,
-      questionsLabel: t("stepQuestions", { count: 20 }),
+      questionsLabel:
+        attempted > 0
+          ? t("stepProgress", { done: attempted, total: 20 })
+          : t("stepQuestions", { count: 20 }),
       swedishOnly: content.swedishOnly ? t("swedishOnly") : undefined,
       done,
       iconOrder: category.order,
@@ -144,13 +124,7 @@ export default async function TeoriPage(
   return (
     <div className="section-shell">
       <div className="site-container max-w-6xl">
-        <TheoryHubNav
-          label={t("hub.label")}
-          items={hubItems}
-          activeKey="steps"
-        />
-
-        <section id="steg-for-steg" className="scroll-mt-28 pt-8 text-center">
+        <section id="steg-for-steg" className="scroll-mt-28 text-center">
           <h1 className="section-title text-balance mx-auto max-w-3xl">
             {t("hub.steps.title")}
           </h1>

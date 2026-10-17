@@ -55,7 +55,7 @@ export async function generateMetadata(props: {
   });
   const pathname =
     (await headers()).get("x-makina-pathname") ?? `/${params.locale}`;
-  const suffix = pathname.replace(/^\/(?:sv|en|ti|ar)/, "") || "/";
+  const suffix = pathname.replace(/^\/(?:sv|en|ti|ar|am|so)/, "") || "/";
   const siteOrigin = validSiteOrigin();
   const localizedPath = (locale: string) =>
     `/${locale}${suffix === "/" ? "" : suffix}`;
@@ -411,6 +411,7 @@ export default async function LocaleLayout(props: {
               ti: t("languagePage.ti"),
               ku: t("languagePage.ku"),
               am: t("languagePage.am"),
+              so: t("languagePage.so"),
               fa: t("languagePage.fa"),
               prs: t("languagePage.prs"),
               tig: t("languagePage.tig"),

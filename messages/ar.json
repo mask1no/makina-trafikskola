@@ -22,6 +22,7 @@
     "ti": "ትግርኛ",
     "ku": "الكردية",
     "am": "الأمهرية",
+    "so": "الصومالية",
     "fa": "الفارسية",
     "prs": "الداري",
     "tig": "التيغرية",
@@ -61,6 +62,7 @@
       "ti": "التغرينية",
       "ku": "الكردية",
       "am": "الأمهرية",
+      "so": "الصومالية",
       "fa": "الفارسية",
       "prs": "الداري",
       "tig": "التيغرية",
@@ -171,14 +173,17 @@
       "title": "اعثر على مدرب قريب منك",
       "description": "اصطحاب مجاني داخل فارستا وأوبلاندس فيسبي",
       "cta": "احجز مدربك",
-      "languageLabel": "صفِّ المدربين حسب اللغة"
+      "languageLabel": "صفِّ المدربين حسب اللغة",
+      "reviewsTitle": "مراجعات Google",
+      "reviewsBody": "اقرأ آراء الناس عن Makina Trafikskola.",
+      "reviewsCta": "افتح في Google"
     },
     "faq": {
       "eyebrow": "الأسئلة الشائعة",
       "title": "إجابات قبل أن تبدأ",
       "cost": {
         "question": "كم تبلغ تكلفة الحصول على رخصة قيادة مع Makina؟",
-        "answer": "الدرس الأول 499 كرونة، ثم 745 كرونة. تبدأ الباقات من {packagePrice}. جميع الأسعار تشمل ضريبة القيمة المضافة."
+        "answer": "الدرس الأول 499 كرونة، ثم 845 كرونة. تبدأ الباقات من {packagePrice}. جميع الأسعار تشمل ضريبة القيمة المضافة."
       },
       "languages": {
         "question": "هل يمكنني أخذ الدروس بلغتي؟",
@@ -366,7 +371,9 @@
     "emptyTitle": "لا يوجد مدرب مطابق",
     "emptyDescription": "جرّب لغة أو موقعًا آخر.",
     "transmissionFilter": "3. اختر ناقل الحركة",
-    "allTransmissions": "كل أنواع ناقل الحركة"
+    "allTransmissions": "كل أنواع ناقل الحركة",
+    "searchLabel": "ابحث عن مدرب أو مكان",
+    "searchPlaceholder": "الاسم أو المكان"
   },
   "teacher": {
     "yearsExperience": "{count, plural, =0 {مدرب جديد} =1 {سنة واحدة من الخبرة} other {{n} سنوات من الخبرة}}",
@@ -391,6 +398,11 @@
     "zoomIn": "تكبير",
     "zoomOut": "تصغير",
     "recenter": "عرض الكل",
+    "areaSearchLabel": "ابحث عن عنوان داخل المنطقة",
+    "areaSearchPlaceholder": "عنوان في فارستا أو أوبلاندس فيسبي",
+    "areaInside": "الاستلام داخل {area}",
+    "areaOutside": "هذا العنوان خارج فارستا وأوبلاندس فيسبي.",
+    "searchAction": "ابحث",
     "homeTeaserTitle": "اعثر على مدرب قريب منك",
     "homeTeaserDescription": "صفِّ حسب اللغة وشاهد أماكن المدربين.",
     "homeTeaserCta": "افتح خريطة المدربين"
@@ -456,6 +468,15 @@
         "description": "يجري إعداد كتاب ماكينا الرقمي لنظرية القيادة.",
         "pending": "سيُنشر الكتاب هنا بعد اكتمال محتوى المدرسة ومراجعته."
       },
+      "ebook": {
+        "title": "كتاب إلكتروني",
+        "description": "اقرأ أو استمع عندما تصبح المادة جاهزة.",
+        "ebookTitle": "كتاب إلكتروني",
+        "ebookBody": "سيُضاف ملف PDF هنا.",
+        "audioTitle": "كتاب صوتي",
+        "audioBody": "سيُضاف ملف الصوت هنا.",
+        "soon": "لاحقاً"
+      },
       "facts": {
         "title": "بنك المعلومات",
         "description": "اقرأ شروحات موثقة تستند إلى الجهات السويدية.",
@@ -467,8 +488,11 @@
     },
     "signGame": {
       "title": "لعبة إشارات المرور",
-      "description": "تدرّب في 300 جولة مجانية باستخدام إشارات الطرق السويدية الرسمية.",
+      "description": "تدرّب على {count} سؤالاً عن إشارات الطرق السويدية الرسمية.",
+      "history": "الإجابات السابقة",
       "progress": "الجولة {current} من {total}",
+      "streak": "{count} إجابات صحيحة متتالية",
+      "best": "الأفضل {count}",
       "finish": "اعرض النتيجة",
       "emptyTitle": "يجري إعداد لعبة إشارات المرور",
       "emptyDescription": "يجري استيراد الإشارات الرسمية. حاول مرة أخرى قريبًا."
@@ -542,6 +566,7 @@
     },
     "practiceAll": "تدرّب على كل الأسئلة ({count})",
     "stepQuestions": "{count} أسئلة",
+    "stepProgress": "{done} من {total} مكتملة",
     "stepDone": "مكتمل"
   },
   "localSchool": {
@@ -651,7 +676,7 @@
         "single": "درس قيادة واحد",
         "packageTitle": "وفّر مع باقة",
         "packageBody": "الباقة أقل سعرًا لكل درس. يمكنك شراءها في أي وقت.",
-        "introLabel": "الدرس الأول 499 كرونة (السعر العادي 745 كرونة)"
+        "introLabel": "الدرس الأول 499 كرونة (السعر العادي 845 كرونة)"
       }
     },
     "account": {
@@ -701,7 +726,7 @@
       "summary": "درس قيادة مع Makina Trafikskola",
       "description": "مهلة الإلغاء: {deadline}."
     },
-    "introPriceLabel": "الدرس الأول 499 كرونة (السعر العادي 745 كرونة)"
+    "introPriceLabel": "الدرس الأول 499 كرونة (السعر العادي 845 كرونة)"
   },
   "auth": {
     "required": "تحتاج إلى حساب للحجز والدفع. يستغرق ذلك نحو 30 ثانية.",
@@ -910,6 +935,8 @@
       "inactive": "لا يوجد وصول نشط",
       "progress": "النتائج",
       "correct": "أسئلة مجاب عنها بشكل صحيح",
+      "streak": "أفضل سلسلة",
+      "streakNow": "{count} إجابات صحيحة متتالية الآن",
       "provisional": "اشترِ نظري القيادة الرقمي لتتدرّب على بنك الأسئلة كاملاً وتجري الاختبارات التجريبية."
     },
     "messages": {
@@ -929,11 +956,13 @@
         "paymentFailed": "فشل الدفع",
         "lessonPaymentNeedsRebooking": "يحتاج الدرس المدفوع إلى حجز جديد",
         "coursePaymentNeedsRebooking": "يحتاج مقعد الدورة المدفوع إلى حجز جديد",
+        "lessonCompleted": "اكتمل الدرس",
         "generic": "رسالة خدمة"
       },
       "bodies": {
         "lessonPaymentNeedsRebooking": "نجح الدفع بعد انتهاء الحجز المؤقت. رصيد الدرس غير المستخدم ما زال متاحًا؛ اختر موعدًا جديدًا.",
-        "coursePaymentNeedsRebooking": "نجح الدفع بعد انتهاء الحجز المؤقت. استحقاق الدورة غير المستخدم ما زال متاحًا؛ اختر موعدًا آخر."
+        "coursePaymentNeedsRebooking": "نجح الدفع بعد انتهاء الحجز المؤقت. استحقاق الدورة غير المستخدم ما زال متاحًا؛ اختر موعدًا آخر.",
+        "lessonCompleted": "تم قيادة الدرس وخُصم من الباقة. تبقّى {count} دروس."
       },
       "channels": {
         "EMAIL": "البريد",
@@ -1019,13 +1048,19 @@
     "nextMonth": "الشهر التالي",
     "views": {
       "today": "اليوم",
-      "week": "الأسبوع"
+      "week": "الأسبوع",
+      "office": "ساعات العمل"
     },
+    "drivesFrom": "تقود من {places}.",
+    "phoneLabel": "رقم الجوال",
+    "phoneSave": "احفظ الرقم",
+    "phoneReady": "رسائل الحجز تذهب إلى {phone}.",
     "students": {
       "title": "طلابي",
       "lessonsDone": "{count, plural, =0 {لا دروس مكتملة} =1 {درس مكتمل واحد} other {{n} دروس مكتملة}}",
       "nextLesson": "الدرس القادم <time>{when}</time>",
       "noNext": "لا يوجد درس قادم.",
+      "remaining": "{count, plural, =0 {لا دروس متبقية} =1 {درس واحد متبق} other {{n} دروس متبقية}}",
       "empty": "لا يوجد طلاب بعد."
     },
     "awaitingPayment": "بانتظار الدفع",
@@ -1411,6 +1446,8 @@
       "ratingDetail": "{count} تقييمات منشورة",
       "lessonsToday": "دروس اليوم",
       "lessonsTodayEmpty": "لا دروس اليوم.",
+      "completedTitle": "الدروس المكتملة مؤخرًا",
+      "completedEmpty": "لا يوجد درس مُعلَّم كمكتمل بعد.",
       "lessonLine": "{time} · {instructor} · {student}",
       "placesTitle": "الأماكن",
       "placesDescription": "المدربون والحجوزات في كل مكان."
@@ -1449,6 +1486,11 @@
       "title": "التقييمات",
       "description": "تقييمات غير منشورة. انشرها أو ارفضها.",
       "empty": "لا توجد تقييمات بانتظار المراجعة.",
+      "googleTitle": "مراجعات Google",
+      "googleBody": "لا يوجد تقييم Google مؤكد لـ Makina Trafikskola بعد.",
+      "googleCta": "افتح في Google",
+      "googleScore": "{rating} من 5",
+      "googleCount": "{count} مراجعة",
       "student": "الطالب",
       "instructor": "المدرب",
       "rating": "التقييم",
@@ -1466,6 +1508,8 @@
       "previous": "الأسبوع السابق",
       "next": "الأسبوع التالي",
       "instructor": "المدرب",
+      "allTeachers": "كل المدربين",
+      "lessonCount": "{count} حجوزات هذا الأسبوع",
       "completed": "مكتمل",
       "empty": "لا يوجد مدربون نشطون.",
       "controls": {

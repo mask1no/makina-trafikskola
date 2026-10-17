@@ -35,6 +35,7 @@ describe("public staff languages", () => {
             ti: "Tigrinja",
             ku: "Kurdiska",
             am: "Amhariska",
+            so: "Somaliska",
             fa: "Persiska",
             prs: "Dari",
             tig: "Tigre",
@@ -64,5 +65,6 @@ describe("public staff languages", () => {
     expect(staffMemberLanguages(["sv", "ti"], [])).toEqual(["sv", "ti"]);
     expect(offeredTeachingLanguagesFrom(["ar"])).toEqual(offeredTeachingLanguages());
     expect(offeredTeachingLanguagesFrom(["ku", "sv"])).toEqual(["sv", "ku"]);
+    expect(offeredTeachingLanguagesFrom(["so", "am", "sv"])).toEqual(["sv", "am", "so"]);
   });
 });

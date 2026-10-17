@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Makina Trafikskola</string>
+    <string name="title_activity_main">Makina Trafikskola</string>
+    <string name="package_name">se.makina.trafikskola</string>
+    <string name="custom_url_scheme">se.makina.trafikskola</string>
+</resources>

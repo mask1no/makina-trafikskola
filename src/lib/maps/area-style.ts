@@ -9,6 +9,7 @@ export const AREA_STROKE_OPACITY = 0.95;
 export type MapArea = {
   id: string;
   name: string;
+  slug?: string;
   boundary: unknown;
   /** Preferred label anchor (office / zone centre). */
   marker?: { lat: number; lng: number } | null;

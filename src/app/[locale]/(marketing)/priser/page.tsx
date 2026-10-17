@@ -140,7 +140,13 @@ export default async function KorlektionerPage(
                     <h2 className="text-h3 font-black">{t(`lessons.groups.${section.key}.title`)}</h2>
                     <p className="mt-2 max-w-[70ch] text-body leading-7 text-ink-muted">{t(`lessons.groups.${section.key}.intro`)}</p>
                     <div className="mt-6 grid gap-6 md:grid-cols-2">
-                      {section.products.map((product) => (
+                      {(section.key === "courses"
+                        ? [...section.products].sort((a, b) => {
+                            const order = ["riskettan", "risktvaan", "handledarutbildning"];
+                            return order.indexOf(a.slug) - order.indexOf(b.slug);
+                          })
+                        : section.products
+                      ).map((product) => (
                         <ProductCard
                           key={product.id}
                           {...toProductCardModel({

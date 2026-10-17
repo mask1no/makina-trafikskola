@@ -9,13 +9,16 @@ import { fromZonedTime } from "date-fns-tz";
 
 import { auth } from "@/auth";
 import { requireRole } from "@/lib/auth/guards";
+import { normalizeSwedishPhone } from "@/lib/auth/phone";
+import { getCreditBalance } from "@/lib/credits/ledger";
 import { db } from "@/lib/db";
 import { bookingNotificationContext } from "@/lib/notifications/context";
 import { dispatchNotifications } from "@/lib/notifications/dispatch";
 import { notifyOwnerOfBooking } from "@/lib/notifications/owner";
 import { enqueueBookingNotifications } from "@/lib/notifications/queue";
+import { locales } from "@/i18n/routing";
 
-const localeSchema = z.enum(["sv", "en", "ti", "ar"]);
+const localeSchema = z.enum(locales);
 
 const reportSchema = z.object({
   bookingId: z.string().cuid(),
@@ -38,6 +41,8 @@ export async function reportLesson(formData: FormData) {
       id: true,
       status: true,
       startsAt: true,
+      studentId: true,
+      creditCharged: true,
       teacherId: true,
       teacher: { select: { userId: true } },
     },
@@ -56,8 +61,10 @@ export async function reportLesson(formData: FormData) {
     redirect(`/${parsed.locale}/larare-portal?error=LESSON_NOT_STARTED`);
   }
 
-  await db.$transaction([
-    db.lessonReport.upsert({
+  const firstCompletion = booking.status !== "COMPLETED";
+  const now = new Date();
+  const notificationIds = await db.$transaction(async (tx) => {
+    await tx.lessonReport.upsert({
       where: { bookingId: booking.id },
       create: {
         bookingId: booking.id,
@@ -69,13 +76,84 @@ export async function reportLesson(formData: FormData) {
         summary: parsed.summary,
         nextFocus: parsed.nextFocus,
       },
-    }),
-    db.booking.update({
+    });
+    await tx.booking.update({
       where: { id: booking.id },
       data: { status: "COMPLETED", holdExpiresAt: null },
-    }),
-  ]);
+    });
+    if (!firstCompletion) return [];
+
+    const creditsRemaining = booking.creditCharged
+      ? await getCreditBalance(tx, booking.studentId, now)
+      : undefined;
+    const student = await tx.user.findUnique({
+      where: { id: booking.studentId },
+      select: { localePref: true },
+    });
+    const admins = await tx.user.findMany({
+      where: { role: "ADMIN", deletedAt: null },
+      select: { id: true, localePref: true },
+    });
+    const ids = await enqueueBookingNotifications(tx, {
+      userId: booking.studentId,
+      locale: student?.localePref ?? parsed.locale,
+      template: "lesson_completed",
+      bookingId: booking.id,
+      startsAt: booking.startsAt,
+      creditsRemaining,
+      channels: ["INAPP"],
+      now,
+    });
+    for (const admin of admins) {
+      if (admin.id === booking.studentId) continue;
+      ids.push(
+        ...(await enqueueBookingNotifications(tx, {
+          userId: admin.id,
+          locale: admin.localePref || "sv",
+          template: "lesson_completed",
+          bookingId: booking.id,
+          startsAt: booking.startsAt,
+          creditsRemaining,
+          channels: ["INAPP"],
+          now,
+        })),
+      );
+    }
+    return ids;
+  });
+  if (notificationIds.length) {
+    await dispatchNotifications(notificationIds, now);
+  }
   revalidatePath(`/${parsed.locale}/larare-portal`);
+  revalidatePath(`/${parsed.locale}/mina-sidor`);
+  revalidatePath(`/${parsed.locale}/admin`);
+}
+
+const phoneSchema = z.object({
+  locale: localeSchema,
+  phone: z.string().trim().min(1).max(30),
+});
+
+export async function saveTeacherPhone(formData: FormData) {
+  const parsed = phoneSchema.parse({
+    locale: formData.get("locale"),
+    phone: formData.get("phone"),
+  });
+  const session = requireRole(await auth(), ["TEACHER", "ADMIN"]);
+  const phone = normalizeSwedishPhone(parsed.phone);
+  if (!phone) {
+    redirect(`/${parsed.locale}/larare-portal?view=office&error=INVALID_PHONE`);
+  }
+  try {
+    await db.user.update({
+      where: { id: session.user.id },
+      data: { phone },
+    });
+  } catch {
+    redirect(`/${parsed.locale}/larare-portal?view=office&error=PHONE_TAKEN`);
+  }
+  revalidatePath(`/${parsed.locale}/larare-portal`);
+  redirect(`/${parsed.locale}/larare-portal?view=office&phone=saved`);
 }
 
 const blockSchema = z
@@ -227,7 +305,7 @@ export async function createCalendarToken() {
     where: { id: teacher.id, calendarToken: null },
     data: { calendarToken: token },
   });
-  for (const locale of ["sv", "en", "ti", "ar"]) {
+  for (const locale of locales) {
     revalidatePath(`/${locale}/larare-portal`);
   }
 }
@@ -239,7 +317,7 @@ export async function rotateCalendarToken() {
     where: { id: teacher.id },
     data: { calendarToken: token },
   });
-  for (const locale of ["sv", "en", "ti", "ar"]) {
+  for (const locale of locales) {
     revalidatePath(`/${locale}/larare-portal`);
   }
 }

@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import {
   AdvancedMarker,
@@ -9,12 +10,15 @@ import {
   InfoWindow,
   Map,
   useMap,
+  useMapsLibrary,
 } from "@vis.gl/react-google-maps";
 
 import { Avatar } from "@/components/Avatar";
 import { Badge } from "@/components/Badge";
 import { BottomSheet } from "@/components/BottomSheet";
 import { AreasLayer } from "@/components/map/AreasLayer";
+import { AreasOutlineArtwork } from "@/components/map/AreasStaticFallback";
+import { pointInGeoJson } from "@/lib/areas/geo";
 import type { MapArea } from "@/lib/maps/area-style";
 import { fanOutPositions } from "@/lib/maps/place-teachers";
 import { reportMapFailure } from "@/lib/maps/report-failure";
@@ -47,6 +51,7 @@ type GoogleMapClientProps = {
   markers: TeacherMarker[];
   areas?: MapArea[];
   variant?: MapVariant;
+  focusSlug?: string;
   selectedTeacherId?: string;
   onSelectTeacher?: (teacherId: string) => void;
 };
@@ -222,6 +227,82 @@ function ZoomRail({
   );
 }
 
+function AreaSearch({ areas }: { areas: MapArea[] }) {
+  const t = useTranslations("map");
+  const router = useRouter();
+  const pathname = usePathname();
+  const geocoding = useMapsLibrary("geocoding");
+  const [value, setValue] = useState("");
+  const [note, setNote] = useState("");
+
+  async function submit(event: FormEvent) {
+    event.preventDefault();
+    const query = value.trim();
+    if (!query || !geocoding) {
+      setNote(t("areaOutside"));
+      return;
+    }
+    try {
+      const geocoder = new geocoding.Geocoder();
+      const response = await geocoder.geocode({
+        address: query,
+        componentRestrictions: { country: "SE" },
+      });
+      const location = response.results[0]?.geometry.location;
+      if (!location) {
+        setNote(t("areaOutside"));
+        return;
+      }
+      const point = { lat: location.lat(), lng: location.lng() };
+      const match = areas.find((area) => pointInGeoJson(point, area.boundary));
+      setNote(match ? t("areaInside", { area: match.name }) : t("areaOutside"));
+      if (match?.slug) router.push(`${pathname}?omrade=${match.slug}#hitta-larare`);
+    } catch {
+      reportMapFailure();
+      setNote(t("areaOutside"));
+    }
+  }
+
+  return (
+    <form onSubmit={(event) => void submit(event)} className="grid gap-2">
+      <label htmlFor="home-area-search" className="text-sm font-semibold">
+        {t("areaSearchLabel")}
+      </label>
+      <div className="flex gap-2">
+        <input
+          id="home-area-search"
+          value={value}
+          onChange={(event) => setValue(event.target.value)}
+          placeholder={t("areaSearchPlaceholder")}
+          className="min-h-11 min-w-0 flex-1 rounded-sm border border-border bg-card px-4 text-ink shadow-soft"
+        />
+        <button
+          type="submit"
+          className="inline-flex min-h-11 items-center rounded-sm bg-accent px-4 font-bold text-accent-ink"
+        >
+          {t("searchAction")}
+        </button>
+      </div>
+      {note ? <p className="text-sm font-bold" aria-live="polite">{note}</p> : null}
+    </form>
+  );
+}
+
+export function HomeAreaSearch({
+  apiKey,
+  areas,
+}: {
+  apiKey?: string;
+  areas: MapArea[];
+}) {
+  if (!apiKey) return null;
+  return (
+    <APIProvider apiKey={apiKey}>
+      <AreaSearch areas={areas} />
+    </APIProvider>
+  );
+}
+
 function MarkerDetails({
   bookingAvailable,
   marker,
@@ -234,7 +315,7 @@ function MarkerDetails({
   const t = useTranslations("map");
   const locale = useLocale();
   return (
-    <div className="grid gap-3 text-start">
+    <div className="grid gap-2 p-1 text-start">
       <div className="flex items-center gap-3">
         <Avatar name={marker.title} imageUrl={marker.photoUrl} size="sm" />
         <p className="font-black">{marker.title}</p>
@@ -279,12 +360,21 @@ export default function GoogleMapClient({
   markers,
   areas = [],
   variant = "directory",
+  focusSlug,
   selectedTeacherId,
   onSelectTeacher,
 }: GoogleMapClientProps) {
   const t = useTranslations("map");
   const home = variant === "home";
   const [openId, setOpenId] = useState<string | null>(null);
+  const [focusId, setFocusId] = useState<string | null>(null);
+  const [trackedSlug, setTrackedSlug] = useState(focusSlug);
+  if (focusSlug !== trackedSlug) {
+    setTrackedSlug(focusSlug);
+    setFocusId(null);
+  }
+  const slugFocus = areas.find((area) => area.slug === focusSlug)?.id ?? null;
+  const activeFocus = focusId ?? slugFocus;
   const [mobile, setMobile] = useState(false);
   const [loadFailed, setLoadFailed] = useState(false);
   const mapRef = useRef<google.maps.Map | null>(null);
@@ -321,7 +411,7 @@ export default function GoogleMapClient({
     };
   }, []);
 
-  if (loadFailed) throw new Error("GOOGLE_MAPS_LOAD_FAILED");
+  if (loadFailed && !home) throw new Error("GOOGLE_MAPS_LOAD_FAILED");
 
   function select(marker: TeacherMarker) {
     onSelectTeacher?.(marker.teacherId);
@@ -355,7 +445,7 @@ export default function GoogleMapClient({
   }
 
   const mapShellClass = home
-    ? "relative h-full min-h-[280px] overflow-hidden rounded-lg border border-ink bg-card"
+    ? "relative h-[320px] overflow-hidden rounded-lg border border-ink bg-card"
     : "relative h-[20rem] overflow-hidden rounded-lg border border-ink bg-card";
 
   return (
@@ -366,7 +456,14 @@ export default function GoogleMapClient({
         setLoadFailed(true);
       }}
     >
-      <div className={`rtl-no-mirror ${home ? "h-full" : ""}`} aria-label={label}>
+      <div className={`teacher-map rtl-no-mirror ${home ? "grid gap-3" : ""}`} aria-label={label}>
+        {home && loadFailed ? (
+          <AreasOutlineArtwork
+            areas={areas}
+            label={label}
+            className="h-[320px] overflow-hidden rounded-lg border border-ink"
+          />
+        ) : (
         <div className={mapShellClass}>
           <Map
             defaultCenter={center}
@@ -380,7 +477,7 @@ export default function GoogleMapClient({
           >
             <MapHandle mapRef={mapRef} />
             {home && areas.length ? (
-              <AreasLayer areas={areas} fit />
+              <AreasLayer areas={areas} fit focusId={activeFocus} />
             ) : (
               <>
                 {areas.length ? <AreasLayer areas={areas} /> : null}
@@ -415,6 +512,8 @@ export default function GoogleMapClient({
               <InfoWindow
                 position={openMarker.displayPosition}
                 onCloseClick={() => setOpenId(null)}
+                headerDisabled
+                pixelOffset={[0, -8]}
               >
                 <MarkerDetails
                   bookingAvailable={bookingAvailable}
@@ -426,6 +525,7 @@ export default function GoogleMapClient({
           </Map>
           <div className="absolute end-3 top-3 z-10">{zoomRail()}</div>
         </div>
+        )}
         {!home && showingPeople && teacherChoices.length > 1 ? (
           <div className="mt-3 flex gap-2 overflow-x-auto">
             {teacherChoices.map((marker) => (

@@ -1,7 +1,7 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
-const locales = ["sv", "en", "ti", "ar"] as const;
+const locales = ["sv", "en", "ti", "ar", "am", "so"] as const;
 
 function flatten(
   value: unknown,

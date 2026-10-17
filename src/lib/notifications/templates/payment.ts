@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { supportedLocale } from "@/i18n/routing";
+import { supportedLocale, type Locale } from "@/i18n/routing";
 
 import { formatPrice } from "@/lib/pricing/format";
 
@@ -49,7 +49,7 @@ export type PaymentFailedPayload = z.infer<
   typeof paymentFailedPayloadSchema
 >;
 
-type SupportedLocale = "sv" | "en" | "ti" | "ar";
+type SupportedLocale = Locale;
 
 type PaymentCopy = {
   receiptSubject: string;
@@ -164,6 +164,50 @@ const copy: Record<SupportedLocale, PaymentCopy> = {
     courseRebookingBody:
       "انتهت مهلة الحجز البالغة 15 دقيقة قبل اكتمال الدفع. بقي الشراء متاحًا مرة واحدة بالضبط كاستحقاق دورة غير مستخدم. لم نستعد المقعد القديم.",
     chooseCourse: "اختر موعد دورة آخر",
+  },
+  am: {
+    receiptSubject: "ደረሰኝ ከማኪና ትራፊክ ትምህርት ቤት",
+    receiptTitle: "ስለ ግዢዎ እናመሰግናለን",
+    quantity: (quantity) => `ብዛት፦ ${quantity}`,
+    total: "ጠቅላላ",
+    vat: "ከዚህ ውስጥ ተ.እ.ታ",
+    viewOrder: "ትዕዛዙን ይመልከቱ",
+    failedSubject: "ክፍያው አልተጠናቀቀም",
+    failedTitle: "ክፍያው አልተሳካም",
+    failedBody: "ትዕዛዝዎ አሁንም በመጠባበቅ ላይ ነው። እንደገና ለመክፈል አገናኙን ይክፈቱ።",
+    resume: "ወደ ክፍያ ይቀጥሉ",
+    lessonRebookingSubject: "ለመንዳት ትምህርት አዲስ ሰዓት ይምረጡ",
+    lessonRebookingTitle: "ክፍያው ተሳክቷል – አዲስ ሰዓት ይምረጡ",
+    lessonRebookingBody:
+      "የ15 ደቂቃ ማስያዣው ክፍያው ከመጠናቀቁ በፊት አልቋል። ትምህርቱ እንደ ያልተጠቀሙበት ክሬዲት አንድ ጊዜ ይቀራል። የቀድሞው ሰዓት አልተመለሰም።",
+    chooseLesson: "አዲስ የትምህርት ሰዓት ይያዙ",
+    courseRebookingSubject: "አዲስ የኮርስ ጊዜ ይምረጡ",
+    courseRebookingTitle: "ክፍያው ተሳክቷል – አዲስ የኮርስ ጊዜ ይምረጡ",
+    courseRebookingBody:
+      "የ15 ደቂቃ ማስያዣው ክፍያው ከመጠናቀቁ በፊት አልቋል። ግዢው እንደ ያልተጠቀሙበት የኮርስ መብት አንድ ጊዜ ይቀራል። የቀድሞው ቦታ አልተመለሰም።",
+    chooseCourse: "አዲስ የኮርስ ጊዜ ይምረጡ",
+  },
+  so: {
+    receiptSubject: "Rasiid ka timid Makina Trafikskola",
+    receiptTitle: "Waad ku mahadsan tahay iibkaaga",
+    quantity: (quantity) => `Tirada: ${quantity}`,
+    total: "Wadarta",
+    vat: "Oo ay ku jirto VAT",
+    viewOrder: "Eeg dalabka",
+    failedSubject: "Lacag-bixinta lama dhamaystirin",
+    failedTitle: "Lacag-bixintu way fashilantay",
+    failedBody: "Dalabkaagu weli waa sugayaa. Fur xiriirka si aad mar kale ugu daydo.",
+    resume: "Sii wad lacag-bixinta",
+    lessonRebookingSubject: "Dooro waqti cusub oo cashar wadista ah",
+    lessonRebookingTitle: "Lacag-bixintu way guulaysatay – dooro waqti cusub",
+    lessonRebookingBody:
+      "Haynta 15-daqiiqada ah waxay dhammaatay ka hor inta aan lacag-bixintu dhammaan. Casharku wuxuu u haray hal mar oo keliya sidii credit aan la isticmaalin. Waqtigii hore lama soo celin.",
+    chooseLesson: "Qabso waqti cashar oo cusub",
+    courseRebookingSubject: "Dooro waqti koorso oo cusub",
+    courseRebookingTitle: "Lacag-bixintu way guulaysatay – dooro waqti koorso oo cusub",
+    courseRebookingBody:
+      "Haynta 15-daqiiqada ah waxay dhammaatay ka hor inta aan lacag-bixintu dhammaan. Iibku wuxuu u haray hal mar oo keliya sidii xuquuq koorso oo aan la isticmaalin. Booskii hore lama soo celin.",
+    chooseCourse: "Dooro waqti koorso oo cusub",
   },
 };
 

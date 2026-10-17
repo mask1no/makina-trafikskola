@@ -3,12 +3,14 @@ import { getTranslations } from "next-intl/server";
 
 import { LocationCards } from "@/app/[locale]/admin/LocationCards";
 import { Card } from "@/components/Card";
+import { GoogleReviewsCard } from "@/components/GoogleReviewsCard";
 import { PageHeader } from "@/components/PageHeader";
 import { StatCard } from "@/components/StatCard";
 import { locationSummaries } from "@/lib/admin/place-query";
 import { db } from "@/lib/db";
-import { formatLessonTime, stockholmParts } from "@/lib/format/datetime";
+import { formatLessonDateTime, formatLessonTime, stockholmParts } from "@/lib/format/datetime";
 import { formatPrice } from "@/lib/pricing/format";
+import { googleSchoolReviews } from "@/lib/reviews/google";
 
 export const dynamic = "force-dynamic";
 
@@ -37,6 +39,7 @@ export default async function AdminPage(props: {
     t,
     places,
     lessonsToday,
+    completedLessons,
     bookingsToday,
     bookingsMonth,
     revenueToday,
@@ -53,6 +56,19 @@ export default async function AdminPage(props: {
         status: counted,
       },
       orderBy: { startsAt: "asc" },
+      select: {
+        id: true,
+        startsAt: true,
+        student: { select: { firstName: true, lastName: true } },
+        teacher: {
+          select: { user: { select: { firstName: true, lastName: true } } },
+        },
+      },
+    }),
+    db.booking.findMany({
+      where: { status: "COMPLETED" },
+      orderBy: { startsAt: "desc" },
+      take: 8,
       select: {
         id: true,
         startsAt: true,
@@ -85,12 +101,20 @@ export default async function AdminPage(props: {
     }),
   ]);
 
-  const placeT = await getTranslations("admin.places");
+  const [placeT, reviewT, google] = await Promise.all([
+    getTranslations("admin.places"),
+    getTranslations("admin.reviews"),
+    googleSchoolReviews(),
+  ]);
   const revenue = (row: { _sum: { amountOre: number | null; refundedOre: number | null } }) =>
     (row._sum.amountOre ?? 0) - (row._sum.refundedOre ?? 0);
   const ratingCount = rating._count._all;
   const ratingValue =
-    ratingCount > 0 && rating._avg.rating != null ? rating._avg.rating.toFixed(1) : "–";
+    ratingCount > 0 && rating._avg.rating != null
+      ? rating._avg.rating.toFixed(1)
+      : google.rating != null
+        ? google.rating.toFixed(1)
+        : "–";
 
   return (
     <section>
@@ -128,10 +152,44 @@ export default async function AdminPage(props: {
           size="sm"
           label={t("rating")}
           value={ratingValue}
-          detail={ratingCount > 0 ? t("ratingDetail", { count: ratingCount }) : t("ratingEmpty")}
+          detail={
+            ratingCount > 0
+              ? t("ratingDetail", { count: ratingCount })
+              : google.count != null
+                ? reviewT("googleCount", { count: google.count })
+                : t("ratingEmpty")
+          }
+        />
+      </div>
+      <div className="mt-6">
+        <GoogleReviewsCard
+          title={reviewT("googleTitle")}
+          body={reviewT("googleBody")}
+          cta={reviewT("googleCta")}
+          url={google.url}
+          rating={google.rating != null ? reviewT("googleScore", { rating: google.rating.toFixed(1) }) : null}
+          countLabel={google.count != null ? reviewT("googleCount", { count: google.count }) : null}
         />
       </div>
 
+      <Card className="mt-6">
+        <h2 className="text-lg font-black">{t("completedTitle")}</h2>
+        {completedLessons.length ? (
+          <ul className="mt-4 grid gap-3">
+            {completedLessons.map((lesson) => (
+              <li key={lesson.id} className="rounded-sm border border-border bg-page px-4 py-3 text-sm leading-6 text-ink">
+                {t("lessonLine", {
+                  time: formatLessonDateTime(lesson.startsAt, params.locale),
+                  instructor: `${lesson.teacher.user.firstName} ${lesson.teacher.user.lastName}`,
+                  student: `${lesson.student.firstName} ${lesson.student.lastName}`,
+                })}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="mt-3 text-sm text-ink-muted">{t("completedEmpty")}</p>
+        )}
+      </Card>
       <div className="mt-8">
         <h2 className="text-xl font-black">{t("placesTitle")}</h2>
         <p className="mt-2 max-w-[70ch] text-sm leading-6 text-ink-muted">{t("placesDescription")}</p>

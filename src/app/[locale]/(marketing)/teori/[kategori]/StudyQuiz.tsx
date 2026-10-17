@@ -31,18 +31,20 @@ type Copy = {
 export function StudyQuiz({
   locale,
   questions,
+  startIndex = 0,
   screenshotFinished = false,
   copy,
   bookHref,
 }: {
   locale: string;
   questions: Question[];
+  startIndex?: number;
   authenticated?: boolean;
   screenshotFinished?: boolean;
   copy: Copy;
   bookHref: string;
 }) {
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(startIndex);
   const [picked, setPicked] = useState<string>();
   const [results, setResults] = useState<
     Record<string, { correct: boolean; explanation: string | null; answerId: string }>

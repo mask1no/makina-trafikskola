@@ -12,6 +12,7 @@ export default async function ProductsPage() {
   const [t, products] = await Promise.all([
     getTranslations("admin.editor"),
     db.product.findMany({
+      where: { kind: { not: "TEST_LESSON" } },
       orderBy: { sortOrder: "asc" },
       include: { translations: true },
     }),

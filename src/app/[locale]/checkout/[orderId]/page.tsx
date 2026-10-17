@@ -6,6 +6,7 @@ import { z } from "zod";
 
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
+import { locales } from "@/i18n/routing";
 import { formatPrice } from "@/lib/pricing/format";
 import { getStripe, stripeIsConfigured } from "@/lib/stripe";
 
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
 };
 
 const paramsSchema = z.object({
-  locale: z.enum(["sv", "en", "ti", "ar"]),
+  locale: z.enum(locales),
   orderId: z.string().cuid(),
 });
 

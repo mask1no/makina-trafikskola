@@ -45,6 +45,7 @@ type TeacherMapProps = {
   markers?: TeacherMarker[];
   areas?: MapArea[];
   variant?: MapVariant;
+  focusSlug?: string;
   selectedTeacherId?: string;
   onSelectTeacher?: (teacherId: string) => void;
 };
@@ -62,6 +63,7 @@ export function TeacherMap({
   markers = [],
   areas = [],
   variant = "directory",
+  focusSlug,
   selectedTeacherId,
   onSelectTeacher,
 }: TeacherMapProps) {
@@ -119,6 +121,7 @@ export function TeacherMap({
         markers={markers}
         areas={areas}
         variant={variant}
+        focusSlug={focusSlug}
         selectedTeacherId={selectedTeacherId}
         onSelectTeacher={onSelectTeacher}
       />
@@ -126,7 +129,7 @@ export function TeacherMap({
   );
 
   if (home) {
-    return <div className="h-full min-h-[280px]">{map}</div>;
+    return <div>{map}</div>;
   }
 
   return <div className="min-h-[20rem]">{map}</div>;

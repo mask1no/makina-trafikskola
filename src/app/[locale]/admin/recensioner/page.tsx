@@ -2,9 +2,11 @@ import { getTranslations } from "next-intl/server";
 
 import { Card } from "@/components/Card";
 import { EmptyState } from "@/components/EmptyState";
+import { GoogleReviewsCard } from "@/components/GoogleReviewsCard";
 import { PageHeader } from "@/components/PageHeader";
 import { formatDate } from "@/lib/format/datetime";
 import { db } from "@/lib/db";
+import { googleSchoolReviews } from "@/lib/reviews/google";
 
 import { ReviewActions } from "./ReviewActions";
 
@@ -14,8 +16,9 @@ export default async function ReviewsPage(props: {
   params: Promise<{ locale: string }>;
 }) {
   const params = await props.params;
-  const [t, reviews] = await Promise.all([
+  const [t, google, reviews] = await Promise.all([
     getTranslations("admin.reviews"),
+    googleSchoolReviews(),
     db.review.findMany({
       where: { published: false },
       orderBy: { createdAt: "asc" },
@@ -34,6 +37,16 @@ export default async function ReviewsPage(props: {
   return (
     <section>
       <PageHeader title={t("title")} description={t("description")} />
+      <div className="mt-6">
+        <GoogleReviewsCard
+          title={t("googleTitle")}
+          body={t("googleBody")}
+          cta={t("googleCta")}
+          url={google.url}
+          rating={google.rating != null ? t("googleScore", { rating: google.rating.toFixed(1) }) : null}
+          countLabel={google.count != null ? t("googleCount", { count: google.count }) : null}
+        />
+      </div>
       <div className="mt-8 grid gap-4">
         {reviews.map((review) => (
           <Card key={review.id}>

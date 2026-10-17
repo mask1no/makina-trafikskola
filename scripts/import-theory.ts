@@ -88,6 +88,13 @@ export async function importTheory(db: PrismaClient) {
   }
   const practiceCount = await importTheoryQuestions(db, questions);
   const signCount = await importTheoryQuestions(db, roadSignQuestions);
+  await db.theoryQuestion.updateMany({
+    where: {
+      category: { slug: "vagmarkesspel" },
+      sourceRef: { notIn: roadSignQuestions.map((question) => question.id) },
+    },
+    data: { active: false },
+  });
   return practiceCount + signCount;
 }
 

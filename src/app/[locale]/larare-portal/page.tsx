@@ -14,6 +14,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { Textarea } from "@/components/Textarea";
 import { Card } from "@/components/Card";
 import { CheckboxField } from "@/components/CheckboxField";
+import { getCreditBalance } from "@/lib/credits/ledger";
 import { formatLessonDateTime, formatLessonTime } from "@/lib/format/datetime";
 import { formatPrice } from "@/lib/pricing/format";
 import { telHref } from "@/lib/format/phone";
@@ -130,6 +131,26 @@ export default async function TeacherPortal(
       }),
     ),
   );
+  const creditBalances = new Map(
+    (
+      await Promise.all(
+        (
+          await db.user.findMany({
+            where: {
+              deletedAt: null,
+              bookings: {
+                some: {
+                  teacherId: teacher.id,
+                  status: { in: ["CONFIRMED", "COMPLETED"] },
+                },
+              },
+            },
+            select: { id: true },
+          })
+        ).map(async (pupil) => [pupil.id, await getCreditBalance(db, pupil.id, now)] as const),
+      )
+    ),
+  );
   const pupils = await db.user.findMany({
     where: {
       deletedAt: null,
@@ -196,8 +217,12 @@ export default async function TeacherPortal(
         {searchParams.error === "LESSON_NOT_STARTED" ? (
           <Notice tone="danger" className="mt-4">{t("lessonNotStarted")}</Notice>
         ) : null}
-        {!teacher.user.phone ? (
-          <Notice tone="danger" className="mt-4">{t("noPhone")}</Notice>
+        {teacher.locations.length ? (
+          <p className="mt-3 text-sm font-bold">
+            {t("drivesFrom", {
+              places: teacher.locations.map((item) => item.location.name).join(", "),
+            })}
+          </p>
         ) : null}
         <div className="flex items-start gap-4">
           <Avatar
@@ -224,23 +249,23 @@ export default async function TeacherPortal(
             }
           />
         </div>
-        {view === "office" ? null : (
-        <>
-        <div className="mt-6 hidden grid-cols-2 gap-2 lg:grid">
-          {(["today", "week"] as const).map((value) => (
+        <div className="mt-6 grid grid-cols-3 gap-2">
+          {(["today", "week", "office"] as const).map((value) => (
             <a
               key={value}
               href={`/${params.locale}/larare-portal?${new URLSearchParams({
                 month: monthKey,
-                ...(value === "week" ? { view: "week" } : {}),
+                ...(value === "today" ? {} : { view: value }),
               }).toString()}`}
               aria-current={view === value ? "page" : undefined}
-              className="inline-flex min-h-11 items-center justify-center rounded-sm border border-border bg-card px-3 text-sm font-bold aria-[current=page]:border-ink aria-[current=page]:bg-surface aria-[current=page]:text-ink-inverse"
+              className="inline-flex min-h-11 items-center justify-center rounded-sm border border-border bg-card px-3 text-center text-sm font-bold aria-[current=page]:border-ink aria-[current=page]:bg-surface aria-[current=page]:text-ink-inverse"
             >
               {t(`views.${value}`)}
             </a>
           ))}
         </div>
+        {view === "office" ? null : (
+        <>
         <div className="relative mt-8 grid gap-4 sm:before:absolute sm:before:bottom-6 sm:before:start-[3.45rem] sm:before:top-6 sm:before:w-px sm:before:bg-border">
           {lessons.map((lesson, index) => {
             const pickup = lesson.pickupAddress;
@@ -290,7 +315,7 @@ export default async function TeacherPortal(
                   </p>
                 </div>
                 {lesson.creditCharged ? (
-                <details className="mt-4">
+                <details className="mt-4" {...(lesson.status !== "COMPLETED" ? { open: true } : {})}>
                   <summary className="flex min-h-11 cursor-pointer list-none items-center font-bold [&::-webkit-details-marker]:hidden">
                     {lesson.status === "COMPLETED" ? t("updateReport") : t("writeNote")}
                   </summary>
@@ -379,6 +404,12 @@ export default async function TeacherPortal(
                 </h3>
                 <p className="mt-1 text-sm text-ink-muted">
                   {t("students.lessonsDone", { count: done, n: String(done) })}
+                </p>
+                <p className="mt-1 text-sm font-bold">
+                  {t("students.remaining", {
+                    count: creditBalances.get(pupil.id) ?? 0,
+                    n: String(creditBalances.get(pupil.id) ?? 0),
+                  })}
                 </p>
                 <p className="mt-1 break-words text-sm text-ink">
                   {nextLesson

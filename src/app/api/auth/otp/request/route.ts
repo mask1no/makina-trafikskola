@@ -11,6 +11,7 @@ import { normalizeSwedishPhone } from "@/lib/auth/phone";
 import { sendOtpSms } from "@/lib/auth/sms";
 import { verifyTurnstileToken } from "@/lib/auth/turnstile";
 import { db } from "@/lib/db";
+import { locales } from "@/i18n/routing";
 import { clientIp } from "@/lib/http/client-ip";
 
 export const runtime = "nodejs";
@@ -131,7 +132,7 @@ export async function POST(request: Request) {
   }
 
   const locale =
-    account?.localePref && ["sv", "en", "ti", "ar"].includes(account.localePref)
+    account?.localePref && (locales as readonly string[]).includes(account.localePref)
       ? account.localePref
       : "sv";
 

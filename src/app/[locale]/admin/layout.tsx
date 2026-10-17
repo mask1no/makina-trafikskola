@@ -48,19 +48,16 @@ export default async function AdminLayout(
   ];
 
   return (
-    <div>
-      <div className="border-b border-surface-soft bg-surface text-ink-inverse">
-        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6">
+    <div className="bg-page">
+      <div className="site-container pt-6">
+        <div className="rounded-xl border border-ink bg-surface px-5 py-5 text-ink-inverse sm:px-7">
           <p className="text-sm font-bold text-ink-inverse-muted">{t("label")}</p>
           <p className="mt-1 text-xl font-black">{session.user.name}</p>
         </div>
       </div>
-      <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8">
+      <div className="site-container py-6 sm:py-8">
         <div className="hidden lg:block">
-          <NavPills
-            label={t("label")}
-            items={links}
-          />
+          <NavPills label={t("label")} items={links} centered />
         </div>
         <div className="lg:mt-8">{children}</div>
       </div>

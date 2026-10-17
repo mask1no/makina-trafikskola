@@ -1,0 +1,1771 @@
+{
+  "placeholders": {
+    "note": "Beddel [TOKEN] kasta oo ku jira faylkan ka hor furitaanka. Isla calaamadahaas ayaa loo isticmaalaa bogagga shuruudaha, asturnaanta iyo /kontakt.",
+    "ORGNR": "559531-4146",
+    "BESOKSADRESS": "Centralvägen 5, 194 77 Upplands Väsby",
+    "POSTADRESS": "Centralvägen 5, 194 77 Upplands Väsby",
+    "TELEFON": "070-097 04 83",
+    "EPOST": "info@makina.se"
+  },
+  "company": {
+    "legalName": "Makina Trafikskola AB",
+    "orgnr": "559531-4146",
+    "visitingAddress": "Centralvägen 5, 194 77 Upplands Väsby",
+    "postalAddress": "Centralvägen 5, 194 77 Upplands Väsby",
+    "phone": "070-097 04 83",
+    "email": "info@makina.se"
+  },
+  "language": {
+    "label": "Dooro luqadda",
+    "sv": "Svenska",
+    "en": "English",
+    "ti": "ትግርኛ",
+    "ku": "Kurdi",
+    "am": "Amxaari",
+    "so": "Soomaali",
+    "fa": "Faarisi",
+    "prs": "Dari",
+    "tig": "Tigre",
+    "ar": "العربية"
+  },
+  "shell": {
+    "skipToContent": "U gudub nuxurka",
+    "navigation": "Hagaha weyn",
+    "home": "Guriga",
+    "packages": "Xirmooyin",
+    "bookings": "Ballamahayga",
+    "messages": "Fariimaha",
+    "theory": "Aragti",
+    "profile": "Astaanta",
+    "lessons": "Casharada wadista",
+    "lessonsShort": "Casharo",
+    "teachers": "Macallimiinta",
+    "book": "Ballan hadda",
+    "scrollTop": "Ku noqo sare",
+    "signIn": "Soo gal",
+    "signOut": "Ka bax",
+    "account": "Akoonkayga",
+    "myPages": "Bogagayga",
+    "balance": "Casharadayda",
+    "teacherPortal": "Albaabka macallinka",
+    "adminPanel": "Guddiga maamulka",
+    "admin": "Maamul",
+    "calendar": "Kalandarka",
+    "students": "Ardayda",
+    "contact": "Xiriir",
+    "courses": "Koorsooyin",
+    "prices": "Qiimaha",
+    "questions": "Su'aalo?",
+    "languagePage": {
+      "sv": "Iswiidhish",
+      "en": "Ingiriisi",
+      "ti": "Tigriinya",
+      "ku": "Kurdi",
+      "am": "Amxaari",
+      "so": "Soomaali",
+      "fa": "Faarisi",
+      "prs": "Dari",
+      "tig": "Tigre",
+      "ar": "Carabi"
+    },
+    "here": "Meesha aan joogno",
+    "schoolIn": "Dugsiga wadista ee {town}",
+    "comingSoonPlace": "{town} – waa soo socda",
+    "openingHours": "Saacadaha furitaanka: Isniin–Jimce 08–21, Sabti–Axad 10–18",
+    "copyright": "© {year} Makina Trafikskola",
+    "footerDescription": "Waxbarashada wadista oo leh hagitaan cad iyo taageero luqaddaada.",
+    "explore": "Baadh",
+    "terms": "Shuruudaha",
+    "privacy": "Asturnaanta",
+    "cookies": "Kukiyada",
+    "callUs": "Naga soo wac",
+    "mailUs": "Noo soo dir iimayl",
+    "seePrices": "Arag qiimaha",
+    "openNow": "Hadda waa furan",
+    "closed": "Waa xiran",
+    "opensAt": "wuxuu furmaa {time}",
+    "opensOn": "wuxuu furmaa {day} {time}",
+    "weekdayShort": {
+      "0": "Ax",
+      "1": "Is",
+      "2": "Tal",
+      "3": "Arb",
+      "4": "Kha",
+      "5": "Jim",
+      "6": "Sab"
+    },
+    "directions": "Tilmaamaha",
+    "showMap": "Muuji khariidadda",
+    "mapPrivacy": "Khariidadda waxaa laga soo qaaday Google. Kukiyada iyo siyaasadda asturnaanta ee Google ayaa khuseysaa.",
+    "legal": "Sharci",
+    "appStore": "App Store",
+    "googlePlay": "Google Play",
+    "instagram": "Instagram",
+    "facebook": "Facebook",
+    "tiktok": "TikTok",
+    "languages": "Luqadaha",
+    "appBadges": "Abka",
+    "socials": "Baraha bulshada",
+    "tabSignIn": "Soo gal",
+    "more": "Wax kale",
+    "teacherOffice": "Saacadaha iyo kalandarka",
+    "closeMenu": "Xir liiska",
+    "statusOpen": "Furan · ilaa {time}",
+    "statusClosedSameDay": "Xiran · wuxuu furmaa {time}",
+    "statusClosedOtherDay": "Xiran · wuxuu furmaa {day} {time}"
+  },
+  "common": {
+    "bookNow": "Ballan hadda",
+    "viewAll": "Arag dhammaan",
+    "readMore": "Akhri wax dheeraad ah",
+    "swedishOnly": "Iswiidhish kaliya",
+    "all": "Dhammaan luqadaha",
+    "allLocations": "Dhammaan goobaha",
+    "applyFilter": "Muuji natiijooyinka"
+  },
+  "home": {
+    "hero": {
+      "brand": "Makina",
+      "title": "Si kalsooni leh u wado, ku baro luqaddaada",
+      "description": "Casharada wadista, aragti iyo macallimiin khibrad leh oo Stockholm ku yaal – dhammaan hal meel.",
+      "areas": "Farsta · Upplands Väsby",
+      "openUntil": "Furan · ilaa {time}",
+      "introOffer": "Casharka koowaad {price}"
+    },
+    "quick": {
+      "eyebrow": "Halkan ka bilow",
+      "title": "Maxaad maanta rabtaa inaad samayso?",
+      "lessons": "Casharada wadista",
+      "courses": "Koorsooyin",
+      "teachers": "Macallimiinta",
+      "contact": "Nala soo xiriir",
+      "theory": "Aragti",
+      "prices": "Qiimaha"
+    },
+    "pickup": {
+      "eyebrow": "Qaadis",
+      "title": "Waxaan kula kulannaa agagaarkaaga",
+      "description": "Qaadis bilaash ah gudaha agagaarka Farsta iyo Upplands Väsby.",
+      "areas": "Farsta · Upplands Väsby",
+      "imageAlt": "Goobaha qaadista ee Makina Trafikskola",
+      "mapLabel": "Goobta qaadista"
+    },
+    "journey": {
+      "choose": {
+        "title": "Dooro jidkaaga",
+        "description": "Isbarbar dhig hal cashar ama xirmo xawaarahaaga."
+      },
+      "book": {
+        "title": "Dooro magaalada, qaadista iyo macallinka",
+        "description": "Shaandhee luqadda, goobta iyo sanduuqa gudbinta."
+      },
+      "call": {
+        "title": "Naga soo wac",
+        "description": "Waxaan kaa caawinnaa inaad hesho macallin iyo waqti kugu habboon."
+      },
+      "learn": {
+        "title": "Raac qorshahaaga",
+        "description": "Tallaabo tallaabo u horumar oo leh hagitaan cad."
+      }
+    },
+    "teachers": {
+      "eyebrow": "Ku baro luqaddaada",
+      "title": "Hel macallin kuu dhow",
+      "description": "Qaadis bilaash ah gudaha Farsta iyo Upplands Väsby",
+      "cta": "Ballan macallinkaaga",
+      "languageLabel": "Shaandhee macallimiinta luqadda",
+      "reviewsTitle": "Faallooyinka Google",
+      "reviewsBody": "Akhri waxa dadku ka yiraahdaan Makina Trafikskola.",
+      "reviewsCta": "Ku fur Google"
+    },
+    "faq": {
+      "eyebrow": "Su'aalaha inta badan la iswaydiiyo",
+      "title": "Jawaabo ka hor intaadan bilowin",
+      "cost": {
+        "question": "Immisa ayay ku kacaysaa shatiga wadista ee Makina?",
+        "answer": "Casharka koowaad 499 kr, ka dib 845 kr. Xirmooyinku waxay ka bilaabmaan {packagePrice}. Dhammaan qiimuhu waxaa ku jira VAT."
+      },
+      "languages": {
+        "question": "Ma ku qaadan karaa casharada luqaddayda?",
+        "answer": "Casharo {languages}."
+      },
+      "pickup": {
+        "question": "Ma i soo qaadi kartaan?",
+        "answer": "Haa. Qaadista waa bilaash gudaha aagagga cagaaran (Farsta iyo Upplands Väsby) mana ka qaadato waqti casharkaaga."
+      },
+      "cancel": {
+        "question": "Sideen u joojiyaa cashar?",
+        "answer": "Waxaad ka joojin kartaa Ballamahayga. Haddii aad ugu dambayn 24 saac ka hor casharka joojiso, waxba kuma kacayso casharkuna wuxuu ku soo noqdaa hadhaagaaga. Joojin dambe waxaa laga qaadaa qiimaha oo dhan casharkana waa laga jarayaa hadhaaga.",
+        "answerPhone": "Naga soo mar bogga xiriirka si aad u joojiso ama u beddesho cashar. Ugu dambayn 24 saac ka hor casharka waxba kuma kacayso casharkuna wuxuu ku soo noqdaa hadhaagaaga. Joojin dambe waxaa laga qaadaa qiimaha oo dhan waxaana laga jarayaa hadhaaga."
+      },
+      "risk": {
+        "question": "Waa maxay farqiga u dhexeeya Risk 1 iyo Risk 2?",
+        "answer": "Risk 1 waa koorso aragti ah oo ku saabsan khamriga, daroogada, daalka iyo khataraha kale. Risk 2 waa tababar ficil ah oo lagu sameeyo goobta simbiriirka, oo ku saabsan xawaaraha iyo xaaladaha wadista ee adag. Labaduba waa lagama maarmaan shatiga heerka B."
+      },
+      "validity": {
+        "question": "Intee in le'eg ayay xirmadaydu shaqaynaysaa?",
+        "answer": "Casharada wadista iyo xirmooyinku waxay shaqeeyaan 12 bilood laga bilaabo iibsiga. Hadhaagaaga iyo taariikhda ugu dambeysa waxaa lagu muujiyaa Bogagayga. Aragtida dhijitaalka ah waqti xadidnimo ma leh."
+      },
+      "late": {
+        "question": "Maxaa dhacaya haddii aan daaho?",
+        "answer": "Casharku wuxuu dhammaadaa waqtiga caadiga ah ee dhamaadka."
+      }
+    },
+    "theory": {
+      "comingSoon": "Aragtida waxaa loo diyaarinayaa afarta luqadood ee bogga."
+    },
+    "benefits": {
+      "label": "Waxa aad ka hesho Makina",
+      "language": {
+        "title": "Luqaddaada",
+        "body": "Waxbarid {languages}."
+      },
+      "pickup": {
+        "title": "Waan ku soo qaadnaa",
+        "body": "Bilaash Farsta iyo Upplands Väsby."
+      },
+      "lesson": {
+        "title": "50 daqiiqo",
+        "body": "Kulanka oo dhan adiga oo wadaya."
+      },
+      "risk": {
+        "title": "Risk 1 annaga",
+        "body": "Tababarka khatarta ee qasabka ah, dugsigeenna."
+      },
+      "guarantee": {
+        "title": "Dammaanadda shatiga",
+        "body": "25 cashar, Risk 1, Risk 2 iyo aragti."
+      },
+      "payment": {
+        "title": "Kaarka, Swish iyo Klarna",
+        "titleSwishSoon": "Kaarka iyo Klarna",
+        "body": "U bixi sidii aad rabto.",
+        "bodySwishSoon": "Swish waa soo furmayaa."
+      },
+      "cancel": {
+        "title": "Si bilaash ah u jooji",
+        "body": "Bilaash ilaa 24 saac ka hor casharka. Ka dib, qiimaha oo dhan."
+      },
+      "reminder": {
+        "title": "Fariin maalin ka hor",
+        "body": "Xusuusin, si aad u timaado diyaar."
+      },
+      "validity": {
+        "title": "12 bilood oo aad isticmaasho",
+        "body": "Casharada iyo xirmooyinku waxay ka bilaabmaan maalinta aad iibsato."
+      }
+    }
+  },
+  "lessons": {
+    "eyebrow": "Qiimaha iyo xirmooyinka",
+    "title": "Casharada wadista tallaabo kasta",
+    "description": "Isbarbar dhig casharada keliya iyo xirmooyinka. Dhammaan qiimuhu waxaa ku jira VAT.",
+    "introOffer": {
+      "eyebrow": "Soo jeedin hordhac ah",
+      "title": "Casharkaaga wadista ee koowaad 499 kr",
+      "description": "50 daqiiqo oo leh macallin baranaya heerkaaga kuna caawiya qorshaynta tallaabada xigta.",
+      "ordinary": "Qiimaha caadiga ah",
+      "book": "Ballan casharka koowaad",
+      "callFirst": "Nala soo xiriir si aad u bilowdo"
+    },
+    "sortPrice": "Qiimo",
+    "sortLessons": "Tirada casharada",
+    "bestSeller": "Kan ugu iibka badan",
+    "groups": {
+      "label": "Kooxaha alaabta",
+      "single": {
+        "title": "Casharo keliya",
+        "intro": "Hal cashar wadista."
+      },
+      "packages": {
+        "title": "Xirmooyin",
+        "intro": "Dhowr cashar oo wadista ah hal xirmo."
+      },
+      "intensive": {
+        "title": "Degdeg",
+        "intro": "Xirmooyin leh tababar khatar, aragti ama dammaanad."
+      },
+      "courses": {
+        "title": "Koorsooyin",
+        "intro": "Koorsooyin qasab ah iyo tababarka kormeeraha."
+      },
+      "theory": {
+        "title": "Aragti",
+        "intro": "Aragti dhijitaal ah oo aan waqti xadidnimo lahayn."
+      }
+    },
+    "testCallout": "Ma hubtaa waxa aad u baahan tahay? Naga soo wac waxaanan kaa caawinnaa doorashada."
+  },
+  "product": {
+    "popular": "Kan ugu caansan",
+    "notForSale": "Weli lama iibinayo",
+    "visualLabel": "Waxbarashada wadista",
+    "save": "{percent}% ka yar iibsiga kala gooni",
+    "saveAmount": "Waxaad kaydsataa {amount} marka loo eego iibsiga kala gooni",
+    "emptyTitle": "Alaab lama muujinayo",
+    "emptyDescription": "Xulashada waa la cusboonaysiinayaa. Fadlan mar kale soo eeg.",
+    "included": "Waxa ku jira",
+    "priceIncludesVat": "Qiimaha oo ay ku jirto VAT",
+    "perLesson": "cashar kasta",
+    "images": {
+      "en-korlektion": "Arday iyo macallin inta cashar wadista socdo",
+      "testlektion": "Macallinku wuxuu ka hadlayaa wadista ka hor casharka qiimeynta",
+      "korpaket-b3": "Saddex cashar, ardaygu wuxuu wadayaa waddo deggan"
+    },
+    "validityMonths": "Wuxuu shaqeeyaa {count} bilood",
+    "kind": {
+      "SINGLE_LESSON": "CASHAR KELIYA",
+      "TEST_LESSON": "CASHARKA QIIMEYNTA",
+      "PACKAGE": "XIRMADA CASHARKA",
+      "INTENSIVE_PACKAGE": "XIRMO DEGDEG AH",
+      "THEORY_ACCESS": "ARAGTI",
+      "GUARANTEE": "DAMMAANAD",
+      "COURSE_SEAT": "KOORSO"
+    },
+    "availableDescription": "Alaabtani waa firfircoon waxaana hadda la iibsan karaa.",
+    "inactiveDescription": "Qiimaha waxaa loo muujiyaa isbarbardhig. Alaabtan lama iibsan karo ilaa adeeg kasta oo ku jira la bixin karo.",
+    "checkout": {
+      "terms": "Waan aqbalay shuruudaha iibsiga.",
+      "withdrawal": "Waxaan akhriyay xuquuqda ka-noqoshada 14-ka maalmood waxaanan codsanayaa in adeeggu u bilaabmo sidii loo qorsheeyay.",
+      "submit": "Sii wad lacag-bixinta",
+      "redirecting": "Lacag-bixinta waa la furayaa…",
+      "error": "Lacag-bixinta lama bilaabi karin. Soo gal oo mar kale isku day."
+    },
+    "cancelNote": "Ugu dambayn 24 saac ka hor casharka si bilaash ah u jooji. Joojin dambe waxaa laga qaadaa qiimaha oo dhan."
+  },
+  "checkout": {
+    "eyebrow": "Lacag-bixin ammaan ah",
+    "title": "Dhammaystir lacag-bixintaada",
+    "businessName": "Makina Trafikskola",
+    "description": "Dib u eeg dalabkaaga oo dooro habka lacag-bixinta. Halkan ayaad joogtaa ilaa lacag-bixintu dhammaato.",
+    "paymentTitle": "Faahfaahinta lacag-bixinta",
+    "secureDescription": "Faahfaahinta lacag-bixintaada waxaa si toos ah u maamula bixiyaha lacag-bixinta Stripe.",
+    "summaryTitle": "Dalabkaaga",
+    "quantity": "Tirada: {quantity}",
+    "loading": "Goobaha lacag-bixinta ee ammaanka ah waa la rarayaa…",
+    "reassurance": "Waxaa lagaa qaadaa kaliya ka dib markaad xaqiijiso lacag-bixinta. Qiimaha waxaa ku jira VAT.",
+    "total": "Wadarta",
+    "vat": "VAT waa ku jirtaa",
+    "submit": "Hadda bixi",
+    "submitting": "Lacag-bixinta waa la socodsiiyaa…",
+    "genericError": "Lacag-bixinta lama dhammayn karin. Hubi faahfaahintaada oo mar kale isku day.",
+    "mockTitle": "Habka lacag-bixinta ee horumarinta",
+    "mockDescription": "Furayaasha Stripe ma jiraan. Dalabku wuu sugayaa, laakiin lacag-bixin ama fulinta ma dhacayso.",
+    "unavailable": "Lacag-bixintu hadda ma diyaar sana. Wax lagama qaadin.",
+    "alreadyProcessed": "Dalabkan horay ayaa loo socodsiyay.",
+    "viewStatus": "Arag xaaladda dalabka"
+  },
+  "teachers": {
+    "eyebrow": "Macallimiinteena",
+    "title": "Hel macallinka kuu habboon",
+    "description": "Marka hore dooro luqad, ka dib goob, si aad u hesho macallinka kugu habboon.",
+    "languageFilter": "1. Dooro luqadda",
+    "languageQuestion": "Luqaddee ayaad casharada ku rabtaa?",
+    "anyLanguage": "Dhammaan luqadaha",
+    "noneAvailable": "Macallin hadda ma diyaar sana",
+    "clearFilters": "Tirtir shaandhada",
+    "showAsList": "Muuji macallimiinta liis ahaan",
+    "locationFilter": "2. Dooro goobta",
+    "results": "Natiijooyinka macallimiinta",
+    "resultCount": "{count, plural, =0 {Macallin ma jiro} =1 {1 macallin} other {{n} macallin}}",
+    "emptyTitle": "Macallin ku habboon ma jiro",
+    "emptyDescription": "Isku day luqad ama goob kale.",
+    "transmissionFilter": "3. Dooro sanduuqa gudbinta",
+    "allTransmissions": "Dhammaan sanduuqyada",
+    "searchLabel": "Raadi macallin ama goob",
+    "searchPlaceholder": "Magac ama goob"
+  },
+  "teacher": {
+    "yearsExperience": "{count, plural, =0 {Macallin cusub} =1 {1 sano oo khibrad ah} other {{n} sano oo khibrad ah}}",
+    "transmission": {
+      "manual": "Gacanta",
+      "automatic": "Otomaatig"
+    },
+    "nextFree": "Waqtiga xiga ee bannaan"
+  },
+  "map": {
+    "title": "Khariidadda macallimiinta",
+    "staticLabel": "Khariidad fudud oo agagaarka Stockholm",
+    "interactiveLabel": "Khariidad is-dhexgal ah oo goobaha macallimiinta",
+    "unavailableTitle": "Khariidadda lama rari karin",
+    "unavailableDescription": "Weli waxaad liiska ka heli kartaa oo dooran kartaa macallin.",
+    "pendingKey": "Khariidadda way shaqaynaysaa marka furaha Google Maps la dhigo.",
+    "interactionTitle": "Baadh macallimiinta khariidadda",
+    "interactionHint": "Macallin kasta wuxuu ku yaal khariidadda. Taabo qof si aad u aragto luqadda, sanduuqa gudbinta iyo goobta.",
+    "book": "Ballan",
+    "contact": "Nala soo xiriir",
+    "close": "Xir",
+    "zoomIn": "Soo dhowee",
+    "zoomOut": "Ka fogee",
+    "recenter": "Muuji dhammaan",
+    "areaSearchLabel": "Raadi cinwaan agagaarka",
+    "areaSearchPlaceholder": "Cinwaan waddo oo Farsta ama Upplands Väsby ah",
+    "areaInside": "Qaadis gudaha {area}",
+    "areaOutside": "Cinwaankaas wuxuu ka baxsan yahay Farsta iyo Upplands Väsby.",
+    "searchAction": "Raadi",
+    "homeTeaserTitle": "Hel macallin kuu dhow",
+    "homeTeaserDescription": "Luqadda ku shaandhee oo arag meesha macallimiintu joogaan.",
+    "homeTeaserCta": "Fur khariidadda macallimiinta"
+  },
+  "courses": {
+    "eyebrow": "Tababarka khatarta iyo koorsooyinka",
+    "title": "Munaasabadaha koorsada ee soo socda",
+    "description": "Arag koorsooyinka la qorsheeyay iyo kuraasta hartay.",
+    "when": "Waqti",
+    "language": "Luqad",
+    "venue": "Goobta",
+    "seats": "Kuraasta bannaan",
+    "seatsLeft": "{count, plural, =0 {Waa buuxsamay} =1 {1 kursi ayaa haray} other {{n} kursi ayaa haray}}",
+    "inactive": "Alaabtan koorsada weli lama iibsan karo.",
+    "soon": "Taariikhda xigta waa la soo daabici doonaa.",
+    "callToBook": "Naga soo wac koorsada",
+    "info": {
+      "RISK1": "Risk 1 waa qaybta aragtida ee tababarka khatarta ee qasabka ah.",
+      "RISK2": "Risk 2 waa qaybta ficilka waxaana lagu qabtaa goobta simbiriirka."
+    },
+    "emptyTitle": "Koorso lama qorsheyn",
+    "emptyDescription": "Munaasabado cusub ayaa halkan ka soo muuqan doona ka dib xaqiijin.",
+    "kind": {
+      "RISK1": "Risk 1",
+      "RISK2": "Risk 2",
+      "HANDLEDARUTBILDNING": "Koorsada kormeeraha",
+      "INTRO_THEORY": "Hordhaca aragtida"
+    },
+    "booking": {
+      "terms": "Waan aqbalay shuruudaha iibsiga.",
+      "withdrawal": "Waxaan codsanayaa in ballanta koorsadu ku bilaabato muddada ka-noqoshada waxaanan fahmayaa sida ay tani u saamayso xuquuqdayda ka-noqoshada.",
+      "submit": "Ballan kursi koorso",
+      "submitting": "Kursiga iyo lacag-bixinta waa la hubinayaa…",
+      "confirmed": "Kursigaaga koorsada waa la xaqiijiyay xuquuqda aad bixisay.",
+      "failed": "Ballanta lama dhammayn karin. Mar kale isku day."
+    }
+  },
+  "theory": {
+    "eyebrow": "Aragtida wadista",
+    "title": "Si bilaash ah ugu tababar aragtida wadista",
+    "description": "Su'aalaha bilaashka ah waa la heli karaa iyada oo aan la iibsan. Nuxurka la bixiyo wuxuu u baahan yahay gelitaan aragti oo firfircoon.",
+    "freeDescription": "Su'aalo bilaash ah oo lagu tababaro, iyada oo aan la iibsan.",
+    "hub": {
+      "label": "Dooro sida aad u baranayso",
+      "free": "Bilaash",
+      "comingSoon": "Waa soo socda",
+      "steps": {
+        "title": "Tallaabo tallaabo",
+        "description": "Raac qaybaha si nidaam cad ah.",
+        "scrollHint": "Dhinac u jiid si aad u aragto tallaabo kasta."
+      },
+      "questions": {
+        "title": "Su'aalaha aragtida wadista",
+        "description": "Ku tababar su'aalaha oo isla markiiba u arag sharaxaad kasta.",
+        "badge": "{count} su'aal"
+      },
+      "signs": {
+        "title": "Ciyaarta calaamadaha wadada",
+        "description": "Baro calaamadaha wadada ee Iswiidhishka wareegyo ciyaar oo gaaban."
+      },
+      "book": {
+        "title": "Buug",
+        "description": "Buugga aragtida wadista ee dhijitaalka ah ee Makina waa la diyaarinayaa.",
+        "pending": "Buugga halkan ayaa laga daabici doonaa ka dib marka nuxurka dugsiga la dhammeeyo lana eego."
+      },
+      "ebook": {
+        "title": "Buug elektaroonig ah",
+        "description": "Akhri ama dhageyso marka agabku diyaar yahay.",
+        "ebookTitle": "Buug elektaroonig ah",
+        "ebookBody": "PDF-ka halkan ayaa lagu dari doonaa.",
+        "audioTitle": "Buug maqal ah",
+        "audioBody": "Faylka maqalka halkan ayaa lagu dari doonaa.",
+        "soon": "Waa soo socda dambe"
+      },
+      "facts": {
+        "title": "Bangiga xaqiiqooyinka",
+        "description": "Akhri sharaxaado il laga soo qaatay oo ku salaysan hay'adaha Iswiidhishka.",
+        "entries": "{count, plural, =1 {1 xaqiiqo} other {{n} xaqiiqo}}",
+        "read": "Fur bangiga xaqiiqooyinka",
+        "categoryDescription": "Sharaxaado asalka ah oo ka yimid bangiga su'aalaha, oo leh ilo aad wax dheeraad ah ka akhrisato.",
+        "source": "Isha"
+      }
+    },
+    "signGame": {
+      "title": "Ciyaarta calaamadaha wadada",
+      "description": "Ku tababar {count} su'aal oo ku saabsan calaamadaha rasmiga ah ee wadada Iswiidhishka.",
+      "history": "Jawaabihii hore",
+      "progress": "Wareegga {current} ee {total}",
+      "streak": "{count} oo isku xigta",
+      "best": "Ugu fiican {count}",
+      "finish": "Muuji natiijada",
+      "emptyTitle": "Ciyaarta calaamadaha wadada waa la diyaarinayaa",
+      "emptyDescription": "Calaamadaha rasmiga ah ee wadada waa la soo dejinayaa. Fadlan mar kale isku day."
+    },
+    "teaser": {
+      "eyebrow": "Aragtida wadista",
+      "title": "Ku baro aragtida luqaddaada",
+      "description": "Qayb qayb ugu tababar oo qaado imtixaan tijaabo ah oo qaabkiisu la mid yahay imtixaanka aqoonta. Tusaale ayaa bilaash ah. Inta kale way furantaa markaad iibsato aragtida.",
+      "freeDescription": "Ku tababar su'aalaha bilaashka ah, qayb qayb.",
+      "tryFree": "Si bilaash ah ugu tababar",
+      "buy": "Iibso gelitaanka aragtida",
+      "pending": "Wuu furmayaa marka bangiga su'aalaha diyaar yahay",
+      "oneTime": "Iibsi hal mar ah",
+      "features": {
+        "categories": "Qaybo cad",
+        "practice": "Su'aalo tababar oo bilaash ah",
+        "languages": "Aragtida wadista {languages}."
+      }
+    },
+    "licensingPending": "Bangiga su'aalaha oo dhan wuxuu furmaa markaad iibsato gelitaanka aragtida.",
+    "questionsAvailable": "su'aalo bilaash ah oo diyaar u ah tijaabo",
+    "freeIntro": "Ku bilow tusaale bilaash ah",
+    "startPractice": "Bilow tababarka",
+    "freeCount": "{count, plural, =1 {1 su'aal bilaash ah} other {{n} su'aal oo bilaash ah}}",
+    "categoryProgress": "{attempted}/{total} ayaa la isku dayay",
+    "swedishOnly": "Iswiidhish kaliya",
+    "examLink": "Fur imtixaanka tijaabada",
+    "emptyTitle": "Su'aalaha bilaashka ah dhowaan ayaa la daabici doonaa",
+    "emptyDescription": "Waxaan ku daraynaa su'aalaha dugsiga. Mar kale soo eeg.",
+    "paidAccess": "Gelitaan aragti oo firfircoon",
+    "freeAccess": "Su'aalo bilaash ah",
+    "questionNumber": "Su'aal {number}",
+    "categoryEmptyTitle": "Su'aalo diyaar ah ma jiraan",
+    "categoryEmptyDescription": "Qaybtan ma lahan su'aalo akoonkaagu geli karo.",
+    "submitAnswer": "Hubi jawaabta",
+    "correct": "Sax",
+    "incorrect": "Sax ma aha",
+    "selectAnswer": "Marka hore dooro jawaab.",
+    "signInToAnswer": "Soo gal arday ahaan si aad u kaydiso jawaabtaada.",
+    "answerError": "Jawaabta lama kaydin karin. Mar kale isku day.",
+    "imageMissing": "Sawirka maqan",
+    "next": "Xiga",
+    "score": "{correct} ka mid ah {total} ayaa sax ah",
+    "reviewMistakes": "Arag khaladaadkaaga",
+    "retry": "Mar kale isku day",
+    "bookLesson": "Ballan cashar",
+    "comingSoonTitle": "Waa soo socda",
+    "comingSoonBody": "Tababarka aragtida halkan ayuu ka furmayaa marka uu diyaar yahay.",
+    "exam": {
+      "eyebrow": "Imtixaan tijaabo ah",
+      "title": "U diyaar garow xaaladaha imtixaanka dhabta ah",
+      "description": "Imtixaanka waxaa lagu qiimeeyaa server-ka wuxuuna dhammaadaa waqtiga go'an ka dib.",
+      "questions": "Su'aalo",
+      "time": "Daqiiqo",
+      "pass": "Sax si loo gudbo",
+      "ready": "Bangiga su'aalaha wuxuu diyaar u yahay imtixaan buuxa.",
+      "unavailable": "Weli ma jiraan 65 su'aal oo firfircoon oo akoonkaagu geli karo.",
+      "signIn": "Soo gal arday ahaan si aad u hubiso gelitaanka imtixaanka.",
+      "start": "Bilow imtixaanka 50 daqiiqo",
+      "starting": "Imtixaanka waa la bilaabayaa…",
+      "finish": "Dhammee imtixaanka",
+      "finishing": "Waa la qiimeynayaa…",
+      "next": "Kaydi oo sii wad",
+      "selectAnswer": "Marka hore dooro jawaab.",
+      "progress": "Su'aal {current} ee {total}",
+      "timeRemaining": "Waqtiga haray",
+      "passed": "Waad gudubtay",
+      "failed": "Ma gudbin",
+      "error": "Imtixaanka lama cusboonaysiin karin. Mar kale isku day.",
+      "imageMissing": "Sawirka lama muujin karin."
+    },
+    "practiceAll": "Ku tababar dhammaan {count} su'aal",
+    "stepQuestions": "{count} su'aal",
+    "stepProgress": "{done} ka mid ah {total} ayaa la dhammeeyay",
+    "stepDone": "La dhammeeyay"
+  },
+  "localSchool": {
+    "eyebrow": "Dugsiga wadista ee kuu dhow",
+    "comingSoon": "Waa soo socda",
+    "title": "Dugsiga wadista ee {city}",
+    "description": "Arag goobteena la xaqiijiyay iyo macallimiinta diyaarka ah ee {city}.",
+    "addressPending": "Cinwaanka saxda ah ee booqashada wuxuu sugayaa xaqiijin.",
+    "addressOnContact": "Cinwaanka booqashada iyo tilmaamaha waxay ku yaalliin bogga xiriirka.",
+    "teachersTitle": "Macallimiinta goobtan",
+    "emptyTitle": "Weli macallin lama xilsaarin",
+    "emptyDescription": "Macallimiintu way soo muuqan doonaan marka goobtooda la xaqiijiyo.",
+    "metadataTitle": "Dugsiga wadista ee {city}",
+    "metadataDescription": "Casharada wadista iyo tababarka shatiga ee {city}."
+  },
+  "booking": {
+    "eyebrow": "Ballan cashar wadista",
+    "title": "Casharkaaga, tallaabo tallaabo",
+    "description": "Dooro cashar, goob, macallin iyo waqti. Doorashooyinkaagu way sii jiraan intaad sii wadeyso.",
+    "progress": "Tallaabooyinka ballanta",
+    "back": "Dib",
+    "next": "Sii wad",
+    "confirm": "Xaqiiji ballanta",
+    "provisional": "Soo jeedin ku meel gaar ah – weli lama iibsan karo",
+    "step": {
+      "what": {
+        "short": "Maxay",
+        "title": "Maxaad rabtaa inaad ballansato?",
+        "description": "Dooro doorashada ku habboon tababarkaaga.",
+        "single": "Hal cashar wadista",
+        "credits": "Isticmaal xirmadayda",
+        "test": "Cashar tijaabo ah"
+      },
+      "where": {
+        "short": "Xaggee",
+        "title": "Xaggee ayaad rabtaa inaad ka bilowdo?",
+        "school": "Waan idiin imaanayaa",
+        "pickup": "I soo qaada",
+        "location": "Dooro dugsiga wadista",
+        "address": "Cinwaanka qaadista",
+        "selectFromList": "Dooro cinwaan liiska ka mid ah."
+      },
+      "who": {
+        "short": "Yaa",
+        "title": "Yaa aad rabtaa inaad la wadato?",
+        "languageFirst": "Marka hore dooro luqadda",
+        "list": "Liis",
+        "map": "Khariidad",
+        "mapLabel": "Khariidadda macallimiinta diyaarka ah",
+        "mapUnavailable": "Khariidadda ma diyaar sana",
+        "mapUnavailableDescription": "Dooro macallin liiska ka mid ah.",
+        "emptyTitle": "Macallin ku habboon ma jiro",
+        "empty": "Isku day luqad kale ama dooro goob kale."
+      },
+      "when": {
+        "short": "Goorma",
+        "title": "Goorma ayaad rabtaa inaad wadato?",
+        "firstAvailable": "Waqtiga ugu horreeya ee bannaan",
+        "loading": "Waqtiyada bannaan waa la rarayaa…",
+        "emptyTitle": "Maalintan waqti ma jiro",
+        "empty": "Dooro maalin kale si aad u aragto waqtiyo kale oo bannaan."
+      },
+      "area": {
+        "short": "Magaalo",
+        "title": "Xaggee ayaad rabtaa inaad ka wadato?",
+        "comingSoon": "Waa soo socda"
+      },
+      "pickup": {
+        "short": "Qaadis",
+        "title": "Xaggee ayaan kaaga soo qaadnaa?",
+        "free": "Qaadista waa bilaash gudaha aagagga cagaaran mana ka qaadato waqti casharkaaga.",
+        "office": "Nagala kulam xafiiska",
+        "address": "Cinwaanka qaadista",
+        "outside": "Cinwaankaas wuxuu ka baxsan yahay aagga. Dooro cinwaan gudaha aagga.",
+        "outline": "Aagga qaadista",
+        "map": {
+          "open": "Ka dooro khariidadda",
+          "title": "Dooro meesha qaadista",
+          "close": "Xir",
+          "search": "Raadi cinwaan",
+          "areaLabel": "Khariidadda aagagga qaadista",
+          "sheetTitle": "Dooro meel gudaha aag cagaaran",
+          "addressLoading": "Cinwaanka waa la raadinayaa…",
+          "addressUnknown": "Meesha laga doortay khariidadda",
+          "inside": "Qaadista meeshan waa bilaash.",
+          "outsideHint": "Dhaqaaji khariidadda si cirbadda ay ugu jirto aagga cagaaran.",
+          "confirm": "Xaqiiji"
+        }
+      },
+      "gearbox": {
+        "short": "Sanduuqa gudbinta",
+        "title": "Gacanta mise otomaatig?",
+        "manual": "Gacanta",
+        "automatic": "Otomaatig"
+      },
+      "schedule": {
+        "short": "Waqti",
+        "title": "Macallimiinta iyo waqtiyada",
+        "next": "Kan xiga ee bannaan",
+        "week": "Toddobaad",
+        "empty": "Toddobaadkan waqti bannaan ma jiro. Dooro macallin ama sanduuq kale.",
+        "loading": "Waqtiyada bannaan waa la rarayaa…"
+      },
+      "pay": {
+        "short": "Bixi",
+        "title": "U bixi casharka",
+        "single": "Hal cashar wadista",
+        "packageTitle": "Ku kaydi xirmo",
+        "packageBody": "Xirmo ayaa cashar kasta ka jaban. Waxaad iibsan kartaa wakhti kasta.",
+        "introLabel": "Casharka koowaad 499 kr (caadi 845 kr)"
+      }
+    },
+    "account": {
+      "short": "Akoonkaaga",
+      "title": "Akoonkaaga",
+      "description": "Waxaan samaynaa akoon si aad u aragto ballamahaaga, hadhaagaaga oo aad keligaa u joojiso.",
+      "firstName": "Magaca hore",
+      "lastName": "Magaca dambe",
+      "phone": "Lambarka mobaylka oo leh koodhka dalka",
+      "code": "Koodh lix lambar ah",
+      "send": "Dir koodhka",
+      "verify": "Xaqiiji oo ballanso",
+      "emailLink": "Iimayl iyo eray sir ah",
+      "devCode": "Horumarinta maxalliga ah kaliya – koodh: {code}"
+    },
+    "credits": {
+      "loading": "Hadhaagaaga waa la hubinayaa…",
+      "signIn": "Soo gal si aad u hubiso xisaabta xirmadaada.",
+      "balance": "{count, plural, =0 {Cashar diyaar ah ma jiro} =1 {1 cashar ayaa diyaar ah} other {{n} cashar ayaa diyaar ah}}"
+    },
+    "summary": {
+      "eyebrow": "Ballantaada",
+      "title": "Soo koobid",
+      "lesson": "Cashar",
+      "place": "Goob",
+      "teacher": "Macallin",
+      "time": "Waqti",
+      "notSelected": "Weli lama dooran",
+      "reassurance": "Waxaad dib ugu noqon kartaa oo beddeli kartaa doorashooyinkaaga ka hor xaqiijinta."
+    },
+    "checkout": {
+      "title": "Oggolaansho ka hor lacag-bixinta",
+      "termsConsent": "Waan aqbalay shuruudaha iibsiga.",
+      "withdrawalConsent": "Waxaan akhriyay xuquuqda ka-noqoshada 14-ka maalmood waxaanan codsanayaa in adeegga la ballansaday u bilaabmo sidii loo qorsheeyay.",
+      "continue": "Sii wad lacag-bixinta ammaanka ah"
+    },
+    "confirmation": {
+      "eyebrow": "Ballanta waa la diiwaangeliyay",
+      "title": "Waqtigaaga waa la ballansaday",
+      "deadline": "Si bilaash ah ayaad u joojin kartaa ilaa <time>{deadline}</time>. Joojin dambe waxaa laga qaadaa qiimaha oo dhan.",
+      "calendar": "Ku dar kalandarka",
+      "creditUsed": "Hal cashar ayaa laga jaray hadhaagaaga.",
+      "hold": "Waqtigan waa laguu hayaa ilaa <time>{expires}</time> inta lacag-bixinta la dhammaynayo.",
+      "provisional": "Liiska qiimaha lama xaqiijin, sidaas darteed lacag-bixintu ku meel gaar ayay u maqan tahay. Hayntaada 15 daqiiqo ah waa sidii hore."
+    },
+    "calendar": {
+      "summary": "Cashar wadista oo leh Makina Trafikskola",
+      "description": "Waqtiga ugu dambeeya ee joojinta: {deadline}."
+    },
+    "introPriceLabel": "Casharka koowaad 499 kr (caadi 845 kr)"
+  },
+  "auth": {
+    "required": "Waxaad u baahan tahay akoon si aad u ballansato oo u bixiso. Waxay qaadataa qiyaastii 30 ilbiriqsi.",
+    "purchaseGate": "Waxaad u baahan tahay akoon si aad u iibsato. Waxay qaadataa qiyaastii 30 ilbiriqsi waxayna kuu furtaa ballamahaaga iyo hadhaagaaga.",
+    "signInToBuy": "Soo gal si aad u iibsato",
+    "signInToSeeBalance": "Soo gal si aad u aragto hadhaagaaga",
+    "firstName": "Magaca hore",
+    "lastName": "Magaca dambe",
+    "email": "Iimayl",
+    "password": "Erayga sirta",
+    "fullName": "Magaca oo dhan",
+    "showPassword": "Muuji erayga sirta",
+    "hidePassword": "Qari erayga sirta",
+    "or": "ama",
+    "continueWithGoogle": "Ku sii wad Google",
+    "oauthError": {
+      "accessDenied": "Gelitaanka Google waa la diiday. Mar kale isku day ama dooro hab kale oo aad ku soo gasho.",
+      "configuration": "Gelitaanka Google hadda ma diyaar sana. Dooro hab kale oo aad ku soo gasho.",
+      "default": "Gelitaanka Google lama dhammayn karin. Mar kale isku day."
+    },
+    "resendWait": "Koodh cusub ku dir {seconds} ilbiriqsi gudahood",
+    "identifier": "Iimayl ama lambar mobayl",
+    "forgotLink": "Ma illowday erayga sirta?",
+    "newPassword": "Eray sir ah oo cusub",
+    "phone": "Lambarka mobaylka",
+    "phonePlaceholder": "+46 70 123 45 67",
+    "phoneHint": "Waxaan ku dirnaa koodh hal mar ah fariin qoraal ah. Lambarkaaga waxaa loo isticmaalaa ballamaha, xusuusinta iyo taageerada.",
+    "code": "Koodh lix lambar ah",
+    "codeSentHint": "Geli koodhka fariinta qoraalka ah. Ma waayay? Dir koodh cusub.",
+    "methodLabel": "Habka gelitaanka",
+    "methods": {
+      "email": "Eray sir ah",
+      "phone": "Koodh SMS"
+    },
+    "sendCode": "Dir koodhka",
+    "resendCode": "Dir koodh cusub",
+    "verifyCode": "Xaqiiji oo sii wad",
+    "working": "Fadlan sug…",
+    "devCode": "Horumarinta maxalliga ah kaliya – koodh: {code}",
+    "secure": "Gelitaan akoon oo ammaan ah",
+    "support": "Ma u baahan tahay caawimaad gelitaanka? Naga soo mar bogga xiriirka.",
+    "context": {
+      "eyebrow": "Makina Trafikskola",
+      "title": "Ballamo, hadhaag iyo aragti oo ku qoran luqaddaada",
+      "bookings": "Arag oo maamul casharadaada wadista",
+      "balance": "Hubi xisaabta casharka ee diyaarka ah",
+      "messages": "Raac ogeysiisyada adeegga iyo lacag-bixinta"
+    },
+    "login": {
+      "title": "Soo gal",
+      "description": "Ugu dhakhsaha badan waa lambar mobayl iyo koodh qoraal ah. Waxaad sidoo kale isticmaali kartaa iimayl.",
+      "submit": "Soo gal",
+      "noAccount": "Akoon ma lihid?",
+      "create": "Samee akoon",
+      "phoneAccountMissing": "Akoon uma isticmaalo lambarkaas.",
+      "codeSentNeutral": "Haddii lambarka nalagu diiwaangeliyay, waxaan diri doonnaa koodh.",
+      "changedNumber": "Ma beddeshay lambarkaaga?",
+      "changedNumberHelp": "Haddii aadan haysan lambarkii aad isku diiwaangelisay, naga soo wac ama noo soo dir iimayl, waxaanan si ammaan ah kuu caawin doonnaa.",
+      "callUs": "Naga soo wac",
+      "mailUs": "Noo soo dir iimayl"
+    },
+    "register": {
+      "title": "Samee akoon",
+      "description": "Buuxi faahfaahintaada. Akoonka waa la sameeyaa marka koodhka qoraalka ah sax yahay.",
+      "submit": "Samee akoon",
+      "hasAccount": "Horey ma u leedahay akoon?",
+      "login": "Soo gal"
+    },
+    "forgot": {
+      "title": "Erayga sirta waa la illoobay",
+      "description": "Geli lambarkaaga mobaylka. Waxaan dirnaa koodh, ka dib waxaad doorataa eray sir ah oo cusub.",
+      "submit": "Kaydi erayga sirta ee cusub",
+      "done": "Erayga sirta waa la cusboonaysiiyay. Ku soo gal erayga cusub."
+    },
+    "verifyPhone": {
+      "title": "Xaqiiji lambarkaaga mobaylka",
+      "description": "Waxaan u baahanahay lambar mobayl oo Iswiidhish ah koodhadhka iyo xusuusinta. Haddii lambarku horey akoon u lahaa, Google waxaa loo xiraa akoonkaas.",
+      "submit": "Xaqiiji lambarka"
+    },
+    "phoneInvalid": "Geli lambar mobayl oo Iswiidhish ah, eberka hore ha lahaado ama ha lahaanin.",
+    "phoneValid": "Lambarku wuxuu u eg yahay mid sax ah.",
+    "emailInvalid": "Geli cinwaan iimayl, tusaale ahaan name@example.com.",
+    "emailValid": "Cinwaanka iimaylku wuxuu u eg yahay mid sax ah."
+  },
+  "student": {
+    "nav": {
+      "label": "Bogagayga",
+      "overview": "Dulmar",
+      "bookings": "Ballamaha",
+      "saldo": "Casharadayda",
+      "theory": "Aragti",
+      "messages": "Fariimaha",
+      "profile": "Astaanta"
+    },
+    "overview": {
+      "title": "Bogagayga",
+      "nextBooking": "Casharka wadista ee xiga",
+      "paymentRequired": "Dhammaystir lacag-bixintaada",
+      "holdUntil": "Waqtigan waa laguu hayaa ilaa <time>{deadline}</time>. Fur ballanta si aad u sii wadato.",
+      "noBooking": "Ballan soo socda ma lihid.",
+      "viewBookings": "Arag ballamaha",
+      "saldo": "Casharadayda",
+      "viewSaldo": "Arag casharada",
+      "lessonsLeft": "{count, plural, =1 {1 cashar ayaa haray} other {{n} cashar ayaa haray}}",
+      "theory": "Gelitaanka aragtida",
+      "theoryActive": "Gelitaankaaga aragtida waa firfircoon.",
+      "theoryInactive": "Gelitaan aragti oo firfircoon ma jiro.",
+      "viewTheory": "Arag aragtida"
+    },
+    "bookings": {
+      "title": "Ballamahayga",
+      "description": "Arag casharada wadista ee soo socda iyo kuwii hore.",
+      "empty": "Ballan ma lihid.",
+      "pickup": "Goobta qaadista",
+      "cancel": "Jooji",
+      "pay": "Dhammaystir lacag-bixinta",
+      "paying": "Lacag-bixinta waa la furayaa…",
+      "keepBooking": "Hay ballanta",
+      "holdStatus": "Lacag-bixin la sugayo",
+      "holdUntil": "Waqtigan waa laguu hayaa ilaa <time>{deadline}</time>.",
+      "cancelHoldWarning": "Xisaab lama isticmaalin. Joojintu isla markiiba way sii deysaa haynta. Ma rabtaa inaad sii wadato?",
+      "lessonFeedback": "Jawaab-celinta casharkaaga",
+      "practiced": "Waxa aad ku tababartay",
+      "nextFocus": "Diiradda xigta",
+      "leaveReview": "Ka tag faallo",
+      "reviewModeration": "Faallada waa la eegaa ka hor daabacaadda. Faallada qoraalka ah waa ikhtiyaar.",
+      "rating": "Qiimeyn",
+      "ratingValue": "{value} ka mid ah 5",
+      "reviewComment": "Faallo (ikhtiyaar)",
+      "submitReview": "Gudbi faallada",
+      "submittingReview": "Waa la gudbinayaa…",
+      "cancelLateWarning": "Waqtiga ugu dambeeya ee joojinta wuu dhaafay. Casharka waxaa laga qaadaa qiimaha oo dhan waxaana laga jarayaa hadhaagaaga. Si kastaba ha ahaatee ma joojisaa?",
+      "cancelRefundWarning": "Hadda joojintu waxay soo celinaysaa xisaabtaada. Waqtiga ugu dambeeya waa <time>{deadline}</time>. Sii wad?",
+      "deadline": "Waad joojin kartaa ilaa <time>{deadline}</time>.",
+      "status": "Xaalad: {status}",
+      "statuses": {
+        "CONFIRMED": "La xaqiijiyay",
+        "COMPLETED": "La dhammeeyay",
+        "CANCELLED_BY_STUDENT": "Adiga ayaa joojiyay",
+        "CANCELLED_BY_TEACHER": "Macallinka ayaa joojiyay",
+        "EXPIRED_HOLD": "Hayntu way dhacday",
+        "NO_SHOW": "Ma iman"
+      }
+    },
+    "saldo": {
+      "title": "Casharadayda",
+      "available": "Weli la wadi doono",
+      "remaining": "{count, plural, =1 {1 cashar ayaa haray} other {{n} cashar ayaa haray}}",
+      "lotCount": "{count, plural, =1 {+1 cashar} other {+{n} cashar}}",
+      "lessons": "casharo wadista",
+      "lots": "Xisaab firfircoon",
+      "expires": "Wuxuu shaqeeyaa ilaa <time>{date}</time>",
+      "noExpiry": "Taariikh dhac ah ma jirto",
+      "empty": "Xisaab firfircoon ma lihid.",
+      "reasons": {
+        "PURCHASE": "Iibsi",
+        "BOOKING_CONSUMED": "Ballan",
+        "CANCELLATION_REFUND": "Celinta joojinta",
+        "LATE_CANCELLATION_CHARGE": "Joojin dambe",
+        "TEACHER_CANCELLATION_REFUND": "Celinta joojinta macallinka",
+        "PAYMENT_REFUND": "Celinta lacag-bixinta",
+        "ADMIN_ADJUSTMENT": "Hagaajin maamul",
+        "EXPIRY": "Xisaab dhacday"
+      }
+    },
+    "payments": {
+      "eyebrow": "Lacag-bixin",
+      "title": "Xaaladda dalabka",
+      "orderStatus": "Xaalad: {status}",
+      "quantity": "Tirada: {quantity}",
+      "total": "Wadarta",
+      "vat": "VAT waa ku jirtaa",
+      "retryDescription": "Lacag-bixintu ma dhammaystirna. Sii wad lacag-bixinta ammaanka ah si aad mar kale isugu daydo.",
+      "retry": "Mar kale isku day lacag-bixinta",
+      "late": {
+        "lesson": {
+          "title": "Lacag-bixintu way guulaysatay – dooro waqti cusub",
+          "description": "Hayntaadii 15 daqiiqo ah way dhacday. Casharka la iibsaday wuxuu hal mar u diyaar yahay xisaab aan la isticmaalin. Waqtigii hore lama soo ceshin.",
+          "action": "Ballan waqti cashar oo cusub"
+        },
+        "course": {
+          "title": "Lacag-bixintu way guulaysatay – dooro munaasabad koorso oo kale",
+          "description": "Hayntaadii 15 daqiiqo ah way dhacday. Kursiga koorsada ee la iibsaday wuxuu hal mar u diyaar yahay xuquuq aan la isticmaalin. Kursigii hore lama soo ceshin.",
+          "action": "Dooro munaasabad koorso oo kale"
+        }
+      },
+      "statuses": {
+        "PENDING": "Lacag-bixin la sugayo",
+        "PAID": "La bixiyay",
+        "FAILED": "Fashilmay",
+        "REFUNDED": "La celiyay",
+        "PARTIALLY_REFUNDED": "Qayb ayaa la celiyay"
+      },
+      "live": {
+        "paid": "Lacag-bixintu waa dhammaatay",
+        "failed": "Lacag-bixintu way fashilantay",
+        "slow": "Tani waxay qaadanaysaa in yar oo dheer - waxaad heli doontaa SMS markay dhammaato",
+        "myPages": "Tag Bogagayga",
+        "pending": "Xaqiijinta lacag-bixinta waa la sugayaa..."
+      }
+    },
+    "theory": {
+      "title": "Aragtidayda",
+      "access": "Gelitaan",
+      "active": "Firfircoon – waqti xadidnimo ma leh",
+      "inactive": "Gelitaan firfircoon ma jiro",
+      "progress": "Natiijooyin",
+      "correct": "su'aalo si sax ah loo jawaabay",
+      "streak": "Isku xigga ugu fiican",
+      "streakNow": "{count} oo sax ah oo hadda isku xiga",
+      "provisional": "Iibso aragtida wadista ee dhijitaalka ah si aad ugu tababarto bangiga su'aalaha oo dhan oo aad u qaadato imtixaanno tijaabo ah."
+    },
+    "messages": {
+      "title": "Fariimaha",
+      "description": "Ogeysiisyadii ugu dambeeyay ee adeegga. Xogta gaarka ah ee fariinta halkan lama muujiyo.",
+      "empty": "Fariimo ma lihid.",
+      "sent": "La diray",
+      "scheduled": "La qorsheeyay",
+      "limited": "Waxaa la muujinayaa 50-kii fariimood ee ugu dambeeyay.",
+      "templates": {
+        "bookingConfirmed": "Ballanta waa la xaqiijiyay",
+        "bookingCancelledByStudent": "Ballanta waa la joojiyay",
+        "bookingCancelledByTeacher": "Ballanta macallinka ayaa joojiyay",
+        "bookingReminder": "Xusuusinta ballanta",
+        "bookingMoved": "Casharka waa la raray",
+        "paymentReceipt": "Rasiidhka lacag-bixinta",
+        "paymentFailed": "Lacag-bixintu way fashilantay",
+        "lessonPaymentNeedsRebooking": "Cashar la bixiyay wuxuu u baahan yahay dib-u-ballan",
+        "coursePaymentNeedsRebooking": "Kursi koorso oo la bixiyay wuxuu u baahan yahay dib-u-ballan",
+        "lessonCompleted": "Casharka waa la dhammeeyay",
+        "generic": "Fariinta adeegga"
+      },
+      "bodies": {
+        "lessonPaymentNeedsRebooking": "Lacag-bixintu way guulaysatay ka dib markii hayntu dhacday. Xisaabtaada casharka ee aan la isticmaalin way sii jirtaa; dooro waqti cusub.",
+        "coursePaymentNeedsRebooking": "Lacag-bixintu way guulaysatay ka dib markii hayntu dhacday. Xuquuqdaada koorsada ee aan la isticmaalin way sii jirtaa; dooro munaasabad kale.",
+        "lessonCompleted": "Casharka waa la waday waxaana laga qaatay xirmada. {count} cashar ayaa haray."
+      },
+      "channels": {
+        "EMAIL": "Iimayl",
+        "SMS": "SMS",
+        "PUSH": "Ogeysiis",
+        "INAPP": "Abka dhexdiisa"
+      }
+    },
+    "profile": {
+      "title": "Astaantayda",
+      "name": "Magac",
+      "email": "Iimayl",
+      "phone": "Telefoon",
+      "newPhone": "Lambar mobayl oo cusub",
+      "currentPhoneCode": "Koodhka lambarka hadda",
+      "newPhoneCode": "Koodhka lambarka cusub",
+      "verifyPhone": "Xaqiiji oo beddel lambarka",
+      "savingPhone": "Lambarka waa la beddelayaa…",
+      "phoneChanged": "Lambarkaaga mobaylka waa la beddelay.",
+      "missing": "Lama bixin",
+      "privacyTitle": "Xogtaada shakhsiyeed",
+      "privacyDescription": "Soo degso xogtaada ama tirtir oo qari akoonka.",
+      "export": "Soo degso xogtayda",
+      "delete": "Tirtir akoonkayga",
+      "deleting": "Waa la tirtirayaa…",
+      "deleteConfirm": "Akoonka waa la qarin doonaa waxaana lagaa saari doonaa. Tan dib looma noqon karo. Sii wad?",
+      "deleteSendCode": "Dir koodhka amniga",
+      "deleteCode": "Koodhka amniga waxaa loo diray mobaylkaaga",
+      "deleteConfirmAction": "Si joogto ah u tirtir akoonka",
+      "settingsDescription": "Maamul magaca, iimaylka, erayga sirta, telefoonka iyo luqadda SMS.",
+      "edit": "Wax ka beddel",
+      "close": "Xir",
+      "saved": "Isbeddeladaada waa la kaydiyay.",
+      "saving": "Waa la kaydinayaa...",
+      "save": "Kaydi",
+      "firstName": "Magaca hore",
+      "lastName": "Magaca dambe",
+      "emailSaved": "Cinwaankaaga iimaylka waa la cusboonaysiiyay.",
+      "passwordSaved": "Eraygaaga sirta ah waa la kaydiyay.",
+      "confirmWith": "Ku xaqiiji",
+      "confirmPassword": "Eray sir ah",
+      "confirmSms": "Koodhka SMS",
+      "password": "Erayga sirta",
+      "sendCode": "Dir koodhka",
+      "smsCode": "Koodhka SMS",
+      "passwordSet": "Erayga sirta waa la dejiyay",
+      "passwordMissing": "Weli eray sir ah ma jiro",
+      "newPassword": "Eray sir ah oo cusub",
+      "currentPassword": "Erayga sirta ee hadda",
+      "lostOldNumber": "Lambarkaygii hore hadda ma haysto",
+      "lostOldNumberHint": "Ku xaqiiji eraygaaga sirta ah, ama haddii aad dhawaan soo gashay / aad isticmaasho Google.",
+      "sendCurrentCode": "U dir koodh lambarka hadda",
+      "sendNewCode": "U dir koodh lambarka cusub",
+      "smsLanguage": "Luqadda SMS",
+      "smsLanguageHelp": "Waxaa loo isticmaalaa koodhadhka iyo xusuusinta lagu diro SMS.",
+      "unusedCreditsWarning": "Waxaad haysataa {count} cashar oo haray oo baabbi'i doona.",
+      "unusedCreditsAck": "Waan fahmayaa in casharada iyo xisaabta aan la isticmaalin ay baabbi'i doonaan."
+    }
+  },
+  "teacherPortal": {
+    "eyebrow": "Albaabka macallinka",
+    "title": "Casharada wadista ee maanta",
+    "lessonCount": "{count, plural, =0 {Maanta cashar ma jiro} =1 {1 cashar maanta} other {{n} cashar maanta}}",
+    "call": "Wac ardayga",
+    "openAddress": "Fur cinwaanka",
+    "previousNote": "Qoraalkii hore",
+    "noPreviousNote": "Qoraal hore ma jiro.",
+    "summary": "Qoraalka casharka",
+    "nextFocus": "Diiradda xigta",
+    "completeLesson": "Dhammee oo kaydi",
+    "writeNote": "Qor qoraalka casharka",
+    "updateReport": "Cusboonaysii warbixinta",
+    "empty": "Maanta cashar ma lihid.",
+    "weekTitle": "Casharada wadista ee toddobaadkan",
+    "weekCount": "{count, plural, =0 {Toddobaadkan cashar ma jiro} =1 {1 cashar toddobaadkan} other {{n} cashar toddobaadkan}}",
+    "weekEmpty": "Toddobaadkan cashar ma lihid.",
+    "monthTitle": "Bishayda",
+    "lessonsDriven": "{count} cashar",
+    "hoursDriven": "{hours} saac",
+    "estimatedPay": "Mushahar la qiyaasay {pay}",
+    "monthEmpty": "Bilkan cashar la dhammeeyay ma jiro.",
+    "previousMonth": "Bishii hore",
+    "nextMonth": "Bisha xigta",
+    "views": {
+      "today": "Maanta",
+      "week": "Toddobaad",
+      "office": "Saacadaha shaqada"
+    },
+    "drivesFrom": "Waxaad ka wadidaa {places}.",
+    "phoneLabel": "Lambarka mobaylka",
+    "phoneSave": "Kaydi lambarka",
+    "phoneReady": "Fariimaha ballanta waxay aadaan {phone}.",
+    "students": {
+      "title": "Ardaydayda",
+      "lessonsDone": "{count, plural, =0 {Cashar la dhammeeyay ma jiro} =1 {1 cashar oo la dhammeeyay} other {{n} cashar oo la dhammeeyay}}",
+      "nextLesson": "Casharka xiga <time>{when}</time>",
+      "noNext": "Cashar soo socda ma jiro.",
+      "remaining": "{count, plural, =0 {Cashar haray ma jiro} =1 {1 cashar ayaa haray} other {{n} cashar ayaa haray}}",
+      "empty": "Weli arday ma jiro."
+    },
+    "awaitingPayment": "Lacag-bixin la sugayo",
+    "noPhone": "Ma heli doontid fariimaha ballanta ilaa dugsigu ku daro lambarkaaga mobaylka.",
+    "lessonNotStarted": "Casharku weli ma bilaaban. Warbixinta waa la kaydin karaa ka dib marka uu bilaabmo.",
+    "noProfile": "Astaanta macallin laguma xirin isticmaalahan.",
+    "calendar": {
+      "title": "Kalandarka",
+      "description": "Ku dar xiriirka Google Calendar ama iPhone. Google Calendar waxay qaadan kartaa dhowr saacadood inay cusboonaato. Fariimaha qoraalka ah ayaa isla markiiba ogeysiiya.",
+      "delay": "Google Calendar waxay qaadan kartaa dhowr saacadood inay cusboonaato. Fariimaha qoraalka ah isla markiiba way yimaadaan.",
+      "copy": "Nuqul ka samee xiriirka",
+      "create": "Samee xiriir kalandar",
+      "rotate": "Beddel xiriirka",
+      "summary": "Cashar wadista – {name}"
+    },
+    "hours": {
+      "title": "Saacadahayga caadiga ah",
+      "help": "Halkan deji saacadahaaga caadiga ah. Waqti ku xir Google Calendar wuxuuna ka baaba'aa ballanta.",
+      "day": "Maalin",
+      "from": "Laga bilaabo",
+      "to": "Ilaa",
+      "area": "Aag",
+      "row": "Waqti {n}",
+      "add": "Ku dar waqti",
+      "remove": "Ka saar",
+      "save": "Kaydi saacadaha",
+      "saved": "Saacadahaaga waa la kaydiyay.",
+      "empty": "Weli saacado caadi ah ma lihid. Ku dar waqti si ardaydu kuu ballansadaan.",
+      "noLocations": "Weli aag laguma xirin. La xiriir dugsiga waxaanan mid ku dari doonnaa.",
+      "errors": {
+        "HOURS_OVERLAP": "Waqtiyadu way isku dhacaan ama way dhammaadaan ka hor intaanay bilaaban. Hagaaji waqtiyada oo mar kale isku day.",
+        "LOCATION_NOT_ASSIGNED": "Waxaad dooran kartaa oo keliya aagagga lagugu xiray. Dooro aag kale.",
+        "INVALID_INPUT": "Hubi waqtiyada oo mar kale isku day.",
+        "TEACHER_NOT_FOUND": "Akoon macallin laguma xirin. La xiriir dugsiga.",
+        "UNAUTHENTICATED": "Mar kale soo gal ka dibna isku day.",
+        "FORBIDDEN": "Ma haysatid oggolaansho aad ku beddesho saacadahan.",
+        "UNKNOWN": "Lama kaydin karin. Mar kale isku day daqiiqad ka dib."
+      }
+    },
+    "block": {
+      "title": "Xir diyaargarowga",
+      "description": "Waqtiyada ka tag madhan si aad u xirto maalinta oo dhan.",
+      "date": "Taariikh",
+      "start": "Laga bilaabo",
+      "end": "Ilaa",
+      "reason": "Sabab",
+      "confirm": "Waan fahmayaa in casharada la xaqiijiyay ee waqtigan la joojin doono, xisaabta la soo celin doono, ardaydana la ogeysiin doono.",
+      "submit": "Xir waqtiga"
+    }
+  },
+  "metadata": {
+    "brand": "Makina Trafikskola",
+    "title": "Makina Trafikskola – waxbarashada wadista ee Stockholm",
+    "description": "Casharada wadista iyo tababarka shatiga ee Stockholm oo leh taageero dhowr luqadood."
+  },
+  "pricing": {
+    "valueSeparately": "Qiimaha haddii si gooni ah loo iibsado: {price}"
+  },
+  "cookieConsent": {
+    "title": "Dejinta kukiyada",
+    "description": "Waxaan u isticmaalnaa kukiyo lagama maarmaan ah gelitaanka iyo luqadda.",
+    "readMore": "Akhri wax dheeraad ah",
+    "ok": "Haa"
+  },
+  "offline": {
+    "eyebrow": "Xiriir ma jiro",
+    "title": "Khadka ayaad ka maqan tahay",
+    "description": "Hubi xiriirkaaga oo mar kale isku day. Ballamaha iyo faahfaahinta akoonka waxay u baahan yihiin internet.",
+    "retry": "Mar kale isku day"
+  },
+  "legal": {
+    "terms": {
+      "metadata": "Shuruudaha iibsiga ee Makina Trafikskola.",
+      "eyebrow": "Macluumaad sharci",
+      "title": "Shuruudaha iibsiga",
+      "sectionOrder": [
+        "seller",
+        "prices",
+        "delivery",
+        "validity",
+        "cancellation",
+        "packages",
+        "lateArrival",
+        "riskArrival",
+        "digitalTheory",
+        "responsibility",
+        "dataProtection",
+        "refunds",
+        "withdrawal",
+        "complaints",
+        "law"
+      ],
+      "seller": {
+        "title": "Iibiyaha",
+        "body": "Adeegga waxaa iibiya Makina Trafikskola AB. Faahfaahinta buuxda ee shirkadda iyo xiriirka waxaa laga heli karaa bogga xiriirka."
+      },
+      "prices": {
+        "title": "Qiimaha iyo lacag-bixinta",
+        "bodySwishSoon": "Dhammaan qiimaha waxaa lagu muujiyaa koroonada Iswiidhishka oo ay ku jirto VAT.\nWaxaad ku bixisaa kaar ama Klarna adoo maraya Stripe. Swish waa soo socotaa.\nQiimaha waxaa laga qaadaa liiska alaabta marka la iibsado.\nStripe ayaa rasiidhka u diraa iimaylkaaga. Annagu iimayl noo gaar ah ma dirno.\nKoodhadhka iyo xusuusinta waxaa lagu diraa fariin qoraal ah.",
+        "body": "Dhammaan qiimaha waxaa lagu muujiyaa koroonada Iswiidhishka oo ay ku jirto VAT.\nWaxaad ku bixisaa kaar, Swish ama Klarna adoo maraya Stripe.\nQiimaha waxaa laga qaadaa liiska alaabta marka la iibsado.\nStripe ayaa rasiidhka u diraa iimaylkaaga. Annagu iimayl noo gaar ah ma dirno.\nKoodhadhka iyo xusuusinta waxaa lagu diraa fariin qoraal ah."
+      },
+      "delivery": {
+        "title": "Sida adeegga loo bixiyo",
+        "body": "Casharada wadista waxaad ka ballansataa kalandarka bogga. Casharku wuxuu la socdaa macallinkaaga waqtiga la isku raacay.\nAragtida dhijitaalka ah way furantaa marka lacag-bixinta la xaqiijiyo.\nKoorsooyinka sida Risk 1 iyo Risk 2 waxay ku siiyaan kursi munaasabad la doortay."
+      },
+      "validity": {
+        "title": "Inta uu shaqaynayo",
+        "body": "Xisaabta casharka iyo xirmooyinku waxay shaqeeyaan 12 bilood laga bilaabo iibsiga. Xisaabta aan la isticmaalin way dhacdaa.\nAragtida dhijitaalka ah waa iibsi hal mar ah. Waqti xadidnimo ma leh."
+      },
+      "cancellation": {
+        "title": "Dib-u-qorshayn iyo joojin",
+        "body": "Cashar wadista waxaad ka joojin kartaa Ballamahayga. Haddii aad ugu dambayn 24 saac ka hor casharka joojiso, xisaabtu waxay ku soo noqotaa hadhaagaaga. Joojin dambe waxaa laga qaadaa qiimaha oo dhan: casharka waa laga jarayaa hadhaaga, cashar keli ahna lama soo celinayo.\nHaddii dugsigu joojiyo, had iyo jeer xisaabta waa laguu soo celinayaa."
+      },
+      "withdrawal": {
+        "title": "Xuquuqda ka-noqoshada",
+        "body": "Waxaad haysataa 14 maalmood oo aad kaga noqoto sharciga iibka fog.\nMuddadu waxay bilaabataa marka heshiiska la sameeyo.\nKa reebid: haddii aad si cad u aqbasho in adeeggu muddadaas ku bilaabmo, oo aad xaqiijiso inaad markaas lumin karto xuquuqda ka-noqoshada, ka reebiddaas waxay khuseysaa qaybta horay loo bixiyay.\nNaga soo mar bogga xiriirka haddii aad rabto inaad ka noqoto."
+      },
+      "complaints": {
+        "title": "Cabashooyin",
+        "body": "Marka hore naga soo mar bogga xiriirka.\nHaddii aynaan isku raacin, waxaad u jeesan kartaa Guddiga Qaranka ee Khilaafaadka Macaamiisha (ARN), arn.se.\nWaxaad sidoo kale isticmaali kartaa madasha khilaafka ee khadka tooska ah ee EU: https://ec.europa.eu/consumers/odr"
+      },
+      "law": {
+        "title": "Sharciga xukuma",
+        "body": "Sharciga Iswiidhishka ayaa khuseeya heshiiska.\nKhilaaf waxaa maqla maxkamad guud oo Iswiidhish ah, haddii aanay xeerarka qasabka ah ee macaamiishu kale odhan."
+      },
+      "summaryTitle": "Shuruudo gaaban",
+      "summaryItems": [
+        {
+          "label": "Shaqaynta",
+          "text": "Dhammaan xirmooyinku waxay shaqeeyaan 12 bilood laga bilaabo taariikhda iibsiga."
+        },
+        {
+          "label": "Joojin",
+          "text": "Ugu dambayn 24 saac ka hor casharka, haddii kale qiimaha oo dhan ayaa la qaadaa."
+        },
+        {
+          "label": "Daahid",
+          "text": "Casharku wuxuu dhammaadaa waqtiga caadiga ah ee dhamaadka."
+        },
+        {
+          "label": "Xirmooyin",
+          "text": "Waa shakhsi lama gudbin karona."
+        },
+        {
+          "label": "Tababarka khatarta",
+          "text": "Waqti fiican u yimid. Daahiddu waxay keeni kartaa ballan cusub."
+        },
+        {
+          "label": "Aragti dhijitaal ah",
+          "text": "Agabka shakhsiyeed lama wadaagi karo lamana koobiyn karo."
+        },
+        {
+          "label": "Mas'uuliyad",
+          "text": "Ardaygu waa inuu raacaa xeerarka taraafikada iyo tilmaamaha macallinka."
+        },
+        {
+          "label": "Asturnaanta",
+          "text": "Xogta shakhsiyeed waxaa loo maamulaa sida GDPR."
+        },
+        {
+          "label": "Lacag-celin",
+          "text": "Waxaa loo maamulaa sida xeerarka Iswiidhishka ee khuseeya."
+        }
+      ],
+      "packages": {
+        "title": "Xirmooyin",
+        "body": "Xirmooyinku waa kuwa shakhsi ah lama gudbin karona."
+      },
+      "lateArrival": {
+        "title": "Daahid",
+        "body": "Haddii aad daahdo, casharku wuxuu dhammaadaa waqtiga caadiga ah ee dhamaadka."
+      },
+      "riskArrival": {
+        "title": "Tababarka khatarta",
+        "body": "Waqti fiican u yimid tababarka khatarta. Daahiddu waxay keeni kartaa ballan cusub."
+      },
+      "digitalTheory": {
+        "title": "Aragti dhijitaal ah",
+        "body": "Aragtida dhijitaalka ah waa agab shakhsi ah lama wadaagi karo lamana koobiyn karo."
+      },
+      "responsibility": {
+        "title": "Mas'uuliyadda ardayga",
+        "body": "Ardaygu waa inuu raacaa xeerarka taraafikada iyo tilmaamaha macallinka."
+      },
+      "dataProtection": {
+        "title": "Asturnaanta",
+        "body": "Xogta shakhsiyeed waxaa loo maamulaa sida GDPR."
+      },
+      "refunds": {
+        "title": "Lacag-celin",
+        "body": "Lacag-celinta waxaa loo maamulaa sida xeerarka Iswiidhishka ee khuseeya."
+      }
+    },
+    "privacy": {
+      "metadata": "Siyaasadda asturnaanta ee Makina Trafikskola.",
+      "eyebrow": "Macluumaad sharci",
+      "title": "Siyaasadda asturnaanta",
+      "accountAction": "Soo degso ama tirtir xogtaada",
+      "sectionOrder": [
+        "controller",
+        "collected",
+        "purpose",
+        "retention",
+        "recipients",
+        "rights",
+        "supervisory"
+      ],
+      "controller": {
+        "title": "Masuulka",
+        "body": "Makina Trafikskola AB ayaa ah masuulka. Faahfaahinta buuxda ee shirkadda iyo xiriirka waxaa laga heli karaa bogga xiriirka."
+      },
+      "collected": {
+        "title": "Waxa aan uruurinno",
+        "body": "Waxaan ka shaqeynaa magaca, iimaylka iyo lambarka telefoonka.\nWaxaan ka shaqeynaa ballamaha, taariikhda lacag-bixinta iyo cinwaanka qaadista.\nWaxaan ka shaqeynaa natiijooyinka aragtida iyo qoraallada casharka ee macallinku qoray."
+      },
+      "purpose": {
+        "title": "Ujeedda iyo saldhigga sharciga",
+        "body": "Heshiis: si loo ballansado casharada, loo siiyo gelitaanka aragtida loona qaado lacagta.\nWaajib sharci: xisaabaadka iyo rasiidhada.\nDane sharci ah: si loo qorsheeyo waqtiga macallinka loona hagaajiyo tababarka.\nOggolaansho: fariimo ikhtiyaar ah iyo kukiyo ka baxsan kuwa lagama maarmaanka ah, haddii kuwaas dambe lagu daro."
+      },
+      "retention": {
+        "title": "Inta aan xogta hayno",
+        "body": "Cinwaanada qaadista waa la tirtiraa 90 maalmood ka dib cashar la dhammeeyay.\nXogta xisaabaadka waxaa lagu hayaa sida Sharciga xisaabaadka.\nAkoonka iyo kaadhka waxbarashada waxaa lagu hayaa inta aad macmiil tahay, ka dibna inta sharcigu dalbado."
+      },
+      "recipients": {
+        "title": "Qaataha iyo kaaliyeyaasha",
+        "body": "Stripe ayaa maamula lacag-bixinta.\nKlarna ayaa maamula lacag-bixinta markaad Klarna doorato lacag-bixinta.\n46elks ayaa dira SMS.\nGoogle ayaa maamula gelitaanka Google wuxuuna muujiyaa khariidado iyo cinwaanno.\nSentry ayaa hela warbixinada khaladka.\nRailway ayaa martigeliya adeegga.\nCloudflare R2 ayaa kaydiya faylasha iyo kaydka.\nQaar ka mid ah kuwan waxay u gudbin karaan xogta meel ka baxsan EU/EEA. Markaas waxaa la isticmaalaa ilaalin la ansixiyay, tusaale ahaan qodobada heshiiska caadiga ah."
+      },
+      "rights": {
+        "title": "Xuquuqdaada",
+        "body": "Waxaad codsan kartaa gelitaan, sixid, tirtirid, qaadista xogta iyo diidmo.\nArdayda soo gashay waxay ka dhoofin karaan xogtooda oo tirtiri karaan akoonka Bogagayga hoostiisa.\nTirtiriddu waxay qarisaa xogta shakhsiyeed. Qoraalada qaar waa in la hayaa xisaabaadka."
+      },
+      "supervisory": {
+        "title": "Hay'adda kormeerka",
+        "body": "Waxaad ka caban kartaa Hay'adda Iswiidhishka ee Ilaalinta Asturnaanta (IMY), imy.se."
+      }
+    },
+    "cookies": {
+      "metadata": "Siyaasadda kukiyada ee Makina Trafikskola.",
+      "eyebrow": "Macluumaad sharci",
+      "title": "Siyaasadda kukiyada",
+      "sectionOrder": [
+        "necessary",
+        "services",
+        "analytics",
+        "change"
+      ],
+      "necessary": {
+        "title": "Kukiyada aan isticmaalno",
+        "body": "Waxaan dejinnaa oo keliya kukiyada loo baahan yahay in boggagu shaqeeyo. Shaxda hoose waxay muujinaysaa magaca, ujeeddada iyo inta la kaydiyo."
+      },
+      "analytics": {
+        "title": "Falanqayn iyo suuqgeyn",
+        "body": "Hadda ma dejinno kukiyo falanqayn ama suuqgeyn ah."
+      },
+      "services": {
+        "title": "Adeegyo ka yimid bixiyeyaal kale",
+        "body": "Google Maps waxay soo raartaa oo keliya ka dib markaad doorato inaad muujiso khariidad. Google Places waxaa la isticmaalaa markaad raadinayso cinwaan qaadis. Stripe waxay soo raartaa inta lacag-bixintu socoto, gelitaanka Google oo keliya markaad adeeggaas doorato. Sentry waxaa loo isticmaalaa xallinta ciladaha iyada oo aan la dirin xog shakhsiyeed. Boggagu wuxuu sidoo kale u isticmaalaa kayd maxalli ah habka khadka-la'aanta."
+      },
+      "change": {
+        "title": "Beddel ama ka noqo doorashadaada",
+        "body": "Waxaad mar kale muujin kartaa banarka kukiyada adigoo isticmaalaya badhanka hoos uga sii jira boggan. Kukiyada lagama maarmaanka ah ayaa loo baahan yahay gelitaanka, luqadda iyo kaydinta doorashadaada."
+      },
+      "settings": {
+        "title": "Doorashadaada kukiyada",
+        "body": "Mar kale muuji banarka haddii aad rabto inaad akhriso macluumaadka ama aad mar kale xaqiijiso doorashadaada.",
+        "action": "Muuji dejinta kukiyada"
+      },
+      "table": {
+        "caption": "Kukiyada la isticmaalo",
+        "name": "Magac",
+        "purpose": "Ujeeddo",
+        "duration": "Muddada",
+        "rows": {
+          "session": {
+            "name": "authjs.session-token",
+            "purpose": "Waxay kugu haysaa soo gal. Wax soo saarka magaca wuxuu noqon karaa __Secure-authjs.session-token.",
+            "duration": "Fadhi, ugu badnaan 30 maalmood"
+          },
+          "locale": {
+            "name": "NEXT_LOCALE",
+            "purpose": "Waxay xasuusataa luqadda aad dooratay.",
+            "duration": "1 sano"
+          },
+          "consent": {
+            "name": "makina-cookie-consent",
+            "purpose": "Waxay kaydisaa doorashadaada banarka kukiyada.",
+            "duration": "1 sano"
+          }
+        }
+      }
+    }
+  },
+  "admin": {
+    "nav": {
+      "label": "Maamul",
+      "overview": "Dulmar",
+      "places": "Goobaha",
+      "calendar": "Kalandarka",
+      "courses": "Koorsooyin",
+      "students": "Ardayda",
+      "teachers": "Macallimiinta",
+      "reviews": "Faallooyinka",
+      "products": "Alaabta",
+      "areas": "Aagagga"
+    },
+    "courses": {
+      "title": "Koorsooyin",
+      "description": "Samee, wax ka beddel oo jooji munaasabadaha Risk 1 iyo Risk 2.",
+      "createTitle": "Munaasabad koorso oo cusub",
+      "course": "Koorso iyo alaab",
+      "language": "Luqadda waxbaridda",
+      "startsAt": "Bilow",
+      "endsAt": "Dhammaad",
+      "venueName": "Magaca goobta",
+      "venueAddress": "Cinwaan",
+      "capacity": "Kuraas",
+      "create": "Samee munaasabad",
+      "created": "Munaasabadda koorsada waa la sameeyay",
+      "save": "Kaydi",
+      "saved": "Waa la kaydiyay",
+      "saving": "Waa la kaydinayaa…",
+      "cancel": "Jooji munaasabadda",
+      "cancelled": "Waa la joojiyay",
+      "cancelConfirmTitle": "Xaqiiji joojinta",
+      "cancelConfirm": "Munaasabaddan waxaa la ballansaday {booked} ka mid ah {capacity} kursi. Munaasabad madhan isla markiiba waa la joojin karaa.",
+      "cancelBlocked": "Munaasabaddan waxay leedahay ballamo. Ka shaqee ka-qaybgalayaasha ka hor joojinta.",
+      "keep": "Hay munaasabadda",
+      "occasion": "Munaasabadda koorsada {count}",
+      "booked": "{booked} ayaa laga ballansaday {capacity}",
+      "error": "Lama kaydin karin. Mar kale isku day.",
+      "recurrenceTitle": "Risk 1 khadka tooska ah – soo noqnoqda",
+      "recurrenceHelp": "Munaasabadaha waxaa la sameeyaa 15-ka iyo 28-ka bishii kasta. Hoos ka beddel ama ka jooji taariikh kasta.",
+      "startTime": "Waqtiga bilowga",
+      "duration": "Dhererka (daqiiqo)",
+      "capacityDefault": "Kuraas",
+      "venueNameDefault": "Magaca goobta",
+      "venueAddressDefault": "Cinwaan",
+      "saveRecurrence": "Kaydi kuwa caadiga ah",
+      "days": "Maalmaha bisha"
+    },
+    "editor": {
+      "save": "Kaydi",
+      "saved": "Waa la kaydiyay",
+      "phone": "Lambarka mobaylka",
+      "languages": "Luqadaha",
+      "gearbox": "Sanduuqa gudbinta",
+      "manual": "Gacanta",
+      "automatic": "Otomaatig",
+      "areas": "Aagagga",
+      "years": "Sannadaha khibradda",
+      "hours": "Saacadaha shaqada",
+      "addHour": "Ku dar saacado",
+      "remove": "Ka saar",
+      "daysOff": "Maalmaha nasashada",
+      "photo": "Sawir",
+      "calendarEmail": "Kalandarka Google",
+      "testCalendar": "Tijaabi",
+      "payRate": "Mushahar cashar kasta (kr)",
+      "price": "Qiimo (kr)",
+      "active": "Firfircoon",
+      "bestSeller": "Kan ugu iibka badan",
+      "shortDesc": "Sharaxaad gaaban",
+      "status": "Xaalad",
+      "office": "Cinwaanka xafiiska",
+      "boundary": "GeoJSON",
+      "comingSoon": "Waa soo socda",
+      "productsTitle": "Alaabta",
+      "areasTitle": "Aagagga",
+      "editTeacher": "Wax ka beddel macallinka"
+    },
+    "dashboard": {
+      "eyebrow": "Maamul",
+      "title": "Dulmar",
+      "description": "Tirada dugsiga hadda.",
+      "bookingsToday": "Ballamaha maanta",
+      "bookingsMonth": "Ballamaha bishan",
+      "revenueToday": "Dakhliga maanta",
+      "revenueTotal": "Dakhliga wadarta",
+      "teachers": "Macallimiinta",
+      "accounts": "Akoonada ardayda",
+      "rating": "Celceliska qiimeynta",
+      "ratingEmpty": "Faallo la daabacay ma jirto",
+      "ratingDetail": "{count} faallo oo la daabacay",
+      "lessonsToday": "Casharada maanta",
+      "lessonsTodayEmpty": "Maanta cashar ma jiro.",
+      "completedTitle": "Casharada dhawaan la dhammeeyay",
+      "completedEmpty": "Weli cashar looma calaamadin in la waday.",
+      "lessonLine": "{time} · {instructor} · {student}",
+      "placesTitle": "Goobaha",
+      "placesDescription": "Macallimiinta iyo ballamaha goob kasta."
+    },
+    "places": {
+      "eyebrow": "Goobaha",
+      "title": "Meesha aan ka wadno",
+      "description": "Farsta iyo Upplands Väsby. Fur goob si aad u aragto macallimiinta, ballamaha iyo lacagta.",
+      "teachers": "{count} macallin",
+      "bookings": "{count} ballan",
+      "viewDetails": "Arag faahfaahin",
+      "completed": "Casharada la dhammeeyay",
+      "confirmed": "Ballamaha soo socda",
+      "thisMonth": "Ballamaha bishan",
+      "pay": "Mushaharka macallinka ee la qiyaasay",
+      "payEmpty": "Mushahar macallin looma dejin casharada la dhammeeyay.",
+      "lessonValue": "Qiimaha casharada la waday",
+      "lessonValueDetail": "Qiimaha hal cashar wadista oo lagu dhuftay casharada la dhammeeyay ee goobtan.",
+      "recent": "Ballamihii ugu dambeeyay",
+      "emptyBookings": "Weli ballan kuma jiro goobtan.",
+      "teachersTitle": "Macallimiinta goobtan",
+      "noTeachers": "Macallin firfircoon halkan laguma xirin.",
+      "pickupNote": "Qaadista aan goob la dooran halkan kuma jiraan."
+    },
+    "directory": {
+      "eyebrow": "Macallimiinta",
+      "title": "Macallimiinta",
+      "description": "Arag yaa meesha ka wada. Fur macallin si aad u beddesho saacadaha, mushaharka iyo telefoonka.",
+      "add": "Ku dar macallin",
+      "edit": "Fur",
+      "active": "Firfircoon",
+      "inactive": "Aan firfircoonayn",
+      "empty": "Weli macallin ma jiro."
+    },
+    "reviews": {
+      "title": "Faallooyinka",
+      "description": "Faallooyin aan la daabicin. Daabac ama diid.",
+      "empty": "Faallo sugaysa ma jirto.",
+      "googleTitle": "Faallooyinka Google",
+      "googleBody": "Weli qiimeyn Google oo la xaqiijiyay uma jirto Makina Trafikskola.",
+      "googleCta": "Ku fur Google",
+      "googleScore": "{rating} ka mid ah 5",
+      "googleCount": "{count} faallo",
+      "student": "Arday",
+      "instructor": "Macallin",
+      "rating": "Qiimeyn",
+      "comment": "Faallo",
+      "date": "Taariikh",
+      "noComment": "Faallo ma jirto.",
+      "publish": "Daabac",
+      "reject": "Diid",
+      "saving": "Waa la kaydinayaa…"
+    },
+    "calendar": {
+      "eyebrow": "Maamul",
+      "title": "Kalandarka toddobaadka",
+      "description": "Arag ballamaha macallin kasta oo firfircoon oo maamul ballan.",
+      "previous": "Toddobaadkii hore",
+      "next": "Toddobaadka xiga",
+      "instructor": "Macallin",
+      "allTeachers": "Dhammaan macallimiinta",
+      "lessonCount": "{count} ballan toddobaadkan",
+      "completed": "La dhammeeyay",
+      "empty": "Macallin firfircoon ma jiro.",
+      "controls": {
+        "manage": "Maamul",
+        "close": "Xir",
+        "action": "Tallaabo",
+        "move": "Beddel waqtiga",
+        "reassign": "Beddel macallinka",
+        "cancel": "Jooji",
+        "newTime": "Waqti maxalli ah oo cusub",
+        "newInstructor": "Macallin cusub",
+        "reason": "Sabab qoran",
+        "confirmCancel": "Waan fahmayaa in casharka la joojin doono, xisaabta la soo celin doono, ardaygana la ogeysiin doono.",
+        "save": "Kaydi isbeddelka",
+        "saving": "Waa la kaydinayaa…"
+      }
+    },
+    "students": {
+      "eyebrow": "Maamul",
+      "title": "Ardayda",
+      "description": "Hel arday, eeg hadhaaga iyo lacag-bixinta, ama diiwaangeli waxa ay horay ugu lahaayeen bogga hore.",
+      "searchLabel": "Magac, iimayl ama mobayl",
+      "search": "Raadi",
+      "results": "{count} natiijo",
+      "noEmail": "Iimayl ma jiro",
+      "empty": "Arday ku habboon raadinta ma jiro.",
+      "selectStudent": "Dooro arday si aad u aragto faahfaahinta.",
+      "balance": "Hadhaaga firfircoon ee la xisaabiyay",
+      "payments": "Lacag-bixinta",
+      "paymentLine": "{provider} · {method} · {status} · la celiyay {refunded}",
+      "unknownMethod": "hab aan la garanayn",
+      "orderStatus": {
+        "PENDING": "Sugaya",
+        "PAID": "La bixiyay",
+        "FAILED": "Fashilmay",
+        "REFUNDED": "La celiyay",
+        "PARTIALLY_REFUNDED": "Qayb ayaa la celiyay"
+      },
+      "paymentStatus": {
+        "PENDING": "Sugaya",
+        "SUCCEEDED": "Guulaystay",
+        "FAILED": "Fashilmay",
+        "REFUNDED": "La celiyay"
+      },
+      "provider": {
+        "STRIPE": "Stripe",
+        "MANUAL": "Gacanta"
+      },
+      "method": {
+        "card": "Kaar",
+        "swish": "Swish",
+        "klarna": "Klarna"
+      },
+      "noPayment": "Lacag-bixin lama diiwaangelin",
+      "noPayments": "Lacag-bixin ma jirto.",
+      "ledger": "Dhaqdhaqaaqa xisaabta",
+      "noLedger": "Dhaqdhaqaaq xisaab ma jiro.",
+      "expires": "Wuxuu shaqeeyaa ilaa {date}",
+      "adjustment": {
+        "title": "Casharo ka yimid bogga hore",
+        "help": "Ku dar casharo ardaygan horay u bixiyay. Waxay socdaan 12 bilood laga bilaabo maanta. Calaamad minus ah ayaa ka saarta casharada. Qor waxa ay lahaayeen, tusaale ahaan magaca xirmadii hore. Kaliya milkiilaha ayaa tan samayn kara.",
+        "delta": "Casharo",
+        "reason": "Sabab qoran oo loo baahan yahay",
+        "submit": "Kaydi casharada",
+        "saving": "Waa la kaydinayaa…"
+      },
+      "theory": {
+        "title": "Aragti ka timid bogga hore",
+        "help": "Aragtida ay horay u bixiyeen waqti xadidnimo ma leh. Macallimiintu ma beddeli karaan hadhaaga ama aragtida.",
+        "active": "Aragtidu waa firfircoon",
+        "inactive": "Aragti ma jirto",
+        "grant": "Sii aragti",
+        "revoke": "Ka saar aragtida",
+        "reason": "Sabab qoran oo loo baahan yahay",
+        "saving": "Waa la kaydinayaa…"
+      },
+      "editTitle": "Wax ka beddel ardayga",
+      "edit": "Wax ka beddel",
+      "close": "Xir",
+      "firstName": "Magaca hore",
+      "lastName": "Magaca dambe",
+      "email": "Iimayl",
+      "phone": "Telefoon",
+      "saved": "Ardayga waa la cusboonaysiiyay.",
+      "saving": "Waa la kaydinayaa...",
+      "save": "Kaydi",
+      "noPhone": "Telefoon ma jiro"
+    },
+    "instructors": {
+      "eyebrow": "Maamul",
+      "title": "Ku dar macallin",
+      "description": "Samee akoon, luqado, sanduuqyo gudbin, goobo iyo saacado shaqo oo maxalli ah oo soo noqnoqda.",
+      "account": "Akoon",
+      "firstName": "Magaca hore",
+      "lastName": "Magaca dambe",
+      "phone": "Lambarka mobaylka",
+      "email": "Iimayl",
+      "initialPassword": "Eray sir ah oo ku meel gaar ah",
+      "slug": "Cinwaanka astaanta",
+      "yearsExperience": "Sannadaha khibradda",
+      "languages": "Luqadaha",
+      "transmissions": "Sanduuqyada gudbinta",
+      "transmission": {
+        "MANUAL": "Gacanta",
+        "AUTOMATIC": "Otomaatig"
+      },
+      "locations": "Goobaha",
+      "noLocations": "Goobo firfircoon ma jiraan. Macallin lama samayn karo.",
+      "hours": "Saacadaha shaqada",
+      "hoursDescription": "Waqtiyadu waa saacadda gudaha ee Europe/Stockholm.",
+      "from": "Laga bilaabo",
+      "to": "Ilaa",
+      "day": {
+        "0": "Axad",
+        "1": "Isniin",
+        "2": "Talaado",
+        "3": "Arbaco",
+        "4": "Khamiis",
+        "5": "Jimce",
+        "6": "Sabti"
+      },
+      "photo": "Sawirka astaanta",
+      "photoHelp": "Ikhtiyaar JPEG, PNG ama WebP, ugu badnaan 5 MB.",
+      "submit": "Samee macallin",
+      "saving": "Waa la samaynayaa…",
+      "created": "Macallinka waa la sameeyay."
+    },
+    "instructorStatus": {
+      "title": "Maamul macallimiinta",
+      "description": "Firfircooni ama dami macallimiinta. Ballamaha la xaqiijiyay ee mustaqbalka waa in marka hore loo beddelo ama la joojiyo.",
+      "active": "Firfircoon",
+      "inactive": "Aan firfircoonayn",
+      "activate": "Firfircooni",
+      "deactivate": "Dami",
+      "saving": "Waa la kaydinayaa…"
+    },
+    "instructorPhone": {
+      "label": "Lambarka mobaylka",
+      "missing": "Maqan",
+      "save": "Kaydi lambarka",
+      "saving": "Waa la kaydinayaa…"
+    }
+  },
+  "errors": {
+    "pageTitle": "Dhibaato farsamo ayaa naga haysata",
+    "retry": "Mar kale isku day",
+    "NO_CREDITS": "Xisaab xirmo ma lihid. Beddelkeeda dooro cashar keli ah oo la bixiyo.",
+    "CHECKOUT_CONSENT_REQUIRED": "Aqbal shuruudaha iibsiga iyo macluumaadka ka-noqoshada si aad u sii wadato.",
+    "INVALID_PICKUP_COORDINATES": "Dooro cinwaan qaadis oo sax ah oo Iswiidhan ku yaal.",
+    "INVALID_INPUT": "Hubi faahfaahinta oo mar kale isku day.",
+    "INVALID_CREDENTIALS": "Iimaylka ama erayga sirta ah waa khalad.",
+    "ACCOUNT_EXISTS": "Akoon leh iimaylkan ama lambarkan mobaylka horey ayuu u jiray.",
+    "NO_ACCOUNT": "Akoon uma isticmaalo lambarkan mobaylka.",
+    "GOOGLE_ALREADY_LINKED": "Lambarkan mobaylka horey ayaa loogu xiray akoon Google oo kale.",
+    "INVALID_OTP": "Koodhku waa khalad ama wuu dhacay. Codso koodh cusub.",
+    "INVALID_PHONE": "Geli lambar mobayl oo sax ah, tusaale ahaan 0701234567 ama +46701234567.",
+    "PHONE_IN_USE": "Lambarkaas mobaylka horey ayaa loo isticmaalay. Geli lambar kale.",
+    "OUTSIDE_CANCELLATION_WINDOW": "Casharka lama beddeli karo wax ka yar 24 saac ka hor inta uu bilaabmo. La xiriir dugsiga.",
+    "LESSON_NOT_STARTED": "Casharku weli ma bilaaban.",
+    "SMS_PROVIDER_NOT_CONFIGURED": "Gelitaanka fariinta qoraalka ah weli lama dejin. La xiriir dugsiga ama isticmaal iimayl.",
+    "SMS_DELIVERY_FAILED": "Fariinta qoraalka ah lama diri karin. Hubi lambarka oo mar kale isku day.",
+    "RATE_LIMITED": "Mar dambe isku day.",
+    "SELECT_LOCATION_OR_PICKUP": "Dooro goob ama geli cinwaan qaadis.",
+    "PICKUP_ADDRESS_CONFIRMATION_REQUIRED": "Dooro cinwaan liiska ka mid ah si aad u sii wadato.",
+    "GEARBOX_REQUIRED": "Dooro gudbin gacanta ama otomaatig ah si aad u sii wadato.",
+    "TEACHER_REQUIRED": "Dooro macallin si aad u sii wadato.",
+    "SLOT_REQUIRED": "Dooro waqti bannaan.",
+    "SLOT_TAKEN": "Waqtigan hadda ayaa la ballansaday. Dooro waqti kale oo bannaan.",
+    "PRODUCT_INACTIVE": "Alaabtu weli lama iibsan karo.",
+    "HOLD_EXPIRED": "Hayntaadu way dhacday. Dooro waqti cusub oo bannaan.",
+    "PAYMENT_PROVIDER_NOT_CONFIGURED": "Lacag-bixintu hadda ma diyaar sana. La xiriir dugsiga ama mar dambe isku day.",
+    "IDEMPOTENCY_KEY_REUSED": "Ballanta mar kale lama gudbin karin. Cusboonaysii bogga oo mar kale isku day.",
+    "ACCOUNT_NOT_FOUND": "Akoonkani hadda ma jiro. Ka bax oo mar kale isku day.",
+    "UNAUTHENTICATED": "Soo gal si aad u sii wadato.",
+    "FORBIDDEN": "Tan ma haysatid gelitaan.",
+    "STUDENT_NOT_FOUND": "Ardayga lama helin.",
+    "BOOKING_NOT_FOUND": "Ballanta lama helin.",
+    "BOOKING_NOT_ACTIVE": "Ballanta hadda lama beddeli karo.",
+    "TEACHER_NOT_FOUND": "Macallinka lama helin ama ma firfircoona.",
+    "TEACHER_HAS_FUTURE_BOOKINGS": "U beddel ama jooji ballamaha mustaqbalka ee macallinka ka hor intaadan damayn.",
+    "LOCATION_NOT_FOUND": "Goob la doortay lama helin ama ma firfircoona.",
+    "LOCATION_NOT_ASSIGNED": "Saacadaha shaqadu waxay isticmaalayaan goob aan la dooran.",
+    "SLUG_EXISTS": "Cinwaanka astaanta horey ayaa loo isticmaalay.",
+    "ACCOUNT_OR_SLUG_EXISTS": "Iimaylka ama cinwaanka astaanta horey ayaa loo isticmaalay.",
+    "ACCOUNT_HAS_ACTIVE_BOOKINGS": "Dhammee ama jooji casharada soo socda, koorsooyinka iyo lacag-bixinta firfircoon ka hor intaadan tirtirin akoonka.",
+    "COURSE_OCCASION_NOT_FOUND": "Munaasabaddan koorsada hadda ma diyaar sana.",
+    "COURSE_OCCASION_HAS_BOOKINGS": "Munaasabaddan koorsada waxay leedahay ballamo. Ka shaqee ka-qaybgalayaasha ka hor joojinta.",
+    "COURSE_FULL": "Koorsadan waa buuxsantay.",
+    "COURSE_ALREADY_BOOKED": "Horey ayaad u haysataa kursi la xaqiijiyay oo koorsadan ah.",
+    "PAYMENT_PROVIDER_ERROR": "Lacag-bixinta lama bilaabi karin. Mar kale isku day.",
+    "PRODUCT_TRANSLATION_MISSING": "Koorsadu waxay ka maqan tahay macluumaadka alaabta ee loo baahan yahay.",
+    "THEORY_QUESTION_NOT_FOUND": "Su'aashan hadda ma diyaar sana.",
+    "THEORY_ACCESS_REQUIRED": "Gelitaan aragti oo firfircoon ayaa loo baahan yahay su'aashan.",
+    "THEORY_EXAM_NOT_FOUND": "Imtixaanka lama helin.",
+    "THEORY_EXAM_FINISHED": "Imtixaanku horey ayuu u dhammaaday.",
+    "THEORY_EXAM_EXPIRED": "Waqtiga imtixaanka wuu dhacay.",
+    "THEORY_EXAM_COMPLETE": "Dhammaan su'aalaha imtixaanka horey ayaa loo jawaabay.",
+    "THEORY_EXAM_UNAVAILABLE": "Su'aalo diyaar ah oo ku filan ma jiraan.",
+    "BOOKING_NOT_COMPLETED": "Waxaad faallo ka bixin kartaa cashar la dhammeeyay.",
+    "REVIEW_EXISTS": "Horey ayaad u faallaysay casharkan.",
+    "UNKNOWN": "Wax baa khaldamay. Mar kale isku day.",
+    "REVIEW_NOT_FOUND": "Faalladaas ma jirto.",
+    "notFoundTitle": "Boggan ma heli karno",
+    "notFoundDescription": "Cinwaanku sax ma aha. Tag bogga hore, casharada wadista, macallimiinta ama ballan waqti.",
+    "forbiddenTitle": "Gelitaan ma lihid",
+    "forbiddenDescription": "Boggan wuxuu u yahay door kale. Tag bogga hore ama bogaggaaga.",
+    "forbiddenDashboard": "U tag bogagayga",
+    "OUTSIDE_PICKUP_AREA": "Cinwaankaas wuxuu ka baxsan yahay aagga qaadista. Dooro cinwaan gudaha aagga.",
+    "AREA_UNAVAILABLE": "Aaggaas weli looma furin ballan. Dooro Farsta ama Upplands Väsby.",
+    "OUTSIDE_BOOKING_HORIZON": "Waxaad ballansan kartaa ugu badnaan afar toddobaad hor. Dooro waqti ka horreeya.",
+    "INTRO_OFFER_USED": "Qiimaha hordhaca wuxuu khuseeyaa oo keliya casharkaaga koowaad. Dooro casharka caadiga ah.",
+    "EMAIL_TAKEN": "Iimaylkaas horey ayaa loo isticmaalay. Dooro mid kale.",
+    "LOST_PHONE_NOT_ALLOWED": "Ku xaqiiji eraygaaga sirta ah ama mar kale soo gal ka hor intaadan beddelin lambarka adigoon haysan kii hore.",
+    "TURNSTILE_FAILED": "Hubinta amniga way fashilantay. Cusboonaysii bogga oo mar kale isku day."
+  },
+  "contact": {
+    "metadata": "Faahfaahinta xiriirka ee Makina Trafikskola ee Stockholm.",
+    "eyebrow": "Nala soo hel",
+    "title": "Xiriir",
+    "description": "Wac, iimayl ama booqo Makina Trafikskola. Halkan waxaad ka heli kartaa saacadaha furitaanka, goobaha iyo luqadaha waxbaridda.",
+    "orgnr": "Lambarka ururka",
+    "visitingAddress": "Cinwaanka booqashada",
+    "postalAddress": "Cinwaanka boostada",
+    "phone": "Telefoon",
+    "email": "Iimayl",
+    "openingHours": "Saacadaha furitaanka",
+    "openingHoursValue": "Isniin–Jimce 08.00–21.00, Sabti–Axad 10.00–18.00 (Europe/Stockholm).",
+    "locationsTitle": "Nala soo hel",
+    "locationsDescription": "Waxaad naga heli kartaa Centralvägen 5 ee Upplands Väsby. Ku fur tilmaamaha Google Maps.",
+    "directions": "Tilmaamaha",
+    "languagesTitle": "Luqaddee ayaad u baahan tahay?",
+    "languagesBody": "Casharo {languages}.",
+    "reviewsTitle": "Faallooyinka ardayda",
+    "reviewsSummary": "{count} faallo oo la daabacay · celcelis {average}/5",
+    "staffTitle": "Kooxdeena",
+    "staffDescription": "La kulan kooxda Makina Trafikskola. La xiriir dugsiga haddii aad rabto inaad ballansato macallin gaar ah.",
+    "contactViaSchool": "Ku xiriir dugsiga",
+    "callSchool": "Wac dugsiga",
+    "sendSms": "Dir fariin qoraal ah",
+    "emailSchool": "U dir iimayl dugsiga",
+    "staffRoles": {
+      "trafikskolechef": "Maamulaha dugsiga wadista",
+      "utbildningsledare": "Madaxa tababarka",
+      "trafiklarare": "Macallinka wadista"
+    },
+    "day": {
+      "0": "Axad",
+      "1": "Isniin",
+      "2": "Talaado",
+      "3": "Arbaco",
+      "4": "Khamiis",
+      "5": "Jimce",
+      "6": "Sabti"
+    },
+    "speaks": "Wuxuu wax ku dhigaa {languages}",
+    "emailUs": "Noo soo dir iimayl",
+    "replyLine": "Waxaan ku jawaabnaa hal maalin shaqo gudaheed."
+  }
+}

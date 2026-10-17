@@ -27,7 +27,7 @@ function mondayFor(dateKey: string) {
 export default async function AdminCalendarPage(
   props: {
     params: Promise<{ locale: string }>;
-    searchParams: Promise<{ week?: string }>;
+    searchParams: Promise<{ week?: string; teacher?: string }>;
   }
 ) {
   const searchParams = await props.searchParams;
@@ -68,9 +68,27 @@ export default async function AdminCalendarPage(
       },
     }),
   ]);
+  const selectedTeacher = teachers.some((teacher) => teacher.id === searchParams.teacher)
+    ? searchParams.teacher
+    : undefined;
+  const visibleTeachers = selectedTeacher
+    ? teachers.filter((teacher) => teacher.id === selectedTeacher)
+    : teachers;
   const days = Array.from({ length: 7 }, (_, index) =>
     addDateKey(weekStartKey, index),
   );
+  const hourStart = 7;
+  const hourEnd = 21;
+  const hourHeight = 48;
+  const dayBookings = (day: string) =>
+    visibleTeachers.flatMap((teacher) =>
+      teacher.bookings
+        .filter(
+          (booking) =>
+            formatInTimeZone(booking.startsAt, TIME_ZONE, "yyyy-MM-dd") === day,
+        )
+        .map((booking) => ({ booking, teacher })),
+    );
   const formatDay = (date: Date) =>
     formatDate(date, params.locale, {
       weekday: "short",
@@ -83,7 +101,7 @@ export default async function AdminCalendarPage(
   }));
 
   return (
-    <section>
+    <section className="flex flex-col">
       <PageHeader
         eyebrow={t("eyebrow")}
         title={t("title")}
@@ -92,13 +110,13 @@ export default async function AdminCalendarPage(
           <>
           <LinkButton
             variant="tertiary"
-            href={`/${params.locale}/admin/calendar?week=${addDateKey(weekStartKey, -7)}`}
+            href={`/${params.locale}/admin/calendar?week=${addDateKey(weekStartKey, -7)}${selectedTeacher ? `&teacher=${selectedTeacher}` : ""}`}
           >
             {t("previous")}
           </LinkButton>
           <LinkButton
             variant="tertiary"
-            href={`/${params.locale}/admin/calendar?week=${addDateKey(weekStartKey, 7)}`}
+            href={`/${params.locale}/admin/calendar?week=${addDateKey(weekStartKey, 7)}${selectedTeacher ? `&teacher=${selectedTeacher}` : ""}`}
           >
             {t("next")}
           </LinkButton>
@@ -106,9 +124,9 @@ export default async function AdminCalendarPage(
         }
       />
 
-      <div className="mt-6 grid gap-4 xl:hidden">
+      <div className="order-2 mt-6 grid gap-4 xl:hidden">
         {days.map((day) => {
-          const dayBookings = teachers.flatMap((teacher) =>
+          const dayItems = visibleTeachers.flatMap((teacher) =>
             teacher.bookings
               .filter(
                 (booking) =>
@@ -122,7 +140,7 @@ export default async function AdminCalendarPage(
                 {formatDay(fromZonedTime(`${day}T12:00:00`, TIME_ZONE))}
               </h2>
               <div className="mt-3 grid gap-3">
-                {dayBookings.map(({ booking, teacher }) => (
+                {dayItems.map(({ booking, teacher }) => (
                   <article key={booking.id} className="rounded-sm border border-border bg-card-muted p-3">
                     <div className="flex items-start justify-between gap-3">
                       <div>
@@ -150,74 +168,68 @@ export default async function AdminCalendarPage(
         })}
       </div>
 
-      <div className="mt-6 hidden rounded-md border border-border bg-card shadow-soft xl:block">
-        <div className="grid grid-cols-[7rem_repeat(7,minmax(0,1fr))]">
-          <div className="border-b border-e border-border p-3 font-bold">
-            {t("instructor")}
-          </div>
+      <div className="order-1 mt-6 overflow-x-auto rounded-md border border-border bg-card shadow-soft">
+        <div className="grid grid-cols-[4.5rem_repeat(7,minmax(0,1fr))] border-b border-border">
+          <div />
           {days.map((day) => (
-            <div
-              key={day}
-              className="border-b border-e border-border p-3 text-center font-bold last:border-e-0"
-            >
+            <div key={day} className="border-s border-border px-2 py-3 text-center text-small font-bold">
               {formatDay(fromZonedTime(`${day}T12:00:00`, TIME_ZONE))}
             </div>
           ))}
-          {teachers.map((teacher) => (
-            <div className="contents" key={teacher.id}>
-              <div className="min-w-0 break-words border-b border-e border-border p-2 text-sm font-bold">
-                {teacher.user.firstName} {teacher.user.lastName}
+        </div>
+        <div className="grid min-w-[52rem] max-h-[42rem] grid-cols-[4.5rem_repeat(7,minmax(0,1fr))] overflow-y-auto">
+          <div>
+            {Array.from({ length: hourEnd - hourStart }, (_, index) => (
+              <div key={index} className="relative border-b border-border pe-2 text-end text-xs text-ink-muted" style={{ height: hourHeight }}>
+                <span className="numbers-ltr absolute -top-2 end-2">{String(hourStart + index).padStart(2, "0")}:00</span>
               </div>
-              {days.map((day) => {
-                const bookings = teacher.bookings.filter(
-                  (booking) =>
-                    formatInTimeZone(booking.startsAt, TIME_ZONE, "yyyy-MM-dd") ===
-                    day,
-                );
+            ))}
+          </div>
+          {days.map((day) => (
+            <div key={day} className="relative border-s border-border" style={{ height: (hourEnd - hourStart) * hourHeight }}>
+              {Array.from({ length: hourEnd - hourStart }, (_, index) => (
+                <div key={index} className="border-b border-border" style={{ height: hourHeight }} />
+              ))}
+              {dayBookings(day).map(({ booking, teacher }) => {
+                const start = Number(formatInTimeZone(booking.startsAt, TIME_ZONE, "H")) * 60
+                  + Number(formatInTimeZone(booking.startsAt, TIME_ZONE, "m"));
+                const end = Number(formatInTimeZone(booking.endsAt, TIME_ZONE, "H")) * 60
+                  + Number(formatInTimeZone(booking.endsAt, TIME_ZONE, "m"));
+                const top = Math.max(0, (start - hourStart * 60) * (hourHeight / 60));
+                const height = Math.max(28, (end - start) * (hourHeight / 60));
                 return (
-                  <div
-                    key={day}
-                    className="min-h-24 min-w-0 border-b border-e border-border p-2 last:border-e-0"
+                  <article
+                    key={booking.id}
+                    className="absolute inset-x-1 overflow-hidden rounded-sm border border-border bg-accent-soft p-1 text-xs"
+                    style={{ top, height }}
                   >
-                    <div className="grid gap-2">
-                      {bookings.map((booking) => (
-                        <article
-                          key={booking.id}
-                          className="rounded-sm border border-border bg-page p-2 text-sm"
-                        >
-                          <p className="font-black" dir="ltr">
-                            {formatLessonTime(booking.startsAt, params.locale)}
-                          </p>
-                          <p className="mt-1 font-bold">
-                            {booking.student.firstName}{" "}
-                            {booking.student.lastName}
-                          </p>
-                          {booking.location ? (
-                            <p className="mt-1 text-xs text-ink-muted">
-                              {booking.location.name}
-                            </p>
-                          ) : null}
-                          {booking.status === "CONFIRMED" ? (
-                            <AdminBookingControls
-                              bookingId={booking.id}
-                              startsAt={booking.startsAt.toISOString()}
-                              teachers={teacherOptions}
-                              currentTeacherId={teacher.id}
-                            />
-                          ) : (
-                            <p className="mt-2 text-xs text-ink-muted">
-                              {t("completed")}
-                            </p>
-                          )}
-                        </article>
-                      ))}
-                    </div>
-                  </div>
+                    <p className="font-black" dir="ltr">{formatLessonTime(booking.startsAt, params.locale)}</p>
+                    <p className="truncate font-bold">{booking.student.firstName} {booking.student.lastName}</p>
+                    <p className="truncate text-ink-muted">{teacher.user.firstName}</p>
+                  </article>
                 );
               })}
             </div>
           ))}
         </div>
+      </div>
+      <div className="order-3 mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <a
+          href={`/${params.locale}/admin/calendar?week=${weekStartKey}`}
+          className={`rounded-md border bg-card p-4 font-bold shadow-soft ${selectedTeacher ? "border-border" : "border-ink"}`}
+        >
+          {t("allTeachers")}
+        </a>
+        {teachers.map((teacher) => (
+          <a
+            key={teacher.id}
+            href={`/${params.locale}/admin/calendar?week=${weekStartKey}&teacher=${teacher.id}`}
+            className={`rounded-md border bg-card p-4 shadow-soft ${selectedTeacher === teacher.id ? "border-ink" : "border-border"}`}
+          >
+            <p className="font-black">{teacher.user.firstName} {teacher.user.lastName}</p>
+            <p className="mt-1 text-small text-ink-muted">{t("lessonCount", { count: teacher.bookings.length })}</p>
+          </a>
+        ))}
       </div>
       {!teachers.length ? (
         <p className="mt-6 rounded-md border border-border bg-card p-6 text-ink-muted">

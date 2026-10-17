@@ -3,9 +3,14 @@ import { describe, expect, it } from "vitest";
 import { roadSignQuestions } from "../../../prisma/theory/road-sign-bank";
 
 describe("road-sign game bank", () => {
-  it("contains 300 free-review rounds backed by local SVG assets", () => {
-    expect(roadSignQuestions).toHaveLength(300);
-    expect(new Set(roadSignQuestions.map((question) => question.id)).size).toBe(300);
+  it("has 100 questions and never repeats the same sign twice in a row", () => {
+    expect(roadSignQuestions).toHaveLength(100);
+    expect(roadSignQuestions.length).toBeLessThanOrEqual(300);
+    expect(new Set(roadSignQuestions.map((question) => question.id)).size).toBe(100);
+    expect(new Set(roadSignQuestions.map((question) => question.image_url)).size).toBe(25);
+    for (let index = 1; index < roadSignQuestions.length; index += 1) {
+      expect(roadSignQuestions[index]?.image_url).not.toBe(roadSignQuestions[index - 1]?.image_url);
+    }
     expect(
       roadSignQuestions.every(
         (question) =>

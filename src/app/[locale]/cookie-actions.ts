@@ -4,9 +4,11 @@ import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
+import { locales } from "@/i18n/routing";
+
 const consentSchema = z
   .object({
-    locale: z.enum(["sv", "en", "ti", "ar"]),
+    locale: z.enum(locales),
     consent: z.enum(["necessary", "accepted"]),
   })
   .strict();
@@ -29,7 +31,7 @@ export async function saveCookieConsent(formData: FormData) {
 }
 
 export async function clearCookieConsent(formData: FormData) {
-  const locale = z.enum(["sv", "en", "ti", "ar"]).safeParse(
+  const locale = z.enum(locales).safeParse(
     formData.get("locale"),
   );
   if (!locale.success) return;
