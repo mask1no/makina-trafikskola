@@ -6,12 +6,13 @@ import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/Button";
 import { Card } from "@/components/Card";
+import { Notice } from "@/components/Notice";
 import { nativeBridge, pickNativePhoto, shouldUseNativeCamera } from "@/lib/photos/native-photo";
+import { TEACHING_LANGUAGES } from "@/lib/teachers/languages";
 
 type Hour = { dayOfWeek: number; startTime: string; endTime: string; locationId: string };
 type Location = { id: string; name: string };
 
-const languages = ["sv", "en", "ti", "ku"] as const;
 const gearboxes = ["MANUAL", "AUTOMATIC"] as const;
 
 function weekday(day: number, locale: string) {
@@ -42,6 +43,7 @@ export function TeacherEditor({
   };
 }) {
   const t = useTranslations("admin.editor");
+  const languageNames = useTranslations("language");
   const errors = useTranslations("errors");
   const router = useRouter();
   const [form, setForm] = useState(initial);
@@ -54,6 +56,20 @@ export function TeacherEditor({
 
   function toggle(list: string[], value: string) {
     return list.includes(value) ? list.filter((item) => item !== value) : [...list, value];
+  }
+
+  function applyWeekdayHours() {
+    const locationId = form.locationIds[0] ?? locations[0]?.id;
+    if (!locationId) return;
+    setForm({
+      ...form,
+      hours: [1, 2, 3, 4, 5].map((dayOfWeek) => ({
+        dayOfWeek,
+        startTime: "09:00",
+        endTime: "17:00",
+        locationId,
+      })),
+    });
   }
 
   async function save() {
@@ -96,7 +112,7 @@ export function TeacherEditor({
     const body = await response.json().catch(() => null);
     setMessage(
       body?.ok
-        ? t("saved")
+        ? t("calendarConnected")
         : errorMessage(body?.error?.code ?? body?.message ?? "UNKNOWN"),
     );
   }
@@ -110,10 +126,10 @@ export function TeacherEditor({
       <fieldset>
         <legend className="text-small font-semibold">{t("languages")}</legend>
         <div className="mt-2 flex flex-wrap gap-2">
-          {languages.map((code) => (
+          {TEACHING_LANGUAGES.map((code) => (
             <label key={code} className="inline-flex min-h-11 items-center gap-2 rounded-full border border-border px-3">
               <input type="checkbox" checked={form.languages.includes(code)} onChange={() => setForm({ ...form, languages: toggle(form.languages, code) })} />
-              {code}
+              {languageNames(code)}
             </label>
           ))}
         </div>
@@ -146,32 +162,63 @@ export function TeacherEditor({
       </label>
       <div className="grid gap-3">
         <p className="text-small font-semibold">{t("hours")}</p>
+        <p className="text-small text-ink-muted">{t("hoursHelp")}</p>
+        <div className="flex flex-wrap gap-2">
+          <Button type="button" variant="secondary" onClick={applyWeekdayHours}>
+            {t("weekdayHours")}
+          </Button>
+          {form.hours.length ? (
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={() => setForm({ ...form, hours: [] })}
+            >
+              {t("clearHours")}
+            </Button>
+          ) : null}
+        </div>
+        {!form.hours.length ? (
+          <Notice tone="danger">{t("notBookable")}</Notice>
+        ) : null}
         {form.hours.map((hour, index) => (
-          <div key={index} className="grid gap-2 sm:grid-cols-[1fr_1fr_1fr_1fr_auto]">
-            <select className="min-h-11 rounded-sm border border-border px-3" value={hour.dayOfWeek} onChange={(event) => {
-              const hours = [...form.hours];
-              hours[index] = { ...hour, dayOfWeek: Number(event.target.value) };
-              setForm({ ...form, hours });
-            }}>
-              {[0, 1, 2, 3, 4, 5, 6].map((day) => <option key={day} value={day}>{weekday(day, locale)}</option>)}
-            </select>
-            <input className="min-h-11 rounded-sm border border-border px-3" value={hour.startTime} onChange={(event) => {
-              const hours = [...form.hours];
-              hours[index] = { ...hour, startTime: event.target.value };
-              setForm({ ...form, hours });
-            }} />
-            <input className="min-h-11 rounded-sm border border-border px-3" value={hour.endTime} onChange={(event) => {
-              const hours = [...form.hours];
-              hours[index] = { ...hour, endTime: event.target.value };
-              setForm({ ...form, hours });
-            }} />
-            <select className="min-h-11 rounded-sm border border-border px-3" value={hour.locationId} onChange={(event) => {
-              const hours = [...form.hours];
-              hours[index] = { ...hour, locationId: event.target.value };
-              setForm({ ...form, hours });
-            }}>
-              {locations.map((location) => <option key={location.id} value={location.id}>{location.name}</option>)}
-            </select>
+          <fieldset key={index} className="grid gap-2 rounded-sm border border-border bg-page p-3 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_1fr_auto] lg:items-end">
+            <legend className="sr-only">{t("hourRow", { number: index + 1 })}</legend>
+            <label className="grid gap-1 text-small font-semibold">
+              {t("hourDay")}
+              <select className="min-h-11 rounded-sm border border-border bg-card px-3" value={hour.dayOfWeek} onChange={(event) => {
+                const hours = [...form.hours];
+                hours[index] = { ...hour, dayOfWeek: Number(event.target.value) };
+                setForm({ ...form, hours });
+              }}>
+                {[1, 2, 3, 4, 5, 6, 0].map((day) => <option key={day} value={day}>{weekday(day, locale)}</option>)}
+              </select>
+            </label>
+            <label className="grid gap-1 text-small font-semibold">
+              {t("hourFrom")}
+              <input type="time" className="min-h-11 rounded-sm border border-border bg-card px-3" value={hour.startTime} onChange={(event) => {
+                const hours = [...form.hours];
+                hours[index] = { ...hour, startTime: event.target.value };
+                setForm({ ...form, hours });
+              }} />
+            </label>
+            <label className="grid gap-1 text-small font-semibold">
+              {t("hourTo")}
+              <input type="time" className="min-h-11 rounded-sm border border-border bg-card px-3" value={hour.endTime} onChange={(event) => {
+                const hours = [...form.hours];
+                hours[index] = { ...hour, endTime: event.target.value };
+                setForm({ ...form, hours });
+              }} />
+            </label>
+            <label className="grid gap-1 text-small font-semibold">
+              {t("hourArea")}
+              <select className="min-h-11 rounded-sm border border-border bg-card px-3" value={hour.locationId} onChange={(event) => {
+                const hours = [...form.hours];
+                hours[index] = { ...hour, locationId: event.target.value };
+                setForm({ ...form, hours });
+              }}>
+                {locations.map((location) => <option key={location.id} value={location.id}>{location.name}</option>)}
+              </select>
+            </label>
             <Button
               type="button"
               variant="ghost"
@@ -180,7 +227,7 @@ export function TeacherEditor({
             >
               {t("remove")}
             </Button>
-          </div>
+          </fieldset>
         ))}
         <Button type="button" variant="secondary" onClick={() => setForm({
           ...form,
@@ -230,11 +277,21 @@ export function TeacherEditor({
           }}
         />
       </label>
-      <label className="grid gap-2 text-small font-semibold">
-        {t("calendarEmail")}
-        <input className="min-h-11 rounded-sm border border-border px-3" value={form.googleCalendarEmail} onChange={(event) => setForm({ ...form, googleCalendarEmail: event.target.value })} />
-      </label>
-      <Button type="button" variant="secondary" onClick={() => void testCalendar()}>{t("testCalendar")}</Button>
+      <div className="grid gap-3 rounded-sm border border-border bg-page p-4">
+        <label className="grid gap-2 text-small font-semibold">
+          {t("calendarEmail")}
+          <input className="min-h-11 rounded-sm border border-border bg-card px-3" value={form.googleCalendarEmail} onChange={(event) => setForm({ ...form, googleCalendarEmail: event.target.value })} />
+        </label>
+        <p className="text-small text-ink-muted">{t("calendarHelp")}</p>
+        <Button
+          type="button"
+          variant="secondary"
+          disabled={!form.googleCalendarEmail}
+          onClick={() => void testCalendar()}
+        >
+          {t("testCalendar")}
+        </Button>
+      </div>
       <label className="grid gap-2 text-small font-semibold">
         {t("payRate")}
         <input className="min-h-11 rounded-sm border border-border px-3" inputMode="numeric" value={form.payRateKr} onChange={(event) => setForm({ ...form, payRateKr: event.target.value })} />

@@ -1,5 +1,5 @@
 const MAPS_URL =
-  "https://www.google.com/maps/search/?api=1&query=Makina+Trafikskola+Centralv%C3%A4gen+5+Upplands+V%C3%A4sby";
+  "https://www.google.com/maps/search/?api=1&query_place_id=ChIJC89a6lSjX0YR1S7kd_nqCxk&query=Makina+Trafikskola";
 
 export type GoogleSchoolReviews = {
   url: string;
@@ -19,10 +19,12 @@ export async function googleSchoolReviews(): Promise<GoogleSchoolReviews> {
   const key = process.env.GOOGLE_MAPS_SERVER_KEY?.trim();
   if (!key) return fallback;
   try {
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
     const response = await fetch("https://places.googleapis.com/v1/places:searchText", {
       method: "POST",
       headers: {
         "content-type": "application/json",
+        ...(siteUrl ? { referer: `${siteUrl.replace(/\/$/, "")}/` } : {}),
         "x-goog-api-key": key,
         "x-goog-fieldmask":
           "places.displayName,places.rating,places.userRatingCount,places.googleMapsUri",

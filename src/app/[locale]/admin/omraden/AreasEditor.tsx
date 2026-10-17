@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/Button";
 import { Card } from "@/components/Card";
+import { Notice } from "@/components/Notice";
 
 type Area = {
   id: string;
@@ -53,15 +54,24 @@ function Preview({ boundary }: { boundary: string }) {
 export function AreasEditor({ areas }: { areas: Area[] }) {
   const t = useTranslations("admin.editor");
   const [rows, setRows] = useState(areas);
-  const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState<
+    Record<string, { tone: "success" | "danger"; text: string }>
+  >({});
 
   async function save(area: Area) {
-    setMessage("");
+    setMessages((current) => {
+      const next = { ...current };
+      delete next[area.id];
+      return next;
+    });
     let boundary: unknown;
     try {
       boundary = JSON.parse(area.boundary);
     } catch {
-      setMessage("INVALID_GEOJSON");
+      setMessages((current) => ({
+        ...current,
+        [area.id]: { tone: "danger", text: t("invalidBoundary") },
+      }));
       return;
     }
     const response = await fetch(`/api/admin/areas/${area.id}`, {
@@ -74,14 +84,46 @@ export function AreasEditor({ areas }: { areas: Area[] }) {
       }),
     });
     const body = await response.json().catch(() => null);
-    setMessage(response.ok ? t("saved") : body?.error?.code ?? "UNKNOWN");
+    setMessages((current) => ({
+      ...current,
+      [area.id]: {
+        tone: response.ok ? "success" : "danger",
+        text: response.ok ? t("saved") : (body?.error?.code ?? "UNKNOWN"),
+      },
+    }));
   }
 
   return (
-    <div className="grid gap-4">
+    <div className="grid gap-6">
+      <nav
+        aria-label={t("areaNavigation")}
+        className="sticky top-24 z-20 flex gap-2 overflow-x-auto rounded-md border border-border bg-card p-2 shadow-soft"
+      >
+        {rows.map((area) => (
+          <a
+            key={area.id}
+            href={`#area-${area.id}`}
+            className="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-sm px-3 font-bold hover:bg-page"
+          >
+            {area.name}
+            <span className="text-xs font-semibold text-ink-muted">
+              {t(area.status === "ACTIVE" ? "active" : "comingSoon")}
+            </span>
+          </a>
+        ))}
+      </nav>
       {rows.map((area, index) => (
-        <Card key={area.id} className="grid gap-3">
-          <h2 className="font-black">{area.name}</h2>
+        <Card
+          key={area.id}
+          id={`area-${area.id}`}
+          className="grid scroll-mt-40 gap-4"
+        >
+          <div>
+            <h2 className="text-xl font-black">{area.name}</h2>
+            <p className="mt-1 text-small text-ink-muted">
+              {t(area.status === "ACTIVE" ? "active" : "comingSoon")}
+            </p>
+          </div>
           <label className="grid gap-1 text-small font-semibold">
             {t("status")}
             <select className="min-h-11 rounded-sm border border-border px-3" value={area.status} onChange={(event) => {
@@ -101,19 +143,27 @@ export function AreasEditor({ areas }: { areas: Area[] }) {
               setRows(next);
             }} />
           </label>
-          <label className="grid gap-1 text-small font-semibold">
-            {t("boundary")}
-            <textarea className="min-h-32 rounded-sm border border-border px-3 py-2 font-mono text-small" value={area.boundary} onChange={(event) => {
-              const next = [...rows];
-              next[index] = { ...area, boundary: event.target.value };
-              setRows(next);
-            }} />
-          </label>
-          <Preview boundary={area.boundary} />
+          <details className="rounded-sm border border-border bg-page p-4">
+            <summary className="flex min-h-11 cursor-pointer items-center font-bold">
+              {t("advancedBoundary")}
+            </summary>
+            <p className="mb-3 text-small text-ink-muted">{t("boundaryHelp")}</p>
+            <label className="grid gap-1 text-small font-semibold">
+              {t("boundary")}
+              <textarea className="min-h-32 rounded-sm border border-border bg-card px-3 py-2 font-mono text-small" value={area.boundary} onChange={(event) => {
+                const next = [...rows];
+                next[index] = { ...area, boundary: event.target.value };
+                setRows(next);
+              }} />
+            </label>
+            <Preview boundary={area.boundary} />
+          </details>
           <Button type="button" onClick={() => void save(area)}>{t("save")}</Button>
+          {messages[area.id] ? (
+            <Notice tone={messages[area.id].tone}>{messages[area.id].text}</Notice>
+          ) : null}
         </Card>
       ))}
-      {message ? <p className="text-small font-bold">{message}</p> : null}
     </div>
   );
 }

@@ -40,6 +40,20 @@ export function HoursEditor({
   const [status, setStatus] = useState<{ tone: "success" | "danger"; text: string } | null>(null);
   const [busy, setBusy] = useState(false);
 
+  function weekdayTemplate() {
+    const locationId = locations[0]?.id;
+    if (!locationId) return;
+    setHours(
+      [1, 2, 3, 4, 5].map((dayOfWeek) => ({
+        dayOfWeek,
+        startTime: "09:00",
+        endTime: "17:00",
+        locationId,
+      })),
+    );
+    setStatus(null);
+  }
+
   function update(index: number, patch: Partial<Hour>) {
     setHours((current) =>
       current.map((hour, hourIndex) => (hourIndex === index ? { ...hour, ...patch } : hour)),
@@ -78,7 +92,13 @@ export function HoursEditor({
 
   return (
     <div className="mt-5 grid gap-4">
-      {hours.length ? null : <p className="text-ink-muted">{t("empty")}</p>}
+      {hours.length ? (
+        <p className="text-small font-bold text-ink-muted">
+          {t("summary", { count: hours.length })}
+        </p>
+      ) : (
+        <Notice tone="danger">{t("notBookable")}</Notice>
+      )}
       {hours.map((hour, index) => (
         <fieldset
           key={index}
@@ -134,6 +154,9 @@ export function HoursEditor({
         </fieldset>
       ))}
       <div className="flex flex-wrap gap-3">
+        <Button type="button" variant="secondary" onClick={weekdayTemplate}>
+          {t("weekdays")}
+        </Button>
         <Button
           type="button"
           variant="secondary"
@@ -146,6 +169,18 @@ export function HoursEditor({
         >
           {t("add")}
         </Button>
+        {hours.length ? (
+          <Button
+            type="button"
+            variant="ghost"
+            onClick={() => {
+              setHours([]);
+              setStatus(null);
+            }}
+          >
+            {t("clear")}
+          </Button>
+        ) : null}
         <Button type="button" onClick={() => void save()} disabled={busy}>
           {t("save")}
         </Button>

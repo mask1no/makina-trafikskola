@@ -16,6 +16,7 @@ import {
 import { benefitItems } from "@/lib/home/benefits";
 import { googleMapsBrowserConfig } from "@/lib/maps/config";
 import { swishActive } from "@/lib/payments/swish";
+import { googleSchoolReviews } from "@/lib/reviews/google";
 import { activeTeacherLanguages } from "@/lib/teachers/query";
 import { formatPrice } from "@/lib/pricing/format";
 import { freeTheoryQuestionCount } from "@/lib/theory/questions";
@@ -60,12 +61,13 @@ async function HomeBelow({
 }) {
   setRequestLocale(locale);
   const t = await getTranslations();
-  const [products, teachers, locations, freeQuestions, activeLanguages] = await Promise.all([
+  const [products, teachers, locations, freeQuestions, activeLanguages, googleReviews] = await Promise.all([
     getProducts(locale),
     getTeachers(locale),
     getLocations(),
     freeTheoryQuestionCount(),
     activeTeacherLanguages(),
+    googleSchoolReviews(),
   ]);
   const offeredLanguages = offeredTeachingLanguagesFrom(activeLanguages);
   const offeredLanguageNames = formatLanguageList(
@@ -231,6 +233,21 @@ async function HomeBelow({
           reviewsTitle={t("home.teachers.reviewsTitle")}
           reviewsBody={t("home.teachers.reviewsBody")}
           reviewsCta={t("home.teachers.reviewsCta")}
+          reviewsUrl={googleReviews.url}
+          reviewsRating={
+            googleReviews.rating == null
+              ? null
+              : t("home.teachers.reviewsScore", {
+                  rating: googleReviews.rating.toFixed(1),
+                })
+          }
+          reviewsCount={
+            googleReviews.count == null
+              ? null
+              : t("home.teachers.reviewsCount", {
+                  count: googleReviews.count,
+                })
+          }
         />
       ) : null}
       <QuickLinksSection

@@ -21,6 +21,22 @@ function purchase(
 }
 
 describe("calculateAvailableCreditBalance", () => {
+  it("leaves nine lessons after one booking from a ten-lesson package", () => {
+    const entries: CreditLedgerEntry[] = [
+      purchase("package-10", 10, "2027-01-01T00:00:00.000Z"),
+      {
+        id: "booking-1",
+        delta: -1,
+        reason: "BOOKING_CONSUMED",
+        orderItemId: null,
+        expiresAt: null,
+        createdAt: new Date("2026-09-01T08:00:00.000Z"),
+      },
+    ];
+
+    expect(calculateAvailableCreditBalance(entries, now).balance).toBe(9);
+  });
+
   it("makes an expired unspent lot unavailable before cron writes EXPIRY", () => {
     expect(
       calculateAvailableCreditBalance(

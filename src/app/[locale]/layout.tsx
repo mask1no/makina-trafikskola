@@ -203,6 +203,7 @@ export default async function LocaleLayout(props: {
     FACEBOOK_URL:
       "https://www.facebook.com/people/Makina-trafikskola/61582442371811/",
     INSTAGRAM_URL: "https://www.instagram.com/makina.trafikskola/",
+    TIKTOK_URL: "https://www.tiktok.com/@makina_trafikskolan?lang=en",
   };
   const socialLinks = (
     [

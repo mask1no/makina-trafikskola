@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { HomeAreaSearch } from "@/components/GoogleMapClient";
+import { GoogleReviewsCard } from "@/components/GoogleReviewsCard";
 import { LazyTeacherMap } from "@/components/LazyTeacherMap";
 import { SectionHeader } from "@/components/SectionHeader";
 import type { TeacherMarker } from "@/components/GoogleMapClient";
@@ -28,6 +29,9 @@ export function TeachersMapSection({
   reviewsTitle,
   reviewsBody,
   reviewsCta,
+  reviewsUrl,
+  reviewsRating,
+  reviewsCount,
 }: {
   locale: Locale;
   canBook: boolean;
@@ -49,6 +53,9 @@ export function TeachersMapSection({
   reviewsTitle: string;
   reviewsBody: string;
   reviewsCta: string;
+  reviewsUrl: string;
+  reviewsRating: string | null;
+  reviewsCount: string | null;
 }) {
   return (
     <section id="hitta-larare" className="section-shell scroll-mt-28 border-t border-[var(--line)]">
@@ -109,18 +116,14 @@ export function TeachersMapSection({
               </Link>
             ))}
           </div>
-          <a
-            href="https://www.google.com/maps/search/?api=1&query=Makina%20Trafikskola%20Centralv%C3%A4gen%205%20Upplands%20V%C3%A4sby"
-            target="_blank"
-            rel="noreferrer"
-            className="flex min-h-16 items-center justify-between gap-3 rounded-md border border-border bg-card px-4 py-3 shadow-soft"
-          >
-            <span>
-              <span className="block font-black">{reviewsTitle}</span>
-              <span className="text-small text-ink-muted">{reviewsBody}</span>
-            </span>
-            <span className="text-small font-bold">{reviewsCta}</span>
-          </a>
+          <GoogleReviewsCard
+            title={reviewsTitle}
+            body={reviewsBody}
+            cta={reviewsCta}
+            url={reviewsUrl}
+            rating={reviewsRating}
+            countLabel={reviewsCount}
+          />
           </div>
         </div>
       </div>
