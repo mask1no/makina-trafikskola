@@ -1,5 +1,12 @@
 import { isLocale, type Locale } from "@/i18n/routing";
 
+export function authenticatedHome(locale: string, role: string | undefined) {
+  const supportedLocale: Locale = isLocale(locale) ? locale : "sv";
+  if (role === "ADMIN") return `/${supportedLocale}/admin`;
+  if (role === "TEACHER") return `/${supportedLocale}/larare-portal`;
+  return `/${supportedLocale}/mina-sidor`;
+}
+
 function validPath(value: string, locale: Locale) {
   if (!value || value.length > 512) return false;
   if (/[\u0000-\u001f\u007f\s\\]/.test(value)) return false;

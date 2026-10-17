@@ -5,13 +5,21 @@ import { signIn } from "next-auth/react";
 import { useTranslations } from "next-intl";
 
 import { normalizeSwedishPhone } from "@/lib/auth/phone";
-import { safeRedirect } from "@/lib/auth/safe-redirect";
+import {
+  authenticatedHome,
+  safeRedirect,
+} from "@/lib/auth/safe-redirect";
 
-export function destinationFor(locale: string, searchParams: URLSearchParams) {
-  return safeRedirect(
-    searchParams.get("next") ?? searchParams.get("callbackUrl"),
-    locale,
-  );
+export function destinationFor(
+  locale: string,
+  searchParams: URLSearchParams,
+  role?: string,
+) {
+  const requested =
+    searchParams.get("next") ?? searchParams.get("callbackUrl");
+  return requested
+    ? safeRedirect(requested, locale)
+    : authenticatedHome(locale, role);
 }
 
 export function useErrorText() {
@@ -184,4 +192,4 @@ export function GoogleButton({
     </div>
   );
 }
-
+

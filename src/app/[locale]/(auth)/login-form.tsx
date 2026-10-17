@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useCallback, useEffect, useState } from "react";
-import { signIn } from "next-auth/react";
+import { getSession, signIn } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -133,7 +133,8 @@ export function LoginForm({
           throw new Error("INVALID_CREDENTIALS");
         }
       }
-      router.push(destinationFor(locale, searchParams));
+      const session = await getSession();
+      router.push(destinationFor(locale, searchParams, session?.user.role));
       router.refresh();
     } catch (reason) {
       setFormError(errorText(reason instanceof Error ? reason.message : "UNKNOWN"));
